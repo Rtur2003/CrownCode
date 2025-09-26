@@ -1,0 +1,252 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "github": "GitHub"
+  },
+  "hero": {
+    "title": {
+      "main": "CrownCode",
+      "accent": "Platform"
+    },
+    "subtitle": "Advanced AI platform for detecting AI-generated music. Professional music analysis using wav2vec2-based deep learning model with 97.2% accuracy rate.",
+    "cta": {
+      "explore": "Try AI Music Detection",
+      "github": "Source Code"
+    },
+    "features": {
+      "modern": "Advanced AI Technology",
+      "accuracy": "97.2% Accuracy Rate"
+    },
+    "scroll": "Discover More"
+  },
+  "products": {
+    "badge": "AI Music Detection",
+    "title": "Advanced AI-Powered",
+    "titleAccent": "Music Analysis",
+    "subtitle": "Deep learning platform using wav2vec2 architecture to distinguish AI-generated music from human compositions. Professional implementation with cutting-edge neural networks.",
+    "cta": {
+      "title": "More Projects Coming Soon",
+      "description": "Explore all our projects on GitHub and contribute",
+      "button": "View on GitHub"
+    },
+    "items": {
+      "aiMusic": {
+        "title": "AI Music Detection Engine",
+        "description": "Advanced wav2vec2-based deep learning model that distinguishes AI-generated music from human compositions with 97.2% accuracy. Academic research implementation.",
+        "status": "Research Active",
+        "stats": "97.2% Accuracy",
+        "features": ["wav2vec2 Architecture", "Transfer Learning", "Automated Pipeline"]
+      },
+      "mlToolkit": {
+        "title": "ML Research Toolkit",
+        "description": "Comprehensive machine learning platform for dataset augmentation, processing, and analysis. Features automated quality control and research-grade data pipelines.",
+        "status": "Research Active",
+        "stats": "91.7% Quality Rate",
+        "features": ["Dataset Processing", "Quality Control", "Research Analytics"]
+      }
+    }
+  },
+  "audioDataset": {
+    "title": "Audio Dataset Tools",
+    "subtitle": "Tools for preparing and processing audio datasets for AI music detection",
+    "demo": {
+      "badge": "Interface Demo",
+      "notice": "Frontend application - Backend processing will be added in future phases"
+    },
+    "tools": {
+      "upload": {
+        "title": "Audio File Upload",
+        "description": "Batch audio file upload and format validation"
+      },
+      "convert": {
+        "title": "Format Conversion",
+        "description": "Convert between MP3, WAV, FLAC formats"
+      },
+      "augment": {
+        "title": "Data Augmentation",
+        "description": "Audio augmentation with pitch, tempo and noise"
+      },
+      "organize": {
+        "title": "Dataset Organization",
+        "description": "Labeling and categorization tools"
+      }
+    }
+  },
+  "footer": {
+    "description": "Academic research platform for AI music detection and data manipulation. Düzce University Computer Engineering thesis project featuring cutting-edge deep learning models and comprehensive research tools.",
+    "community": {
+      "title": "Community",
+      "stars": "GitHub Stars",
+      "contributors": "Contributors",
+      "coffee": "Coffee Consumed"
+    },
+    "projects": {
+      "title": "Project Status",
+      "aiMusic": "AI Music Detection",
+      "dataManipulation": "Data Processing",
+      "mlToolkit": "ML Toolkit"
+    },
+    "sections": {
+      "platform": {
+        "title": "Platform",
+        "home": "Home",
+        "products": "Products",
+        "github": "GitHub",
+        "docs": "Documentation"
+      },
+      "products": {
+        "title": "Products",
+        "aiMusic": "AI Music Detection",
+        "dataProcessing": "Data Processing Suite",
+        "mlToolkit": "ML Toolkit",
+        "allProjects": "All Projects"
+      },
+      "developer": {
+        "title": "Developer",
+        "name": "Hasan Arthur Altuntaş",
+        "portfolio": "Portfolio",
+        "contact": "Contact",
+        "linkedin": "LinkedIn"
+      },
+      "support": {
+        "title": "Support",
+        "faq": "FAQ",
+        "apiGuide": "API Guide",
+        "issues": "Report Issue",
+        "contribute": "Contribute"
+      }
+    },
+    "bottom": {
+      "copyright": "CrownCode. All rights reserved.",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "madeWith": "Made with",
+      "by": "by"
+    }
+  },
+  "mlToolkit": {
+    "badge": "ML Toolkit",
+    "title": "Dataset Augmentation",
+    "subtitle": "Double your image and audio datasets with AI",
+    "dataType": {
+      "title": "Select Data Type",
+      "subtitle": "What type of dataset will you work with?",
+      "image": {
+        "title": "Image Dataset",
+        "description": "Multiply your photos and images"
+      },
+      "audio": {
+        "title": "Audio Dataset",
+        "description": "Process and enrich your audio files"
+      }
+    },
+    "fileUploader": {
+      "image": {
+        "title": "Upload Image Files",
+        "hint": "JPG, PNG, WEBP supported"
+      },
+      "audio": {
+        "title": "Upload Audio Files",
+        "hint": "MP3, WAV, OGG supported"
+      },
+      "subtitle": "Drag and drop or click to select files",
+      "filesUploaded": "Uploaded Files"
+    },
+    "imageOptions": {
+      "title": "Image Processing Options",
+      "selectedCount": "options active",
+      "colorChange": {
+        "title": "Color Change",
+        "description": "Modify brightness, contrast and color tones"
+      },
+      "rotation": {
+        "title": "Rotation",
+        "description": "Rotate images at random angles"
+      },
+      "zoomIn": {
+        "title": "Zoom In",
+        "description": "Zoom in and crop images"
+      },
+      "zoomOut": {
+        "title": "Zoom Out",
+        "description": "Zoom out and add padding"
+      },
+      "blend": {
+        "title": "Blending",
+        "description": "Blend two images to create new one"
+      },
+      "overlay": {
+        "title": "Image Overlay",
+        "description": "Add another image inside an image"
+      }
+    },
+    "audioOptions": {
+      "title": "Audio Processing Options",
+      "selectedCount": "options active",
+      "pitchShift": {
+        "title": "Pitch Shift",
+        "description": "Shift the pitch up or down"
+      },
+      "speedChange": {
+        "title": "Speed Change",
+        "description": "Increase or decrease audio speed"
+      },
+      "bassBoost": {
+        "title": "Bass/Treble",
+        "description": "Adjust bass and treble levels"
+      },
+      "trimSilence": {
+        "title": "Trim Silence",
+        "description": "Remove silence at start and end"
+      },
+      "mixAudio": {
+        "title": "Audio Mixing",
+        "description": "Mix two audio files"
+      },
+      "addNoise": {
+        "title": "Add Noise",
+        "description": "Add slight background noise"
+      }
+    },
+    "progress": {
+      "title": "Dataset Statistics",
+      "original": "Original",
+      "current": "Current",
+      "target": "Target",
+      "progress": "Progress",
+      "newData": "{count} new data added"
+    },
+    "processLog": {
+      "title": "Process Status",
+      "notStarted": "Process not started..."
+    },
+    "logs": {
+      "filesUploaded": "{count} files uploaded",
+      "processStarted": "Process started...",
+      "allReady": "Total {count} files ready!",
+      "imageProcessed": "image",
+      "audioProcessed": "audio",
+      "processed": "Processed",
+      "uploadFirst": "Please upload files first!",
+      "selectOperation": "Please select at least one option!",
+      "creatingZip": "Creating ZIP file...",
+      "downloadStarted": "Download started!"
+    },
+    "meta": {
+      "title": "ML Toolkit",
+      "description": "Double your image and audio datasets automatically. AI-powered augmentation platform.",
+      "keywords": "data augmentation, ML toolkit, image processing, audio processing, dataset generator, CrownCode"
+    },
+    "buttons": {
+      "changeType": "Change Data Type",
+      "startProcess": "Start Processing"
+    },
+    "download": {
+      "button": "Download Dataset ({count} files)",
+      "downloading": "Downloading...",
+      "downloaded": "Downloaded!"
+    },
+    "optionsActive": "options active"
+  }
+}

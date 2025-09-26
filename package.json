@@ -1,0 +1,98 @@
+{
+  "name": "devforge-suite-with-rthur",
+  "version": "1.0.0",
+  "description": "Comprehensive Development Platform for Modern Web Applications",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:platform\" \"npm run dev:projects\"",
+    "dev:platform": "cd platform && npm run dev",
+    "dev:projects": "npm run dev:ai-music",
+    "dev:ai-music": "cd projects/ai-music-detection && npm run dev",
+    "build": "npm run build:platform && npm run build:projects",
+    "build:platform": "cd platform && npm run build",
+    "build:projects": "npm run build:ai-music",
+    "build:ai-music": "cd projects/ai-music-detection && npm run build",
+    "test": "npm run test:platform && npm run test:projects",
+    "test:platform": "cd platform && npm test",
+    "test:projects": "npm run test:ai-music",
+    "test:ai-music": "cd projects/ai-music-detection && npm test",
+    "test:all": "npm run test",
+    "lint": "npm run lint:platform && npm run lint:projects",
+    "lint:platform": "cd platform && npm run lint",
+    "lint:projects": "npm run lint:ai-music",
+    "lint:ai-music": "cd projects/ai-music-detection && npm run lint",
+    "deploy:staging": "npm run build && npm run deploy:staging:platform",
+    "deploy:production": "npm run build && npm run deploy:production:platform",
+    "deploy:staging:platform": "cd platform && vercel --target staging",
+    "deploy:production:platform": "cd platform && vercel --prod",
+    "setup": "npm install && npm run setup:platform && npm run setup:projects",
+    "setup:platform": "cd platform && npm install",
+    "setup:projects": "npm run setup:ai-music",
+    "setup:ai-music": "cd projects/ai-music-detection && npm install",
+    "clean": "npm run clean:platform && npm run clean:projects",
+    "clean:platform": "cd platform && rm -rf .next node_modules",
+    "clean:projects": "npm run clean:ai-music",
+    "clean:ai-music": "cd projects/ai-music-detection && rm -rf .next node_modules"
+  },
+  "keywords": [
+    "devforge",
+    "suite",
+    "platform",
+    "ai",
+    "music",
+    "detection",
+    "data",
+    "manipulation",
+    "machine",
+    "learning",
+    "web",
+    "application",
+    "nextjs",
+    "react",
+    "typescript"
+  ],
+  "author": {
+    "name": "Hasan Arthur Altuntaş",
+    "email": "contact@hasanarthuraltuntas.xyz",
+    "url": "https://hasanarthuraltuntas.xyz"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rtur2003/DevForge-Suite-with-Rthur.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Rtur2003/DevForge-Suite-with-Rthur/issues"
+  },
+  "homepage": "https://devforge-suite.com",
+  "engines": {
+    "node": ">=20.18.1",
+    "npm": ">=10.9.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{md,json}": [
+      "prettier --write"
+    ]
+  },
+  "workspaces": [
+    "platform",
+    "projects/*"
+  ]
+}

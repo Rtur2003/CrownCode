@@ -1,0 +1,252 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "products": "Ürünler",
+    "github": "GitHub"
+  },
+  "hero": {
+    "title": {
+      "main": "CrownCode",
+      "accent": "Platformu"
+    },
+    "subtitle": "AI ile üretilmiş müzikleri tespit eden gelişmiş yapay zeka platformu. wav2vec2 tabanlı derin öğrenme modeli kullanarak %97.2 doğruluk oranı ile profesyonel müzik analizi.",
+    "cta": {
+      "explore": "AI Müzik Tespitini Dene",
+      "github": "Kaynak Kodu"
+    },
+    "features": {
+      "modern": "Gelişmiş AI Teknolojisi",
+      "accuracy": "%97.2 Doğruluk Oranı"
+    },
+    "scroll": "Daha Fazlasını Keşfet"
+  },
+  "products": {
+    "badge": "AI Müzik Tespiti",
+    "title": "Gelişmiş AI ile",
+    "titleAccent": "Müzik Analizi",
+    "subtitle": "wav2vec2 mimarisini kullanan derin öğrenme modeli ile AI tarafından üretilmiş müzikleri gerçek insan bestelerinden ayırt eden profesyonel analiz platformu.",
+    "cta": {
+      "title": "Daha Fazla Proje Yolda",
+      "description": "GitHub'da tüm projelerimizi inceleyebilir, katkıda bulunabilirsiniz",
+      "button": "GitHub'da Görüntüle"
+    },
+    "items": {
+      "aiMusic": {
+        "title": "AI Müzik Tespit Motoru",
+        "description": "wav2vec2 tabanlı derin öğrenme modeli ile AI üretimi müzikleri insan bestelerinden %97.2 doğrulukla ayırt eden akademik araştırma uygulaması.",
+        "status": "Araştırma Aktif",
+        "stats": "97.2% Doğruluk",
+        "features": ["wav2vec2 Mimarisi", "Transfer Learning", "Otomatik Pipeline"]
+      },
+      "mlToolkit": {
+        "title": "ML Araştırma Araç Seti",
+        "description": "Veri seti artırma, işleme ve analiz için kapsamlı makine öğrenmesi platformu. Otomatik kalite kontrolü ve araştırma kalitesinde veri pipeline'ları içerir.",
+        "status": "Araştırma Aktif",
+        "stats": "%91.7 Kalite Oranı",
+        "features": ["Veri Seti İşleme", "Kalite Kontrolü", "Araştırma Analitiği"]
+      }
+    }
+  },
+  "audioDataset": {
+    "title": "Ses Veri Seti Araçları",
+    "subtitle": "AI müzik tespiti için ses veri setlerini hazırlama ve işleme araçları",
+    "demo": {
+      "badge": "Arayüz Demosu",
+      "notice": "Ön yüz uygulaması - Arka plan işleme gelecek aşamalarda eklenecek"
+    },
+    "tools": {
+      "upload": {
+        "title": "Ses Dosyası Yükleme",
+        "description": "Toplu ses dosyası yükleme ve format doğrulama"
+      },
+      "convert": {
+        "title": "Format Dönüştürme",
+        "description": "MP3, WAV, FLAC formatları arasında dönüştürme"
+      },
+      "augment": {
+        "title": "Veri Artırma",
+        "description": "Pitch, tempo ve gürültü ile ses artırma"
+      },
+      "organize": {
+        "title": "Veri Seti Organizasyonu",
+        "description": "Etiketleme ve kategorilendirme araçları"
+      }
+    }
+  },
+  "footer": {
+    "description": "AI müzik tespiti ve veri manipülasyonu için akademik araştırma platformu. Düzce Üniversitesi Bilgisayar Mühendisliği tez projesi olarak geliştirilen son teknoloji derin öğrenme modelleri ve kapsamlı araştırma araçları.",
+    "community": {
+      "title": "Topluluk",
+      "stars": "GitHub Stars",
+      "contributors": "Contributors",
+      "coffee": "Coffee Consumed"
+    },
+    "projects": {
+      "title": "Proje Durumları",
+      "aiMusic": "AI Müzik Tespit",
+      "dataManipulation": "Veri İşleme",
+      "mlToolkit": "ML Araç Seti"
+    },
+    "sections": {
+      "platform": {
+        "title": "Platform",
+        "home": "Ana Sayfa",
+        "products": "Ürünler",
+        "github": "GitHub",
+        "docs": "Dokümantasyon"
+      },
+      "products": {
+        "title": "Ürünler",
+        "aiMusic": "AI Müzik Tespit",
+        "dataProcessing": "Veri İşleme Suite",
+        "mlToolkit": "ML Araç Seti",
+        "allProjects": "Tüm Projeler"
+      },
+      "developer": {
+        "title": "Geliştirici",
+        "name": "Hasan Arthur Altuntaş",
+        "portfolio": "Portfolio",
+        "contact": "İletişim",
+        "linkedin": "LinkedIn"
+      },
+      "support": {
+        "title": "Destek",
+        "faq": "SSS",
+        "apiGuide": "API Rehberi",
+        "issues": "Issue Bildirimi",
+        "contribute": "Katkıda Bulunun"
+      }
+    },
+    "bottom": {
+      "copyright": "CrownCode. Tüm hakları saklıdır.",
+      "privacy": "Gizlilik Politikası",
+      "terms": "Kullanım Koşulları",
+      "madeWith": "Made with",
+      "by": "by"
+    }
+  },
+  "mlToolkit": {
+    "badge": "ML Toolkit",
+    "title": "Veri Seti Çoğaltma",
+    "subtitle": "Görsel ve ses veri setlerinizi AI ile 2 katına çıkarın",
+    "dataType": {
+      "title": "Veri Tipi Seçin",
+      "subtitle": "Hangi tür veri seti ile çalışacaksınız?",
+      "image": {
+        "title": "Görsel Veri Seti",
+        "description": "Fotoğraf ve görsel dosyalarınızı çoğaltın"
+      },
+      "audio": {
+        "title": "Ses Veri Seti",
+        "description": "Ses dosyalarınızı işleyip zenginleştirin"
+      }
+    },
+    "fileUploader": {
+      "image": {
+        "title": "Görsel Dosyalarını Yükleyin",
+        "hint": "JPG, PNG, WEBP destekleniyor"
+      },
+      "audio": {
+        "title": "Ses Dosyalarını Yükleyin",
+        "hint": "MP3, WAV, OGG destekleniyor"
+      },
+      "subtitle": "Sürükle bırak veya tıklayarak dosya seç",
+      "filesUploaded": "Yüklenen Dosyalar"
+    },
+    "imageOptions": {
+      "title": "Görsel İşleme Seçenekleri",
+      "selectedCount": "seçenek aktif",
+      "colorChange": {
+        "title": "Renk Değişimi",
+        "description": "Parlaklık, kontrast ve renk tonlarını değiştir"
+      },
+      "rotation": {
+        "title": "Döndürme",
+        "description": "Görselleri rastgele açılarda döndür"
+      },
+      "zoomIn": {
+        "title": "Yakınlaştırma",
+        "description": "Görselleri yakınlaştırıp kırp"
+      },
+      "zoomOut": {
+        "title": "Uzaklaştırma",
+        "description": "Görselleri uzaklaştırıp padding ekle"
+      },
+      "blend": {
+        "title": "Karıştırma",
+        "description": "İki görseli karıştırıp yeni görsel oluştur"
+      },
+      "overlay": {
+        "title": "Görsel Ekleme",
+        "description": "Bir görselin içine başka görsel ekle"
+      }
+    },
+    "audioOptions": {
+      "title": "Ses İşleme Seçenekleri",
+      "selectedCount": "seçenek aktif",
+      "pitchShift": {
+        "title": "Pitch Değişimi",
+        "description": "Sesin perdesini yukarı veya aşağı kaydır"
+      },
+      "speedChange": {
+        "title": "Hız Değişimi",
+        "description": "Ses hızını artır veya azalt"
+      },
+      "bassBoost": {
+        "title": "Bass/Treble",
+        "description": "Bas ve tiz seviyelerini ayarla"
+      },
+      "trimSilence": {
+        "title": "Sessizlik Kesme",
+        "description": "Başta ve sondaki sessizlikleri kaldır"
+      },
+      "mixAudio": {
+        "title": "Ses Karıştırma",
+        "description": "İki ses dosyasını karıştır"
+      },
+      "addNoise": {
+        "title": "Gürültü Ekleme",
+        "description": "Hafif arka plan gürültüsü ekle"
+      }
+    },
+    "progress": {
+      "title": "Veri Seti İstatistikleri",
+      "original": "Orijinal",
+      "current": "Mevcut",
+      "target": "Hedef",
+      "progress": "İlerleme",
+      "newData": "{count} yeni veri eklendi"
+    },
+    "processLog": {
+      "title": "İşlem Durumu",
+      "notStarted": "İşlem başlamadı..."
+    },
+    "logs": {
+      "filesUploaded": "{count} dosya yüklendi",
+      "processStarted": "İşlem başlatıldı...",
+      "allReady": "Toplam {count} dosya hazır!",
+      "imageProcessed": "görsel",
+      "audioProcessed": "ses",
+      "processed": "İşlendi",
+      "uploadFirst": "Lütfen önce dosya yükleyin!",
+      "selectOperation": "Lütfen en az bir işlem seçin!",
+      "creatingZip": "ZIP dosyası oluşturuluyor...",
+      "downloadStarted": "İndirme başlatıldı!"
+    },
+    "meta": {
+      "title": "ML Toolkit",
+      "description": "Görsel ve ses veri setlerinizi otomatik olarak 2 katına çıkarın. AI destekli augmentation platformu.",
+      "keywords": "data augmentation, ML toolkit, image processing, audio processing, dataset generator, CrownCode"
+    },
+    "buttons": {
+      "changeType": "Veri Tipini Değiştir",
+      "startProcess": "İşlemi Başlat"
+    },
+    "download": {
+      "button": "Veri Setini İndir ({count} dosya)",
+      "downloading": "İndiriliyor...",
+      "downloaded": "İndirildi!"
+    },
+    "optionsActive": "seçenek aktif"
+  }
+}

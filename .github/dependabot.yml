@@ -1,0 +1,206 @@
+version: 2
+updates:
+  # Platform dependencies (main)
+  - package-ecosystem: "npm"
+    directory: "/platform"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    target-branch: "develop"
+    labels:
+      - "dependencies"
+      - "platform"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps):"
+      include: "scope"
+    assignees:
+      - "Rtur2003"
+    reviewers:
+      - "Rtur2003"
+
+  # Root workspace dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:30"
+    open-pull-requests-limit: 3
+    target-branch: "develop"
+    labels:
+      - "dependencies"
+      - "workspace"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps):"
+      include: "scope"
+
+  # AI Music Detection project
+  - package-ecosystem: "npm"
+    directory: "/projects/ai-music-detection"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    target-branch: "develop"
+    labels:
+      - "dependencies"
+      - "ai-music-detection"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps-ai):"
+      include: "scope"
+    assignees:
+      - "Rtur2003"
+
+  # AI Music Detection frontend
+  - package-ecosystem: "npm"
+    directory: "/projects/ai-music-detection/frontend"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "09:30"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "ai-music-frontend"
+      - "automated"
+
+  # AI Music Detection backend
+  - package-ecosystem: "npm"
+    directory: "/projects/ai-music-detection/backend"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "10:00"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "ai-music-backend"
+      - "automated"
+
+  # Data Manipulation project (when available)
+  - package-ecosystem: "npm"
+    directory: "/projects/data-manipulation"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    target-branch: "develop"
+    labels:
+      - "dependencies"
+      - "data-manipulation"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps-data):"
+      include: "scope"
+
+  # ML Toolkit project (when available)
+  - package-ecosystem: "npm"
+    directory: "/projects/ml-toolkit"
+    schedule:
+      interval: "weekly"
+      day: "thursday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    target-branch: "develop"
+    labels:
+      - "dependencies"
+      - "ml-toolkit"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps-ml):"
+      include: "scope"
+
+  # Python dependencies (for ML projects)
+  - package-ecosystem: "pip"
+    directory: "/projects/ai-music-detection/models"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "09:00"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "python"
+      - "ai-models"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps-py):"
+
+  - package-ecosystem: "pip"
+    directory: "/projects/data-manipulation/scripts"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "09:30"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "python"
+      - "data-scripts"
+      - "automated"
+
+  - package-ecosystem: "pip"
+    directory: "/projects/ml-toolkit/backend"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "10:00"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "python"
+      - "ml-backend"
+      - "automated"
+
+  # GitHub Actions dependencies
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    target-branch: "develop"
+    labels:
+      - "dependencies"
+      - "github-actions"
+      - "ci-cd"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps-actions):"
+    assignees:
+      - "Rtur2003"
+
+  # Docker dependencies
+  - package-ecosystem: "docker"
+    directory: "/platform"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "10:00"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "docker"
+      - "platform"
+      - "automated"
+
+  - package-ecosystem: "docker"
+    directory: "/projects/ai-music-detection"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "10:30"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "docker"
+      - "ai-music-detection"
+      - "automated"

@@ -1,0 +1,159 @@
+# DevForge Suite - Code Owners
+
+# ===========================================
+# GLOBAL OWNERSHIP
+# ===========================================
+
+# Default ownership - all files
+* @Rtur2003
+
+# ===========================================
+# PLATFORM SPECIFIC
+# ===========================================
+
+# Platform core files
+/platform/ @Rtur2003
+/platform/src/ @Rtur2003
+/platform/pages/ @Rtur2003
+/platform/components/ @Rtur2003
+/platform/utils/ @Rtur2003
+/platform/styles/ @Rtur2003
+
+# Platform configuration
+/platform/package.json @Rtur2003
+/platform/next.config.js @Rtur2003
+/platform/tailwind.config.js @Rtur2003
+/platform/tsconfig.json @Rtur2003
+
+# ===========================================
+# PROJECT SPECIFIC
+# ===========================================
+
+# AI Music Detection Project
+/projects/ai-music-detection/ @Rtur2003
+/projects/ai-music-detection/frontend/ @Rtur2003
+/projects/ai-music-detection/backend/ @Rtur2003
+/projects/ai-music-detection/models/ @Rtur2003
+
+# Data Manipulation Project
+/projects/data-manipulation/ @Rtur2003
+/projects/data-manipulation/frontend/ @Rtur2003
+/projects/data-manipulation/backend/ @Rtur2003
+/projects/data-manipulation/scripts/ @Rtur2003
+
+# ML Toolkit Project
+/projects/ml-toolkit/ @Rtur2003
+/projects/ml-toolkit/frontend/ @Rtur2003
+/projects/ml-toolkit/backend/ @Rtur2003
+/projects/ml-toolkit/models/ @Rtur2003
+
+# ===========================================
+# DOCUMENTATION
+# ===========================================
+
+# Platform documentation
+/docs/ @Rtur2003
+/docs/api/ @Rtur2003
+/docs/deployment/ @Rtur2003
+/docs/contributing/ @Rtur2003
+
+# Project documentation
+/*.md @Rtur2003
+/projects/**/*.md @Rtur2003
+/platform/**/*.md @Rtur2003
+
+# Academic papers and reports
+/AKADEMIK_PROJE_RAPORU_TR.md @Rtur2003
+/ACADEMIC_PROJECT_REPORT_EN.md @Rtur2003
+/TECHNICAL_SPECIFICATIONS.md @Rtur2003
+
+# ===========================================
+# CONFIGURATION FILES
+# ===========================================
+
+# Root configuration
+/package.json @Rtur2003
+/.env.example @Rtur2003
+/.gitignore @Rtur2003
+/tsconfig.json @Rtur2003
+
+# GitHub configuration
+/.github/ @Rtur2003
+/.github/workflows/ @Rtur2003
+/.github/ISSUE_TEMPLATE/ @Rtur2003
+/.github/PULL_REQUEST_TEMPLATE/ @Rtur2003
+
+# Deployment configuration
+/vercel.json @Rtur2003
+/netlify.toml @Rtur2003
+/docker-compose.yml @Rtur2003
+
+# ===========================================
+# SECURITY & LEGAL
+# ===========================================
+
+# Security files
+/SECURITY.md @Rtur2003
+/.github/dependabot.yml @Rtur2003
+
+# Legal files
+/LICENSE @Rtur2003
+/CONTRIBUTING.md @Rtur2003
+
+# ===========================================
+# SCRIPTS & UTILITIES
+# ===========================================
+
+# Build and deployment scripts
+/scripts/ @Rtur2003
+/scripts/deploy/ @Rtur2003
+/scripts/setup/ @Rtur2003
+/scripts/build/ @Rtur2003
+
+# Utility scripts
+/scripts/utils/ @Rtur2003
+
+# ===========================================
+# TESTING
+# ===========================================
+
+# Test files
+/tests/ @Rtur2003
+/platform/tests/ @Rtur2003
+/projects/**/tests/ @Rtur2003
+
+# Test configuration
+/jest.config.js @Rtur2003
+/cypress.config.js @Rtur2003
+/playwright.config.js @Rtur2003
+
+# ===========================================
+# ASSETS & MEDIA
+# ===========================================
+
+# Shared assets
+/assets/ @Rtur2003
+/assets/images/ @Rtur2003
+/assets/fonts/ @Rtur2003
+/assets/icons/ @Rtur2003
+
+# Project assets
+/projects/**/assets/ @Rtur2003
+/projects/**/public/ @Rtur2003
+
+# ===========================================
+# CI/CD & AUTOMATION
+# ===========================================
+
+# GitHub Actions workflows
+/.github/workflows/platform-ci.yml @Rtur2003
+/.github/workflows/project-ci.yml @Rtur2003
+/.github/workflows/security-scan.yml @Rtur2003
+/.github/workflows/deploy-staging.yml @Rtur2003
+/.github/workflows/deploy-production.yml @Rtur2003
+
+# Dependabot configuration
+/.github/dependabot.yml @Rtur2003
+
+# Auto-labeler configuration
+/.github/labeler.yml @Rtur2003

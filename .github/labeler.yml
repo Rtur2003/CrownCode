@@ -1,0 +1,263 @@
+# DevForge Suite - Auto Labeler Configuration
+
+# ===========================================
+# PROJECT LABELS
+# ===========================================
+
+platform:
+  - platform/**
+  - platform/**/*
+
+ai-music-detection:
+  - projects/ai-music-detection/**
+  - projects/ai-music-detection/**/*
+
+data-manipulation:
+  - projects/data-manipulation/**
+  - projects/data-manipulation/**/*
+
+ml-toolkit:
+  - projects/ml-toolkit/**
+  - projects/ml-toolkit/**/*
+
+# ===========================================
+# COMPONENT LABELS
+# ===========================================
+
+frontend:
+  - "**/frontend/**"
+  - "**/client/**"
+  - "**/ui/**"
+  - "**/components/**"
+  - "**/pages/**"
+  - "**/styles/**"
+
+backend:
+  - "**/backend/**"
+  - "**/server/**"
+  - "**/api/**"
+  - "**/services/**"
+  - "**/controllers/**"
+  - "**/routes/**"
+
+database:
+  - "**/database/**"
+  - "**/db/**"
+  - "**/migrations/**"
+  - "**/models/**"
+  - "**/schema/**"
+
+# ===========================================
+# TECHNOLOGY LABELS
+# ===========================================
+
+javascript:
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.mjs"
+
+typescript:
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/tsconfig.json"
+  - "**/tsconfig.*.json"
+
+python:
+  - "**/*.py"
+  - "**/requirements.txt"
+  - "**/Pipfile"
+  - "**/pyproject.toml"
+  - "**/setup.py"
+
+react:
+  - "**/components/**"
+  - "**/hooks/**"
+  - "**/context/**"
+  - "**/*.jsx"
+  - "**/*.tsx"
+
+nextjs:
+  - "**/pages/**"
+  - "**/app/**"
+  - "**/next.config.js"
+  - "**/next.config.ts"
+
+nodejs:
+  - "**/package.json"
+  - "**/package-lock.json"
+  - "**/yarn.lock"
+  - "**/pnpm-lock.yaml"
+
+# ===========================================
+# FILE TYPE LABELS
+# ===========================================
+
+documentation:
+  - "**/*.md"
+  - "**/*.mdx"
+  - "**/docs/**"
+  - "**/README*"
+  - "**/CHANGELOG*"
+  - "**/CONTRIBUTING*"
+  - "**/LICENSE*"
+
+configuration:
+  - "**/*.json"
+  - "**/*.yml"
+  - "**/*.yaml"
+  - "**/*.toml"
+  - "**/*.ini"
+  - "**/.env*"
+  - "**/config/**"
+  - "**/*config*"
+
+styles:
+  - "**/*.css"
+  - "**/*.scss"
+  - "**/*.sass"
+  - "**/*.less"
+  - "**/styles/**"
+  - "**/tailwind.config.*"
+
+tests:
+  - "**/*.test.*"
+  - "**/*.spec.*"
+  - "**/tests/**"
+  - "**/test/**"
+  - "**/__tests__/**"
+  - "**/cypress/**"
+  - "**/playwright/**"
+  - "**/jest.config.*"
+  - "**/vitest.config.*"
+
+# ===========================================
+# GITHUB SPECIFIC LABELS
+# ===========================================
+
+github-actions:
+  - ".github/workflows/**"
+  - ".github/actions/**"
+
+github-config:
+  - ".github/**"
+  - ".github/ISSUE_TEMPLATE/**"
+  - ".github/PULL_REQUEST_TEMPLATE/**"
+  - ".github/CODEOWNERS"
+  - ".github/dependabot.yml"
+  - ".github/labeler.yml"
+
+# ===========================================
+# DEPLOYMENT LABELS
+# ===========================================
+
+deployment:
+  - "**/vercel.json"
+  - "**/netlify.toml"
+  - "**/Dockerfile"
+  - "**/docker-compose.*"
+  - "**/kubernetes/**"
+  - "**/k8s/**"
+
+scripts:
+  - "**/scripts/**"
+  - "**/*.sh"
+  - "**/*.bat"
+  - "**/*.ps1"
+
+# ===========================================
+# DEPENDENCY LABELS
+# ===========================================
+
+dependencies:
+  - "**/package.json"
+  - "**/package-lock.json"
+  - "**/yarn.lock"
+  - "**/pnpm-lock.yaml"
+  - "**/requirements.txt"
+  - "**/Pipfile.lock"
+  - "**/Cargo.lock"
+
+security:
+  - "**/SECURITY.md"
+  - "**/.nvmrc"
+  - "**/security/**"
+
+# ===========================================
+# FEATURE AREA LABELS
+# ===========================================
+
+authentication:
+  - "**/auth/**"
+  - "**/authentication/**"
+  - "**/login/**"
+  - "**/signup/**"
+
+api:
+  - "**/api/**"
+  - "**/routes/**"
+  - "**/endpoints/**"
+
+ui-ux:
+  - "**/components/**"
+  - "**/ui/**"
+  - "**/design/**"
+  - "**/assets/**"
+
+performance:
+  - "**/optimization/**"
+  - "**/performance/**"
+  - "**/lazy/**"
+  - "**/cache/**"
+
+accessibility:
+  - "**/a11y/**"
+  - "**/accessibility/**"
+
+mobile:
+  - "**/mobile/**"
+  - "**/responsive/**"
+  - "**/touch/**"
+
+# ===========================================
+# AI/ML SPECIFIC LABELS
+# ===========================================
+
+machine-learning:
+  - "**/models/**"
+  - "**/ml/**"
+  - "**/ai/**"
+  - "**/*.pkl"
+  - "**/*.h5"
+  - "**/*.onnx"
+
+tensorflow:
+  - "**/tensorflow/**"
+  - "**/tf/**"
+  - "**/*tensorflow*"
+
+audio-processing:
+  - "**/audio/**"
+  - "**/sound/**"
+  - "**/wav2vec2/**"
+  - "**/spectral/**"
+
+# ===========================================
+# DATA PROCESSING LABELS
+# ===========================================
+
+data-processing:
+  - "**/data/**"
+  - "**/processing/**"
+  - "**/transform/**"
+  - "**/etl/**"
+
+file-upload:
+  - "**/upload/**"
+  - "**/file/**"
+  - "**/storage/**"
+
+visualization:
+  - "**/charts/**"
+  - "**/graphs/**"
+  - "**/visualization/**"
+  - "**/dashboard/**"
