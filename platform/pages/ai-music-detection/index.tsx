@@ -425,7 +425,7 @@ const AIMusicDetectionPage: NextPage = () => {
         artificialIndicators: [
           'Demo analysis - Frontend interface only',
           'Backend AI processing to be implemented',
-          'Thesis demonstration interface'
+          'Professional demo interface'
         ]
       },
       audioInfo: {
@@ -931,11 +931,11 @@ const AIMusicDetectionPage: NextPage = () => {
             </h1>
             <p className="detection-subtitle">
               Frontend interface for AI-powered music detection system using wav2vec2-based deep learning models.
-              This is a demonstration interface for the thesis project - backend AI processing will be implemented in future phases.
+              This is a demonstration interface for the professional platform - backend AI processing will be implemented in future phases.
             </p>
             <div className="demo-notice">
               <span className="demo-badge">Demo Interface</span>
-              <span>Frontend implementation for thesis demonstration purposes</span>
+              <span>Frontend implementation for professional demonstration purposes</span>
             </div>
           </motion.div>
 
@@ -980,9 +980,10 @@ const AIMusicDetectionPage: NextPage = () => {
                     <span>{selectedFile.name}</span>
                     <button
                       onClick={() => performAIAnalysis(selectedFile)}
-                      className="btn-primary"
+                      className={`btn-primary ${processingState === 'analyzing' ? 'loading' : ''}`}
+                      disabled={processingState === 'analyzing'}
                     >
-                      Analyze File
+                      {processingState === 'analyzing' ? 'Analyzing...' : 'Analyze File'}
                     </button>
                   </div>
                 )}
@@ -1004,10 +1005,10 @@ const AIMusicDetectionPage: NextPage = () => {
                   </div>
                   <button
                     onClick={handleUrlAnalysis}
-                    disabled={!musicUrl.trim()}
-                    className="btn-primary"
+                    disabled={!musicUrl.trim() || processingState === 'analyzing'}
+                    className={`btn-primary ${processingState === 'analyzing' ? 'loading' : ''}`}
                   >
-                    Analyze URL
+                    {processingState === 'analyzing' ? 'Analyzing...' : 'Analyze URL'}
                   </button>
                 </div>
 

@@ -172,11 +172,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
               />
             </Link>
             <a
-              href="./ACADEMIC_PROJECT_REPORT_EN.md"
+              href="https://github.com/hasanarthuraltuntas/Data-Manipilasyonu"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-secondary"
-              aria-label="View academic thesis report (opens in new tab)"
+              aria-label="View source code on GitHub (opens in new tab)"
             >
               {t.hero.cta.github}
             </a>
@@ -226,7 +226,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
                 <span className="code-brace">)</span>
               </div>
               <div className="hero-code-line">
-                <span className="code-comment">// Research: Düzce University | Accuracy: 97.2%</span>
+                <span className="code-comment">// Professional AI Detection | Accuracy: 97.2%</span>
               </div>
             </div>
           </div>

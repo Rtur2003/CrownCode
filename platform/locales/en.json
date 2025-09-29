@@ -33,7 +33,7 @@
     "items": {
       "aiMusic": {
         "title": "AI Music Detection Engine",
-        "description": "Advanced wav2vec2-based deep learning model that distinguishes AI-generated music from human compositions with 97.2% accuracy. Academic research implementation.",
+        "description": "Advanced wav2vec2-based deep learning model that distinguishes AI-generated music from human compositions with 97.2% accuracy. Professional implementation.",
         "status": "Research Active",
         "stats": "97.2% Accuracy",
         "features": ["wav2vec2 Architecture", "Transfer Learning", "Automated Pipeline"]
@@ -74,7 +74,7 @@
     }
   },
   "footer": {
-    "description": "Academic research platform for AI music detection and data manipulation. Düzce University Computer Engineering thesis project featuring cutting-edge deep learning models and comprehensive research tools.",
+    "description": "Professional platform for AI music detection and audio analysis. Advanced wav2vec2-based deep learning technology offering innovative solutions for music analysis and streaming platform integration.",
     "community": {
       "title": "Community",
       "stars": "GitHub Stars",
