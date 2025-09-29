@@ -7,9 +7,9 @@ import { ProjectsSection } from '@/components/Home/ProjectsSection'
 const HomePage: NextPage = () => {
   return (
     <MainLayout
-      title="CrownCode Platform - AI Music Detection & Data Manipulation | Düzce University Thesis"
-      description="Advanced AI-powered platform for music detection and data manipulation. Düzce University Computer Engineering thesis project featuring 97.2% accuracy AI music detection, automated ML pipelines, and comprehensive research tools."
-      keywords="AI music detection, wav2vec2, deep learning, data manipulation, machine learning, computer engineering thesis, Düzce University, academic research, artificial intelligence, audio analysis, music technology, research platform, ML toolkit, Hasan Arthur Altuntaş"
+      title="CrownCode Platform - Professional AI Music Detection | Advanced Audio Analysis"
+      description="Professional AI-powered platform for detecting AI-generated music with 97.2% accuracy. Advanced wav2vec2-based deep learning technology for streaming platforms, audio analysis, and music industry applications."
+      keywords="AI music detection, wav2vec2, deep learning, audio analysis, machine learning, artificial intelligence, music technology, streaming platforms, professional audio tools, music industry, Spotify detection, YouTube analysis, Hasan Arthur Altuntaş"
     >
       <HeroSection />
       <ProjectsSection />

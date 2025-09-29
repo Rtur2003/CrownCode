@@ -1,26 +1,37 @@
 :root {
-  --color-primary: #00D4FF;
-  --color-secondary: #0080FF;
-  --color-accent: #D4AF37;
+  /* Primary Brand Colors */
+  --color-primary: #38bdf8;
+  --color-secondary: #0ea5e9;
+  --color-accent: #fbbf24;
 
-  --color-background: #000000;
-  --color-surface: #0a192f;
-  --color-surface-alt: #1a2332;
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #A0A0A0;
-  --color-text-muted: #666666;
-  --color-border: #1a1a1a;
-  --color-border-light: #2a2a2a;
+  /* Background Colors */
+  --color-background: #0f0f23;
+  --color-surface: #1a1a2e;
+  --color-surface-elevated: #16213e;
+  --color-border: #2a2a4a;
+  --color-border-light: #3a3a5a;
 
+  /* Text Colors */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+
+  /* Glass Effects */
+  --glass-bg: rgba(30, 41, 59, 0.8);
+  --glass-border: rgba(56, 189, 248, 0.3);
+
+  /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5);
-  --shadow-glow: 0 0 40px rgba(0, 212, 255, 0.3);
+  --shadow-glow: 0 0 40px rgba(56, 189, 248, 0.3);
 
+  /* Animations */
   --animation-duration: 0.3s;
   --animation-easing: cubic-bezier(0.4, 0, 0.2, 1);
 
+  /* Z-Index Layers */
   --z-dropdown: 1000;
   --z-sticky: 1020;
   --z-fixed: 1030;
@@ -29,26 +40,21 @@
   --z-popover: 1060;
   --z-tooltip: 1070;
   --z-toast: 1080;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
 }
 
-.dark {
-  --color-background: #000000;
-  --color-surface: #0a192f;
-  --color-surface-alt: #1a2332;
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #A0A0A0;
-  --color-text-muted: #666666;
-  --color-border: #1a1a1a;
-  --color-border-light: #2a2a2a;
-}
-
-.light {
-  --color-background: #000000;
-  --color-surface: #0a192f;
-  --color-surface-alt: #1a2332;
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #A0A0A0;
-  --color-text-muted: #666666;
-  --color-border: #1a1a1a;
-  --color-border-light: #2a2a2a;
+/* Responsive breakpoints for consistency */
+@media (max-width: 640px) {
+  :root {
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+  }
 }

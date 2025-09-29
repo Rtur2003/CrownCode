@@ -273,9 +273,35 @@
 }
 
 .btn-primary:disabled {
-  opacity: 0.5;
+  opacity: 0.6;
   cursor: not-allowed;
   transform: none;
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+}
+
+.btn-primary.loading {
+  cursor: wait;
+  position: relative;
+  color: transparent;
+}
+
+.btn-primary.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .btn-secondary {
@@ -293,9 +319,17 @@
   text-decoration: none;
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover:not(:disabled) {
   background: rgba(56, 189, 248, 0.2);
   transform: translateY(-2px);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(107, 114, 128, 0.1);
+  border-color: rgba(107, 114, 128, 0.3);
+  color: #6b7280;
 }
 
 /* =========================================================================
@@ -537,5 +571,87 @@
   .processing-steps {
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  .demo-notice {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .demo-notice span:last-child {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .metric-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .supported-platforms {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .platform-icons {
+    justify-content: center;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .detection-container {
+    padding: 0.75rem;
+  }
+
+  .detection-title {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .detection-interface {
+    gap: 1.5rem;
+  }
+
+  .upload-dropzone {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .upload-dropzone h3 {
+    font-size: 1rem;
+  }
+
+  .upload-dropzone p {
+    font-size: 0.875rem;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+  }
+
+  .analysis-result-card {
+    padding: 1.5rem;
+  }
+
+  .result-title {
+    font-size: 1.25rem;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .detection-title {
+    font-size: 2.25rem;
+  }
+
+  .detection-interface {
+    gap: 2rem;
   }
 }

@@ -43,7 +43,7 @@ const AudioDatasetPage: NextPage = () => {
       title: t.audioDataset.tools.upload.title,
       description: t.audioDataset.tools.upload.description,
       icon: Upload,
-      gradient: 'from-blue-400 to-blue-600',
+      gradient: 'from-primary to-secondary',
       status: 'available'
     },
     {
@@ -51,7 +51,7 @@ const AudioDatasetPage: NextPage = () => {
       title: t.audioDataset.tools.convert.title,
       description: t.audioDataset.tools.convert.description,
       icon: RefreshCw,
-      gradient: 'from-green-400 to-green-600',
+      gradient: 'from-primary to-secondary',
       status: 'available'
     },
     {
@@ -59,7 +59,7 @@ const AudioDatasetPage: NextPage = () => {
       title: t.audioDataset.tools.augment.title,
       description: t.audioDataset.tools.augment.description,
       icon: Music,
-      gradient: 'from-purple-400 to-purple-600',
+      gradient: 'from-primary to-secondary',
       status: 'available'
     },
     {
@@ -67,7 +67,7 @@ const AudioDatasetPage: NextPage = () => {
       title: t.audioDataset.tools.organize.title,
       description: t.audioDataset.tools.organize.description,
       icon: FolderOpen,
-      gradient: 'from-orange-400 to-orange-600',
+      gradient: 'from-primary to-secondary',
       status: 'available'
     }
   ]
@@ -161,23 +161,23 @@ const AudioDatasetPage: NextPage = () => {
             transition={{ delay: 0.6, duration: 0.8 }}
           >
             <div className="features-content">
-              <h2>Platform Özellikleri</h2>
+              <h2>{t.audioDataset.title}</h2>
               <div className="features-grid">
                 <div className="feature-item">
                   <Upload size={20} />
-                  <span>Toplu dosya yükleme</span>
+                  <span>{t.audioDataset.tools.upload.title}</span>
                 </div>
                 <div className="feature-item">
                   <RefreshCw size={20} />
-                  <span>Format dönüştürme</span>
+                  <span>{t.audioDataset.tools.convert.title}</span>
                 </div>
                 <div className="feature-item">
                   <Music size={20} />
-                  <span>Ses artırma teknikleri</span>
+                  <span>{t.audioDataset.tools.augment.title}</span>
                 </div>
                 <div className="feature-item">
                   <Download size={20} />
-                  <span>Dışa aktarma</span>
+                  <span>Export Dataset</span>
                 </div>
               </div>
             </div>
@@ -188,8 +188,8 @@ const AudioDatasetPage: NextPage = () => {
       <style jsx>{`
         .page-container {
           min-height: 100vh;
-          background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-          color: #ffffff;
+          background: linear-gradient(135deg, var(--color-background) 0%, var(--color-surface) 50%, var(--color-surface-elevated) 100%);
+          color: var(--color-text-primary);
           padding: 2rem 0;
         }
 
@@ -211,17 +211,18 @@ const AudioDatasetPage: NextPage = () => {
           background: rgba(56, 189, 248, 0.1);
           border: 1px solid rgba(56, 189, 248, 0.3);
           padding: 0.5rem 1rem;
-          border-radius: 2rem;
-          color: #38bdf8;
+          border-radius: var(--radius-3xl);
+          color: var(--color-primary);
           font-size: 0.875rem;
           font-weight: 500;
           margin-bottom: 1.5rem;
+          backdrop-filter: blur(10px);
         }
 
         .page-title {
           font-size: 3rem;
           font-weight: 800;
-          background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
+          background: linear-gradient(135deg, var(--color-text-primary) 0%, var(--color-primary) 100%);
           background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -231,7 +232,7 @@ const AudioDatasetPage: NextPage = () => {
 
         .page-subtitle {
           font-size: 1.25rem;
-          color: #94a3b8;
+          color: var(--color-text-secondary);
           max-width: 600px;
           margin: 0 auto 2rem;
           line-height: 1.6;
@@ -251,13 +252,13 @@ const AudioDatasetPage: NextPage = () => {
           border: 1px solid rgba(249, 115, 22, 0.3);
           color: #f97316;
           padding: 0.5rem 1rem;
-          border-radius: 2rem;
+          border-radius: var(--radius-3xl);
           font-size: 0.875rem;
           font-weight: 600;
         }
 
         .demo-text {
-          color: #64748b;
+          color: var(--color-text-muted);
           font-size: 0.875rem;
         }
 
@@ -269,17 +270,18 @@ const AudioDatasetPage: NextPage = () => {
         }
 
         .tool-card {
-          background: rgba(30, 41, 59, 0.8);
-          border: 1px solid rgba(56, 189, 248, 0.3);
-          border-radius: 1rem;
+          background: var(--glass-bg);
+          border: 1px solid var(--glass-border);
+          border-radius: var(--radius-xl);
           padding: 2rem;
           backdrop-filter: blur(10px);
-          transition: all 0.3s ease;
+          transition: all var(--animation-duration) var(--animation-easing);
         }
 
         .tool-card:hover {
-          border-color: #38bdf8;
-          box-shadow: 0 20px 40px rgba(56, 189, 248, 0.1);
+          border-color: var(--color-primary);
+          box-shadow: var(--shadow-glow);
+          transform: translateY(-2px);
         }
 
         .tool-header {
@@ -292,10 +294,11 @@ const AudioDatasetPage: NextPage = () => {
         .tool-icon {
           width: 3rem;
           height: 3rem;
-          border-radius: 0.75rem;
+          border-radius: var(--radius-lg);
           display: flex;
           align-items: center;
           justify-content: center;
+          background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
           color: white;
         }
 
@@ -307,11 +310,11 @@ const AudioDatasetPage: NextPage = () => {
           font-size: 1.25rem;
           font-weight: 700;
           margin-bottom: 0.5rem;
-          color: #ffffff;
+          color: var(--color-text-primary);
         }
 
         .tool-description {
-          color: #94a3b8;
+          color: var(--color-text-secondary);
           line-height: 1.6;
         }
 
@@ -322,13 +325,13 @@ const AudioDatasetPage: NextPage = () => {
         .tool-button {
           background: rgba(56, 189, 248, 0.1);
           border: 1px solid rgba(56, 189, 248, 0.3);
-          color: #38bdf8;
+          color: var(--color-primary);
           padding: 0.75rem 1.5rem;
-          border-radius: 0.5rem;
+          border-radius: var(--radius-md);
           font-weight: 500;
           cursor: not-allowed;
           opacity: 0.6;
-          transition: all 0.3s ease;
+          transition: all var(--animation-duration) var(--animation-easing);
         }
 
         .features-section {
@@ -340,7 +343,7 @@ const AudioDatasetPage: NextPage = () => {
           font-size: 2rem;
           font-weight: 700;
           margin-bottom: 2rem;
-          color: #ffffff;
+          color: var(--color-text-primary);
         }
 
         .features-grid {
@@ -355,28 +358,72 @@ const AudioDatasetPage: NextPage = () => {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          color: #94a3b8;
+          color: var(--color-text-secondary);
           padding: 1rem;
-          background: rgba(30, 41, 59, 0.5);
-          border-radius: 0.5rem;
+          background: var(--glass-bg);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-md);
+          transition: all var(--animation-duration) var(--animation-easing);
+        }
+
+        .feature-item:hover {
+          border-color: var(--color-primary);
+          transform: translateY(-2px);
         }
 
         .feature-item svg {
-          color: #38bdf8;
+          color: var(--color-primary);
         }
 
         @media (max-width: 768px) {
+          .content-wrapper {
+            padding: 0 1rem;
+          }
+
           .page-title {
-            font-size: 2rem;
+            font-size: 2.5rem;
+          }
+
+          .page-subtitle {
+            font-size: 1rem;
           }
 
           .tools-grid {
             grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+
+          .tool-card {
+            padding: 1.5rem;
           }
 
           .demo-notice {
             flex-direction: column;
             gap: 0.5rem;
+          }
+
+          .features-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .page-container {
+            padding: 1rem 0;
+          }
+
+          .page-title {
+            font-size: 2rem;
+          }
+
+          .tool-card {
+            padding: 1rem;
+          }
+
+          .tool-icon {
+            width: 2.5rem;
+            height: 2.5rem;
           }
         }
       `}</style>

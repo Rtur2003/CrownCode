@@ -33,7 +33,7 @@
     "items": {
       "aiMusic": {
         "title": "AI Müzik Tespit Motoru",
-        "description": "wav2vec2 tabanlı derin öğrenme modeli ile AI üretimi müzikleri insan bestelerinden %97.2 doğrulukla ayırt eden akademik araştırma uygulaması.",
+        "description": "wav2vec2 tabanlı gelişmiş derin öğrenme modeli ile AI üretimi müzikleri insan bestelerinden %97.2 doğrulukla ayırt eden profesyonel uygulama.",
         "status": "Araştırma Aktif",
         "stats": "97.2% Doğruluk",
         "features": ["wav2vec2 Mimarisi", "Transfer Learning", "Otomatik Pipeline"]
@@ -74,7 +74,7 @@
     }
   },
   "footer": {
-    "description": "AI müzik tespiti ve veri manipülasyonu için akademik araştırma platformu. Düzce Üniversitesi Bilgisayar Mühendisliği tez projesi olarak geliştirilen son teknoloji derin öğrenme modelleri ve kapsamlı araştırma araçları.",
+    "description": "AI müzik tespiti ve ses analizi için profesyonel platform. wav2vec2 tabanlı derin öğrenme teknolojisi ile gelişmiş müzik analizi ve streaming platform entegrasyonu sunan yenilikçi çözüm.",
     "community": {
       "title": "Topluluk",
       "stars": "GitHub Stars",
