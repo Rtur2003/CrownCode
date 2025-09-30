@@ -579,13 +579,15 @@
 {
   "training_framework": {
     "name": "PyTorch",
-    "version": "2.2.2",
-    "release_date": "2024-12-04",
+    "version": "2.4.0+ with CUDA 12.9",
+    "release_date": "2024-10+",
     "justification": [
+      "Latest stable with CUDA 12.9 support",
       "Research community standard",
       "Dynamic computation graphs",
-      "Python ecosystem",
-      "Model deployment options"
+      "Python 3.11+ optimizations",
+      "Model deployment options",
+      "Install: pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121"
     ]
   },
   "model_deployment": {

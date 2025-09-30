@@ -1,7 +1,13 @@
 {
   "name": "@crowncode/platform",
   "version": "1.0.0",
-  "description": "CrownCode - AI Powered Development Platform by Rthur",
+  "description": "CrownCode - AI-Powered Music Detection & Data Analysis Platform",
+  "author": "Hasan Arthur Altuntaş <contact@hasanarthuraltuntas.xyz>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rtur2003/CrownCode.git"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",

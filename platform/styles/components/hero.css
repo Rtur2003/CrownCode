@@ -405,8 +405,8 @@
   .btn-primary,
   .btn-secondary {
     width: 100%;
+    max-width: 320px;
     justify-content: center;
-    max-width: 280px;
   }
   
   .hero-card {

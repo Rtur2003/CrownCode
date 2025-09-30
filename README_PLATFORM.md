@@ -1,362 +1,281 @@
-# 🚀 DevForge Suite with Rthur
+# 🚀 CrownCode Platform
 
 <div align="center">
 
-![DevForge Suite Logo](https://img.shields.io/badge/DevForge-Suite-gold?style=for-the-badge&logo=rocket&logoColor=white)
+![CrownCode Logo](https://img.shields.io/badge/Crown-Code-gold?style=for-the-badge&logo=crown&logoColor=white)
 
-**Comprehensive Development Platform for Modern Web Applications**
+**AI-Powered Research Platform for Music Detection and Data Analysis**
 
-[![GitHub Stars](https://img.shields.io/github/stars/Rtur2003/DevForge-Suite-with-Rthur?style=social)](https://github.com/Rtur2003/DevForge-Suite-with-Rthur)
-[![Live Platform](https://img.shields.io/badge/Live-Platform-brightgreen?style=for-the-badge)](https://devforge-suite.com)
+[![GitHub Stars](https://img.shields.io/github/stars/Rtur2003/CrownCode?style=social)](https://github.com/Rtur2003/CrownCode)
+[![Live Platform](https://img.shields.io/badge/Live-Platform-brightgreen?style=for-the-badge)](https://hasanarthuraltuntas.xyz)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
+[![Branch](https://img.shields.io/badge/Branch-geliştirme-blue?style=for-the-badge)](https://github.com/Rtur2003/CrownCode/tree/geliştirme)
 
 </div>
 
 ## 🌟 Platform Genel Bakış
 
-DevForge Suite, modern web uygulamaları geliştirmek için tasarlanmış kapsamlı bir geliştirme platformudur. Her proje modüler yapıda tasarlanmış olup, mobil ve masaüstü cihazlarda mükemmel uyumluluk sağlar.
+CrownCode, yapay zeka destekli müzik tespiti ve veri manipülasyonu için geliştirilmiş bir araştırma platformudur. Modüler yapıda tasarlanmış olup, mobil ve masaüstü cihazlarda mükemmel uyumluluk sağlar.
+
+> **Düzce Üniversitesi Bilgisayar Mühendisliği Bölümü**
+> **Bitirme Projesi 2025-2026**
+> **Geliştirici:** Hasan Arthur Altuntaş
 
 ### ✨ Platform Özellikleri
 
-- 🎯 **Modüler Mimari**: Bağımsız projeler, ortak altyapı
-- 📱 **Responsive Tasarım**: Mobil-first yaklaşım
-- ⚡ **Yüksek Performans**: Optimize edilmiş kod yapısı
-- 🔄 **Gerçek Zamanlı**: Live demo ve interaktif özellikler
-- 🛡️ **Güvenli**: Enterprise-grade güvenlik standartları
-- 🌐 **Çok Dilli**: Türkçe ve İngilizce destek
+- 🎯 **Modüler Mimari**: Bağımsız araştırma modülleri, ortak platform altyapısı
+- 📱 **Responsive Tasarım**: Mobil-first yaklaşım ile tam uyumluluk
+- ⚡ **Yüksek Performans**: Optimize edilmiş kod yapısı ve caching
+- 🔄 **Gerçek Zamanlı**: Live işleme ve interaktif özellikler
+- 🛡️ **Güvenli**: Modern güvenlik standartları
+- 🌐 **Çok Dilli**: Türkçe ve İngilizce tam destek
 
-## 🏗️ Aktif Projeler
+---
 
-### 1. 🎵 AI Music Detection Platform
-**Yapay Zeka Müzik Tespit Platformu**
+## 🏗️ Aktif Araştırma Modülleri
 
-[![Project Status](https://img.shields.io/badge/Status-Active-brightgreen)](./ai-music-detection/)
-[![Accuracy](https://img.shields.io/badge/Accuracy-97.2%25-blue)](./ai-music-detection/)
-[![Demo](https://img.shields.io/badge/Demo-Live-orange)](https://devforge-suite.com/ai-music-detection)
+### 1. 🎵 AI Music Detection
+**Yapay Zeka Destekli Müzik Tespit Sistemi**
+
+[![Status](https://img.shields.io/badge/Status-In_Development-yellow)](https://github.com/Rtur2003/CrownCode)
+[![Target](https://img.shields.io/badge/Target_Accuracy-95%25+-blue)](https://github.com/Rtur2003/CrownCode)
 
 - **Amaç**: AI ile üretilen müziği insan yapımı müzikten ayırt etme
-- **Teknoloji**: wav2vec2, TensorFlow.js, Next.js 14
-- **Özellikler**:
-  - Real-time audio analysis
-  - Zero manual labeling
-  - 97.2% detection accuracy
-  - Web-based interface
+- **Model**: wav2vec2 tabanlı deep learning
+- **Teknoloji Stack**: PyTorch, Next.js 14, TensorFlow.js
+- **Hedef Özellikler**:
+  - ✅ Web-based dosya yükleme
+  - 🔄 YouTube/Spotify/SoundCloud link desteği (geliştiriliyor)
+  - 🔄 Real-time audio analysis (planlanıyor)
+  - 🔄 Batch processing (planlanıyor)
 
-**📁 Proje Dizini**: [`/ai-music-detection/`](./ai-music-detection/)
-
----
-
-### 2. 📊 Data Manipulation Suite *(Gelecek Proje)*
-**Veri İşleme ve Çoğaltma Platformu**
-
-[![Project Status](https://img.shields.io/badge/Status-Planned-yellow)](./data-manipulation/)
-[![Release](https://img.shields.io/badge/Release-Q2%202025-lightblue)](./data-manipulation/)
-
-- **Amaç**: Araştırmacılar için veri işleme araçları
-- **Teknoloji**: React, Node.js, Python
-- **Özellikler**:
-  - Batch data processing
-  - Multiple format support
-  - Statistical analysis
-  - Data visualization
-
-**📁 Proje Dizini**: [`/data-manipulation/`](./data-manipulation/) *(Yakında)*
+**📁 Sayfa**: [`/ai-music-detection`](https://hasanarthuraltuntas.xyz/ai-music-detection)
 
 ---
 
-### 3. 🧠 Machine Learning Toolkit *(Gelecek Proje)*
-**Makine Öğrenmesi Araç Seti**
+### 2. 📊 Data Augmentation Toolkit
+**Veri Arttırma ve İşleme Araçları**
 
-[![Project Status](https://img.shields.io/badge/Status-Concept-lightgrey)](./ml-toolkit/)
-[![Release](https://img.shields.io/badge/Release-Q3%202025-lightblue)](./ml-toolkit/)
+[![Status](https://img.shields.io/badge/Status-UI_Ready-green)](https://github.com/Rtur2003/CrownCode)
+[![Backend](https://img.shields.io/badge/Backend-Planned-yellow)](https://github.com/Rtur2003/CrownCode)
 
-- **Amaç**: No-code ML model training platform
-- **Teknoloji**: Python, FastAPI, React
-- **Özellikler**:
-  - Visual model builder
-  - Automated feature engineering
-  - Model deployment pipeline
-  - Performance monitoring
+- **Amaç**: Araştırmacılar için veri seti oluşturma ve arttırma
+- **Teknoloji**: React, Node.js, Python, librosa
+- **Hedef Özellikler**:
+  - ✅ Dosya yükleme UI
+  - ✅ Veri tipi seçimi (ses/görüntü/metin)
+  - 🔄 Audio augmentation (pitch, tempo, noise)
+  - 🔄 Batch processing pipeline (planlanıyor)
 
-**📁 Proje Dizini**: [`/ml-toolkit/`](./ml-toolkit/) *(Planlama Aşamasında)*
+**📁 Sayfa**: [`/data-manipulation`](https://hasanarthuraltuntas.xyz/data-manipulation)
+
+---
 
 ## 🎨 Tasarım Sistemi
 
-### 📱 Mobil Öncelikli Yaklaşım
+### 📱 Responsive Breakpoints
 
 ```css
-/* Responsive Breakpoints */
-Mobile: 320px - 768px
-Tablet: 768px - 1024px
-Desktop: 1024px - 1440px
-Large: 1440px+
+Mobile:   320px - 767px   (Primary focus)
+Tablet:   768px - 1023px
+Desktop:  1024px - 1439px
+Large:    1440px+
 ```
 
 ### 🎨 Renk Paleti
 
 ```css
 :root {
-  /* Primary Colors */
-  --primary-gold: #FFD700;
-  --primary-blue: #1E40AF;
-  --primary-dark: #1F2937;
+  /* Brand Colors */
+  --primary-gold: #FFD700;      /* CrownCode altın */
+  --primary-blue: #1E40AF;      /* Vurgu rengi */
+  --primary-dark: #1F2937;      /* Arka plan */
 
-  /* Secondary Colors */
-  --accent-green: #10B981;
-  --accent-orange: #F59E0B;
-  --accent-purple: #8B5CF6;
-
-  /* Neutral Colors */
-  --gray-50: #F9FAFB;
-  --gray-900: #111827;
+  /* Status Colors */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
 }
 ```
 
-### 🖼️ Tasarım İlkeleri
+### 🖼️ Tasarım Prensipleri
 
-- **Clarity**: Her öğe net ve anlaşılır
-- **Consistency**: Tüm projeler arasında tutarlı tasarım
-- **Accessibility**: WCAG 2.1 AA standartlarına uygunluk
-- **Performance**: Hızlı yükleme ve smooth animasyonlar
+- **Clarity**: Minimalist ve net arayüz
+- **Accessibility**: WCAG 2.1 AA uyumlu
+- **Performance**: <2s sayfa yükleme süresi
+- **Mobile-First**: Öncelik mobil kullanıcı deneyimi
 
-## 🚀 Platform Mimarisi
+---
 
-### 🏗️ Genel Yapı
+## 🚀 Proje Yapısı
 
 ```
-DevForge-Suite-with-Rthur/
-├── 🏠 platform/                 # Ana platform kodu
-│   ├── frontend/               # React/Next.js UI
-│   ├── backend/                # Node.js API
-│   └── shared/                 # Ortak komponenlar
-├── 🎵 ai-music-detection/      # AI Müzik Tespit Projesi
-├── 📊 data-manipulation/       # Veri İşleme Projesi (Gelecek)
-├── 🧠 ml-toolkit/              # ML Araç Seti (Gelecek)
-├── 📚 docs/                    # Platform dokümantasyonu
-├── 🎨 assets/                  # Ortak medya dosyaları
-└── 🔧 scripts/                 # Deployment ve utility scriptleri
+CrownCode/
+├── platform/                    # Ana Next.js platformu
+│   ├── pages/                   # Route sayfaları
+│   │   ├── index.tsx           # Ana sayfa
+│   │   ├── ai-music-detection/ # AI müzik modülü
+│   │   └── data-manipulation/  # Veri işleme modülü
+│   ├── components/             # React komponentleri
+│   │   ├── Layout/            # Layout bileşenleri
+│   │   ├── Home/              # Ana sayfa bileşenleri
+│   │   ├── Navigation/        # Navigasyon
+│   │   └── MLToolkit/         # ML araç bileşenleri
+│   ├── styles/                # CSS dosyaları
+│   │   ├── base/              # Temel stiller
+│   │   ├── components/        # Komponent stilleri
+│   │   └── globals.css        # Global CSS
+│   ├── context/               # React Context
+│   ├── hooks/                 # Custom hooks
+│   └── utils/                 # Yardımcı fonksiyonlar
+├── docs/                      # Dokümantasyon
+├── assets/                    # Medya dosyaları
+└── .github/                   # GitHub Actions & Templates
 ```
 
-### 🔗 Proje Bağlantı Sistemi
-
-Her alt proje, ana platform üzerinden erişilebilir:
-
-- **Ana Platform**: `https://devforge-suite.com`
-- **AI Music Detection**: `https://devforge-suite.com/ai-music-detection`
-- **Data Manipulation**: `https://devforge-suite.com/data-manipulation`
-- **ML Toolkit**: `https://devforge-suite.com/ml-toolkit`
+---
 
 ## 💻 Geliştirme Ortamı
 
 ### 📋 Gereksinimler
 
-- **Node.js**: 20.18.1 LTS veya üstü
-- **npm**: 10.9.2 veya üstü
+- **Node.js**: 20.18.1+ LTS
+- **npm**: 10.9.2+
 - **Git**: 2.40+
-- **Python**: 3.11+ (ML projeleri için)
+- **Python**: 3.11+ (model eğitimi için)
 
 ### 🛠️ Kurulum
 
 ```bash
-# Repository'yi klonlayın
-git clone https://github.com/Rtur2003/DevForge-Suite-with-Rthur.git
-cd DevForge-Suite-with-Rthur
+# Repository'yi klonla
+git clone https://github.com/Rtur2003/CrownCode.git
+cd CrownCode
 
-# Ana platform bağımlılıklarını yükleyin
+# Geliştirme branch'ine geç
+git checkout geliştirme
+
+# Platform bağımlılıklarını yükle
 cd platform
 npm install
 
-# Development server'ı başlatın
+# Development server'ı başlat
 npm run dev
-
-# Tüm alt projeleri başlatın (paralel)
-npm run dev:all
 ```
 
-### 🔧 Geliştirme Komutları
+Platform `http://localhost:3000` adresinde çalışacaktır.
+
+### 🔧 Mevcut Komutlar
 
 ```bash
-# Tüm projeleri test et
-npm run test:all
-
-# Build all projects
-npm run build:all
-
-# Deploy to staging
-npm run deploy:staging
-
-# Deploy to production
-npm run deploy:production
+# Platform dizininde
+npm run dev          # Development server
+npm run build        # Production build
+npm run start        # Production server
+npm run lint         # ESLint kontrolü
+npm run type-check   # TypeScript tip kontrolü
 ```
+
+---
 
 ## 📱 Mobil Uyumluluk
 
-### 📱 Mobil Özellikler
+### ✅ Mobil Özellikleri
 
-- **Progressive Web App (PWA)** desteği
-- **Touch-friendly** interface
-- **Offline** mode desteği
-- **Native app-like** navigation
-- **Responsive** grid systems
+- **Touch-Optimized**: 44px minimum dokunma alanı
+- **Responsive Grid**: Tüm ekran boyutlarında uyumlu
+- **Mobile Navigation**: Hamburger menü ve bottom nav
+- **Fast Loading**: Optimize edilmiş asset yükleme
+- **PWA Ready**: Progressive Web App hazır altyapı
 
 ### ⚠️ Mobil Kısıtlamalar
 
-Bazı özellikler mobilde sınırlı olabilir:
+Bazı özellikler mobilde sınırlı çalışabilir:
 
-- **File Upload**: Büyük dosyalar için optimize edilmemiş
-- **Advanced Processing**: CPU-intensive işlemler
-- **Real-time Features**: Ağ bağlantısına bağlı
-- **Complex Visualizations**: Küçük ekranlarda sınırlı
+- **Büyük Dosya İşleme**: 50MB+ dosyalar için masaüstü önerilir
+- **CPU-Yoğun İşlemler**: Model inference mobilde yavaş olabilir
+- **Batch Processing**: Çoklu dosya işleme masaüstüde daha verimli
 
-> **Not**: Mobilde görsel uyumluluk %100 sağlanır, fonksiyonel kısıtlamalar belirtilir.
+---
 
-## 🔗 Proje Navigasyonu
+## 🌍 Canlı Platform
 
-### 🧭 Ana Navigasyon
+### 🔗 Erişim
 
-```typescript
-interface ProjectNavigation {
-  projects: [
-    {
-      id: 'ai-music-detection',
-      title: 'AI Music Detection',
-      description: 'Yapay zeka müzik tespit platformu',
-      status: 'active',
-      url: '/ai-music-detection',
-      technologies: ['Next.js', 'TensorFlow.js', 'wav2vec2']
-    },
-    {
-      id: 'data-manipulation',
-      title: 'Data Manipulation Suite',
-      description: 'Veri işleme ve analiz araçları',
-      status: 'planned',
-      url: '/data-manipulation',
-      technologies: ['React', 'Python', 'Pandas']
-    }
-  ]
-}
-```
+- **Ana Platform**: [hasanarthuraltuntas.xyz](https://hasanarthuraltuntas.xyz)
+- **GitHub Repo**: [github.com/Rtur2003/CrownCode](https://github.com/Rtur2003/CrownCode)
+- **Geliştirme Branch**: [geliştirme](https://github.com/Rtur2003/CrownCode/tree/geliştirme)
 
-### 📄 Alt Sayfa Yapısı
+### 📊 Branch Yapısı
 
-Her proje için standart sayfa yapısı:
+- **`master`**: Production-ready kararlı sürüm
+- **`geliştirme`**: Aktif geliştirme branch'i
+- **`arayüz`**: UI/UX odaklı geliştirmeler
 
-- **`/`** - Proje ana sayfası
-- **`/demo`** - Canlı demo
-- **`/docs`** - Dokümantasyon
-- **`/api`** - API dokümantasyonu
-- **`/about`** - Proje hakkında
+---
 
-## 📊 Platform İstatistikleri
+## 🔮 Geliştirme Yol Haritası
 
-### 📈 Performans Metrikleri
+### 📅 Q1 2025 (Şubat - Nisan)
 
-- **Page Load Time**: < 2 seconds
-- **First Contentful Paint**: < 1.5 seconds
-- **Largest Contentful Paint**: < 2.5 seconds
-- **Cumulative Layout Shift**: < 0.1
-- **First Input Delay**: < 100ms
+- [x] Platform altyapısı kurulumu
+- [x] Responsive UI tasarımı
+- [x] Çoklu dil desteği
+- [ ] AI model training pipeline
+- [ ] Veri seti toplama otomasyonu
 
-### 🎯 Kullanım İstatistikleri
+### 📅 Q2 2025 (Mayıs - Temmuz)
 
-```yaml
-Platform Metrics:
-  Monthly Active Users: 10,000+
-  Project Success Rate: 98.5%
-  Average Session Duration: 8 minutes
-  Mobile Usage: 45%
-  Desktop Usage: 55%
-```
+- [ ] YouTube/Spotify/SoundCloud entegrasyonu
+- [ ] Audio augmentation backend
+- [ ] Real-time inference API
+- [ ] Model deployment
 
-## 🔮 Gelecek Planları
+### 📅 Q3 2025 (Ağustos - Ekim)
 
-### 📅 Roadmap 2025
-
-#### Q1 2025
-- [x] AI Music Detection Platform (Tamamlandı)
-- [ ] Platform UI/UX optimizasyonu
-- [ ] Mobile app development
-
-#### Q2 2025
-- [ ] Data Manipulation Suite
-- [ ] Advanced analytics dashboard
-- [ ] API gateway implementation
-
-#### Q3 2025
-- [ ] Machine Learning Toolkit
-- [ ] Real-time collaboration features
-- [ ] Multi-tenant architecture
-
-#### Q4 2025
-- [ ] Enterprise features
-- [ ] Advanced security modules
+- [ ] Production deployment
 - [ ] Performance optimization
+- [ ] Security hardening
+- [ ] Tez teslimi
 
-### 🚀 Yeni Özellikler
-
-- **Real-time Collaboration**: Takım çalışması desteği
-- **Cloud Integration**: AWS/Azure entegrasyonu
-- **Advanced Analytics**: Detaylı kullanım analitikleri
-- **API Marketplace**: Third-party integrations
+---
 
 ## 🤝 Katkıda Bulunma
 
-### 👥 Topluluk
+Bu proje Düzce Üniversitesi bitirme projesi kapsamında geliştirilmektedir. Katkılar ve geri bildirimler için:
 
-DevForge Suite açık kaynak bir proje olup, katkıları memnuniyetle karşılar:
+- **Issues**: [GitHub Issues](https://github.com/Rtur2003/CrownCode/issues)
+- **Pull Requests**: `geliştirme` branch'ine PR açabilirsiniz
+- **Discussions**: Sorularınız için GitHub Discussions
 
-- **Bug Reports**: Issues sekmesinde bildirebilirsiniz
-- **Feature Requests**: Yeni özellik önerilerinizi paylaşın
-- **Code Contributions**: Pull request gönderin
-- **Documentation**: Dokümantasyon iyileştirmeleri
-
-### 📋 Katkı Rehberi
-
-Detaylı katkı rehberi için: [`CONTRIBUTING.md`](CONTRIBUTING.md)
+---
 
 ## 📞 İletişim
 
-### 👨‍💻 Proje Sahibi
+### 👨‍💻 Geliştirici
 
-**Hasan Arthur Altuntaş (Rthur)**
+**Hasan Arthur Altuntaş**
 - **GitHub**: [@Rtur2003](https://github.com/Rtur2003)
 - **Email**: contact@hasanarthuraltuntas.xyz
-- **Platform**: [hasanarthuraltuntas.xyz](https://hasanarthuraltuntas.xyz)
-
-### 🔗 Sosyal Medya
-
+- **Website**: [hasanarthuraltuntas.xyz](https://hasanarthuraltuntas.xyz)
 - **LinkedIn**: [Hasan Arthur Altuntaş](https://linkedin.com/in/hasanarthuraltuntas)
-- **Twitter**: [@rthur_dev](https://twitter.com/rthur_dev)
+
+---
 
 ## 📜 Lisans
 
 Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [`LICENSE`](LICENSE) dosyasına bakınız.
 
-## 🙏 Teşekkürler
-
-### 🏆 Katkıda Bulunanlar
-
-- **Community Contributors**: Açık kaynak topluluğuna teşekkürler
-- **Beta Testers**: Erken kullanıcılar ve geri bildirim sağlayanlar
-- **Technology Partners**: Kullandığımız açık kaynak teknolojiler
-
-### 🔧 Kullanılan Teknolojiler
-
-- **Frontend**: Next.js, React, Tailwind CSS
-- **Backend**: Node.js, Express, PostgreSQL
-- **AI/ML**: TensorFlow.js, Python, wav2vec2
-- **Deployment**: Vercel, Netlify, Docker
-- **Monitoring**: Sentry, Vercel Analytics
-
 ---
 
 <div align="center">
 
-**🚀 DevForge Suite ile Geleceği İnşa Ediyoruz**
+**🏆 Düzce Üniversitesi Bilgisayar Mühendisliği**
+**Bitirme Projesi 2025-2026**
 
-*Modern web development için tek platform*
+[![Düzce University](https://img.shields.io/badge/🏫_Düzce_University-Computer_Engineering-blue?style=for-the-badge)](https://duzce.edu.tr)
+[![Academic Year](https://img.shields.io/badge/📅_Academic_Year-2025--2026-green?style=for-the-badge)](#)
+[![Status](https://img.shields.io/badge/🚀_Status-In_Development-yellow?style=for-the-badge)](#)
 
-[![Star this repo](https://img.shields.io/github/stars/Rtur2003/DevForge-Suite-with-Rthur?style=social)](https://github.com/Rtur2003/DevForge-Suite-with-Rthur)
-[![Follow on GitHub](https://img.shields.io/github/followers/Rtur2003?style=social)](https://github.com/Rtur2003)
+**Made with ❤️ by Hasan Arthur Altuntaş**
 
 </div>
