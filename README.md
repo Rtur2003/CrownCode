@@ -343,7 +343,7 @@ This project is released under the MIT License - see the [LICENSE](./LICENSE) fi
 
 ### Developer Contact
 - **Name**: Hasan Arthur Altuntaş
-- **Email**: contact@hasanarthuraltuntas.xyz
+- **Email**: hasannarthurrr@gmail.com
 - **University**: Düzce University - Computer Engineering
 - **LinkedIn**: [linkedin.com/in/hasan-arthur-altuntas](https://linkedin.com/in/hasan-arthur-altuntas)
 - **GitHub**: [@Rtur2003](https://github.com/Rtur2003)
