@@ -9,14 +9,14 @@
       "main": "CrownCode",
       "accent": "Platform"
     },
-    "subtitle": "Advanced AI platform for detecting AI-generated music. Professional music analysis using wav2vec2-based deep learning model with 97.2% accuracy rate.",
+    "subtitle": "Advanced AI research platform for detecting AI-generated music. Professional music analysis using wav2vec2-based deep learning model. In development.",
     "cta": {
       "explore": "Try AI Music Detection",
       "github": "Source Code"
     },
     "features": {
       "modern": "Advanced AI Technology",
-      "accuracy": "97.2% Accuracy Rate"
+      "accuracy": "Target 95%+ Accuracy"
     },
     "scroll": "Discover More"
   },
@@ -33,9 +33,9 @@
     "items": {
       "aiMusic": {
         "title": "AI Music Detection Engine",
-        "description": "Advanced wav2vec2-based deep learning model that distinguishes AI-generated music from human compositions with 97.2% accuracy. Professional implementation.",
-        "status": "Research Active",
-        "stats": "97.2% Accuracy",
+        "description": "Research platform aiming to distinguish AI-generated music from human compositions using wav2vec2-based deep learning model. Currently in development.",
+        "status": "In Development",
+        "stats": "Target 95%+ Accuracy",
         "features": ["wav2vec2 Architecture", "Transfer Learning", "Automated Pipeline"]
       },
       "mlToolkit": {

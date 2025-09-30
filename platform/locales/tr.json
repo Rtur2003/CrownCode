@@ -9,14 +9,14 @@
       "main": "CrownCode",
       "accent": "Platformu"
     },
-    "subtitle": "AI ile üretilmiş müzikleri tespit eden gelişmiş yapay zeka platformu. wav2vec2 tabanlı derin öğrenme modeli kullanarak %97.2 doğruluk oranı ile profesyonel müzik analizi.",
+    "subtitle": "AI ile üretilmiş müzikleri tespit eden gelişmiş yapay zeka araştırma platformu. wav2vec2 tabanlı derin öğrenme modeli kullanarak profesyonel müzik analizi hedefleniyor.",
     "cta": {
       "explore": "AI Müzik Tespitini Dene",
       "github": "Kaynak Kodu"
     },
     "features": {
       "modern": "Gelişmiş AI Teknolojisi",
-      "accuracy": "%97.2 Doğruluk Oranı"
+      "accuracy": "Hedef %95+ Doğruluk"
     },
     "scroll": "Daha Fazlasını Keşfet"
   },
@@ -33,10 +33,10 @@
     "items": {
       "aiMusic": {
         "title": "AI Müzik Tespit Motoru",
-        "description": "wav2vec2 tabanlı gelişmiş derin öğrenme modeli ile AI üretimi müzikleri insan bestelerinden %97.2 doğrulukla ayırt eden profesyonel uygulama.",
-        "status": "Araştırma Aktif",
-        "stats": "97.2% Doğruluk",
-        "features": ["wav2vec2 Mimarisi", "Transfer Learning", "Otomatik Pipeline"]
+        "description": "wav2vec2 tabanlı derin öğrenme modeli ile AI üretimi müzikleri insan bestelerinden ayırt etmeyi hedefleyen araştırma platformu. Geliştirme aşamasında.",
+        "status": "Geliştiriliyor",
+        "stats": "Hedef %95+ Doğruluk",
+        "features": ["wav2vec2 Mimarisi", "Derin Öğrenme", "Ses Analizi"]
       },
       "mlToolkit": {
         "title": "ML Araştırma Araç Seti",

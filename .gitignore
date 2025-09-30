@@ -6,12 +6,31 @@ yarn-error.log*
 yarn.lock
 pnpm-lock.yaml
 
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
 # Build outputs
 .next/
 out/
 build/
 dist/
 coverage/
+
+# AI/ML Models
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+models/checkpoints/
+models/weights/
 
 # Environment variables
 .env

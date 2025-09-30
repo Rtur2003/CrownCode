@@ -7,8 +7,9 @@
 > **Developer:** Hasan Arthur Altuntaş
 
 [![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Platform-blue?style=for-the-badge)](https://hasanarthuraltuntas.xyz)
-[![Thesis Report](https://img.shields.io/badge/📄_Thesis-Academic_Report-green?style=for-the-badge)](./ACADEMIC_PROJECT_REPORT_EN.md)
-[![Build Status](https://img.shields.io/badge/🔧_Build-Passing-brightgreen?style=for-the-badge)](#)
+[![GitHub Repo](https://img.shields.io/badge/📦_GitHub-CrownCode-black?style=for-the-badge&logo=github)](https://github.com/Rtur2003/CrownCode)
+[![Thesis Report](https://img.shields.io/badge/📄_Thesis-Academic_Report-green?style=for-the-badge)](./docs/academic/ACADEMIC_PROJECT_REPORT_EN.md)
+[![Build Status](https://img.shields.io/badge/🔧_Build-In_Development-yellow?style=for-the-badge)](#)
 
 ---
 
@@ -139,26 +140,37 @@ CrownCode is an advanced web-based platform that combines **artificial intellige
    cd CrownCode
    ```
 
-2. **Install platform dependencies**
+2. **Switch to development branch**
+   ```bash
+   git checkout geliştirme
+   ```
+
+3. **Install platform dependencies**
    ```bash
    cd platform
    npm install
    ```
 
-3. **Setup environment variables**
+4. **Setup environment variables**
    ```bash
    cp .env.example .env.local
    # Configure your environment variables
    ```
 
-4. **Run development server**
+5. **Run development server**
    ```bash
    npm run dev
    ```
 
-5. **Access the platform**
+6. **Access the platform**
    - Local: `http://localhost:3000`
    - Production: `https://hasanarthuraltuntas.xyz`
+
+### Available Branches
+
+- **`master`**: Production-ready stable release
+- **`geliştirme`**: Active development branch
+- **`arayüz`**: UI/UX focused development
 
 ### AI Model Setup
 
@@ -230,16 +242,16 @@ class MusicDetectionModel(nn.Module):
 ## 🎓 Academic Documentation
 
 ### Thesis Reports
-- 📄 [English Academic Report](./ACADEMIC_PROJECT_REPORT_EN.md) - Comprehensive technical documentation
-- 📄 [Turkish Academic Report](./AKADEMIK_PROJE_RAPORU_TR.md) - Detailed Turkish documentation
-- 📊 [AI Model Strategy](./AI_MODEL_STRATEGY.md) - Model development methodology
-- 🏗️ [Architecture Documentation](./MODULAR_ARCHITECTURE.md) - System design principles
+- 📄 [English Academic Report](./docs/academic/ACADEMIC_PROJECT_REPORT_EN.md) - Comprehensive technical documentation
+- 📄 [Turkish Academic Report](./docs/academic/AKADEMIK_PROJE_RAPORU_TR.md) - Detailed Turkish documentation
+- 📊 [AI Model Strategy](./docs/technical/AI_MODEL_STRATEGY.md) - Model development methodology
+- 🏗️ [Architecture Documentation](./docs/technical/MODULAR_ARCHITECTURE.md) - System design principles
 
 ### Project Documentation
-- 📋 [Deployment Configuration](./DEPLOYMENT_CONFIG.md) - Infrastructure setup
-- 🚀 [Development Roadmap](./INTENSIVE_3_MONTH_PLAN.md) - Project timeline
-- 📱 [Mobile Design](./MOBILE_RESPONSIVE_DESIGN.md) - Responsive implementation
-- 🤖 [Automation Strategy](./COMPLETE_AUTOMATION_STRATEGY.md) - DevOps processes
+- 📋 [Deployment Configuration](./docs/technical/DEPLOYMENT_CONFIG.md) - Infrastructure setup
+- 🚀 [Development Roadmap](./docs/guides/INTENSIVE_3_MONTH_PLAN.md) - Project timeline
+- 📱 [Mobile Design](./docs/technical/MOBILE_RESPONSIVE_DESIGN.md) - Responsive implementation
+- 🤖 [Automation Strategy](./docs/technical/COMPLETE_AUTOMATION_STRATEGY.md) - DevOps processes
 
 ---
 
@@ -353,6 +365,7 @@ This project is released under the MIT License - see the [LICENSE](./LICENSE) fi
 - 📚 **Documentation**: [Academic Reports](./ACADEMIC_PROJECT_REPORT_EN.md)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/Rtur2003/CrownCode/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/Rtur2003/CrownCode/discussions)
+- 🌿 **Development Branch**: [geliştirme](https://github.com/Rtur2003/CrownCode/tree/geliştirme)
 
 ---
 
