@@ -44,6 +44,8 @@
   letter-spacing: -0.02em;
   color: var(--color-text-primary);
   margin-bottom: 1.5rem;
+  display: block;
+  text-align: center;
 }
 
 .products-title-accent {
@@ -51,6 +53,7 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  display: inline;
 }
 
 .products-subtitle {

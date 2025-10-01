@@ -160,7 +160,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
           <motion.div className="hero-actions" variants={itemVariants}>
             <Link
               href="/ai-music-detection"
-              className="btn-primary"
+              className="hero-btn-primary"
               aria-label="Try AI music detection system"
             >
               {t.hero.cta.explore}
@@ -175,7 +175,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
               href="https://github.com/hasanarthuraltuntas/Data-Manipilasyonu"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary"
+              className="hero-btn-secondary"
               aria-label="View source code on GitHub (opens in new tab)"
             >
               {t.hero.cta.github}
