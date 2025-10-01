@@ -125,6 +125,80 @@
       "by": "by"
     }
   },
+  "aiDetection": {
+    "meta": {
+      "title": "AI Müzik Tespiti - CrownCode Platform (Demo Arayüzü)",
+      "description": "AI müzik tespit sistemi için profesyonel ön yüz arayüzü. Planlanan wav2vec2 tabanlı derin öğrenme uygulamasının demonstrasyonu. Backend AI entegrasyonu geliştiriliyor.",
+      "keywords": "AI müzik tespiti, wav2vec2, derin öğrenme, müzik analizi, yapay zeka, ses analizi, demo arayüzü"
+    },
+    "header": {
+      "badge": "AI Müzik Tespiti",
+      "title": "AI Üretimi Müzikleri Tespit Et",
+      "subtitle": "AI destekli müzik tespit sistemi için profesyonel ön yüz arayüz gösterimi. Bu arayüz, planlanan kullanıcı deneyimi ve sistem mimarisini sergiliyor."
+    },
+    "warning": {
+      "title": "Demo Arayüzü - Eğitim Amaçlı",
+      "currentStatus": "Mevcut Durum:",
+      "currentStatusText": "Bu profesyonel bir UI/UX gösterimidir.",
+      "analysisResults": "Analiz Sonuçları:",
+      "analysisResultsText": "Sadece arayüz testi için üretilmiştir - gerçek AI tahminleri değil.",
+      "plannedImplementation": "Planlanan Uygulama:",
+      "plannedImplementationText": "PyTorch + wav2vec2 modeli ile backend AI entegrasyonu (2025 Q2)."
+    },
+    "upload": {
+      "title": "Ses Dosyası Yükle",
+      "dropHere": "Ses dosyanızı buraya bırakın",
+      "orClick": "veya tıklayarak seçin",
+      "supported": "Desteklenen: MP3, WAV, FLAC, M4A (maks 100MB)",
+      "analyzeButton": "Dosyayı Analiz Et",
+      "analyzing": "Analiz Ediliyor..."
+    },
+    "url": {
+      "title": "URL'den Analiz Et",
+      "placeholder": "Spotify, YouTube, SoundCloud veya Apple Music URL'si yapıştırın...",
+      "supportedPlatforms": "Desteklenen platformlar:",
+      "analyzeButton": "URL'yi Analiz Et",
+      "analyzing": "Analiz Ediliyor..."
+    },
+    "processing": {
+      "title": "Demo Analizi Devam Ediyor...",
+      "subtitle": "Arayüz gösterimi için AI tespit iş akışı simüle ediliyor.",
+      "steps": {
+        "simulation": "UI simülasyonu",
+        "generation": "Rastgele sonuç üretimi",
+        "testing": "Arayüz testi",
+        "completion": "Demo tamamlanıyor"
+      }
+    },
+    "error": {
+      "title": "Analiz Hatası",
+      "tryAgain": "Tekrar Dene"
+    },
+    "result": {
+      "aiDetected": "AI Üretimi Müzik Tespit Edildi",
+      "humanDetected": "İnsan Bestesi Müzik",
+      "confidence": "Güven",
+      "model": "Model",
+      "processingTime": "İşlem Süresi",
+      "sampleRate": "Örnekleme Hızı",
+      "duration": "Süre",
+      "analysisDetails": "Analiz Detayları:",
+      "exportReport": "Rapor Dışa Aktar",
+      "analyzeAnother": "Başka Analiz Et"
+    },
+    "errors": {
+      "enterUrl": "Lütfen geçerli bir müzik URL'si girin.",
+      "invalidUrl": "Geçersiz URL formatı. Lütfen http:// veya https:// ile başlayan tam bir URL girin",
+      "unsupportedFormat": "Desteklenmeyen dosya formatı: {format}. İzin verilen formatlar: MP3, WAV, FLAC, M4A",
+      "fileTooSmall": "Dosya çok küçük. Minimum dosya boyutu 1KB.",
+      "fileTooLarge": "Dosya boyutu 100MB limitini aşıyor. Lütfen daha küçük bir dosya kullanın.",
+      "invalidFileName": "Geçersiz dosya adı. Dosya adı yasak karakterler içeriyor.",
+      "suspiciousFile": "Dosya adı şüpheli desenler içeriyor. Lütfen ses dosyanızı yeniden adlandırın.",
+      "invalidHeader": "Dosya başlık analizine göre geçerli bir ses dosyası gibi görünmüyor.",
+      "headerReadError": "Dosya başlığı okunurken hata oluştu",
+      "validationFailed": "Dosya doğrulaması başarısız. Lütfen farklı bir dosya deneyin."
+    }
+  },
   "mlToolkit": {
     "badge": "ML Toolkit",
     "title": "Veri Seti Çoğaltma",
