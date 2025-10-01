@@ -1,19 +1,26 @@
 // =========================================================================
-// AI MUSIC DETECTION PAGE - MAIN PLATFORM FEATURE
+// AI MUSIC DETECTION PAGE - FRONTEND INTERFACE DEMO
 // =========================================================================
-// Advanced AI-powered music detection system using wav2vec2-based deep
-// learning models. Detects AI-generated music with 97.2% accuracy.
-// Supports file upload, URL analysis, and streaming platform integration.
+// Professional frontend interface for AI-powered music detection system.
+// This is a DEMONSTRATION of the planned system architecture and UI/UX design.
 //
-// Features:
-// - File upload (MP3, WAV, FLAC, M4A)
-// - URL analysis (Spotify, YouTube, SoundCloud, Apple Music)
-// - Real-time waveform visualization
-// - Confidence scoring and detailed analysis
-// - Export analysis reports
+// CURRENT STATUS: Frontend UI Implementation (Q1 2025)
+// PLANNED: Backend AI integration with wav2vec2 model (Q2 2025)
+//
+// Features Implemented:
+// - File upload interface with validation
+// - URL parsing for streaming platforms
+// - Demo analysis workflow visualization
+// - Professional UI/UX design
+//
+// Features Planned:
+// - Real AI model inference (PyTorch backend)
+// - Actual audio feature extraction
+// - wav2vec2-based classification
+// - Production-ready accuracy metrics
 //
 // @author Hasan Arthur Altuntaş
-// @version 1.0.0
+// @version 1.0.0-demo
 // @since 2025-01-01
 // =========================================================================
 
@@ -40,6 +47,7 @@ import {
   Zap
 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
+import styles from '@/styles/pages/ai-detection.module.css'
 
 // =========================================================================
 // TYPE DEFINITIONS
@@ -403,21 +411,26 @@ const AIMusicDetectionPage: NextPage = () => {
   // -----------------------------------------------------------------------
 
   /**
-   * Demo AI analysis function - Frontend interface demonstration
+   * ⚠️ DEMO FUNCTION - NOT REAL AI ANALYSIS
+   * This function generates RANDOM results for UI demonstration purposes only.
+   * Real implementation will use PyTorch backend with wav2vec2 model.
+   *
+   * @param audioSource - File or URL (NOT analyzed, just for UI demo)
+   * @returns Demo AnalysisResult with random confidence scores
    */
   const performAIAnalysis = useCallback(async (audioSource: File | string) => {
     setProcessingState('analyzing')
     setError(null)
 
-    // Demo processing delay
+    // ⚠️ DEMO: Simulated processing delay (real AI would take 3-5s)
     await new Promise(resolve => setTimeout(resolve, 3000))
 
-    // Demo result - this would be replaced with actual AI backend processing
+    // ⚠️ DEMO: Random results for interface testing ONLY
     const demoResult: AnalysisResult = {
-      isAIGenerated: Math.random() > 0.5,
-      confidence: 0.85 + Math.random() * 0.14,
+      isAIGenerated: Math.random() > 0.5,  // ⚠️ RANDOM - not real prediction
+      confidence: 0.85 + Math.random() * 0.14,  // ⚠️ FAKE confidence score
       processingTime: 2.1,
-      modelVersion: 'wav2vec2-demo-v1.0',
+      modelVersion: 'demo-interface-v1.0',  // ⚠️ Not a real model
       features: {
         spectralRegularity: Math.random(),
         temporalPatterns: Math.random(),
@@ -707,7 +720,7 @@ const AIMusicDetectionPage: NextPage = () => {
         duration: audioData.duration,
         sampleRate: audioData.sampleRate,
         bitrate: estimateBitrate(audioData),
-        format: audioSource instanceof File ? audioSource.name.split('.').pop()?.toUpperCase() || 'UNKNOWN' : 'STREAM'
+        format: audioSource instanceof File ? audioSource.name.split('.').pop()?.toUpperCase() || 'UNKNOWN' : styles['STREAM']
       }
     }
   }
@@ -841,40 +854,40 @@ const AIMusicDetectionPage: NextPage = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="analysis-result-card"
+        className={styles['analysis-result-card']}
       >
-        <div className="result-header">
-          <div className={`result-icon ${isAI ? 'ai-detected' : 'human-detected'}`}>
+        <div className={styles['result-header']}>
+          <div className={`${styles['result-icon']} ${isAI ? styles['ai-detected'] : styles['human-detected']}`}>
             {isAI ? <AlertTriangle size={24} /> : <CheckCircle size={24} />}
           </div>
-          <div className="result-content">
-            <h3 className="result-title">
+          <div className={styles['result-content']}>
+            <h3 className={styles['result-title']}>
               {isAI ? 'AI-Generated Music Detected' : 'Human-Composed Music'}
             </h3>
-            <p className="result-subtitle">
+            <p className={styles['result-subtitle']}>
               Confidence: {confidence}% | Model: {analysisResult.modelVersion}
             </p>
           </div>
         </div>
 
-        <div className="result-metrics">
-          <div className="metric-grid">
-            <div className="metric-item">
+        <div className={styles['result-metrics']}>
+          <div className={styles['metric-grid']}>
+            <div className={styles['metric-item']}>
               <Clock size={16} />
               <span>Processing Time: {analysisResult.processingTime.toFixed(1)}s</span>
             </div>
-            <div className="metric-item">
+            <div className={styles['metric-item']}>
               <Zap size={16} />
               <span>Sample Rate: {analysisResult.audioInfo.sampleRate.toLocaleString()} Hz</span>
             </div>
-            <div className="metric-item">
+            <div className={styles['metric-item']}>
               <BarChart3 size={16} />
               <span>Duration: {Math.round(analysisResult.audioInfo.duration)}s</span>
             </div>
           </div>
         </div>
 
-        <div className="artificial-indicators">
+        <div className={styles['artificial-indicators']}>
           <h4>Analysis Details:</h4>
           <ul>
             {analysisResult.features.artificialIndicators.map((indicator, index) => (
@@ -883,13 +896,13 @@ const AIMusicDetectionPage: NextPage = () => {
           </ul>
         </div>
 
-        <div className="result-actions">
-          <button className="btn-secondary">
+        <div className={styles['result-actions']}>
+          <button className={styles['btn-secondary']}>
             <Download size={16} />
             Export Report
           </button>
           <button
-            className="btn-primary"
+            className={styles['btn-primary']}
             onClick={() => {
               setSelectedFile(null)
               setMusicUrl('')
@@ -910,48 +923,59 @@ const AIMusicDetectionPage: NextPage = () => {
 
   return (
     <MainLayout
-      title="AI Music Detection - CrownCode Platform"
-      description="Advanced AI-powered music detection system. Detect AI-generated music with 97.2% accuracy using wav2vec2-based deep learning models."
-      keywords="AI music detection, wav2vec2, deep learning, music analysis, artificial intelligence, audio analysis"
+      title="AI Music Detection - CrownCode Platform (Demo Interface)"
+      description="Professional frontend interface for AI music detection system. Demonstration of planned wav2vec2-based deep learning implementation. Backend AI integration in development."
+      keywords="AI music detection, wav2vec2, deep learning, music analysis, artificial intelligence, audio analysis, demo interface"
     >
-      <div className="ai-detection-page">
-        <div className="detection-container">
+      <div className={styles['ai-detection-page']}>
+        <div className={styles['detection-container']}>
           {/* Page Header */}
           <motion.div
-            className="detection-header"
+            className={styles['detection-header']}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className="header-badge">
+            <div className={styles['header-badge']}>
               <Shield size={16} />
               <span>AI Music Detection</span>
             </div>
-            <h1 className="detection-title">
+            <h1 className={styles['detection-title']}>
               Detect AI-Generated Music
             </h1>
-            <p className="detection-subtitle">
-              Frontend interface for AI-powered music detection system using wav2vec2-based deep learning models.
-              This is a demonstration interface for the professional platform - backend AI processing will be implemented in future phases.
+            <p className={styles['detection-subtitle']}>
+              Professional frontend interface demonstration for AI-powered music detection system.
+              This interface showcases the planned user experience and system architecture.
             </p>
-            <div className="demo-notice">
-              <span className="demo-badge">Demo Interface</span>
-              <span>Frontend implementation for professional demonstration purposes</span>
+
+            {/* ⚠️ CRITICAL: Demo Warning - Academic Honesty */}
+            <div className={styles['demo-warning-container']}>
+              <div className={styles['demo-warning-card']}>
+                <div className={styles['warning-header']}>
+                  <AlertTriangle size={20} className={styles['warning-icon']} />
+                  <span className={styles['warning-title']}>Demo Interface - Educational Purpose</span>
+                </div>
+                <div className={styles['warning-content']}>
+                  <p><strong>Current Status:</strong> This is a professional UI/UX demonstration.</p>
+                  <p><strong>Analysis Results:</strong> Generated for interface testing only - not real AI predictions.</p>
+                  <p><strong>Planned Implementation:</strong> Backend AI integration with PyTorch + wav2vec2 model (Q2 2025).</p>
+                </div>
+              </div>
             </div>
           </motion.div>
 
           {/* Main Interface */}
-          {processingState === 'idle' && !analysisResult && (
+          {!analysisResult && processingState !== 'complete' && processingState !== 'error' && (
             <motion.div
-              className="detection-interface"
+              className={styles['detection-interface']}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
               {/* File Upload Section */}
-              <div className="upload-section">
+              <div className={styles['upload-section']}>
                 <h2>Upload Audio File</h2>
                 <div
-                  className={`upload-dropzone ${isDragOver ? 'drag-over' : ''}`}
+                  className={`${styles['upload-dropzone']} ${isDragOver ? styles['drag-over'] : ''}`}
                   onDrop={handleDrop}
                   onDragOver={(e) => { e.preventDefault(); setIsDragOver(true) }}
                   onDragLeave={() => setIsDragOver(false)}
@@ -960,7 +984,7 @@ const AIMusicDetectionPage: NextPage = () => {
                   <Upload size={48} />
                   <h3>Drop your audio file here</h3>
                   <p>or click to browse</p>
-                  <div className="supported-formats">
+                  <div className={styles['supported-formats']}>
                     <span>Supported: MP3, WAV, FLAC, M4A (max 100MB)</span>
                   </div>
                   <input
@@ -968,19 +992,19 @@ const AIMusicDetectionPage: NextPage = () => {
                     type="file"
                     accept="audio/*"
                     onChange={handleFileSelect}
-                    className="hidden"
+                    className={styles['hidden']}
                     aria-label="Upload audio file for AI music detection"
                     title="Upload audio file for AI music detection"
                   />
                 </div>
 
                 {selectedFile && (
-                  <div className="selected-file">
+                  <div className={styles['selected-file']}>
                     <Music size={20} />
                     <span>{selectedFile.name}</span>
                     <button
                       onClick={() => performAIAnalysis(selectedFile)}
-                      className={`btn-primary ${processingState === 'analyzing' ? 'loading' : ''}`}
+                      className={`${styles['btn-primary']} ${processingState === 'analyzing' ? styles['loading'] : ''}`}
                       disabled={processingState === 'analyzing'}
                     >
                       {processingState === 'analyzing' ? 'Analyzing...' : 'Analyze File'}
@@ -990,33 +1014,33 @@ const AIMusicDetectionPage: NextPage = () => {
               </div>
 
               {/* URL Analysis Section */}
-              <div className="url-section">
+              <div className={styles['url-section']}>
                 <h2>Analyze from URL</h2>
-                <div className="url-input-container">
-                  <div className="url-input-wrapper">
+                <div className={styles['url-input-container']}>
+                  <div className={styles['url-input-wrapper']}>
                     <LinkIcon size={20} />
                     <input
                       type="url"
                       placeholder="Paste Spotify, YouTube, SoundCloud, or Apple Music URL..."
                       value={musicUrl}
                       onChange={(e) => setMusicUrl(e.target.value)}
-                      className="url-input"
+                      className={styles['url-input']}
                     />
                   </div>
                   <button
                     onClick={handleUrlAnalysis}
                     disabled={!musicUrl.trim() || processingState === 'analyzing'}
-                    className={`btn-primary ${processingState === 'analyzing' ? 'loading' : ''}`}
+                    className={`${styles['btn-primary']} ${processingState === 'analyzing' ? styles['loading'] : ''}`}
                   >
                     {processingState === 'analyzing' ? 'Analyzing...' : 'Analyze URL'}
                   </button>
                 </div>
 
-                <div className="supported-platforms">
+                <div className={styles['supported-platforms']}>
                   <span>Supported platforms:</span>
-                  <div className="platform-icons">
+                  <div className={styles['platform-icons']}>
                     {['spotify', 'youtube', 'soundcloud', 'apple'].map((platform) => (
-                      <div key={platform} className="platform-icon">
+                      <div key={platform} className={styles['platform-icon']}>
                         {renderPlatformIcon(platform as SupportedPlatform)}
                       </div>
                     ))}
@@ -1029,20 +1053,20 @@ const AIMusicDetectionPage: NextPage = () => {
           {/* Processing State */}
           {processingState === 'analyzing' && (
             <motion.div
-              className="processing-state"
+              className={styles['processing-state']}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <div className="processing-spinner">
-                <div className="spinner" />
+              <div className={styles['processing-spinner']}>
+                <div className={styles['spinner']} />
               </div>
               <h3>Analyzing Audio...</h3>
               <p>Our AI model is analyzing the audio for artificial generation patterns.</p>
-              <div className="processing-steps">
-                <div className="step active">Audio preprocessing</div>
-                <div className="step active">Feature extraction</div>
-                <div className="step active">AI model inference</div>
-                <div className="step">Result generation</div>
+              <div className={styles['processing-steps']}>
+                <div className={`${styles['step']} ${styles['active']}`}>Audio preprocessing</div>
+                <div className={`${styles['step']} ${styles['active']}`}>Feature extraction</div>
+                <div className={`${styles['step']} ${styles['active']}`}>AI model inference</div>
+                <div className={styles['step']}>Result generation</div>
               </div>
             </motion.div>
           )}
@@ -1050,7 +1074,7 @@ const AIMusicDetectionPage: NextPage = () => {
           {/* Error State */}
           {error && (
             <motion.div
-              className="error-state"
+              className={styles['error-state']}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -1062,7 +1086,7 @@ const AIMusicDetectionPage: NextPage = () => {
                   setError(null)
                   setProcessingState('idle')
                 }}
-                className="btn-primary"
+                className={styles['btn-primary']}
               >
                 Try Again
               </button>

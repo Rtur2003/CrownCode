@@ -18,6 +18,9 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [language, setLanguageState] = useState<Language>('tr')
 
   useEffect(() => {
+    // SSR safe check - localStorage only available in browser
+    if (typeof window === 'undefined') return
+
     const savedLang = localStorage.getItem('language') as Language
     if (savedLang && (savedLang === 'tr' || savedLang === 'en')) {
       setLanguageState(savedLang)
@@ -26,7 +29,11 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang)
-    localStorage.setItem('language', lang)
+
+    // SSR safe check - localStorage only available in browser
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', lang)
+    }
   }
 
   const value = {
