@@ -125,6 +125,80 @@
       "by": "by"
     }
   },
+  "aiDetection": {
+    "meta": {
+      "title": "AI Music Detection - CrownCode Platform (Demo Interface)",
+      "description": "Professional frontend interface for AI music detection system. Demonstration of planned wav2vec2-based deep learning implementation. Backend AI integration in development.",
+      "keywords": "AI music detection, wav2vec2, deep learning, music analysis, artificial intelligence, audio analysis, demo interface"
+    },
+    "header": {
+      "badge": "AI Music Detection",
+      "title": "Detect AI-Generated Music",
+      "subtitle": "Professional frontend interface demonstration for AI-powered music detection system. This interface showcases the planned user experience and system architecture."
+    },
+    "warning": {
+      "title": "Demo Interface - Educational Purpose",
+      "currentStatus": "Current Status:",
+      "currentStatusText": "This is a professional UI/UX demonstration.",
+      "analysisResults": "Analysis Results:",
+      "analysisResultsText": "Generated for interface testing only - not real AI predictions.",
+      "plannedImplementation": "Planned Implementation:",
+      "plannedImplementationText": "Backend AI integration with PyTorch + wav2vec2 model (Q2 2025)."
+    },
+    "upload": {
+      "title": "Upload Audio File",
+      "dropHere": "Drop your audio file here",
+      "orClick": "or click to browse",
+      "supported": "Supported: MP3, WAV, FLAC, M4A (max 100MB)",
+      "analyzeButton": "Analyze File",
+      "analyzing": "Analyzing..."
+    },
+    "url": {
+      "title": "Analyze from URL",
+      "placeholder": "Paste Spotify, YouTube, SoundCloud, or Apple Music URL...",
+      "supportedPlatforms": "Supported platforms:",
+      "analyzeButton": "Analyze URL",
+      "analyzing": "Analyzing..."
+    },
+    "processing": {
+      "title": "Demo Analysis in Progress...",
+      "subtitle": "Simulating AI detection workflow for interface demonstration purposes.",
+      "steps": {
+        "simulation": "UI simulation",
+        "generation": "Random result generation",
+        "testing": "Interface testing",
+        "completion": "Demo completion"
+      }
+    },
+    "error": {
+      "title": "Analysis Error",
+      "tryAgain": "Try Again"
+    },
+    "result": {
+      "aiDetected": "AI-Generated Music Detected",
+      "humanDetected": "Human-Composed Music",
+      "confidence": "Confidence",
+      "model": "Model",
+      "processingTime": "Processing Time",
+      "sampleRate": "Sample Rate",
+      "duration": "Duration",
+      "analysisDetails": "Analysis Details:",
+      "exportReport": "Export Report",
+      "analyzeAnother": "Analyze Another"
+    },
+    "errors": {
+      "enterUrl": "Please enter a valid music URL.",
+      "invalidUrl": "Invalid URL format. Please enter a complete URL starting with http:// or https://",
+      "unsupportedFormat": "Unsupported file format: {format}. Allowed formats: MP3, WAV, FLAC, M4A",
+      "fileTooSmall": "File is too small. Minimum file size is 1KB.",
+      "fileTooLarge": "File size exceeds 100MB limit. Please use a smaller file.",
+      "invalidFileName": "Invalid file name. File name contains prohibited characters.",
+      "suspiciousFile": "File name contains suspicious patterns. Please rename your audio file.",
+      "invalidHeader": "File does not appear to be a valid audio file based on file header analysis.",
+      "headerReadError": "Error reading file header",
+      "validationFailed": "File validation failed. Please try a different file."
+    }
+  },
   "mlToolkit": {
     "badge": "ML Toolkit",
     "title": "Dataset Augmentation",
