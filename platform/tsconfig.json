@@ -20,14 +20,11 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
       "@/components/*": ["./components/*"],
       "@/pages/*": ["./pages/*"],
       "@/styles/*": ["./styles/*"],
-      "@/utils/*": ["./utils/*"],
       "@/hooks/*": ["./hooks/*"],
       "@/context/*": ["./context/*"],
-      "@/types/*": ["./types/*"],
       "@/public/*": ["./public/*"],
       "@/locales/*": ["./locales/*"]
     },
