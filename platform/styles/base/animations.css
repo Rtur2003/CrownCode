@@ -1,0 +1,259 @@
+/* Animation Styles */
+/* Bu dosya tüm global animasyon tanımlarını içerir */
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Animation Utility Classes */
+.animate-fade-in {
+  animation: fadeIn var(--animation-normal) var(--ease-out-cubic);
+}
+
+.animate-fade-out {
+  animation: fadeOut var(--animation-normal) var(--ease-out-cubic);
+}
+
+.animate-slide-up {
+  animation: slideUp var(--animation-normal) var(--ease-out-cubic);
+}
+
+.animate-slide-down {
+  animation: slideDown var(--animation-normal) var(--ease-out-cubic);
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft var(--animation-normal) var(--ease-out-cubic);
+}
+
+.animate-slide-in-right {
+  animation: slideInRight var(--animation-normal) var(--ease-out-cubic);
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--animation-normal) var(--ease-out-cubic);
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+}
+
+.animate-gradient-shift {
+  animation: gradientShift 3s ease infinite;
+  background-size: 200% 200%;
+}
+
+.animate-bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+/* Hover Animations */
+.hover-lift {
+  transition: transform var(--animation-normal) var(--ease-out-cubic);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+.hover-scale {
+  transition: transform var(--animation-normal) var(--ease-out-cubic);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-glow {
+  transition: box-shadow var(--animation-normal) var(--ease-out-cubic);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+}
+
+/* Animation Delays */
+.animate-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animate-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animate-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animate-delay-500 {
+  animation-delay: 500ms;
+}
+
+/* Animation Duration Overrides */
+.animate-fast {
+  animation-duration: var(--animation-fast) !important;
+}
+
+.animate-normal {
+  animation-duration: var(--animation-normal) !important;
+}
+
+.animate-slow {
+  animation-duration: var(--animation-slow) !important;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .animate-float,
+  .animate-pulse,
+  .animate-spin,
+  .animate-shimmer,
+  .animate-gradient-shift,
+  .animate-bounce {
+    animation: none !important;
+  }
+}
