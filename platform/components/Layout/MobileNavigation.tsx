@@ -7,6 +7,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useLanguage } from '@/context/LanguageContext'
 import {
   Home,
   FolderOpen,
@@ -27,6 +28,7 @@ interface NavigationItem {
 
 export const MobileNavigation: React.FC = () => {
   const router = useRouter()
+  const { t } = useLanguage()
 
   const isActiveRoute = (href: string): boolean => {
     if (href === '/') {
@@ -38,23 +40,23 @@ export const MobileNavigation: React.FC = () => {
   // Main navigation items for mobile bottom bar
   const navigationItems: NavigationItem[] = [
     {
-      label: 'Ana Sayfa',
+      label: t.nav.home,
       href: '/',
       icon: <Home size={20} />,
     },
     {
-      label: 'Projeler',
+      label: t.nav.projects,
       href: '/projects',
       icon: <FolderOpen size={20} />,
     },
     {
-      label: 'AI Müzik',
+      label: t.nav.aiMusic,
       href: '/ai-music-detection',
       icon: <Music size={20} />,
-      badge: 'Aktif',
+      badge: t.nav.aiMusicBadge,
     },
     {
-      label: 'Dokümanlar',
+      label: t.nav.docs,
       href: '/docs',
       icon: <BookOpen size={20} />,
     },
