@@ -2,7 +2,11 @@
   "nav": {
     "home": "Ana Sayfa",
     "products": "Ürünler",
-    "github": "GitHub"
+    "github": "GitHub",
+    "projects": "Projeler",
+    "aiMusic": "AI Müzik",
+    "docs": "Dokümanlar",
+    "aiMusicBadge": "Aktif"
   },
   "hero": {
     "title": {
