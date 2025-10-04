@@ -2,7 +2,11 @@
   "nav": {
     "home": "Home",
     "products": "Products",
-    "github": "GitHub"
+    "github": "GitHub",
+    "projects": "Projects",
+    "aiMusic": "AI Music",
+    "docs": "Docs",
+    "aiMusicBadge": "Active"
   },
   "hero": {
     "title": {
