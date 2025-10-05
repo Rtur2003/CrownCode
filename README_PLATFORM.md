@@ -15,7 +15,7 @@
 
 ## 🌟 Platform Genel Bakış
 
-CrownCode, yapay zeka destekli müzik tespiti ve veri manipülasyonu için geliştirilmiş bir araştırma platformudur. Modüler yapıda tasarlanmış olup, mobil ve masaüstü cihazlarda mükemmel uyumluluk sağlar.
+CrownCode, yapay zeka destekli müzik tespiti ve veri manipülasyonu için geliştirilmiş bir araştırma platformudur. Modüler yapıda tasarlanmış olup, mobil ve masaüstü cihazlarda mükemmel uyumluluk sağlıyor.
 
 > **Düzce Üniversitesi Bilgisayar Mühendisliği Bölümü**
 > **Bitirme Projesi 2025-2026**
