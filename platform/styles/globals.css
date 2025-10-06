@@ -18,6 +18,7 @@
 @import './components/footer.css';
 @import './components/ml-toolkit.css';
 @import './components/language-selector.css';
+@import './components/toast.css';
 
 /* Utilities */
 @import './utilities/helpers.css';
