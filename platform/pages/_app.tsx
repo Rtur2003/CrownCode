@@ -1,13 +1,15 @@
 /**
  * Next.js App Component
  * Kullanım: Tüm sayfalar için global wrapper
- * Bağımlılıklar: ThemeProvider, global styles
+ * Bağımlılıklar: ThemeProvider, LanguageProvider, ToastProvider, global styles
  */
 
 import React from 'react'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'next-themes'
 import { LanguageProvider } from '@/context/LanguageContext'
+import { ToastProvider } from '@/context/ToastContext'
+import { ToastContainer } from '@/components/UI/Toast/ToastContainer'
 import '@/styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -19,7 +21,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       themes={['light', 'dark', 'system']}
     >
       <LanguageProvider>
-        <Component {...pageProps} />
+        <ToastProvider>
+          <Component {...pageProps} />
+          <ToastContainer />
+        </ToastProvider>
       </LanguageProvider>
     </ThemeProvider>
   )

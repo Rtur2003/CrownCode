@@ -40,14 +40,22 @@
         "description": "Research platform aiming to distinguish AI-generated music from human compositions using wav2vec2-based deep learning model. Currently in development.",
         "status": "In Development",
         "stats": "Target 95%+ Accuracy",
-        "features": ["wav2vec2 Architecture", "Transfer Learning", "Automated Pipeline"]
+        "features": [
+          "wav2vec2 Architecture",
+          "Transfer Learning",
+          "Automated Pipeline"
+        ]
       },
       "mlToolkit": {
         "title": "ML Research Toolkit",
         "description": "Comprehensive machine learning platform for dataset augmentation, processing, and analysis. Features automated quality control and research-grade data pipelines.",
         "status": "Research Active",
         "stats": "91.7% Quality Rate",
-        "features": ["Dataset Processing", "Quality Control", "Research Analytics"]
+        "features": [
+          "Dataset Processing",
+          "Quality Control",
+          "Research Analytics"
+        ]
       }
     }
   },
@@ -326,5 +334,31 @@
       "downloaded": "Downloaded!"
     },
     "optionsActive": "options active"
+  },
+  "toast": {
+    "success": {
+      "title": "Success",
+      "copied": "Copied to clipboard",
+      "saved": "Saved",
+      "updated": "Updated",
+      "deleted": "Deleted",
+      "uploaded": "Upload successful"
+    },
+    "error": {
+      "title": "Error",
+      "general": "An error occurred",
+      "network": "Network error",
+      "fileSize": "File size too large",
+      "fileType": "Unsupported file type",
+      "upload": "Upload failed"
+    },
+    "warning": {
+      "title": "Warning",
+      "unsaved": "You have unsaved changes"
+    },
+    "info": {
+      "title": "Info",
+      "processing": "Processing..."
+    }
   }
 }

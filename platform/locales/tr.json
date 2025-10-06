@@ -40,14 +40,22 @@
         "description": "wav2vec2 tabanlı derin öğrenme modeli ile AI üretimi müzikleri insan bestelerinden ayırt etmeyi hedefleyen araştırma platformu. Geliştirme aşamasında.",
         "status": "Geliştiriliyor",
         "stats": "Hedef %95+ Doğruluk",
-        "features": ["wav2vec2 Mimarisi", "Derin Öğrenme", "Ses Analizi"]
+        "features": [
+          "wav2vec2 Mimarisi",
+          "Derin Öğrenme",
+          "Ses Analizi"
+        ]
       },
       "mlToolkit": {
         "title": "ML Araştırma Araç Seti",
         "description": "Veri seti artırma, işleme ve analiz için kapsamlı makine öğrenmesi platformu. Otomatik kalite kontrolü ve araştırma kalitesinde veri pipeline'ları içerir.",
         "status": "Araştırma Aktif",
         "stats": "%91.7 Kalite Oranı",
-        "features": ["Veri Seti İşleme", "Kalite Kontrolü", "Araştırma Analitiği"]
+        "features": [
+          "Veri Seti İşleme",
+          "Kalite Kontrolü",
+          "Araştırma Analitiği"
+        ]
       }
     }
   },
@@ -326,5 +334,31 @@
       "downloaded": "İndirildi!"
     },
     "optionsActive": "seçenek aktif"
+  },
+  "toast": {
+    "success": {
+      "title": "Başarılı",
+      "copied": "Panoya kopyalandı",
+      "saved": "Kaydedildi",
+      "updated": "Güncellendi",
+      "deleted": "Silindi",
+      "uploaded": "Yükleme başarılı"
+    },
+    "error": {
+      "title": "Hata",
+      "general": "Bir hata oluştu",
+      "network": "Bağlantı hatası",
+      "fileSize": "Dosya boyutu çok büyük",
+      "fileType": "Desteklenmeyen dosya türü",
+      "upload": "Yükleme başarısız"
+    },
+    "warning": {
+      "title": "Uyarı",
+      "unsaved": "Kaydedilmemiş değişiklikler var"
+    },
+    "info": {
+      "title": "Bilgi",
+      "processing": "İşleniyor..."
+    }
   }
 }
