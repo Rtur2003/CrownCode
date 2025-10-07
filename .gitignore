@@ -88,3 +88,19 @@ coverage/
 
 # Claude
 .claude
+# Source Maps (production - don't commit)
+*.map
+!**/*.map.d.ts
+
+# Reports & Analysis
+bundle-report.html
+stats.json
+lighthouse-report.html
+size-report.html
+
+# Mobile app (React Native - excluded)
+mobile/
+react-native/
+*.apk
+*.ipa
+*.aab
