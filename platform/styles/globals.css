@@ -24,6 +24,7 @@
 @import './components/skeleton.css';
 @import './components/shortcuts-modal.css';
 @import './components/search-modal.css';
+@import './components/loading-screen.css';
 
 /* Utilities */
 @import './utilities/helpers.css';
