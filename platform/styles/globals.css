@@ -21,6 +21,8 @@
 @import './components/toast.css';
 @import './components/error.css';
 @import './components/copy-button.css';
+@import './components/skeleton.css';
+@import './components/shortcuts-modal.css';
 
 /* Utilities */
 @import './utilities/helpers.css';

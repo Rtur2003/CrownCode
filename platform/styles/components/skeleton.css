@@ -1,0 +1,143 @@
+/* Skeleton Loading Styles */
+/* Bu dosya loading skeleton components için kullanılır */
+
+/* Base Skeleton */
+.skeleton {
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 0%,
+    var(--color-surface-elevated) 50%,
+    var(--color-surface) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+/* Variants */
+.skeleton-text {
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+
+.skeleton-circular {
+  border-radius: 50%;
+}
+
+.skeleton-rectangular {
+  border-radius: var(--radius-md);
+}
+
+/* Shimmer Animation */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Project Card Skeleton */
+.project-card-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(16px);
+}
+
+.skeleton-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skeleton-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-description {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-stats {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.skeleton-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Hero Skeleton */
+.hero-skeleton {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  padding: 80px 20px;
+  min-height: 600px;
+  align-items: center;
+}
+
+.hero-skeleton-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.skeleton-title {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-subtitle {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.skeleton-features {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-skeleton {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 40px 20px;
+  }
+
+  .hero-skeleton-code {
+    display: none;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    background: var(--color-surface);
+  }
+}
