@@ -7,6 +7,7 @@ const nextConfig = {
 
   // Image optimization
   images: {
+    unoptimized: true, // Required for static export
     remotePatterns: [
       {
         protocol: 'https',
