@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: var(--z-fixed);
   background: transparent;
   transition: all var(--animation-normal) var(--ease-out-cubic);
 }
@@ -264,7 +264,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  z-index: calc(var(--z-fixed) - 1);
 }
 
 /* Responsive Design */
