@@ -1,0 +1,219 @@
+/* Search Modal Styles */
+/* Bu dosya global search modal için kullanılır */
+
+.search-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal-backdrop);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 100px 20px 20px;
+}
+
+.search-modal {
+  position: relative;
+  max-width: 600px;
+  width: 100%;
+  max-height: calc(100vh - 120px);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-2xl);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Search Input */
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.search-icon {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  font-family: inherit;
+}
+
+.search-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.search-close {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all var(--animation-fast);
+}
+
+.search-close:hover {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+/* Search Results */
+.search-results {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.search-category {
+  margin-bottom: 24px;
+}
+
+.search-category:last-child {
+  margin-bottom: 0;
+}
+
+.search-category-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 8px 8px;
+}
+
+.search-items {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--animation-fast);
+  text-align: left;
+  width: 100%;
+}
+
+.search-item:hover {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+.search-item:active {
+  transform: scale(0.98);
+}
+
+.search-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.search-item:hover .search-item-icon {
+  background: var(--color-surface-elevated);
+}
+
+.search-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-item-title {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+}
+
+.search-item-description {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-item-arrow {
+  color: var(--color-text-muted);
+  opacity: 0;
+  transition: opacity var(--animation-fast);
+  flex-shrink: 0;
+}
+
+.search-item:hover .search-item-arrow {
+  opacity: 1;
+}
+
+/* Empty State */
+.search-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.search-hint,
+.search-no-results {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .search-modal-overlay {
+    padding: 60px 12px 12px;
+  }
+
+  .search-modal {
+    max-height: calc(100vh - 72px);
+  }
+
+  .search-input-wrapper {
+    padding: 16px 20px;
+  }
+
+  .search-results {
+    padding: 12px;
+  }
+
+  .search-item {
+    padding: 10px;
+  }
+
+  .search-item-icon {
+    width: 32px;
+    height: 32px;
+  }
+}

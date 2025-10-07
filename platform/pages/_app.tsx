@@ -1,7 +1,7 @@
 /**
  * Next.js App Component
  * Kullanım: Tüm sayfalar için global wrapper
- * Bağımlılıklar: ThemeProvider, LanguageProvider, ToastProvider, ErrorBoundary, global styles
+ * Bağımlılıklar: ThemeProvider, LanguageProvider, ToastProvider, ErrorBoundary, SearchModal, global styles
  */
 
 import React from 'react'
@@ -12,6 +12,7 @@ import { ToastProvider } from '@/context/ToastContext'
 import { ToastContainer } from '@/components/UI/Toast/ToastContainer'
 import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary'
 import { ShortcutsModal } from '@/components/KeyboardShortcuts/ShortcutsModal'
+import { SearchModal } from '@/components/Search/SearchModal'
 import '@/styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -28,6 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
             <ToastContainer />
             <ShortcutsModal />
+            <SearchModal />
           </ToastProvider>
         </LanguageProvider>
       </ThemeProvider>

@@ -1,4 +1,5 @@
-/* Error Page Styles - Simple version */
+/* Error Page Styles */
+/* Bu dosya error boundary ve custom error pages için kullanılır */
 
 .error-page {
   min-height: 100vh;
@@ -39,9 +40,15 @@
   font-size: 6rem;
   font-weight: 900;
   background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin: 0 0 16px 0;
 }
 

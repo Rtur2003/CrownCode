@@ -360,5 +360,25 @@
       "title": "Bilgi",
       "processing": "İşleniyor..."
     }
+  },
+  "search": {
+    "placeholder": "Ara... (Ctrl+K)",
+    "noResults": "Sonuc bulunamadi",
+    "categories": {
+      "pages": "Sayfalar",
+      "features": "Ozellikler",
+      "recent": "Son Aramalar"
+    },
+    "pages": {
+      "home": "Ana Sayfa",
+      "aiMusic": "AI Muzik Tespiti",
+      "mlToolkit": "ML Arac Seti",
+      "projects": "Projeler"
+    },
+    "features": {
+      "upload": "Dosya Yukle",
+      "urlAnalysis": "URL Analizi",
+      "dataAugmentation": "Veri Artirma"
+    }
   }
 }
