@@ -144,6 +144,18 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
       stats: t.products.items.aiMusic.stats,
       features: t.products.items.aiMusic.features
     }
+    ,
+    {
+      id: 'ml-toolkit',
+      title: t.products.items.mlToolkit.title,
+      description: t.products.items.mlToolkit.description,
+      href: '/data-manipulation',
+      icon: Brain,
+      gradient: 'from-blue-400 via-cyan-500 to-teal-600',
+      status: t.products.items.mlToolkit.status,
+      stats: t.products.items.mlToolkit.stats,
+      features: t.products.items.mlToolkit.features
+    }
   ]
 
   // -----------------------------------------------------------------------
