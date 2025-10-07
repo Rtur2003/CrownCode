@@ -143,8 +143,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
       status: t.products.items.aiMusic.status,
       stats: t.products.items.aiMusic.stats,
       features: t.products.items.aiMusic.features
-    }
-    ,
+    },
     {
       id: 'ml-toolkit',
       title: t.products.items.mlToolkit.title,
