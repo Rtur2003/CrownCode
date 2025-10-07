@@ -4,17 +4,19 @@
  * Bağımlılıklar: ThemeProvider, LanguageProvider, ToastProvider, ErrorBoundary, LoadingScreen, global styles
  */
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, lazy, Suspense } from 'react'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'next-themes'
 import { LanguageProvider } from '@/context/LanguageContext'
 import { ToastProvider } from '@/context/ToastContext'
 import { ToastContainer } from '@/components/UI/Toast/ToastContainer'
 import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary'
-import { ShortcutsModal } from '@/components/KeyboardShortcuts/ShortcutsModal'
-import { SearchModal } from '@/components/Search/SearchModal'
 import { LoadingScreen } from '@/components/Loading/LoadingScreen'
 import '@/styles/globals.css'
+
+// Dynamic imports for better code splitting - load modals only when needed
+const ShortcutsModal = lazy(() => import('@/components/KeyboardShortcuts/ShortcutsModal').then(m => ({ default: m.ShortcutsModal })))
+const SearchModal = lazy(() => import('@/components/Search/SearchModal').then(m => ({ default: m.SearchModal })))
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true)
@@ -45,8 +47,11 @@ function MyApp({ Component, pageProps }: AppProps) {
             {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
             <Component {...pageProps} />
             <ToastContainer />
-            <ShortcutsModal />
-            <SearchModal />
+            {/* Lazy load modals for better initial load performance */}
+            <Suspense fallback={null}>
+              <ShortcutsModal />
+              <SearchModal />
+            </Suspense>
           </ToastProvider>
         </LanguageProvider>
       </ThemeProvider>
@@ -55,3 +60,28 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 export default MyApp
+
+/**
+ * Web Vitals reporting for performance monitoring
+ * Tracks Core Web Vitals: LCP, FID, CLS, FCP, TTFB
+ */
+export function reportWebVitals(metric: any) {
+  // Log to console in development
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`[Web Vitals] ${metric.name}:`, {
+      value: metric.value,
+      rating: metric.rating,
+      delta: metric.delta,
+      id: metric.id,
+    })
+  }
+
+  // Send to analytics in production (example)
+  if (process.env.NODE_ENV === 'production') {
+    // Example: Send to analytics service
+    // window.gtag?.('event', metric.name, {
+    //   value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+    //   event_category: 'Web Vitals',
+    // })
+  }
+}
