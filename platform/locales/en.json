@@ -360,5 +360,25 @@
       "title": "Info",
       "processing": "Processing..."
     }
+  },
+  "search": {
+    "placeholder": "Search... (Ctrl+K)",
+    "noResults": "No results found",
+    "categories": {
+      "pages": "Pages",
+      "features": "Features",
+      "recent": "Recent Searches"
+    },
+    "pages": {
+      "home": "Home",
+      "aiMusic": "AI Music Detection",
+      "mlToolkit": "ML Toolkit",
+      "projects": "Projects"
+    },
+    "features": {
+      "upload": "Upload File",
+      "urlAnalysis": "URL Analysis",
+      "dataAugmentation": "Data Augmentation"
+    }
   }
 }
