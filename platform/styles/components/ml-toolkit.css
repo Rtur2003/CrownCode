@@ -2,7 +2,7 @@
 
 .ml-toolkit-page {
   min-height: 100vh;
-  padding: 6rem 0 4rem;
+  padding: 8rem 0 4rem; /* 128px top clearance for header (64px) + spacing */
   background: var(--color-background);
 }
 
