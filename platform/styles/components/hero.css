@@ -7,6 +7,7 @@
   justify-content: center;
   overflow: hidden;
   background: var(--color-background);
+  padding-top: 5rem; /* 80px clearance for fixed header (64px) + spacing */
 }
 
 /* Background Elements */
