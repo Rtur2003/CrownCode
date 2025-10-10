@@ -21,10 +21,10 @@ const ErrorPage: NextPage<ErrorProps> = ({ statusCode, title }) => {
   const isClientError = statusCode && statusCode >= 400 && statusCode < 500
 
   const getErrorTitle = () => {
-    if (title) return title
-    if (statusCode === 404) return 'Sayfa Bulunamadı'
-    if (isServerError) return 'Sunucu Hatası'
-    if (isClientError) return 'İstek Hatası'
+    if (title) { return title }
+    if (statusCode === 404) { return 'Sayfa Bulunamadı' }
+    if (isServerError) { return 'Sunucu Hatası' }
+    if (isClientError) { return 'İstek Hatası' }
     return 'Bir Hata Oluştu'
   }
 
