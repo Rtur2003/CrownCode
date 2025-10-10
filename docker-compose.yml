@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # Frontend Platform
+  platform:
+    build:
+      context: ./platform
+      dockerfile: Dockerfile
+    container_name: crowncode-platform
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_APP_NAME=CrownCode
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - crowncode-network
+
+  # PostgreSQL Database (when needed)
+  # postgres:
+  #   image: postgres:16.6-alpine
+  #   container_name: crowncode-db
+  #   environment:
+  #     POSTGRES_USER: crowncode
+  #     POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+  #     POSTGRES_DB: crowncode
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #   restart: unless-stopped
+  #   networks:
+  #     - crowncode-network
+
+  # Redis Cache (when needed)
+  # redis:
+  #   image: redis:7.4.1-alpine
+  #   container_name: crowncode-cache
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis-data:/data
+  #   restart: unless-stopped
+  #   networks:
+  #     - crowncode-network
+
+networks:
+  crowncode-network:
+    driver: bridge
+
+# volumes:
+#   postgres-data:
+#   redis-data:
