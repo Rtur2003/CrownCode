@@ -71,7 +71,7 @@ export const ProjectDropdown: React.FC<ProjectDropdownProps> = ({
     }
   }, [isOpen, onClose])
 
-  if (!isOpen) return null
+  if (!isOpen) { return } null
 
   const isActiveProject = (href: string) => {
     return router.pathname.startsWith(href)
