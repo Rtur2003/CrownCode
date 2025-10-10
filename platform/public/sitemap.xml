@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
   <!-- Homepage -->
   <url>
-    <loc>https://hasanarthuraltuntas.xyz</loc>
-    <lastmod>2025-09-24</lastmod>
+    <loc>https://hasanarthuraltuntas.xyz/</loc>
+    <lastmod>2025-01-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.xyz/?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.xyz/?lang=en"/>
   </url>
 
   <!-- AI Music Detection -->
   <url>
     <loc>https://hasanarthuraltuntas.xyz/ai-music-detection</loc>
-    <lastmod>2025-09-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2025-01-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.xyz/ai-music-detection?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.xyz/ai-music-detection?lang=en"/>
   </url>
 
-  <!-- Data Manipulation -->
+  <!-- Data Manipulation / ML Toolkit -->
   <url>
     <loc>https://hasanarthuraltuntas.xyz/data-manipulation</loc>
-    <lastmod>2025-09-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2025-01-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.xyz/data-manipulation?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.xyz/data-manipulation?lang=en"/>
   </url>
 
-  <!-- ML Toolkit -->
-  <url>
-    <loc>https://hasanarthuraltuntas.xyz/ml-toolkit</loc>
-    <lastmod>2025-09-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
 </urlset>
