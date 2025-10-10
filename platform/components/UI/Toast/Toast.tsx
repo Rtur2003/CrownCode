@@ -25,7 +25,7 @@ export const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
   const [progress, setProgress] = useState(100)
 
   useEffect(() => {
-    if (!toast.duration || toast.duration <= 0) return
+    if (!toast.duration || toast.duration <= 0) { return }
 
     const interval = setInterval(() => {
       setProgress((prev) => {
