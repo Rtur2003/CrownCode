@@ -53,7 +53,7 @@ export const SearchModal: React.FC = () => {
     }
   }, [isOpen])
 
-  if (!isOpen) return null
+  if (!isOpen) { return } null
 
   return (
     <AnimatePresence>
