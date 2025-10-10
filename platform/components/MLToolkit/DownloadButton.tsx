@@ -21,7 +21,7 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
   const [isComplete, setIsComplete] = useState(false)
 
   const handleDownload = async () => {
-    if (!isReady || isDownloading) return
+    if (!isReady || isDownloading) { return }
 
     setIsDownloading(true)
     try {

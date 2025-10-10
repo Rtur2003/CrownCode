@@ -1,0 +1,29 @@
+# Dependencies
+node_modules
+package-lock.json
+
+# Build outputs
+.next
+out
+build
+dist
+
+# Cache
+.cache
+.parcel-cache
+
+# Environment
+.env
+.env.*
+
+# Logs
+*.log
+logs
+
+# Coverage
+coverage
+.nyc_output
+
+# Misc
+.DS_Store
+*.tsbuildinfo
