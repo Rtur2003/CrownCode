@@ -1,10 +1,22 @@
-# robots.txt for CrownCode
+# CrownCode Platform - Robots.txt
+# Allow all search engines to crawl the site
+
 User-agent: *
 Allow: /
 
-# Disallow admin or private areas (if any in future)
-Disallow: /api/
-Disallow: /_next/
-
-# Sitemap
+# Sitemap location
 Sitemap: https://hasanarthuraltuntas.xyz/sitemap.xml
+
+# Crawl delay (optional - 1 second)
+Crawl-delay: 1
+
+# Disallow API routes
+Disallow: /api/
+
+# Disallow build artifacts
+Disallow: /_next/static/
+
+# Allow important pages
+Allow: /
+Allow: /ai-music-detection
+Allow: /data-manipulation
