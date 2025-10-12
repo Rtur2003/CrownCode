@@ -102,7 +102,7 @@ export const usePWA = (options: UsePWAOptions = {}) => {
 
   // Install app
   const installApp = async () => {
-    if (!deferredPrompt) return false
+    if (!deferredPrompt) { return false }
 
     try {
       deferredPrompt.prompt()

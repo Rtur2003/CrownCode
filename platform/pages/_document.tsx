@@ -30,6 +30,30 @@ export default function Document() {
         {/* Security & Performance */}
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta httpEquiv="x-dns-prefetch-control" content="on" />
+
+        {/* Structured Data - JSON-LD for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'CrownCode Platform',
+              description: 'Central platform showcasing software projects, research work, and development processes',
+              url: 'https://hasanarthuraltuntas.xyz',
+              author: {
+                '@type': 'Person',
+                name: 'Hasan Arthur Altuntaş',
+                url: 'https://github.com/hasanarthuraltuntas'
+              },
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: 'https://hasanarthuraltuntas.xyz/?q={search_term_string}',
+                'query-input': 'required name=search_term_string'
+              }
+            })
+          }}
+        />
       </Head>
       <body>
         <Main />

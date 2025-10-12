@@ -32,7 +32,7 @@ export const useKeyboardShortcuts = ({
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
-      if (!enabled) return
+      if (!enabled) { return }
 
       for (const shortcut of shortcuts) {
         const { key, modifiers = [], callback } = shortcut
@@ -68,7 +68,7 @@ export const useKeyboardShortcuts = ({
   )
 
   useEffect(() => {
-    if (!enabled) return
+    if (!enabled) { return }
 
     window.addEventListener('keydown', handleKeyDown)
 

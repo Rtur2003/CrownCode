@@ -455,7 +455,7 @@ const AIMusicDetectionPage: NextPage = () => {
    * Toggle audio playback
    */
   const togglePlayback = useCallback(() => {
-    if (!audioRef.current) return
+    if (!audioRef.current) { return }
 
     if (isPlaying) {
       audioRef.current.pause()
@@ -489,7 +489,7 @@ const AIMusicDetectionPage: NextPage = () => {
    * Render analysis result card
    */
   const renderAnalysisResult = () => {
-    if (!analysisResult) return null
+    if (!analysisResult) { return null }
 
     const isAI = analysisResult.isAIGenerated
     const confidence = Math.round(analysisResult.confidence * 100)

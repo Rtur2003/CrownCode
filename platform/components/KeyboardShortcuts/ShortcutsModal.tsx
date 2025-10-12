@@ -75,7 +75,7 @@ export const ShortcutsModal: React.FC = () => {
     return acc
   }, {} as Record<string, Shortcut[]>)
 
-  if (!isOpen) return null
+  if (!isOpen) { return null }
 
   return (
     <AnimatePresence>

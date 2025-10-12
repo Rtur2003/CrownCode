@@ -112,7 +112,7 @@ export const usePerformanceMonitor = () => {
 
   const getScore = (metric: keyof PerformanceMetrics): 'good' | 'needs-improvement' | 'poor' | null => {
     const value = metrics[metric]
-    if (value === undefined) return null
+    if (value === undefined) { return null }
 
     switch (metric) {
       case 'fcp':
