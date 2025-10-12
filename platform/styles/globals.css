@@ -14,7 +14,6 @@
 /* Component Styles */
 @import './components/header.css';
 @import './components/hero.css';
-@import './components/about.css';
 @import './components/projects.css';
 @import './components/footer.css';
 @import './components/ml-toolkit.css';
