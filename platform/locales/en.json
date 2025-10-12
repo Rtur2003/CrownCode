@@ -10,17 +10,17 @@
   },
   "hero": {
     "title": {
-      "main": "CrownCode",
-      "accent": "Platform"
+      "main": "Hasan Arthur Altuntaş",
+      "accent": "Pianist • Composer • AI Developer"
     },
-    "subtitle": "Advanced AI research platform for detecting AI-generated music. Professional music analysis using wav2vec2-based deep learning model. In development.",
+    "subtitle": "Creative technology expert combining cinematic ambient music composition with artificial intelligence development. Conducting research on AI music detection systems at Düzce University Computer Engineering.",
     "cta": {
-      "explore": "Try AI Music Detection",
-      "github": "Source Code"
+      "explore": "Explore My Projects",
+      "github": "View on GitHub"
     },
     "features": {
-      "modern": "Advanced AI Technology",
-      "accuracy": "Target 95%+ Accuracy"
+      "modern": "Music & Technology",
+      "accuracy": "Research & Development"
     },
     "scroll": "Discover More"
   },

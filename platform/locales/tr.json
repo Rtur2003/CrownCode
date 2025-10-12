@@ -10,17 +10,17 @@
   },
   "hero": {
     "title": {
-      "main": "CrownCode",
-      "accent": "Platformu"
+      "main": "Hasan Arthur Altuntaş",
+      "accent": "Piyanist • Besteci • AI Geliştiricisi"
     },
-    "subtitle": "AI ile üretilmiş müzikleri tespit eden gelişmiş yapay zeka araştırma platformu. wav2vec2 tabanlı derin öğrenme modeli kullanarak profesyonel müzik analizi hedefleniyor.",
+    "subtitle": "Sinematik ambient müzik besteciliği ile yapay zeka geliştirmeyi birleştiren yaratıcı teknoloji uzmanı. Düzce Üniversitesi Bilgisayar Mühendisliği'nde AI müzik tespit sistemleri üzerine araştırmalar yapıyorum.",
     "cta": {
-      "explore": "AI Müzik Tespitini Dene",
-      "github": "Kaynak Kodu"
+      "explore": "Projelerimi Keşfet",
+      "github": "GitHub'da Görüntüle"
     },
     "features": {
-      "modern": "Gelişmiş AI Teknolojisi",
-      "accuracy": "Hedef %95+ Doğruluk"
+      "modern": "Müzik & Teknoloji",
+      "accuracy": "Araştırma & Geliştirme"
     },
     "scroll": "Daha Fazlasını Keşfet"
   },
