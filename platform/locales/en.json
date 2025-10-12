@@ -10,9 +10,10 @@
   },
   "hero": {
     "title": {
-      "main": "CrownCode",
-      "accent": "Platform"
+      "main": "Hasan Arthur Altuntaş",
+      "accent": "Pianist • Composer • AI Developer"
     },
+<<<<<<< HEAD
     "subtitle": "Central platform showcasing software projects, research work, and development processes. Open-source projects, demo applications, and technical documentation.",
     "cta": {
       "explore": "Explore Projects",
@@ -21,6 +22,16 @@
     "features": {
       "modern": "Open Source Projects",
       "accuracy": "Demos & Documentation"
+=======
+    "subtitle": "Creative technology expert combining cinematic ambient music composition with artificial intelligence development. Conducting research on AI music detection systems at Düzce University Computer Engineering.",
+    "cta": {
+      "explore": "Explore My Projects",
+      "github": "View on GitHub"
+    },
+    "features": {
+      "modern": "Music & Technology",
+      "accuracy": "Research & Development"
+>>>>>>> 55d09c7a3b29adcb77ecfb9223596631897fa8a3
     },
     "scroll": "Discover More"
   },
