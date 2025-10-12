@@ -11,16 +11,16 @@
   "hero": {
     "title": {
       "main": "CrownCode",
-      "accent": "Platformu"
+      "accent": "Platform"
     },
-    "subtitle": "AI ile üretilmiş müzikleri tespit eden gelişmiş yapay zeka araştırma platformu. wav2vec2 tabanlı derin öğrenme modeli kullanarak profesyonel müzik analizi hedefleniyor.",
+    "subtitle": "Yazılım projeleri, araştırma çalışmaları ve geliştirme süreçlerinin sergilendiği merkezi platform. Açık kaynak projeler, demo uygulamalar ve teknik dokümantasyon.",
     "cta": {
-      "explore": "AI Müzik Tespitini Dene",
-      "github": "Kaynak Kodu"
+      "explore": "Projeleri Keşfet",
+      "github": "GitHub'da Görüntüle"
     },
     "features": {
-      "modern": "Gelişmiş AI Teknolojisi",
-      "accuracy": "Hedef %95+ Doğruluk"
+      "modern": "Açık Kaynak Projeler",
+      "accuracy": "Demo & Dokümantasyon"
     },
     "scroll": "Daha Fazlasını Keşfet"
   },

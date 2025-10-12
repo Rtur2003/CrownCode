@@ -13,14 +13,14 @@
       "main": "CrownCode",
       "accent": "Platform"
     },
-    "subtitle": "Advanced AI research platform for detecting AI-generated music. Professional music analysis using wav2vec2-based deep learning model. In development.",
+    "subtitle": "Central platform showcasing software projects, research work, and development processes. Open-source projects, demo applications, and technical documentation.",
     "cta": {
-      "explore": "Try AI Music Detection",
-      "github": "Source Code"
+      "explore": "Explore Projects",
+      "github": "View on GitHub"
     },
     "features": {
-      "modern": "Advanced AI Technology",
-      "accuracy": "Target 95%+ Accuracy"
+      "modern": "Open Source Projects",
+      "accuracy": "Demos & Documentation"
     },
     "scroll": "Discover More"
   },

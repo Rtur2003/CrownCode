@@ -7,9 +7,9 @@ import { ProjectsSection } from '@/components/Home/ProjectsSection'
 const HomePage: NextPage = () => {
   return (
     <MainLayout
-      title="CrownCode Platform - AI Music Detection & Data Analysis Research"
-      description="Academic research platform for AI-powered music detection using wav2vec2 deep learning. Developed at Düzce University Computer Engineering Department as senior thesis project by Hasan Arthur Altuntaş."
-      keywords="AI music detection, wav2vec2, deep learning, audio analysis, machine learning, data augmentation, research platform, Düzce University, computer engineering, thesis project, Hasan Arthur Altuntaş, CrownCode"
+      title="CrownCode Platform - Açık Kaynak Proje Sergisi & Demo Uygulamaları"
+      description="Yazılım projeleri, araştırma çalışmaları ve geliştirme süreçlerinin sergilendiği merkezi platform. AI müzik tespiti, veri manipülasyonu ve diğer açık kaynak projelerin demo uygulamaları."
+      keywords="CrownCode, açık kaynak projeler, demo uygulamalar, AI music detection, veri manipülasyonu, ML toolkit, proje sergisi, yazılım projeleri, GitHub, Hasan Arthur Altuntaş"
     >
       <HeroSection />
       <ProjectsSection />
