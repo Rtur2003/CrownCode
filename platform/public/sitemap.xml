@@ -2,34 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
-  <!-- Homepage -->
+  <!-- Homepage - XYZ Domain -->
   <url>
     <loc>https://hasanarthuraltuntas.xyz/</loc>
-    <lastmod>2025-01-10</lastmod>
+    <lastmod>2025-01-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.xyz/?lang=tr"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.xyz/?lang=en"/>
+    <xhtml:link rel="canonical" href="https://hasanarthuraltuntas.xyz/"/>
   </url>
 
-  <!-- AI Music Detection -->
+  <!-- Homepage - COM.TR Domain -->
+  <url>
+    <loc>https://hasanarthuraltuntas.com.tr/</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.com.tr/?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.com.tr/?lang=en"/>
+    <xhtml:link rel="canonical" href="https://hasanarthuraltuntas.com.tr/"/>
+  </url>
+
+  <!-- AI Music Detection - XYZ Domain -->
   <url>
     <loc>https://hasanarthuraltuntas.xyz/ai-music-detection</loc>
-    <lastmod>2025-01-10</lastmod>
+    <lastmod>2025-01-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.xyz/ai-music-detection?lang=tr"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.xyz/ai-music-detection?lang=en"/>
   </url>
 
-  <!-- Data Manipulation / ML Toolkit -->
+  <!-- AI Music Detection - COM.TR Domain -->
+  <url>
+    <loc>https://hasanarthuraltuntas.com.tr/ai-music-detection</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.com.tr/ai-music-detection?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.com.tr/ai-music-detection?lang=en"/>
+  </url>
+
+  <!-- Data Manipulation / ML Toolkit - XYZ Domain -->
   <url>
     <loc>https://hasanarthuraltuntas.xyz/data-manipulation</loc>
-    <lastmod>2025-01-10</lastmod>
+    <lastmod>2025-01-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.xyz/data-manipulation?lang=tr"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.xyz/data-manipulation?lang=en"/>
+  </url>
+
+  <!-- Data Manipulation / ML Toolkit - COM.TR Domain -->
+  <url>
+    <loc>https://hasanarthuraltuntas.com.tr/data-manipulation</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.com.tr/data-manipulation?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.com.tr/data-manipulation?lang=en"/>
   </url>
 
 </urlset>
