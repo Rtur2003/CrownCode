@@ -48,8 +48,37 @@ export default function Document() {
               },
               potentialAction: {
                 '@type': 'SearchAction',
-                target: 'https://hasanarthuraltuntas.xyz/?q={search_term_string}',
+                target: 'https://hasanarthuraltuntas.xyz/search?q={search_term_string}',
                 'query-input': 'required name=search_term_string'
+              }
+            })
+          }}
+        />
+
+        {/* Organization Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'CrownCode',
+              url: 'https://hasanarthuraltuntas.xyz',
+              logo: 'https://hasanarthuraltuntas.xyz/logo-main.png',
+              description: 'Open-source project showcase and demo applications platform',
+              founder: {
+                '@type': 'Person',
+                name: 'Hasan Arthur Altuntaş',
+                url: 'https://github.com/hasanarthuraltuntas'
+              },
+              sameAs: [
+                'https://github.com/hasanarthuraltuntas',
+                'https://hasanarthuraltuntas.com.tr'
+              ],
+              contactPoint: {
+                '@type': 'ContactPoint',
+                contactType: 'Technical Support',
+                availableLanguage: ['Turkish', 'English']
               }
             })
           }}

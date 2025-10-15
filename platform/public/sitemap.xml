@@ -64,4 +64,24 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.com.tr/data-manipulation?lang=en"/>
   </url>
 
+  <!-- Search Page - XYZ Domain -->
+  <url>
+    <loc>https://hasanarthuraltuntas.xyz/search</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.xyz/search?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.xyz/search?lang=en"/>
+  </url>
+
+  <!-- Search Page - COM.TR Domain -->
+  <url>
+    <loc>https://hasanarthuraltuntas.com.tr/search</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.com.tr/search?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.com.tr/search?lang=en"/>
+  </url>
+
 </urlset>
