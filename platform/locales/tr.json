@@ -201,6 +201,7 @@
     "errors": {
       "enterUrl": "Lütfen geçerli bir müzik URL'si girin.",
       "invalidUrl": "Geçersiz URL formatı. Lütfen http:// veya https:// ile başlayan tam bir URL girin",
+      "unsupportedPlatform": "Desteklenmeyen URL formatı. Desteklenen platformlar:\n• Spotify: https://open.spotify.com/track/... veya https://spotify.com/track/...\n• YouTube: https://www.youtube.com/watch?v=... veya https://youtu.be/...\n• YouTube Music: https://music.youtube.com/watch?v=...\n• SoundCloud: https://soundcloud.com/artist/track\n• Apple Music: https://music.apple.com/country/album/...",
       "unsupportedFormat": "Desteklenmeyen dosya formatı: {format}. İzin verilen formatlar: MP3, WAV, FLAC, M4A",
       "fileTooSmall": "Dosya çok küçük. Minimum dosya boyutu 1KB.",
       "fileTooLarge": "Dosya boyutu 100MB limitini aşıyor. Lütfen daha küçük bir dosya kullanın.",

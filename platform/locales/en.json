@@ -201,6 +201,7 @@
     "errors": {
       "enterUrl": "Please enter a valid music URL.",
       "invalidUrl": "Invalid URL format. Please enter a complete URL starting with http:// or https://",
+      "unsupportedPlatform": "Unsupported URL format. Supported platforms:\n• Spotify: https://open.spotify.com/track/... or https://spotify.com/track/...\n• YouTube: https://www.youtube.com/watch?v=... or https://youtu.be/...\n• YouTube Music: https://music.youtube.com/watch?v=...\n• SoundCloud: https://soundcloud.com/artist/track\n• Apple Music: https://music.apple.com/country/album/...",
       "unsupportedFormat": "Unsupported file format: {format}. Allowed formats: MP3, WAV, FLAC, M4A",
       "fileTooSmall": "File is too small. Minimum file size is 1KB.",
       "fileTooLarge": "File size exceeds 100MB limit. Please use a smaller file.",

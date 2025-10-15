@@ -31,8 +31,6 @@ import { MainLayout } from '@/components/Layout/MainLayout'
 import {
   Upload,
   Music,
-  Play,
-  Pause,
   Shield,
   BarChart3,
   Download,
@@ -103,11 +101,6 @@ const AIMusicDetectionPage: NextPage = () => {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  // Audio playback
-  const [isPlaying, setIsPlaying] = useState<boolean>(false)
-  const [currentTime, setCurrentTime] = useState<number>(0)
-  const [duration, setDuration] = useState<number>(0)
-  const audioRef = useRef<HTMLAudioElement>(null)
 
   // Upload interface
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -118,27 +111,58 @@ const AIMusicDetectionPage: NextPage = () => {
   // -----------------------------------------------------------------------
 
   /**
-   * Handle file selection from input
+   * Validate file header to ensure it's actually an audio file (magic number check)
    */
-  const handleFileSelect = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      validateAndSetFile(file)
-    }
-  }, [])
+  const validateFileHeader = async (file: File): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
 
-  /**
-   * Handle drag and drop file upload
-   */
-  const handleDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    setIsDragOver(false)
+      reader.onload = function(e) {
+        const arrayBuffer = e.target?.result as ArrayBuffer
+        if (!arrayBuffer) {
+          reject(new Error('Could not read file header'))
+          return
+        }
 
-    const file = event.dataTransfer.files[0]
-    if (file) {
-      validateAndSetFile(file)
-    }
-  }, [])
+        const bytes = new Uint8Array(arrayBuffer.slice(0, 12))
+
+        // Check common audio file signatures (magic numbers)
+        const header = Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('')
+
+        // MP3: ID3 tag (49443320) or frame sync (fffb, fff3, fff2)
+        // WAV: RIFF (52494646)
+        // FLAC: fLaC (664c6143)
+        // M4A/MP4: ftyp (66747970)
+
+        const validHeaders = [
+          '494433', // ID3
+          'fff', // MP3 frame sync (partial)
+          '52494646', // RIFF (WAV)
+          '664c6143', // fLaC
+          '66747970', // ftyp (M4A/MP4)
+        ]
+
+        const isValidHeader = validHeaders.some(validHeader =>
+          header.toLowerCase().startsWith(validHeader.toLowerCase())
+        )
+
+        if (!isValidHeader) {
+          reject(new Error('File does not appear to be a valid audio file based on file header analysis.'))
+          return
+        }
+
+        resolve()
+      }
+
+      reader.onerror = function() {
+        reject(new Error('Error reading file header'))
+      }
+
+      // Read first 12 bytes for header validation
+      const blob = file.slice(0, 12)
+      reader.readAsArrayBuffer(blob)
+    })
+  }
 
   /**
    * Comprehensive file validation with security measures
@@ -207,58 +231,27 @@ const AIMusicDetectionPage: NextPage = () => {
   }, [])
 
   /**
-   * Validate file header to ensure it's actually an audio file (magic number check)
+   * Handle file selection from input
    */
-  const validateFileHeader = async (file: File): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
+  const handleFileSelect = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      validateAndSetFile(file)
+    }
+  }, [validateAndSetFile])
 
-      reader.onload = function(e) {
-        const arrayBuffer = e.target?.result as ArrayBuffer
-        if (!arrayBuffer) {
-          reject(new Error('Could not read file header'))
-          return
-        }
+  /**
+   * Handle drag and drop file upload
+   */
+  const handleDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    setIsDragOver(false)
 
-        const bytes = new Uint8Array(arrayBuffer.slice(0, 12))
-
-        // Check common audio file signatures (magic numbers)
-        const header = Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('')
-
-        // MP3: ID3 tag (49443320) or frame sync (fffb, fff3, fff2)
-        // WAV: RIFF (52494646)
-        // FLAC: fLaC (664c6143)
-        // M4A/MP4: ftyp (66747970)
-
-        const validHeaders = [
-          '494433', // ID3
-          'fff', // MP3 frame sync (partial)
-          '52494646', // RIFF (WAV)
-          '664c6143', // fLaC
-          '66747970', // ftyp (M4A/MP4)
-        ]
-
-        const isValidHeader = validHeaders.some(validHeader =>
-          header.toLowerCase().startsWith(validHeader.toLowerCase())
-        )
-
-        if (!isValidHeader) {
-          reject(new Error('File does not appear to be a valid audio file based on file header analysis.'))
-          return
-        }
-
-        resolve()
-      }
-
-      reader.onerror = function() {
-        reject(new Error('Error reading file header'))
-      }
-
-      // Read first 12 bytes for header validation
-      const blob = file.slice(0, 12)
-      reader.readAsArrayBuffer(blob)
-    })
-  }
+    const file = event.dataTransfer.files[0]
+    if (file) {
+      validateAndSetFile(file)
+    }
+  }, [validateAndSetFile])
 
   // -----------------------------------------------------------------------
   // URL PROCESSING HANDLERS
@@ -319,80 +312,6 @@ const AIMusicDetectionPage: NextPage = () => {
   }, [])
 
   /**
-   * Handle URL analysis with comprehensive validation
-   */
-  const handleUrlAnalysis = useCallback(async () => {
-    if (!musicUrl.trim()) {
-      setError('Please enter a valid music URL.')
-      return
-    }
-
-    // Basic URL format validation
-    try {
-      new URL(musicUrl)
-    } catch {
-      setError('Invalid URL format. Please enter a complete URL starting with http:// or https://')
-      return
-    }
-
-    const platform = detectPlatform(musicUrl)
-    if (!platform) {
-      setError(`Unsupported URL format. {t.aiDetection.url.supportedPlatforms}
-      • Spotify: https://open.spotify.com/track/... or https://spotify.com/track/...
-      • YouTube: https://www.youtube.com/watch?v=... or https://youtu.be/...
-      • YouTube Music: https://music.youtube.com/watch?v=...
-      • SoundCloud: https://soundcloud.com/artist/track
-      • Apple Music: https://music.apple.com/country/album/...`)
-      return
-    }
-
-    setProcessingState('analyzing')
-    setError(null)
-
-    try {
-      // Validate URL accessibility (simulate API availability check)
-      await validateUrlAccess(musicUrl, platform)
-
-      // Extract audio and perform analysis
-      await simulateUrlAnalysis(musicUrl, platform)
-    } catch (error: any) {
-      const errorMessage = error.message || 'Failed to analyze the provided URL. Please try again.'
-      setError(errorMessage)
-      setProcessingState('error')
-    }
-  }, [musicUrl, detectPlatform])
-
-  /**
-   * Validate URL accessibility and platform-specific requirements
-   */
-  const validateUrlAccess = async (url: string, platform: SupportedPlatform): Promise<void> => {
-    // Simulate platform-specific validation
-    await new Promise(resolve => setTimeout(resolve, 1000))
-
-    // Simulate various validation scenarios
-    const random = Math.random()
-
-    if (random < 0.1) {
-      throw new Error(`${platform.charAt(0).toUpperCase() + platform.slice(1)} track is private or unavailable.`)
-    }
-
-    if (random < 0.15) {
-      throw new Error(`Region-restricted content. This ${platform} track is not available in your region.`)
-    }
-
-    if (random < 0.2) {
-      throw new Error(`${platform.charAt(0).toUpperCase() + platform.slice(1)} API rate limit exceeded. Please try again in a few minutes.`)
-    }
-
-    // Simulate successful validation
-    return Promise.resolve()
-  }
-
-  // -----------------------------------------------------------------------
-  // AI ANALYSIS CORE
-  // -----------------------------------------------------------------------
-
-  /**
    * ⚠️ DEMO FUNCTION - NOT REAL AI ANALYSIS
    * This function generates RANDOM results for UI demonstration purposes only.
    * Real implementation will use PyTorch backend with wav2vec2 model.
@@ -439,31 +358,78 @@ const AIMusicDetectionPage: NextPage = () => {
    * Simulate URL analysis for streaming platforms
    * ⚠️ DEMO: Uses same random analysis as file upload
    */
-  const simulateUrlAnalysis = async (url: string, platform: SupportedPlatform) => {
+  const simulateUrlAnalysis = useCallback(async (url: string, platform: SupportedPlatform) => {
     // Simulate platform-specific processing
     await new Promise(resolve => setTimeout(resolve, 3000))
 
     // Perform demo analysis
     await performAIAnalysis(url)
-  }
-
-  // -----------------------------------------------------------------------
-  // AUDIO PLAYBACK CONTROLS
-  // -----------------------------------------------------------------------
+  }, [performAIAnalysis])
 
   /**
-   * Toggle audio playback
+   * Handle URL analysis with comprehensive validation
    */
-  const togglePlayback = useCallback(() => {
-    if (!audioRef.current) { return }
-
-    if (isPlaying) {
-      audioRef.current.pause()
-    } else {
-      audioRef.current.play()
+  const handleUrlAnalysis = useCallback(async () => {
+    if (!musicUrl.trim()) {
+      setError(t.aiDetection.errors.enterUrl)
+      return
     }
-    setIsPlaying(!isPlaying)
-  }, [isPlaying])
+
+    // Basic URL format validation
+    try {
+      new URL(musicUrl)
+    } catch {
+      setError(t.aiDetection.errors.invalidUrl)
+      return
+    }
+
+    const platform = detectPlatform(musicUrl)
+    if (!platform) {
+      setError(t.aiDetection.errors.unsupportedPlatform)
+      return
+    }
+
+    setProcessingState('analyzing')
+    setError(null)
+
+    try {
+      // Validate URL accessibility (simulate API availability check)
+      await validateUrlAccess(musicUrl, platform)
+
+      // Extract audio and perform analysis
+      await simulateUrlAnalysis(musicUrl, platform)
+    } catch (error: any) {
+      const errorMessage = error.message || 'Failed to analyze the provided URL. Please try again.'
+      setError(errorMessage)
+      setProcessingState('error')
+    }
+  }, [musicUrl, detectPlatform, t, simulateUrlAnalysis])
+
+  /**
+   * Validate URL accessibility and platform-specific requirements
+   */
+  const validateUrlAccess = async (url: string, platform: SupportedPlatform): Promise<void> => {
+    // Simulate platform-specific validation
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    // Simulate various validation scenarios
+    const random = Math.random()
+
+    if (random < 0.1) {
+      throw new Error(`${platform.charAt(0).toUpperCase() + platform.slice(1)} track is private or unavailable.`)
+    }
+
+    if (random < 0.15) {
+      throw new Error(`Region-restricted content. This ${platform} track is not available in your region.`)
+    }
+
+    if (random < 0.2) {
+      throw new Error(`${platform.charAt(0).toUpperCase() + platform.slice(1)} API rate limit exceeded. Please try again in a few minutes.`)
+    }
+
+    // Simulate successful validation
+    return Promise.resolve()
+  }
 
   // -----------------------------------------------------------------------
   // RENDER HELPERS
