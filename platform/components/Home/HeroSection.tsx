@@ -205,7 +205,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
             {/* Code Preview Content */}
             <div className="hero-card-content">
               <div className="hero-code-line">
-                <span className="code-comment">// CrownCode AI Music Detection Platform</span>
+                <span className="code-comment">{'//'} CrownCode AI Music Detection Platform</span>
               </div>
               <div className="hero-code-line">
                 <span className="code-keyword">import</span>
@@ -213,7 +213,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
                 <span className="code-variable">AIDetector</span>
                 <span className="code-brace"> &#125; </span>
                 <span className="code-keyword">from</span>
-                <span className="code-string"> '@crowncode/platform'</span>
+                <span className="code-string"> &apos;@crowncode/platform&apos;</span>
               </div>
               <div className="hero-code-line">
                 <span className="code-keyword">const</span>
@@ -222,11 +222,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
                 <span className="code-keyword">await </span>
                 <span className="code-function">AIDetector</span>
                 <span className="code-brace">(</span>
-                <span className="code-string">'music.wav'</span>
+                <span className="code-string">&apos;music.wav&apos;</span>
                 <span className="code-brace">)</span>
               </div>
               <div className="hero-code-line">
-                <span className="code-comment">// Professional AI Detection | Accuracy: 97.2%</span>
+                <span className="code-comment">{'//'} Professional AI Detection | Accuracy: 97.2%</span>
               </div>
             </div>
           </div>

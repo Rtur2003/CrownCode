@@ -167,8 +167,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
    * @returns CSS class string for status styling
    */
   const getStatusClass = (status: string): string => {
-    if (status === 'Aktif' || status === 'Research Active') return 'active'
-    if (status === 'Geliştiriliyor' || status === 'Developing') return 'developing'
+    if (status === 'Aktif' || status === 'Research Active') { return 'active' }
+    if (status === 'Geliştiriliyor' || status === 'Developing') { return 'developing' }
     return 'planned'
   }
 
