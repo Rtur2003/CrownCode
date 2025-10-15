@@ -65,9 +65,18 @@ export default MyApp
  * Web Vitals reporting for performance monitoring
  * Tracks Core Web Vitals: LCP, FID, CLS, FCP, TTFB
  */
-export function reportWebVitals(metric: any) {
+interface WebVitalMetric {
+  name: string
+  value: number
+  rating: string
+  delta: number
+  id: string
+}
+
+export function reportWebVitals(metric: WebVitalMetric) {
   // Log to console in development
   if (process.env.NODE_ENV === 'development') {
+    // eslint-disable-next-line no-console
     console.log(`[Web Vitals] ${metric.name}:`, {
       value: metric.value,
       rating: metric.rating,

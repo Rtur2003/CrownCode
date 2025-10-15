@@ -6,27 +6,9 @@ import {
   Mail,
   Globe,
   Heart,
-  Code2,
-  Music,
-  Database,
-  Brain,
-  Star,
-  Users,
-  Coffee
+  Code2
 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
-
-interface FooterLink {
-  label: string
-  href: string
-  external?: boolean
-}
-
-interface FooterSection {
-  title: string
-  links: FooterLink[]
-}
-
 
 export const Footer: React.FC = () => {
   const { t } = useLanguage()

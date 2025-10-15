@@ -4,7 +4,7 @@
  * Bağımlılıklar: useKeyboardShortcuts, styles/components/shortcuts-modal.css
  */
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Keyboard } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'

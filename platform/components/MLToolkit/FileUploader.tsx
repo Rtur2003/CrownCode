@@ -29,23 +29,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ dataType, onFilesSel
     }
   }, [])
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setIsDragging(false)
-
-    const files = Array.from(e.dataTransfer.files)
-    handleFiles(files)
-  }, [dataType])
-
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const files = Array.from(e.target.files)
-      handleFiles(files)
-    }
-  }
-
-  const handleFiles = (files: File[]) => {
+  const handleFiles = useCallback((files: File[]) => {
     const validFiles = files.filter(file => {
       if (dataType === 'image') {
         return file.type.startsWith('image/')
@@ -56,6 +40,22 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ dataType, onFilesSel
 
     setSelectedFiles(prev => [...prev, ...validFiles])
     onFilesSelected(validFiles)
+  }, [dataType, onFilesSelected])
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(false)
+
+    const files = Array.from(e.dataTransfer.files)
+    handleFiles(files)
+  }, [handleFiles])
+
+  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files)
+      handleFiles(files)
+    }
   }
 
   const removeFile = (index: number) => {

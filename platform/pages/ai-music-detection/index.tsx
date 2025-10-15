@@ -225,7 +225,8 @@ const AIMusicDetectionPage: NextPage = () => {
       setError(null)
       setAnalysisResult(null)
 
-    } catch (error: any) {
+    } catch (err) {
+      const error = err as Error
       setError(error.message || 'File validation failed. Please try a different file.')
     }
   }, [])
@@ -305,7 +306,7 @@ const AIMusicDetectionPage: NextPage = () => {
       }
 
       return null
-    } catch (error) {
+    } catch {
       // Invalid URL format
       return null
     }
@@ -358,7 +359,7 @@ const AIMusicDetectionPage: NextPage = () => {
    * Simulate URL analysis for streaming platforms
    * ⚠️ DEMO: Uses same random analysis as file upload
    */
-  const simulateUrlAnalysis = useCallback(async (url: string, platform: SupportedPlatform) => {
+  const simulateUrlAnalysis = useCallback(async (url: string, _platform: SupportedPlatform) => {
     // Simulate platform-specific processing
     await new Promise(resolve => setTimeout(resolve, 3000))
 
@@ -398,7 +399,8 @@ const AIMusicDetectionPage: NextPage = () => {
 
       // Extract audio and perform analysis
       await simulateUrlAnalysis(musicUrl, platform)
-    } catch (error: any) {
+    } catch (err) {
+      const error = err as Error
       const errorMessage = error.message || 'Failed to analyze the provided URL. Please try again.'
       setError(errorMessage)
       setProcessingState('error')

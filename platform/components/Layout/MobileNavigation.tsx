@@ -12,9 +12,6 @@ import {
   Home,
   FolderOpen,
   Music,
-  Brain,
-  User,
-  Search,
   BookOpen
 } from 'lucide-react'
 
