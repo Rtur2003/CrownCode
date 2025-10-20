@@ -27,6 +27,20 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (hasLoaded) {
       setIsLoading(false)
     }
+
+    // Register service worker for PWA
+    if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((registration) => {
+          // eslint-disable-next-line no-console
+          console.log('[SW] Service Worker registered:', registration.scope)
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error('[SW] Service Worker registration failed:', error)
+        })
+    }
   }, [])
 
   const handleLoadingComplete = () => {
