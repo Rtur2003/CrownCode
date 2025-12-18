@@ -6,6 +6,7 @@ This is a placeholder structure ready for wav2vec2 integration.
 """
 from typing import Optional, Dict, Any
 from pathlib import Path
+from threading import Lock
 from ..config import get_settings
 from ..exceptions import ModelNotFoundError, InferenceError
 from ..logging_config import get_logger
@@ -91,14 +92,17 @@ class AIModelService:
 
 
 _model_service: Optional[AIModelService] = None
+_model_service_lock = Lock()
 
 
 def get_model_service() -> AIModelService:
-    """Get singleton instance of model service."""
+    """Get thread-safe singleton instance of model service."""
     global _model_service
     
     if _model_service is None:
-        _model_service = AIModelService()
-        _model_service.load_model()
+        with _model_service_lock:
+            if _model_service is None:
+                _model_service = AIModelService()
+                _model_service.load_model()
     
     return _model_service
