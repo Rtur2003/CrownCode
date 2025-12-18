@@ -221,7 +221,7 @@ export const useYouTubeAnalysis = () => {
   const startTimeRef = useRef<number>(0)
 
   const apiBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_API_URL?.trim(), [])
-  const minDurationMs = 1200
+  const minDurationMs = 4000
 
   const reset = useCallback(() => {
     setAnalysisResult(null)
