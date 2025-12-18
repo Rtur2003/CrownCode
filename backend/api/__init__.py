@@ -10,8 +10,10 @@ api_router = APIRouter()
 # Import and include sub-routers
 from .health import router as health_router
 from .version import router as version_router
+from .analyze import router as analyze_router
 
 api_router.include_router(health_router, tags=["health"])
 api_router.include_router(version_router, tags=["info"])
+api_router.include_router(analyze_router, tags=["analysis"])
 
 __all__ = ['api_router']
