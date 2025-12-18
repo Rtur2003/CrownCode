@@ -160,7 +160,13 @@
     "url": {
       "title": "YouTube Baglantisini Analiz Et",
       "placeholder": "YouTube linki yapistirin (youtube.com veya youtu.be)...",
-      "supportedPlatforms": "Desteklenen platform:",
+      "supportedPlatforms": "Girdi secenekleri:",
+      "sources": {
+        "youtube": "YouTube",
+        "upload": "Dosya yukleme (yakinda)",
+        "spotify": "Spotify (yakinda)",
+        "appleMusic": "Apple Music (yakinda)"
+      },
       "analyzeButton": "Baglantiyi Isle",
       "analyzing": "Isleniyor..."
     },
