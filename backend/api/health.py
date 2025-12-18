@@ -5,7 +5,7 @@ System health monitoring and status reporting.
 """
 from fastapi import APIRouter
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime, timezone
 import psutil
 from ..config import get_settings
 
@@ -35,7 +35,7 @@ async def health_check() -> HealthResponse:
     
     return HealthResponse(
         status="healthy",
-        timestamp=datetime.utcnow(),
+        timestamp=datetime.now(timezone.utc),
         version=settings.app_version,
         environment=settings.environment,
         system={
