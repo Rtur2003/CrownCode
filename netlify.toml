@@ -1,6 +1,6 @@
 [build]
   base = "platform"
-  command = "npm install --prefix . && npm run build --prefix ."
+  command = "corepack prepare npm@10.9.2 --activate && npm install --prefix . && npm run build --prefix ."
   publish = "out"
 
 [build.environment]
