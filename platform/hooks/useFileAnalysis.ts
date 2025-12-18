@@ -4,11 +4,12 @@
  * Bagimliliklar: File API, fetch API (optional)
  */
 
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import type { AnalysisErrorCode, AnalysisResult, ProcessingState } from '@/hooks/analysisTypes'
+import { analyzeSource } from '@/hooks/analysisGateway'
 import { buildFeatureScores, buildSeed, previewIndicators } from '@/hooks/analysisUtils'
 
-const MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024
+const MAX_FILE_SIZE_BYTES = 30 * 1024 * 1024
 const MIN_FILE_SIZE_BYTES = 1024
 
 const ALLOWED_MIME_TYPES = new Set([
@@ -96,6 +97,7 @@ export const useFileAnalysis = () => {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null)
   const [error, setError] = useState<AnalysisErrorCode | null>(null)
   const startTimeRef = useRef<number>(0)
+  const apiBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_API_URL?.trim(), [])
 
   const validateFile = useCallback((file: File): AnalysisErrorCode | null => {
     if (!isSafeFileName(file.name)) {
@@ -158,13 +160,50 @@ export const useFileAnalysis = () => {
     setProcessingState('validating')
     startTimeRef.current = Date.now()
 
-    setProcessingState('downloading')
-    setProcessingState('analyzing')
+    const fallbackToPreview = (warningKey?: string) => {
+      const elapsedSec = Math.max((Date.now() - startTimeRef.current) / 1000, 0.4)
+      const indicators = warningKey ? [warningKey] : []
+      const preview = buildPreviewResult(selectedFile, elapsedSec)
+      if (warningKey) {
+        preview.features.artificialIndicators = [
+          ...preview.features.artificialIndicators,
+          `Fallback reason: ${warningKey}`
+        ]
+      }
+      setAnalysisResult(preview)
+      setProcessingState('complete')
+    }
 
-    const elapsedSec = Math.max((Date.now() - startTimeRef.current) / 1000, 0.4)
-    setAnalysisResult(buildPreviewResult(selectedFile, elapsedSec))
-    setProcessingState('complete')
-  }, [selectedFile, validateFile])
+    setProcessingState('downloading')
+
+    if (!apiBaseUrl) {
+      fallbackToPreview('backend_not_configured')
+      return
+    }
+
+    try {
+      setProcessingState('analyzing')
+      const { result, error: gatewayError } = await analyzeSource(apiBaseUrl, {
+        sourceType: 'file',
+        file: selectedFile
+      })
+
+      if (result) {
+        setAnalysisResult(result)
+        setProcessingState('complete')
+        return
+      }
+
+      if (gatewayError === 'backend_not_configured' || gatewayError === 'backend_unreachable' || gatewayError === 'backend_unexpected_response') {
+        fallbackToPreview(gatewayError)
+      } else {
+        setError(gatewayError || 'unsupportedFileType')
+        setProcessingState('error')
+      }
+    } catch (fetchError) {
+      fallbackToPreview('backend_unreachable')
+    }
+  }, [apiBaseUrl, selectedFile, validateFile])
 
   return {
     selectedFile,

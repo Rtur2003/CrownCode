@@ -6,6 +6,7 @@
 
 import { useCallback, useMemo, useRef, useState } from 'react'
 import type { AnalysisErrorCode, AnalysisResult, DecisionSource, ProcessingState } from '@/hooks/analysisTypes'
+import { analyzeSource } from '@/hooks/analysisGateway'
 import { buildFeatureScores, buildSeed, previewIndicators } from '@/hooks/analysisUtils'
 
 interface ParsedYouTubeUrl {
@@ -69,9 +70,14 @@ const parseYouTubeUrl = (input: string): ParsedYouTubeUrl | null => {
 
     let videoId: string | null = null
 
+    const isYouTubeHost = host.includes('youtube.com') || host.includes('youtu.be') || host.includes('music.youtube.com')
+    if (!isYouTubeHost) {
+      return null
+    }
+
     if (host === 'youtu.be' || host === 'www.youtu.be') {
       videoId = path.replace('/', '').split('/')[0] || null
-    } else if (host.includes('youtube.com')) {
+    } else if (host.includes('youtube.com') || host.includes('music.youtube.com')) {
       if (path === '/watch') {
         videoId = params.get('v')
       } else if (path.startsWith('/shorts/') || path.startsWith('/live/') || path.startsWith('/embed/')) {
@@ -191,11 +197,6 @@ export const useYouTubeAnalysis = () => {
   const startTimeRef = useRef<number>(0)
 
   const apiBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_API_URL?.trim(), [])
-  const timeoutMs = useMemo(() => {
-    const raw = process.env.NEXT_PUBLIC_API_TIMEOUT
-    const parsed = raw ? Number(raw) : 15000
-    return Number.isFinite(parsed) ? parsed : 15000
-  }, [])
 
   const reset = useCallback(() => {
     setAnalysisResult(null)
@@ -204,24 +205,10 @@ export const useYouTubeAnalysis = () => {
     setProcessingState('idle')
   }, [])
 
-  const fetchWithTimeout = useCallback(async (endpoint: string, payload: object) => {
-    const controller = new AbortController()
-    const timer = setTimeout(() => controller.abort(), timeoutMs)
-    try {
-      return await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        signal: controller.signal
-      })
-    } finally {
-      clearTimeout(timer)
-    }
-  }, [timeoutMs])
-
   const runAnalysis = useCallback(async () => {
     if (!url.trim()) {
       setError('enterUrl')
+      setProcessingState('error')
       return
     }
 
@@ -233,61 +220,49 @@ export const useYouTubeAnalysis = () => {
       return
     }
 
+    const fallbackToPreview = (warningKey?: string) => {
+      const elapsedSec = (Date.now() - startTimeRef.current) / 1000
+      const warningsBuffer = warningKey ? [warningKey] : []
+      setAnalysisResult(buildPreviewResult(parsed, url, elapsedSec, warningsBuffer))
+      setWarnings(warningsBuffer)
+      setProcessingState('complete')
+    }
+
     setError(null)
     setWarnings([])
     setAnalysisResult(null)
     startTimeRef.current = Date.now()
 
-    const warningsBuffer: string[] = []
     setProcessingState('downloading')
 
     if (!apiBaseUrl) {
-      warningsBuffer.push('backend_not_configured')
-      const elapsedSec = (Date.now() - startTimeRef.current) / 1000
-      setAnalysisResult(buildPreviewResult(parsed, url, elapsedSec, warningsBuffer))
-      setWarnings(warningsBuffer)
-      setProcessingState('complete')
+      fallbackToPreview('backend_not_configured')
       return
     }
 
     try {
       setProcessingState('analyzing')
-      const response = await fetchWithTimeout(`${apiBaseUrl}/api/youtube/analyze`, {
-        url,
-        include_raw: false
+      const { result, error: gatewayError } = await analyzeSource(apiBaseUrl, {
+        sourceType: 'youtube',
+        url
       })
 
-      if (!response.ok) {
-        warningsBuffer.push(`backend_http_${response.status}`)
-        const elapsedSec = (Date.now() - startTimeRef.current) / 1000
-        setAnalysisResult(buildPreviewResult(parsed, url, elapsedSec, warningsBuffer))
-        setWarnings(warningsBuffer)
+      if (result) {
+        setAnalysisResult(result)
         setProcessingState('complete')
         return
       }
 
-      const data = await response.json() as BackendResponse
-      const elapsedSec = (Date.now() - startTimeRef.current) / 1000
-
-      if (!data?.summary || !data?.source) {
-        warningsBuffer.push('backend_unexpected_response')
-        setAnalysisResult(buildPreviewResult(parsed, url, elapsedSec, warningsBuffer))
-        setWarnings(warningsBuffer)
-        setProcessingState('complete')
-        return
+      if (gatewayError === 'backend_not_configured' || gatewayError === 'backend_unreachable' || gatewayError === 'backend_unexpected_response') {
+        fallbackToPreview(gatewayError)
+      } else {
+        setError(gatewayError || 'invalidYouTubeUrl')
+        setProcessingState('error')
       }
-
-      setAnalysisResult(mapBackendResponse(parsed, url, data, elapsedSec))
-      setWarnings(data.warnings || [])
-      setProcessingState('complete')
     } catch (fetchError) {
-      warningsBuffer.push('backend_unreachable')
-      const elapsedSec = (Date.now() - startTimeRef.current) / 1000
-      setAnalysisResult(buildPreviewResult(parsed, url, elapsedSec, warningsBuffer))
-      setWarnings(warningsBuffer)
-      setProcessingState('complete')
+      fallbackToPreview('backend_unreachable')
     }
-  }, [apiBaseUrl, fetchWithTimeout, url])
+  }, [apiBaseUrl, url])
 
   return {
     url,
