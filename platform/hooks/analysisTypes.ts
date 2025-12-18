@@ -24,6 +24,13 @@ export interface YouTubeSourceInfo {
   startTimeSec?: number
 }
 
+export interface SpotifySourceInfo {
+  kind: 'spotify'
+  url: string
+  trackId: string
+  normalizedUrl: string
+}
+
 export interface FileSourceInfo {
   kind: 'file'
   fileName: string
@@ -31,7 +38,7 @@ export interface FileSourceInfo {
   mimeType: string
 }
 
-export type AnalysisSource = YouTubeSourceInfo | FileSourceInfo
+export type AnalysisSource = YouTubeSourceInfo | SpotifySourceInfo | FileSourceInfo
 
 export interface AnalysisResult {
   isAIGenerated: boolean

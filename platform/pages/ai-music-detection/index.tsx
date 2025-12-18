@@ -205,7 +205,7 @@ const AIMusicDetectionPage: NextPage = () => {
         </div>
 
         <div className={styles['result-source']}>
-          {source.kind === 'youtube' ? (
+          {source.kind === 'youtube' && (
             <>
               <div className={styles['result-source-item']}>
                 <span>{t.aiDetection.result.videoId}</span>
@@ -216,7 +216,20 @@ const AIMusicDetectionPage: NextPage = () => {
                 <span>{source.normalizedUrl}</span>
               </div>
             </>
-          ) : (
+          )}
+          {source.kind === 'spotify' && (
+            <>
+              <div className={styles['result-source-item']}>
+                <span>Spotify Track</span>
+                <span>{source.trackId}</span>
+              </div>
+              <div className={styles['result-source-item']}>
+                <span>{t.aiDetection.result.normalizedUrl}</span>
+                <span>{source.normalizedUrl}</span>
+              </div>
+            </>
+          )}
+          {source.kind === 'file' && (
             <>
               <div className={styles['result-source-item']}>
                 <span>{t.aiDetection.result.fileName}</span>

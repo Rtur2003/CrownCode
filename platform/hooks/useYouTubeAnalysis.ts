@@ -9,11 +9,9 @@ import type { AnalysisErrorCode, AnalysisResult, DecisionSource, ProcessingState
 import { analyzeSource } from '@/hooks/analysisGateway'
 import { buildFeatureScores, buildSeed, previewIndicators } from '@/hooks/analysisUtils'
 
-interface ParsedYouTubeUrl {
-  videoId: string
-  normalizedUrl: string
-  startTimeSec?: number
-}
+type ParsedSource =
+  | { kind: 'youtube'; videoId: string; normalizedUrl: string; startTimeSec?: number }
+  | { kind: 'spotify'; trackId: string; normalizedUrl: string }
 
 interface BackendSummary {
   is_ai_generated: boolean
@@ -61,7 +59,7 @@ const parseTimeOffset = (raw: string | null): number | undefined => {
   }, 0)
 }
 
-const parseYouTubeUrl = (input: string): ParsedYouTubeUrl | null => {
+const parseYouTubeUrl = (input: string): ParsedSource | null => {
   try {
     const url = new URL(input.trim())
     const host = url.hostname.toLowerCase()
@@ -71,8 +69,18 @@ const parseYouTubeUrl = (input: string): ParsedYouTubeUrl | null => {
     let videoId: string | null = null
 
     const isYouTubeHost = host.includes('youtube.com') || host.includes('youtu.be') || host.includes('music.youtube.com')
-    if (!isYouTubeHost) {
+    const isSpotifyHost = host.includes('spotify.com')
+    if (!isYouTubeHost && !isSpotifyHost) {
       return null
+    }
+
+    if (isSpotifyHost) {
+      const parts = path.split('/').filter(Boolean)
+      const trackIndex = parts.findIndex((p) => p === 'track')
+      const trackId = trackIndex >= 0 ? parts[trackIndex + 1] : null
+      if (!trackId) return null
+      const normalizedUrl = `https://open.spotify.com/track/${trackId}`
+      return { kind: 'spotify', trackId, normalizedUrl }
     }
 
     if (host === 'youtu.be' || host === 'www.youtu.be') {
@@ -94,25 +102,24 @@ const parseYouTubeUrl = (input: string): ParsedYouTubeUrl | null => {
       ? `https://www.youtube.com/watch?v=${videoId}&t=${startTimeSec}`
       : `https://www.youtube.com/watch?v=${videoId}`
 
-    const parsed: ParsedYouTubeUrl = {
+    return {
+      kind: 'youtube',
       videoId,
       normalizedUrl,
       ...(startTimeSec !== undefined ? { startTimeSec } : {})
     }
-
-    return parsed
   } catch (error) {
     return null
   }
 }
 
 const buildPreviewResult = (
-  parsed: ParsedYouTubeUrl,
+  parsed: ParsedSource,
   url: string,
   elapsedSec: number,
   warnings: string[]
 ): AnalysisResult => {
-  const seed = buildSeed(parsed.videoId)
+  const seed = buildSeed(parsed.kind === 'spotify' ? parsed.trackId : parsed.videoId)
   const isAIGenerated = seed > 0.5
   const baseConfidence = 0.55 + seed * 0.35
   const confidence = Number(Math.min(0.97, Math.max(0.51, baseConfidence + (Math.random() - 0.5) * 0.08)).toFixed(3))
@@ -129,13 +136,21 @@ const buildPreviewResult = (
     processingTime: elapsedSec,
     modelVersion: 'youtube-preview-v1',
     decisionSource: 'preview',
-    source: {
-      kind: 'youtube',
-      url,
-      normalizedUrl: parsed.normalizedUrl,
-      videoId: parsed.videoId,
-      ...(parsed.startTimeSec !== undefined ? { startTimeSec: parsed.startTimeSec } : {})
-    },
+    source:
+      parsed.kind === 'youtube'
+        ? {
+            kind: 'youtube',
+            url,
+            normalizedUrl: parsed.normalizedUrl,
+            videoId: parsed.videoId,
+            ...(parsed.startTimeSec !== undefined ? { startTimeSec: parsed.startTimeSec } : {})
+          }
+        : {
+            kind: 'spotify',
+            url,
+            normalizedUrl: parsed.normalizedUrl,
+            trackId: parsed.trackId
+          },
     features: {
       ...featureScores,
       artificialIndicators: indicators
@@ -144,18 +159,18 @@ const buildPreviewResult = (
       duration: 0,
       sampleRate: 44100,
       bitrate: 192,
-      format: 'YOUTUBE'
+      format: parsed.kind === 'spotify' ? 'SPOTIFY' : 'YOUTUBE'
     }
   }
 }
 
 const mapBackendResponse = (
-  parsed: ParsedYouTubeUrl,
+  parsed: ParsedSource,
   url: string,
   response: BackendResponse,
   elapsedSec: number
 ): AnalysisResult => {
-  const seed = buildSeed(parsed.videoId)
+  const seed = buildSeed(parsed.kind === 'spotify' ? parsed.trackId : parsed.videoId)
   const featureScores = buildFeatureScores(seed)
   const indicators = response.summary.indicators || []
   const warnings = response.warnings || []
@@ -167,15 +182,23 @@ const mapBackendResponse = (
     processingTime: response.timings?.total_sec ?? elapsedSec,
     modelVersion: response.summary.model_version,
     decisionSource: response.summary.decision_source,
-    source: {
-      kind: 'youtube',
-      url,
-      normalizedUrl: response.source.normalized_url,
-      videoId: response.source.video_id,
-      ...(response.source.start_time_sec !== undefined
-        ? { startTimeSec: response.source.start_time_sec }
-        : {})
-    },
+    source:
+      parsed.kind === 'youtube'
+        ? {
+            kind: 'youtube',
+            url,
+            normalizedUrl: response.source.normalized_url,
+            videoId: response.source.video_id,
+            ...(response.source.start_time_sec !== undefined
+              ? { startTimeSec: response.source.start_time_sec }
+              : {})
+          }
+        : {
+            kind: 'spotify',
+            url,
+            normalizedUrl: response.source.normalized_url || parsed.normalizedUrl,
+            trackId: parsed.trackId
+          },
     features: {
       ...featureScores,
       artificialIndicators: [...indicators, ...warningIndicators]
@@ -184,7 +207,7 @@ const mapBackendResponse = (
       duration: response.source.duration_sec ?? 0,
       sampleRate: 44100,
       bitrate: 192,
-      format: response.source.audio_format ?? 'YOUTUBE'
+      format: response.source.audio_format ?? (parsed.kind === 'spotify' ? 'SPOTIFY' : 'YOUTUBE')
     }
   }
 }
@@ -198,6 +221,7 @@ export const useYouTubeAnalysis = () => {
   const startTimeRef = useRef<number>(0)
 
   const apiBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_API_URL?.trim(), [])
+  const minDurationMs = 1200
 
   const reset = useCallback(() => {
     setAnalysisResult(null)
@@ -221,7 +245,15 @@ export const useYouTubeAnalysis = () => {
       return
     }
 
-    const fallbackToPreview = (warningKey?: string) => {
+    const ensureMinDuration = async () => {
+      const elapsedMs = Date.now() - startTimeRef.current
+      if (elapsedMs < minDurationMs) {
+        await new Promise((resolve) => setTimeout(resolve, minDurationMs - elapsedMs))
+      }
+    }
+
+    const fallbackToPreview = async (warningKey?: string) => {
+      await ensureMinDuration()
       const elapsedSec = (Date.now() - startTimeRef.current) / 1000
       const warningsBuffer = warningKey ? [warningKey] : []
       setAnalysisResult(buildPreviewResult(parsed, url, elapsedSec, warningsBuffer))
@@ -244,11 +276,12 @@ export const useYouTubeAnalysis = () => {
     try {
       setProcessingState('analyzing')
       const { result, error: gatewayError } = await analyzeSource(apiBaseUrl, {
-        sourceType: 'youtube',
+        sourceType: parsed.kind === 'spotify' ? 'spotify' : 'youtube',
         url
       })
 
       if (result) {
+        await ensureMinDuration()
         setAnalysisResult(result)
         setProcessingState('complete')
         return
