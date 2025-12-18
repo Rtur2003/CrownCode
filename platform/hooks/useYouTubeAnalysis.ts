@@ -118,11 +118,13 @@ const parseYouTubeUrl = (input: string): ParsedYouTubeUrl | null => {
       ? `https://www.youtube.com/watch?v=${videoId}&t=${startTimeSec}`
       : `https://www.youtube.com/watch?v=${videoId}`
 
-    return {
+    const parsed: ParsedYouTubeUrl = {
       videoId,
       normalizedUrl,
-      startTimeSec
+      ...(startTimeSec !== undefined ? { startTimeSec } : {})
     }
+
+    return parsed
   } catch (error) {
     return null
   }
@@ -175,7 +177,7 @@ const buildPreviewResult = (
       url,
       normalizedUrl: parsed.normalizedUrl,
       videoId: parsed.videoId,
-      startTimeSec: parsed.startTimeSec
+      ...(parsed.startTimeSec !== undefined ? { startTimeSec: parsed.startTimeSec } : {})
     },
     features: {
       ...featureScores,
@@ -212,7 +214,9 @@ const mapBackendResponse = (
       url,
       normalizedUrl: response.source.normalized_url,
       videoId: response.source.video_id,
-      startTimeSec: response.source.start_time_sec
+      ...(response.source.start_time_sec !== undefined
+        ? { startTimeSec: response.source.start_time_sec }
+        : {})
     },
     features: {
       ...featureScores,
