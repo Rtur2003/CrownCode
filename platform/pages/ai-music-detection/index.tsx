@@ -78,6 +78,7 @@ const AIMusicDetectionPage: NextPage = () => {
     const confidence = Math.round(analysisResult.confidence * 100)
     const decisionLabel = getDecisionLabel(analysisResult.decisionSource)
     const isAI = analysisResult.isAIGenerated
+    const source = analysisResult.source
 
     return (
       <motion.div
@@ -116,16 +117,18 @@ const AIMusicDetectionPage: NextPage = () => {
           </div>
         </div>
 
-        <div className={styles['result-source']}>
-          <div className={styles['result-source-item']}>
-            <span>{t.aiDetection.result.videoId}</span>
-            <span>{analysisResult.source.videoId}</span>
+        {source.kind === 'youtube' && (
+          <div className={styles['result-source']}>
+            <div className={styles['result-source-item']}>
+              <span>{t.aiDetection.result.videoId}</span>
+              <span>{source.videoId}</span>
+            </div>
+            <div className={styles['result-source-item']}>
+              <span>{t.aiDetection.result.normalizedUrl}</span>
+              <span>{source.normalizedUrl}</span>
+            </div>
           </div>
-          <div className={styles['result-source-item']}>
-            <span>{t.aiDetection.result.normalizedUrl}</span>
-            <span>{analysisResult.source.normalizedUrl}</span>
-          </div>
-        </div>
+        )}
 
         <div className={styles['artificial-indicators']}>
           <h4>{t.aiDetection.result.analysisDetails}</h4>
