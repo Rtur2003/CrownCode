@@ -9,12 +9,19 @@ export const fnv1a = (value: string): number => {
 
 export const buildSeed = (value: string): number => (fnv1a(value) % 1000) / 1000
 
+const clamp01 = (value: number) => Math.min(0.99, Math.max(0, value))
+
+const jitter = (value: number, magnitude: number) => {
+  const delta = (Math.random() - 0.5) * magnitude
+  return Number(clamp01(value + delta).toFixed(3))
+}
+
 export const buildFeatureScores = (seed: number) => {
-  const normalized = (offset: number) => Number(((seed + offset) % 1).toFixed(3))
+  const normalized = (offset: number) => ((seed + offset) % 1)
   return {
-    spectralRegularity: normalized(0.17),
-    temporalPatterns: normalized(0.43),
-    harmonicStructure: normalized(0.71)
+    spectralRegularity: jitter(normalized(0.17), 0.12),
+    temporalPatterns: jitter(normalized(0.43), 0.12),
+    harmonicStructure: jitter(normalized(0.71), 0.12)
   }
 }
 
