@@ -52,3 +52,6 @@ export type AnalysisErrorCode =
   | 'fileTooLarge'
   | 'fileTooSmall'
   | 'invalidFileName'
+  | 'backend_not_configured'
+  | 'backend_unreachable'
+  | 'backend_unexpected_response'

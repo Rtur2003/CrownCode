@@ -6,7 +6,7 @@
 
 import { useCallback, useMemo, useRef, useState } from 'react'
 import type { AnalysisErrorCode, AnalysisResult, DecisionSource, ProcessingState } from '@/hooks/analysisTypes'
-import { buildFeatureScores, buildSeed } from '@/hooks/analysisUtils'
+import { buildFeatureScores, buildSeed, previewIndicators } from '@/hooks/analysisUtils'
 
 interface ParsedYouTubeUrl {
   videoId: string
@@ -111,10 +111,7 @@ const buildPreviewResult = (
   const confidence = Number((0.55 + seed * 0.35).toFixed(3))
   const featureScores = buildFeatureScores(seed)
 
-  const indicators = [
-    'Preview-only decision based on URL fingerprint.',
-    'No model inference was available at request time.'
-  ]
+  const indicators = previewIndicators()
   if (warnings.length) {
     indicators.push('Warnings reported by the backend pipeline.')
   }
