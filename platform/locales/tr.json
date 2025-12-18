@@ -161,7 +161,7 @@
       "title": "Ses Dosyasi Yukle",
       "dropHere": "Ses dosyanizi buraya birakin",
       "orClick": "veya tiklayip secin",
-      "supported": "Desteklenen: MP3, WAV, FLAC, M4A (maks 100MB)",
+      "supported": "Desteklenen: MP3, WAV, FLAC, M4A (maks 30MB / ~6 dk)",
       "analyzeButton": "Dosyayi Analiz Et",
       "analyzing": "Analiz Ediliyor..."
     },
@@ -230,9 +230,12 @@
       "invalidYouTubeUrl": "Gecersiz YouTube URL'si. https://www.youtube.com/watch?v=... veya https://youtu.be/... kullanin.",
       "missingFile": "Lutfen analiz icin bir ses dosyasi secin.",
       "unsupportedFileType": "Desteklenmeyen dosya formati. MP3, WAV, FLAC, M4A kullanin.",
-      "fileTooLarge": "Dosya boyutu 100MB sinirini asiyor. Daha kucuk dosya secin.",
+      "fileTooLarge": "Dosya boyutu 30MB (yaklasik 6 dk) sinirini asiyor. Daha kucuk dosya secin.",
       "fileTooSmall": "Dosya cok kucuk. Minimum boyut 1KB.",
-      "invalidFileName": "Gecersiz dosya adi. Dosyayi yeniden adlandirin."
+      "invalidFileName": "Gecersiz dosya adi. Dosyayi yeniden adlandirin.",
+      "backend_not_configured": "Backend ayarlanamadi. Yalnizca onizleme sonucu gosteriliyor.",
+      "backend_unreachable": "Backend su anda ulasilamiyor. Yalnizca onizleme sonucu gosteriliyor.",
+      "backend_unexpected_response": "Backend beklenmedik cevap verdi. Yalnizca onizleme sonucu gosteriliyor."
     }
   },
   "mlToolkit": {

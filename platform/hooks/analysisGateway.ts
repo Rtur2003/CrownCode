@@ -38,22 +38,38 @@ export const analyzeSource = async (
     formData.append('file', payload.file)
   }
 
-  const response = await fetch(`${apiBaseUrl}/api/analyze`, {
-    method: 'POST',
-    body: formData
-  })
+  // Validate required fields before hitting the network
+  if (payload.sourceType === 'youtube' && !payload.url) {
+    return { result: null, error: 'enterUrl' }
+  }
+  if (payload.sourceType === 'file' && !payload.file) {
+    return { result: null, error: 'missingFile' }
+  }
 
-  if (!response.ok) {
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/analyze`, {
+      method: 'POST',
+      body: formData
+    })
+
+    if (!response.ok) {
+      return { result: null, error: 'backend_unreachable' as AnalysisErrorCode }
+    }
+
+    const data = await response.json() as AnalyzeResponse
+    if (data.errors && data.errors.length) {
+      // Map a few known errors to the existing codes
+      if (data.errors.includes('missing_file')) return { result: null, error: 'missingFile' }
+      if (data.errors.includes('unsupported_source')) return { result: null, error: 'invalidYouTubeUrl' }
+      return { result: null, error: 'backend_unexpected_response' as AnalysisErrorCode }
+    }
+
+    if (!data.result) {
+      return { result: null, error: 'backend_unexpected_response' as AnalysisErrorCode }
+    }
+
+    return { result: data.result, error: null }
+  } catch (error) {
     return { result: null, error: 'backend_unreachable' as AnalysisErrorCode }
   }
-
-  const data = await response.json() as AnalyzeResponse
-  if (data.errors && data.errors.length) {
-    // Map a few known errors to the existing codes
-    if (data.errors.includes('missing_file')) return { result: null, error: 'missingFile' }
-    if (data.errors.includes('unsupported_source')) return { result: null, error: 'invalidYouTubeUrl' }
-    return { result: null, error: 'backend_unexpected_response' as AnalysisErrorCode }
-  }
-
-  return { result: data.result ?? null, error: null }
 }
