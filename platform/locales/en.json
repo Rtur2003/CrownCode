@@ -161,7 +161,7 @@
       "title": "Upload Audio File",
       "dropHere": "Drop your audio file here",
       "orClick": "or click to browse",
-      "supported": "Supported: MP3, WAV, FLAC, M4A (max 100MB)",
+      "supported": "Supported: MP3, WAV, FLAC, M4A (max 30MB / ~6 min)",
       "analyzeButton": "Analyze File",
       "analyzing": "Analyzing..."
     },
@@ -230,9 +230,12 @@
       "invalidYouTubeUrl": "Invalid YouTube URL. Use https://www.youtube.com/watch?v=... or https://youtu.be/...",
       "missingFile": "Please choose an audio file to analyze.",
       "unsupportedFileType": "Unsupported file format. Allowed: MP3, WAV, FLAC, M4A.",
-      "fileTooLarge": "File size exceeds 100MB limit. Please use a smaller file.",
+      "fileTooLarge": "File size exceeds 30MB limit (about 6 minutes of audio). Please use a smaller file.",
       "fileTooSmall": "File is too small. Minimum file size is 1KB.",
-      "invalidFileName": "Invalid file name. Please rename your audio file."
+      "invalidFileName": "Invalid file name. Please rename your audio file.",
+      "backend_not_configured": "Backend is not configured. Showing preview-only result.",
+      "backend_unreachable": "Backend is unreachable right now. Showing preview-only result.",
+      "backend_unexpected_response": "Backend returned an unexpected response. Showing preview-only result."
     }
   },
   "mlToolkit": {
