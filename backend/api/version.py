@@ -5,7 +5,7 @@ Application version and feature flag reporting.
 """
 from fastapi import APIRouter
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime, timezone
 from ..config import get_settings
 
 router = APIRouter()
@@ -31,7 +31,7 @@ async def get_version() -> VersionResponse:
     return VersionResponse(
         version=settings.app_version,
         environment=settings.environment,
-        build_date=datetime.utcnow(),
+        build_date=datetime.now(timezone.utc),
         features={
             "ai_music_detection": True,
             "data_manipulation": True,
