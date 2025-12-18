@@ -41,7 +41,18 @@ const AIMusicDetectionPage: NextPage = () => {
   } = useYouTubeAnalysis()
 
   const isProcessing = ['validating', 'downloading', 'analyzing'].includes(processingState)
-  const errorMessage = error ? (t.aiDetection.errors?.[error] || t.aiDetection.error.title) : null
+  const resolveErrorMessage = (errorKey: string | null) => {
+    if (!errorKey) return null
+    if (errorKey === 'enterUrl') {
+      return t.aiDetection.errors?.enterUrl || t.aiDetection.error.title
+    }
+    if (errorKey === 'invalidYouTubeUrl') {
+      return t.aiDetection.errors?.invalidYouTubeUrl || t.aiDetection.error.title
+    }
+    return t.aiDetection.error.title
+  }
+
+  const errorMessage = resolveErrorMessage(error)
 
   const stepOrder: Array<'validating' | 'downloading' | 'analyzing' | 'complete'> = [
     'validating',
