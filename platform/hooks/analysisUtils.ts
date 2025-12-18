@@ -17,3 +17,11 @@ export const buildFeatureScores = (seed: number) => {
     harmonicStructure: normalized(0.71)
   }
 }
+
+export const previewIndicators = (extra?: string[]) => {
+  const base = [
+    'Preview-only decision based on fingerprint.',
+    'No model inference was available at request time.'
+  ]
+  return extra && extra.length ? [...base, ...extra] : base
+}

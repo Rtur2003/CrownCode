@@ -6,7 +6,7 @@
 
 import { useCallback, useRef, useState } from 'react'
 import type { AnalysisErrorCode, AnalysisResult, ProcessingState } from '@/hooks/analysisTypes'
-import { buildFeatureScores, buildSeed } from '@/hooks/analysisUtils'
+import { buildFeatureScores, buildSeed, previewIndicators } from '@/hooks/analysisUtils'
 
 const MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024
 const MIN_FILE_SIZE_BYTES = 1024
@@ -79,10 +79,7 @@ const buildPreviewResult = (file: File, elapsedSec: number): AnalysisResult => {
     },
     features: {
       ...featureScores,
-      artificialIndicators: [
-        'Preview-only decision based on file fingerprint.',
-        'No model inference was available at request time.'
-      ]
+      artificialIndicators: previewIndicators()
     },
     audioInfo: {
       duration: 0,
