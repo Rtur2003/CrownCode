@@ -1,11 +1,11 @@
 {
   "nav": {
     "home": "Ana Sayfa",
-    "products": "Ürünler",
+    "products": "Urunler",
     "github": "GitHub",
     "projects": "Projeler",
-    "aiMusic": "AI Müzik",
-    "docs": "Dokümanlar",
+    "aiMusic": "AI Muzik",
+    "docs": "Dokumanlar",
     "aiMusicBadge": "Aktif"
   },
   "hero": {
@@ -13,112 +13,112 @@
       "main": "CrownCode",
       "accent": "Platform"
     },
-    "subtitle": "Yazılım projeleri, araştırma çalışmaları ve geliştirme süreçlerinin sergilendiği merkezi platform. Açık kaynak projeler, demo uygulamalar ve teknik dokümantasyon.",
+    "subtitle": "Yazilim projeleri, arastirma calismalari ve gelistirme sureclerinin sergilendigi merkezi platform. Acik kaynak projeler, demo uygulamalar ve teknik dokumantasyon.",
     "cta": {
-      "explore": "Projeleri Keşfet",
-      "github": "GitHub'da Görüntüle"
+      "explore": "Projeleri Kesfet",
+      "github": "GitHub'da Goruntule"
     },
     "features": {
-      "modern": "Açık Kaynak Projeler",
-      "accuracy": "Demo & Dokümantasyon"
+      "modern": "Acik Kaynak Projeler",
+      "accuracy": "Demo ve Dokumantasyon"
     },
-    "scroll": "Daha Fazlasını Keşfet"
+    "scroll": "Daha Fazlasini Kesfet"
   },
   "products": {
-    "badge": "AI Müzik Tespiti",
-    "title": "Gelişmiş AI ile",
-    "titleAccent": "Müzik Analizi",
-    "subtitle": "wav2vec2 mimarisini kullanan derin öğrenme modeli ile AI tarafından üretilmiş müzikleri gerçek insan bestelerinden ayırt eden profesyonel analiz platformu.",
+    "badge": "AI Muzik Tespiti",
+    "title": "Gelismis AI ile",
+    "titleAccent": "Muzik Analizi",
+    "subtitle": "wav2vec2 mimarisini kullanan derin ogrenme platformu ile AI tarafindan uretilmis muzikleri insan bestelerinden ayirt eden profesyonel analiz.",
     "cta": {
       "title": "Daha Fazla Proje Yolda",
-      "description": "GitHub'da tüm projelerimizi inceleyebilir, katkıda bulunabilirsiniz",
-      "button": "GitHub'da Görüntüle"
+      "description": "GitHub'da tum projelerimizi inceleyebilir, katkida bulunabilirsiniz",
+      "button": "GitHub'da Goruntule"
     },
     "items": {
       "aiMusic": {
-        "title": "AI Müzik Tespit Motoru",
-        "description": "wav2vec2 tabanlı derin öğrenme modeli ile AI üretimi müzikleri insan bestelerinden ayırt etmeyi hedefleyen araştırma platformu. Geliştirme aşamasında.",
-        "status": "Geliştiriliyor",
-        "stats": "Hedef %95+ Doğruluk",
+        "title": "AI Muzik Tespit Motoru",
+        "description": "wav2vec2 tabanli derin ogrenme modeli ile AI uretimi muzikleri insan bestelerinden ayirt etmeyi hedefleyen arastirma platformu. Gelistirme asamasinda.",
+        "status": "Gelistiriliyor",
+        "stats": "Hedef %95+ Dogruluk",
         "features": [
           "wav2vec2 Mimarisi",
-          "Derin Öğrenme",
-          "Ses Analizi"
+          "Transfer Ogrenme",
+          "Otomatik Pipeline"
         ]
       },
       "mlToolkit": {
-        "title": "ML Araştırma Araç Seti",
-        "description": "Veri seti artırma, işleme ve analiz için kapsamlı makine öğrenmesi platformu. Otomatik kalite kontrolü ve araştırma kalitesinde veri pipeline'ları içerir.",
-        "status": "Araştırma Aktif",
-        "stats": "%91.7 Kalite Oranı",
+        "title": "ML Arastirma Arac Seti",
+        "description": "Veri seti artirma, isleme ve analiz icin kapsamli makine ogrenmesi platformu. Otomatik kalite kontrolu ve arastirma kalitesinde veri pipeline'lari icerir.",
+        "status": "Arastirma Aktif",
+        "stats": "%91.7 Kalite Orani",
         "features": [
-          "Veri Seti İşleme",
-          "Kalite Kontrolü",
-          "Araştırma Analitiği"
+          "Veri Seti Isleme",
+          "Kalite Kontrolu",
+          "Arastirma Analitigi"
         ]
       }
     }
   },
   "audioDataset": {
-    "title": "Ses Veri Seti Araçları",
-    "subtitle": "AI müzik tespiti için ses veri setlerini hazırlama ve işleme araçları",
+    "title": "Ses Veri Seti Araclari",
+    "subtitle": "AI muzik tespiti icin ses veri setlerini hazirlama ve isleme araclari",
     "demo": {
-      "badge": "Arayüz Demosu",
-      "notice": "Ön yüz uygulaması - Arka plan işleme gelecek aşamalarda eklenecek"
+      "badge": "Arayuz Demosu",
+      "notice": "On yuz uygulamasi - Arka plan isleme gelecek asamalarda eklenecek"
     },
     "tools": {
       "upload": {
-        "title": "Ses Dosyası Yükleme",
-        "description": "Toplu ses dosyası yükleme ve format doğrulama"
+        "title": "Ses Dosyasi Yukleme",
+        "description": "Toplu ses dosyasi yukleme ve format dogrulama"
       },
       "convert": {
-        "title": "Format Dönüştürme",
-        "description": "MP3, WAV, FLAC formatları arasında dönüştürme"
+        "title": "Format Donusturme",
+        "description": "MP3, WAV, FLAC formatlari arasinda donusturme"
       },
       "augment": {
-        "title": "Veri Artırma",
-        "description": "Pitch, tempo ve gürültü ile ses artırma"
+        "title": "Veri Artirma",
+        "description": "Pitch, tempo ve gurultu ile ses artirma"
       },
       "organize": {
         "title": "Veri Seti Organizasyonu",
-        "description": "Etiketleme ve kategorilendirme araçları"
+        "description": "Etiketleme ve kategorilendirme araclari"
       }
     }
   },
   "footer": {
-    "description": "AI müzik tespiti ve ses analizi için profesyonel platform. wav2vec2 tabanlı derin öğrenme teknolojisi ile gelişmiş müzik analizi ve streaming platform entegrasyonu sunan yenilikçi çözüm.",
+    "description": "AI muzik tespiti ve ses analizi icin profesyonel platform. wav2vec2 tabanli derin ogrenme teknolojisi ile gelismis muzik analizi ve streaming platform entegrasyonu sunan yenilikci cozum.",
     "community": {
       "title": "Topluluk",
       "stars": "GitHub Stars",
-      "contributors": "Contributors",
-      "coffee": "Coffee Consumed"
+      "contributors": "Katkida Bulunanlar",
+      "coffee": "Tuketilen Kahve"
     },
     "projects": {
-      "title": "Proje Durumları",
-      "aiMusic": "AI Müzik Tespit",
-      "dataManipulation": "Veri İşleme",
-      "mlToolkit": "ML Araç Seti"
+      "title": "Proje Durumlari",
+      "aiMusic": "AI Muzik Tespit",
+      "dataManipulation": "Veri Isleme",
+      "mlToolkit": "ML Arac Seti"
     },
     "sections": {
       "platform": {
         "title": "Platform",
         "home": "Ana Sayfa",
-        "products": "Ürünler",
+        "products": "Urunler",
         "github": "GitHub",
-        "docs": "Dokümantasyon"
+        "docs": "Dokumantasyon"
       },
       "products": {
-        "title": "Ürünler",
-        "aiMusic": "AI Müzik Tespit",
-        "dataProcessing": "Veri İşleme Suite",
-        "mlToolkit": "ML Araç Seti",
-        "allProjects": "Tüm Projeler"
+        "title": "Urunler",
+        "aiMusic": "AI Muzik Tespit",
+        "dataProcessing": "Veri Isleme Paketi",
+        "mlToolkit": "ML Arac Seti",
+        "allProjects": "Tum Projeler"
       },
       "developer": {
-        "title": "Geliştirici",
-        "name": "Hasan Arthur Altuntaş",
-        "portfolio": "Portfolio",
-        "contact": "İletişim",
+        "title": "Gelistirici",
+        "name": "Hasan Arthur Altuntas",
+        "portfolio": "Portfolyo",
+        "contact": "Iletisim",
         "linkedin": "LinkedIn"
       },
       "support": {
@@ -126,158 +126,159 @@
         "faq": "SSS",
         "apiGuide": "API Rehberi",
         "issues": "Issue Bildirimi",
-        "contribute": "Katkıda Bulunun"
+        "contribute": "Katkida Bulunun"
       }
     },
     "bottom": {
-      "copyright": "CrownCode. Tüm hakları saklıdır.",
-      "privacy": "Gizlilik Politikası",
-      "terms": "Kullanım Koşulları",
+      "copyright": "CrownCode. Tum haklari saklidir.",
+      "privacy": "Gizlilik Politikasi",
+      "terms": "Kullanim Kosullari",
       "madeWith": "Made with",
       "by": "by"
     }
   },
   "aiDetection": {
     "meta": {
-      "title": "AI Müzik Tespiti - CrownCode Platform (Demo Arayüzü)",
-      "description": "AI müzik tespit sistemi için profesyonel ön yüz arayüzü. Planlanan wav2vec2 tabanlı derin öğrenme uygulamasının demonstrasyonu. Backend AI entegrasyonu geliştiriliyor.",
-      "keywords": "AI müzik tespiti, wav2vec2, derin öğrenme, müzik analizi, yapay zeka, ses analizi, demo arayüzü"
+      "title": "AI Muzik Tespiti - YouTube Is Akisi",
+      "description": "YouTube odakli analiz akisi. Backend entegrasyonlari varsa kullanir, model yoksa deterministik onizleme kullanir.",
+      "keywords": "AI muzik tespiti, YouTube analizi, ses analizi, onizleme akisi, CrownCode"
     },
     "header": {
-      "badge": "AI Müzik Tespiti",
-      "title": "AI Üretimi Müzikleri Tespit Et",
-      "subtitle": "AI destekli müzik tespit sistemi için profesyonel ön yüz arayüz gösterimi. Bu arayüz, planlanan kullanıcı deneyimi ve sistem mimarisini sergiliyor."
+      "badge": "AI Muzik Tespiti",
+      "title": "AI Uretimi Muzikleri Tespit Et",
+      "subtitle": "YouTube odakli analiz arayuzu; backend entegrasyonlari opsiyonel, onizleme guvenli yedektir."
     },
     "warning": {
-      "title": "Demo Arayüzü - Eğitim Amaçlı",
+      "title": "YouTube Onizleme Modu",
       "currentStatus": "Mevcut Durum:",
-      "currentStatusText": "Bu profesyonel bir UI/UX gösterimidir.",
-      "analysisResults": "Analiz Sonuçları:",
-      "analysisResultsText": "Sadece arayüz testi için üretilmiştir - gerçek AI tahminleri değil.",
+      "currentStatusText": "Model ciktisi opsiyonel ve offline olabilir.",
+      "analysisResults": "Analiz Sonuclari:",
+      "analysisResultsText": "Onizleme sonuclari URL tabanli ve deterministiktir.",
       "plannedImplementation": "Planlanan Uygulama:",
       "plannedImplementationText": "PyTorch + wav2vec2 modeli ile backend AI entegrasyonu (2025 Q2)."
     },
-    "upload": {
-      "title": "Ses Dosyası Yükle",
-      "dropHere": "Ses dosyanızı buraya bırakın",
-      "orClick": "veya tıklayarak seçin",
-      "supported": "Desteklenen: MP3, WAV, FLAC, M4A (maks 100MB)",
-      "analyzeButton": "Dosyayı Analiz Et",
-      "analyzing": "Analiz Ediliyor..."
-    },
     "url": {
-      "title": "URL'den Analiz Et",
-      "placeholder": "Spotify, YouTube, SoundCloud veya Apple Music URL'si yapıştırın...",
-      "supportedPlatforms": "Desteklenen platformlar:",
-      "analyzeButton": "URL'yi Analiz Et",
-      "analyzing": "Analiz Ediliyor..."
+      "title": "YouTube Baglantisini Analiz Et",
+      "placeholder": "YouTube linki yapistirin (youtube.com veya youtu.be)...",
+      "supportedPlatforms": "Desteklenen platform:",
+      "analyzeButton": "Baglantiyi Isle",
+      "analyzing": "Isleniyor..."
+    },
+    "pipeline": {
+      "title": "Pipeline Modulleri",
+      "items": {
+        "download": "YouTube ses yakalama",
+        "musicAi": "Music-AIDetector cikarim",
+        "sesAnalizi": "Ses-Analizi raporu",
+        "preview": "Onizleme yedegi"
+      },
+      "note": "Model yoksa onizleme modu her zaman kullanilir."
     },
     "processing": {
-      "title": "Demo Analizi Devam Ediyor...",
-      "subtitle": "Arayüz gösterimi için AI tespit iş akışı simüle ediliyor.",
+      "title": "Analiz Devam Ediyor...",
+      "subtitle": "Baglanti dogrulaniyor ve analiz akisi hazirlaniyor.",
       "steps": {
-        "simulation": "UI simülasyonu",
-        "generation": "Rastgele sonuç üretimi",
-        "testing": "Arayüz testi",
-        "completion": "Demo tamamlanıyor"
+        "validating": "URL Dogrulama",
+        "downloading": "Ses Hazirlama",
+        "analyzing": "Sinyal Analizi",
+        "complete": "Rapor Tamamlama"
       }
     },
     "error": {
-      "title": "Analiz Hatası",
+      "title": "Analiz Hatasi",
       "tryAgain": "Tekrar Dene"
     },
     "result": {
-      "aiDetected": "AI Üretimi Müzik Tespit Edildi",
-      "humanDetected": "İnsan Bestesi Müzik",
-      "confidence": "Güven",
+      "aiDetected": "AI Uretimi Muzik Tespit Edildi",
+      "humanDetected": "Insan Bestesi Muzik",
+      "confidence": "Guven",
       "model": "Model",
-      "processingTime": "İşlem Süresi",
-      "sampleRate": "Örnekleme Hızı",
-      "duration": "Süre",
-      "analysisDetails": "Analiz Detayları:",
-      "exportReport": "Rapor Dışa Aktar",
-      "analyzeAnother": "Başka Analiz Et"
+      "processingTime": "Islem Suresi",
+      "sampleRate": "Ornekleme Hizi",
+      "duration": "Sure",
+      "analysisDetails": "Analiz Detaylari:",
+      "exportReport": "Raporu Disari Aktar",
+      "analyzeAnother": "Baska Analiz Et",
+      "decisionSource": "Karar Kaynagi",
+      "sources": {
+        "musicAi": "Music-AIDetector",
+        "sesAnalizi": "Ses-Analizi",
+        "preview": "Onizleme"
+      },
+      "videoId": "Video ID",
+      "normalizedUrl": "Normalize URL"
     },
     "errors": {
-      "enterUrl": "Lütfen geçerli bir müzik URL'si girin.",
-      "invalidUrl": "Geçersiz URL formatı. Lütfen http:// veya https:// ile başlayan tam bir URL girin",
-      "unsupportedPlatform": "Desteklenmeyen URL formatı. Desteklenen platformlar:\n• Spotify: https://open.spotify.com/track/... veya https://spotify.com/track/...\n• YouTube: https://www.youtube.com/watch?v=... veya https://youtu.be/...\n• YouTube Music: https://music.youtube.com/watch?v=...\n• SoundCloud: https://soundcloud.com/artist/track\n• Apple Music: https://music.apple.com/country/album/...",
-      "unsupportedFormat": "Desteklenmeyen dosya formatı: {format}. İzin verilen formatlar: MP3, WAV, FLAC, M4A",
-      "fileTooSmall": "Dosya çok küçük. Minimum dosya boyutu 1KB.",
-      "fileTooLarge": "Dosya boyutu 100MB limitini aşıyor. Lütfen daha küçük bir dosya kullanın.",
-      "invalidFileName": "Geçersiz dosya adı. Dosya adı yasak karakterler içeriyor.",
-      "suspiciousFile": "Dosya adı şüpheli desenler içeriyor. Lütfen ses dosyanızı yeniden adlandırın.",
-      "invalidHeader": "Dosya başlık analizine göre geçerli bir ses dosyası gibi görünmüyor.",
-      "headerReadError": "Dosya başlığı okunurken hata oluştu",
-      "validationFailed": "Dosya doğrulaması başarısız. Lütfen farklı bir dosya deneyin."
+      "enterUrl": "Lutfen bir YouTube URL'si girin.",
+      "invalidYouTubeUrl": "Gecersiz YouTube URL'si. https://www.youtube.com/watch?v=... veya https://youtu.be/... kullanin."
     }
   },
   "mlToolkit": {
     "badge": "ML Toolkit",
-    "title": "Veri Seti Çoğaltma",
-    "subtitle": "Görsel ve ses veri setlerinizi AI ile 2 katına çıkarın",
+    "title": "Veri Seti Cogaltma",
+    "subtitle": "Gorsel ve ses veri setlerinizi AI ile 2 katina cikarin",
     "dataType": {
-      "title": "Veri Tipi Seçin",
-      "subtitle": "Hangi tür veri seti ile çalışacaksınız?",
+      "title": "Veri Tipi Secin",
+      "subtitle": "Hangi tur veri seti ile calisacaksiniz?",
       "image": {
-        "title": "Görsel Veri Seti",
-        "description": "Fotoğraf ve görsel dosyalarınızı çoğaltın"
+        "title": "Gorsel Veri Seti",
+        "description": "Fotograf ve gorsel dosyalarinizi cogaltin"
       },
       "audio": {
         "title": "Ses Veri Seti",
-        "description": "Ses dosyalarınızı işleyip zenginleştirin"
+        "description": "Ses dosyalarinizi isleyip zenginlestirin"
       }
     },
     "fileUploader": {
       "image": {
-        "title": "Görsel Dosyalarını Yükleyin",
+        "title": "Gorsel Dosyalarinizi Yukleyin",
         "hint": "JPG, PNG, WEBP destekleniyor"
       },
       "audio": {
-        "title": "Ses Dosyalarını Yükleyin",
+        "title": "Ses Dosyalarinizi Yukleyin",
         "hint": "MP3, WAV, OGG destekleniyor"
       },
-      "subtitle": "Sürükle bırak veya tıklayarak dosya seç",
-      "filesUploaded": "Yüklenen Dosyalar"
+      "subtitle": "Surukle birak veya tiklayarak dosya sec",
+      "filesUploaded": "Yuklenen Dosyalar"
     },
     "imageOptions": {
-      "title": "Görsel İşleme Seçenekleri",
-      "selectedCount": "seçenek aktif",
+      "title": "Gorsel Isleme Secenekleri",
+      "selectedCount": "secenek aktif",
       "colorChange": {
-        "title": "Renk Değişimi",
-        "description": "Parlaklık, kontrast ve renk tonlarını değiştir"
+        "title": "Renk Degisimi",
+        "description": "Parlaklik, kontrast ve renk tonlarini degistir"
       },
       "rotation": {
-        "title": "Döndürme",
-        "description": "Görselleri rastgele açılarda döndür"
+        "title": "Dondurme",
+        "description": "Gorselleri rastgele acilarda dondur"
       },
       "zoomIn": {
-        "title": "Yakınlaştırma",
-        "description": "Görselleri yakınlaştırıp kırp"
+        "title": "Yakinlastirma",
+        "description": "Gorselleri yakinlastirip kirp"
       },
       "zoomOut": {
-        "title": "Uzaklaştırma",
-        "description": "Görselleri uzaklaştırıp padding ekle"
+        "title": "Uzaklastirma",
+        "description": "Gorselleri uzaklastirip padding ekle"
       },
       "blend": {
-        "title": "Karıştırma",
-        "description": "İki görseli karıştırıp yeni görsel oluştur"
+        "title": "Karistirma",
+        "description": "Iki gorseli karistirip yeni gorsel olustur"
       },
       "overlay": {
-        "title": "Görsel Ekleme",
-        "description": "Bir görselin içine başka görsel ekle"
+        "title": "Gorsel Ekleme",
+        "description": "Bir gorselin icine baska gorsel ekle"
       }
     },
     "audioOptions": {
-      "title": "Ses İşleme Seçenekleri",
-      "selectedCount": "seçenek aktif",
+      "title": "Ses Isleme Secenekleri",
+      "selectedCount": "secenek aktif",
       "pitchShift": {
-        "title": "Pitch Değişimi",
-        "description": "Sesin perdesini yukarı veya aşağı kaydır"
+        "title": "Pitch Degisimi",
+        "description": "Sesin perdesini yukari veya asagi kaydir"
       },
       "speedChange": {
-        "title": "Hız Değişimi",
-        "description": "Ses hızını artır veya azalt"
+        "title": "Hiz Degisimi",
+        "description": "Ses hizini artir veya azalt"
       },
       "bassBoost": {
         "title": "Bass/Treble",
@@ -285,81 +286,81 @@
       },
       "trimSilence": {
         "title": "Sessizlik Kesme",
-        "description": "Başta ve sondaki sessizlikleri kaldır"
+        "description": "Basta ve sondaki sessizlikleri kaldir"
       },
       "mixAudio": {
-        "title": "Ses Karıştırma",
-        "description": "İki ses dosyasını karıştır"
+        "title": "Ses Karistirma",
+        "description": "Iki ses dosyasini karistir"
       },
       "addNoise": {
-        "title": "Gürültü Ekleme",
-        "description": "Hafif arka plan gürültüsü ekle"
+        "title": "Gurultu Ekleme",
+        "description": "Hafif arka plan gurultusu ekle"
       }
     },
     "progress": {
-      "title": "Veri Seti İstatistikleri",
+      "title": "Veri Seti Istatistikleri",
       "original": "Orijinal",
       "current": "Mevcut",
       "target": "Hedef",
-      "progress": "İlerleme",
+      "progress": "Ilerleme",
       "newData": "{count} yeni veri eklendi"
     },
     "processLog": {
-      "title": "İşlem Durumu",
-      "notStarted": "İşlem başlamadı..."
+      "title": "Islem Durumu",
+      "notStarted": "Islem baslamadi..."
     },
     "logs": {
-      "filesUploaded": "{count} dosya yüklendi",
-      "processStarted": "İşlem başlatıldı...",
-      "allReady": "Toplam {count} dosya hazır!",
-      "imageProcessed": "görsel",
+      "filesUploaded": "{count} dosya yuklendi",
+      "processStarted": "Islem baslatildi...",
+      "allReady": "Toplam {count} dosya hazir!",
+      "imageProcessed": "gorsel",
       "audioProcessed": "ses",
-      "processed": "İşlendi",
-      "uploadFirst": "Lütfen önce dosya yükleyin!",
-      "selectOperation": "Lütfen en az bir işlem seçin!",
-      "creatingZip": "ZIP dosyası oluşturuluyor...",
-      "downloadStarted": "İndirme başlatıldı!"
+      "processed": "Islendi",
+      "uploadFirst": "Lutfen once dosya yukleyin!",
+      "selectOperation": "Lutfen en az bir islem secin!",
+      "creatingZip": "ZIP dosyasi olusturuluyor...",
+      "downloadStarted": "Indirme baslatildi!"
     },
     "meta": {
       "title": "ML Toolkit",
-      "description": "Görsel ve ses veri setlerinizi otomatik olarak 2 katına çıkarın. AI destekli augmentation platformu.",
+      "description": "Gorsel ve ses veri setlerinizi otomatik olarak 2 katina cikarin. AI destekli augmentation platformu.",
       "keywords": "data augmentation, ML toolkit, image processing, audio processing, dataset generator, CrownCode"
     },
     "buttons": {
-      "changeType": "Veri Tipini Değiştir",
-      "startProcess": "İşlemi Başlat"
+      "changeType": "Veri Tipini Degistir",
+      "startProcess": "Islemi Baslat"
     },
     "download": {
-      "button": "Veri Setini İndir ({count} dosya)",
-      "downloading": "İndiriliyor...",
-      "downloaded": "İndirildi!"
+      "button": "Veri Setini Indir ({count} dosya)",
+      "downloading": "Indiriliyor...",
+      "downloaded": "Indirildi!"
     },
-    "optionsActive": "seçenek aktif"
+    "optionsActive": "secenek aktif"
   },
   "toast": {
     "success": {
-      "title": "Başarılı",
-      "copied": "Panoya kopyalandı",
+      "title": "Basarili",
+      "copied": "Panoya kopyalandi",
       "saved": "Kaydedildi",
-      "updated": "Güncellendi",
+      "updated": "Guncellendi",
       "deleted": "Silindi",
-      "uploaded": "Yükleme başarılı"
+      "uploaded": "Yukleme basarili"
     },
     "error": {
       "title": "Hata",
-      "general": "Bir hata oluştu",
-      "network": "Bağlantı hatası",
-      "fileSize": "Dosya boyutu çok büyük",
-      "fileType": "Desteklenmeyen dosya türü",
-      "upload": "Yükleme başarısız"
+      "general": "Bir hata olustu",
+      "network": "Baglanti hatasi",
+      "fileSize": "Dosya boyutu cok buyuk",
+      "fileType": "Desteklenmeyen dosya turu",
+      "upload": "Yukleme basarisiz"
     },
     "warning": {
-      "title": "Uyarı",
-      "unsaved": "Kaydedilmemiş değişiklikler var"
+      "title": "Uyari",
+      "unsaved": "Kaydedilmemis degisiklikler var"
     },
     "info": {
       "title": "Bilgi",
-      "processing": "İşleniyor..."
+      "processing": "Isleniyor..."
     }
   },
   "search": {
@@ -377,8 +378,7 @@
       "projects": "Projeler"
     },
     "features": {
-      "upload": "Dosya Yukle",
-      "urlAnalysis": "URL Analizi",
+      "urlAnalysis": "YouTube Analizi",
       "dataAugmentation": "Veri Artirma"
     }
   }
