@@ -1,0 +1,1 @@
+# Model Placeholder\n\nBu klasf6r, gerf5ek model aa7b1rld1k dosyalard1 ib7ermez. Netlify ortamd1nda ab7d1rld1klar host edilmiyor; gerf5ek inference, harici INFERENCE_API_URL ile saf7lanacak.\n
