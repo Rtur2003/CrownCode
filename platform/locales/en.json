@@ -160,7 +160,13 @@
     "url": {
       "title": "Analyze YouTube Link",
       "placeholder": "Paste a YouTube link (youtube.com or youtu.be)...",
-      "supportedPlatforms": "Supported platform:",
+      "supportedPlatforms": "Input options:",
+      "sources": {
+        "youtube": "YouTube",
+        "upload": "File upload (coming soon)",
+        "spotify": "Spotify (coming soon)",
+        "appleMusic": "Apple Music (coming soon)"
+      },
       "analyzeButton": "Process Link",
       "analyzing": "Processing..."
     },

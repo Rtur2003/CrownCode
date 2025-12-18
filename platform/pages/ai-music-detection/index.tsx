@@ -222,10 +222,20 @@ const AIMusicDetectionPage: NextPage = () => {
 
                 <div className={styles['supported-platforms']}>
                   <span>{t.aiDetection.url.supportedPlatforms}</span>
-                  <div className={styles['platform-icons']}>
-                    <div className={styles['platform-icon']}>
-                      <Youtube size={20} className="text-current" />
-                    </div>
+                  <div className={styles['source-chips']}>
+                    <span className={`${styles['source-chip']} ${styles['source-chip-active']}`}>
+                      <Youtube size={16} className={styles['source-chip-icon']} />
+                      {t.aiDetection.url.sources.youtube}
+                    </span>
+                    <span className={`${styles['source-chip']} ${styles['source-chip-soon']}`}>
+                      {t.aiDetection.url.sources.upload}
+                    </span>
+                    <span className={`${styles['source-chip']} ${styles['source-chip-soon']}`}>
+                      {t.aiDetection.url.sources.spotify}
+                    </span>
+                    <span className={`${styles['source-chip']} ${styles['source-chip-soon']}`}>
+                      {t.aiDetection.url.sources.appleMusic}
+                    </span>
                   </div>
                 </div>
               </div>

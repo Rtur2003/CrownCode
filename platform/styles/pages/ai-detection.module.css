@@ -174,32 +174,46 @@
 
 .supported-platforms {
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
   color: #94a3b8;
   font-size: 0.875rem;
 }
 
-.platform-icons {
+.source-chips {
   display: flex;
-  gap: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
-.platform-icon {
-  display: flex;
+.source-chip {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
   background: rgba(56, 189, 248, 0.1);
-  border-radius: 0.5rem;
+  border-radius: 999px;
   color: #38bdf8;
-  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
-.platform-icon:hover {
-  background: rgba(56, 189, 248, 0.2);
-  transform: translateY(-2px);
+.source-chip-icon {
+  color: #38bdf8;
+}
+
+.source-chip-active {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
+}
+
+.source-chip-soon {
+  background: rgba(148, 163, 184, 0.12);
+  border-color: rgba(148, 163, 184, 0.35);
+  color: #94a3b8;
 }
 
 /* =========================================================================
@@ -611,12 +625,12 @@
   }
 
   .supported-platforms {
-    flex-direction: column;
     gap: 0.75rem;
     text-align: center;
+    align-items: center;
   }
 
-  .platform-icons {
+  .source-chips {
     justify-content: center;
   }
 }
