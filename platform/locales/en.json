@@ -157,17 +157,31 @@
       "plannedImplementation": "Planned Implementation:",
       "plannedImplementationText": "Backend AI integration with PyTorch + wav2vec2 model (Q2 2025)."
     },
+    "upload": {
+      "title": "Upload Audio File",
+      "dropHere": "Drop your audio file here",
+      "orClick": "or click to browse",
+      "supported": "Supported: MP3, WAV, FLAC, M4A (max 100MB)",
+      "analyzeButton": "Analyze File",
+      "analyzing": "Analyzing..."
+    },
     "url": {
       "title": "Analyze YouTube Link",
       "placeholder": "Paste a YouTube link (youtube.com or youtu.be)...",
-      "supportedPlatforms": "Supported platform:",
+      "supportedPlatforms": "Input options:",
+      "sources": {
+        "youtube": "YouTube",
+        "upload": "File upload",
+        "spotify": "Spotify (coming soon)",
+        "appleMusic": "Apple Music (coming soon)"
+      },
       "analyzeButton": "Process Link",
       "analyzing": "Processing..."
     },
     "pipeline": {
       "title": "Pipeline Modules",
       "items": {
-        "download": "YouTube audio capture",
+        "download": "Audio intake",
         "musicAi": "Music-AIDetector inference",
         "sesAnalizi": "Ses-Analizi report",
         "preview": "Preview fallback"
@@ -176,9 +190,9 @@
     },
     "processing": {
       "title": "Analysis in Progress...",
-      "subtitle": "Validating the link and preparing the analysis pipeline.",
+      "subtitle": "Validating the source and preparing the analysis pipeline.",
       "steps": {
-        "validating": "Validate URL",
+        "validating": "Validate source",
         "downloading": "Prepare audio",
         "analyzing": "Analyze signals",
         "complete": "Finalize report"
@@ -206,11 +220,19 @@
         "preview": "Preview"
       },
       "videoId": "Video ID",
-      "normalizedUrl": "Normalized URL"
+      "normalizedUrl": "Normalized URL",
+      "fileName": "File Name",
+      "fileSize": "File Size",
+      "fileFormat": "File Format"
     },
     "errors": {
       "enterUrl": "Please enter a YouTube URL.",
-      "invalidYouTubeUrl": "Invalid YouTube URL. Use https://www.youtube.com/watch?v=... or https://youtu.be/..."
+      "invalidYouTubeUrl": "Invalid YouTube URL. Use https://www.youtube.com/watch?v=... or https://youtu.be/...",
+      "missingFile": "Please choose an audio file to analyze.",
+      "unsupportedFileType": "Unsupported file format. Allowed: MP3, WAV, FLAC, M4A.",
+      "fileTooLarge": "File size exceeds 100MB limit. Please use a smaller file.",
+      "fileTooSmall": "File is too small. Minimum file size is 1KB.",
+      "invalidFileName": "Invalid file name. Please rename your audio file."
     }
   },
   "mlToolkit": {

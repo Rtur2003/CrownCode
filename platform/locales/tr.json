@@ -157,17 +157,31 @@
       "plannedImplementation": "Planlanan Uygulama:",
       "plannedImplementationText": "PyTorch + wav2vec2 modeli ile backend AI entegrasyonu (2025 Q2)."
     },
+    "upload": {
+      "title": "Ses Dosyasi Yukle",
+      "dropHere": "Ses dosyanizi buraya birakin",
+      "orClick": "veya tiklayip secin",
+      "supported": "Desteklenen: MP3, WAV, FLAC, M4A (maks 100MB)",
+      "analyzeButton": "Dosyayi Analiz Et",
+      "analyzing": "Analiz Ediliyor..."
+    },
     "url": {
       "title": "YouTube Baglantisini Analiz Et",
       "placeholder": "YouTube linki yapistirin (youtube.com veya youtu.be)...",
-      "supportedPlatforms": "Desteklenen platform:",
+      "supportedPlatforms": "Girdi secenekleri:",
+      "sources": {
+        "youtube": "YouTube",
+        "upload": "Dosya yukleme",
+        "spotify": "Spotify (yakinda)",
+        "appleMusic": "Apple Music (yakinda)"
+      },
       "analyzeButton": "Baglantiyi Isle",
       "analyzing": "Isleniyor..."
     },
     "pipeline": {
       "title": "Pipeline Modulleri",
       "items": {
-        "download": "YouTube ses yakalama",
+        "download": "Ses alma",
         "musicAi": "Music-AIDetector cikarim",
         "sesAnalizi": "Ses-Analizi raporu",
         "preview": "Onizleme yedegi"
@@ -176,9 +190,9 @@
     },
     "processing": {
       "title": "Analiz Devam Ediyor...",
-      "subtitle": "Baglanti dogrulaniyor ve analiz akisi hazirlaniyor.",
+      "subtitle": "Kaynak dogrulaniyor ve analiz akisi hazirlaniyor.",
       "steps": {
-        "validating": "URL Dogrulama",
+        "validating": "Kaynak Dogrulama",
         "downloading": "Ses Hazirlama",
         "analyzing": "Sinyal Analizi",
         "complete": "Rapor Tamamlama"
@@ -206,11 +220,19 @@
         "preview": "Onizleme"
       },
       "videoId": "Video ID",
-      "normalizedUrl": "Normalize URL"
+      "normalizedUrl": "Normalize URL",
+      "fileName": "Dosya Adi",
+      "fileSize": "Dosya Boyutu",
+      "fileFormat": "Dosya Formati"
     },
     "errors": {
       "enterUrl": "Lutfen bir YouTube URL'si girin.",
-      "invalidYouTubeUrl": "Gecersiz YouTube URL'si. https://www.youtube.com/watch?v=... veya https://youtu.be/... kullanin."
+      "invalidYouTubeUrl": "Gecersiz YouTube URL'si. https://www.youtube.com/watch?v=... veya https://youtu.be/... kullanin.",
+      "missingFile": "Lutfen analiz icin bir ses dosyasi secin.",
+      "unsupportedFileType": "Desteklenmeyen dosya formati. MP3, WAV, FLAC, M4A kullanin.",
+      "fileTooLarge": "Dosya boyutu 100MB sinirini asiyor. Daha kucuk dosya secin.",
+      "fileTooSmall": "Dosya cok kucuk. Minimum boyut 1KB.",
+      "invalidFileName": "Gecersiz dosya adi. Dosyayi yeniden adlandirin."
     }
   },
   "mlToolkit": {
