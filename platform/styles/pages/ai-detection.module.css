@@ -111,6 +111,12 @@
   margin-bottom: 3rem;
 }
 
+.input-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
 @media (max-width: 768px) {
   .detection-interface {
     grid-template-columns: 1fr;
@@ -122,12 +128,126 @@
    PANELS
    ========================================================================= */
 
+.upload-section h2,
 .url-section h2,
 .pipeline-section h2 {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
   color: #ffffff;
+}
+
+/* =========================================================================
+   INPUT SOURCES
+   ========================================================================= */
+
+.input-sources {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: #94a3b8;
+  font-size: 0.875rem;
+}
+
+.source-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.source-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  background: rgba(56, 189, 248, 0.1);
+  border-radius: 999px;
+  color: #38bdf8;
+  border: 1px solid transparent;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.source-chip-icon {
+  color: #38bdf8;
+}
+
+.source-chip-active {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
+}
+
+.source-chip-soon {
+  background: rgba(148, 163, 184, 0.12);
+  border-color: rgba(148, 163, 184, 0.35);
+  color: #94a3b8;
+}
+
+/* =========================================================================
+   UPLOAD SECTION
+   ========================================================================= */
+
+.upload-dropzone {
+  border: 2px dashed rgba(56, 189, 248, 0.3);
+  border-radius: 1rem;
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(30, 41, 59, 0.5);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.upload-dropzone:hover,
+.upload-dropzone.drag-over {
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  transform: translateY(-2px);
+}
+
+.upload-dropzone svg {
+  color: #38bdf8;
+  margin-bottom: 1rem;
+}
+
+.upload-dropzone h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.upload-dropzone p {
+  color: #94a3b8;
+  margin-bottom: 1.5rem;
+}
+
+.supported-formats {
+  background: rgba(56, 189, 248, 0.1);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  color: #38bdf8;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.selected-file {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-top: 1rem;
+  color: #22c55e;
+}
+
+.selected-file span {
+  flex: 1;
+  font-weight: 500;
 }
 
 /* =========================================================================
@@ -170,50 +290,6 @@
 
 .url-input::placeholder {
   color: #64748b;
-}
-
-.supported-platforms {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
-  color: #94a3b8;
-  font-size: 0.875rem;
-}
-
-.source-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.source-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.75rem;
-  background: rgba(56, 189, 248, 0.1);
-  border-radius: 999px;
-  color: #38bdf8;
-  border: 1px solid transparent;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.source-chip-icon {
-  color: #38bdf8;
-}
-
-.source-chip-active {
-  background: rgba(56, 189, 248, 0.12);
-  border-color: rgba(56, 189, 248, 0.35);
-  color: #38bdf8;
-}
-
-.source-chip-soon {
-  background: rgba(148, 163, 184, 0.12);
-  border-color: rgba(148, 163, 184, 0.35);
-  color: #94a3b8;
 }
 
 /* =========================================================================
@@ -609,6 +685,10 @@
     font-size: 1rem;
   }
 
+  .upload-dropzone {
+    padding: 2rem 1rem;
+  }
+
   .processing-steps {
     flex-direction: column;
     gap: 0.5rem;
@@ -624,8 +704,8 @@
     gap: 0.75rem;
   }
 
-  .supported-platforms {
-    gap: 0.75rem;
+  .input-sources {
+    align-items: center;
     text-align: center;
     align-items: center;
   }
@@ -648,6 +728,18 @@
 
   .detection-interface {
     gap: 1.5rem;
+  }
+
+  .upload-dropzone {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .upload-dropzone h3 {
+    font-size: 1rem;
+  }
+
+  .upload-dropzone p {
+    font-size: 0.875rem;
   }
 
   .btn-primary,

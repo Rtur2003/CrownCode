@@ -5,38 +5,8 @@
  */
 
 import { useCallback, useMemo, useRef, useState } from 'react'
-
-export type ProcessingState = 'idle' | 'validating' | 'downloading' | 'analyzing' | 'complete' | 'error'
-
-export type DecisionSource = 'music_ai' | 'ses_analizi' | 'preview'
-
-export interface YouTubeSourceInfo {
-  url: string
-  normalizedUrl: string
-  videoId: string
-  startTimeSec?: number
-}
-
-export interface YouTubeAnalysisResult {
-  isAIGenerated: boolean
-  confidence: number
-  processingTime: number
-  modelVersion: string
-  decisionSource: DecisionSource
-  source: YouTubeSourceInfo
-  features: {
-    spectralRegularity: number
-    temporalPatterns: number
-    harmonicStructure: number
-    artificialIndicators: string[]
-  }
-  audioInfo: {
-    duration: number
-    sampleRate: number
-    bitrate: number
-    format: string
-  }
-}
+import type { AnalysisErrorCode, AnalysisResult, DecisionSource, ProcessingState } from '@/hooks/analysisTypes'
+import { buildFeatureScores, buildSeed } from '@/hooks/analysisUtils'
 
 interface ParsedYouTubeUrl {
   videoId: string
@@ -130,31 +100,13 @@ const parseYouTubeUrl = (input: string): ParsedYouTubeUrl | null => {
   }
 }
 
-const fnv1a = (value: string): number => {
-  let hash = 0x811c9dc5
-  for (let i = 0; i < value.length; i += 1) {
-    hash ^= value.charCodeAt(i)
-    hash = Math.imul(hash, 0x01000193)
-  }
-  return hash >>> 0
-}
-
-const buildFeatureScores = (seed: number) => {
-  const normalized = (offset: number) => Number(((seed + offset) % 1).toFixed(3))
-  return {
-    spectralRegularity: normalized(0.17),
-    temporalPatterns: normalized(0.43),
-    harmonicStructure: normalized(0.71)
-  }
-}
-
 const buildPreviewResult = (
   parsed: ParsedYouTubeUrl,
   url: string,
   elapsedSec: number,
   warnings: string[]
-): YouTubeAnalysisResult => {
-  const seed = (fnv1a(parsed.videoId) % 1000) / 1000
+): AnalysisResult => {
+  const seed = buildSeed(parsed.videoId)
   const isAIGenerated = seed > 0.5
   const confidence = Number((0.55 + seed * 0.35).toFixed(3))
   const featureScores = buildFeatureScores(seed)
@@ -174,6 +126,7 @@ const buildPreviewResult = (
     modelVersion: 'youtube-preview-v1',
     decisionSource: 'preview',
     source: {
+      kind: 'youtube',
       url,
       normalizedUrl: parsed.normalizedUrl,
       videoId: parsed.videoId,
@@ -197,8 +150,8 @@ const mapBackendResponse = (
   url: string,
   response: BackendResponse,
   elapsedSec: number
-): YouTubeAnalysisResult => {
-  const seed = (fnv1a(parsed.videoId) % 1000) / 1000
+): AnalysisResult => {
+  const seed = buildSeed(parsed.videoId)
   const featureScores = buildFeatureScores(seed)
   const indicators = response.summary.indicators || []
   const warnings = response.warnings || []
@@ -211,6 +164,7 @@ const mapBackendResponse = (
     modelVersion: response.summary.model_version,
     decisionSource: response.summary.decision_source,
     source: {
+      kind: 'youtube',
       url,
       normalizedUrl: response.source.normalized_url,
       videoId: response.source.video_id,
@@ -234,8 +188,8 @@ const mapBackendResponse = (
 export const useYouTubeAnalysis = () => {
   const [url, setUrl] = useState('')
   const [processingState, setProcessingState] = useState<ProcessingState>('idle')
-  const [analysisResult, setAnalysisResult] = useState<YouTubeAnalysisResult | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null)
+  const [error, setError] = useState<AnalysisErrorCode | null>(null)
   const [warnings, setWarnings] = useState<string[]>([])
   const startTimeRef = useRef<number>(0)
 

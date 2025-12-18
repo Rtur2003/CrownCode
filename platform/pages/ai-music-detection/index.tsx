@@ -9,7 +9,7 @@
 // @since 2025-01-01
 // =========================================================================
 
-import React from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import type { NextPage } from 'next'
 import { motion } from 'framer-motion'
 import {
@@ -19,12 +19,15 @@ import {
   Clock,
   Download,
   Link as LinkIcon,
+  Music,
   Shield,
+  Upload,
   Youtube,
   Zap
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
+import { useFileAnalysis } from '@/hooks/useFileAnalysis'
 import { useYouTubeAnalysis } from '@/hooks/useYouTubeAnalysis'
 import styles from '@/styles/pages/ai-detection.module.css'
 
@@ -33,23 +36,101 @@ const AIMusicDetectionPage: NextPage = () => {
   const {
     url,
     setUrl,
-    processingState,
-    analysisResult,
-    error,
-    runAnalysis,
-    reset
+    processingState: youtubeProcessingState,
+    analysisResult: youtubeResult,
+    error: youtubeError,
+    runAnalysis: runYouTubeAnalysis,
+    reset: resetYouTube
   } = useYouTubeAnalysis()
+  const {
+    selectedFile,
+    processingState: fileProcessingState,
+    analysisResult: fileResult,
+    error: fileError,
+    selectFile,
+    runAnalysis: runFileAnalysis,
+    reset: resetFile
+  } = useFileAnalysis()
+  const [activeSource, setActiveSource] = useState<'youtube' | 'file'>('youtube')
+  const [isDragOver, setIsDragOver] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const processingState = activeSource === 'youtube' ? youtubeProcessingState : fileProcessingState
+  const analysisResult = activeSource === 'youtube' ? youtubeResult : fileResult
+  const error = activeSource === 'youtube' ? youtubeError : fileError
 
   const isProcessing = ['validating', 'downloading', 'analyzing'].includes(processingState)
+
+  const handleFileSelect = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      setActiveSource('file')
+      resetYouTube()
+      selectFile(file)
+    }
+    event.target.value = ''
+  }, [resetYouTube, selectFile])
+
+  const handleDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    setIsDragOver(false)
+    const file = event.dataTransfer.files?.[0]
+    if (file) {
+      setActiveSource('file')
+      resetYouTube()
+      selectFile(file)
+    }
+  }, [resetYouTube, selectFile])
+
+  const handleDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    setIsDragOver(true)
+  }, [])
+
+  const handleDragLeave = useCallback(() => {
+    setIsDragOver(false)
+  }, [])
+
+  const handleFileAnalyze = useCallback(() => {
+    setActiveSource('file')
+    resetYouTube()
+    runFileAnalysis()
+  }, [resetYouTube, runFileAnalysis])
+
+  const handleUrlAnalyze = useCallback(() => {
+    setActiveSource('youtube')
+    resetFile()
+    runYouTubeAnalysis()
+  }, [resetFile, runYouTubeAnalysis])
+
+  const resetAll = useCallback(() => {
+    resetYouTube()
+    resetFile()
+    setActiveSource('youtube')
+  }, [resetFile, resetYouTube])
+
+  const formatFileSize = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(2)} MB`
+
   const resolveErrorMessage = (errorKey: string | null) => {
     if (!errorKey) return null
-    if (errorKey === 'enterUrl') {
-      return t.aiDetection.errors?.enterUrl || t.aiDetection.error.title
+    switch (errorKey) {
+      case 'enterUrl':
+        return t.aiDetection.errors?.enterUrl || t.aiDetection.error.title
+      case 'invalidYouTubeUrl':
+        return t.aiDetection.errors?.invalidYouTubeUrl || t.aiDetection.error.title
+      case 'missingFile':
+        return t.aiDetection.errors?.missingFile || t.aiDetection.error.title
+      case 'unsupportedFileType':
+        return t.aiDetection.errors?.unsupportedFileType || t.aiDetection.error.title
+      case 'fileTooLarge':
+        return t.aiDetection.errors?.fileTooLarge || t.aiDetection.error.title
+      case 'fileTooSmall':
+        return t.aiDetection.errors?.fileTooSmall || t.aiDetection.error.title
+      case 'invalidFileName':
+        return t.aiDetection.errors?.invalidFileName || t.aiDetection.error.title
+      default:
+        return t.aiDetection.error.title
     }
-    if (errorKey === 'invalidYouTubeUrl') {
-      return t.aiDetection.errors?.invalidYouTubeUrl || t.aiDetection.error.title
-    }
-    return t.aiDetection.error.title
   }
 
   const errorMessage = resolveErrorMessage(error)
@@ -78,6 +159,7 @@ const AIMusicDetectionPage: NextPage = () => {
     const confidence = Math.round(analysisResult.confidence * 100)
     const decisionLabel = getDecisionLabel(analysisResult.decisionSource)
     const isAI = analysisResult.isAIGenerated
+    const source = analysisResult.source
 
     return (
       <motion.div
@@ -117,14 +199,33 @@ const AIMusicDetectionPage: NextPage = () => {
         </div>
 
         <div className={styles['result-source']}>
-          <div className={styles['result-source-item']}>
-            <span>{t.aiDetection.result.videoId}</span>
-            <span>{analysisResult.source.videoId}</span>
-          </div>
-          <div className={styles['result-source-item']}>
-            <span>{t.aiDetection.result.normalizedUrl}</span>
-            <span>{analysisResult.source.normalizedUrl}</span>
-          </div>
+          {source.kind === 'youtube' ? (
+            <>
+              <div className={styles['result-source-item']}>
+                <span>{t.aiDetection.result.videoId}</span>
+                <span>{source.videoId}</span>
+              </div>
+              <div className={styles['result-source-item']}>
+                <span>{t.aiDetection.result.normalizedUrl}</span>
+                <span>{source.normalizedUrl}</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={styles['result-source-item']}>
+                <span>{t.aiDetection.result.fileName}</span>
+                <span>{source.fileName}</span>
+              </div>
+              <div className={styles['result-source-item']}>
+                <span>{t.aiDetection.result.fileSize}</span>
+                <span>{formatFileSize(source.fileSizeBytes)}</span>
+              </div>
+              <div className={styles['result-source-item']}>
+                <span>{t.aiDetection.result.fileFormat}</span>
+                <span>{analysisResult.audioInfo.format}</span>
+              </div>
+            </>
+          )}
         </div>
 
         <div className={styles['artificial-indicators']}>
@@ -143,7 +244,7 @@ const AIMusicDetectionPage: NextPage = () => {
           </button>
           <button
             className={styles['btn-primary']}
-            onClick={reset}
+            onClick={resetAll}
           >
             {t.aiDetection.result.analyzeAnother}
           </button>
@@ -198,36 +299,16 @@ const AIMusicDetectionPage: NextPage = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <div className={styles['url-section']} id="url">
-                <h2>{t.aiDetection.url.title}</h2>
-                <div className={styles['url-input-container']}>
-                  <div className={styles['url-input-wrapper']}>
-                    <LinkIcon size={20} />
-                    <input
-                      type="url"
-                      placeholder={t.aiDetection.url.placeholder}
-                      value={url}
-                      onChange={(event) => setUrl(event.target.value)}
-                      className={styles['url-input']}
-                    />
-                  </div>
-                  <button
-                    onClick={runAnalysis}
-                    disabled={!url.trim() || isProcessing}
-                    className={`${styles['btn-primary']} ${isProcessing ? styles['loading'] : ''}`}
-                  >
-                    {isProcessing ? t.aiDetection.url.analyzing : t.aiDetection.url.analyzeButton}
-                  </button>
-                </div>
-
-                <div className={styles['supported-platforms']}>
+              <div className={styles['input-stack']}>
+                <div className={styles['input-sources']}>
                   <span>{t.aiDetection.url.supportedPlatforms}</span>
                   <div className={styles['source-chips']}>
                     <span className={`${styles['source-chip']} ${styles['source-chip-active']}`}>
                       <Youtube size={16} className={styles['source-chip-icon']} />
                       {t.aiDetection.url.sources.youtube}
                     </span>
-                    <span className={`${styles['source-chip']} ${styles['source-chip-soon']}`}>
+                    <span className={`${styles['source-chip']} ${styles['source-chip-active']}`}>
+                      <Upload size={16} className={styles['source-chip-icon']} />
                       {t.aiDetection.url.sources.upload}
                     </span>
                     <span className={`${styles['source-chip']} ${styles['source-chip-soon']}`}>
@@ -236,6 +317,70 @@ const AIMusicDetectionPage: NextPage = () => {
                     <span className={`${styles['source-chip']} ${styles['source-chip-soon']}`}>
                       {t.aiDetection.url.sources.appleMusic}
                     </span>
+                  </div>
+                </div>
+
+                <div className={styles['upload-section']}>
+                  <h2>{t.aiDetection.upload.title}</h2>
+                  <div
+                    className={`${styles['upload-dropzone']} ${isDragOver ? styles['drag-over'] : ''}`}
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <Upload size={48} />
+                    <h3>{t.aiDetection.upload.dropHere}</h3>
+                    <p>{t.aiDetection.upload.orClick}</p>
+                    <div className={styles['supported-formats']}>
+                      <span>{t.aiDetection.upload.supported}</span>
+                    </div>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="audio/*,.mp3,.wav,.flac,.m4a,.mp4,.aac"
+                      onChange={handleFileSelect}
+                      className={styles['hidden']}
+                      aria-label="Upload audio file for AI music detection"
+                      title="Upload audio file for AI music detection"
+                    />
+                  </div>
+
+                  {selectedFile && (
+                    <div className={styles['selected-file']}>
+                      <Music size={20} />
+                      <span>{selectedFile.name}</span>
+                      <button
+                        onClick={handleFileAnalyze}
+                        disabled={isProcessing}
+                        className={`${styles['btn-primary']} ${isProcessing ? styles['loading'] : ''}`}
+                      >
+                        {isProcessing ? t.aiDetection.upload.analyzing : t.aiDetection.upload.analyzeButton}
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                <div className={styles['url-section']} id="url">
+                  <h2>{t.aiDetection.url.title}</h2>
+                  <div className={styles['url-input-container']}>
+                    <div className={styles['url-input-wrapper']}>
+                      <LinkIcon size={20} />
+                      <input
+                        type="url"
+                        placeholder={t.aiDetection.url.placeholder}
+                        value={url}
+                        onChange={(event) => setUrl(event.target.value)}
+                        className={styles['url-input']}
+                      />
+                    </div>
+                    <button
+                      onClick={handleUrlAnalyze}
+                      disabled={!url.trim() || isProcessing}
+                      className={`${styles['btn-primary']} ${isProcessing ? styles['loading'] : ''}`}
+                    >
+                      {isProcessing ? t.aiDetection.url.analyzing : t.aiDetection.url.analyzeButton}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -301,7 +446,7 @@ const AIMusicDetectionPage: NextPage = () => {
               <h3>{t.aiDetection.error.title}</h3>
               <p>{errorMessage}</p>
               <button
-                onClick={reset}
+                onClick={resetAll}
                 className={styles['btn-primary']}
               >
                 {t.aiDetection.error.tryAgain}
