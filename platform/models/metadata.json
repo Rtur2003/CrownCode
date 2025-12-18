@@ -1,0 +1,11 @@
+{
+  "model_name": "ai_music_detector_placeholder",
+  "version": "0.0.0-placeholder",
+  "trained_on": "n/a",
+  "features": [
+    "spectralRegularity",
+    "temporalPatterns",
+    "harmonicStructure"
+  ],
+  "notes": "Placeholder metadata. Replace after real training."
+}
