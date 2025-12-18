@@ -1,49 +1,49 @@
-// Unified analysis gateway (mock/preview). Real integrations (yt-dlp/model) should be wired to the providers.
-const { promises: fs } = require('fs')
+// Netlify proxy for unified analysis. It forwards multipart requests to an external inference service.
+// Heavy work (yt-dlp, ffmpeg, model) should live in the external service, not on Netlify.
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' }
   }
 
-  // NOTE: Netlify Functions cannot parse multipart by default; here we return a fixed preview response.
-  // In real usage, move this to a full server or add multipart parsing + external service calls.
-  const now = Date.now()
-  const seed = (now % 1000) / 1000
-  const isAIGenerated = seed > 0.5
-  const confidence = Number((0.55 + seed * 0.35).toFixed(3))
-
-  const result = {
-    isAIGenerated,
-    confidence,
-    processingTime: 0.4,
-    modelVersion: 'gateway-preview-v1',
-    decisionSource: 'preview',
-    source: {
-      kind: 'file',
-      fileName: 'preview',
-      fileSizeBytes: 0,
-      mimeType: 'application/octet-stream'
-    },
-    features: {
-      spectralRegularity: Number(((seed + 0.17) % 1).toFixed(3)),
-      temporalPatterns: Number(((seed + 0.43) % 1).toFixed(3)),
-      harmonicStructure: Number(((seed + 0.71) % 1).toFixed(3)),
-      artificialIndicators: [
-        'Preview-only decision based on fingerprint.',
-        'No model inference was available at request time.'
-      ]
-    },
-    audioInfo: {
-      duration: 0,
-      sampleRate: 44100,
-      bitrate: 192,
-      format: 'PREVIEW'
-    }
+  const targetBase = process.env.INFERENCE_API_URL || process.env.NEXT_PUBLIC_API_URL
+  if (!targetBase) {
+    return { statusCode: 500, body: JSON.stringify({ errors: ['backend_not_configured'] }) }
   }
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ result, warnings: ['gateway_mock_preview'] })
+  const target = targetBase.endsWith('/api/analyze')
+    ? targetBase
+    : `${targetBase.replace(/\/$/, '')}/api/analyze`
+
+  const contentType = event.headers['content-type'] || event.headers['Content-Type']
+  if (!contentType || !contentType.toLowerCase().includes('multipart/form-data')) {
+    return { statusCode: 400, body: JSON.stringify({ errors: ['unsupported_media_type'] }) }
+  }
+
+  const bodyBuffer = Buffer.from(event.body || '', event.isBase64Encoded ? 'base64' : 'utf8')
+
+  try {
+    const response = await fetch(target, {
+      method: 'POST',
+      headers: { 'content-type': contentType },
+      body: bodyBuffer
+    })
+
+    const text = await response.text()
+    return {
+      statusCode: response.status,
+      body: text,
+      headers: {
+        'Content-Type': response.headers.get('content-type') || 'application/json'
+      }
+    }
+  } catch (error) {
+    return {
+      statusCode: 502,
+      body: JSON.stringify({
+        errors: ['backend_unreachable'],
+        message: 'Failed to reach inference service'
+      })
+    }
   }
 }
