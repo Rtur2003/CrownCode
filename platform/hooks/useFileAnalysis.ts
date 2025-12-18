@@ -61,7 +61,8 @@ const isSupportedAudioFile = (file: File) => {
 const buildPreviewResult = (file: File, elapsedSec: number): AnalysisResult => {
   const seed = buildSeed(`${file.name}:${file.size}:${file.lastModified}`)
   const isAIGenerated = seed > 0.5
-  const confidence = Number((0.55 + seed * 0.35).toFixed(3))
+  const baseConfidence = 0.55 + seed * 0.35
+  const confidence = Number(Math.min(0.97, Math.max(0.51, baseConfidence + (Math.random() - 0.5) * 0.08)).toFixed(3))
   const featureScores = buildFeatureScores(seed)
   const extension = getFileExtension(file.name)
   const format = extension ? extension.slice(1).toUpperCase() : 'AUDIO'
