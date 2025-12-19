@@ -102,3 +102,14 @@ repos:
     hooks:
       - id: conventional-pre-commit
         stages: [commit-msg]
+
+  # Branch name validation
+  - repo: local
+    hooks:
+      - id: validate-branch-name
+        name: Validate Branch Name
+        entry: python scripts/validate_branch_name.py
+        language: system
+        always_run: true
+        pass_filenames: false
+        stages: [commit]

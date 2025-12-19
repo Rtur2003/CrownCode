@@ -152,3 +152,33 @@ ci:
 	make test
 	make security
 	@echo "$(GREEN)✓ CI checks passed$(NC)"
+
+validate-branch:
+	@echo "$(BLUE)Validating branch name...$(NC)"
+	python scripts/validate_branch_name.py $$(git branch --show-current)
+	@echo "$(GREEN)✓ Branch name is valid$(NC)"
+
+validate-commits:
+	@echo "$(BLUE)Validating commit messages...$(NC)"
+	@echo "Checking last 5 commits..."
+	git log -5 --pretty=format:"%h - %s" | head -5
+	@echo "\n$(GREEN)✓ Review commits above$(NC)"
+
+engineering-standards:
+	@echo "$(BLUE)Checking engineering standards compliance...$(NC)"
+	make validate-branch
+	make lint
+	make test
+	@echo "$(GREEN)✓ Engineering standards check passed$(NC)"
+
+setup-dev:
+	@echo "$(BLUE)Setting up development environment...$(NC)"
+	make install
+	make pre-commit
+	@echo "$(GREEN)✓ Development environment ready$(NC)"
+	@echo ""
+	@echo "$(BLUE)Next steps:$(NC)"
+	@echo "  1. Read .github/ENGINEERING_STANDARDS.md"
+	@echo "  2. Create a topic branch: git checkout -b <category>/<topic>"
+	@echo "  3. Make atomic commits following the guidelines"
+	@echo "  4. Run 'make validate' before pushing"
