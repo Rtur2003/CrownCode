@@ -6,6 +6,10 @@ on:
   push:
     branches: [main, master, geliştirme]
 
+permissions:
+  contents: read
+  pull-requests: read
+
 env:
   # Configuration
   MAX_FILES_PER_COMMIT: 10
@@ -16,6 +20,8 @@ jobs:
     name: Validate Branch Name
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code
@@ -35,6 +41,8 @@ jobs:
     name: Validate Commit Messages
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code
@@ -79,6 +87,8 @@ jobs:
     name: Check Atomic Commits
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code
@@ -129,6 +139,8 @@ jobs:
     name: Check Python-First Compliance
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code
@@ -180,6 +192,8 @@ jobs:
     name: Validate PR Description
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
+    permissions:
+      pull-requests: read
     
     steps:
       - name: Check PR description
@@ -215,6 +229,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate-branch-name, validate-commits, check-atomic-commits, check-python-first, check-pr-template]
     if: always() && github.event_name == 'pull_request'
+    permissions:
+      contents: read
     
     steps:
       - name: Summary
