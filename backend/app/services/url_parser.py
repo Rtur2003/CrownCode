@@ -12,9 +12,6 @@ from urllib.parse import parse_qs, urlparse
 from .validation import validate_video_id, validate_url
 
 
-VIDEO_ID_RE = re.compile(r"^[a-zA-Z0-9_-]{11}$")
-
-
 @dataclass(frozen=True)
 class ParsedYouTubeUrl:
     video_id: str

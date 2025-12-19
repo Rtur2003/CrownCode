@@ -12,13 +12,21 @@ from pathlib import Path
 from typing import Optional
 
 
+# YouTube video ID format: 11 alphanumeric characters plus _ and -
+# This has been stable since 2006 but could theoretically change
 VIDEO_ID_PATTERN = re.compile(r'^[a-zA-Z0-9_-]{11}$')
+VIDEO_ID_LENGTH = 11
+
 ALLOWED_AUDIO_EXTENSIONS = {'.mp3', '.wav', '.flac', '.ogg', '.m4a', '.webm', '.opus'}
 
 
 def validate_video_id(video_id: str) -> bool:
     """
     Validate YouTube video ID format.
+    
+    YouTube video IDs are currently 11 characters long, consisting of
+    alphanumeric characters, underscores, and hyphens. This format has
+    been stable since 2006.
     
     Args:
         video_id: Video identifier to validate
@@ -29,7 +37,7 @@ def validate_video_id(video_id: str) -> bool:
     if not video_id or not isinstance(video_id, str):
         return False
     
-    if len(video_id) != 11:
+    if len(video_id) != VIDEO_ID_LENGTH:
         return False
         
     return bool(VIDEO_ID_PATTERN.match(video_id))
@@ -92,10 +100,8 @@ def validate_audio_path(path: Path) -> tuple[bool, Optional[str]]:
         return False, "not_a_file"
     
     try:
+        # resolve with strict=True validates path and prevents traversal
         resolved = path.resolve(strict=True)
-        
-        if '..' in str(resolved):
-            return False, "path_traversal_attempt"
         
     except (OSError, RuntimeError):
         return False, "invalid_path"

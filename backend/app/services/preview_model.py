@@ -13,6 +13,9 @@ import random
 from typing import List
 
 
+UINT32_MAX = 2**32
+
+
 class PreviewModel:
     """
     Fallback analysis model that generates realistic predictions.
@@ -63,7 +66,7 @@ class PreviewModel:
         for i in range(0, len(hash_bytes), 4):
             chunk = hash_bytes[i:i+4]
             value = int.from_bytes(chunk, byteorder='big')
-            components.append(value / (2**32))
+            components.append(value / UINT32_MAX)
         
         seed = sum(components) / len(components)
         return seed % 1.0

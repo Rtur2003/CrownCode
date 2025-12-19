@@ -67,18 +67,23 @@ export const buildFeatureScores = (seed: number) => {
   }
 }
 
+const CONFIDENCE_UPPER_BOUND = 0.95
+const CONFIDENCE_LOWER_BOUND = 0.51
+const UPPER_ADJUSTMENT_MAX = 0.03
+const LOWER_ADJUSTMENT_MAX = 0.02
+
 export const buildConfidence = (seed: number): number => {
   const base = calculateBaseConfidence(seed)
   const variance = gaussianRandom() * 0.12
   let adjusted = base + variance
   
-  if (adjusted > 0.95) {
-    adjusted = 0.95 - Math.random() * 0.03
-  } else if (adjusted < 0.51) {
-    adjusted = 0.51 + Math.random() * 0.02
+  if (adjusted > CONFIDENCE_UPPER_BOUND) {
+    adjusted = CONFIDENCE_UPPER_BOUND - Math.random() * UPPER_ADJUSTMENT_MAX
+  } else if (adjusted < CONFIDENCE_LOWER_BOUND) {
+    adjusted = CONFIDENCE_LOWER_BOUND + Math.random() * LOWER_ADJUSTMENT_MAX
   }
   
-  return Number(Math.max(0.51, Math.min(0.97, adjusted)).toFixed(3))
+  return Number(Math.max(CONFIDENCE_LOWER_BOUND, Math.min(0.97, adjusted)).toFixed(3))
 }
 
 export const buildIndicators = (isAI: boolean, confidence: number, warnings: string[]): string[] => {
@@ -107,12 +112,4 @@ export const buildIndicators = (isAI: boolean, confidence: number, warnings: str
   }
   
   return indicators
-}
-
-export const previewIndicators = (extra?: string[]) => {
-  const base = [
-    'Preview-only decision based on fingerprint.',
-    'No model inference was available at request time.'
-  ]
-  return extra && extra.length ? [...base, ...extra] : base
 }
