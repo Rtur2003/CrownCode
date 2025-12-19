@@ -26,6 +26,11 @@ class YouTubeDownloader:
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
     def download(self, url: str, video_id: str) -> DownloadResult:
+        if not url or not url.strip():
+            raise ValueError("URL cannot be empty")
+        if not video_id or not video_id.strip():
+            raise ValueError("Video ID cannot be empty")
+        
         warnings: List[str] = []
 
         info = self._download_with_ffmpeg(url)

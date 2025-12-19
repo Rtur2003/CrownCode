@@ -27,6 +27,11 @@ class MusicAIDetectorClient:
     async def predict(self, audio_path: Path) -> ClientResponse:
         if not self.base_url:
             return ClientResponse(available=False, response=None, error="music_ai_not_configured")
+        
+        if not audio_path.exists():
+            return ClientResponse(available=True, response=None, error="music_ai_file_not_found")
+        if not audio_path.is_file():
+            return ClientResponse(available=True, response=None, error="music_ai_invalid_file_path")
 
         try:
             async with httpx.AsyncClient(timeout=self.timeout_sec) as client:
@@ -58,6 +63,11 @@ class SesAnaliziClient:
     async def analyze(self, audio_path: Path) -> ClientResponse:
         if not self.base_url:
             return ClientResponse(available=False, response=None, error="ses_analizi_not_configured")
+        
+        if not audio_path.exists():
+            return ClientResponse(available=True, response=None, error="ses_analizi_file_not_found")
+        if not audio_path.is_file():
+            return ClientResponse(available=True, response=None, error="ses_analizi_invalid_file_path")
 
         try:
             async with httpx.AsyncClient(timeout=self.timeout_sec) as client:
