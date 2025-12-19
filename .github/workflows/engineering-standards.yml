@@ -6,6 +6,11 @@ on:
   push:
     branches: [main, master, geliştirme]
 
+env:
+  # Configuration
+  MAX_FILES_PER_COMMIT: 10
+  NON_ATOMIC_PATTERNS: "misc|cleanup|various|multiple|several|fix stuff|wip"
+
 jobs:
   validate-branch-name:
     name: Validate Branch Name
@@ -48,17 +53,27 @@ jobs:
 
       - name: Validate commit messages
         run: |
+          set -e
+          
           # Get all commits in the PR
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
           HEAD_SHA="${{ github.event.pull_request.head.sha }}"
           
           echo "Validating commits from $BASE_SHA to $HEAD_SHA"
           
+          # Get commit list into array
+          mapfile -t COMMITS < <(git log --format=%H $BASE_SHA..$HEAD_SHA)
+          
           # Validate each commit
-          git log --format=%H $BASE_SHA..$HEAD_SHA | while read commit; do
+          for commit in "${COMMITS[@]}"; do
             echo "Checking commit: $commit"
-            git log --format=%B -n 1 $commit | npx commitlint
+            if ! git log --format=%B -n 1 "$commit" | npx commitlint; then
+              echo "❌ Commit $commit has invalid message format"
+              exit 1
+            fi
           done
+          
+          echo "✅ All commit messages are valid"
 
   check-atomic-commits:
     name: Check Atomic Commits
@@ -73,22 +88,24 @@ jobs:
 
       - name: Check commit atomicity
         run: |
+          set -e
+          
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
           HEAD_SHA="${{ github.event.pull_request.head.sha }}"
           
           echo "Checking atomicity of commits"
           
-          # Get list of commits
-          COMMITS=$(git log --format=%H $BASE_SHA..$HEAD_SHA)
+          # Get commit list into array
+          mapfile -t COMMITS < <(git log --format=%H $BASE_SHA..$HEAD_SHA)
           
-          for commit in $COMMITS; do
+          for commit in "${COMMITS[@]}"; do
             echo "Analyzing commit: $commit"
             
             # Get commit message
-            MSG=$(git log --format=%B -n 1 $commit)
+            MSG=$(git log --format=%B -n 1 "$commit")
             
             # Check for problematic patterns
-            if echo "$MSG" | grep -iE "misc|cleanup|various|multiple|several|fix stuff|wip"; then
+            if echo "$MSG" | grep -iE "${{ env.NON_ATOMIC_PATTERNS }}"; then
               echo "❌ Commit $commit may not be atomic!"
               echo "Message contains non-specific words: $MSG"
               echo ""
@@ -98,9 +115,9 @@ jobs:
             fi
             
             # Get number of files changed
-            FILES_CHANGED=$(git diff-tree --no-commit-id --name-only -r $commit | wc -l)
+            FILES_CHANGED=$(git diff-tree --no-commit-id --name-only -r "$commit" | wc -l)
             
-            if [ $FILES_CHANGED -gt 10 ]; then
+            if [ "$FILES_CHANGED" -gt "${{ env.MAX_FILES_PER_COMMIT }}" ]; then
               echo "⚠️  Warning: Commit $commit changes $FILES_CHANGED files"
               echo "Consider splitting into smaller commits if concerns are mixed."
             fi

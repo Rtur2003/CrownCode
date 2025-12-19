@@ -296,7 +296,7 @@ git branch -m <category>/<proper-name>
 **Solution:**
 All documentation is in the `docs/` directory:
 
-- [Engineering Standards](./.github/ENGINEERING_STANDARDS.md)
+- [Engineering Standards](../.github/ENGINEERING_STANDARDS.md)
 - [Quick Start](./QUICK_START.md)
 - [Branch Naming](./BRANCH_NAMING.md)
 - [Commit Messages](./COMMIT_MESSAGES.md)
