@@ -13,36 +13,21 @@ import uuid
 from typing import List
 
 from .external_clients import ClientResponse, MusicAIDetectorClient, SesAnaliziClient
+from .preview_model import create_preview_result
 from .url_parser import parse_youtube_url
 from .youtube_downloader import YouTubeDownloader
 from ..schemas import AnalysisSummary, ServiceResult, YouTubeAnalyzeResponse, YouTubeSource
 
 
-def _fnv1a_32(value: str) -> int:
-    hash_value = 0x811C9DC5
-    for char in value:
-        hash_value ^= ord(char)
-        hash_value = (hash_value * 0x01000193) & 0xFFFFFFFF
-    return hash_value
-
-
 def _preview_summary(video_id: str, warnings: List[str]) -> AnalysisSummary:
-    seed = (_fnv1a_32(video_id) % 1000) / 1000.0
-    is_ai = seed > 0.5
-    confidence = 0.55 + seed * 0.35
-    indicators = [
-        "Preview-only decision based on URL fingerprint.",
-        "No model inference was available at request time.",
-    ]
-    if warnings:
-        indicators.append("Warnings present: " + ", ".join(warnings))
-
+    result = create_preview_result(video_id, warnings)
+    
     return AnalysisSummary(
-        is_ai_generated=is_ai,
-        confidence=round(confidence, 4),
-        decision_source="preview",
-        model_version="youtube-preview-v1",
-        indicators=indicators,
+        is_ai_generated=result["is_ai_generated"],
+        confidence=result["confidence"],
+        decision_source=result["decision_source"],
+        model_version=result["model_version"],
+        indicators=result["indicators"],
     )
 
 

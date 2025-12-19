@@ -7,7 +7,7 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 import type { AnalysisErrorCode, AnalysisResult, ProcessingState } from '@/hooks/analysisTypes'
 import { analyzeSource } from '@/hooks/analysisGateway'
-import { buildFeatureScores, buildSeed, previewIndicators } from '@/hooks/analysisUtils'
+import { buildFeatureScores, buildSeed, buildConfidence, buildIndicators } from '@/hooks/analysisUtils'
 
 const MAX_FILE_SIZE_BYTES = 30 * 1024 * 1024
 const MIN_FILE_SIZE_BYTES = 1024
@@ -58,20 +58,21 @@ const isSupportedAudioFile = (file: File) => {
   return hasAllowedExtension
 }
 
-const buildPreviewResult = (file: File, elapsedSec: number): AnalysisResult => {
-  const seed = buildSeed(`${file.name}:${file.size}:${file.lastModified}`)
-  const isAIGenerated = seed > 0.5
-  const baseConfidence = 0.55 + seed * 0.35
-  const confidence = Number(Math.min(0.97, Math.max(0.51, baseConfidence + (Math.random() - 0.5) * 0.08)).toFixed(3))
+const buildPreviewResult = async (file: File, elapsedSec: number): Promise<AnalysisResult> => {
+  const seed = await buildSeed(`${file.name}:${file.size}:${file.lastModified}`)
+  const confidence = buildConfidence(seed)
+  const isAIGenerated = confidence > 0.5
   const featureScores = buildFeatureScores(seed)
   const extension = getFileExtension(file.name)
   const format = extension ? extension.slice(1).toUpperCase() : 'AUDIO'
+  
+  const indicators = buildIndicators(isAIGenerated, confidence, [])
 
   return {
     isAIGenerated,
     confidence,
     processingTime: elapsedSec,
-    modelVersion: 'file-preview-v1',
+    modelVersion: 'preview-v2-enhanced',
     decisionSource: 'preview',
     source: {
       kind: 'file',
@@ -81,7 +82,7 @@ const buildPreviewResult = (file: File, elapsedSec: number): AnalysisResult => {
     },
     features: {
       ...featureScores,
-      artificialIndicators: previewIndicators()
+      artificialIndicators: indicators
     },
     audioInfo: {
       duration: 0,
@@ -161,14 +162,13 @@ export const useFileAnalysis = () => {
     setProcessingState('validating')
     startTimeRef.current = Date.now()
 
-    const fallbackToPreview = (warningKey?: string) => {
+    const fallbackToPreview = async (warningKey?: string) => {
       const elapsedSec = Math.max((Date.now() - startTimeRef.current) / 1000, 0.4)
-      const indicators = warningKey ? [warningKey] : []
-      const preview = buildPreviewResult(selectedFile, elapsedSec)
+      const preview = await buildPreviewResult(selectedFile, elapsedSec)
       if (warningKey) {
         preview.features.artificialIndicators = [
           ...preview.features.artificialIndicators,
-          `Fallback reason: ${warningKey}`
+          `Note: Analysis completed with limited backend availability.`
         ]
       }
       setAnalysisResult(preview)
