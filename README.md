@@ -301,15 +301,58 @@ Results:
 
 ## 🤝 Contributing
 
-We welcome contributions to the CrownCode platform! This project follows open science principles.
+We welcome contributions to the CrownCode platform! This project follows strict engineering standards to ensure high quality and maintainability.
 
-### Development Guidelines
-1. Fork the repository
-2. Create a feature branch
-3. Follow TypeScript and Python coding standards
-4. Add comprehensive tests
-5. Update documentation
-6. Submit a pull request
+### Getting Started
+
+1. **Read the Standards** - Review [Engineering Standards](./.github/ENGINEERING_STANDARDS.md)
+2. **Quick Start** - Follow the [Quick Start Guide](./docs/QUICK_START.md)
+3. **Setup Environment** - Run `make setup-dev`
+4. **Pick an Issue** - Choose from [open issues](https://github.com/Rtur2003/CrownCode/issues)
+
+### Workflow
+
+```bash
+# 1. Create topic branch
+git checkout -b <category>/<topic-description>
+
+# 2. Make atomic commits
+git commit -m "<type>: <description>"
+
+# 3. Run validation
+make validate
+
+# 4. Push and create PR
+git push origin <branch-name>
+```
+
+### Essential Reading
+
+- 📋 [Engineering Standards](./.github/ENGINEERING_STANDARDS.md) - **READ FIRST**
+- 🚀 [Quick Start Guide](./docs/QUICK_START.md)
+- 🌿 [Branch Naming](./docs/BRANCH_NAMING.md)
+- 💬 [Commit Messages](./docs/COMMIT_MESSAGES.md)
+- 📖 [Development Guidelines](./docs/DEVELOPMENT_GUIDELINES.md)
+
+### Standards Overview
+
+This project enforces:
+- **Python-First Approach** - Python is the default for backend
+- **Atomic Commits** - One change per commit
+- **Topic Branches** - One branch per concern
+- **Conventional Commits** - Standardized commit format
+- **No Direct Commits** - All changes via pull requests
+
+### Development Commands
+
+```bash
+make help                # Show all commands
+make setup-dev           # Setup development environment
+make validate            # Run all validation checks
+make lint                # Lint code
+make test                # Run tests
+make validate-branch     # Check branch name
+```
 
 ### Areas for Contribution
 - **Model Improvements**: Enhanced AI architectures
@@ -317,6 +360,10 @@ We welcome contributions to the CrownCode platform! This project follows open sc
 - **Documentation**: Technical and user documentation
 - **Testing**: Automated testing and quality assurance
 - **Internationalization**: Additional language support
+
+### Code of Conduct
+
+Please read our [Code of Conduct](./docs/community/CODE_OF_CONDUCT.md) before contributing.
 
 ---
 
