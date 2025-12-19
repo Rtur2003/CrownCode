@@ -40,8 +40,14 @@ class MusicAIDetectorClient:
                     error=f"music_ai_http_{response.status_code}",
                 )
             return ClientResponse(available=True, response=response.json(), error=None)
+        except httpx.TimeoutException:
+            return ClientResponse(available=True, response=None, error="music_ai_timeout")
+        except httpx.NetworkError as exc:
+            return ClientResponse(available=True, response=None, error=f"music_ai_network_error: {type(exc).__name__}")
+        except OSError as exc:
+            return ClientResponse(available=True, response=None, error=f"music_ai_file_error: {type(exc).__name__}")
         except Exception as exc:
-            return ClientResponse(available=True, response=None, error=str(exc))
+            return ClientResponse(available=True, response=None, error=f"music_ai_error: {type(exc).__name__}")
 
 
 class SesAnaliziClient:
@@ -65,8 +71,14 @@ class SesAnaliziClient:
                     error=f"ses_analizi_http_{response.status_code}",
                 )
             return ClientResponse(available=True, response=response.json(), error=None)
+        except httpx.TimeoutException:
+            return ClientResponse(available=True, response=None, error="ses_analizi_timeout")
+        except httpx.NetworkError as exc:
+            return ClientResponse(available=True, response=None, error=f"ses_analizi_network_error: {type(exc).__name__}")
+        except OSError as exc:
+            return ClientResponse(available=True, response=None, error=f"ses_analizi_file_error: {type(exc).__name__}")
         except Exception as exc:
-            return ClientResponse(available=True, response=None, error=str(exc))
+            return ClientResponse(available=True, response=None, error=f"ses_analizi_error: {type(exc).__name__}")
 
 
 def service_status() -> dict:
