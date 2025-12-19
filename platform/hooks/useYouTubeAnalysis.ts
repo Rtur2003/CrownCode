@@ -7,7 +7,7 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 import type { AnalysisErrorCode, AnalysisResult, DecisionSource, ProcessingState } from '@/hooks/analysisTypes'
 import { analyzeSource } from '@/hooks/analysisGateway'
-import { buildFeatureScores, buildSeed, previewIndicators } from '@/hooks/analysisUtils'
+import { buildFeatureScores, buildSeed, buildConfidence, buildIndicators } from '@/hooks/analysisUtils'
 
 type ParsedSource =
   | { kind: 'youtube'; videoId: string; normalizedUrl: string; startTimeSec?: number }
@@ -113,28 +113,24 @@ const parseYouTubeUrl = (input: string): ParsedSource | null => {
   }
 }
 
-const buildPreviewResult = (
+const buildPreviewResult = async (
   parsed: ParsedSource,
   url: string,
   elapsedSec: number,
   warnings: string[]
-): AnalysisResult => {
-  const seed = buildSeed(parsed.kind === 'spotify' ? parsed.trackId : parsed.videoId)
-  const isAIGenerated = seed > 0.5
-  const baseConfidence = 0.55 + seed * 0.35
-  const confidence = Number(Math.min(0.97, Math.max(0.51, baseConfidence + (Math.random() - 0.5) * 0.08)).toFixed(3))
+): Promise<AnalysisResult> => {
+  const seed = await buildSeed(parsed.kind === 'spotify' ? parsed.trackId : parsed.videoId)
+  const confidence = buildConfidence(seed)
+  const isAIGenerated = confidence > 0.5
   const featureScores = buildFeatureScores(seed)
-
-  const indicators = previewIndicators()
-  if (warnings.length) {
-    indicators.push('Warnings reported by the backend pipeline.')
-  }
+  
+  const indicators = buildIndicators(isAIGenerated, confidence, warnings)
 
   return {
     isAIGenerated,
     confidence,
     processingTime: elapsedSec,
-    modelVersion: 'youtube-preview-v1',
+    modelVersion: 'preview-v2-enhanced',
     decisionSource: 'preview',
     source:
       parsed.kind === 'youtube'
@@ -164,13 +160,13 @@ const buildPreviewResult = (
   }
 }
 
-const mapBackendResponse = (
+const mapBackendResponse = async (
   parsed: ParsedSource,
   url: string,
   response: BackendResponse,
   elapsedSec: number
-): AnalysisResult => {
-  const seed = buildSeed(parsed.kind === 'spotify' ? parsed.trackId : parsed.videoId)
+): Promise<AnalysisResult> => {
+  const seed = await buildSeed(parsed.kind === 'spotify' ? parsed.trackId : parsed.videoId)
   const featureScores = buildFeatureScores(seed)
   const indicators = response.summary.indicators || []
   const warnings = response.warnings || []
@@ -256,7 +252,8 @@ export const useYouTubeAnalysis = () => {
       await ensureMinDuration()
       const elapsedSec = (Date.now() - startTimeRef.current) / 1000
       const warningsBuffer = warningKey ? [warningKey] : []
-      setAnalysisResult(buildPreviewResult(parsed, url, elapsedSec, warningsBuffer))
+      const result = await buildPreviewResult(parsed, url, elapsedSec, warningsBuffer)
+      setAnalysisResult(result)
       setWarnings(warningsBuffer)
       setProcessingState('complete')
     }

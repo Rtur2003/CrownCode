@@ -1,5 +1,5 @@
 """
-YouTube URL parsing helpers.
+YouTube URL parsing helpers with enhanced validation.
 """
 
 from __future__ import annotations
@@ -9,8 +9,7 @@ import re
 from typing import Optional
 from urllib.parse import parse_qs, urlparse
 
-
-VIDEO_ID_RE = re.compile(r"^[a-zA-Z0-9_-]{11}$")
+from .validation import validate_video_id, validate_url
 
 
 @dataclass(frozen=True)
@@ -65,14 +64,20 @@ def _extract_video_id(parsed_url) -> Optional[str]:
 def parse_youtube_url(url: str) -> ParsedYouTubeUrl:
     if not url or not url.strip():
         raise ValueError("URL is empty.")
+    
+    if not validate_url(url):
+        raise ValueError("Invalid or unsafe URL format.")
 
     parsed = urlparse(url.strip())
     if parsed.scheme not in {"http", "https"}:
         raise ValueError("URL must start with http:// or https://")
 
     video_id = _extract_video_id(parsed)
-    if not video_id or not VIDEO_ID_RE.match(video_id):
+    if not video_id:
         raise ValueError("Invalid or missing YouTube video ID.")
+    
+    if not validate_video_id(video_id):
+        raise ValueError("Invalid video ID format.")
 
     query = parse_qs(parsed.query)
     start_raw = query.get("t", [None])[0] or query.get("start", [None])[0] or query.get("time_continue", [None])[0]

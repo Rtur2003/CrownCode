@@ -1,5 +1,5 @@
 """
-YouTube analysis orchestration for CrownCode.
+YouTube analysis orchestration for CrownCode with enhanced logging.
 """
 
 from __future__ import annotations
@@ -13,36 +13,25 @@ import uuid
 from typing import List
 
 from .external_clients import ClientResponse, MusicAIDetectorClient, SesAnaliziClient
+from .preview_model import create_preview_result
 from .url_parser import parse_youtube_url
 from .youtube_downloader import YouTubeDownloader
+from .logging_config import get_logger
 from ..schemas import AnalysisSummary, ServiceResult, YouTubeAnalyzeResponse, YouTubeSource
 
 
-def _fnv1a_32(value: str) -> int:
-    hash_value = 0x811C9DC5
-    for char in value:
-        hash_value ^= ord(char)
-        hash_value = (hash_value * 0x01000193) & 0xFFFFFFFF
-    return hash_value
+logger = get_logger(__name__)
 
 
 def _preview_summary(video_id: str, warnings: List[str]) -> AnalysisSummary:
-    seed = (_fnv1a_32(video_id) % 1000) / 1000.0
-    is_ai = seed > 0.5
-    confidence = 0.55 + seed * 0.35
-    indicators = [
-        "Preview-only decision based on URL fingerprint.",
-        "No model inference was available at request time.",
-    ]
-    if warnings:
-        indicators.append("Warnings present: " + ", ".join(warnings))
-
+    result = create_preview_result(video_id, warnings)
+    
     return AnalysisSummary(
-        is_ai_generated=is_ai,
-        confidence=round(confidence, 4),
-        decision_source="preview",
-        model_version="youtube-preview-v1",
-        indicators=indicators,
+        is_ai_generated=result["is_ai_generated"],
+        confidence=result["confidence"],
+        decision_source=result["decision_source"],
+        model_version=result["model_version"],
+        indicators=result["indicators"],
     )
 
 
@@ -55,19 +44,29 @@ class YouTubeAnalysisService:
 
     async def analyze(self, url: str, include_raw: bool = False) -> YouTubeAnalyzeResponse:
         request_id = uuid.uuid4().hex
+        logger.info(f"Starting analysis for request {request_id}")
+        
         warnings: List[str] = []
         errors: List[str] = []
         timings = {"download_sec": 0.0, "analysis_sec": 0.0, "total_sec": 0.0}
 
         start_total = time.monotonic()
-        parsed = parse_youtube_url(url)
+        
+        try:
+            parsed = parse_youtube_url(url)
+            logger.debug(f"Parsed URL - video_id: {parsed.video_id}")
+        except ValueError as exc:
+            logger.warning(f"URL parsing failed: {exc}")
+            raise
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             downloader = YouTubeDownloader(output_dir=Path(tmp_dir))
             start_download = time.monotonic()
             try:
                 download_result = downloader.download(parsed.normalized_url, parsed.video_id)
+                logger.info(f"Download completed in {time.monotonic() - start_download:.2f}s")
             except Exception as exc:
+                logger.error(f"Download failed: {exc}")
                 errors.append(f"download_failed: {exc}")
                 timings["total_sec"] = round(time.monotonic() - start_total, 4)
                 summary = _preview_summary(parsed.video_id, warnings)
@@ -97,6 +96,8 @@ class YouTubeAnalysisService:
             music_supported = audio_ext in {".mp3", ".wav", ".flac", ".ogg", ".m4a"}
             ses_supported = audio_ext in {".mp3", ".wav", ".flac", ".ogg", ".m4a", ".webm", ".opus"}
 
+            logger.debug(f"Audio format: {audio_ext}, music_ai: {music_supported}, ses_analizi: {ses_supported}")
+
             music_ai_result = (
                 ClientResponse(available=False, response=None, error="music_ai_unsupported_format")
                 if not music_supported
@@ -124,6 +125,7 @@ class YouTubeAnalysisService:
                 ses_result = ClientResponse(available=False, response=None, error="ses_analizi_unavailable")
 
             timings["analysis_sec"] = round(time.monotonic() - start_analysis, 4)
+            logger.info(f"Analysis completed in {timings['analysis_sec']}s")
 
         if not music_ai_result.available:
             if music_ai_result.error == "music_ai_unsupported_format":
@@ -143,6 +145,8 @@ class YouTubeAnalysisService:
 
         summary = self._build_summary(music_ai_result, ses_result, parsed.video_id, warnings)
         timings["total_sec"] = round(time.monotonic() - start_total, 4)
+        
+        logger.info(f"Request {request_id} completed in {timings['total_sec']}s")
 
         if music_ai_result.error and music_ai_result.error not in {"music_ai_not_configured", "music_ai_unsupported_format"}:
             errors.append(music_ai_result.error)
