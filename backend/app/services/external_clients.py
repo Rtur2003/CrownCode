@@ -1,5 +1,5 @@
 """
-HTTP clients for external analysis services.
+HTTP clients for external analysis services with enhanced validation.
 """
 
 from __future__ import annotations
@@ -10,6 +10,8 @@ from pathlib import Path
 from typing import Optional
 
 import httpx
+
+from .validation import validate_audio_path, validate_timeout
 
 
 @dataclass
@@ -22,16 +24,19 @@ class ClientResponse:
 class MusicAIDetectorClient:
     def __init__(self, base_url: Optional[str] = None, timeout_sec: float = 30.0) -> None:
         self.base_url = base_url or os.getenv("MUSIC_AI_API_URL")
+        
+        if not validate_timeout(timeout_sec):
+            timeout_sec = 30.0
+        
         self.timeout_sec = timeout_sec
 
     async def predict(self, audio_path: Path) -> ClientResponse:
         if not self.base_url:
             return ClientResponse(available=False, response=None, error="music_ai_not_configured")
         
-        if not audio_path.exists():
-            return ClientResponse(available=True, response=None, error="music_ai_file_not_found")
-        if not audio_path.is_file():
-            return ClientResponse(available=True, response=None, error="music_ai_invalid_file_path")
+        is_valid, error_msg = validate_audio_path(audio_path)
+        if not is_valid:
+            return ClientResponse(available=True, response=None, error=f"music_ai_{error_msg}")
 
         try:
             async with httpx.AsyncClient(timeout=self.timeout_sec) as client:
@@ -58,16 +63,19 @@ class MusicAIDetectorClient:
 class SesAnaliziClient:
     def __init__(self, base_url: Optional[str] = None, timeout_sec: float = 30.0) -> None:
         self.base_url = base_url or os.getenv("SES_ANALIZI_API_URL")
+        
+        if not validate_timeout(timeout_sec):
+            timeout_sec = 30.0
+        
         self.timeout_sec = timeout_sec
 
     async def analyze(self, audio_path: Path) -> ClientResponse:
         if not self.base_url:
             return ClientResponse(available=False, response=None, error="ses_analizi_not_configured")
         
-        if not audio_path.exists():
-            return ClientResponse(available=True, response=None, error="ses_analizi_file_not_found")
-        if not audio_path.is_file():
-            return ClientResponse(available=True, response=None, error="ses_analizi_invalid_file_path")
+        is_valid, error_msg = validate_audio_path(audio_path)
+        if not is_valid:
+            return ClientResponse(available=True, response=None, error=f"ses_analizi_{error_msg}")
 
         try:
             async with httpx.AsyncClient(timeout=self.timeout_sec) as client:
