@@ -1,0 +1,119 @@
+name: Security Issue
+description: Report a security vulnerability or safety gap
+title: "[SECURITY] "
+labels: ["security", "high-priority"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Security Issue Report
+        
+        ⚠️ **For critical vulnerabilities**, please email security@hasanarthuraltuntas.xyz instead.
+        
+        Use this template for security improvements and non-critical safety gaps.
+        
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severe is this security issue?
+      options:
+        - Low (minor improvement)
+        - Medium (should be addressed)
+        - High (needs prompt attention)
+        - Critical (immediate action required)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: vulnerability-type
+    attributes:
+      label: Vulnerability Type
+      options:
+        - Input validation missing
+        - Authentication/Authorization
+        - SQL Injection
+        - XSS (Cross-Site Scripting)
+        - Path traversal
+        - Command injection
+        - Sensitive data exposure
+        - Insufficient logging
+        - Missing error handling
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Security Issue Description
+      description: Describe the security issue (avoid detailed exploits in public issues)
+      placeholder: |
+        Example: User input in the video ID parameter is not validated,
+        potentially allowing injection attacks.
+    validations:
+      required: true
+
+  - type: textarea
+    id: affected-code
+    attributes:
+      label: Affected Code
+      description: Where is the security issue located?
+      placeholder: |
+        File: backend/app/routes/youtube.py
+        Function: download_video()
+        Lines: 25-30
+    validations:
+      required: true
+
+  - type: textarea
+    id: exploit-scenario
+    attributes:
+      label: Potential Exploit Scenario
+      description: How could this be exploited? (keep vague if sensitive)
+      placeholder: |
+        Example: An attacker could provide a malformed video ID
+        to access files outside the intended directory.
+    validations:
+      required: false
+
+  - type: textarea
+    id: recommended-fix
+    attributes:
+      label: Recommended Fix
+      description: How should this be fixed?
+      placeholder: |
+        1. Add input validation using validation.py
+        2. Sanitize file paths
+        3. Implement whitelist of allowed characters
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: impact
+    attributes:
+      label: Potential Impact
+      description: What could be affected?
+      options:
+        - label: Data confidentiality
+        - label: Data integrity
+        - label: System availability
+        - label: User privacy
+        - label: Server compromise
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other relevant security information
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        **Note:** Critical vulnerabilities should be reported privately to security@hasanarthuraltuntas.xyz

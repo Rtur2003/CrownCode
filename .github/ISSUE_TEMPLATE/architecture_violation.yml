@@ -1,0 +1,107 @@
+name: Architecture Violation
+description: Report an architectural principle violation that needs fixing
+title: "[ARCHITECTURE] "
+labels: ["architecture", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Architecture Violation Report
+        
+        Use this template when code violates established architectural principles.
+        
+  - type: dropdown
+    id: violation-type
+    attributes:
+      label: Violation Type
+      description: What architectural principle is being violated?
+      options:
+        - Separation of Concerns
+        - Single Responsibility
+        - Dependency Inversion
+        - Interface Segregation
+        - Open/Closed Principle
+        - Layered Architecture
+        - Domain Boundaries
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: Current Behavior
+      description: Describe the current architecture violation
+      placeholder: |
+        Example: Business logic is implemented directly in the API controller,
+        violating separation of concerns.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Architecture
+      description: How should this be architected?
+      placeholder: |
+        Example: Business logic should be in a service layer,
+        with the controller only handling HTTP concerns.
+    validations:
+      required: true
+
+  - type: textarea
+    id: affected-files
+    attributes:
+      label: Affected Files
+      description: List files with the architectural issue
+      placeholder: |
+        - backend/app/routes/youtube.py
+        - backend/app/services/youtube_analysis.py
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: How should this be fixed?
+      placeholder: |
+        1. Extract business logic to service layer
+        2. Keep controller thin
+        3. Add proper dependency injection
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - Critical (blocks other work)
+        - High (should fix soon)
+        - Medium (normal priority)
+        - Low (can wait)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: impact
+    attributes:
+      label: Impact Areas
+      description: What does this affect?
+      options:
+        - label: Maintainability
+        - label: Testability
+        - label: Scalability
+        - label: Performance
+        - label: Security
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other relevant information
+    validations:
+      required: false
