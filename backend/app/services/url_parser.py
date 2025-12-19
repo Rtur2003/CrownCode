@@ -40,7 +40,7 @@ def _parse_time_offset(raw: str) -> Optional[int]:
             total += amount_int * 60
         elif unit == "s":
             total += amount_int
-    return total or None
+    return total
 
 
 def _extract_video_id(parsed_url) -> Optional[str]:
