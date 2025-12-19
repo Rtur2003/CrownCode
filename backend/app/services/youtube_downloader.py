@@ -73,8 +73,11 @@ class YouTubeDownloader:
             "quiet": True,
             "no_warnings": True,
         }
-        with yt_dlp.YoutubeDL(options) as ydl:
-            return ydl.extract_info(url, download=True)
+        try:
+            with yt_dlp.YoutubeDL(options) as ydl:
+                return ydl.extract_info(url, download=True)
+        except Exception:
+            return None
 
     def _resolve_output_path(self, video_id: str) -> Path:
         candidates = list(self.output_dir.glob(f"{video_id}.*"))
