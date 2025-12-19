@@ -5,6 +5,7 @@
 fastapi==0.109.0
 uvicorn[standard]==0.27.0
 pydantic==2.5.3
+pydantic-settings==2.1.0
 python-multipart==0.0.6
 
 # === AI/ML (PyTorch with CUDA 12.9) ===
@@ -30,6 +31,9 @@ scipy==1.11.4
 aiohttp==3.9.1
 httpx==0.26.0
 requests==2.31.0
+
+# === System Utilities ===
+psutil==5.9.6
 
 # === Utilities ===
 python-dotenv==1.0.0
