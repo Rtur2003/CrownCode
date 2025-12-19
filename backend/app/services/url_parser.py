@@ -25,8 +25,7 @@ def _parse_time_offset(raw: str) -> Optional[int]:
         return None
     value = raw.strip().lower()
     if value.isdigit():
-        parsed = int(value)
-        return parsed if parsed > 0 else None
+        return int(value)
 
     total = 0
     matches = re.findall(r"(\d+)(h|m|s)", value)
@@ -41,7 +40,7 @@ def _parse_time_offset(raw: str) -> Optional[int]:
             total += amount_int * 60
         elif unit == "s":
             total += amount_int
-    return total if total > 0 else None
+    return total
 
 
 def _extract_video_id(parsed_url) -> Optional[str]:
