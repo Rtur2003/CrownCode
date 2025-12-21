@@ -271,7 +271,7 @@
 .social-link:hover {
   color: var(--color-text-primary);
   border-color: var(--color-gold-400);
-  background: rgba(251, 191, 36, 0.1);
+  background: rgba(201, 147, 71, 0.12);
   transform: translateY(-2px);
 }
 

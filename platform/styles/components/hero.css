@@ -100,7 +100,7 @@
 
 @keyframes badgePulse {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.3);
+    box-shadow: 0 0 0 0 rgba(201, 147, 71, 0.35);
   }
   50% {
     box-shadow: 0 0 0 8px rgba(251, 191, 36, 0);
@@ -225,7 +225,7 @@
   border-color: var(--color-gold-400);
   color: var(--color-gold-400);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(251, 191, 36, 0.1);
+  box-shadow: 0 8px 32px rgba(201, 147, 71, 0.12);
 }
 
 .hero-visual-panels {

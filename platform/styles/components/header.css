@@ -184,7 +184,7 @@
 .action-button:hover {
   color: var(--color-text-inverse);
   border-color: var(--color-gold-400);
-  box-shadow: 0 8px 24px rgba(251, 191, 36, 0.2);
+  box-shadow: 0 8px 24px rgba(201, 147, 71, 0.25);
 }
 
 .action-button:hover::before {
