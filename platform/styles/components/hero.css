@@ -264,6 +264,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  isolation: isolate;
 }
 
 .hero-card {
