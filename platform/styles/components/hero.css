@@ -228,6 +228,36 @@
   box-shadow: 0 8px 32px rgba(251, 191, 36, 0.1);
 }
 
+.hero-visual-panels {
+  position: absolute;
+  inset: -10% -10% -10% -10%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-panel {
+  position: absolute;
+  max-width: 260px;
+  width: 60%;
+  height: auto;
+  opacity: 0.8;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.4));
+  transform: rotate(-6deg);
+}
+
+.hero-panel-primary {
+  top: 12%;
+  right: 0;
+  opacity: 0.7;
+}
+
+.hero-panel-secondary {
+  bottom: 12%;
+  right: 20%;
+  opacity: 0.6;
+  transform: rotate(8deg);
+}
+
 /* Visual Element */
 .hero-visual {
   display: flex;
