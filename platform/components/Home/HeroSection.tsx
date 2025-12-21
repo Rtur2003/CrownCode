@@ -191,6 +191,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
           transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           aria-label="Interactive code preview"
         >
+          <div className="hero-visual-panels" aria-hidden="true">
+            <img
+              src="/images/panel/discord.png"
+              alt=""
+              className="hero-panel hero-panel-primary"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              src="/images/panel/about-me.png"
+              alt=""
+              className="hero-panel hero-panel-secondary"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
           <div className="hero-card">
             {/* Code Editor Header */}
             <div className="hero-card-header">

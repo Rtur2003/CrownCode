@@ -6,7 +6,10 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: var(--color-background);
+  background:
+    radial-gradient(120% 120% at 20% 10%, rgba(234, 192, 111, 0.15) 0%, transparent 45%),
+    radial-gradient(120% 120% at 80% 0%, rgba(138, 95, 43, 0.2) 0%, transparent 55%),
+    linear-gradient(180deg, #0b0a08 0%, #0f0d0a 50%, #0b0a08 100%);
   padding-top: 5rem; /* 80px clearance for fixed header (64px) + spacing */
 }
 
@@ -20,21 +23,33 @@
 .hero-gradient {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    ellipse 80% 50% at 50% 40%,
-    rgba(251, 191, 36, 0.1) 0%,
-    rgba(251, 191, 36, 0.05) 40%,
-    transparent 100%
-  );
+  background:
+    radial-gradient(60% 60% at 15% 20%, rgba(231, 199, 122, 0.18) 0%, transparent 65%),
+    radial-gradient(50% 50% at 85% 25%, rgba(154, 107, 43, 0.2) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(11, 10, 8, 0.9) 0%, rgba(11, 10, 8, 0.4) 100%);
 }
 
 .hero-pattern {
   position: absolute;
   inset: 0;
-  background-image: 
-    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
-  background-size: 24px 24px;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(244, 237, 227, 0.05) 1px, transparent 0),
+    linear-gradient(120deg, rgba(138, 95, 43, 0.08), rgba(0, 0, 0, 0) 60%);
+  background-size: 24px 24px, 100% 100%;
   animation: patternFloat 20s linear infinite;
+}
+
+.hero-background::after {
+  content: '';
+  position: absolute;
+  inset: -10% -10% auto;
+  height: 120%;
+  background: url('/images/panel/discord.png') right 10% top 20% / 320px auto no-repeat;
+  opacity: 0.12;
+  mix-blend-mode: screen;
+  filter: saturate(0.9) contrast(1.05);
+  pointer-events: none;
 }
 
 @keyframes patternFloat {
@@ -178,12 +193,12 @@
 .hero-btn-primary {
   background: var(--gradient-primary);
   color: var(--color-text-inverse);
-  box-shadow: 0 4px 16px rgba(251, 191, 36, 0.3);
+  box-shadow: 0 4px 18px rgba(201, 147, 71, 0.35);
 }
 
 .hero-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(251, 191, 36, 0.4);
+  box-shadow: 0 10px 36px rgba(201, 147, 71, 0.45);
 }
 
 .hero-btn-primary:active {
