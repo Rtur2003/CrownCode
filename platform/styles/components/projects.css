@@ -350,14 +350,14 @@
   font-weight: 600;
   border-radius: var(--radius-xl);
   transition: all var(--animation-normal) var(--ease-out-cubic);
-  box-shadow: 0 4px 16px rgba(251, 191, 36, 0.2);
+  box-shadow: 0 4px 16px rgba(201, 147, 71, 0.25);
   position: relative;
   z-index: 1;
 }
 
 .cta-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(251, 191, 36, 0.3);
+  box-shadow: 0 10px 36px rgba(201, 147, 71, 0.35);
 }
 
 /* Responsive Design */
