@@ -26,9 +26,9 @@ module.exports = {
         error: '#ef4444',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        heading: ['Poppins', 'Inter', 'sans-serif'],
-        mono: ['Fira Code', 'Monaco', 'monospace'],
+        sans: ['IM Fell Double Pica', 'Times New Roman', 'serif'],
+        heading: ['Portmanteau', 'IM Fell Double Pica', 'serif'],
+        mono: ['JetBrains Mono', 'Courier New', 'monospace'],
       },
       boxShadow: {
         'glow': '0 0 40px rgba(0, 212, 255, 0.3)',
