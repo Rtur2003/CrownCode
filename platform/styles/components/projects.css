@@ -137,17 +137,17 @@
 
 .status-dot.active {
   background: var(--color-success);
-  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  box-shadow: 0 0 0 0 rgba(127, 176, 105, 0.7);
 }
 
 .status-dot.developing {
   background: var(--color-warning);
-  box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+  box-shadow: 0 0 0 0 rgba(201, 147, 71, 0.7);
 }
 
 .status-dot.planned {
   background: var(--color-info);
-  box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  box-shadow: 0 0 0 0 rgba(107, 143, 122, 0.7);
 }
 
 @keyframes statusPulse {
