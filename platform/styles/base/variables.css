@@ -38,15 +38,15 @@
   --font-family-mono: 'JetBrains Mono', 'Courier New', monospace;
 
   /* Glass Effects */
-  --glass-bg: rgba(30, 41, 59, 0.8);
-  --glass-border: rgba(56, 189, 248, 0.3);
+  --glass-bg: rgba(21, 17, 14, 0.78);
+  --glass-border: rgba(201, 147, 71, 0.25);
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5);
-  --shadow-glow: 0 0 40px rgba(56, 189, 248, 0.3);
+  --shadow-glow: 0 0 40px rgba(201, 147, 71, 0.25);
 
   /* Animations */
   --animation-duration: 0.3s;
@@ -76,6 +76,7 @@
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
   --radius-3xl: 2rem;
+  --radius-full: 999px;
 }
 
 /* Responsive breakpoints for consistency */
