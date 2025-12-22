@@ -4,11 +4,6 @@ export default function Document() {
   return (
     <Html lang="tr">
       <Head>
-        {/* DNS Prefetch & Preconnect for Performance */}
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
         {/* Favicon & Icons - Multiple sizes */}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/favicon.ico" />
@@ -18,9 +13,9 @@ export default function Document() {
         <link rel="manifest" href="/manifest.json" />
 
         {/* Theme Colors - Brand identity */}
-        <meta name="theme-color" content="#fbbf24" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)" />
-        <meta name="msapplication-TileColor" content="#fbbf24" />
+        <meta name="theme-color" content="#e7c77a" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#0b0a08" media="(prefers-color-scheme: dark)" />
+        <meta name="msapplication-TileColor" content="#e7c77a" />
 
         {/* Apple Mobile Web App */}
         <meta name="apple-mobile-web-app-capable" content="yes" />

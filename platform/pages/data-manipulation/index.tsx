@@ -131,9 +131,9 @@ const AudioDatasetPage: NextPage = () => {
                     </div>
                     <div className="tool-status">
                       {tool.status === 'available' ? (
-                        <CheckCircle size={16} className="text-green-400" />
+                        <CheckCircle size={16} className="text-success" />
                       ) : (
-                        <AlertCircle size={16} className="text-orange-400" />
+                        <AlertCircle size={16} className="text-warning" />
                       )}
                     </div>
                   </div>
@@ -208,8 +208,8 @@ const AudioDatasetPage: NextPage = () => {
           display: inline-flex;
           align-items: center;
           gap: 0.5rem;
-          background: rgba(56, 189, 248, 0.1);
-          border: 1px solid rgba(56, 189, 248, 0.3);
+          background: rgba(231, 199, 122, 0.12);
+          border: 1px solid rgba(201, 147, 71, 0.45);
           padding: 0.5rem 1rem;
           border-radius: var(--radius-3xl);
           color: var(--color-primary);
@@ -248,9 +248,9 @@ const AudioDatasetPage: NextPage = () => {
         }
 
         .demo-badge {
-          background: rgba(249, 115, 22, 0.1);
-          border: 1px solid rgba(249, 115, 22, 0.3);
-          color: #f97316;
+          background: rgba(201, 147, 71, 0.12);
+          border: 1px solid rgba(201, 147, 71, 0.45);
+          color: var(--color-warning);
           padding: 0.5rem 1rem;
           border-radius: var(--radius-3xl);
           font-size: 0.875rem;
@@ -299,7 +299,7 @@ const AudioDatasetPage: NextPage = () => {
           align-items: center;
           justify-content: center;
           background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-          color: white;
+          color: var(--color-text-inverse);
         }
 
         .tool-content {
@@ -323,8 +323,8 @@ const AudioDatasetPage: NextPage = () => {
         }
 
         .tool-button {
-          background: rgba(56, 189, 248, 0.1);
-          border: 1px solid rgba(56, 189, 248, 0.3);
+          background: rgba(231, 199, 122, 0.12);
+          border: 1px solid rgba(201, 147, 71, 0.35);
           color: var(--color-primary);
           padding: 0.75rem 1.5rem;
           border-radius: var(--radius-md);

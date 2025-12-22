@@ -56,7 +56,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#fbbf24" />
+        <meta name="theme-color" content="#e7c77a" />
         <meta name="author" content="Hasan Arthur Altuntaş (Rthur)" />
         <meta name="robots" content="index, follow" />
         <meta name="language" content="Turkish" />
@@ -88,10 +88,6 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
             __html: JSON.stringify(structuredData)
           }}
         />
-        
-        {/* Fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
         {/* Favicon */}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
