@@ -1,8 +1,8 @@
 # AI Music Detection Preview Mode
 
-- Model henüz entegre edilmediğinden önizleme sonuçları rastgele tohum + jitter ile çalışıyor; güven ve feature skorları her çağrıda hafif farklı olabilir.
-- Gerçek model servisi geldiğinde:
-  1) /api/analyze gateway'ini harici inference servisine bağla (yt-dlp + ffmpeg + model).
-  2) Önizleme jitter'ini kaldır, gerçek skorları dön.
+- Model henÃ¼z entegre edilmediÄŸinden Ã¶nizleme sonuÃ§larÄ± rastgele tohum + jitter ile Ã§alÄ±ÅŸÄ±yor; gÃ¼ven ve feature skorlarÄ± her Ã§aÄŸrÄ±da hafif farklÄ± olabilir.
+- GerÃ§ek model servisi geldiÄŸinde:
+  1) /api/analyze gateway'ini harici inference servisine baÄŸla (yt-dlp + ffmpeg + model).
+  2) Ã–nizleme jitter'ini kaldÄ±r, gerÃ§ek skorlarÄ± dÃ¶n.
 - Gateway hedefi: INFERENCE_API_URL veya NEXT_PUBLIC_API_URL /api/analyze
-- Limitler: max 30MB, ~6dk ses; Spotify/Apple şimdilik 501/preview.
+- Limitler: max 30MB, ~6dk ses; Spotify/Apple ÅŸimdilik 501/preview.
