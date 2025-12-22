@@ -18,9 +18,9 @@ export default function Document() {
         <link rel="manifest" href="/manifest.json" />
 
         {/* Theme Colors - Brand identity */}
-        <meta name="theme-color" content="#fbbf24" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)" />
-        <meta name="msapplication-TileColor" content="#fbbf24" />
+        <meta name="theme-color" content="#e7c77a" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#0b0a08" media="(prefers-color-scheme: dark)" />
+        <meta name="msapplication-TileColor" content="#e7c77a" />
 
         {/* Apple Mobile Web App */}
         <meta name="apple-mobile-web-app-capable" content="yes" />

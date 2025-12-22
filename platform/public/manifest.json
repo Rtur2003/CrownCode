@@ -4,8 +4,8 @@
   "description": "AI-powered music detection and data analysis research platform",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0f0f0f",
-  "theme_color": "#fbbf24",
+  "background_color": "#0b0a08",
+  "theme_color": "#e7c77a",
   "orientation": "portrait-primary",
   "icons": [
     {
