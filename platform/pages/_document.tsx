@@ -4,11 +4,6 @@ export default function Document() {
   return (
     <Html lang="tr">
       <Head>
-        {/* DNS Prefetch & Preconnect for Performance */}
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
         {/* Favicon & Icons - Multiple sizes */}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/favicon.ico" />
