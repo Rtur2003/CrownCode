@@ -10,36 +10,55 @@
         <title>Sitemap - CrownCode Platform</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <style type="text/css">
+          @font-face {
+            font-family: 'IM Fell Double Pica';
+            src: url('/fonts/im-fell-double-pica-regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+          }
+
+          @font-face {
+            font-family: 'Portmanteau';
+            src: url('/fonts/portmanteau-regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+          }
+
           * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
           }
           body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-            color: #e0e0e0;
+            font-family: 'IM Fell Double Pica', 'Times New Roman', serif;
+            background:
+              radial-gradient(120% 120% at 15% 10%, rgba(231, 199, 122, 0.18) 0%, transparent 55%),
+              linear-gradient(135deg, #0b0a08 0%, #15110e 100%);
+            color: #f4ede3;
             padding: 2rem;
             line-height: 1.6;
           }
           .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: #1a1a1a;
+            background: #15110e;
             border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            border: 1px solid #2a2a2a;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2c231b;
           }
           h1 {
-            color: #fbbf24;
+            font-family: 'Portmanteau', 'IM Fell Double Pica', serif;
+            color: #eac06f;
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
             text-align: center;
           }
           .subtitle {
             text-align: center;
-            color: #9ca3af;
+            color: #9a8d7d;
             margin-bottom: 2rem;
             font-size: 1.1rem;
           }
@@ -49,9 +68,9 @@
             gap: 2rem;
             margin-bottom: 2rem;
             padding: 1rem;
-            background: #0f0f0f;
+            background: #0b0a08;
             border-radius: 8px;
-            border: 1px solid #2a2a2a;
+            border: 1px solid #2c231b;
           }
           .stat {
             text-align: center;
@@ -59,10 +78,10 @@
           .stat-value {
             font-size: 2rem;
             font-weight: bold;
-            color: #fbbf24;
+            color: #eac06f;
           }
           .stat-label {
-            color: #9ca3af;
+            color: #9a8d7d;
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -71,13 +90,13 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 1rem;
-            background: #0f0f0f;
+            background: #0b0a08;
             border-radius: 8px;
             overflow: hidden;
           }
           th {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            color: #000;
+            background: linear-gradient(135deg, #eac06f 0%, #c99347 60%, #8a5f2b 100%);
+            color: #0b0a08;
             padding: 1rem;
             text-align: left;
             font-weight: 600;
@@ -87,22 +106,22 @@
           }
           td {
             padding: 1rem;
-            border-bottom: 1px solid #2a2a2a;
-            color: #e0e0e0;
+            border-bottom: 1px solid #2c231b;
+            color: #f4ede3;
           }
           tr:hover {
-            background: #252525;
+            background: #1f1914;
           }
           tr:last-child td {
             border-bottom: none;
           }
           a {
-            color: #fbbf24;
+            color: #eac06f;
             text-decoration: none;
             transition: color 0.2s;
           }
           a:hover {
-            color: #f59e0b;
+            color: #c99347;
             text-decoration: underline;
           }
           .priority {
@@ -113,36 +132,36 @@
             font-size: 0.85rem;
           }
           .priority-high {
-            background: rgba(251, 191, 36, 0.2);
-            color: #fbbf24;
+            background: rgba(231, 199, 122, 0.2);
+            color: #eac06f;
           }
           .priority-medium {
-            background: rgba(59, 130, 246, 0.2);
-            color: #3b82f6;
+            background: rgba(127, 176, 105, 0.2);
+            color: #7fb069;
           }
           .priority-low {
-            background: rgba(107, 114, 128, 0.2);
-            color: #9ca3af;
+            background: rgba(154, 141, 125, 0.2);
+            color: #9a8d7d;
           }
           .changefreq {
             display: inline-block;
             padding: 0.25rem 0.75rem;
-            background: rgba(251, 191, 36, 0.1);
+            background: rgba(231, 199, 122, 0.12);
             border-radius: 6px;
             font-size: 0.85rem;
-            color: #fbbf24;
-            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: #eac06f;
+            border: 1px solid rgba(201, 147, 71, 0.35);
           }
           .footer {
             text-align: center;
             margin-top: 2rem;
             padding-top: 2rem;
-            border-top: 1px solid #2a2a2a;
-            color: #9ca3af;
+            border-top: 1px solid #2c231b;
+            color: #9a8d7d;
             font-size: 0.9rem;
           }
           .footer a {
-            color: #fbbf24;
+            color: #eac06f;
           }
         </style>
       </head>
