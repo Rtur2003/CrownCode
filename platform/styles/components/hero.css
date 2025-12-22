@@ -93,8 +93,8 @@
   font-size: 0.875rem;
   font-weight: 500;
   width: fit-content;
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   animation: badgePulse 3s ease-in-out infinite;
 }
 
@@ -125,8 +125,8 @@
   font-size: clamp(2.5rem, 7vw, 4rem);
   font-weight: 300;
   background: var(--gradient-primary);
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% 200%;
   animation: gradientShift 4s ease-in-out infinite;
@@ -273,8 +273,8 @@
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-2xl);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   animation: float 6s ease-in-out infinite;
@@ -496,8 +496,8 @@
   .hero-title-accent {
     animation: none;
     background: var(--color-gold-400);
-    background-clip: text;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   

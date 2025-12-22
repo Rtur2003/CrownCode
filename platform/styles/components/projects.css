@@ -43,8 +43,8 @@
   font-size: 0.875rem;
   font-weight: 500;
   margin-bottom: 1.5rem;
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .products-title {
@@ -60,8 +60,8 @@
 
 .products-title-accent {
   background: var(--gradient-primary);
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline;
 }
@@ -124,8 +124,8 @@
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--color-text-secondary);
-  backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .status-dot {
@@ -307,8 +307,8 @@
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-2xl);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   position: relative;
   overflow: hidden;
 }
