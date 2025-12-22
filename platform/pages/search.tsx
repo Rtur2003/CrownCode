@@ -108,7 +108,7 @@ const SearchPage: NextPage = () => {
           <h1 style={{
             fontSize: 'clamp(2rem, 5vw, 3rem)',
             marginBottom: '1rem',
-            background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+            background: 'var(--gradient-primary)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
@@ -117,7 +117,7 @@ const SearchPage: NextPage = () => {
           </h1>
           <p style={{
             fontSize: '1.1rem',
-            color: 'var(--text-secondary)',
+            color: 'var(--color-text-secondary)',
             marginBottom: '2rem'
           }}>
             {language === 'tr'
@@ -137,17 +137,17 @@ const SearchPage: NextPage = () => {
           <div style={{
             display: 'flex',
             gap: '1rem',
-            background: 'var(--card-bg)',
+            background: 'var(--glass-bg)',
             padding: '0.5rem',
             borderRadius: '12px',
-            border: '1px solid var(--border-color)',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+            border: '1px solid var(--glass-border)',
+            boxShadow: 'var(--shadow-md)'
           }}>
             <SearchIcon
               size={24}
               style={{
                 margin: 'auto 0.5rem',
-                color: 'var(--text-secondary)'
+                color: 'var(--color-text-secondary)'
               }}
             />
             <input
@@ -161,7 +161,7 @@ const SearchPage: NextPage = () => {
                 border: 'none',
                 background: 'transparent',
                 fontSize: '1.1rem',
-                color: 'var(--text-primary)',
+                color: 'var(--color-text-primary)',
                 outline: 'none'
               }}
             />
@@ -169,8 +169,8 @@ const SearchPage: NextPage = () => {
               type="submit"
               style={{
                 padding: '1rem 2rem',
-                background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
-                color: '#000',
+                background: 'var(--gradient-primary)',
+                color: 'var(--color-text-inverse)',
                 border: 'none',
                 borderRadius: '8px',
                 fontWeight: 600,
@@ -195,7 +195,7 @@ const SearchPage: NextPage = () => {
             <h2 style={{
               fontSize: '1.5rem',
               marginBottom: '1.5rem',
-              color: 'var(--text-primary)'
+              color: 'var(--color-text-primary)'
             }}>
               {results.length > 0
                 ? language === 'tr'
@@ -217,27 +217,27 @@ const SearchPage: NextPage = () => {
                   <Link href={result.url} style={{ textDecoration: 'none' }}>
                     <div style={{
                       padding: '1.5rem',
-                      background: 'var(--card-bg)',
-                      border: '1px solid var(--border-color)',
+                      background: 'var(--glass-bg)',
+                      border: '1px solid var(--glass-border)',
                       borderRadius: '12px',
                       transition: 'all 0.3s',
                       cursor: 'pointer'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = '#fbbf24'
+                      e.currentTarget.style.borderColor = 'var(--color-primary)'
                       e.currentTarget.style.transform = 'translateY(-2px)'
-                      e.currentTarget.style.boxShadow = '0 8px 16px rgba(251, 191, 36, 0.2)'
+                      e.currentTarget.style.boxShadow = 'var(--shadow-glow)'
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = 'var(--border-color)'
+                      e.currentTarget.style.borderColor = 'var(--glass-border)'
                       e.currentTarget.style.transform = 'translateY(0)'
                       e.currentTarget.style.boxShadow = 'none'
                     }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-                        <span style={{ color: '#fbbf24' }}>{result.icon}</span>
+                        <span style={{ color: 'var(--color-primary)' }}>{result.icon}</span>
                         <h3 style={{
                           fontSize: '1.25rem',
-                          color: 'var(--text-primary)',
+                          color: 'var(--color-text-primary)',
                           margin: 0
                         }}>
                           {result.title}
@@ -245,8 +245,8 @@ const SearchPage: NextPage = () => {
                         <span style={{
                           marginLeft: 'auto',
                           padding: '0.25rem 0.75rem',
-                          background: 'rgba(251, 191, 36, 0.1)',
-                          color: '#fbbf24',
+                          background: 'rgba(231, 199, 122, 0.12)',
+                          color: 'var(--color-primary)',
                           borderRadius: '6px',
                           fontSize: '0.85rem',
                           fontWeight: 600,
@@ -256,7 +256,7 @@ const SearchPage: NextPage = () => {
                         </span>
                       </div>
                       <p style={{
-                        color: 'var(--text-secondary)',
+                        color: 'var(--color-text-secondary)',
                         margin: 0,
                         lineHeight: 1.6
                       }}>
@@ -279,7 +279,7 @@ const SearchPage: NextPage = () => {
             style={{
               textAlign: 'center',
               padding: '4rem 2rem',
-              color: 'var(--text-secondary)'
+              color: 'var(--color-text-secondary)'
             }}
           >
             <SearchIcon size={64} style={{ marginBottom: '1rem', opacity: 0.3 }} />
