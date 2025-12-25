@@ -31,8 +31,6 @@ import { MainLayout } from '@/components/Layout/MainLayout'
 import {
   Upload,
   Music,
-  Play,
-  Pause,
   Shield,
   BarChart3,
   Download,
@@ -103,12 +101,6 @@ const AIMusicDetectionPage: NextPage = () => {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  // Audio playback
-  const [isPlaying, setIsPlaying] = useState<boolean>(false)
-  const [currentTime, setCurrentTime] = useState<number>(0)
-  const [duration, setDuration] = useState<number>(0)
-  const audioRef = useRef<HTMLAudioElement>(null)
-
   // Upload interface
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [isDragOver, setIsDragOver] = useState<boolean>(false)
@@ -116,29 +108,6 @@ const AIMusicDetectionPage: NextPage = () => {
   // -----------------------------------------------------------------------
   // FILE UPLOAD HANDLERS
   // -----------------------------------------------------------------------
-
-  /**
-   * Handle file selection from input
-   */
-  const handleFileSelect = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      validateAndSetFile(file)
-    }
-  }, [])
-
-  /**
-   * Handle drag and drop file upload
-   */
-  const handleDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    setIsDragOver(false)
-
-    const file = event.dataTransfer.files[0]
-    if (file) {
-      validateAndSetFile(file)
-    }
-  }, [])
 
   /**
    * Comprehensive file validation with security measures
@@ -201,10 +170,34 @@ const AIMusicDetectionPage: NextPage = () => {
       setError(null)
       setAnalysisResult(null)
 
-    } catch (error: any) {
-      setError(error.message || 'File validation failed. Please try a different file.')
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'File validation failed. Please try a different file.'
+      setError(errorMessage)
     }
   }, [])
+
+  /**
+   * Handle file selection from input
+   */
+  const handleFileSelect = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      validateAndSetFile(file)
+    }
+  }, [validateAndSetFile])
+
+  /**
+   * Handle drag and drop file upload
+   */
+  const handleDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    setIsDragOver(false)
+
+    const file = event.dataTransfer.files[0]
+    if (file) {
+      validateAndSetFile(file)
+    }
+  }, [validateAndSetFile])
 
   /**
    * Validate file header to ensure it's actually an audio file (magic number check)
@@ -312,85 +305,11 @@ const AIMusicDetectionPage: NextPage = () => {
       }
 
       return null
-    } catch (error) {
+    } catch {
       // Invalid URL format
       return null
     }
   }, [])
-
-  /**
-   * Handle URL analysis with comprehensive validation
-   */
-  const handleUrlAnalysis = useCallback(async () => {
-    if (!musicUrl.trim()) {
-      setError('Please enter a valid music URL.')
-      return
-    }
-
-    // Basic URL format validation
-    try {
-      new URL(musicUrl)
-    } catch {
-      setError('Invalid URL format. Please enter a complete URL starting with http:// or https://')
-      return
-    }
-
-    const platform = detectPlatform(musicUrl)
-    if (!platform) {
-      setError(`Unsupported URL format. {t.aiDetection.url.supportedPlatforms}
-      • Spotify: https://open.spotify.com/track/... or https://spotify.com/track/...
-      • YouTube: https://www.youtube.com/watch?v=... or https://youtu.be/...
-      • YouTube Music: https://music.youtube.com/watch?v=...
-      • SoundCloud: https://soundcloud.com/artist/track
-      • Apple Music: https://music.apple.com/country/album/...`)
-      return
-    }
-
-    setProcessingState('analyzing')
-    setError(null)
-
-    try {
-      // Validate URL accessibility (simulate API availability check)
-      await validateUrlAccess(musicUrl, platform)
-
-      // Extract audio and perform analysis
-      await simulateUrlAnalysis(musicUrl, platform)
-    } catch (error: any) {
-      const errorMessage = error.message || 'Failed to analyze the provided URL. Please try again.'
-      setError(errorMessage)
-      setProcessingState('error')
-    }
-  }, [musicUrl, detectPlatform])
-
-  /**
-   * Validate URL accessibility and platform-specific requirements
-   */
-  const validateUrlAccess = async (url: string, platform: SupportedPlatform): Promise<void> => {
-    // Simulate platform-specific validation
-    await new Promise(resolve => setTimeout(resolve, 1000))
-
-    // Simulate various validation scenarios
-    const random = Math.random()
-
-    if (random < 0.1) {
-      throw new Error(`${platform.charAt(0).toUpperCase() + platform.slice(1)} track is private or unavailable.`)
-    }
-
-    if (random < 0.15) {
-      throw new Error(`Region-restricted content. This ${platform} track is not available in your region.`)
-    }
-
-    if (random < 0.2) {
-      throw new Error(`${platform.charAt(0).toUpperCase() + platform.slice(1)} API rate limit exceeded. Please try again in a few minutes.`)
-    }
-
-    // Simulate successful validation
-    return Promise.resolve()
-  }
-
-  // -----------------------------------------------------------------------
-  // AI ANALYSIS CORE
-  // -----------------------------------------------------------------------
 
   /**
    * ⚠️ DEMO FUNCTION - NOT REAL AI ANALYSIS
@@ -439,31 +358,83 @@ const AIMusicDetectionPage: NextPage = () => {
    * Simulate URL analysis for streaming platforms
    * ⚠️ DEMO: Uses same random analysis as file upload
    */
-  const simulateUrlAnalysis = async (url: string, platform: SupportedPlatform) => {
+  const simulateUrlAnalysis = useCallback(async (url: string, _platform: SupportedPlatform) => {
     // Simulate platform-specific processing
     await new Promise(resolve => setTimeout(resolve, 3000))
 
     // Perform demo analysis
     await performAIAnalysis(url)
-  }
-
-  // -----------------------------------------------------------------------
-  // AUDIO PLAYBACK CONTROLS
-  // -----------------------------------------------------------------------
+  }, [performAIAnalysis])
 
   /**
-   * Toggle audio playback
+   * Handle URL analysis with comprehensive validation
    */
-  const togglePlayback = useCallback(() => {
-    if (!audioRef.current) return
-
-    if (isPlaying) {
-      audioRef.current.pause()
-    } else {
-      audioRef.current.play()
+  const handleUrlAnalysis = useCallback(async () => {
+    if (!musicUrl.trim()) {
+      setError('Please enter a valid music URL.')
+      return
     }
-    setIsPlaying(!isPlaying)
-  }, [isPlaying])
+
+    // Basic URL format validation
+    try {
+      new URL(musicUrl)
+    } catch {
+      setError('Invalid URL format. Please enter a complete URL starting with http:// or https://')
+      return
+    }
+
+    const platform = detectPlatform(musicUrl)
+    if (!platform) {
+      setError(`Unsupported URL format. {t.aiDetection.url.supportedPlatforms}
+      • Spotify: https://open.spotify.com/track/... or https://spotify.com/track/...
+      • YouTube: https://www.youtube.com/watch?v=... or https://youtu.be/...
+      • YouTube Music: https://music.youtube.com/watch?v=...
+      • SoundCloud: https://soundcloud.com/artist/track
+      • Apple Music: https://music.apple.com/country/album/...`)
+      return
+    }
+
+    setProcessingState('analyzing')
+    setError(null)
+
+    try {
+      // Validate URL accessibility (simulate API availability check)
+      await validateUrlAccess(musicUrl, platform)
+
+      // Extract audio and perform analysis
+      await simulateUrlAnalysis(musicUrl, platform)
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to analyze the provided URL. Please try again.'
+      setError(errorMessage)
+      setProcessingState('error')
+    }
+  }, [musicUrl, detectPlatform, simulateUrlAnalysis])
+
+  /**
+   * Validate URL accessibility and platform-specific requirements
+   */
+  const validateUrlAccess = async (url: string, platform: SupportedPlatform): Promise<void> => {
+    // Simulate platform-specific validation
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    // Simulate various validation scenarios
+    const random = Math.random()
+
+    if (random < 0.1) {
+      throw new Error(`${platform.charAt(0).toUpperCase() + platform.slice(1)} track is private or unavailable.`)
+    }
+
+    if (random < 0.15) {
+      throw new Error(`Region-restricted content. This ${platform} track is not available in your region.`)
+    }
+
+    if (random < 0.2) {
+      throw new Error(`${platform.charAt(0).toUpperCase() + platform.slice(1)} API rate limit exceeded. Please try again in a few minutes.`)
+    }
+
+    // Simulate successful validation
+    return Promise.resolve()
+  }
 
   // -----------------------------------------------------------------------
   // RENDER HELPERS
@@ -472,10 +443,10 @@ const AIMusicDetectionPage: NextPage = () => {
   /**
    * Render platform icon
    */
-  const renderPlatformIcon = (platform: SupportedPlatform) => {
+  const renderPlatformIcon = (_platform: SupportedPlatform) => {
     const iconProps = { size: 20, className: "text-current" }
 
-    switch (platform) {
+    switch (_platform) {
       case 'spotify': return <Music2 {...iconProps} />
       case 'youtube':
       case 'youtubemusic': return <Youtube {...iconProps} />
@@ -489,7 +460,9 @@ const AIMusicDetectionPage: NextPage = () => {
    * Render analysis result card
    */
   const renderAnalysisResult = () => {
-    if (!analysisResult) return null
+    if (!analysisResult) {
+      return null
+    }
 
     const isAI = analysisResult.isAIGenerated
     const confidence = Math.round(analysisResult.confidence * 100)

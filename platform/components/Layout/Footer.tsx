@@ -6,13 +6,7 @@ import {
   Mail,
   Globe,
   Heart,
-  Code2,
-  Music,
-  Database,
-  Brain,
-  Star,
-  Users,
-  Coffee
+  Code2
 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
@@ -32,7 +26,7 @@ export const Footer: React.FC = () => {
   const { t } = useLanguage()
   const currentYear = new Date().getFullYear()
 
-  const footerSections = [
+  const footerSections: FooterSection[] = [
     {
       title: t.footer.sections.platform.title,
       links: [
