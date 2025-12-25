@@ -9,6 +9,7 @@ import tempfile
 from ..config import get_settings
 from ..exceptions import AudioProcessingError
 from ..logging_config import get_logger
+from ..utils.file_utils import safe_delete_file, sanitize_filename
 
 logger = get_logger()
 
@@ -62,9 +63,15 @@ class AudioProcessor:
             
         Returns:
             Path to saved file
+            
+        Raises:
+            AudioProcessingError: If file saving fails
         """
         try:
-            suffix = Path(filename).suffix
+            # Sanitize filename for security
+            safe_name = sanitize_filename(filename)
+            suffix = Path(safe_name).suffix
+            
             with tempfile.NamedTemporaryFile(
                 delete=False, 
                 suffix=suffix,
