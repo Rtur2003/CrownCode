@@ -306,7 +306,7 @@ const AIMusicDetectionPage: NextPage = () => {
 
       return null
     } catch {
-      // Invalid URL format
+      // Invalid URL format - intentionally ignoring error details
       return null
     }
   }, [])
