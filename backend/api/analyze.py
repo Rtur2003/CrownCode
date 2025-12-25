@@ -6,13 +6,13 @@ AI-powered music detection analysis endpoint.
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from pydantic import BaseModel
 from typing import Dict, Any
-import os
 
 from ..services.audio import get_audio_processor
 from ..services.model import get_model_service
 from ..validators.audio import AudioFileValidator
 from ..exceptions import AudioProcessingError, InferenceError
 from ..logging_config import get_logger
+from ..utils.file_utils import safe_delete_file
 
 router = APIRouter()
 logger = get_logger()
@@ -93,8 +93,7 @@ async def analyze_audio(
         raise HTTPException(status_code=500, detail="Analysis failed")
     
     finally:
-        if temp_path and temp_path.exists():
-            try:
-                os.unlink(temp_path)
-            except Exception as e:
-                logger.warning(f"Failed to cleanup temp file: {str(e)}")
+        # Clean up temporary file
+        if temp_path:
+            if not safe_delete_file(temp_path):
+                logger.warning(f"Failed to cleanup temp file: {temp_path}")

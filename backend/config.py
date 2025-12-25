@@ -5,6 +5,11 @@ Centralized configuration with environment variable support.
 """
 from pydantic_settings import BaseSettings
 from functools import lru_cache
+from typing import List
+from .constants import (
+    MAX_AUDIO_SIZE_MB,
+    SUPPORTED_AUDIO_EXTENSIONS
+)
 
 
 class Settings(BaseSettings):
@@ -28,8 +33,8 @@ class Settings(BaseSettings):
     model_cache_dir: str = "./cache"
     
     # Audio Processing
-    max_audio_size_mb: int = 50
-    supported_audio_formats: list = [".mp3", ".wav", ".flac", ".m4a", ".ogg"]
+    max_audio_size_mb: int = MAX_AUDIO_SIZE_MB
+    supported_audio_formats: List[str] = SUPPORTED_AUDIO_EXTENSIONS
     
     class Config:
         env_file = ".env"
