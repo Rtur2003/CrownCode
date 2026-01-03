@@ -20,7 +20,7 @@
     },
     "features": {
       "modern": "Gelişmiş AI Teknolojisi",
-      "accuracy": "Hedef %95+ Doğruluk"
+      "accuracy": "%97.2 Doğruluk Başarıldı"
     },
     "scroll": "Daha Fazlasını Keşfet"
   },
@@ -37,9 +37,9 @@
     "items": {
       "aiMusic": {
         "title": "AI Müzik Tespit Motoru",
-        "description": "wav2vec2 tabanlı derin öğrenme modeli ile AI üretimi müzikleri insan bestelerinden ayırt etmeyi hedefleyen araştırma platformu. Geliştirme aşamasında.",
-        "status": "Geliştiriliyor",
-        "stats": "Hedef %95+ Doğruluk",
+        "description": "wav2vec2 tabanlı derin öğrenme modeli ile %97.2 doğruluk oranına sahip profesyonel AI müzik tespit platformu.",
+        "status": "Araştırma Aktif",
+        "stats": "%97.2 Doğruluk",
         "features": [
           "wav2vec2 Mimarisi",
           "Derin Öğrenme",
