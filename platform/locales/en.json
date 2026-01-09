@@ -26,10 +26,10 @@
     "scroll": "Discover More"
   },
   "products": {
-    "badge": "AI Music Detection",
-    "title": "Advanced AI-Powered",
+    "badge": "AURIS AI",
+    "title": "AURIS -",
     "titleAccent": "Music Analysis",
-    "subtitle": "Deep learning platform using wav2vec2 architecture to distinguish AI-generated music from human compositions. Professional implementation with cutting-edge neural networks.",
+    "subtitle": "AURIS - Deep learning platform using wav2vec2 architecture to distinguish AI-generated music from human compositions. Professional implementation with cutting-edge neural networks.",
     "cta": {
       "title": "More Projects Coming Soon",
       "description": "Explore all our projects on GitHub and contribute",
@@ -37,14 +37,14 @@
     },
     "items": {
       "aiMusic": {
-        "title": "AI Music Detection Engine",
-        "description": "Research platform aiming to distinguish AI-generated music from human compositions using wav2vec2-based deep learning model. Currently in development.",
+        "title": "AURIS - AI Music Detection Engine",
+        "description": "AURIS is a research platform aiming to distinguish AI-generated music from human compositions using wav2vec2-based deep learning model. Currently in development.",
         "status": "In Development",
         "stats": "Target 95%+ Accuracy",
         "features": [
           "wav2vec2 Architecture",
           "Transfer Learning",
-          "Automated Pipeline"
+          "AURIS Pipeline"
         ]
       },
       "mlToolkit": {
@@ -56,6 +56,17 @@
           "Dataset Processing",
           "Quality Control",
           "Research Analytics"
+        ]
+      },
+      "fortune": {
+        "title": "Crown Fortune",
+        "description": "Daily motivation and inspiration source. A fun experience with a royal-themed fortune wheel.",
+        "status": "Active",
+        "stats": "8 Categories",
+        "features": [
+          "Fortune Wheel",
+          "Motivation",
+          "Daily Inspiration"
         ]
       }
     }
@@ -87,7 +98,7 @@
     }
   },
   "footer": {
-    "description": "Professional platform for AI music detection and audio analysis. Advanced wav2vec2-based deep learning technology offering innovative solutions for music analysis and streaming platform integration.",
+    "description": "AURIS - Professional platform for AI music detection and audio analysis. Advanced wav2vec2-based deep learning technology offering innovative solutions for music analysis and streaming platform integration.",
     "community": {
       "title": "Community",
       "stars": "GitHub Stars",
@@ -96,7 +107,7 @@
     },
     "projects": {
       "title": "Project Status",
-      "aiMusic": "AI Music Detection",
+      "aiMusic": "AURIS",
       "dataManipulation": "Data Processing",
       "mlToolkit": "ML Toolkit"
     },
@@ -110,10 +121,11 @@
       },
       "products": {
         "title": "Products",
-        "aiMusic": "AI Music Detection",
+        "aiMusic": "AURIS",
         "dataProcessing": "Data Processing Suite",
         "mlToolkit": "ML Toolkit",
-        "allProjects": "All Projects"
+        "allProjects": "All Projects",
+        "fortune": "Crown Fortune"
       },
       "developer": {
         "title": "Developer",
@@ -140,23 +152,23 @@
   },
   "aiDetection": {
     "meta": {
-      "title": "AI Music Detection - YouTube Workflow",
-      "description": "YouTube-first analysis flow for AI music detection. Uses backend integrations when available and a deterministic preview when models are offline.",
-      "keywords": "AI music detection, YouTube analysis, audio analysis, preview workflow, CrownCode"
+      "title": "AURIS - AI Music Detection",
+      "description": "AURIS - YouTube-first analysis flow for AI music detection. Uses backend integrations when available and a deterministic preview when models are offline.",
+      "keywords": "AURIS, AI music detection, YouTube analysis, audio analysis, CrownCode"
     },
     "header": {
-      "badge": "AI Music Detection",
-      "title": "Detect AI-Generated Music",
-      "subtitle": "YouTube-first analysis interface with optional backend integrations and a safe preview fallback."
+      "badge": "AURIS",
+      "title": "AURIS - AI Music Detection",
+      "subtitle": "AURIS - YouTube-first analysis interface with optional backend integrations and a safe preview fallback."
     },
     "warning": {
-      "title": "YouTube Preview Mode",
+      "title": "AURIS Preview Mode",
       "currentStatus": "Current Status:",
-      "currentStatusText": "Model inference is optional and may be offline.",
+      "currentStatusText": "AURIS model inference is optional and may be offline.",
       "analysisResults": "Analysis Results:",
       "analysisResultsText": "Preview results are deterministic and URL-based.",
       "plannedImplementation": "Planned Implementation:",
-      "plannedImplementationText": "Backend AI integration with PyTorch + wav2vec2 model (Q2 2025)."
+      "plannedImplementationText": "AURIS - Backend AI integration with PyTorch + wav2vec2 model (Q2 2025)."
     },
     "upload": {
       "title": "Upload Audio File",
@@ -180,14 +192,14 @@
       "analyzing": "Processing..."
     },
     "pipeline": {
-      "title": "Pipeline Modules",
+      "title": "AURIS Pipeline",
       "items": {
         "download": "Audio intake",
-        "musicAi": "Music-AIDetector inference",
+        "musicAi": "AURIS inference",
         "sesAnalizi": "Ses-Analizi report",
         "preview": "Preview fallback"
       },
-      "note": "Preview mode is always available when models are offline."
+      "note": "Preview mode is always available when AURIS model is offline."
     },
     "processing": {
       "title": "Analysis in Progress...",
@@ -216,7 +228,7 @@
       "analyzeAnother": "Analyze Another",
       "decisionSource": "Decision Source",
       "sources": {
-        "musicAi": "Music-AIDetector",
+        "musicAi": "AURIS",
         "sesAnalizi": "Ses-Analizi",
         "preview": "Preview"
       },
