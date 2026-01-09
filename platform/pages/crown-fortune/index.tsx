@@ -192,10 +192,7 @@ const CrownFortunePage: NextPage = () => {
                         backgroundColor: segment.color
                       }}
                     >
-                      <div
-                        className={styles['segment-content']}
-                        style={{ transform: `rotate(${360 / WHEEL_SEGMENTS.length / 2}deg)` }}
-                      >
+                      <div className={styles['segment-content']}>
                         {segment.icon}
                       </div>
                     </div>

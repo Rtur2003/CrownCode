@@ -79,21 +79,25 @@
 
 .wheel-pointer {
   position: absolute;
-  top: -20px;
+  top: -16px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
   color: #eac06f;
-  filter: drop-shadow(0 4px 12px rgba(234, 192, 111, 0.5));
+  filter: drop-shadow(0 4px 16px rgba(234, 192, 111, 0.6));
   animation: pointerPulse 2s ease-in-out infinite;
+}
+
+.wheel-pointer svg {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 @keyframes pointerPulse {
   0%, 100% {
-    transform: translateX(-50%) scale(1);
+    transform: translateX(-50%) scale(1) translateY(0);
   }
   50% {
-    transform: translateX(-50%) scale(1.1);
+    transform: translateX(-50%) scale(1.1) translateY(2px);
   }
 }
 
@@ -104,10 +108,47 @@
   border-radius: 50%;
   overflow: hidden;
   box-shadow:
-    0 0 0 8px rgba(201, 147, 71, 0.3),
-    0 0 0 12px rgba(138, 95, 43, 0.2),
-    0 20px 60px rgba(0, 0, 0, 0.4),
-    inset 0 0 30px rgba(0, 0, 0, 0.3);
+    0 0 0 4px rgba(234, 192, 111, 0.6),
+    0 0 0 8px rgba(138, 95, 43, 0.4),
+    0 0 0 12px rgba(201, 147, 71, 0.2),
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    inset 0 0 40px rgba(0, 0, 0, 0.25);
+}
+
+.wheel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(0, 0, 0, 0.1) 0.5deg,
+    transparent 1deg,
+    transparent 45deg,
+    rgba(0, 0, 0, 0.1) 45.5deg,
+    transparent 46deg,
+    transparent 90deg,
+    rgba(0, 0, 0, 0.1) 90.5deg,
+    transparent 91deg,
+    transparent 135deg,
+    rgba(0, 0, 0, 0.1) 135.5deg,
+    transparent 136deg,
+    transparent 180deg,
+    rgba(0, 0, 0, 0.1) 180.5deg,
+    transparent 181deg,
+    transparent 225deg,
+    rgba(0, 0, 0, 0.1) 225.5deg,
+    transparent 226deg,
+    transparent 270deg,
+    rgba(0, 0, 0, 0.1) 270.5deg,
+    transparent 271deg,
+    transparent 315deg,
+    rgba(0, 0, 0, 0.1) 315.5deg,
+    transparent 316deg
+  );
+  z-index: 4;
+  pointer-events: none;
 }
 
 .wheel-segment {
@@ -117,19 +158,22 @@
   top: 0;
   left: 50%;
   transform-origin: 0% 100%;
-  clip-path: polygon(0 0, 100% 0, 0 100%);
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 1.5rem 0 0 0.5rem;
+  /* 45 derece dilim için uygun clip-path */
+  clip-path: polygon(0% 100%, 0% 0%, 100% 0%);
 }
 
 .segment-content {
+  position: absolute;
+  /* Dilimin ortasına radyal konumlandırma */
+  top: 28%;
+  left: -8%;
+  transform: rotate(22.5deg);
   color: #0b0a08;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.9;
+  opacity: 0.95;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
 }
 
 .wheel-center {
@@ -137,18 +181,33 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #eac06f 0%, #c99347 50%, #8a5f2b 100%);
+  background: linear-gradient(145deg, #f5d998 0%, #eac06f 30%, #c99347 70%, #8a5f2b 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #0b0a08;
   box-shadow:
-    0 4px 20px rgba(201, 147, 71, 0.4),
-    inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    0 0 0 4px rgba(138, 95, 43, 0.5),
+    0 0 0 8px rgba(234, 192, 111, 0.3),
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
   z-index: 5;
+}
+
+.wheel-center::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  pointer-events: none;
 }
 
 .wheel-glow {
@@ -405,13 +464,18 @@
   }
 
   .wheel-center {
-    width: 56px;
-    height: 56px;
+    width: 64px;
+    height: 64px;
   }
 
   .wheel-center svg {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .segment-content svg {
+    width: 20px;
+    height: 20px;
   }
 
   .spin-button {
