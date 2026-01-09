@@ -6,7 +6,8 @@
     "projects": "Projeler",
     "aiMusic": "AI Muzik",
     "docs": "Dokumanlar",
-    "aiMusicBadge": "Aktif"
+    "aiMusicBadge": "Aktif",
+    "fortune": "Sans Carki"
   },
   "hero": {
     "title": {
@@ -400,11 +401,95 @@
       "home": "Ana Sayfa",
       "aiMusic": "AI Muzik Tespiti",
       "mlToolkit": "ML Arac Seti",
-      "projects": "Projeler"
+      "projects": "Projeler",
+      "crownFortune": "Kraliyet Sansi"
     },
     "features": {
       "urlAnalysis": "YouTube Analizi",
       "dataAugmentation": "Veri Artirma"
     }
+  },
+  "crownFortune": {
+    "meta": {
+      "title": "Crown Fortune - Kraliyet Sansi",
+      "description": "CrownCode sans carki ile gunluk motivasyon ve ilham kaynaginiz.",
+      "keywords": "sans carki, motivasyon, gunluk sans, CrownCode, fortune wheel"
+    },
+    "header": {
+      "badge": "Kraliyet Sansi",
+      "title": "Sans Carkini Cevir",
+      "subtitle": "Gunluk motivasyon ve ilham kaynagi. Carki cevir, evrenin mesajini al."
+    },
+    "buttons": {
+      "spin": "Carki Cevir",
+      "spinning": "Cevriliyor...",
+      "reset": "Sifirla"
+    },
+    "spinCount": "{count} kez cevirdin",
+    "categories": {
+      "motivation": "Motivasyon",
+      "love": "Sevgi",
+      "energy": "Enerji",
+      "success": "Basari",
+      "luck": "Sans",
+      "gift": "Hediye",
+      "cosmic": "Kozmik",
+      "wisdom": "Bilgelik"
+    },
+    "messages": {
+      "motivation": [
+        "Bugun basariya giden yolda buyuk bir adim atacaksin!",
+        "Icindeki guc seni zirveye tasiyacak.",
+        "Her zorluk, seni daha guclu yapan bir firsattir."
+      ],
+      "love": [
+        "Sevgi dolu bir gun seni bekliyor.",
+        "Kalbindeki isik cevrene yayilacak.",
+        "Bugun biriyle ozel bir bag kurabilirsin."
+      ],
+      "energy": [
+        "Enerjin bugun zirve yapacak!",
+        "Yapamayacagin hicbir sey yok.",
+        "Dinamizmin herkesi etkileyecek."
+      ],
+      "success": [
+        "Basari kapida, sadece ac!",
+        "Bugun hedeflerine bir adim daha yaklasacaksin.",
+        "Emeklerin meyvesini verecek."
+      ],
+      "luck": [
+        "Sans bugun yaninda!",
+        "Beklenmedik guzel surprizler geliyor.",
+        "Evren senin icin calisiyor."
+      ],
+      "gift": [
+        "Hayat sana guzel bir hediye hazirliyor.",
+        "Beklemedigin bir yerden guzel haberler gelecek.",
+        "Bugun ozel bir gun olacak."
+      ],
+      "cosmic": [
+        "Yildizlar senin icin parliyor.",
+        "Evrensel enerji seninle uyum icinde.",
+        "Kozmik gucler seni destekliyor."
+      ],
+      "wisdom": [
+        "Bugun onemli bir farkindalik kazanacaksin.",
+        "Ic sesin sana dogru yolu gosterecek.",
+        "Bilgelik seninle yuruyor."
+      ]
+    },
+    "result": {
+      "footer": "Evren seninle konustu"
+    },
+    "info": {
+      "title": "Nasil Calisir?",
+      "steps": [
+        "Carki cevir butonuna tikla",
+        "Carkin durmasini bekle",
+        "Gunluk mesajini oku",
+        "Ilham al, motivasyonunu artir!"
+      ]
+    },
+    "disclaimer": "Bu uygulama tamamen eglence amaclidir. Kumar icermez."
   }
 }
