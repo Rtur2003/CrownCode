@@ -26,10 +26,10 @@
     "scroll": "Daha Fazlasini Kesfet"
   },
   "products": {
-    "badge": "AI Muzik Tespiti",
-    "title": "Gelismis AI ile",
+    "badge": "AURIS AI",
+    "title": "AURIS ile",
     "titleAccent": "Muzik Analizi",
-    "subtitle": "wav2vec2 mimarisini kullanan derin ogrenme platformu ile AI tarafindan uretilmis muzikleri insan bestelerinden ayirt eden profesyonel analiz.",
+    "subtitle": "AURIS - wav2vec2 mimarisini kullanan derin ogrenme platformu ile AI tarafindan uretilmis muzikleri insan bestelerinden ayirt eden profesyonel analiz motoru.",
     "cta": {
       "title": "Daha Fazla Proje Yolda",
       "description": "GitHub'da tum projelerimizi inceleyebilir, katkida bulunabilirsiniz",
@@ -37,14 +37,14 @@
     },
     "items": {
       "aiMusic": {
-        "title": "AI Muzik Tespit Motoru",
-        "description": "wav2vec2 tabanli derin ogrenme modeli ile AI uretimi muzikleri insan bestelerinden ayirt etmeyi hedefleyen arastirma platformu. Gelistirme asamasinda.",
+        "title": "AURIS - AI Muzik Tespit Motoru",
+        "description": "AURIS, wav2vec2 tabanli derin ogrenme modeli ile AI uretimi muzikleri insan bestelerinden ayirt etmeyi hedefleyen arastirma platformudur. Gelistirme asamasinda.",
         "status": "Gelistiriliyor",
         "stats": "Hedef %95+ Dogruluk",
         "features": [
           "wav2vec2 Mimarisi",
           "Transfer Ogrenme",
-          "Otomatik Pipeline"
+          "AURIS Pipeline"
         ]
       },
       "mlToolkit": {
@@ -56,6 +56,17 @@
           "Veri Seti Isleme",
           "Kalite Kontrolu",
           "Arastirma Analitigi"
+        ]
+      },
+      "fortune": {
+        "title": "Crown Fortune",
+        "description": "Gunluk motivasyon ve ilham kaynagi. Kraliyet temalı sans carki ile eglenceli bir deneyim.",
+        "status": "Aktif",
+        "stats": "8 Kategori",
+        "features": [
+          "Sans Carki",
+          "Motivasyon",
+          "Gunluk Ilham"
         ]
       }
     }
@@ -87,7 +98,7 @@
     }
   },
   "footer": {
-    "description": "AI muzik tespiti ve ses analizi icin profesyonel platform. wav2vec2 tabanli derin ogrenme teknolojisi ile gelismis muzik analizi ve streaming platform entegrasyonu sunan yenilikci cozum.",
+    "description": "AURIS - AI muzik tespiti ve ses analizi icin profesyonel platform. wav2vec2 tabanli derin ogrenme teknolojisi ile gelismis muzik analizi ve streaming platform entegrasyonu sunan yenilikci cozum.",
     "community": {
       "title": "Topluluk",
       "stars": "GitHub Stars",
@@ -96,7 +107,7 @@
     },
     "projects": {
       "title": "Proje Durumlari",
-      "aiMusic": "AI Muzik Tespit",
+      "aiMusic": "AURIS",
       "dataManipulation": "Veri Isleme",
       "mlToolkit": "ML Arac Seti"
     },
@@ -110,10 +121,11 @@
       },
       "products": {
         "title": "Urunler",
-        "aiMusic": "AI Muzik Tespit",
+        "aiMusic": "AURIS",
         "dataProcessing": "Veri Isleme Paketi",
         "mlToolkit": "ML Arac Seti",
-        "allProjects": "Tum Projeler"
+        "allProjects": "Tum Projeler",
+        "fortune": "Sans Carki"
       },
       "developer": {
         "title": "Gelistirici",
@@ -140,23 +152,23 @@
   },
   "aiDetection": {
     "meta": {
-      "title": "AI Muzik Tespiti - YouTube Is Akisi",
-      "description": "YouTube odakli analiz akisi. Backend entegrasyonlari varsa kullanir, model yoksa deterministik onizleme kullanir.",
-      "keywords": "AI muzik tespiti, YouTube analizi, ses analizi, onizleme akisi, CrownCode"
+      "title": "AURIS - AI Muzik Tespiti",
+      "description": "AURIS ile YouTube odakli AI muzik analizi. Backend entegrasyonlari varsa kullanir, model yoksa deterministik onizleme kullanir.",
+      "keywords": "AURIS, AI muzik tespiti, YouTube analizi, ses analizi, CrownCode"
     },
     "header": {
-      "badge": "AI Muzik Tespiti",
-      "title": "AI Uretimi Muzikleri Tespit Et",
-      "subtitle": "YouTube odakli analiz arayuzu; backend entegrasyonlari opsiyonel, onizleme guvenli yedektir."
+      "badge": "AURIS",
+      "title": "AURIS ile AI Muzik Tespiti",
+      "subtitle": "AURIS - YouTube odakli analiz arayuzu; backend entegrasyonlari opsiyonel, onizleme guvenli yedektir."
     },
     "warning": {
-      "title": "YouTube Onizleme Modu",
+      "title": "AURIS Onizleme Modu",
       "currentStatus": "Mevcut Durum:",
-      "currentStatusText": "Model ciktisi opsiyonel ve offline olabilir.",
+      "currentStatusText": "AURIS model ciktisi opsiyonel ve offline olabilir.",
       "analysisResults": "Analiz Sonuclari:",
       "analysisResultsText": "Onizleme sonuclari URL tabanli ve deterministiktir.",
       "plannedImplementation": "Planlanan Uygulama:",
-      "plannedImplementationText": "PyTorch + wav2vec2 modeli ile backend AI entegrasyonu (2025 Q2)."
+      "plannedImplementationText": "AURIS - PyTorch + wav2vec2 modeli ile backend AI entegrasyonu (2025 Q2)."
     },
     "upload": {
       "title": "Ses Dosyasi Yukle",
@@ -180,14 +192,14 @@
       "analyzing": "Isleniyor..."
     },
     "pipeline": {
-      "title": "Pipeline Modulleri",
+      "title": "AURIS Pipeline",
       "items": {
         "download": "Ses alma",
-        "musicAi": "Music-AIDetector cikarim",
+        "musicAi": "AURIS cikarim",
         "sesAnalizi": "Ses-Analizi raporu",
         "preview": "Onizleme yedegi"
       },
-      "note": "Model yoksa onizleme modu her zaman kullanilir."
+      "note": "AURIS model yoksa onizleme modu her zaman kullanilir."
     },
     "processing": {
       "title": "Analiz Devam Ediyor...",
@@ -216,7 +228,7 @@
       "analyzeAnother": "Baska Analiz Et",
       "decisionSource": "Karar Kaynagi",
       "sources": {
-        "musicAi": "Music-AIDetector",
+        "musicAi": "AURIS",
         "sesAnalizi": "Ses-Analizi",
         "preview": "Onizleme"
       },
