@@ -59,20 +59,11 @@
   color: var(--color-text-inverse);
   transition: all var(--animation-normal) var(--ease-out-cubic);
   position: relative;
-  overflow: hidden;
 }
 
-.logo-icon::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url('/icons/bits.png') center / 60% auto no-repeat;
-  opacity: 0.9;
-  mix-blend-mode: screen;
-}
-
-.header-logo:hover .logo-icon::after {
-  transform: scale(1.05);
+.logo-icon svg {
+  position: relative;
+  z-index: 1;
 }
 
 .header-logo:hover .logo-icon {
