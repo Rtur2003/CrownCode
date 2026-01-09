@@ -6,7 +6,8 @@
     "projects": "Projects",
     "aiMusic": "AI Music",
     "docs": "Docs",
-    "aiMusicBadge": "Active"
+    "aiMusicBadge": "Active",
+    "fortune": "Fortune"
   },
   "hero": {
     "title": {
@@ -400,11 +401,95 @@
       "home": "Home",
       "aiMusic": "AI Music Detection",
       "mlToolkit": "ML Toolkit",
-      "projects": "Projects"
+      "projects": "Projects",
+      "crownFortune": "Crown Fortune"
     },
     "features": {
       "urlAnalysis": "YouTube Analysis",
       "dataAugmentation": "Data Augmentation"
     }
+  },
+  "crownFortune": {
+    "meta": {
+      "title": "Crown Fortune - Royal Luck",
+      "description": "Your daily source of motivation and inspiration with CrownCode fortune wheel.",
+      "keywords": "fortune wheel, motivation, daily luck, CrownCode, fortune"
+    },
+    "header": {
+      "badge": "Royal Fortune",
+      "title": "Spin the Fortune Wheel",
+      "subtitle": "Your daily source of motivation and inspiration. Spin the wheel, receive the universe's message."
+    },
+    "buttons": {
+      "spin": "Spin the Wheel",
+      "spinning": "Spinning...",
+      "reset": "Reset"
+    },
+    "spinCount": "You've spun {count} times",
+    "categories": {
+      "motivation": "Motivation",
+      "love": "Love",
+      "energy": "Energy",
+      "success": "Success",
+      "luck": "Luck",
+      "gift": "Gift",
+      "cosmic": "Cosmic",
+      "wisdom": "Wisdom"
+    },
+    "messages": {
+      "motivation": [
+        "Today you'll take a big step towards success!",
+        "The power within you will carry you to the top.",
+        "Every challenge is an opportunity to make you stronger."
+      ],
+      "love": [
+        "A day full of love awaits you.",
+        "The light in your heart will spread to those around you.",
+        "Today you might form a special connection with someone."
+      ],
+      "energy": [
+        "Your energy will peak today!",
+        "There's nothing you can't do.",
+        "Your dynamism will impress everyone."
+      ],
+      "success": [
+        "Success is at the door, just open it!",
+        "Today you'll get one step closer to your goals.",
+        "Your efforts will bear fruit."
+      ],
+      "luck": [
+        "Luck is on your side today!",
+        "Unexpected pleasant surprises are coming.",
+        "The universe is working for you."
+      ],
+      "gift": [
+        "Life is preparing a beautiful gift for you.",
+        "Good news will come from an unexpected place.",
+        "Today will be a special day."
+      ],
+      "cosmic": [
+        "The stars are shining for you.",
+        "Universal energy is in harmony with you.",
+        "Cosmic forces are supporting you."
+      ],
+      "wisdom": [
+        "Today you'll gain an important awareness.",
+        "Your inner voice will show you the right path.",
+        "Wisdom walks with you."
+      ]
+    },
+    "result": {
+      "footer": "The universe has spoken to you"
+    },
+    "info": {
+      "title": "How It Works?",
+      "steps": [
+        "Click the spin button",
+        "Wait for the wheel to stop",
+        "Read your daily message",
+        "Get inspired, boost your motivation!"
+      ]
+    },
+    "disclaimer": "This application is purely for entertainment purposes. No gambling involved."
   }
 }
