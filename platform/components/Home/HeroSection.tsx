@@ -215,34 +215,36 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
                 <span />
                 <span />
               </div>
-              <span className="hero-card-title">CrownCode AI</span>
+              <span className="hero-card-title">AURIS</span>
             </div>
 
             {/* Code Preview Content */}
             <div className="hero-card-content">
               <div className="hero-code-line">
-                <span className="code-comment">{'//'} CrownCode AI Music Detection Platform</span>
+                <span className="code-comment">{'//'} AURIS - AI Music Detection Platform</span>
               </div>
               <div className="hero-code-line">
                 <span className="code-keyword">import</span>
                 <span className="code-brace"> &#123; </span>
-                <span className="code-variable">AIDetector</span>
+                <span className="code-variable">AURIS</span>
                 <span className="code-brace"> &#125; </span>
                 <span className="code-keyword">from</span>
-                <span className="code-string"> &apos;@crowncode/platform&apos;</span>
+                <span className="code-string"> &apos;@crowncode/auris&apos;</span>
               </div>
               <div className="hero-code-line">
                 <span className="code-keyword">const</span>
                 <span className="code-variable"> analysis </span>
                 <span className="code-operator">= </span>
                 <span className="code-keyword">await </span>
-                <span className="code-function">AIDetector</span>
+                <span className="code-function">AURIS</span>
+                <span className="code-brace">.</span>
+                <span className="code-function">detect</span>
                 <span className="code-brace">(</span>
                 <span className="code-string">&apos;music.wav&apos;</span>
                 <span className="code-brace">)</span>
               </div>
               <div className="hero-code-line">
-                <span className="code-comment">{'//'} Professional AI Detection | Accuracy: 97.2%</span>
+                <span className="code-comment">{'//'} AURIS Detection | Target: 95%+ Accuracy</span>
               </div>
             </div>
           </div>
