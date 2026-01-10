@@ -220,7 +220,7 @@ const AIMusicDetectionPage: NextPage = () => {
           {source.kind === 'spotify' && (
             <>
               <div className={styles['result-source-item']}>
-                <span>Spotify Track</span>
+                <span>{t.aiDetection.result.spotifyTrack}</span>
                 <span>{source.trackId}</span>
               </div>
               <div className={styles['result-source-item']}>
@@ -409,19 +409,19 @@ const AIMusicDetectionPage: NextPage = () => {
                 <ul className={styles['pipeline-list']}>
                   <li className={styles['pipeline-item']}>
                     <span>{t.aiDetection.pipeline.items.download}</span>
-                    <span className={styles['pipeline-tag']}>yt-dlp</span>
+                    <span className={styles['pipeline-tag']}>{t.aiDetection.pipeline.tags.ytDlp}</span>
                   </li>
                   <li className={styles['pipeline-item']}>
                     <span>{t.aiDetection.pipeline.items.musicAi}</span>
-                    <span className={styles['pipeline-tag']}>optional</span>
+                    <span className={styles['pipeline-tag']}>{t.aiDetection.pipeline.tags.optional}</span>
                   </li>
                   <li className={styles['pipeline-item']}>
                     <span>{t.aiDetection.pipeline.items.sesAnalizi}</span>
-                    <span className={styles['pipeline-tag']}>optional</span>
+                    <span className={styles['pipeline-tag']}>{t.aiDetection.pipeline.tags.optional}</span>
                   </li>
                   <li className={styles['pipeline-item']}>
                     <span>{t.aiDetection.pipeline.items.preview}</span>
-                    <span className={styles['pipeline-tag']}>always</span>
+                    <span className={styles['pipeline-tag']}>{t.aiDetection.pipeline.tags.always}</span>
                   </li>
                 </ul>
                 <p className={styles['pipeline-note']}>
