@@ -323,12 +323,11 @@ const CrownFortunePage: NextPage = () => {
             transition={{ delay: 0.5 }}
           >
             <div className={styles['info-card']}>
-              <h3>Nasıl Çalışır?</h3>
+              <h3>{t.crownFortune.info.title}</h3>
               <ul>
-                <li>Her gün gece yarısı (00:00) yeni kader belirlenir</li>
-                <li>Çarkı çevir, kategorini öğren</li>
-                <li>Kartın açılsın, mesajını oku</li>
-                <li>Ertesi güne kadar aynı kader geçerli</li>
+                {t.crownFortune.info.steps.map((step: string, index: number) => (
+                  <li key={index}>{step}</li>
+                ))}
               </ul>
             </div>
 
@@ -342,13 +341,13 @@ const CrownFortunePage: NextPage = () => {
                   <div style={{ color: CATEGORY_COLORS[cat.key] }}>
                     {CATEGORY_ICONS[cat.key]}
                   </div>
-                  <span>{language === 'tr' ? cat.labelTr : cat.label}</span>
+                  <span>{t.crownFortune.categories[cat.key as keyof typeof t.crownFortune.categories]}</span>
                 </div>
               ))}
             </div>
 
             <div className={styles['disclaimer']}>
-              <p>Bu uygulama eğlence amaçlıdır.</p>
+              <p>{t.crownFortune.disclaimer}</p>
             </div>
           </motion.section>
 
