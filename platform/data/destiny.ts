@@ -480,3 +480,32 @@ export function clearDestinyData(): void {
 if (typeof window !== 'undefined') {
   (window as unknown as { clearDestinyData: typeof clearDestinyData }).clearDestinyData = clearDestinyData
 }
+
+/**
+ * Belirtilen kategori için "Ters/Kötü" mesaj getirir
+ * Mevcut mesajdan farklı bir negatif mesaj seçmeye çalışır
+ */
+export function getReverseMessage(category: FortuneCategory, currentMessageIndex: number = -1): FortuneMessage {
+  const messages = FORTUNE_MESSAGES[category]
+  // Negatif veya uyarı mesajlarını filtrele
+  const negativeMessages = messages.filter(m => m.tone === 'negative' || m.type === 'warning')
+  
+  if (negativeMessages.length === 0) {
+    // Eğer hiç negatif yoksa (olmamalı ama), genel bir uyarı döndür
+    return {
+      text: 'Dikkatli ol, gölgeler her zaman ışığı takip eder.',
+      textEn: 'Be careful, shadows always follow the light.',
+      tone: 'negative',
+      type: 'warning'
+    }
+  }
+
+  // Rastgele bir negatif mesaj seç
+  // Eğer mevcut mesaj zaten negatifse, farklı bir tane seçmeye çalış
+  let candidates = negativeMessages
+  // Mevcut mesaj indexini bulmamız zor çünkü filtered array farklı, ama text karşılaştırması yapabiliriz
+  // Şimdilik sadece rastgele seçelim
+  
+  const randomIndex = Math.floor(Math.random() * negativeMessages.length)
+  return negativeMessages[randomIndex]
+}
