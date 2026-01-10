@@ -183,15 +183,15 @@ const CrownFortunePage: NextPage = () => {
           >
             <div className={styles['header-badge']}>
               <Crown size={16} />
-              <span>Crown Destiny</span>
+              <span>{t.crownFortune.header.badge}</span>
             </div>
-            <h1 className={styles['fortune-title']}>Bugünün Kaderi</h1>
+            <h1 className={styles['fortune-title']}>{t.crownFortune.header.title}</h1>
             <p className={styles['fortune-subtitle']}>
-              Çarkı çevir ve evrenin bugün sana ne söylediğini keşfet.
+              {t.crownFortune.header.subtitle}
             </p>
             <div className={styles['countdown']}>
               <Clock size={16} />
-              <span>Yeni kader:</span>
+              <span>{t.crownFortune.countdown.label}</span>
               <span className={styles['countdown-time']}>{countdown}</span>
             </div>
           </motion.header>
