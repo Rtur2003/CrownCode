@@ -336,7 +336,7 @@ const CrownFortunePage: NextPage = () => {
 
                         {/* Message */}
                         <div className={styles['card-message']}>
-                          <p>{details.message.text}</p>
+                          <p>{language === 'tr' ? details.message.text : details.message.textEn}</p>
                         </div>
 
                         {/* Footer */}
