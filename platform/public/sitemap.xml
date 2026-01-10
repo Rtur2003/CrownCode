@@ -65,6 +65,26 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.com.tr/data-manipulation?lang=en"/>
   </url>
 
+  <!-- Crown Fortune / Destiny - XYZ Domain -->
+  <url>
+    <loc>https://hasanarthuraltuntas.xyz/crown-fortune</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.xyz/crown-fortune?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.xyz/crown-fortune?lang=en"/>
+  </url>
+
+  <!-- Crown Fortune / Destiny - COM.TR Domain -->
+  <url>
+    <loc>https://hasanarthuraltuntas.com.tr/crown-fortune</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.com.tr/crown-fortune?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.com.tr/crown-fortune?lang=en"/>
+  </url>
+
   <!-- Search Page - XYZ Domain -->
   <url>
     <loc>https://hasanarthuraltuntas.xyz/search</loc>

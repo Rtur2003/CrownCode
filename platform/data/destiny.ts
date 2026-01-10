@@ -13,6 +13,7 @@ export interface DestinyCard {
   name: string
   nameTr: string
   symbol: string // emoji or icon name
+  image: string // path to image in /tarot
   element: 'fire' | 'water' | 'earth' | 'air' | 'ether'
   energy: 'ascending' | 'descending' | 'stable'
 }
@@ -75,28 +76,28 @@ export const FORTUNE_CATEGORIES: {
 
 // 22 Kader Kartı - Kendi evrenimiz
 export const DESTINY_CARDS: DestinyCard[] = [
-  { id: 0, name: 'The Wanderer', nameTr: 'Gezgin', symbol: '🌟', element: 'air', energy: 'ascending' },
-  { id: 1, name: 'The Creator', nameTr: 'Yaratıcı', symbol: '✨', element: 'fire', energy: 'ascending' },
-  { id: 2, name: 'The Oracle', nameTr: 'Kahin', symbol: '🔮', element: 'water', energy: 'stable' },
-  { id: 3, name: 'The Nurturer', nameTr: 'Koruyucu', symbol: '🌸', element: 'earth', energy: 'stable' },
-  { id: 4, name: 'The Sovereign', nameTr: 'Hükümdar', symbol: '👑', element: 'fire', energy: 'stable' },
-  { id: 5, name: 'The Guide', nameTr: 'Rehber', symbol: '🗝️', element: 'earth', energy: 'stable' },
-  { id: 6, name: 'The Union', nameTr: 'Birlik', symbol: '💫', element: 'air', energy: 'ascending' },
-  { id: 7, name: 'The Chariot', nameTr: 'Zafer', symbol: '⚡', element: 'fire', energy: 'ascending' },
-  { id: 8, name: 'The Phoenix', nameTr: 'Anka', symbol: '🔥', element: 'fire', energy: 'ascending' },
-  { id: 9, name: 'The Hermit', nameTr: 'Bilge', symbol: '🏔️', element: 'earth', energy: 'stable' },
-  { id: 10, name: 'The Wheel', nameTr: 'Çark', symbol: '☯️', element: 'ether', energy: 'stable' },
-  { id: 11, name: 'The Balance', nameTr: 'Denge', symbol: '⚖️', element: 'air', energy: 'stable' },
-  { id: 12, name: 'The Reflection', nameTr: 'Yansıma', symbol: '🪞', element: 'water', energy: 'descending' },
-  { id: 13, name: 'The Transformation', nameTr: 'Dönüşüm', symbol: '🦋', element: 'water', energy: 'descending' },
-  { id: 14, name: 'The Harmony', nameTr: 'Uyum', symbol: '🎵', element: 'water', energy: 'stable' },
-  { id: 15, name: 'The Shadow', nameTr: 'Gölge', symbol: '🌑', element: 'earth', energy: 'descending' },
-  { id: 16, name: 'The Storm', nameTr: 'Fırtına', symbol: '⛈️', element: 'air', energy: 'descending' },
-  { id: 17, name: 'The Star', nameTr: 'Yıldız', symbol: '⭐', element: 'ether', energy: 'ascending' },
-  { id: 18, name: 'The Dream', nameTr: 'Düş', symbol: '🌙', element: 'water', energy: 'stable' },
-  { id: 19, name: 'The Dawn', nameTr: 'Şafak', symbol: '☀️', element: 'fire', energy: 'ascending' },
-  { id: 20, name: 'The Awakening', nameTr: 'Uyanış', symbol: '🔔', element: 'ether', energy: 'ascending' },
-  { id: 21, name: 'The Crown', nameTr: 'Taç', symbol: '👑', element: 'ether', energy: 'ascending' },
+  { id: 0, name: 'The Wanderer', nameTr: 'Gezgin', symbol: '🌟', image: '/tarot/the-fool.png', element: 'air', energy: 'ascending' },
+  { id: 1, name: 'The Creator', nameTr: 'Yaratıcı', symbol: '✨', image: '/tarot/the-magician.png', element: 'fire', energy: 'ascending' },
+  { id: 2, name: 'The Oracle', nameTr: 'Kahin', symbol: '🔮', image: '/tarot/the-high-priestess.png', element: 'water', energy: 'stable' },
+  { id: 3, name: 'The Nurturer', nameTr: 'Koruyucu', symbol: '🌸', image: '/tarot/the-empress.png', element: 'earth', energy: 'stable' },
+  { id: 4, name: 'The Sovereign', nameTr: 'Hükümdar', symbol: '👑', image: '/tarot/the-emperor.png', element: 'fire', energy: 'stable' },
+  { id: 5, name: 'The Guide', nameTr: 'Rehber', symbol: '🗝️', image: '/tarot/the-hierophant.png', element: 'earth', energy: 'stable' },
+  { id: 6, name: 'The Union', nameTr: 'Birlik', symbol: '💫', image: '/tarot/the-lovers.png', element: 'air', energy: 'ascending' },
+  { id: 7, name: 'The Chariot', nameTr: 'Zafer', symbol: '⚡', image: '/tarot/the-chariot.png', element: 'fire', energy: 'ascending' },
+  { id: 8, name: 'The Phoenix', nameTr: 'Anka', symbol: '🔥', image: '/tarot/strength.png', element: 'fire', energy: 'ascending' },
+  { id: 9, name: 'The Hermit', nameTr: 'Bilge', symbol: '🏔️', image: '/tarot/the-hermit.png', element: 'earth', energy: 'stable' },
+  { id: 10, name: 'The Wheel', nameTr: 'Çark', symbol: '☯️', image: '/tarot/wheel-of-fortune.png', element: 'ether', energy: 'stable' },
+  { id: 11, name: 'The Balance', nameTr: 'Denge', symbol: '⚖️', image: '/tarot/justice.png', element: 'air', energy: 'stable' },
+  { id: 12, name: 'The Reflection', nameTr: 'Yansıma', symbol: '🪞', image: '/tarot/the-hanged-man.png', element: 'water', energy: 'descending' },
+  { id: 13, name: 'The Transformation', nameTr: 'Dönüşüm', symbol: '🦋', image: '/tarot/death.png', element: 'water', energy: 'descending' },
+  { id: 14, name: 'The Harmony', nameTr: 'Uyum', symbol: '🎵', image: '/tarot/temperance.png', element: 'water', energy: 'stable' },
+  { id: 15, name: 'The Shadow', nameTr: 'Gölge', symbol: '🌑', image: '/tarot/the-devil.png', element: 'earth', energy: 'descending' },
+  { id: 16, name: 'The Storm', nameTr: 'Fırtına', symbol: '⛈️', image: '/tarot/the-tower.png', element: 'air', energy: 'descending' },
+  { id: 17, name: 'The Star', nameTr: 'Yıldız', symbol: '⭐', image: '/tarot/the-star.png', element: 'ether', energy: 'ascending' },
+  { id: 18, name: 'The Dream', nameTr: 'Düş', symbol: '🌙', image: '/tarot/the-moon.png', element: 'water', energy: 'stable' },
+  { id: 19, name: 'The Dawn', nameTr: 'Şafak', symbol: '☀️', image: '/tarot/the-sun.png', element: 'fire', energy: 'ascending' },
+  { id: 20, name: 'The Awakening', nameTr: 'Uyanış', symbol: '🔔', image: '/tarot/judgement.png', element: 'ether', energy: 'ascending' },
+  { id: 21, name: 'The Crown', nameTr: 'Taç', symbol: '👑', image: '/tarot/the-world.png', element: 'ether', energy: 'ascending' },
 ]
 
 // Mesaj havuzu - kategori ve ton bazlı

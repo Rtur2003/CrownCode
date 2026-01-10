@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import type { NextPage } from 'next'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Crown,
@@ -280,8 +281,15 @@ const CrownFortunePage: NextPage = () => {
 
                     {/* CARD FRONT */}
                     <div className={`${styles['card-face']} ${styles['card-front']}`}>
-                      <div className={styles['card-symbol']}>
-                        {details.card.symbol}
+                      <div className={styles['card-image-container']}>
+                        <Image
+                          src={details.card.image}
+                          alt={cardName}
+                          fill
+                          className={styles['card-image']}
+                          sizes="(max-width: 768px) 100vw, 300px"
+                          priority
+                        />
                       </div>
                       <h2 className={styles['card-name']}>{cardName}</h2>
                       <div
