@@ -89,7 +89,7 @@ The wav2vec2 model was developed by Facebook AI Research and aimed to learn from
 | Ircam AI Detector | 99.8% | 3-5 seconds | Paid | API |
 | Believe AI Radar | 98% | 2-3 seconds | Commercial | Closed |
 | YouTube Detection | 93% | Real-time | Free | Platform-specific |
-| **This Study** | **97.2%** | **<2 seconds** | **Free** | **Web/API** |
+| **AURIS (This Study)** | **97.2%** | **<2 seconds** | **Free** | **Web/Android/API** |
 
 ---
 
