@@ -351,14 +351,12 @@
 .card-back-pattern {
   position: absolute;
   inset: 0;
-  background-image: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 8px,
-    rgba(201, 147, 71, 0.03) 8px,
-    rgba(201, 147, 71, 0.03) 16px
-  );
+  background-image: url('/tarot/wheel-of-fortune.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.15;
   pointer-events: none;
+  mix-blend-mode: luminosity;
 }
 
 .card-back-logo {
