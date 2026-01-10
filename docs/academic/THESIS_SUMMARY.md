@@ -1,57 +1,88 @@
-# 🎓 Thesis Summary: CrownCode Platform
+# AURIS: AI Music Detection Platform
 
-## 📋 Project Overview
+## Project Overview
 
-**Project Title:** Web-Based AI Music Detection and Data Manipulation Platform
+**Project Title:** AURIS - Artificial Intelligence Music Detection System with Web and Mobile Platforms
 **Developer:** Hasan Arthur Altuntaş
-**Institution:** Düzce University - Computer Engineering Department
+**Institution:** Duzce University - Computer Engineering Department
 **Academic Year:** 2025-2026
 **Supervisor:** [Faculty Advisor Name]
 **Platform URL:** https://hasanarthuraltuntas.xyz
 
 ---
 
-## 🎯 Research Objectives
+## Research Objectives
 
 ### Primary Research Question
-*"Can wav2vec2-based deep learning models effectively distinguish between AI-generated and human-composed music in a production-ready web platform?"*
+*"Can wav2vec2-based deep learning models effectively distinguish between AI-generated and human-composed music in production-ready web and mobile platforms?"*
 
 ### Specific Goals
 1. **High Accuracy Detection**: Achieve >95% accuracy in AI music detection
 2. **Real-time Processing**: Complete analysis in <2 seconds
-3. **Scalable Architecture**: Support 500+ concurrent users
-4. **Automated Pipeline**: Zero-manual-labeling dataset collection
-5. **Production Deployment**: Full web platform with comprehensive features
+3. **Multi-Platform Access**: Web platform + Native Android application
+4. **Scalable Architecture**: Support 500+ concurrent users
+5. **Automated Pipeline**: Zero-manual-labeling dataset collection
 
 ---
 
-## 🧠 Technical Innovation
+## Technical Innovation
 
 ### Novel Contributions
 
-#### 1. **Source-Based Automatic Labeling**
+#### 1. Source-Based Automatic Labeling
 - Revolutionary approach eliminating manual data labeling
 - 97% labeling accuracy with automated quality control
 - Scalable dataset creation from multiple AI and human sources
 
-#### 2. **wav2vec2 Transfer Learning for Music**
+#### 2. wav2vec2 Transfer Learning for Music
 - First implementation of wav2vec2 specifically for AI music detection
 - Custom classification head optimized for musical features
 - 96.8% test accuracy with competitive inference time
 
-#### 3. **Fail-Safe Modular Architecture**
-- Circuit breaker patterns preventing cascade failures
-- Real-time health monitoring and alerting
-- Independent module deployment capabilities
+#### 3. Multi-Platform Architecture
+- **Web Platform:** Next.js 14 with TypeScript, responsive design
+- **Mobile Application:** Native Android with Kotlin and Jetpack Compose
+- **Backend API:** FastAPI with PyTorch for ML inference
+- Shared design system across all platforms (Gold/Bronze theme)
 
-#### 4. **Continuous Learning System**
+#### 4. Continuous Learning System
 - Weekly automated model improvement (0.5-1.0% accuracy gains)
 - Zero-downtime model updates
 - Performance regression detection and rollback
 
 ---
 
-## 📊 Research Results
+## Platform Architecture
+
+### Web Platform (`platform/`)
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Next.js | 14 | React Framework (Pages Router) |
+| TypeScript | Strict Mode | Type Safety |
+| Framer Motion | Latest | Animations |
+| CSS Modules | - | Scoped Styling |
+
+### Mobile Application (`Android-App-CrownCode/`)
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Kotlin | Latest | Programming Language |
+| Jetpack Compose | Material 3 | Modern UI Toolkit |
+| Hilt | Latest | Dependency Injection |
+| Coroutines + Flow | Latest | Async Operations |
+| Retrofit + OkHttp | Latest | Network Layer |
+| Clean Architecture | MVVM | Design Pattern |
+
+### Backend (`backend/`)
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| FastAPI | Latest | API Framework |
+| Python | 3.11+ | Runtime |
+| PyTorch | CPU/CUDA | ML Inference |
+| Hugging Face | Latest | Model Hosting |
+
+---
+
+## Research Results
 
 ### Model Performance
 | Metric | Achievement | Industry Benchmark |
@@ -66,11 +97,10 @@
 ### Platform Metrics
 | Performance Indicator | Result | Target |
 |----------------------|--------|---------|
-| **Concurrent Users** | 500+ | >100 ✅ |
-| **Uptime** | 99.7% | >99% ✅ |
-| **API Response Time** | 450ms | <1s ✅ |
-| **Page Load Time** | 1.8s | <3s ✅ |
-| **Dataset Quality Rate** | 91.7% | >90% ✅ |
+| **Concurrent Users** | 500+ | >100 |
+| **Uptime** | 99.7% | >99% |
+| **API Response Time** | 450ms | <1s |
+| **Page Load Time** | 1.8s | <3s |
 
 ### Dataset Characteristics
 - **Total Samples**: 10,000 high-quality audio files
@@ -80,9 +110,51 @@
 
 ---
 
-## 🔬 Methodology
+## Mobile Application Features
 
-### AI Model Development
+### Android App Architecture
+```
+com.crowncode/
+├── di/                     # Dependency Injection (Hilt)
+│   └── AppModule.kt
+├── presentation/
+│   ├── components/         # Reusable UI Components
+│   │   ├── GradientButton.kt
+│   │   ├── SoundWaveAnimation.kt
+│   │   ├── EqualizerBars.kt
+│   │   └── AurisLogo.kt
+│   ├── navigation/         # Navigation Graph
+│   │   ├── Routes.kt
+│   │   └── CrownCodeNavHost.kt
+│   ├── screens/
+│   │   ├── welcome/        # Welcome Screen
+│   │   ├── auth/           # Login & Signup
+│   │   └── aimusic/        # AI Music Detection
+│   └── theme/              # Material 3 Theme
+│       ├── Color.kt
+│       ├── Type.kt
+│       └── Theme.kt
+└── util/                   # Utilities
+```
+
+### Mobile App Key Features
+1. **File Upload Analysis**: Select audio files from device storage
+2. **URL Analysis**: Paste YouTube links for direct analysis
+3. **Real-time Processing**: Visual feedback with animated indicators
+4. **Result Display**: Clear AI/Human classification with confidence scores
+5. **Offline Support**: Cached results and graceful error handling
+
+### Mobile UI Components
+- **SoundWaveAnimation**: Animated sound visualization
+- **EqualizerBars**: Audio processing visual feedback
+- **GradientButton**: Themed action buttons
+- **ProcessingSteps**: Step-by-step analysis progress
+
+---
+
+## Methodology
+
+### AI Model Architecture
 ```python
 # Model Architecture
 wav2vec2_base (768 features)
@@ -98,36 +170,26 @@ wav2vec2_base (768 features)
 3. **Data Augmentation**: Time stretching, pitch shifting, noise injection
 4. **Quality Control**: SNR analysis, silence detection, duration validation
 
-### Web Platform Architecture
+### Analysis Flow
 ```
-Frontend (Next.js 14.2.18)
-├── TypeScript + Tailwind CSS
-├── React Context for state management
-├── Web Audio API for real-time processing
-└── Framer Motion for animations
-
-Backend Services
-├── Node.js 20.18.1 LTS runtime
-├── Express.js RESTful APIs
-├── PostgreSQL + Prisma ORM
-└── Redis caching layer
-
-Infrastructure
-├── Netlify (Frontend hosting)
-├── Vercel (Backend services)
-├── Automated CI/CD pipeline
-└── Real-time monitoring
+┌─────────────────────────────────────────────────────┐
+│  1. Audio Input (File/URL)                          │
+│  2. Preprocessing (Resampling, Normalization)       │
+│  3. Feature Extraction (wav2vec2)                   │
+│  4. Classification (MLP Head)                       │
+│  5. Result: AI-Generated or Human-Composed          │
+└─────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 📈 Impact & Applications
+## Impact & Applications
 
 ### Academic Contributions
 - **Open Science**: Complete source code and datasets publicly available
 - **Reproducible Research**: Detailed methodology and benchmark results
 - **Novel Methodology**: Source-based labeling technique
-- **Performance Benchmarks**: New evaluation framework for AI music detection
+- **Multi-Platform**: First AI music detector with native mobile app
 
 ### Industrial Applications
 1. **Streaming Platforms**: Content moderation and fair artist compensation
@@ -139,100 +201,40 @@ Infrastructure
 - **Artist Protection**: Preserving human creativity recognition
 - **Transparency**: Enabling detection of AI-generated content
 - **Research Acceleration**: Open-source tools for academic community
-- **Ethical AI**: Promoting responsible AI content disclosure
+- **Mobile Accessibility**: Detection on-the-go via Android app
 
 ---
 
-## 🚀 Technical Achievements
+## Future Research Directions
 
-### Performance Optimizations
-- **Code Splitting**: Reduced initial bundle size by 40%
-- **Image Optimization**: WebP format with responsive loading
-- **API Caching**: 89.3% cache hit rate with Redis
-- **Database Optimization**: 12ms average query response time
+### Completed
+- [x] Web platform with real-time analysis
+- [x] Native Android application
+- [x] Backend API with ML inference
+- [x] 96.8% detection accuracy
 
-### Scalability Features
-- **Load Balancing**: Automatic scaling for traffic spikes
-- **Edge Distribution**: Global CDN for low latency
-- **Circuit Breakers**: Fault tolerance preventing system failures
-- **Health Monitoring**: Proactive maintenance and alerting
+### Short-term (6-12 months)
+- [ ] iOS application development
+- [ ] Batch processing for multiple files
+- [ ] Real-time streaming analysis
+- [ ] Browser extension
 
-### Security Implementation
-- **Input Validation**: Comprehensive sanitization and validation
-- **Rate Limiting**: Protection against abuse and DoS attacks
-- **Data Encryption**: End-to-end encryption for file uploads
-- **Privacy Compliance**: GDPR-compliant data handling
-
----
-
-## 📚 Academic Rigor
-
-### Literature Review
-- **50+ Academic Papers**: Comprehensive review of AI music detection field
-- **Current Research**: Integration of 2024-2025 cutting-edge developments
-- **Comparative Analysis**: Benchmarking against existing commercial solutions
-- **Gap Identification**: Novel approaches addressing research limitations
-
-### Evaluation Methodology
-- **Statistical Validation**: Cross-validation, bootstrap sampling, significance testing
-- **Ablation Studies**: Feature importance analysis and architecture comparison
-- **User Studies**: 150 participants across music professionals and researchers
-- **Performance Benchmarking**: Load testing with 1000 concurrent users
-
-### Documentation Standards
-- **Code Documentation**: Comprehensive inline comments and API documentation
-- **Research Journal**: Detailed development log and decision rationale
-- **Reproducibility**: Complete setup instructions and dependency management
-- **Version Control**: Systematic Git workflow with meaningful commit messages
+### Long-term (1-3 years)
+- [ ] Multimodal analysis (audio + lyrics + metadata)
+- [ ] Explainable AI with detection reasoning
+- [ ] Federated learning for privacy
+- [ ] Edge deployment for offline detection
 
 ---
 
-## 🔮 Future Research Directions
-
-### Short-term Extensions (6-12 months)
-1. **Ensemble Methods**: Multiple model voting for improved accuracy
-2. **Attention Mechanisms**: Transformer-based architecture improvements
-3. **Domain Adaptation**: Genre-specific fine-tuning strategies
-4. **Mobile Deployment**: Native iOS/Android applications
-
-### Long-term Research (1-3 years)
-1. **Multimodal Analysis**: Integration of audio, lyrics, and metadata
-2. **Explainable AI**: Detailed reasoning for detection decisions
-3. **Federated Learning**: Privacy-preserving collaborative improvements
-4. **Real-time Streaming**: Live audio stream analysis capabilities
-
-### Research Questions for Future Work
-1. **Temporal Analysis**: Can we track AI music technology evolution over time?
-2. **Cross-cultural Performance**: How does the model perform across different musical cultures?
-3. **Adversarial Robustness**: How resilient is the system against adversarial attacks?
-4. **Zero-shot Learning**: Can the model detect music from unseen AI generators?
-
----
-
-## 🏆 Awards & Recognition
-
-### Academic Achievements
-- **Thesis Project**: Completed as partial fulfillment of B.S. in Computer Engineering
-- **Technical Innovation**: Novel source-based labeling methodology
-- **Production Deployment**: Real-world application with active users
-- **Open Source Contribution**: Complete platform available to research community
-
-### Performance Metrics
-- **High Accuracy**: 96.8% competitive with commercial solutions
-- **Scalable Architecture**: Production-ready deployment supporting hundreds of users
-- **Continuous Integration**: Automated testing and deployment pipeline
-- **User Satisfaction**: 4.2/5.0 average rating from beta testing
-
----
-
-## 📖 Publications & Citations
+## Publications & Citations
 
 ### Thesis Citation
 ```bibtex
-@thesis{altuntas2025crowncode,
-  title={Web-Based AI Music Detection and Data Manipulation Platform},
+@thesis{altuntas2025auris,
+  title={AURIS: AI Music Detection System with Web and Mobile Platforms},
   author={Hasan Arthur Altuntaş},
-  institution={Düzce University},
+  institution={Duzce University},
   department={Computer Engineering},
   year={2025},
   type={Bachelor's Thesis},
@@ -242,49 +244,32 @@ Infrastructure
 ```
 
 ### Related Documentation
-- **Technical Report**: [ACADEMIC_PROJECT_REPORT_EN.md](./ACADEMIC_PROJECT_REPORT_EN.md)
-- **Turkish Documentation**: [AKADEMIK_PROJE_RAPORU_TR.md](./AKADEMIK_PROJE_RAPORU_TR.md)
-- **Architecture Guide**: [MODULAR_ARCHITECTURE.md](./MODULAR_ARCHITECTURE.md)
-- **API Documentation**: [API_DOCUMENTATION.md](./API_DOCUMENTATION.md)
+- **Technical Report EN**: [ACADEMIC_PROJECT_REPORT_EN.md](./ACADEMIC_PROJECT_REPORT_EN.md)
+- **Technical Report TR**: [AKADEMIK_PROJE_RAPORU_TR.md](./AKADEMIK_PROJE_RAPORU_TR.md)
 
 ---
 
-## 🤝 Acknowledgments
-
-### Academic Support
-- **Düzce University**: Computer Engineering Department faculty and resources
-- **Research Community**: Open-source datasets and academic papers
-- **Beta Testers**: 150 participants providing valuable feedback
+## Acknowledgments
 
 ### Technical Resources
 - **Facebook AI Research**: wav2vec2 pre-trained models
 - **Hugging Face**: Transformers library and model hosting
-- **Open Source Community**: Various libraries and frameworks
+- **Google**: Android development tools and Jetpack libraries
 
-### Special Thanks
-- **Thesis Advisor**: [Advisor Name] for guidance and mentorship
-- **Department Faculty**: Technical expertise and academic support
-- **Family & Friends**: Encouragement throughout the development process
+### Academic Support
+- **Duzce University**: Computer Engineering Department
+- **Research Community**: Open-source datasets and papers
+- **Beta Testers**: Feedback from 150 participants
 
 ---
 
 <div align="center">
 
-**🎓 This thesis represents the culmination of four years of Computer Engineering education at Düzce University**
+**AURIS - Detecting the Future of Music**
 
-**Submitted in partial fulfillment of the requirements for the degree of Bachelor of Science in Computer Engineering**
+**Duzce University | Computer Engineering | 2025-2026**
 
-**Academic Year 2025-2026**
-
----
-
-**Prepared by:** Hasan Arthur Altuntaş
-**Student ID:** [Student ID]
-**Email:** contact@hasanarthuraltuntas.xyz
+**Developer:** Hasan Arthur Altuntaş
 **Platform:** https://hasanarthuraltuntas.xyz
-
-**Düzce University**
-**Computer Engineering Department**
-**Faculty of Engineering**
 
 </div>

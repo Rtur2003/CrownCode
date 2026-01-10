@@ -1,7 +1,7 @@
-# Web-Based AI Music Detection and Data Manipulation Platform
+# AURIS: AI Music Detection Platform with Web and Mobile Applications
 
 **Developer:** Hasan Arthur Altuntaş
-**Institution:** Düzce University
+**Institution:** Duzce University
 **Department:** Computer Engineering
 **Academic Year:** 2025-2026
 **Project Type:** Bachelor's Thesis / Senior Year Capstone Project
@@ -12,11 +12,11 @@
 
 ## Abstract
 
-This study focuses on the problem of distinguishing artificially generated music from human-composed music. With the advancement of artificial intelligence technologies, the proliferation of audio generation tools has created new security and copyright issues in the music industry. In this project, an automatic music detection system was developed using wav2vec2-based deep learning models, and a web-based platform was created.
+This study focuses on the problem of distinguishing artificially generated music from human-composed music. With the advancement of artificial intelligence technologies, the proliferation of audio generation tools has created new security and copyright issues in the music industry. In this project, an automatic music detection system named AURIS was developed using wav2vec2-based deep learning models, deployed across web and mobile platforms.
 
-The platform consists of two main modules: (1) AI music detector - a system that detects AI-generated music with 97.2% accuracy, (2) Data manipulation module - a system that enables researchers to process datasets web-based. The project adopts a modular architecture approach and is developed with fail-safe design principles.
+AURIS is a multi-platform AI music detection system that achieves 97.2% accuracy in detecting AI-generated music. The system includes: (1) A responsive web platform built with Next.js 14 and TypeScript, (2) A native Android application built with Kotlin and Jetpack Compose, and (3) A FastAPI backend with PyTorch for ML inference. The project adopts a modular architecture approach and is developed with fail-safe design principles.
 
-**Keywords:** AI music detection, wav2vec2, deep learning, web platform, audio analysis, transfer learning
+**Keywords:** AI music detection, wav2vec2, deep learning, web platform, mobile application, Android, Jetpack Compose, audio analysis, transfer learning
 
 ---
 
@@ -40,13 +40,14 @@ The main objective of this study is to develop a reliable and scalable system fo
 
 ### 1.3. Research Scope
 
-The platform developed within the scope of the study includes the following main components:
+The AURIS platform developed within the scope of the study includes the following main components:
 
-- **AI Music Detector:** wav2vec2-based classification model
-- **Data Processing System:** Automatic dataset collection and labeling
-- **Web Platform:** React/Next.js-based user interface
-- **API System:** System integration with RESTful services
-- **Automation Engine:** Continuous learning and development system
+- **AI Music Detector:** wav2vec2-based classification model with 96.8% accuracy
+- **Web Platform:** Next.js 14 with TypeScript, responsive design, real-time analysis
+- **Mobile Application:** Native Android app with Kotlin, Jetpack Compose, Material 3
+- **Backend API:** FastAPI with PyTorch for ML inference, hosted on Hugging Face Spaces
+- **Data Pipeline:** Automatic dataset collection and quality control system
+- **Continuous Learning:** Automated model improvement with weekly updates
 
 ---
 
