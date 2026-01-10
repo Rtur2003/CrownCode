@@ -164,33 +164,50 @@
   top: 0;
   left: 50%;
   transform-origin: 0% 100%;
-  /* 72 derece segment için clip-path */
-  clip-path: polygon(0% 100%, 0% 0%, 84% 0%, 100% 27%);
+  overflow: visible;
 }
 
+/* Segment arka planı */
+.wheel-segment::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 58%);
+}
+
+/* İkon - clip-path dışında */
 .segment-content {
   position: absolute;
-  top: 25%;
-  left: -5%;
+  top: 30%;
+  left: 5%;
   transform: rotate(36deg);
   color: rgba(255, 255, 255, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  z-index: 2;
+}
+
+.segment-content svg {
+  width: 28px;
+  height: 28px;
 }
 
 .segment-label {
   position: absolute;
-  top: 40%;
-  left: -15%;
+  top: 48%;
+  left: -8%;
   transform: rotate(36deg);
-  font-size: 0.625rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   white-space: nowrap;
+  z-index: 2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Center */
