@@ -13,7 +13,9 @@ import {
   Activity,
   Clock,
   RotateCcw,
-  Star
+  Star,
+  X,
+  Maximize2
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
@@ -64,6 +66,7 @@ const CrownFortunePage: NextPage = () => {
   const [rotation, setRotation] = useState(0)
   const [countdown, setCountdown] = useState('')
   const [mounted, setMounted] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   // Client mount
   useEffect(() => {
@@ -183,6 +186,7 @@ const CrownFortunePage: NextPage = () => {
         title={t.crownFortune.meta.title}
         description={t.crownFortune.meta.description}
         keywords={t.crownFortune.meta.keywords}
+        noCache={true}
       >
         <div className={styles['fortune-page']}>
           <div className={styles['fortune-container']}>
@@ -206,6 +210,7 @@ const CrownFortunePage: NextPage = () => {
       title={t.crownFortune.meta.title}
       description={t.crownFortune.meta.description}
       keywords={t.crownFortune.meta.keywords}
+      noCache={true}
     >
       <div className={styles['fortune-page']}>
         {/* Background Elements */}
@@ -314,7 +319,13 @@ const CrownFortunePage: NextPage = () => {
                 transition={{ duration: 0.6 }}
               >
                 <div className={styles['card-container']}>
-                  <div className={`${styles['card-flipper']} ${isCardFlipped ? styles['flipped'] : ''}`}>
+                  <div
+                    className={`${styles['card-flipper']} ${isCardFlipped ? styles['flipped'] : ''}`}
+                    onClick={() => isCardFlipped && setIsModalOpen(true)}
+                    role={isCardFlipped ? 'button' : undefined}
+                    tabIndex={isCardFlipped ? 0 : undefined}
+                    onKeyDown={(e) => isCardFlipped && e.key === 'Enter' && setIsModalOpen(true)}
+                  >
                     {/* CARD BACK */}
                     <div className={`${styles['card-face']} ${styles['card-back']}`}>
                       <div className={styles['card-back-pattern']} />
@@ -380,8 +391,87 @@ const CrownFortunePage: NextPage = () => {
                       </div>
                     </div>
                   </div>
+                  {/* Click hint */}
+                  {isCardFlipped && (
+                    <motion.div
+                      className={styles['card-click-hint']}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 1 }}
+                    >
+                      <Maximize2 size={12} style={{ marginRight: 4, display: 'inline' }} />
+                      {language === 'tr' ? 'Büyütmek için tıkla' : 'Click to enlarge'}
+                    </motion.div>
+                  )}
                 </div>
               </motion.section>
+            )}
+          </AnimatePresence>
+
+          {/* CARD MODAL */}
+          <AnimatePresence>
+            {isModalOpen && (
+              <motion.div
+                className={styles['card-modal-overlay']}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsModalOpen(false)}
+              >
+                <div
+                  className={styles['card-modal']}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    className={styles['card-modal-close']}
+                    onClick={() => setIsModalOpen(false)}
+                    aria-label={language === 'tr' ? 'Kapat' : 'Close'}
+                  >
+                    <X size={20} />
+                  </button>
+
+                  <motion.div
+                    className={styles['card-modal-inner']}
+                    initial={{ rotateX: 90, scale: 0.5, opacity: 0 }}
+                    animate={{ rotateX: 0, scale: 1, opacity: 1 }}
+                    exit={{ rotateX: -90, scale: 0.5, opacity: 0 }}
+                    transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+                  >
+                    <div className={styles['card-modal-image-wrapper']}>
+                      <Image
+                        src={details.card.image}
+                        alt={cardName}
+                        fill
+                        className={styles['card-modal-image']}
+                        sizes="(max-width: 600px) 85vw, 500px"
+                        priority
+                      />
+
+                      <div className={styles['card-modal-info']}>
+                        <div className={styles['card-modal-title']}>
+                          <span className={styles['card-modal-symbol']}>{details.card.symbol}</span>
+                          <h2 className={styles['card-modal-name']}>{cardName}</h2>
+                        </div>
+
+                        <div className={styles['card-modal-meta']}>
+                          <span
+                            className={styles['card-modal-category']}
+                            style={{ backgroundColor: CATEGORY_COLORS[destiny.category] }}
+                          >
+                            {CATEGORY_ICONS_SMALL[destiny.category]}
+                            {catLabel}
+                          </span>
+                          <span className={styles['card-modal-energy']}>{energyText}</span>
+                        </div>
+
+                        <p className={styles['card-modal-message']}>
+                          {language === 'tr' ? details.message.text : details.message.textEn}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
             )}
           </AnimatePresence>
 
