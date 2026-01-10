@@ -15,9 +15,11 @@ import {
   RotateCcw,
   Star,
   X,
-  Maximize2
+  Maximize2,
+  AlertTriangle
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
+import BackgroundFloatingCards from '@/components/CrownFortune/BackgroundFloatingCards'
 import { useLanguage } from '@/context/LanguageContext'
 import {
   FORTUNE_CATEGORIES,
@@ -25,8 +27,10 @@ import {
   getDestinyDetails,
   getTimeUntilMidnightGMT3,
   getTurkeyDate,
+  getReverseMessage,
   type FortuneCategory,
-  type DailyDestiny
+  type DailyDestiny,
+  type FortuneMessage
 } from '@/data/destiny'
 import styles from '@/styles/pages/crown-fortune.module.css'
 
@@ -67,6 +71,10 @@ const CrownFortunePage: NextPage = () => {
   const [countdown, setCountdown] = useState('')
   const [mounted, setMounted] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  
+  // Reverse / Tempt Fate State
+  const [isReversed, setIsReversed] = useState(false)
+  const [reverseMessage, setReverseMessage] = useState<FortuneMessage | null>(null)
 
   // Client mount
   useEffect(() => {
@@ -81,26 +89,40 @@ const CrownFortunePage: NextPage = () => {
       const daily = getDailyDestiny()
       const today = getTurkeyDate()
 
-      // Eğer revealed flag eski tarihli ise temizle
+      // Eski revealed flag'leri temizle
       const revealed = localStorage.getItem('crown_destiny_revealed')
       if (revealed && revealed !== today) {
         localStorage.removeItem('crown_destiny_revealed')
+        localStorage.removeItem('crown_destiny_is_reversed')
+        localStorage.removeItem('crown_destiny_reverse_msg')
       }
 
       setDestiny(daily)
 
-      // Eğer bugün zaten bakıldıysa ve tarihler eşleşiyorsa
+      // Eğer bugün zaten bakıldıysa
       const currentRevealed = localStorage.getItem('crown_destiny_revealed')
       if (currentRevealed === daily.date && daily.date === today) {
         const catIndex = FORTUNE_CATEGORIES.findIndex(c => c.key === daily.category)
         setRotation(catIndex * 72 + 720 + 36)
         setShowCard(true)
         setIsCardFlipped(true)
+        
+        // Reverse durumunu kontrol et
+        const reversed = localStorage.getItem('crown_destiny_is_reversed')
+        if (reversed === 'true') {
+          setIsReversed(true)
+          const savedMsg = localStorage.getItem('crown_destiny_reverse_msg')
+          if (savedMsg) {
+            setReverseMessage(JSON.parse(savedMsg))
+          }
+        }
       } else {
         // Yeni gün, sıfırla
         setShowCard(false)
         setIsCardFlipped(false)
         setRotation(0)
+        setIsReversed(false)
+        setReverseMessage(null)
       }
     }
 
@@ -124,33 +146,29 @@ const CrownFortunePage: NextPage = () => {
     return () => clearInterval(interval)
   }, [mounted])
 
-  // Midnight reset - her 30 saniyede kontrol
+  // Midnight reset check
   useEffect(() => {
     if (!mounted) return
 
     const check = () => {
       const today = getTurkeyDate()
-
-      // Revealed flag eski mi kontrol et
-      const revealed = localStorage.getItem('crown_destiny_revealed')
-      if (revealed && revealed !== today) {
-        localStorage.removeItem('crown_destiny_revealed')
-      }
-
-      // Destiny tarihi bugün değilse yenile
+      
       if (destiny && destiny.date !== today) {
         const newDestiny = getDailyDestiny()
         setDestiny(newDestiny)
         setShowCard(false)
         setIsCardFlipped(false)
         setRotation(0)
+        setIsReversed(false)
+        setReverseMessage(null)
+        
+        localStorage.removeItem('crown_destiny_revealed')
+        localStorage.removeItem('crown_destiny_is_reversed')
+        localStorage.removeItem('crown_destiny_reverse_msg')
       }
     }
 
-    // İlk kontrol hemen yap
     check()
-
-    // Her 30 saniyede kontrol et
     const interval = setInterval(check, 30000)
     return () => clearInterval(interval)
   }, [mounted, destiny])
@@ -162,23 +180,34 @@ const CrownFortunePage: NextPage = () => {
 
     // Hedef kategori indeksi
     const catIndex = FORTUNE_CATEGORIES.findIndex(c => c.key === destiny.category)
-    // Her segment 72 derece, ortası için +36
     const target = (5 * 360) + (catIndex * 72) + 36
 
     setRotation(target)
 
-    // Çark durduğunda kart göster
     setTimeout(() => {
       setIsSpinning(false)
       setShowCard(true)
 
-      // Kart flip animasyonu
       setTimeout(() => {
         setIsCardFlipped(true)
         localStorage.setItem('crown_destiny_revealed', destiny.date)
       }, 500)
     }, 4000)
   }, [destiny, isSpinning, showCard])
+
+  const handleReverseDestiny = useCallback(() => {
+    if (!destiny) return
+    
+    // Zaten reverse ise işlem yapma
+    if (isReversed) return
+
+    const msg = getReverseMessage(destiny.category, destiny.messageIndex)
+    setReverseMessage(msg)
+    setIsReversed(true)
+    
+    localStorage.setItem('crown_destiny_is_reversed', 'true')
+    localStorage.setItem('crown_destiny_reverse_msg', JSON.stringify(msg))
+  }, [destiny, isReversed])
 
   if (!mounted || !destiny) {
     return (
@@ -204,6 +233,11 @@ const CrownFortunePage: NextPage = () => {
   const cardName = language === 'tr' ? details.card.nameTr : details.card.name
   const catLabel = t.crownFortune.categories[destiny.category as keyof typeof t.crownFortune.categories]
   const energyText = t.crownFortune.energy[details.card.energy as keyof typeof t.crownFortune.energy]
+  
+  // Mesaj: Reverse ise yeni mesajı, değilse orijinali göster
+  const displayMessage = isReversed && reverseMessage 
+    ? (language === 'tr' ? reverseMessage.text : reverseMessage.textEn)
+    : (language === 'tr' ? details.message.text : details.message.textEn)
 
   return (
     <MainLayout
@@ -217,6 +251,8 @@ const CrownFortunePage: NextPage = () => {
         <div className={styles['fortune-background']}>
           <div className={styles['fortune-gradient']} />
           <div className={styles['fortune-pattern']} />
+          {/* Floating Cards Animation - Web only check inside component or css */}
+          <BackgroundFloatingCards />
         </div>
 
         <div className={styles['fortune-container']}>
@@ -251,12 +287,10 @@ const CrownFortunePage: NextPage = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className={styles['wheel-container']}>
-              {/* Pointer */}
               <div className={styles['wheel-pointer']}>
                 <Crown size={32} />
               </div>
 
-              {/* Wheel with conic gradient */}
               <motion.div
                 className={styles['wheel']}
                 animate={{ rotate: rotation }}
@@ -265,7 +299,6 @@ const CrownFortunePage: NextPage = () => {
                   ease: [0.2, 0.8, 0.2, 1]
                 }}
               >
-                {/* Icons overlay */}
                 <div className={styles['wheel-icons']}>
                   {FORTUNE_CATEGORIES.map((cat) => (
                     <div key={cat.key} className={styles['wheel-icon']}>
@@ -273,18 +306,14 @@ const CrownFortunePage: NextPage = () => {
                     </div>
                   ))}
                 </div>
-
-                {/* Center */}
                 <div className={styles['wheel-center']}>
                   <Crown size={32} />
                 </div>
               </motion.div>
 
-              {/* Glow */}
               <div className={styles['wheel-glow']} />
             </div>
 
-            {/* Spin Button */}
             {!showCard && (
               <motion.button
                 className={`${styles['spin-button']} ${isSpinning ? styles['spinning'] : ''}`}
@@ -322,9 +351,6 @@ const CrownFortunePage: NextPage = () => {
                   <div
                     className={`${styles['card-flipper']} ${isCardFlipped ? styles['flipped'] : ''}`}
                     onClick={() => isCardFlipped && setIsModalOpen(true)}
-                    role={isCardFlipped ? 'button' : undefined}
-                    tabIndex={isCardFlipped ? 0 : undefined}
-                    onKeyDown={(e) => isCardFlipped && e.key === 'Enter' && setIsModalOpen(true)}
                   >
                     {/* CARD BACK */}
                     <div className={`${styles['card-face']} ${styles['card-back']}`}>
@@ -333,9 +359,8 @@ const CrownFortunePage: NextPage = () => {
                       <span className={styles['card-back-text']}>Crown Destiny</span>
                     </div>
 
-                    {/* CARD FRONT - Full Image Background */}
+                    {/* CARD FRONT */}
                     <div className={`${styles['card-face']} ${styles['card-front']}`}>
-                      {/* Full Background Image */}
                       <div className={styles['card-background']}>
                         <Image
                           src={details.card.image}
@@ -344,28 +369,31 @@ const CrownFortunePage: NextPage = () => {
                           className={styles['card-bg-image']}
                           sizes="(max-width: 768px) 100vw, 300px"
                           priority
+                          style={{
+                            transform: isReversed ? 'rotate(180deg)' : 'none',
+                            transition: 'transform 0.6s ease'
+                          }}
                         />
                       </div>
 
-                      {/* Gradient Overlay */}
                       <div className={styles['card-overlay']} />
-
-                      {/* Sheen Effect */}
                       <div className={styles['card-sheen']} />
 
-                      {/* Content at Bottom */}
                       <div className={styles['card-content']}>
-                        {/* Header: Symbol + Name */}
                         <div className={styles['card-header']}>
                           <span className={styles['card-symbol']}>{details.card.symbol}</span>
-                          <h2 className={styles['card-name']}>{cardName}</h2>
+                          <h2 className={styles['card-name']}>
+                            {cardName} {isReversed && (language === 'tr' ? '(Ters)' : '(Reversed)')}
+                          </h2>
                         </div>
 
-                        {/* Meta: Category + Energy */}
                         <div className={styles['card-meta']}>
                           <div
                             className={styles['card-category']}
-                            style={{ backgroundColor: CATEGORY_COLORS[destiny.category] }}
+                            style={{ 
+                              backgroundColor: isReversed ? '#e74c3c' : CATEGORY_COLORS[destiny.category],
+                              transition: 'background-color 0.3s ease'
+                            }}
                           >
                             {CATEGORY_ICONS_SMALL[destiny.category]}
                             <span>{catLabel}</span>
@@ -373,12 +401,10 @@ const CrownFortunePage: NextPage = () => {
                           <span className={styles['card-energy']}>{energyText}</span>
                         </div>
 
-                        {/* Message */}
                         <div className={styles['card-message']}>
-                          <p>{language === 'tr' ? details.message.text : details.message.textEn}</p>
+                          <p>{displayMessage}</p>
                         </div>
 
-                        {/* Footer */}
                         <div className={styles['card-footer']}>
                           <Star size={12} />
                           <span className={styles['card-date']}>
@@ -391,17 +417,47 @@ const CrownFortunePage: NextPage = () => {
                       </div>
                     </div>
                   </div>
-                  {/* Click hint */}
+                  
                   {isCardFlipped && (
-                    <motion.div
-                      className={styles['card-click-hint']}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 1 }}
-                    >
-                      <Maximize2 size={12} style={{ marginRight: 4, display: 'inline' }} />
-                      {language === 'tr' ? 'Büyütmek için tıkla' : 'Click to enlarge'}
-                    </motion.div>
+                    <div style={{ display: 'flex', gap: '10px', marginTop: '16px', flexDirection: 'column', alignItems: 'center' }}>
+                      <motion.div
+                        className={styles['card-click-hint']}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1 }}
+                      >
+                        <Maximize2 size={12} style={{ marginRight: 4, display: 'inline' }} />
+                        {language === 'tr' ? 'Büyütmek için tıkla' : 'Click to enlarge'}
+                      </motion.div>
+
+                      {/* Tempt Fate Button */}
+                      {!isReversed && (
+                        <motion.button
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 1.5 }}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleReverseDestiny()
+                          }}
+                          className={styles['spin-button']} // Reusing spin button style for consistency
+                          style={{ 
+                            fontSize: '0.9rem', 
+                            padding: '0.5rem 1rem',
+                            background: 'rgba(0,0,0,0.6)',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                            marginTop: '0.5rem'
+                          }}
+                          whileHover={{ scale: 1.05, backgroundColor: 'rgba(200, 50, 50, 0.8)' }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <AlertTriangle size={16} />
+                          <span style={{ marginLeft: '8px' }}>
+                            {language === 'tr' ? 'Kötü Talihini Gör' : 'See Your Dark Fate'}
+                          </span>
+                        </motion.button>
+                      )}
+                    </div>
                   )}
                 </div>
               </motion.section>
@@ -445,18 +501,24 @@ const CrownFortunePage: NextPage = () => {
                         className={styles['card-modal-image']}
                         sizes="(max-width: 600px) 85vw, 500px"
                         priority
+                        style={{
+                            transform: isReversed ? 'rotate(180deg)' : 'none',
+                            transition: 'transform 0.6s ease'
+                        }}
                       />
 
                       <div className={styles['card-modal-info']}>
                         <div className={styles['card-modal-title']}>
                           <span className={styles['card-modal-symbol']}>{details.card.symbol}</span>
-                          <h2 className={styles['card-modal-name']}>{cardName}</h2>
+                          <h2 className={styles['card-modal-name']}>
+                             {cardName} {isReversed && (language === 'tr' ? '(Ters)' : '(Reversed)')}
+                          </h2>
                         </div>
 
                         <div className={styles['card-modal-meta']}>
                           <span
                             className={styles['card-modal-category']}
-                            style={{ backgroundColor: CATEGORY_COLORS[destiny.category] }}
+                            style={{ backgroundColor: isReversed ? '#e74c3c' : CATEGORY_COLORS[destiny.category] }}
                           >
                             {CATEGORY_ICONS_SMALL[destiny.category]}
                             {catLabel}
@@ -465,7 +527,7 @@ const CrownFortunePage: NextPage = () => {
                         </div>
 
                         <p className={styles['card-modal-message']}>
-                          {language === 'tr' ? details.message.text : details.message.textEn}
+                          {displayMessage}
                         </p>
                       </div>
                     </div>
