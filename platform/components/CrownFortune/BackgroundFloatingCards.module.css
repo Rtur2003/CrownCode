@@ -1,0 +1,31 @@
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0; /* Behind everything */
+}
+
+.card {
+  position: absolute;
+  width: 80px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+
+.cardContent {
+  opacity: 0.3;
+}
+
+.icon {
+  color: var(--text-muted);
+}
