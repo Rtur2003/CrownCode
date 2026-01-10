@@ -237,7 +237,7 @@ const CrownFortunePage: NextPage = () => {
               <div className={styles['wheel-glow']} />
             </div>
 
-            {/* Spin Button - sadece henüz açılmamışsa */}
+            {/* Spin Button */}
             {!showCard && (
               <motion.button
                 className={`${styles['spin-button']} ${isSpinning ? styles['spinning'] : ''}`}
@@ -249,12 +249,12 @@ const CrownFortunePage: NextPage = () => {
                 {isSpinning ? (
                   <>
                     <RotateCcw className={styles['spin-icon']} size={20} />
-                    <span>Çevriliyor...</span>
+                    <span>{t.crownFortune.buttons.spinning}</span>
                   </>
                 ) : (
                   <>
                     <Sparkles size={20} />
-                    <span>Çarkı Çevir</span>
+                    <span>{t.crownFortune.buttons.spin}</span>
                   </>
                 )}
               </motion.button>
