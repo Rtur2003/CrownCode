@@ -21,7 +21,7 @@ logger = get_logger(__name__)
 
 
 def _load_origins() -> list[str]:
-    raw = os.getenv("CROWNCODE_CORS_ORIGINS", "http://localhost:3000")
+    raw = os.getenv("CROWNCODE_CORS_ORIGINS") or os.getenv("CORS_ORIGIN", "http://localhost:3000")
     if raw.strip() == "*":
         logger.warning("CORS configured to allow all origins")
         return ["*"]
