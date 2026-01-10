@@ -19,7 +19,8 @@ export interface DestinyCard {
 }
 
 export interface FortuneMessage {
-  text: string
+  text: string // Turkish
+  textEn: string // English
   tone: MessageTone
   type: MessageType
 }
