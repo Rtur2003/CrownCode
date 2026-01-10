@@ -106,3 +106,7 @@ react-native/
 *.apk
 *.ipa
 *.aab
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/    

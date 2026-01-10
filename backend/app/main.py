@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse
 
 from .routes.health import router as health_router
 from .routes.youtube import router as youtube_router
+from .routes.data_processing import router as data_processing_router
 from .services.logging_config import setup_logging, get_logger
 
 
@@ -69,5 +70,6 @@ app.add_middleware(
 
 app.include_router(health_router)
 app.include_router(youtube_router)
+app.include_router(data_processing_router)
 
 logger.info("CrownCode backend API initialized")

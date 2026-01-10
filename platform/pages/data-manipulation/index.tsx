@@ -1,26 +1,22 @@
 // =========================================================================
 // AUDIO DATASET TOOLS PAGE - AUDIO DATA PREPARATION & PROCESSING
 // =========================================================================
-// Specialized interface for audio dataset preparation and processing for AI
-// music detection research. Provides tools for audio augmentation, format
-// conversion, and dataset organization.
+// Specialized interface for audio dataset preparation and processing.
 //
 // Features:
-// - Audio file upload and batch processing
-// - Audio format conversion (MP3, WAV, FLAC)
+// - Audio file upload
 // - Audio augmentation (pitch, tempo, noise)
-// - Dataset organization and labeling
-// - Quality control and validation
-// - Export functionality for training datasets
+// - Backend processing integration
+// - File download
 //
 // @author Hasan Arthur Altuntaş
-// @version 1.0.0
-// @since 2025-01-01
+// @version 2.0.0
+// @since 2025-01-10
 // =========================================================================
 
-import React from 'react'
+import React, { useState } from 'react'
 import type { NextPage } from 'next'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import {
   Upload,
@@ -28,49 +24,192 @@ import {
   Music,
   FolderOpen,
   Settings,
+  ArrowLeft,
+  Play,
   Download,
-  AlertCircle,
-  CheckCircle
+  Loader2,
+  AlertCircle
 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
+import FileUploader from '@/components/MLToolkit/FileUploader'
+import AudioAugmentation, { AudioAugmentationOptions } from '@/components/MLToolkit/AudioAugmentation'
+
+type ToolId = 'upload' | 'convert' | 'augment' | 'organize'
 
 const AudioDatasetPage: NextPage = () => {
   const { t } = useLanguage()
+  const [activeTool, setActiveTool] = useState<ToolId | null>(null)
+  const [files, setFiles] = useState<File[]>([])
+  const [augmentOptions, setAugmentOptions] = useState<AudioAugmentationOptions>({
+    pitchShift: false,
+    speedChange: false,
+    bassBoost: false,
+    trimSilence: false,
+    mixAudio: false,
+    addNoise: false
+  })
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [processedFileUrl, setProcessedFileUrl] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   const tools = [
     {
-      id: 'upload',
-      title: t.audioDataset.tools.upload.title,
-      description: t.audioDataset.tools.upload.description,
-      icon: Upload,
-      gradient: 'from-primary to-secondary',
-      status: 'available'
-    },
-    {
-      id: 'convert',
-      title: t.audioDataset.tools.convert.title,
-      description: t.audioDataset.tools.convert.description,
-      icon: RefreshCw,
-      gradient: 'from-primary to-secondary',
-      status: 'available'
-    },
-    {
-      id: 'augment',
-      title: t.audioDataset.tools.augment.title,
-      description: t.audioDataset.tools.augment.description,
+      id: 'augment' as ToolId,
+      title: 'Audio Augmentation',
+      description: 'Enhance your dataset with pitch shifting, speed changes, and noise injection.',
       icon: Music,
       gradient: 'from-primary to-secondary',
       status: 'available'
     },
     {
-      id: 'organize',
-      title: t.audioDataset.tools.organize.title,
-      description: t.audioDataset.tools.organize.description,
+      id: 'convert' as ToolId,
+      title: 'Format Converter',
+      description: 'Convert audio files between formats (MP3, WAV, FLAC). (Coming Soon)',
+      icon: RefreshCw,
+      gradient: 'from-gray-500 to-gray-600',
+      status: 'coming_soon'
+    },
+    {
+      id: 'organize' as ToolId,
+      title: 'Dataset Organizer',
+      description: 'Organize and label your audio files for training. (Coming Soon)',
       icon: FolderOpen,
-      gradient: 'from-primary to-secondary',
-      status: 'available'
+      gradient: 'from-gray-500 to-gray-600',
+      status: 'coming_soon'
     }
   ]
+
+  const handleFilesSelected = (selectedFiles: File[]) => {
+    setFiles(selectedFiles)
+    setError(null)
+    setProcessedFileUrl(null)
+  }
+
+  const handleProcess = async () => {
+    if (files.length === 0) {
+      setError('Please select a file first.')
+      return
+    }
+
+    setIsProcessing(true)
+    setError(null)
+    setProcessedFileUrl(null)
+
+    // For MVP, we process the first file only
+    const fileToProcess = files[0]
+    const formData = new FormData()
+    formData.append('file', fileToProcess)
+    formData.append('options', JSON.stringify(augmentOptions))
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/process/audio`, {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!response.ok) {
+        const errData = await response.json()
+        throw new Error(errData.detail || 'Processing failed')
+      }
+
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      setProcessedFileUrl(url)
+    } catch (err: any) {
+      setError(err.message || 'An unexpected error occurred.')
+    } finally {
+      setIsProcessing(false)
+    }
+  }
+
+  const renderToolInterface = () => {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        className="tool-interface"
+      >
+        <button 
+          onClick={() => {
+            setActiveTool(null)
+            setFiles([])
+            setProcessedFileUrl(null)
+            setError(null)
+          }}
+          className="back-button"
+        >
+          <ArrowLeft size={20} />
+          <span>Back to Tools</span>
+        </button>
+
+        <div className="interface-grid">
+          <div className="left-panel">
+            <h2 className="section-title">1. Upload Audio</h2>
+            <FileUploader 
+              dataType="audio" 
+              onFilesSelected={handleFilesSelected} 
+            />
+            
+            {files.length > 0 && (
+              <div className="file-status">
+                <span className="text-primary font-medium">{files[0].name}</span> selected.
+                {files.length > 1 && <span className="text-xs text-muted block mt-1">(Only the first file will be processed in this demo)</span>}
+              </div>
+            )}
+          </div>
+
+          <div className="right-panel">
+            <h2 className="section-title">2. Configure Augmentation</h2>
+            <AudioAugmentation 
+              options={augmentOptions} 
+              onChange={setAugmentOptions} 
+            />
+
+            <div className="action-area">
+              {error && (
+                <div className="error-message">
+                  <AlertCircle size={20} />
+                  {error}
+                </div>
+              )}
+
+              <button 
+                className={`process-button ${isProcessing ? 'processing' : ''}`}
+                onClick={handleProcess}
+                disabled={isProcessing || files.length === 0}
+              >
+                {isProcessing ? (
+                  <>
+                    <Loader2 size={20} className="animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <Play size={20} fill="currentColor" />
+                    Start Processing
+                  </>
+                )}
+              </button>
+
+              {processedFileUrl && (
+                <motion.a
+                  href={processedFileUrl}
+                  download={`processed-${files[0]?.name || 'audio'}.wav`}
+                  className="download-button"
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                >
+                  <Download size={20} />
+                  Download Result
+                </motion.a>
+              )}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    )
+  }
 
   return (
     <MainLayout
@@ -80,12 +219,10 @@ const AudioDatasetPage: NextPage = () => {
     >
       <div className="page-container">
         <div className="content-wrapper">
-          {/* Header Section */}
           <motion.div
             className="page-header"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
           >
             <div className="header-badge">
               <Settings size={16} />
@@ -93,95 +230,61 @@ const AudioDatasetPage: NextPage = () => {
             </div>
 
             <h1 className="page-title">
-              {t.audioDataset.title}
+              {activeTool ? tools.find(t => t.id === activeTool)?.title : t.audioDataset.title}
             </h1>
-
-            <p className="page-subtitle">
-              {t.audioDataset.subtitle}
-            </p>
-
-            <div className="demo-notice">
-              <span className="demo-badge">{t.audioDataset.demo.badge}</span>
-              <span className="demo-text">{t.audioDataset.demo.notice}</span>
-            </div>
+            
+            {!activeTool && (
+              <p className="page-subtitle">
+                {t.audioDataset.subtitle}
+              </p>
+            )}
           </motion.div>
 
-          {/* Tools Grid */}
-          <motion.div
-            className="tools-grid"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-          >
-            {tools.map((tool, index) => {
-              const Icon = tool.icon
+          <AnimatePresence mode="wait">
+            {activeTool ? (
+              renderToolInterface()
+            ) : (
+              <motion.div
+                className="tools-grid"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                {tools.map((tool, index) => {
+                  const Icon = tool.icon
+                  const isAvailable = tool.status === 'available'
 
-              return (
-                <motion.div
-                  key={tool.id}
-                  className="tool-card"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * index, duration: 0.6 }}
-                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                >
-                  <div className="tool-header">
-                    <div className={`tool-icon bg-gradient-to-r ${tool.gradient}`}>
-                      <Icon size={24} />
-                    </div>
-                    <div className="tool-status">
-                      {tool.status === 'available' ? (
-                        <CheckCircle size={16} className="text-success" />
-                      ) : (
-                        <AlertCircle size={16} className="text-warning" />
-                      )}
-                    </div>
-                  </div>
+                  return (
+                    <motion.div
+                      key={tool.id}
+                      className={`tool-card ${!isAvailable ? 'opacity-50 grayscale' : ''}`}
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 * index }}
+                      onClick={() => isAvailable && setActiveTool(tool.id)}
+                    >
+                      <div className="tool-header">
+                        <div className={`tool-icon bg-gradient-to-r ${tool.gradient}`}>
+                          <Icon size={24} />
+                        </div>
+                      </div>
 
-                  <div className="tool-content">
-                    <h3 className="tool-title">{tool.title}</h3>
-                    <p className="tool-description">{tool.description}</p>
-                  </div>
+                      <div className="tool-content">
+                        <h3 className="tool-title">{tool.title}</h3>
+                        <p className="tool-description">{tool.description}</p>
+                      </div>
 
-                  <div className="tool-footer">
-                    <button className="tool-button" disabled>
-                      <span>Interface Demo</span>
-                    </button>
-                  </div>
-                </motion.div>
-              )
-            })}
-          </motion.div>
-
-          {/* Features Overview */}
-          <motion.div
-            className="features-section"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-          >
-            <div className="features-content">
-              <h2>{t.audioDataset.title}</h2>
-              <div className="features-grid">
-                <div className="feature-item">
-                  <Upload size={20} />
-                  <span>{t.audioDataset.tools.upload.title}</span>
-                </div>
-                <div className="feature-item">
-                  <RefreshCw size={20} />
-                  <span>{t.audioDataset.tools.convert.title}</span>
-                </div>
-                <div className="feature-item">
-                  <Music size={20} />
-                  <span>{t.audioDataset.tools.augment.title}</span>
-                </div>
-                <div className="feature-item">
-                  <Download size={20} />
-                  <span>Export Dataset</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+                      <div className="tool-footer">
+                         <span className="tool-action-text">
+                           {isAvailable ? 'Open Tool →' : 'Coming Soon'}
+                         </span>
+                      </div>
+                    </motion.div>
+                  )
+                })}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
@@ -201,7 +304,7 @@ const AudioDatasetPage: NextPage = () => {
 
         .page-header {
           text-align: center;
-          margin-bottom: 4rem;
+          margin-bottom: 3rem;
         }
 
         .header-badge {
@@ -216,7 +319,6 @@ const AudioDatasetPage: NextPage = () => {
           font-size: 0.875rem;
           font-weight: 500;
           margin-bottom: 1.5rem;
-          backdrop-filter: blur(10px);
         }
 
         .page-title {
@@ -227,46 +329,19 @@ const AudioDatasetPage: NextPage = () => {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           margin-bottom: 1rem;
-          line-height: 1.1;
         }
 
         .page-subtitle {
           font-size: 1.25rem;
           color: var(--color-text-secondary);
           max-width: 600px;
-          margin: 0 auto 2rem;
-          line-height: 1.6;
-        }
-
-        .demo-notice {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 1rem;
-          margin-bottom: 2rem;
-          flex-wrap: wrap;
-        }
-
-        .demo-badge {
-          background: rgba(201, 147, 71, 0.12);
-          border: 1px solid rgba(201, 147, 71, 0.45);
-          color: var(--color-warning);
-          padding: 0.5rem 1rem;
-          border-radius: var(--radius-3xl);
-          font-size: 0.875rem;
-          font-weight: 600;
-        }
-
-        .demo-text {
-          color: var(--color-text-muted);
-          font-size: 0.875rem;
+          margin: 0 auto;
         }
 
         .tools-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
           gap: 2rem;
-          margin-bottom: 4rem;
         }
 
         .tool-card {
@@ -274,156 +349,132 @@ const AudioDatasetPage: NextPage = () => {
           border: 1px solid var(--glass-border);
           border-radius: var(--radius-xl);
           padding: 2rem;
-          backdrop-filter: blur(10px);
-          transition: all var(--animation-duration) var(--animation-easing);
+          cursor: pointer;
+          transition: all 0.3s ease;
         }
 
         .tool-card:hover {
           border-color: var(--color-primary);
+          transform: translateY(-5px);
           box-shadow: var(--shadow-glow);
-          transform: translateY(-2px);
-        }
-
-        .tool-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 1.5rem;
         }
 
         .tool-icon {
-          width: 3rem;
-          height: 3rem;
+          width: 3.5rem;
+          height: 3.5rem;
           border-radius: var(--radius-lg);
           display: flex;
           align-items: center;
           justify-content: center;
-          background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-          color: var(--color-text-inverse);
-        }
-
-        .tool-content {
-          margin-bottom: 2rem;
+          color: white;
+          margin-bottom: 1.5rem;
         }
 
         .tool-title {
-          font-size: 1.25rem;
+          font-size: 1.5rem;
           font-weight: 700;
           margin-bottom: 0.5rem;
-          color: var(--color-text-primary);
         }
 
         .tool-description {
           color: var(--color-text-secondary);
           line-height: 1.6;
+          margin-bottom: 1.5rem;
         }
 
-        .tool-footer {
-          text-align: center;
-        }
-
-        .tool-button {
-          background: rgba(231, 199, 122, 0.12);
-          border: 1px solid rgba(201, 147, 71, 0.35);
+        .tool-action-text {
           color: var(--color-primary);
-          padding: 0.75rem 1.5rem;
-          border-radius: var(--radius-md);
-          font-weight: 500;
-          cursor: not-allowed;
-          opacity: 0.6;
-          transition: all var(--animation-duration) var(--animation-easing);
+          font-weight: 600;
         }
 
-        .features-section {
-          text-align: center;
-          padding: 3rem 0;
-        }
-
-        .features-content h2 {
-          font-size: 2rem;
-          font-weight: 700;
+        /* Interface Styles */
+        .back-button {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: var(--color-text-secondary);
           margin-bottom: 2rem;
+          transition: color 0.2s;
+        }
+
+        .back-button:hover {
+          color: var(--color-primary);
+        }
+
+        .interface-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 3rem;
+        }
+
+        .section-title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin-bottom: 1.5rem;
           color: var(--color-text-primary);
         }
 
-        .features-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 1.5rem;
-          max-width: 800px;
-          margin: 0 auto;
+        .action-area {
+          margin-top: 2rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
         }
 
-        .feature-item {
+        .process-button, .download-button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.75rem;
+          width: 100%;
+          padding: 1rem;
+          border-radius: var(--radius-lg);
+          font-weight: 600;
+          transition: all 0.3s ease;
+        }
+
+        .process-button {
+          background: var(--color-primary);
+          color: var(--color-background);
+        }
+
+        .process-button:hover:not(:disabled) {
+          background: var(--color-primary-hover);
+        }
+
+        .process-button:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        .download-button {
+          background: var(--color-success);
+          color: white;
+        }
+
+        .error-message {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          color: var(--color-text-secondary);
+          padding: 1rem;
+          background: rgba(239, 68, 68, 0.1);
+          border: 1px solid rgba(239, 68, 68, 0.3);
+          color: #ef4444;
+          border-radius: var(--radius-md);
+        }
+
+        .file-status {
+          margin-top: 1rem;
           padding: 1rem;
           background: var(--glass-bg);
-          border: 1px solid var(--color-border);
           border-radius: var(--radius-md);
-          transition: all var(--animation-duration) var(--animation-easing);
-        }
-
-        .feature-item:hover {
-          border-color: var(--color-primary);
-          transform: translateY(-2px);
-        }
-
-        .feature-item svg {
-          color: var(--color-primary);
+          font-size: 0.9rem;
         }
 
         @media (max-width: 768px) {
-          .content-wrapper {
-            padding: 0 1rem;
-          }
-
-          .page-title {
-            font-size: 2.5rem;
-          }
-
-          .page-subtitle {
-            font-size: 1rem;
-          }
-
-          .tools-grid {
+          .interface-grid {
             grid-template-columns: 1fr;
-            gap: 1.5rem;
-          }
-
-          .tool-card {
-            padding: 1.5rem;
-          }
-
-          .demo-notice {
-            flex-direction: column;
-            gap: 0.5rem;
-          }
-
-          .features-grid {
-            grid-template-columns: 1fr;
-            gap: 1rem;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .page-container {
-            padding: 1rem 0;
-          }
-
-          .page-title {
-            font-size: 2rem;
-          }
-
-          .tool-card {
-            padding: 1rem;
-          }
-
-          .tool-icon {
-            width: 2.5rem;
-            height: 2.5rem;
+            gap: 2rem;
           }
         }
       `}</style>
