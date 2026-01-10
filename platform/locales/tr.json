@@ -1,34 +1,55 @@
 {
+  "errorPage": {
+    "titles": {
+      "notFound": "Sayfa Bulunamadı",
+      "serverError": "Sunucu Hatası",
+      "clientError": "İstek Hatası",
+      "default": "Bir Hata Oluştu"
+    },
+    "messages": {
+      "notFound": "Aradığınız sayfa bulunamadı.",
+      "serverError": "Sunucumuzda bir sorun oluştu. Lütfen daha sonra tekrar deneyin.",
+      "clientError": "İsteğiniz işlenirken bir hata oluştu.",
+      "default": "Beklenmeyen bir hata oluştu."
+    },
+    "actions": {
+      "refresh": "Sayfayı Yenile",
+      "home": "Ana Sayfaya Dön"
+    },
+    "helpPrefix": "Sorun devam ederse, lütfen",
+    "helpSuffix": "üzerinden bize ulaşın."
+  },
   "nav": {
     "home": "Ana Sayfa",
     "products": "Ürünler",
     "github": "GitHub",
     "projects": "Projeler",
     "aiMusic": "AI Müzik",
-    "docs": "Dokümanlar",
-    "aiMusicBadge": "Aktif"
+    "docs": "Dökümanlar",
+    "aiMusicBadge": "Aktif",
+    "fortune": "Şans Çarkı"
   },
   "hero": {
     "title": {
       "main": "CrownCode",
-      "accent": "Platformu"
+      "accent": "Platform"
     },
-    "subtitle": "AI ile üretilmiş müzikleri tespit eden gelişmiş yapay zeka araştırma platformu. wav2vec2 tabanlı derin öğrenme modeli kullanarak profesyonel müzik analizi hedefleniyor.",
+    "subtitle": "Yazılım projeleri, araştırma çalışmaları ve geliştirme süreçlerinin sergilendiği merkezi platform. Açık kaynak projeler, demo uygulamalar ve teknik dokümantasyon.",
     "cta": {
-      "explore": "AI Müzik Tespitini Dene",
-      "github": "Kaynak Kodu"
+      "explore": "Projeleri Keşfet",
+      "github": "GitHub'da Görüntüle"
     },
     "features": {
-      "modern": "Gelişmiş AI Teknolojisi",
-      "accuracy": "Hedef %95+ Doğruluk"
+      "modern": "Açık Kaynak Projeler",
+      "accuracy": "Demo ve Dokümantasyon"
     },
     "scroll": "Daha Fazlasını Keşfet"
   },
   "products": {
-    "badge": "AI Müzik Tespiti",
-    "title": "Gelişmiş AI ile",
+    "badge": "AURIS AI",
+    "title": "AURIS ile",
     "titleAccent": "Müzik Analizi",
-    "subtitle": "wav2vec2 mimarisini kullanan derin öğrenme modeli ile AI tarafından üretilmiş müzikleri gerçek insan bestelerinden ayırt eden profesyonel analiz platformu.",
+    "subtitle": "AURIS - wav2vec2 mimarisini kullanan derin öğrenme platformu ile AI tarafından üretilmiş müzikleri insan bestelerinden ayırt eden profesyonel analiz motoru.",
     "cta": {
       "title": "Daha Fazla Proje Yolda",
       "description": "GitHub'da tüm projelerimizi inceleyebilir, katkıda bulunabilirsiniz",
@@ -36,14 +57,14 @@
     },
     "items": {
       "aiMusic": {
-        "title": "AI Müzik Tespit Motoru",
-        "description": "wav2vec2 tabanlı derin öğrenme modeli ile AI üretimi müzikleri insan bestelerinden ayırt etmeyi hedefleyen araştırma platformu. Geliştirme aşamasında.",
+        "title": "AURIS - AI Müzik Tespit Motoru",
+        "description": "AURIS, wav2vec2 tabanlı derin öğrenme modeli ile AI üretimi müzikleri insan bestelerinden ayırt etmeyi hedefleyen araştırma platformudur. Geliştirme aşamasında.",
         "status": "Geliştiriliyor",
         "stats": "Hedef %95+ Doğruluk",
         "features": [
           "wav2vec2 Mimarisi",
-          "Derin Öğrenme",
-          "Ses Analizi"
+          "Transfer Öğrenme",
+          "AURIS Pipeline"
         ]
       },
       "mlToolkit": {
@@ -55,6 +76,17 @@
           "Veri Seti İşleme",
           "Kalite Kontrolü",
           "Araştırma Analitiği"
+        ]
+      },
+      "fortune": {
+        "title": "Crown Fortune",
+        "description": "Günlük motivasyon ve ilham kaynağı. Kraliyet temalı şans çarkı ile eğlenceli bir deneyim.",
+        "status": "Aktif",
+        "stats": "8 Kategori",
+        "features": [
+          "Şans Çarkı",
+          "Motivasyon",
+          "Günlük İlham"
         ]
       }
     }
@@ -83,19 +115,36 @@
         "title": "Veri Seti Organizasyonu",
         "description": "Etiketleme ve kategorilendirme araçları"
       }
+    },
+    "interface": {
+      "backToTools": "Araçlara Dön",
+      "step1": "1. Ses Dosyası Yükle",
+      "step2": "2. Augmentation Ayarları",
+      "selected": "seçildi",
+      "demoNote": "(Bu demoda sadece ilk dosya işlenecektir)",
+      "startProcessing": "İşlemi Başlat",
+      "processing": "İşleniyor...",
+      "downloadResult": "Sonucu İndir",
+      "openTool": "Aracı Aç →",
+      "comingSoon": "Çok Yakında",
+      "errors": {
+        "selectFile": "Lütfen önce bir dosya seçin.",
+        "processingFailed": "İşlem başarısız oldu",
+        "unexpected": "Beklenmeyen bir hata oluştu."
+      }
     }
   },
   "footer": {
-    "description": "AI müzik tespiti ve ses analizi için profesyonel platform. wav2vec2 tabanlı derin öğrenme teknolojisi ile gelişmiş müzik analizi ve streaming platform entegrasyonu sunan yenilikçi çözüm.",
+    "description": "AURIS - AI müzik tespiti ve ses analizi için profesyonel platform. wav2vec2 tabanlı derin öğrenme teknolojisi ile gelişmiş müzik analizi ve streaming platform entegrasyonu sunan yenilikçi çözüm.",
     "community": {
       "title": "Topluluk",
       "stars": "GitHub Stars",
-      "contributors": "Contributors",
-      "coffee": "Coffee Consumed"
+      "contributors": "Katkıda Bulunanlar",
+      "coffee": "Tüketilen Kahve"
     },
     "projects": {
       "title": "Proje Durumları",
-      "aiMusic": "AI Müzik Tespit",
+      "aiMusic": "AURIS",
       "dataManipulation": "Veri İşleme",
       "mlToolkit": "ML Araç Seti"
     },
@@ -109,15 +158,16 @@
       },
       "products": {
         "title": "Ürünler",
-        "aiMusic": "AI Müzik Tespit",
-        "dataProcessing": "Veri İşleme Suite",
+        "aiMusic": "AURIS",
+        "dataProcessing": "Veri İşleme Paketi",
         "mlToolkit": "ML Araç Seti",
-        "allProjects": "Tüm Projeler"
+        "allProjects": "Tüm Projeler",
+        "fortune": "Şans Çarkı"
       },
       "developer": {
         "title": "Geliştirici",
         "name": "Hasan Arthur Altuntaş",
-        "portfolio": "Portfolio",
+        "portfolio": "Portfolyo",
         "contact": "İletişim",
         "linkedin": "LinkedIn"
       },
@@ -139,47 +189,68 @@
   },
   "aiDetection": {
     "meta": {
-      "title": "AI Müzik Tespiti - CrownCode Platform (Demo Arayüzü)",
-      "description": "AI müzik tespit sistemi için profesyonel ön yüz arayüzü. Planlanan wav2vec2 tabanlı derin öğrenme uygulamasının demonstrasyonu. Backend AI entegrasyonu geliştiriliyor.",
-      "keywords": "AI müzik tespiti, wav2vec2, derin öğrenme, müzik analizi, yapay zeka, ses analizi, demo arayüzü"
+      "title": "AURIS - AI Müzik Tespiti",
+      "description": "AURIS ile YouTube odaklı AI müzik analizi. Backend entegrasyonları varsa kullanır, model yoksa deterministik önizleme kullanır.",
+      "keywords": "AURIS, AI müzik tespiti, YouTube analizi, ses analizi, CrownCode"
     },
     "header": {
-      "badge": "AI Müzik Tespiti",
-      "title": "AI Üretimi Müzikleri Tespit Et",
-      "subtitle": "AI destekli müzik tespit sistemi için profesyonel ön yüz arayüz gösterimi. Bu arayüz, planlanan kullanıcı deneyimi ve sistem mimarisini sergiliyor."
+      "badge": "AURIS",
+      "title": "AURIS ile AI Müzik Tespiti",
+      "subtitle": "AURIS - YouTube odaklı analiz arayüzü; backend entegrasyonları opsiyonel, önizleme güvenli yedektir."
     },
     "warning": {
-      "title": "Demo Arayüzü - Eğitim Amaçlı",
+      "title": "AURIS Önizleme Modu",
       "currentStatus": "Mevcut Durum:",
-      "currentStatusText": "Bu profesyonel bir UI/UX gösterimidir.",
+      "currentStatusText": "AURIS model çıktısı opsiyonel ve offline olabilir.",
       "analysisResults": "Analiz Sonuçları:",
-      "analysisResultsText": "Sadece arayüz testi için üretilmiştir - gerçek AI tahminleri değil.",
+      "analysisResultsText": "Önizleme sonuçları URL tabanlı ve deterministiktir.",
       "plannedImplementation": "Planlanan Uygulama:",
-      "plannedImplementationText": "PyTorch + wav2vec2 modeli ile backend AI entegrasyonu (2025 Q2)."
+      "plannedImplementationText": "AURIS - PyTorch + wav2vec2 modeli ile backend AI entegrasyonu (2025 Q2)."
     },
     "upload": {
       "title": "Ses Dosyası Yükle",
       "dropHere": "Ses dosyanızı buraya bırakın",
-      "orClick": "veya tıklayarak seçin",
-      "supported": "Desteklenen: MP3, WAV, FLAC, M4A (maks 100MB)",
+      "orClick": "veya tıklayıp seçin",
+      "supported": "Desteklenen: MP3, WAV, FLAC, M4A (maks 30MB / ~6 dk)",
       "analyzeButton": "Dosyayı Analiz Et",
       "analyzing": "Analiz Ediliyor..."
     },
     "url": {
-      "title": "URL'den Analiz Et",
-      "placeholder": "Spotify, YouTube, SoundCloud veya Apple Music URL'si yapıştırın...",
-      "supportedPlatforms": "Desteklenen platformlar:",
-      "analyzeButton": "URL'yi Analiz Et",
-      "analyzing": "Analiz Ediliyor..."
+      "title": "YouTube Bağlantısını Analiz Et",
+      "placeholder": "YouTube linki yapıştırın (youtube.com veya youtu.be)...",
+      "supportedPlatforms": "Girdi seçenekleri:",
+      "sources": {
+        "youtube": "YouTube",
+        "upload": "Dosya yükleme",
+        "spotify": "Spotify (yakında)",
+        "appleMusic": "Apple Music (yakında)"
+      },
+      "analyzeButton": "Bağlantıyı İşle",
+      "analyzing": "İşleniyor..."
+    },
+    "pipeline": {
+      "title": "AURIS Pipeline",
+      "items": {
+        "download": "Ses alma",
+        "musicAi": "AURIS çıkarım",
+        "sesAnalizi": "Ses-Analizi raporu",
+        "preview": "Önizleme yedeği"
+      },
+      "tags": {
+        "ytDlp": "yt-dlp",
+        "optional": "opsiyonel",
+        "always": "her zaman"
+      },
+      "note": "AURIS model yoksa önizleme modu her zaman kullanılır."
     },
     "processing": {
-      "title": "Demo Analizi Devam Ediyor...",
-      "subtitle": "Arayüz gösterimi için AI tespit iş akışı simüle ediliyor.",
+      "title": "Analiz Devam Ediyor...",
+      "subtitle": "Kaynak doğrulanıyor ve analiz akışı hazırlanıyor.",
       "steps": {
-        "simulation": "UI simülasyonu",
-        "generation": "Rastgele sonuç üretimi",
-        "testing": "Arayüz testi",
-        "completion": "Demo tamamlanıyor"
+        "validating": "Kaynak Doğrulama",
+        "downloading": "Ses Hazırlama",
+        "analyzing": "Sinyal Analizi",
+        "complete": "Rapor Tamamlama"
       }
     },
     "error": {
@@ -195,20 +266,32 @@
       "sampleRate": "Örnekleme Hızı",
       "duration": "Süre",
       "analysisDetails": "Analiz Detayları:",
-      "exportReport": "Rapor Dışa Aktar",
-      "analyzeAnother": "Başka Analiz Et"
+      "exportReport": "Raporu Dışarı Aktar",
+      "analyzeAnother": "Başka Analiz Et",
+      "spotifyTrack": "Spotify Parçası",
+      "decisionSource": "Karar Kaynağı",
+      "sources": {
+        "musicAi": "AURIS",
+        "sesAnalizi": "Ses-Analizi",
+        "preview": "Önizleme"
+      },
+      "videoId": "Video ID",
+      "normalizedUrl": "Normalize URL",
+      "fileName": "Dosya Adı",
+      "fileSize": "Dosya Boyutu",
+      "fileFormat": "Dosya Formatı"
     },
     "errors": {
-      "enterUrl": "Lütfen geçerli bir müzik URL'si girin.",
-      "invalidUrl": "Geçersiz URL formatı. Lütfen http:// veya https:// ile başlayan tam bir URL girin",
-      "unsupportedFormat": "Desteklenmeyen dosya formatı: {format}. İzin verilen formatlar: MP3, WAV, FLAC, M4A",
-      "fileTooSmall": "Dosya çok küçük. Minimum dosya boyutu 1KB.",
-      "fileTooLarge": "Dosya boyutu 100MB limitini aşıyor. Lütfen daha küçük bir dosya kullanın.",
-      "invalidFileName": "Geçersiz dosya adı. Dosya adı yasak karakterler içeriyor.",
-      "suspiciousFile": "Dosya adı şüpheli desenler içeriyor. Lütfen ses dosyanızı yeniden adlandırın.",
-      "invalidHeader": "Dosya başlık analizine göre geçerli bir ses dosyası gibi görünmüyor.",
-      "headerReadError": "Dosya başlığı okunurken hata oluştu",
-      "validationFailed": "Dosya doğrulaması başarısız. Lütfen farklı bir dosya deneyin."
+      "enterUrl": "Lütfen bir YouTube URL'si girin.",
+      "invalidYouTubeUrl": "Geçersiz YouTube URL'si. https://www.youtube.com/watch?v=... veya https://youtu.be/... kullanın.",
+      "missingFile": "Lütfen analiz için bir ses dosyası seçin.",
+      "unsupportedFileType": "Desteklenmeyen dosya formatı. MP3, WAV, FLAC, M4A kullanın.",
+      "fileTooLarge": "Dosya boyutu 30MB (yaklaşık 6 dk) sınırını aşıyor. Daha küçük dosya seçin.",
+      "fileTooSmall": "Dosya çok küçük. Minimum boyut 1KB.",
+      "invalidFileName": "Geçersiz dosya adı. Dosyayı yeniden adlandırın.",
+      "backend_not_configured": "Backend ayarlanamadı. Yalnızca önizleme sonucu gösteriliyor.",
+      "backend_unreachable": "Backend şu anda ulaşılamıyor. Yalnızca önizleme sonucu gösteriliyor.",
+      "backend_unexpected_response": "Backend beklenmedik cevap verdi. Yalnızca önizleme sonucu gösteriliyor."
     }
   },
   "mlToolkit": {
@@ -229,11 +312,11 @@
     },
     "fileUploader": {
       "image": {
-        "title": "Görsel Dosyalarını Yükleyin",
+        "title": "Görsel Dosyalarınızı Yükleyin",
         "hint": "JPG, PNG, WEBP destekleniyor"
       },
       "audio": {
-        "title": "Ses Dosyalarını Yükleyin",
+        "title": "Ses Dosyalarınızı Yükleyin",
         "hint": "MP3, WAV, OGG destekleniyor"
       },
       "subtitle": "Sürükle bırak veya tıklayarak dosya seç",
@@ -363,22 +446,64 @@
   },
   "search": {
     "placeholder": "Ara... (Ctrl+K)",
-    "noResults": "Sonuc bulunamadi",
+    "noResults": "Sonuç bulunamadı",
     "categories": {
       "pages": "Sayfalar",
-      "features": "Ozellikler",
+      "features": "Özellikler",
       "recent": "Son Aramalar"
     },
     "pages": {
       "home": "Ana Sayfa",
-      "aiMusic": "AI Muzik Tespiti",
-      "mlToolkit": "ML Arac Seti",
-      "projects": "Projeler"
+      "aiMusic": "AI Müzik Tespiti",
+      "mlToolkit": "ML Araç Seti",
+      "projects": "Projeler",
+      "crownFortune": "Kraliyet Şansı"
     },
     "features": {
-      "upload": "Dosya Yukle",
-      "urlAnalysis": "URL Analizi",
-      "dataAugmentation": "Veri Artirma"
+      "urlAnalysis": "YouTube Analizi",
+      "dataAugmentation": "Veri Artırma"
     }
+  },
+  "crownFortune": {
+    "meta": {
+      "title": "Crown Destiny - Günlük Kader",
+      "description": "CrownCode ile günlük kaderini keşfet. Çarkı çevir, kartını aç, evrenin mesajını al.",
+      "keywords": "günlük kader, şans çarkı, tarot, motivasyon, CrownCode, crown destiny"
+    },
+    "header": {
+      "badge": "Crown Destiny",
+      "title": "Bugünün Kaderi",
+      "subtitle": "Çarkı çevir ve evrenin bugün sana ne söylediğini keşfet."
+    },
+    "loading": "Yükleniyor...",
+    "countdown": {
+      "label": "Yeni kader:"
+    },
+    "buttons": {
+      "spin": "Çarkı Çevir",
+      "spinning": "Çevriliyor..."
+    },
+    "categories": {
+      "love": "Aşk",
+      "career": "Kariyer",
+      "money": "Bereket",
+      "health": "Sağlık",
+      "spirit": "Ruh"
+    },
+    "energy": {
+      "ascending": "Yükselen Enerji",
+      "descending": "Alçalan Enerji",
+      "stable": "Dengeli Enerji"
+    },
+    "info": {
+      "title": "Nasıl Çalışır?",
+      "steps": [
+        "Her gün gece yarısı (00:00) yeni kader belirlenir",
+        "Çarkı çevir, kategorini öğren",
+        "Kartın açılsın, mesajını oku",
+        "Ertesi güne kadar aynı kader geçerli"
+      ]
+    },
+    "disclaimer": "Bu uygulama eğlence amaçlıdır."
   }
 }

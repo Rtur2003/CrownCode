@@ -10,7 +10,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-family-base);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -62,7 +62,7 @@ input, textarea, select {
 input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgb(245 158 11 / 0.1);
+  box-shadow: 0 0 0 3px rgba(201, 147, 71, 0.15);
 }
 
 /* Scrollbar */
@@ -86,7 +86,7 @@ input:focus, textarea:focus, select:focus {
 
 /* Selection */
 ::selection {
-  background-color: rgb(245 158 11 / 0.2);
+  background-color: rgba(231, 199, 122, 0.2);
   color: var(--color-text-primary);
 }
 

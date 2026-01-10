@@ -20,6 +20,7 @@
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-2xl);
+  -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
 }
 
@@ -28,8 +29,8 @@
   width: 100px;
   height: 100px;
   margin: 0 auto 24px;
-  background: rgba(239, 68, 68, 0.1);
-  border: 2px solid rgba(239, 68, 68, 0.3);
+  background: rgba(166, 75, 60, 0.12);
+  border: 2px solid rgba(166, 75, 60, 0.4);
   border-radius: 50%;
   color: var(--color-error);
   align-items: center;

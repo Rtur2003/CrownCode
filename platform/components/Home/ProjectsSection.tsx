@@ -22,7 +22,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
-import { Music, Brain, ArrowUpRight, Sparkles, Activity, LucideIcon } from 'lucide-react'
+import { Music, Brain, ArrowUpRight, Sparkles, Activity, LucideIcon, Crown } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
 // =========================================================================
@@ -154,6 +154,17 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
       status: t.products.items.mlToolkit.status,
       stats: t.products.items.mlToolkit.stats,
       features: t.products.items.mlToolkit.features
+    },
+    {
+      id: 'crown-fortune',
+      title: t.products.items.fortune?.title || 'Crown Fortune',
+      description: t.products.items.fortune?.description || 'Daily motivation and inspiration source.',
+      href: '/crown-fortune',
+      icon: Crown,
+      gradient: 'from-amber-400 via-orange-500 to-red-500',
+      status: t.products.items.fortune?.status || 'Active',
+      stats: t.products.items.fortune?.stats || '8 Categories',
+      features: t.products.items.fortune?.features || ['Fortune Wheel', 'Motivation', 'Daily Inspiration']
     }
   ]
 
@@ -167,12 +178,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
    * @returns CSS class string for status styling
    */
   const getStatusClass = (status: string): string => {
-    if (status === 'Aktif' || status === 'Research Active') {
-      return 'active'
-    }
-    if (status === 'Geliştiriliyor' || status === 'Developing') {
-      return 'developing'
-    }
+    if (status === 'Aktif' || status === 'Active' || status === 'Research Active' || status === 'Arastirma Aktif') { return 'active' }
+    if (status === 'Gelistiriliyor' || status === 'In Development' || status === 'Developing') { return 'developing' }
     return 'planned'
   }
 

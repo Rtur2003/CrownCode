@@ -3,10 +3,20 @@
   position: relative;
   padding: 8rem 0;
   background: var(--color-background);
-  background-image: 
-    linear-gradient(rgba(26, 26, 26, 0.8), rgba(26, 26, 26, 0.8)),
-    radial-gradient(circle at 20% 50%, rgba(251, 191, 36, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.03) 0%, transparent 50%);
+  background-image:
+    linear-gradient(180deg, rgba(11, 10, 8, 0.85), rgba(15, 12, 9, 0.9)),
+    radial-gradient(circle at 15% 30%, rgba(231, 199, 122, 0.08) 0%, transparent 55%),
+    radial-gradient(circle at 85% 10%, rgba(154, 107, 43, 0.1) 0%, transparent 60%);
+}
+
+.products-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/images/panel/about-me.png') left 5% top 15% / 260px auto no-repeat;
+  opacity: 0.08;
+  mix-blend-mode: screen;
+  pointer-events: none;
 }
 
 .products-container {
@@ -33,8 +43,8 @@
   font-size: 0.875rem;
   font-weight: 500;
   margin-bottom: 1.5rem;
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .products-title {
@@ -50,8 +60,8 @@
 
 .products-title-accent {
   background: var(--gradient-primary);
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline;
 }
@@ -114,8 +124,8 @@
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--color-text-secondary);
-  backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .status-dot {
@@ -127,17 +137,17 @@
 
 .status-dot.active {
   background: var(--color-success);
-  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  box-shadow: 0 0 0 0 rgba(127, 176, 105, 0.7);
 }
 
 .status-dot.developing {
   background: var(--color-warning);
-  box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+  box-shadow: 0 0 0 0 rgba(201, 147, 71, 0.7);
 }
 
 .status-dot.planned {
   background: var(--color-info);
-  box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  box-shadow: 0 0 0 0 rgba(107, 143, 122, 0.7);
 }
 
 @keyframes statusPulse {
@@ -297,8 +307,8 @@
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-2xl);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   position: relative;
   overflow: hidden;
 }
@@ -340,14 +350,14 @@
   font-weight: 600;
   border-radius: var(--radius-xl);
   transition: all var(--animation-normal) var(--ease-out-cubic);
-  box-shadow: 0 4px 16px rgba(251, 191, 36, 0.2);
+  box-shadow: 0 4px 16px rgba(201, 147, 71, 0.25);
   position: relative;
   z-index: 1;
 }
 
 .cta-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(251, 191, 36, 0.3);
+  box-shadow: 0 10px 36px rgba(201, 147, 71, 0.35);
 }
 
 /* Responsive Design */

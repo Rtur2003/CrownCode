@@ -80,7 +80,7 @@ const nextConfig = {
   // Output configuration for Netlify
   output: 'export',
   distDir: 'out',
-  trailingSlash: true,
+  trailingSlash: false, // Changed to false for better sitemap compatibility
 
   // Compression
   compress: true,

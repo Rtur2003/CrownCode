@@ -6,6 +6,19 @@
   overflow: hidden;
 }
 
+.footer::after {
+  content: '';
+  position: absolute;
+  right: 6%;
+  bottom: 15%;
+  width: 140px;
+  height: 140px;
+  background: url('/icons/x.png') center / contain no-repeat;
+  opacity: 0.08;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
 .footer::before {
   content: '';
   position: absolute;
@@ -258,7 +271,7 @@
 .social-link:hover {
   color: var(--color-text-primary);
   border-color: var(--color-gold-400);
-  background: rgba(251, 191, 36, 0.1);
+  background: rgba(201, 147, 71, 0.12);
   transform: translateY(-2px);
 }
 
@@ -369,7 +382,7 @@
 }
 
 .heart-icon {
-  color: #ef4444;
+  color: var(--color-error);
   animation: heartbeat 2s ease-in-out infinite;
 }
 

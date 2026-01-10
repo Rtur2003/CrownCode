@@ -14,9 +14,9 @@ interface MainLayoutProps {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({
   children,
-  title = 'CrownCode by Rthur - AI Powered Development Tools',
-  description = 'AI müzik tespitinden veri manipülasyonuna, modern web çözümleri. %97.2 doğrulukla AI-generated müzik tespiti ve daha fazlası.',
-  keywords = 'AI, machine learning, music detection, data processing, web development, developer tools, CrownCode, Rthur, artificial intelligence',
+  title = 'CrownCode by Rthur - AURIS AI Music Detection Platform',
+  description = 'AURIS - AI muzik tespiti ve veri manipulasyonu icin profesyonel platform. wav2vec2 tabanli derin ogrenme teknolojisi.',
+  keywords = 'AURIS, AI, machine learning, music detection, data processing, web development, developer tools, CrownCode, Rthur, artificial intelligence',
   image = '/logo-main.png',
   url = 'https://crowncode.dev',
 }) => {
@@ -56,7 +56,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#fbbf24" />
+        <meta name="theme-color" content="#e7c77a" />
         <meta name="author" content="Hasan Arthur Altuntaş (Rthur)" />
         <meta name="robots" content="index, follow" />
         <meta name="language" content="Turkish" />
@@ -88,10 +88,6 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
             __html: JSON.stringify(structuredData)
           }}
         />
-        
-        {/* Fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
         {/* Favicon */}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

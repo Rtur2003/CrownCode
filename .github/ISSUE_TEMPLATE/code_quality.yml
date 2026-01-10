@@ -1,0 +1,103 @@
+name: Code Quality Improvement
+description: Report maintainability risks or code quality issues
+title: "[QUALITY] "
+labels: ["code-quality", "maintainability", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Code Quality Improvement
+        
+        Use this template for maintainability risks, code clarity issues, or technical debt.
+        
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Classification
+      description: What type of quality issue is this?
+      options:
+        - Maintainability risk
+        - Responsibility leakage
+        - Developer experience deficiency
+        - Tooling/standards omission
+        - Code complexity
+        - Code duplication
+        - Naming issues
+        - Documentation gap
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: Problem Description
+      description: Describe the code quality issue
+      placeholder: |
+        Example: The youtube_analysis.py file has a 500-line function that's
+        difficult to understand and modify.
+    validations:
+      required: true
+
+  - type: textarea
+    id: affected-code
+    attributes:
+      label: Affected Code
+      description: Location and example of problematic code
+      placeholder: |
+        File: backend/app/services/youtube_analysis.py
+        Lines: 45-545
+        
+        ```python
+        def analyze_everything(...):
+            # 500 lines of mixed concerns
+        ```
+    validations:
+      required: true
+
+  - type: textarea
+    id: improvement-suggestion
+    attributes:
+      label: Improvement Suggestion
+      description: How could this be improved?
+      placeholder: |
+        1. Split into smaller, focused functions
+        2. Extract validation logic
+        3. Separate data processing from business logic
+        4. Add clear function names
+    validations:
+      required: false
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Improvement Complexity
+      options:
+        - Simple (< 1 hour)
+        - Moderate (1-4 hours)
+        - Complex (> 4 hours)
+        - Requires refactoring
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: benefits
+    attributes:
+      label: Expected Benefits
+      description: What will improve?
+      options:
+        - label: Easier to understand
+        - label: Easier to test
+        - label: Easier to modify
+        - label: Better performance
+        - label: Better error handling
+        - label: Reduced duplication
+
+  - type: textarea
+    id: additional-notes
+    attributes:
+      label: Additional Notes
+      description: Any other relevant information
+    validations:
+      required: false
