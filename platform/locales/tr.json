@@ -1,4 +1,24 @@
 {
+  "errorPage": {
+    "titles": {
+      "notFound": "Sayfa Bulunamadı",
+      "serverError": "Sunucu Hatası",
+      "clientError": "İstek Hatası",
+      "default": "Bir Hata Oluştu"
+    },
+    "messages": {
+      "notFound": "Aradığınız sayfa bulunamadı.",
+      "serverError": "Sunucumuzda bir sorun oluştu. Lütfen daha sonra tekrar deneyin.",
+      "clientError": "İsteğiniz işlenirken bir hata oluştu.",
+      "default": "Beklenmeyen bir hata oluştu."
+    },
+    "actions": {
+      "refresh": "Sayfayı Yenile",
+      "home": "Ana Sayfaya Dön"
+    },
+    "helpPrefix": "Sorun devam ederse, lütfen",
+    "helpSuffix": "üzerinden bize ulaşın."
+  },
   "nav": {
     "home": "Ana Sayfa",
     "products": "Ürünler",
@@ -216,6 +236,11 @@
         "sesAnalizi": "Ses-Analizi raporu",
         "preview": "Önizleme yedeği"
       },
+      "tags": {
+        "ytDlp": "yt-dlp",
+        "optional": "opsiyonel",
+        "always": "her zaman"
+      },
       "note": "AURIS model yoksa önizleme modu her zaman kullanılır."
     },
     "processing": {
@@ -243,6 +268,7 @@
       "analysisDetails": "Analiz Detayları:",
       "exportReport": "Raporu Dışarı Aktar",
       "analyzeAnother": "Başka Analiz Et",
+      "spotifyTrack": "Spotify Parçası",
       "decisionSource": "Karar Kaynağı",
       "sources": {
         "musicAi": "AURIS",
