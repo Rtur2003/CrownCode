@@ -162,13 +162,14 @@ const CrownFortunePage: NextPage = () => {
 
   const details = getDestinyDetails(destiny)
   const cardName = language === 'tr' ? details.card.nameTr : details.card.name
-  const catLabel = language === 'tr' ? details.category.labelTr : details.category.label
-  const energyText = getEnergyDescription(details.card.energy, language as 'tr' | 'en')
+  const catLabel = t.crownFortune.categories[destiny.category as keyof typeof t.crownFortune.categories]
+  const energyText = t.crownFortune.energy[details.card.energy as keyof typeof t.crownFortune.energy]
 
   return (
     <MainLayout
-      title="Crown Destiny - Günlük Kader"
-      description="Çarkı çevir, kaderini öğren!"
+      title={t.crownFortune.meta.title}
+      description={t.crownFortune.meta.description}
+      keywords={t.crownFortune.meta.keywords}
     >
       <div className={styles['fortune-page']}>
         <div className={styles['fortune-container']}>
