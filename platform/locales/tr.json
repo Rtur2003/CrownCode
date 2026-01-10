@@ -94,6 +94,23 @@
       "organize": {
         "title": "Veri Seti Organizasyonu",
         "description": "Etiketleme ve kategorilendirme araçları"
+      },
+      "interface": {
+        "backToTools": "Araçlara Dön",
+        "step1": "1. Ses Dosyası Yükle",
+        "step2": "2. Augmentation Ayarları",
+        "selected": "seçildi",
+        "demoNote": "(Bu demoda sadece ilk dosya işlenecektir)",
+        "startProcessing": "İşlemi Başlat",
+        "processing": "İşleniyor...",
+        "downloadResult": "Sonucu İndir",
+        "openTool": "Aracı Aç →",
+        "comingSoon": "Çok Yakında",
+        "errors": {
+          "selectFile": "Lütfen önce bir dosya seçin.",
+          "processingFailed": "İşlem başarısız oldu",
+          "unexpected": "Beklenmeyen bir hata oluştu."
+        }
       }
     }
   },

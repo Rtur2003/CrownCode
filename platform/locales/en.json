@@ -94,6 +94,23 @@
       "organize": {
         "title": "Dataset Organization",
         "description": "Labeling and categorization tools"
+      },
+      "interface": {
+        "backToTools": "Back to Tools",
+        "step1": "1. Upload Audio",
+        "step2": "2. Configure Augmentation",
+        "selected": "selected",
+        "demoNote": "(Only the first file will be processed in this demo)",
+        "startProcessing": "Start Processing",
+        "processing": "Processing...",
+        "downloadResult": "Download Result",
+        "openTool": "Open Tool →",
+        "comingSoon": "Coming Soon",
+        "errors": {
+          "selectFile": "Please select a file first.",
+          "processingFailed": "Processing failed",
+          "unexpected": "An unexpected error occurred."
+        }
       }
     }
   },

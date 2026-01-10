@@ -10,7 +10,7 @@
 // - File download
 //
 // @author Hasan Arthur Altuntaş
-// @version 2.0.0
+// @version 2.1.0
 // @since 2025-01-10
 // =========================================================================
 
@@ -57,24 +57,24 @@ const AudioDatasetPage: NextPage = () => {
   const tools = [
     {
       id: 'augment' as ToolId,
-      title: 'Audio Augmentation',
-      description: 'Enhance your dataset with pitch shifting, speed changes, and noise injection.',
+      title: t.audioDataset.tools.augment.title,
+      description: t.audioDataset.tools.augment.description,
       icon: Music,
       gradient: 'from-primary to-secondary',
       status: 'available'
     },
     {
       id: 'convert' as ToolId,
-      title: 'Format Converter',
-      description: 'Convert audio files between formats (MP3, WAV, FLAC). (Coming Soon)',
+      title: t.audioDataset.tools.convert.title,
+      description: t.audioDataset.tools.convert.description,
       icon: RefreshCw,
       gradient: 'from-gray-500 to-gray-600',
       status: 'coming_soon'
     },
     {
       id: 'organize' as ToolId,
-      title: 'Dataset Organizer',
-      description: 'Organize and label your audio files for training. (Coming Soon)',
+      title: t.audioDataset.tools.organize.title,
+      description: t.audioDataset.tools.organize.description,
       icon: FolderOpen,
       gradient: 'from-gray-500 to-gray-600',
       status: 'coming_soon'
@@ -89,7 +89,7 @@ const AudioDatasetPage: NextPage = () => {
 
   const handleProcess = async () => {
     if (files.length === 0) {
-      setError('Please select a file first.')
+      setError(t.audioDataset.interface.errors.selectFile)
       return
     }
 
@@ -111,14 +111,14 @@ const AudioDatasetPage: NextPage = () => {
 
       if (!response.ok) {
         const errData = await response.json()
-        throw new Error(errData.detail || 'Processing failed')
+        throw new Error(errData.detail || t.audioDataset.interface.errors.processingFailed)
       }
 
       const blob = await response.blob()
       const url = window.URL.createObjectURL(blob)
       setProcessedFileUrl(url)
     } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred.')
+      setError(err.message || t.audioDataset.interface.errors.unexpected)
     } finally {
       setIsProcessing(false)
     }
@@ -142,12 +142,12 @@ const AudioDatasetPage: NextPage = () => {
           className="back-button"
         >
           <ArrowLeft size={20} />
-          <span>Back to Tools</span>
+          <span>{t.audioDataset.interface.backToTools}</span>
         </button>
 
         <div className="interface-grid">
           <div className="left-panel">
-            <h2 className="section-title">1. Upload Audio</h2>
+            <h2 className="section-title">{t.audioDataset.interface.step1}</h2>
             <FileUploader 
               dataType="audio" 
               onFilesSelected={handleFilesSelected} 
@@ -155,14 +155,14 @@ const AudioDatasetPage: NextPage = () => {
             
             {files.length > 0 && (
               <div className="file-status">
-                <span className="text-primary font-medium">{files[0].name}</span> selected.
-                {files.length > 1 && <span className="text-xs text-muted block mt-1">(Only the first file will be processed in this demo)</span>}
+                <span className="text-primary font-medium">{files[0].name}</span> {t.audioDataset.interface.selected}.
+                {files.length > 1 && <span className="text-xs text-muted block mt-1">{t.audioDataset.interface.demoNote}</span>}
               </div>
             )}
           </div>
 
           <div className="right-panel">
-            <h2 className="section-title">2. Configure Augmentation</h2>
+            <h2 className="section-title">{t.audioDataset.interface.step2}</h2>
             <AudioAugmentation 
               options={augmentOptions} 
               onChange={setAugmentOptions} 
@@ -184,12 +184,12 @@ const AudioDatasetPage: NextPage = () => {
                 {isProcessing ? (
                   <>
                     <Loader2 size={20} className="animate-spin" />
-                    Processing...
+                    {t.audioDataset.interface.processing}
                   </>
                 ) : (
                   <>
                     <Play size={20} fill="currentColor" />
-                    Start Processing
+                    {t.audioDataset.interface.startProcessing}
                   </>
                 )}
               </button>
@@ -203,7 +203,7 @@ const AudioDatasetPage: NextPage = () => {
                   animate={{ scale: 1, opacity: 1 }}
                 >
                   <Download size={20} />
-                  Download Result
+                  {t.audioDataset.interface.downloadResult}
                 </motion.a>
               )}
             </div>
@@ -228,7 +228,7 @@ const AudioDatasetPage: NextPage = () => {
           >
             <div className="header-badge">
               <Settings size={16} />
-              <span>Audio Dataset Tools</span>
+              <span>{t.audioDataset.title}</span>
             </div>
 
             <h1 className="page-title">
@@ -278,7 +278,7 @@ const AudioDatasetPage: NextPage = () => {
 
                       <div className="tool-footer">
                          <span className="tool-action-text">
-                           {isAvailable ? 'Open Tool →' : 'Coming Soon'}
+                           {isAvailable ? t.audioDataset.interface.openTool : t.audioDataset.interface.comingSoon}
                          </span>
                       </div>
                     </motion.div>
