@@ -51,3 +51,12 @@ class YouTubeAnalyzeResponse(BaseModel):
     warnings: List[str]
     errors: List[str]
     timings: Dict[str, float]
+
+
+class AudioAugmentationOptions(BaseModel):
+    pitch_shift: bool = Field(default=False, description="Apply random pitch shifting")
+    speed_change: bool = Field(default=False, description="Apply random speed change")
+    bass_boost: bool = Field(default=False, description="Apply bass boost equalization")
+    trim_silence: bool = Field(default=False, description="Trim leading and trailing silence")
+    mix_audio: bool = Field(default=False, description="Mix with another audio track (placeholder)")
+    add_noise: bool = Field(default=False, description="Add Gaussian noise")
