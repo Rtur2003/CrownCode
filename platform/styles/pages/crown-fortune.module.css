@@ -4,6 +4,35 @@
   min-height: 100vh;
   padding: 6rem 1rem 4rem;
   background: var(--color-background, #0b0a08);
+  position: relative;
+  overflow: hidden;
+}
+
+.fortune-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.fortune-gradient {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 50% 0%, rgba(234, 192, 111, 0.08), transparent 70%),
+    radial-gradient(circle at 50% 100%, rgba(138, 95, 43, 0.05), transparent 70%);
+}
+
+.fortune-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: url('/tarot/the-moon.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.03;
+  filter: grayscale(100%) contrast(150%);
+  mix-blend-mode: overlay;
 }
 
 .fortune-container {
@@ -13,6 +42,8 @@
   flex-direction: column;
   align-items: center;
   gap: 2.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 /* Loading */
