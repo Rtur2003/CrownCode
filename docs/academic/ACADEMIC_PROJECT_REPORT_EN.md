@@ -233,43 +233,36 @@ def extract_audio_features(audio_path):
 
 #### 3.3.1. Modular Component Architecture
 
-**Frontend Module Structure:**
+**Web Platform Structure (Next.js 14):**
 ```
-frontend/modules/
-├── ai-music-detector/
-│   ├── components/AudioUpload/
-│   ├── components/Waveform/
-│   ├── components/DetectionResults/
-│   ├── hooks/useAudioProcessing.ts
-│   ├── services/aiModelService.ts
-│   └── store/aiStore.ts
-├── data-manipulation/
-│   ├── components/FileUpload/
-│   ├── components/DataViewer/
-│   ├── hooks/useDataProcessing.ts
-│   └── services/processingAPI.ts
-└── shared/
-    ├── components/UI/
-    ├── hooks/useApi.ts
-    └── utils/validation.ts
+platform/
+├── pages/
+│   ├── index.tsx              # Landing page
+│   ├── ai-music-detector/     # AI Music Detection page
+│   │   └── index.tsx
+│   └── api/                   # API routes
+├── components/
+│   ├── Layout/                # Header, Footer, MainLayout
+│   ├── AIMusicDetector/       # Detection UI components
+│   └── UI/                    # Shared UI components
+├── styles/
+│   ├── globals.css            # Global styles
+│   └── pages/                 # Page-specific styles
+└── public/                    # Static assets
 ```
 
-**Backend Module Structure:**
+**Backend API Structure (FastAPI + PyTorch):**
 ```
-backend/modules/
-├── ai-detection/
-│   ├── controllers/detectionController.ts
-│   ├── services/aiModelService.ts
-│   ├── models/AudioAnalysis.ts
-│   └── routes/aiRoutes.ts
-├── data-processing/
-│   ├── controllers/processingController.ts
-│   ├── services/fileProcessingService.ts
-│   └── models/DataUpload.ts
-└── shared/
-    ├── middleware/errorHandler.ts
-    ├── services/storageService.ts
-    └── utils/validation.ts
+backend/
+├── app/
+│   ├── main.py               # FastAPI application
+│   ├── routers/
+│   │   └── analyze.py        # Audio analysis endpoints
+│   ├── services/
+│   │   └── audio_analyzer.py # wav2vec2 inference
+│   └── models/               # Pydantic models
+├── Dockerfile                # HF Spaces deployment
+└── requirements.txt          # Dependencies
 ```
 
 #### 3.3.2. Fail-Safe Design
@@ -338,9 +331,109 @@ class HealthMonitor {
 }
 ```
 
-### 3.4. Automation and DevOps
+### 3.4. Mobile Application Development
 
-#### 3.4.1. Continuous Integration Pipeline
+#### 3.4.1. Android Application Architecture
+
+The AURIS platform includes a native Android application built with modern Android development practices. The application follows Clean Architecture with MVVM pattern.
+
+**Technology Stack:**
+| Technology | Purpose |
+|------------|---------|
+| Kotlin | Programming Language |
+| Jetpack Compose | Modern UI Toolkit |
+| Material 3 | Design System |
+| Hilt | Dependency Injection |
+| Coroutines + Flow | Asynchronous Operations |
+| Retrofit + OkHttp | Network Layer |
+| Clean Architecture | Design Pattern |
+
+**Application Structure:**
+```
+com.crowncode/
+├── di/                        # Dependency Injection
+│   └── AppModule.kt          # Hilt modules
+├── presentation/
+│   ├── components/           # Reusable UI Components
+│   │   ├── GradientButton.kt
+│   │   ├── SoundWaveAnimation.kt
+│   │   ├── EqualizerBars.kt
+│   │   └── AurisLogo.kt
+│   ├── navigation/           # Navigation Graph
+│   │   ├── Routes.kt
+│   │   └── CrownCodeNavHost.kt
+│   ├── screens/
+│   │   ├── welcome/          # Welcome Screen
+│   │   ├── auth/             # Login & Signup
+│   │   └── aimusic/          # AI Music Detection
+│   │       ├── AiMusicDetectionScreen.kt
+│   │       └── AiMusicDetectionViewModel.kt
+│   └── theme/                # Material 3 Theme
+│       ├── Color.kt          # Gold/Bronze palette
+│       ├── Type.kt           # Typography
+│       └── Theme.kt          # Theme configuration
+└── util/                     # Utilities
+```
+
+#### 3.4.2. Mobile App Key Features
+
+**1. File Upload Analysis:**
+```kotlin
+@Composable
+fun AiMusicDetectionScreen(viewModel: AiMusicDetectionViewModel) {
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { viewModel.analyzeFile(it) }
+    }
+
+    GradientButton(
+        text = "Select Audio File",
+        onClick = { launcher.launch("audio/*") }
+    )
+}
+```
+
+**2. URL Analysis:**
+- YouTube URL support for direct music analysis
+- Real-time processing feedback with animated indicators
+- Clear result display with confidence scores
+
+**3. Visual Feedback Components:**
+- `SoundWaveAnimation`: Animated audio visualization
+- `EqualizerBars`: Processing state indicator
+- `ProcessingSteps`: Step-by-step analysis progress
+
+#### 3.4.3. Mobile Design System
+
+The mobile application implements the same Gold/Bronze theme as the web platform for visual consistency:
+
+```kotlin
+// Color.kt
+val CrownGold = Color(0xFFD4AF37)
+val CrownBronze = Color(0xFFCD7F32)
+val DarkBackground = Color(0xFF0D0D0D)
+val CardBackground = Color(0xFF1A1A1A)
+
+// Theme.kt
+@Composable
+fun CrownCodeTheme(content: @Composable () -> Unit) {
+    MaterialTheme(
+        colorScheme = darkColorScheme(
+            primary = CrownGold,
+            secondary = CrownBronze,
+            background = DarkBackground,
+            surface = CardBackground
+        ),
+        typography = CrownCodeTypography,
+        content = content
+    )
+}
+```
+
+### 3.5. Automation and DevOps
+
+#### 3.5.1. Continuous Integration Pipeline
 
 **GitHub Actions Workflow:**
 ```yaml
@@ -389,7 +482,7 @@ jobs:
           vercel-args: '--prod'
 ```
 
-#### 3.4.2. Automatic Model Training
+#### 3.5.2. Automatic Model Training
 
 **Weekly Training Pipeline:**
 ```python
