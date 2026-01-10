@@ -365,6 +365,7 @@ export function getDailyDestiny(): DailyDestiny {
   const today = getTurkeyDate()
   const userId = getUserId()
   const storageKey = 'crown_daily_destiny'
+  const revealedKey = 'crown_destiny_revealed'
 
   // Kayıtlı kaderi kontrol et
   const stored = localStorage.getItem(storageKey)
@@ -374,8 +375,11 @@ export function getDailyDestiny(): DailyDestiny {
       if (parsed.date === today) {
         return parsed
       }
+      // Tarih değişmiş, revealed flag'i temizle
+      localStorage.removeItem(revealedKey)
     } catch {
       // Parse hatası, yeni oluştur
+      localStorage.removeItem(revealedKey)
     }
   }
 
@@ -459,4 +463,20 @@ export function getEnergyDescription(energy: DestinyCard['energy'], language: 't
     stable: { tr: 'Dengeli Enerji', en: 'Balanced Energy' }
   }
   return descriptions[energy][language]
+}
+
+/**
+ * Destiny verilerini temizle (test/debug için)
+ * Tarayıcı konsolundan: clearDestinyData()
+ */
+export function clearDestinyData(): void {
+  if (typeof window === 'undefined') return
+  localStorage.removeItem('crown_daily_destiny')
+  localStorage.removeItem('crown_destiny_revealed')
+  console.log('Crown Destiny data cleared. Refresh the page.')
+}
+
+// Global'e ekle (debug için)
+if (typeof window !== 'undefined') {
+  (window as unknown as { clearDestinyData: typeof clearDestinyData }).clearDestinyData = clearDestinyData
 }
