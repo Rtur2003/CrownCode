@@ -10,6 +10,9 @@
 [![GitHub Repo](https://img.shields.io/badge/📦_GitHub-CrownCode-black?style=for-the-badge&logo=github)](https://github.com/Rtur2003/CrownCode)
 [![Thesis Report](https://img.shields.io/badge/📄_Thesis-Academic_Report-green?style=for-the-badge)](./docs/academic/ACADEMIC_PROJECT_REPORT_EN.md)
 [![Build Status](https://img.shields.io/badge/🔧_Build-In_Development-yellow?style=for-the-badge)](#)
+[![GitHub Repo](https://img.shields.io/badge/📦_GitHub-CrownCode-black?style=for-the-badge&logo=github)](https://github.com/Rtur2003/CrownCode)
+[![Thesis Report](https://img.shields.io/badge/📄_Thesis-Academic_Report-green?style=for-the-badge)](./docs/academic/ACADEMIC_PROJECT_REPORT_EN.md)
+[![Build Status](https://img.shields.io/badge/🔧_Build-In_Development-yellow?style=for-the-badge)](#)
 
 ---
 
@@ -146,11 +149,18 @@ CrownCode is an advanced web-based platform that combines **artificial intellige
    ```
 
 3. **Install platform dependencies**
+2. **Switch to development branch**
+   ```bash
+   git checkout geliştirme
+   ```
+
+3. **Install platform dependencies**
    ```bash
    cd platform
    npm install
    ```
 
+4. **Setup environment variables**
 4. **Setup environment variables**
    ```bash
    cp .env.example .env.local
@@ -158,13 +168,21 @@ CrownCode is an advanced web-based platform that combines **artificial intellige
    ```
 
 5. **Run development server**
+5. **Run development server**
    ```bash
    npm run dev
    ```
 
 6. **Access the platform**
+6. **Access the platform**
    - Local: `http://localhost:3000`
    - Production: `https://hasanarthuraltuntas.xyz`
+
+### Available Branches
+
+- **`master`**: Production-ready stable release
+- **`geliştirme`**: Active development branch
+- **`arayüz`**: UI/UX focused development
 
 ### Available Branches
 
@@ -246,8 +264,16 @@ class MusicDetectionModel(nn.Module):
 - 📄 [Turkish Academic Report](./docs/academic/AKADEMIK_PROJE_RAPORU_TR.md) - Detailed Turkish documentation
 - 📊 [AI Model Strategy](./docs/technical/AI_MODEL_STRATEGY.md) - Model development methodology
 - 🏗️ [Architecture Documentation](./docs/technical/MODULAR_ARCHITECTURE.md) - System design principles
+- 📄 [English Academic Report](./docs/academic/ACADEMIC_PROJECT_REPORT_EN.md) - Comprehensive technical documentation
+- 📄 [Turkish Academic Report](./docs/academic/AKADEMIK_PROJE_RAPORU_TR.md) - Detailed Turkish documentation
+- 📊 [AI Model Strategy](./docs/technical/AI_MODEL_STRATEGY.md) - Model development methodology
+- 🏗️ [Architecture Documentation](./docs/technical/MODULAR_ARCHITECTURE.md) - System design principles
 
 ### Project Documentation
+- 📋 [Deployment Configuration](./docs/technical/DEPLOYMENT_CONFIG.md) - Infrastructure setup
+- 🚀 [Development Roadmap](./docs/guides/INTENSIVE_3_MONTH_PLAN.md) - Project timeline
+- 📱 [Mobile Design](./docs/technical/MOBILE_RESPONSIVE_DESIGN.md) - Responsive implementation
+- 🤖 [Automation Strategy](./docs/technical/COMPLETE_AUTOMATION_STRATEGY.md) - DevOps processes
 - 📋 [Deployment Configuration](./docs/technical/DEPLOYMENT_CONFIG.md) - Infrastructure setup
 - 🚀 [Development Roadmap](./docs/guides/INTENSIVE_3_MONTH_PLAN.md) - Project timeline
 - 📱 [Mobile Design](./docs/technical/MOBILE_RESPONSIVE_DESIGN.md) - Responsive implementation
@@ -301,15 +327,58 @@ Results:
 
 ## 🤝 Contributing
 
-We welcome contributions to the CrownCode platform! This project follows open science principles.
+We welcome contributions to the CrownCode platform! This project follows strict engineering standards to ensure high quality and maintainability.
 
-### Development Guidelines
-1. Fork the repository
-2. Create a feature branch
-3. Follow TypeScript and Python coding standards
-4. Add comprehensive tests
-5. Update documentation
-6. Submit a pull request
+### Getting Started
+
+1. **Read the Standards** - Review [Engineering Standards](./.github/ENGINEERING_STANDARDS.md)
+2. **Quick Start** - Follow the [Quick Start Guide](./docs/QUICK_START.md)
+3. **Setup Environment** - Run `make setup-dev`
+4. **Pick an Issue** - Choose from [open issues](https://github.com/Rtur2003/CrownCode/issues)
+
+### Workflow
+
+```bash
+# 1. Create topic branch
+git checkout -b <category>/<topic-description>
+
+# 2. Make atomic commits
+git commit -m "<type>: <description>"
+
+# 3. Run validation
+make validate
+
+# 4. Push and create PR
+git push origin <branch-name>
+```
+
+### Essential Reading
+
+- 📋 [Engineering Standards](./.github/ENGINEERING_STANDARDS.md) - **READ FIRST**
+- 🚀 [Quick Start Guide](./docs/QUICK_START.md)
+- 🌿 [Branch Naming](./docs/BRANCH_NAMING.md)
+- 💬 [Commit Messages](./docs/COMMIT_MESSAGES.md)
+- 📖 [Development Guidelines](./docs/DEVELOPMENT_GUIDELINES.md)
+
+### Standards Overview
+
+This project enforces:
+- **Python-First Approach** - Python is the default for backend
+- **Atomic Commits** - One change per commit
+- **Topic Branches** - One branch per concern
+- **Conventional Commits** - Standardized commit format
+- **No Direct Commits** - All changes via pull requests
+
+### Development Commands
+
+```bash
+make help                # Show all commands
+make setup-dev           # Setup development environment
+make validate            # Run all validation checks
+make lint                # Lint code
+make test                # Run tests
+make validate-branch     # Check branch name
+```
 
 ### Areas for Contribution
 - **Model Improvements**: Enhanced AI architectures
@@ -317,6 +386,10 @@ We welcome contributions to the CrownCode platform! This project follows open sc
 - **Documentation**: Technical and user documentation
 - **Testing**: Automated testing and quality assurance
 - **Internationalization**: Additional language support
+
+### Code of Conduct
+
+Please read our [Code of Conduct](./docs/community/CODE_OF_CONDUCT.md) before contributing.
 
 ---
 
@@ -366,6 +439,7 @@ This project is released under the MIT License - see the [LICENSE](./LICENSE) fi
 - 🐛 **Issues**: [GitHub Issues](https://github.com/Rtur2003/CrownCode/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/Rtur2003/CrownCode/discussions)
 - 🌿 **Development Branch**: [geliştirme](https://github.com/Rtur2003/CrownCode/tree/geliştirme)
+- 🌿 **Development Branch**: [geliştirme](https://github.com/Rtur2003/CrownCode/tree/geliştirme)
 
 ---
 
@@ -391,8 +465,6 @@ This project is released under the MIT License - see the [LICENSE](./LICENSE) fi
 **Made with ❤️ by Hasan Arthur Altuntaş**
 
 </div>
-<<<<<<< HEAD
-=======
 ## 🆕 Latest Updates (January 2025)
 
 ### Performance Optimizations
@@ -493,4 +565,3 @@ Returns application version and feature flags.
 
 ---
 
->>>>>>> f2c9927 (m)

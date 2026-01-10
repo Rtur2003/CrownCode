@@ -29,8 +29,7 @@ export const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
 
     const interval = setInterval(() => {
       setProgress((prev) => {
-        const duration = toast.duration || 0
-        const newProgress = prev - (100 / (duration / 50))
+        const newProgress = prev - (100 / ((toast.duration || 3000) / 50))
         return newProgress <= 0 ? 0 : newProgress
       })
     }, 50)

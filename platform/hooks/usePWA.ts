@@ -6,6 +6,21 @@
 
 import { useState, useEffect } from 'react'
 
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
+}
+
+interface SyncManager {
+  getTags(): Promise<string[]>;
+  register(tag: string): Promise<void>;
+}
+
+// Extend ServiceWorkerRegistration to include sync
+interface ServiceWorkerRegistrationWithSync extends ServiceWorkerRegistration {
+  sync?: SyncManager;
+}
+
 interface PWAState {
   isInstallable: boolean
   isInstalled: boolean
@@ -35,7 +50,7 @@ export const usePWA = (options: UsePWAOptions = {}) => {
     swRegistration: null
   })
 
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null)
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
 
   // Register service worker
   useEffect(() => {
@@ -68,7 +83,7 @@ export const usePWA = (options: UsePWAOptions = {}) => {
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault()
-      setDeferredPrompt(e)
+      setDeferredPrompt(e as BeforeInstallPromptEvent)
       setState(prev => ({ ...prev, isInstallable: true }))
     }
 
@@ -102,7 +117,7 @@ export const usePWA = (options: UsePWAOptions = {}) => {
 
   // Install app
   const installApp = async () => {
-    if (!deferredPrompt) return false
+    if (!deferredPrompt) { return false }
 
     try {
       deferredPrompt.prompt()
@@ -162,12 +177,14 @@ export const usePWA = (options: UsePWAOptions = {}) => {
 
   // Register background sync
   const registerBackgroundSync = async (tag: string) => {
-    if (!enableBackgroundSync || !(state.swRegistration as any)?.sync) {
+    const swReg = state.swRegistration as ServiceWorkerRegistrationWithSync | null;
+    
+    if (!enableBackgroundSync || !swReg?.sync) {
       return false
     }
 
     try {
-      await (state.swRegistration as any).sync.register(tag)
+      await swReg.sync.register(tag)
       return true
     } catch (error) {
       console.error('Background sync registration failed:', error)

@@ -1,0 +1,6 @@
+{
+  "ai_probability_threshold": 0.5,
+  "min_confidence": 0.5,
+  "max_confidence": 0.99,
+  "note": "Placeholder thresholds; update after calibration."
+}

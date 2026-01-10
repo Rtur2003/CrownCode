@@ -1,0 +1,242 @@
+name: Engineering Standards Validation
+
+on:
+  pull_request:
+    branches: [main, master, geliştirme]
+  push:
+    branches: [main, master, geliştirme]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+env:
+  # Configuration
+  MAX_FILES_PER_COMMIT: 10
+  NON_ATOMIC_PATTERNS: "misc|cleanup|various|multiple|several|fix stuff|wip"
+
+jobs:
+  validate-branch-name:
+    name: Validate Branch Name
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Validate branch name
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          python scripts/validate_branch_name.py "$BRANCH_NAME"
+
+  validate-commits:
+    name: Validate Commit Messages
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.18.1'
+
+      - name: Install commitlint
+        run: |
+          npm install -g @commitlint/cli @commitlint/config-conventional
+
+      - name: Validate commit messages
+        run: |
+          set -e
+          
+          # Get all commits in the PR
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          
+          echo "Validating commits from $BASE_SHA to $HEAD_SHA"
+          
+          # Get commit list into array
+          mapfile -t COMMITS < <(git log --format=%H $BASE_SHA..$HEAD_SHA)
+          
+          # Validate each commit
+          for commit in "${COMMITS[@]}"; do
+            echo "Checking commit: $commit"
+            if ! git log --format=%B -n 1 "$commit" | npx commitlint; then
+              echo "❌ Commit $commit has invalid message format"
+              exit 1
+            fi
+          done
+          
+          echo "✅ All commit messages are valid"
+
+  check-atomic-commits:
+    name: Check Atomic Commits
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check commit atomicity
+        run: |
+          set -e
+          
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          
+          echo "Checking atomicity of commits"
+          
+          # Get commit list into array
+          mapfile -t COMMITS < <(git log --format=%H $BASE_SHA..$HEAD_SHA)
+          
+          for commit in "${COMMITS[@]}"; do
+            echo "Analyzing commit: $commit"
+            
+            # Get commit message
+            MSG=$(git log --format=%B -n 1 "$commit")
+            
+            # Check for problematic patterns
+            if echo "$MSG" | grep -iE "${{ env.NON_ATOMIC_PATTERNS }}"; then
+              echo "❌ Commit $commit may not be atomic!"
+              echo "Message contains non-specific words: $MSG"
+              echo ""
+              echo "Each commit should represent ONE logical change."
+              echo "See .github/ENGINEERING_STANDARDS.md for guidelines."
+              exit 1
+            fi
+            
+            # Get number of files changed
+            FILES_CHANGED=$(git diff-tree --no-commit-id --name-only -r "$commit" | wc -l)
+            
+            if [ "$FILES_CHANGED" -gt "${{ env.MAX_FILES_PER_COMMIT }}" ]; then
+              echo "⚠️  Warning: Commit $commit changes $FILES_CHANGED files"
+              echo "Consider splitting into smaller commits if concerns are mixed."
+            fi
+          done
+          
+          echo "✅ Commit atomicity check passed"
+
+  check-python-first:
+    name: Check Python-First Compliance
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for backend code changes
+        id: check-backend
+        run: |
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          
+          # Check if backend files changed
+          if git diff --name-only $BASE_SHA..$HEAD_SHA | grep -q "^backend/"; then
+            echo "backend_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "backend_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Verify Python usage
+        if: steps.check-backend.outputs.backend_changed == 'true'
+        run: |
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          
+          # Check for non-Python backend files
+          NON_PYTHON=$(git diff --name-only $BASE_SHA..$HEAD_SHA | \
+            grep "^backend/" | \
+            grep -v "\.py$" | \
+            grep -v "\.md$" | \
+            grep -v "\.txt$" | \
+            grep -v "\.yml$" | \
+            grep -v "\.yaml$" | \
+            grep -v "\.toml$" | \
+            grep -v "\.json$" || true)
+          
+          if [ -n "$NON_PYTHON" ]; then
+            echo "⚠️  Non-Python files detected in backend:"
+            echo "$NON_PYTHON"
+            echo ""
+            echo "Please ensure Python-first approach is followed."
+            echo "If non-Python is required, document justification in PR description."
+          else
+            echo "✅ Python-first compliance verified"
+          fi
+
+  check-pr-template:
+    name: Validate PR Description
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      pull-requests: read
+    
+    steps:
+      - name: Check PR description
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const body = pr.body || '';
+            
+            const requiredSections = [
+              'Scope Definition',
+              'Issue Classification',
+              'Rationale',
+              'Safety Assurance',
+            ];
+            
+            const missingSections = requiredSections.filter(section => {
+              return !body.includes(section);
+            });
+            
+            if (missingSections.length > 0) {
+              core.setFailed(
+                `❌ PR description is missing required sections:\n` +
+                missingSections.map(s => `  - ${s}`).join('\n') +
+                `\n\nPlease use the PR template in .github/PULL_REQUEST_TEMPLATE.md`
+              );
+            } else {
+              console.log('✅ PR description includes all required sections');
+            }
+
+  standards-summary:
+    name: Engineering Standards Summary
+    runs-on: ubuntu-latest
+    needs: [validate-branch-name, validate-commits, check-atomic-commits, check-python-first, check-pr-template]
+    if: always() && github.event_name == 'pull_request'
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Summary
+        run: |
+          echo "## Engineering Standards Validation Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "All engineering standards checks completed." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "See .github/ENGINEERING_STANDARDS.md for full guidelines." >> $GITHUB_STEP_SUMMARY

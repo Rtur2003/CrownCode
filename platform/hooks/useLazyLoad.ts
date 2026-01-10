@@ -19,7 +19,7 @@ export const useLazyLoad = (options: UseLazyLoadOptions = {}) => {
 
   useEffect(() => {
     const element = elementRef.current
-    if (!element || hasLoaded) return
+    if (!element || hasLoaded) { return }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
