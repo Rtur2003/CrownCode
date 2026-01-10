@@ -34,7 +34,7 @@ import { useLanguage } from '@/context/LanguageContext'
 import FileUploader from '@/components/MLToolkit/FileUploader'
 import AudioAugmentation, { AudioAugmentationOptions } from '@/components/MLToolkit/AudioAugmentation'
 
-import '@/styles/pages/data-manipulation.css'
+import styles from '@/styles/pages/data-manipulation.module.css'
 
 type ToolId = 'upload' | 'convert' | 'augment' | 'organize'
 
@@ -130,7 +130,7 @@ const AudioDatasetPage: NextPage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="tool-interface"
+        className={styles['tool-interface']}
       >
         <button 
           onClick={() => {
@@ -139,22 +139,22 @@ const AudioDatasetPage: NextPage = () => {
             setProcessedFileUrl(null)
             setError(null)
           }}
-          className="back-button"
+          className={styles['back-button']}
         >
           <ArrowLeft size={20} />
           <span>{t.audioDataset.interface.backToTools}</span>
         </button>
 
-        <div className="interface-grid">
+        <div className={styles['interface-grid']}>
           <div className="left-panel">
-            <h2 className="section-title">{t.audioDataset.interface.step1}</h2>
+            <h2 className={styles['section-title']}>{t.audioDataset.interface.step1}</h2>
             <FileUploader 
               dataType="audio" 
               onFilesSelected={handleFilesSelected} 
             />
             
             {files.length > 0 && (
-              <div className="file-status">
+              <div className={styles['file-status']}>
                 <span className="text-primary font-medium">{files[0].name}</span> {t.audioDataset.interface.selected}.
                 {files.length > 1 && <span className="text-xs text-muted block mt-1">{t.audioDataset.interface.demoNote}</span>}
               </div>
@@ -162,22 +162,22 @@ const AudioDatasetPage: NextPage = () => {
           </div>
 
           <div className="right-panel">
-            <h2 className="section-title">{t.audioDataset.interface.step2}</h2>
+            <h2 className={styles['section-title']}>{t.audioDataset.interface.step2}</h2>
             <AudioAugmentation 
               options={augmentOptions} 
               onChange={setAugmentOptions} 
             />
 
-            <div className="action-area">
+            <div className={styles['action-area']}>
               {error && (
-                <div className="error-message">
+                <div className={styles['error-message']}>
                   <AlertCircle size={20} />
                   {error}
                 </div>
               )}
 
               <button 
-                className={`process-button ${isProcessing ? 'processing' : ''}`}
+                className={`${styles['process-button']} ${isProcessing ? 'processing' : ''}`}
                 onClick={handleProcess}
                 disabled={isProcessing || files.length === 0}
               >
@@ -198,7 +198,7 @@ const AudioDatasetPage: NextPage = () => {
                 <motion.a
                   href={processedFileUrl}
                   download={`processed-${files[0]?.name || 'audio'}.wav`}
-                  className="download-button"
+                  className={styles['download-button']}
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                 >
@@ -219,24 +219,24 @@ const AudioDatasetPage: NextPage = () => {
       description={t.audioDataset.subtitle}
       keywords="audio dataset, data preparation, audio processing, AI music detection, dataset tools"
     >
-      <div className="page-container">
-        <div className="content-wrapper">
+      <div className={styles['page-container']}>
+        <div className={styles['content-wrapper']}>
           <motion.div
-            className="page-header"
+            className={styles['page-header']}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className="header-badge">
+            <div className={styles['header-badge']}>
               <Settings size={16} />
               <span>{t.audioDataset.title}</span>
             </div>
 
-            <h1 className="page-title">
+            <h1 className={styles['page-title']}>
               {activeTool ? tools.find(t => t.id === activeTool)?.title : t.audioDataset.title}
             </h1>
             
             {!activeTool && (
-              <p className="page-subtitle">
+              <p className={styles['page-subtitle']}>
                 {t.audioDataset.subtitle}
               </p>
             )}
@@ -247,7 +247,7 @@ const AudioDatasetPage: NextPage = () => {
               renderToolInterface()
             ) : (
               <motion.div
-                className="tools-grid"
+                className={styles['tools-grid']}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -259,25 +259,25 @@ const AudioDatasetPage: NextPage = () => {
                   return (
                     <motion.div
                       key={tool.id}
-                      className={`tool-card ${!isAvailable ? 'opacity-50 grayscale' : ''}`}
+                      className={`${styles['tool-card']} ${!isAvailable ? 'opacity-50 grayscale' : ''}`}
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 * index }}
                       onClick={() => isAvailable && setActiveTool(tool.id)}
                     >
                       <div className="tool-header">
-                        <div className={`tool-icon bg-gradient-to-r ${tool.gradient}`}>
+                        <div className={`${styles['tool-icon']} bg-gradient-to-r ${tool.gradient}`}>
                           <Icon size={24} />
                         </div>
                       </div>
 
                       <div className="tool-content">
-                        <h3 className="tool-title">{tool.title}</h3>
-                        <p className="tool-description">{tool.description}</p>
+                        <h3 className={styles['tool-title']}>{tool.title}</h3>
+                        <p className={styles['tool-description']}>{tool.description}</p>
                       </div>
 
-                      <div className="tool-footer">
-                         <span className="tool-action-text">
+                      <div className={styles['tool-footer']}>
+                         <span className={styles['tool-action-text']}>
                            {isAvailable ? t.audioDataset.interface.openTool : t.audioDataset.interface.comingSoon}
                          </span>
                       </div>
