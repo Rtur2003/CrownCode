@@ -10,6 +10,7 @@ interface MainLayoutProps {
   keywords?: string
   image?: string
   url?: string
+  noCache?: boolean
 }
 
 export const MainLayout: React.FC<MainLayoutProps> = ({
@@ -19,6 +20,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   keywords = 'AURIS, AI, machine learning, music detection, data processing, web development, developer tools, CrownCode, Rthur, artificial intelligence',
   image = '/logo-main.png',
   url = 'https://crowncode.dev',
+  noCache = false,
 }) => {
   const baseUrl = url || 'https://crowncode.dev'
   const imageUrl = image.startsWith('http') ? image : `${baseUrl}${image}`
@@ -61,6 +63,15 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         <meta name="robots" content="index, follow" />
         <meta name="language" content="Turkish" />
         <link rel="canonical" href={baseUrl} />
+
+        {/* Cache Control - Dinamik içerik için */}
+        {noCache && (
+          <>
+            <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+            <meta httpEquiv="Pragma" content="no-cache" />
+            <meta httpEquiv="Expires" content="0" />
+          </>
+        )}
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
