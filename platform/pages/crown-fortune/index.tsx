@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import type { NextPage } from 'next'
-import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Crown,
@@ -13,20 +12,26 @@ import {
   Activity,
   Clock,
   RefreshCw,
-  Star
+  Star,
+  Flame,
+  Droplets,
+  Mountain,
+  Wind
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
 import {
-  TAROT_CARDS,
+  DESTINY_CARDS,
   FORTUNE_CATEGORIES,
-  getDailyFortune,
-  getFortuneDetails,
+  getDailyDestiny,
+  getDestinyDetails,
   getTimeUntilMidnightGMT3,
   getTurkeyDate,
+  getElementEmoji,
+  getEnergyDescription,
   type FortuneCategory,
-  type DailyFortune
-} from '@/data/tarot'
+  type DailyDestiny
+} from '@/data/destiny'
 import styles from '@/styles/pages/crown-fortune.module.css'
 
 const CATEGORY_ICONS: Record<FortuneCategory, React.ReactNode> = {
@@ -37,38 +42,44 @@ const CATEGORY_ICONS: Record<FortuneCategory, React.ReactNode> = {
   spirit: <Sparkles size={24} />
 }
 
+const ELEMENT_ICONS: Record<string, React.ReactNode> = {
+  fire: <Flame size={16} />,
+  water: <Droplets size={16} />,
+  earth: <Mountain size={16} />,
+  air: <Wind size={16} />,
+  ether: <Sparkles size={16} />
+}
+
 const CrownFortunePage: NextPage = () => {
   const { t, language } = useLanguage()
-  const [fortune, setFortune] = useState<DailyFortune | null>(null)
+  const [destiny, setDestiny] = useState<DailyDestiny | null>(null)
   const [isRevealed, setIsRevealed] = useState(false)
   const [isSpinning, setIsSpinning] = useState(false)
   const [rotation, setRotation] = useState(0)
   const [countdown, setCountdown] = useState('')
   const [mounted, setMounted] = useState(false)
 
-  // Client-side mount check
+  // Client mount
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  // Load daily fortune
+  // Load daily destiny
   useEffect(() => {
     if (!mounted) return
 
-    const dailyFortune = getDailyFortune()
-    setFortune(dailyFortune)
+    const dailyDestiny = getDailyDestiny()
+    setDestiny(dailyDestiny)
 
-    // Eğer bugün zaten fal bakılmışsa direkt göster
-    const hasSeenToday = localStorage.getItem('crown_fortune_revealed')
-    if (hasSeenToday === dailyFortune.date) {
+    const hasSeenToday = localStorage.getItem('crown_destiny_revealed')
+    if (hasSeenToday === dailyDestiny.date) {
       setIsRevealed(true)
-      // Çarkı doğru pozisyona getir
-      const categoryIndex = FORTUNE_CATEGORIES.findIndex(c => c.key === dailyFortune.category)
+      const categoryIndex = FORTUNE_CATEGORIES.findIndex(c => c.key === dailyDestiny.category)
       setRotation(categoryIndex * (360 / FORTUNE_CATEGORIES.length) + 720)
     }
   }, [mounted])
 
-  // Countdown timer
+  // Countdown
   useEffect(() => {
     if (!mounted) return
 
@@ -85,33 +96,31 @@ const CrownFortunePage: NextPage = () => {
     return () => clearInterval(interval)
   }, [mounted])
 
-  // Midnight reset check
+  // Midnight reset
   useEffect(() => {
     if (!mounted) return
 
     const checkMidnight = () => {
       const currentDate = getTurkeyDate()
-      if (fortune && fortune.date !== currentDate) {
-        // Gece yarısı geçti, yeni fal yükle
-        const newFortune = getDailyFortune()
-        setFortune(newFortune)
+      if (destiny && destiny.date !== currentDate) {
+        const newDestiny = getDailyDestiny()
+        setDestiny(newDestiny)
         setIsRevealed(false)
         setRotation(0)
-        localStorage.removeItem('crown_fortune_revealed')
+        localStorage.removeItem('crown_destiny_revealed')
       }
     }
 
-    const interval = setInterval(checkMidnight, 60000) // Her dakika kontrol
+    const interval = setInterval(checkMidnight, 60000)
     return () => clearInterval(interval)
-  }, [mounted, fortune])
+  }, [mounted, destiny])
 
-  const revealFortune = useCallback(() => {
-    if (!fortune || isSpinning || isRevealed) return
+  const revealDestiny = useCallback(() => {
+    if (!destiny || isSpinning || isRevealed) return
 
     setIsSpinning(true)
 
-    // Kategoriye göre çarkı döndür
-    const categoryIndex = FORTUNE_CATEGORIES.findIndex(c => c.key === fortune.category)
+    const categoryIndex = FORTUNE_CATEGORIES.findIndex(c => c.key === destiny.category)
     const segmentAngle = 360 / FORTUNE_CATEGORIES.length
     const targetAngle = (5 * 360) + (categoryIndex * segmentAngle) + (segmentAngle / 2)
 
@@ -120,21 +129,21 @@ const CrownFortunePage: NextPage = () => {
     setTimeout(() => {
       setIsSpinning(false)
       setIsRevealed(true)
-      localStorage.setItem('crown_fortune_revealed', fortune.date)
+      localStorage.setItem('crown_destiny_revealed', destiny.date)
     }, 4000)
-  }, [fortune, isSpinning, isRevealed])
+  }, [destiny, isSpinning, isRevealed])
 
-  if (!mounted || !fortune) {
+  if (!mounted || !destiny) {
     return (
       <MainLayout
-        title="Crown Fortune - Günlük Tarot Falı"
-        description="CrownCode günlük tarot falı ile şansını keşfet!"
+        title="Crown Destiny - Günlük Kader"
+        description="Crown Destiny ile bugünün enerjisini keşfet!"
       >
         <div className={styles['fortune-page']}>
           <div className={styles['fortune-container']}>
             <div className={styles['loading']}>
               <Sparkles className={styles['loading-icon']} size={32} />
-              <span>Yükleniyor...</span>
+              <span>Kader yükleniyor...</span>
             </div>
           </div>
         </div>
@@ -142,15 +151,23 @@ const CrownFortunePage: NextPage = () => {
     )
   }
 
-  const fortuneDetails = getFortuneDetails(fortune)
-  const categoryLabel = language === 'tr' ? fortuneDetails.category.labelTr : fortuneDetails.category.label
-  const cardName = language === 'tr' ? fortuneDetails.card.nameTr : fortuneDetails.card.name
+  const details = getDestinyDetails(destiny)
+  const categoryLabel = language === 'tr' ? details.category.labelTr : details.category.label
+  const cardName = language === 'tr' ? details.card.nameTr : details.card.name
+  const energyText = getEnergyDescription(details.card.energy, language as 'tr' | 'en')
+
+  // Ton bazlı renk
+  const toneColors = {
+    positive: '#27ae60',
+    negative: '#e74c3c',
+    neutral: '#9b59b6'
+  }
 
   return (
     <MainLayout
-      title={t.crownFortune?.meta?.title || "Crown Fortune - Günlük Tarot Falı"}
-      description={t.crownFortune?.meta?.description || "CrownCode günlük tarot falı ile şansını keşfet!"}
-      keywords="tarot, günlük fal, şans, fortune, daily tarot, CrownCode"
+      title="Crown Destiny - Günlük Kader"
+      description="Crown Destiny ile bugünün enerjisini keşfet!"
+      keywords="günlük kader, şans, fortune, destiny, CrownCode"
     >
       <div className={styles['fortune-page']}>
         <div className={styles['fortune-container']}>
@@ -162,32 +179,29 @@ const CrownFortunePage: NextPage = () => {
           >
             <div className={styles['header-badge']}>
               <Crown size={16} />
-              <span>{t.crownFortune?.header?.badge || "Günlük Tarot"}</span>
+              <span>Crown Destiny</span>
             </div>
             <h1 className={styles['fortune-title']}>
-              {t.crownFortune?.header?.title || "Bugünün Falı"}
+              Bugünün Kaderi
             </h1>
             <p className={styles['fortune-subtitle']}>
-              {t.crownFortune?.header?.subtitle || "Çarkı çevir, kartını aç ve günün mesajını al."}
+              Çarkı çevir, kartını aç ve evrenin bugün sana ne söylediğini öğren.
             </p>
 
-            {/* Countdown */}
             <div className={styles['countdown']}>
               <Clock size={16} />
-              <span>{t.crownFortune?.countdown?.label || "Yeni fal için:"}</span>
+              <span>Yeni kader için:</span>
               <span className={styles['countdown-time']}>{countdown}</span>
             </div>
           </motion.div>
 
-          {/* Wheel Section */}
+          {/* Wheel */}
           <div className={styles['wheel-section']}>
             <div className={styles['wheel-container']}>
-              {/* Pointer */}
               <div className={styles['wheel-pointer']}>
                 <Crown size={32} />
               </div>
 
-              {/* Wheel */}
               <motion.div
                 className={styles['wheel']}
                 animate={{ rotate: rotation }}
@@ -221,15 +235,13 @@ const CrownFortunePage: NextPage = () => {
                 </div>
               </motion.div>
 
-              {/* Glow Effect */}
               <div className={styles['wheel-glow']} />
             </div>
 
-            {/* Spin Button */}
             {!isRevealed && (
               <motion.button
                 className={`${styles['spin-button']} ${isSpinning ? styles['spinning'] : ''}`}
-                onClick={revealFortune}
+                onClick={revealDestiny}
                 disabled={isSpinning}
                 whileHover={{ scale: isSpinning ? 1 : 1.05 }}
                 whileTap={{ scale: isSpinning ? 1 : 0.95 }}
@@ -237,19 +249,19 @@ const CrownFortunePage: NextPage = () => {
                 {isSpinning ? (
                   <>
                     <RefreshCw className={styles['spin-icon']} size={20} />
-                    <span>{t.crownFortune?.buttons?.spinning || "Çevriliyor..."}</span>
+                    <span>Çevriliyor...</span>
                   </>
                 ) : (
                   <>
                     <Sparkles size={20} />
-                    <span>{t.crownFortune?.buttons?.reveal || "Falımı Aç"}</span>
+                    <span>Kaderimi Gör</span>
                   </>
                 )}
               </motion.button>
             )}
           </div>
 
-          {/* Result Card */}
+          {/* Result */}
           <AnimatePresence mode="wait">
             {isRevealed && (
               <motion.div
@@ -259,61 +271,71 @@ const CrownFortunePage: NextPage = () => {
                 exit={{ opacity: 0, y: -20, scale: 0.9 }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               >
-                {/* Tarot Card */}
-                <div className={styles['tarot-card-container']}>
-                  <motion.div
-                    className={styles['tarot-card']}
-                    initial={{ rotateY: 180 }}
-                    animate={{ rotateY: 0 }}
-                    transition={{ duration: 0.8, delay: 0.3 }}
-                  >
-                    <div className={styles['tarot-card-inner']}>
-                      <div className={styles['tarot-card-image']}>
-                        <Image
-                          src={fortuneDetails.card.image}
-                          alt={cardName}
-                          width={200}
-                          height={320}
-                          onError={(e) => {
-                            // Fallback görsel
-                            const target = e.target as HTMLImageElement
-                            target.style.display = 'none'
-                          }}
-                        />
-                        <div className={styles['tarot-card-fallback']}>
-                          <Crown size={64} />
-                          <span>{cardName}</span>
-                        </div>
-                      </div>
-                      <div className={styles['tarot-card-glow']} />
+                {/* Kart */}
+                <motion.div
+                  className={styles['destiny-card']}
+                  initial={{ rotateY: 180, scale: 0.8 }}
+                  animate={{ rotateY: 0, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                  <div className={styles['destiny-card-inner']}>
+                    <div className={styles['destiny-card-symbol']}>
+                      {details.card.symbol}
                     </div>
+                    <div className={styles['destiny-card-name']}>
+                      {cardName}
+                    </div>
+                    <div className={styles['destiny-card-element']}>
+                      {ELEMENT_ICONS[details.card.element]}
+                      <span>{getElementEmoji(details.card.element)}</span>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Bilgi */}
+                <div className={styles['result-header']}>
+                  <motion.div
+                    className={styles['result-category-badge']}
+                    style={{ backgroundColor: details.category.color }}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.5, type: 'spring' }}
+                  >
+                    {CATEGORY_ICONS[destiny.category]}
+                    <span>{categoryLabel}</span>
+                  </motion.div>
+
+                  <motion.div
+                    className={styles['result-energy']}
+                    style={{ borderColor: toneColors[destiny.tone] }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.6 }}
+                  >
+                    <span style={{ color: toneColors[destiny.tone] }}>{energyText}</span>
                   </motion.div>
                 </div>
 
-                {/* Card Info */}
-                <div className={styles['result-header']}>
-                  <div
-                    className={styles['result-category-badge']}
-                    style={{ backgroundColor: fortuneDetails.category.color }}
-                  >
-                    {CATEGORY_ICONS[fortune.category]}
-                    <span>{categoryLabel}</span>
-                  </div>
-                  <h2 className={styles['result-card-name']}>{cardName}</h2>
-                  <span className={styles['result-card-number']}>
-                    {fortuneDetails.card.id === 0 ? '0' : fortuneDetails.card.id} - Major Arcana
-                  </span>
-                </div>
-
-                {/* Message */}
-                <div className={styles['result-message']}>
-                  <p>{fortuneDetails.message}</p>
-                </div>
+                {/* Mesaj */}
+                <motion.div
+                  className={styles['result-message']}
+                  style={{ borderColor: toneColors[destiny.tone] + '40' }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7 }}
+                >
+                  <p>{details.message.text}</p>
+                </motion.div>
 
                 {/* Footer */}
-                <div className={styles['result-footer']}>
+                <motion.div
+                  className={styles['result-footer']}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.8 }}
+                >
                   <Sparkles size={14} />
-                  <span>{t.crownFortune?.result?.footer || "Bugünün mesajı senin için"}</span>
+                  <span>Evrenin bugünkü mesajı</span>
                   <span className={styles['result-date']}>
                     {new Date().toLocaleDateString(language === 'tr' ? 'tr-TR' : 'en-US', {
                       day: 'numeric',
@@ -321,12 +343,12 @@ const CrownFortunePage: NextPage = () => {
                       year: 'numeric'
                     })}
                   </span>
-                </div>
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Info Section */}
+          {/* Info */}
           <motion.div
             className={styles['info-section']}
             initial={{ opacity: 0 }}
@@ -334,12 +356,12 @@ const CrownFortunePage: NextPage = () => {
             transition={{ delay: 0.5 }}
           >
             <div className={styles['info-card']}>
-              <h3>{t.crownFortune?.info?.title || "Nasıl Çalışır?"}</h3>
+              <h3>Crown Destiny Nedir?</h3>
               <ul>
-                <li>{t.crownFortune?.info?.steps?.[0] || "Her gün 00:00'da (GMT+3) yeni bir fal belirlenir"}</li>
-                <li>{t.crownFortune?.info?.steps?.[1] || "Çarkı çevir ve günün kartını aç"}</li>
-                <li>{t.crownFortune?.info?.steps?.[2] || "22 Major Arcana kartından biri sana atanır"}</li>
-                <li>{t.crownFortune?.info?.steps?.[3] || "5 kategoriden birinde özel mesajını oku"}</li>
+                <li>Her gün gece yarısı (00:00 GMT+3) yeni bir kader belirlenir</li>
+                <li>22 benzersiz Kader Kartı ve 5 yaşam alanı</li>
+                <li>Olumlu, olumsuz ve dengeli mesajlar</li>
+                <li>Kişisel ve genel yorumlar</li>
               </ul>
             </div>
 
@@ -359,7 +381,7 @@ const CrownFortunePage: NextPage = () => {
             </div>
 
             <div className={styles['disclaimer']}>
-              <p>{t.crownFortune?.disclaimer || "Bu uygulama eğlence amaçlıdır. Tarot kartları sembolik yorumlar içerir."}</p>
+              <p>Bu uygulama eğlence amaçlıdır. Mesajlar sembolik ve motivasyoneldir.</p>
             </div>
           </motion.div>
         </div>
