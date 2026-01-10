@@ -302,7 +302,7 @@ const CrownFortunePage: NextPage = () => {
                       <div className={styles['card-footer']}>
                         <Star size={12} />
                         <span className={styles['card-date']}>
-                          {new Date().toLocaleDateString('tr-TR', {
+                          {new Date().toLocaleDateString(language === 'tr' ? 'tr-TR' : 'en-US', {
                             day: 'numeric',
                             month: 'long'
                           })}
