@@ -725,6 +725,205 @@
   }
 }
 
+/* =============== CARD MODAL - Tam Görsel =============== */
+.card-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.card-modal {
+  position: relative;
+  perspective: 2000px;
+  cursor: default;
+}
+
+.card-modal-inner {
+  width: min(500px, 90vw);
+  aspect-ratio: 2/3;
+  transform-style: preserve-3d;
+  animation: cardReveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes cardReveal {
+  0% {
+    transform: rotateX(90deg) scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: rotateX(-10deg) scale(1.02);
+    opacity: 1;
+  }
+  100% {
+    transform: rotateX(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+.card-modal-image-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: var(--radius-xl, 1rem);
+  overflow: hidden;
+  box-shadow:
+    0 0 0 2px var(--color-gold-500, #c99347),
+    0 0 0 4px rgba(138, 95, 43, 0.3),
+    0 50px 100px -20px rgba(0, 0, 0, 0.8),
+    0 0 80px rgba(201, 147, 71, 0.25);
+}
+
+.card-modal-image {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Modal card info */
+.card-modal-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem 1.5rem 1.5rem;
+  background: linear-gradient(
+    to top,
+    rgba(11, 10, 8, 0.98) 0%,
+    rgba(11, 10, 8, 0.85) 50%,
+    transparent 100%
+  );
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.card-modal-symbol {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+}
+
+.card-modal-name {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 700;
+  color: var(--color-text-primary, #f4ede3);
+  margin: 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+}
+
+.card-modal-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.card-modal-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full, 999px);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-inverse, #0b0a08);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-modal-energy {
+  font-size: 0.75rem;
+  color: var(--color-gold-400, #eac06f);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-modal-message {
+  font-size: clamp(1rem, 3vw, 1.15rem);
+  color: var(--color-text-primary, #f4ede3);
+  line-height: 1.7;
+  text-align: center;
+  font-style: italic;
+  margin: 0.5rem 0 0;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Close button */
+.card-modal-close {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(21, 17, 14, 0.9);
+  border: 1px solid var(--glass-border, rgba(201, 147, 71, 0.25));
+  color: var(--color-text-primary, #f4ede3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--animation-fast, 0.15s) ease;
+}
+
+.card-modal-close:hover {
+  background: var(--color-gold-500, #c99347);
+  color: var(--color-text-inverse, #0b0a08);
+  transform: scale(1.1);
+}
+
+/* Click hint on card */
+.card-click-hint {
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #9a8d7d);
+  opacity: 0;
+  transition: opacity var(--animation-normal, 0.3s) ease;
+  white-space: nowrap;
+}
+
+.card-container:hover .card-click-hint {
+  opacity: 1;
+}
+
+/* Make card clickable */
+.card-flipper.flipped {
+  cursor: pointer;
+}
+
+/* Modal responsive */
+@media (max-width: 600px) {
+  .card-modal-inner {
+    width: min(350px, 85vw);
+  }
+
+  .card-modal-info {
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .card-modal-close {
+    top: -45px;
+    right: -5px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   .wheel-pointer,
@@ -741,5 +940,10 @@
   .card-bg-image,
   .card-sheen {
     transition: none;
+  }
+
+  .card-modal-inner {
+    animation: none;
+    transform: none;
   }
 }
