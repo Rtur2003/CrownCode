@@ -17,13 +17,11 @@ import {
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
 import {
-  DESTINY_CARDS,
   FORTUNE_CATEGORIES,
   getDailyDestiny,
   getDestinyDetails,
   getTimeUntilMidnightGMT3,
   getTurkeyDate,
-  getEnergyDescription,
   type FortuneCategory,
   type DailyDestiny
 } from '@/data/destiny'
