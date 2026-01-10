@@ -88,6 +88,8 @@ coverage/
 
 # Claude
 .claude
+CLAUDE_SYSTEM_PROMPT.md
+
 # Source Maps (production - don't commit)
 *.map
 !**/*.map.d.ts
