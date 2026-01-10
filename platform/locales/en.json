@@ -1,4 +1,24 @@
 {
+  "errorPage": {
+    "titles": {
+      "notFound": "Page Not Found",
+      "serverError": "Server Error",
+      "clientError": "Request Error",
+      "default": "An Error Occurred"
+    },
+    "messages": {
+      "notFound": "The page you are looking for could not be found.",
+      "serverError": "A problem occurred on our server. Please try again later.",
+      "clientError": "An error occurred while processing your request.",
+      "default": "An unexpected error occurred."
+    },
+    "actions": {
+      "refresh": "Refresh Page",
+      "home": "Back to Home"
+    },
+    "helpPrefix": "If the problem persists, please contact us via",
+    "helpSuffix": "."
+  },
   "nav": {
     "home": "Home",
     "products": "Products",
@@ -216,6 +236,11 @@
         "sesAnalizi": "Ses-Analizi report",
         "preview": "Preview fallback"
       },
+      "tags": {
+        "ytDlp": "yt-dlp",
+        "optional": "optional",
+        "always": "always"
+      },
       "note": "Preview mode is always available when AURIS model is offline."
     },
     "processing": {
@@ -243,6 +268,7 @@
       "analysisDetails": "Analysis Details:",
       "exportReport": "Export Report",
       "analyzeAnother": "Analyze Another",
+      "spotifyTrack": "Spotify Track",
       "decisionSource": "Decision Source",
       "sources": {
         "musicAi": "AURIS",
