@@ -101,184 +101,184 @@ export const DESTINY_CARDS: DestinyCard[] = [
   { id: 21, name: 'The Crown', nameTr: 'Taç', symbol: '👑', image: '/tarot/the-world.png', element: 'ether', energy: 'ascending' },
 ]
 
-// Mesaj havuzu - kategori ve ton bazlı
+// Mesaj havuzu - kategori ve ton bazlı (TR + EN)
 export const FORTUNE_MESSAGES: Record<FortuneCategory, FortuneMessage[]> = {
   love: [
     // Pozitif - Genel
-    { text: 'Bugün kalbin açık, sevgi alacak ve vereceksin.', tone: 'positive', type: 'general' },
-    { text: 'Aşk enerjin yükselişte, çevrendekiler bunu hissedecek.', tone: 'positive', type: 'general' },
-    { text: 'Romantik bir sürpriz kapıda olabilir.', tone: 'positive', type: 'general' },
-    { text: 'Duygusal bağların güçleniyor.', tone: 'positive', type: 'general' },
-    { text: 'Sevgi dolu anlar seni bekliyor.', tone: 'positive', type: 'general' },
+    { text: 'Bugün kalbin açık, sevgi alacak ve vereceksin.', textEn: 'Your heart is open today, ready to give and receive love.', tone: 'positive', type: 'general' },
+    { text: 'Aşk enerjin yükselişte, çevrendekiler bunu hissedecek.', textEn: 'Your love energy is rising, those around you will feel it.', tone: 'positive', type: 'general' },
+    { text: 'Romantik bir sürpriz kapıda olabilir.', textEn: 'A romantic surprise may be on the way.', tone: 'positive', type: 'general' },
+    { text: 'Duygusal bağların güçleniyor.', textEn: 'Your emotional bonds are strengthening.', tone: 'positive', type: 'general' },
+    { text: 'Sevgi dolu anlar seni bekliyor.', textEn: 'Moments full of love await you.', tone: 'positive', type: 'general' },
 
     // Pozitif - Özel
-    { text: 'Uzun süredir beklediğin haber bugün gelebilir.', tone: 'positive', type: 'specific' },
-    { text: 'Birileri seni düşünüyor, belki de sana ulaşacak.', tone: 'positive', type: 'specific' },
-    { text: 'Eski bir tanıdıkla karşılaşma ihtimali yüksek.', tone: 'positive', type: 'specific' },
-    { text: 'Bir bakış, bir gülümseme... Dikkatli ol, anlam yüklü.', tone: 'positive', type: 'specific' },
+    { text: 'Uzun süredir beklediğin haber bugün gelebilir.', textEn: 'The news you\'ve been waiting for may come today.', tone: 'positive', type: 'specific' },
+    { text: 'Birileri seni düşünüyor, belki de sana ulaşacak.', textEn: 'Someone is thinking of you, they might reach out.', tone: 'positive', type: 'specific' },
+    { text: 'Eski bir tanıdıkla karşılaşma ihtimali yüksek.', textEn: 'There\'s a high chance of meeting an old acquaintance.', tone: 'positive', type: 'specific' },
+    { text: 'Bir bakış, bir gülümseme... Dikkatli ol, anlam yüklü.', textEn: 'A glance, a smile... Pay attention, it carries meaning.', tone: 'positive', type: 'specific' },
 
     // Pozitif - Tavsiye
-    { text: 'Duygularını ifade etmekten çekinme, karşılık bulacaksın.', tone: 'positive', type: 'advice' },
-    { text: 'Kalbini dinle, akıl bugün ikinci planda kalmalı.', tone: 'positive', type: 'advice' },
-    { text: 'Affetmek güçtür, bugün bu gücü kullanabilirsin.', tone: 'positive', type: 'advice' },
+    { text: 'Duygularını ifade etmekten çekinme, karşılık bulacaksın.', textEn: 'Don\'t hesitate to express your feelings, you\'ll be reciprocated.', tone: 'positive', type: 'advice' },
+    { text: 'Kalbini dinle, akıl bugün ikinci planda kalmalı.', textEn: 'Listen to your heart, let logic take a back seat today.', tone: 'positive', type: 'advice' },
+    { text: 'Affetmek güçtür, bugün bu gücü kullanabilirsin.', textEn: 'Forgiveness is strength, you can use this power today.', tone: 'positive', type: 'advice' },
 
     // Negatif - Genel
-    { text: 'Bugün duygusal iniş çıkışlar yaşayabilirsin.', tone: 'negative', type: 'general' },
-    { text: 'Beklentilerini biraz düşür, hayal kırıklığından kaçın.', tone: 'negative', type: 'general' },
-    { text: 'Yanlış anlaşılmalara açık bir gün, dikkatli ol.', tone: 'negative', type: 'general' },
+    { text: 'Bugün duygusal iniş çıkışlar yaşayabilirsin.', textEn: 'You may experience emotional ups and downs today.', tone: 'negative', type: 'general' },
+    { text: 'Beklentilerini biraz düşür, hayal kırıklığından kaçın.', textEn: 'Lower your expectations a bit to avoid disappointment.', tone: 'negative', type: 'general' },
+    { text: 'Yanlış anlaşılmalara açık bir gün, dikkatli ol.', textEn: 'A day prone to misunderstandings, be careful.', tone: 'negative', type: 'general' },
 
     // Negatif - Uyarı
-    { text: 'Aceleye gerek yok, bazı duygular zaman ister.', tone: 'negative', type: 'warning' },
-    { text: 'Her söylenen samimi olmayabilir, sezgilerini kullan.', tone: 'negative', type: 'warning' },
-    { text: 'Geçmişe takılma, bugünü kaçırırsın.', tone: 'negative', type: 'warning' },
+    { text: 'Aceleye gerek yok, bazı duygular zaman ister.', textEn: 'No need to rush, some feelings need time.', tone: 'negative', type: 'warning' },
+    { text: 'Her söylenen samimi olmayabilir, sezgilerini kullan.', textEn: 'Not everything said may be sincere, trust your intuition.', tone: 'negative', type: 'warning' },
+    { text: 'Geçmişe takılma, bugünü kaçırırsın.', textEn: 'Don\'t dwell on the past, you\'ll miss the present.', tone: 'negative', type: 'warning' },
 
     // Nötr - Genel
-    { text: 'Duygusal denge günü, ne çok yükseliş ne düşüş.', tone: 'neutral', type: 'general' },
-    { text: 'Aşk hayatında durağan bir dönem, bu da geçici.', tone: 'neutral', type: 'general' },
-    { text: 'Kendinle vakit geçirmek için ideal bir gün.', tone: 'neutral', type: 'general' },
-    { text: 'İlişkilerde sabır anahtarın bugün.', tone: 'neutral', type: 'advice' },
+    { text: 'Duygusal denge günü, ne çok yükseliş ne düşüş.', textEn: 'A day of emotional balance, neither highs nor lows.', tone: 'neutral', type: 'general' },
+    { text: 'Aşk hayatında durağan bir dönem, bu da geçici.', textEn: 'A quiet period in love life, this too shall pass.', tone: 'neutral', type: 'general' },
+    { text: 'Kendinle vakit geçirmek için ideal bir gün.', textEn: 'An ideal day to spend time with yourself.', tone: 'neutral', type: 'general' },
+    { text: 'İlişkilerde sabır anahtarın bugün.', textEn: 'Patience is your key in relationships today.', tone: 'neutral', type: 'advice' },
   ],
 
   career: [
     // Pozitif - Genel
-    { text: 'İş hayatında parlak bir gün! Fırsatlar kapıda.', tone: 'positive', type: 'general' },
-    { text: 'Yeteneklerin bugün fark edilecek.', tone: 'positive', type: 'general' },
-    { text: 'Kariyer hedeflerine bir adım daha yaklaştın.', tone: 'positive', type: 'general' },
-    { text: 'Takım çalışması bugün harikalar yaratacak.', tone: 'positive', type: 'general' },
-    { text: 'Yaratıcı fikirler akacak, not almayı unutma.', tone: 'positive', type: 'general' },
+    { text: 'İş hayatında parlak bir gün! Fırsatlar kapıda.', textEn: 'A bright day in your career! Opportunities are knocking.', tone: 'positive', type: 'general' },
+    { text: 'Yeteneklerin bugün fark edilecek.', textEn: 'Your talents will be noticed today.', tone: 'positive', type: 'general' },
+    { text: 'Kariyer hedeflerine bir adım daha yaklaştın.', textEn: 'You\'re one step closer to your career goals.', tone: 'positive', type: 'general' },
+    { text: 'Takım çalışması bugün harikalar yaratacak.', textEn: 'Teamwork will create wonders today.', tone: 'positive', type: 'general' },
+    { text: 'Yaratıcı fikirler akacak, not almayı unutma.', textEn: 'Creative ideas will flow, don\'t forget to take notes.', tone: 'positive', type: 'general' },
 
     // Pozitif - Özel
-    { text: 'Beklediğin onay veya terfı haberi yakın.', tone: 'positive', type: 'specific' },
-    { text: 'Bir toplantı veya görüşme çok olumlu geçecek.', tone: 'positive', type: 'specific' },
-    { text: 'Yeni bir proje teklifi alabilirsin.', tone: 'positive', type: 'specific' },
-    { text: 'Bir iş bağlantısı kapıları açacak.', tone: 'positive', type: 'specific' },
+    { text: 'Beklediğin onay veya terfi haberi yakın.', textEn: 'The approval or promotion news you\'ve been waiting for is near.', tone: 'positive', type: 'specific' },
+    { text: 'Bir toplantı veya görüşme çok olumlu geçecek.', textEn: 'A meeting or interview will go very positively.', tone: 'positive', type: 'specific' },
+    { text: 'Yeni bir proje teklifi alabilirsin.', textEn: 'You may receive a new project offer.', tone: 'positive', type: 'specific' },
+    { text: 'Bir iş bağlantısı kapıları açacak.', textEn: 'A business connection will open doors.', tone: 'positive', type: 'specific' },
 
     // Pozitif - Tavsiye
-    { text: 'Kendine güven, başarı seni bekliyor.', tone: 'positive', type: 'advice' },
-    { text: 'Risk almaktan korkma, kazanacaksın.', tone: 'positive', type: 'advice' },
-    { text: 'Fikirlerini paylaş, değer görecekler.', tone: 'positive', type: 'advice' },
+    { text: 'Kendine güven, başarı seni bekliyor.', textEn: 'Trust yourself, success awaits you.', tone: 'positive', type: 'advice' },
+    { text: 'Risk almaktan korkma, kazanacaksın.', textEn: 'Don\'t be afraid to take risks, you\'ll win.', tone: 'positive', type: 'advice' },
+    { text: 'Fikirlerini paylaş, değer görecekler.', textEn: 'Share your ideas, they\'ll be appreciated.', tone: 'positive', type: 'advice' },
 
     // Negatif - Genel
-    { text: 'İş yerinde gerilim olabilir, sakin kal.', tone: 'negative', type: 'general' },
-    { text: 'Beklenmedik engeller çıkabilir ama geçici.', tone: 'negative', type: 'general' },
-    { text: 'Bugün büyük kararlar alma, bekle.', tone: 'negative', type: 'general' },
+    { text: 'İş yerinde gerilim olabilir, sakin kal.', textEn: 'There may be tension at work, stay calm.', tone: 'negative', type: 'general' },
+    { text: 'Beklenmedik engeller çıkabilir ama geçici.', textEn: 'Unexpected obstacles may arise, but they\'re temporary.', tone: 'negative', type: 'general' },
+    { text: 'Bugün büyük kararlar alma, bekle.', textEn: 'Don\'t make big decisions today, wait.', tone: 'negative', type: 'general' },
 
     // Negatif - Uyarı
-    { text: 'Dedikodulara kulak asma, işine odaklan.', tone: 'negative', type: 'warning' },
-    { text: 'Acele işe şeytan karışır, detaylara dikkat.', tone: 'negative', type: 'warning' },
-    { text: 'Herkese güvenme, önce kanıtlasınlar.', tone: 'negative', type: 'warning' },
+    { text: 'Dedikodulara kulak asma, işine odaklan.', textEn: 'Don\'t pay attention to gossip, focus on your work.', tone: 'negative', type: 'warning' },
+    { text: 'Acele işe şeytan karışır, detaylara dikkat.', textEn: 'Haste makes waste, pay attention to details.', tone: 'negative', type: 'warning' },
+    { text: 'Herkese güvenme, önce kanıtlasınlar.', textEn: 'Don\'t trust everyone, let them prove themselves first.', tone: 'negative', type: 'warning' },
 
     // Nötr - Genel
-    { text: 'Rutin bir iş günü, fırtına öncesi sessizlik.', tone: 'neutral', type: 'general' },
-    { text: 'Planlama ve organizasyon için ideal gün.', tone: 'neutral', type: 'general' },
-    { text: 'Bugün tohumları ek, yarın hasat zamanı.', tone: 'neutral', type: 'general' },
-    { text: 'Öğrenmeye açık ol, yeni bilgiler geliyor.', tone: 'neutral', type: 'advice' },
+    { text: 'Rutin bir iş günü, fırtına öncesi sessizlik.', textEn: 'A routine work day, calm before the storm.', tone: 'neutral', type: 'general' },
+    { text: 'Planlama ve organizasyon için ideal gün.', textEn: 'An ideal day for planning and organization.', tone: 'neutral', type: 'general' },
+    { text: 'Bugün tohumları ek, yarın hasat zamanı.', textEn: 'Plant the seeds today, harvest time is tomorrow.', tone: 'neutral', type: 'general' },
+    { text: 'Öğrenmeye açık ol, yeni bilgiler geliyor.', textEn: 'Be open to learning, new knowledge is coming.', tone: 'neutral', type: 'advice' },
   ],
 
   money: [
     // Pozitif - Genel
-    { text: 'Bolluk enerjisi etrafında, paranı çekiyorsun.', tone: 'positive', type: 'general' },
-    { text: 'Finansal şansın yükselişte!', tone: 'positive', type: 'general' },
-    { text: 'Beklenmedik bir gelir kapıda olabilir.', tone: 'positive', type: 'general' },
-    { text: 'Yatırımların meyvesini vermeye başlıyor.', tone: 'positive', type: 'general' },
-    { text: 'Maddi konularda olumlu gelişmeler var.', tone: 'positive', type: 'general' },
+    { text: 'Bolluk enerjisi etrafında, paranı çekiyorsun.', textEn: 'Abundance energy surrounds you, you\'re attracting wealth.', tone: 'positive', type: 'general' },
+    { text: 'Finansal şansın yükselişte!', textEn: 'Your financial luck is on the rise!', tone: 'positive', type: 'general' },
+    { text: 'Beklenmedik bir gelir kapıda olabilir.', textEn: 'Unexpected income may be on the way.', tone: 'positive', type: 'general' },
+    { text: 'Yatırımların meyvesini vermeye başlıyor.', textEn: 'Your investments are starting to bear fruit.', tone: 'positive', type: 'general' },
+    { text: 'Maddi konularda olumlu gelişmeler var.', textEn: 'Positive developments in financial matters.', tone: 'positive', type: 'general' },
 
     // Pozitif - Özel
-    { text: 'Uzun süredir beklediğin ödeme gelebilir.', tone: 'positive', type: 'specific' },
-    { text: 'Bir alışverişte beklenmedik indirim bulacaksın.', tone: 'positive', type: 'specific' },
-    { text: 'Yan gelir fırsatı kendini gösterebilir.', tone: 'positive', type: 'specific' },
-    { text: 'Finansal bir teklif dikkatini çekecek.', tone: 'positive', type: 'specific' },
+    { text: 'Uzun süredir beklediğin ödeme gelebilir.', textEn: 'The payment you\'ve been waiting for may arrive.', tone: 'positive', type: 'specific' },
+    { text: 'Bir alışverişte beklenmedik indirim bulacaksın.', textEn: 'You\'ll find an unexpected discount while shopping.', tone: 'positive', type: 'specific' },
+    { text: 'Yan gelir fırsatı kendini gösterebilir.', textEn: 'A side income opportunity may present itself.', tone: 'positive', type: 'specific' },
+    { text: 'Finansal bir teklif dikkatini çekecek.', textEn: 'A financial offer will catch your attention.', tone: 'positive', type: 'specific' },
 
     // Pozitif - Tavsiye
-    { text: 'Birikime başlamak için ideal gün.', tone: 'positive', type: 'advice' },
-    { text: 'Değerini bil, pazarlık yap.', tone: 'positive', type: 'advice' },
-    { text: 'Cömertlik sana katlanarak dönecek.', tone: 'positive', type: 'advice' },
+    { text: 'Birikime başlamak için ideal gün.', textEn: 'An ideal day to start saving.', tone: 'positive', type: 'advice' },
+    { text: 'Değerini bil, pazarlık yap.', textEn: 'Know your worth, negotiate.', tone: 'positive', type: 'advice' },
+    { text: 'Cömertlik sana katlanarak dönecek.', textEn: 'Generosity will return to you multiplied.', tone: 'positive', type: 'advice' },
 
     // Negatif - Genel
-    { text: 'Beklenmedik harcamalar çıkabilir, hazırlıklı ol.', tone: 'negative', type: 'general' },
-    { text: 'Bugün büyük alımlar için uygun değil.', tone: 'negative', type: 'general' },
-    { text: 'Finansal kararları ertele, netlik yok.', tone: 'negative', type: 'general' },
+    { text: 'Beklenmedik harcamalar çıkabilir, hazırlıklı ol.', textEn: 'Unexpected expenses may arise, be prepared.', tone: 'negative', type: 'general' },
+    { text: 'Bugün büyük alımlar için uygun değil.', textEn: 'Today is not suitable for big purchases.', tone: 'negative', type: 'general' },
+    { text: 'Finansal kararları ertele, netlik yok.', textEn: 'Postpone financial decisions, there\'s no clarity.', tone: 'negative', type: 'general' },
 
     // Negatif - Uyarı
-    { text: 'Çok iyi görünen teklifler aldatıcı olabilir.', tone: 'negative', type: 'warning' },
-    { text: 'Borç verme veya alma konusunda dikkatli ol.', tone: 'negative', type: 'warning' },
-    { text: 'İmpulsif harcamalardan kaçın, pişman olursun.', tone: 'negative', type: 'warning' },
+    { text: 'Çok iyi görünen teklifler aldatıcı olabilir.', textEn: 'Offers that look too good may be deceptive.', tone: 'negative', type: 'warning' },
+    { text: 'Borç verme veya alma konusunda dikkatli ol.', textEn: 'Be careful about lending or borrowing money.', tone: 'negative', type: 'warning' },
+    { text: 'İmpulsif harcamalardan kaçın, pişman olursun.', textEn: 'Avoid impulsive spending, you\'ll regret it.', tone: 'negative', type: 'warning' },
 
     // Nötr - Genel
-    { text: 'Finansal denge günü, ne kazanç ne kayıp.', tone: 'neutral', type: 'general' },
-    { text: 'Bütçeni gözden geçirmek için iyi zaman.', tone: 'neutral', type: 'general' },
-    { text: 'Para konusunda sabırlı ol, zaman senin yanında.', tone: 'neutral', type: 'general' },
-    { text: 'Küçük adımlar büyük servetler yaratır.', tone: 'neutral', type: 'advice' },
+    { text: 'Finansal denge günü, ne kazanç ne kayıp.', textEn: 'A day of financial balance, neither gain nor loss.', tone: 'neutral', type: 'general' },
+    { text: 'Bütçeni gözden geçirmek için iyi zaman.', textEn: 'A good time to review your budget.', tone: 'neutral', type: 'general' },
+    { text: 'Para konusunda sabırlı ol, zaman senin yanında.', textEn: 'Be patient with money, time is on your side.', tone: 'neutral', type: 'general' },
+    { text: 'Küçük adımlar büyük servetler yaratır.', textEn: 'Small steps create great fortunes.', tone: 'neutral', type: 'advice' },
   ],
 
   health: [
     // Pozitif - Genel
-    { text: 'Enerji seviyeni yüksek, tadını çıkar!', tone: 'positive', type: 'general' },
-    { text: 'Bedenin güçlü, bugün her şeyi başarabilirsin.', tone: 'positive', type: 'general' },
-    { text: 'Sağlık için olumlu enerji akışı var.', tone: 'positive', type: 'general' },
-    { text: 'Zihin ve beden uyum içinde.', tone: 'positive', type: 'general' },
-    { text: 'Şifa enerjisi seni sarıyor.', tone: 'positive', type: 'general' },
+    { text: 'Enerji seviyeni yüksek, tadını çıkar!', textEn: 'Your energy level is high, enjoy it!', tone: 'positive', type: 'general' },
+    { text: 'Bedenin güçlü, bugün her şeyi başarabilirsin.', textEn: 'Your body is strong, you can achieve anything today.', tone: 'positive', type: 'general' },
+    { text: 'Sağlık için olumlu enerji akışı var.', textEn: 'There\'s a positive energy flow for your health.', tone: 'positive', type: 'general' },
+    { text: 'Zihin ve beden uyum içinde.', textEn: 'Mind and body are in harmony.', tone: 'positive', type: 'general' },
+    { text: 'Şifa enerjisi seni sarıyor.', textEn: 'Healing energy surrounds you.', tone: 'positive', type: 'general' },
 
     // Pozitif - Özel
-    { text: 'Yeni bir spor veya aktivite denersen çok keyif alırsın.', tone: 'positive', type: 'specific' },
-    { text: 'Bugün aldığın besinler seni besleyecek.', tone: 'positive', type: 'specific' },
-    { text: 'Uzun süredir yapmak istediğin sağlıklı değişiklik için tam gün.', tone: 'positive', type: 'specific' },
+    { text: 'Yeni bir spor veya aktivite denersen çok keyif alırsın.', textEn: 'You\'ll enjoy trying a new sport or activity.', tone: 'positive', type: 'specific' },
+    { text: 'Bugün aldığın besinler seni besleyecek.', textEn: 'The food you eat today will nourish you well.', tone: 'positive', type: 'specific' },
+    { text: 'Uzun süredir yapmak istediğin sağlıklı değişiklik için tam gün.', textEn: 'Perfect day for that healthy change you\'ve been wanting.', tone: 'positive', type: 'specific' },
 
     // Pozitif - Tavsiye
-    { text: 'Doğada zaman geçir, ruhun ve bedenin şükredecek.', tone: 'positive', type: 'advice' },
-    { text: 'Bol su iç, bedenin sana teşekkür edecek.', tone: 'positive', type: 'advice' },
-    { text: 'Gülümse, mutluluk hormonların aktif.', tone: 'positive', type: 'advice' },
+    { text: 'Doğada zaman geçir, ruhun ve bedenin şükredecek.', textEn: 'Spend time in nature, your soul and body will thank you.', tone: 'positive', type: 'advice' },
+    { text: 'Bol su iç, bedenin sana teşekkür edecek.', textEn: 'Drink plenty of water, your body will thank you.', tone: 'positive', type: 'advice' },
+    { text: 'Gülümse, mutluluk hormonların aktif.', textEn: 'Smile, your happiness hormones are active.', tone: 'positive', type: 'advice' },
 
     // Negatif - Genel
-    { text: 'Enerji seviyeni düşük hissedebilirsin.', tone: 'negative', type: 'general' },
-    { text: 'Stres belirtilerine dikkat, dinlenme şart.', tone: 'negative', type: 'general' },
-    { text: 'Bedenin sana mesaj veriyor, dinle.', tone: 'negative', type: 'general' },
+    { text: 'Enerji seviyeni düşük hissedebilirsin.', textEn: 'You may feel your energy level is low.', tone: 'negative', type: 'general' },
+    { text: 'Stres belirtilerine dikkat, dinlenme şart.', textEn: 'Watch for signs of stress, rest is essential.', tone: 'negative', type: 'general' },
+    { text: 'Bedenin sana mesaj veriyor, dinle.', textEn: 'Your body is sending you a message, listen.', tone: 'negative', type: 'general' },
 
     // Negatif - Uyarı
-    { text: 'Aşırı yorgunluk sinyalleri, mola ver.', tone: 'negative', type: 'warning' },
-    { text: 'Sağlıksız alışkanlıklardan bugün uzak dur.', tone: 'negative', type: 'warning' },
-    { text: 'Uyku düzenine dikkat, ihmal etme.', tone: 'negative', type: 'warning' },
+    { text: 'Aşırı yorgunluk sinyalleri, mola ver.', textEn: 'Signs of extreme fatigue, take a break.', tone: 'negative', type: 'warning' },
+    { text: 'Sağlıksız alışkanlıklardan bugün uzak dur.', textEn: 'Stay away from unhealthy habits today.', tone: 'negative', type: 'warning' },
+    { text: 'Uyku düzenine dikkat, ihmal etme.', textEn: 'Pay attention to your sleep schedule, don\'t neglect it.', tone: 'negative', type: 'warning' },
 
     // Nötr - Genel
-    { text: 'Dengeli bir sağlık günü, rutin koru.', tone: 'neutral', type: 'general' },
-    { text: 'Bedenini dinle, o sana ne istediğini söylüyor.', tone: 'neutral', type: 'general' },
-    { text: 'Küçük değişiklikler büyük sonuçlar yaratır.', tone: 'neutral', type: 'general' },
-    { text: 'Önleme tedaviden iyidir, bugün buna odaklan.', tone: 'neutral', type: 'advice' },
+    { text: 'Dengeli bir sağlık günü, rutin koru.', textEn: 'A balanced health day, maintain your routine.', tone: 'neutral', type: 'general' },
+    { text: 'Bedenini dinle, o sana ne istediğini söylüyor.', textEn: 'Listen to your body, it\'s telling you what it needs.', tone: 'neutral', type: 'general' },
+    { text: 'Küçük değişiklikler büyük sonuçlar yaratır.', textEn: 'Small changes create big results.', tone: 'neutral', type: 'general' },
+    { text: 'Önleme tedaviden iyidir, bugün buna odaklan.', textEn: 'Prevention is better than cure, focus on that today.', tone: 'neutral', type: 'advice' },
   ],
 
   spirit: [
     // Pozitif - Genel
-    { text: 'Ruhsal enerijn çok yüksek, içsel huzur var.', tone: 'positive', type: 'general' },
-    { text: 'Sezgilerin bugün çok güçlü, güven onlara.', tone: 'positive', type: 'general' },
-    { text: 'Evrenle bağlantın açık, mesajları al.', tone: 'positive', type: 'general' },
-    { text: 'İç huzur ve denge hakim.', tone: 'positive', type: 'general' },
-    { text: 'Spiritüel farkındalığın artıyor.', tone: 'positive', type: 'general' },
+    { text: 'Ruhsal enerjin çok yüksek, içsel huzur var.', textEn: 'Your spiritual energy is very high, inner peace reigns.', tone: 'positive', type: 'general' },
+    { text: 'Sezgilerin bugün çok güçlü, güven onlara.', textEn: 'Your intuition is very strong today, trust it.', tone: 'positive', type: 'general' },
+    { text: 'Evrenle bağlantın açık, mesajları al.', textEn: 'Your connection to the universe is open, receive its messages.', tone: 'positive', type: 'general' },
+    { text: 'İç huzur ve denge hakim.', textEn: 'Inner peace and balance prevail.', tone: 'positive', type: 'general' },
+    { text: 'Spiritüel farkındalığın artıyor.', textEn: 'Your spiritual awareness is increasing.', tone: 'positive', type: 'general' },
 
     // Pozitif - Özel
-    { text: 'Bir rüya veya işaret dikkatini çekecek, not al.', tone: 'positive', type: 'specific' },
-    { text: 'Beklenmedik bir içgörü anı yaşayabilirsin.', tone: 'positive', type: 'specific' },
-    { text: 'Birinin sözleri sana ilham verecek.', tone: 'positive', type: 'specific' },
+    { text: 'Bir rüya veya işaret dikkatini çekecek, not al.', textEn: 'A dream or sign will catch your attention, take note.', tone: 'positive', type: 'specific' },
+    { text: 'Beklenmedik bir içgörü anı yaşayabilirsin.', textEn: 'You may experience an unexpected moment of insight.', tone: 'positive', type: 'specific' },
+    { text: 'Birinin sözleri sana ilham verecek.', textEn: 'Someone\'s words will inspire you.', tone: 'positive', type: 'specific' },
 
     // Pozitif - Tavsiye
-    { text: 'Meditasyon veya sessizlik için zaman ayır.', tone: 'positive', type: 'advice' },
-    { text: 'Şükran listesi yaz, enerijn yükselecek.', tone: 'positive', type: 'advice' },
-    { text: 'Doğayla bağlantı kur, topraklan.', tone: 'positive', type: 'advice' },
+    { text: 'Meditasyon veya sessizlik için zaman ayır.', textEn: 'Make time for meditation or silence.', tone: 'positive', type: 'advice' },
+    { text: 'Şükran listesi yaz, enerjin yükselecek.', textEn: 'Write a gratitude list, your energy will rise.', tone: 'positive', type: 'advice' },
+    { text: 'Doğayla bağlantı kur, topraklan.', textEn: 'Connect with nature, ground yourself.', tone: 'positive', type: 'advice' },
 
     // Negatif - Genel
-    { text: 'Zihinsel karmaşa yaşayabilirsin, sakinleş.', tone: 'negative', type: 'general' },
-    { text: 'Negatif düşünceler yoğun, bırak gitsinler.', tone: 'negative', type: 'general' },
-    { text: 'Spiritüel yorgunluk belirtileri, şarj ol.', tone: 'negative', type: 'general' },
+    { text: 'Zihinsel karmaşa yaşayabilirsin, sakinleş.', textEn: 'You may experience mental confusion, calm down.', tone: 'negative', type: 'general' },
+    { text: 'Negatif düşünceler yoğun, bırak gitsinler.', textEn: 'Negative thoughts are intense, let them go.', tone: 'negative', type: 'general' },
+    { text: 'Spiritüel yorgunluk belirtileri, şarj ol.', textEn: 'Signs of spiritual fatigue, recharge yourself.', tone: 'negative', type: 'general' },
 
     // Negatif - Uyarı
-    { text: 'Başkalarının enerjisinden korun, sınır koy.', tone: 'negative', type: 'warning' },
-    { text: 'Aşırı düşünme tuzağına düşme, hisset.', tone: 'negative', type: 'warning' },
-    { text: 'Negatif ortamlardan uzak dur bugün.', tone: 'negative', type: 'warning' },
+    { text: 'Başkalarının enerjisinden korun, sınır koy.', textEn: 'Protect yourself from others\' energy, set boundaries.', tone: 'negative', type: 'warning' },
+    { text: 'Aşırı düşünme tuzağına düşme, hisset.', textEn: 'Don\'t fall into the trap of overthinking, just feel.', tone: 'negative', type: 'warning' },
+    { text: 'Negatif ortamlardan uzak dur bugün.', textEn: 'Stay away from negative environments today.', tone: 'negative', type: 'warning' },
 
     // Nötr - Genel
-    { text: 'İç dünyanda keşif zamanı, kendini dinle.', tone: 'neutral', type: 'general' },
-    { text: 'Ruhsal denge için ideal gün, korumaya al.', tone: 'neutral', type: 'general' },
-    { text: 'Sorular cevaplardan önemli, sorgula.', tone: 'neutral', type: 'general' },
-    { text: 'Bugün sadece var ol, hiçbir şey yapma.', tone: 'neutral', type: 'advice' },
+    { text: 'İç dünyanda keşif zamanı, kendini dinle.', textEn: 'Time for inner exploration, listen to yourself.', tone: 'neutral', type: 'general' },
+    { text: 'Ruhsal denge için ideal gün, korumaya al.', textEn: 'An ideal day for spiritual balance, protect it.', tone: 'neutral', type: 'general' },
+    { text: 'Sorular cevaplardan önemli, sorgula.', textEn: 'Questions are more important than answers, keep questioning.', tone: 'neutral', type: 'general' },
+    { text: 'Bugün sadece var ol, hiçbir şey yapma.', textEn: 'Just be today, do nothing.', tone: 'neutral', type: 'advice' },
   ],
 }
 
