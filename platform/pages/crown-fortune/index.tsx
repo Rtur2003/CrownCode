@@ -171,6 +171,12 @@ const CrownFortunePage: NextPage = () => {
       keywords={t.crownFortune.meta.keywords}
     >
       <div className={styles['fortune-page']}>
+        {/* Background Elements */}
+        <div className={styles['fortune-background']}>
+          <div className={styles['fortune-gradient']} />
+          <div className={styles['fortune-pattern']} />
+        </div>
+
         <div className={styles['fortune-container']}>
 
           {/* HEADER */}
