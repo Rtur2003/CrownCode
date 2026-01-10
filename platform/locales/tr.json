@@ -423,85 +423,44 @@
   },
   "crownFortune": {
     "meta": {
-      "title": "Crown Fortune - Kraliyet Şansı",
-      "description": "CrownCode şans çarkı ile günlük motivasyon ve ilham kaynağınız.",
-      "keywords": "şans çarkı, motivasyon, günlük şans, CrownCode, fortune wheel"
+      "title": "Crown Destiny - Günlük Kader",
+      "description": "CrownCode ile günlük kaderini keşfet. Çarkı çevir, kartını aç, evrenin mesajını al.",
+      "keywords": "günlük kader, şans çarkı, tarot, motivasyon, CrownCode, crown destiny"
     },
     "header": {
-      "badge": "Kraliyet Şansı",
-      "title": "Şans Çarkını Çevir",
-      "subtitle": "Günlük motivasyon ve ilham kaynağı. Çarkı çevir, evrenin mesajını al."
+      "badge": "Crown Destiny",
+      "title": "Bugünün Kaderi",
+      "subtitle": "Çarkı çevir ve evrenin bugün sana ne söylediğini keşfet."
+    },
+    "loading": "Yükleniyor...",
+    "countdown": {
+      "label": "Yeni kader:"
     },
     "buttons": {
       "spin": "Çarkı Çevir",
-      "spinning": "Çevriliyor...",
-      "reset": "Sıfırla"
+      "spinning": "Çevriliyor..."
     },
-    "spinCount": "{count} kez çevirdin",
     "categories": {
-      "motivation": "Motivasyon",
-      "love": "Sevgi",
-      "energy": "Enerji",
-      "success": "Başarı",
-      "luck": "Şans",
-      "gift": "Hediye",
-      "cosmic": "Kozmik",
-      "wisdom": "Bilgelik"
+      "love": "Aşk",
+      "career": "Kariyer",
+      "money": "Bereket",
+      "health": "Sağlık",
+      "spirit": "Ruh"
     },
-    "messages": {
-      "motivation": [
-        "Bugün başarıya giden yolda büyük bir adım atacaksın!",
-        "İçindeki güç seni zirveye taşıyacak.",
-        "Her zorluk, seni daha güçlü yapan bir fırsattır."
-      ],
-      "love": [
-        "Sevgi dolu bir gün seni bekliyor.",
-        "Kalbindeki ışık çevrene yayılacak.",
-        "Bugün biriyle özel bir bağ kurabilirsin."
-      ],
-      "energy": [
-        "Enerjin bugün zirve yapacak!",
-        "Yapamayacağın hiçbir şey yok.",
-        "Dinamizmin herkesi etkileyecek."
-      ],
-      "success": [
-        "Başarı kapıda, sadece aç!",
-        "Bugün hedeflerine bir adım daha yaklaşacaksın.",
-        "Emeklerin meyvesini verecek."
-      ],
-      "luck": [
-        "Şans bugün yanında!",
-        "Beklenmedik güzel sürprizler geliyor.",
-        "Evren senin için çalışıyor."
-      ],
-      "gift": [
-        "Hayat sana güzel bir hediye hazırlıyor.",
-        "Beklemediğin bir yerden güzel haberler gelecek.",
-        "Bugün özel bir gün olacak."
-      ],
-      "cosmic": [
-        "Yıldızlar senin için parlıyor.",
-        "Evrensel enerji seninle uyum içinde.",
-        "Kozmik güçler seni destekliyor."
-      ],
-      "wisdom": [
-        "Bugün önemli bir farkındalık kazanacaksın.",
-        "İç sesin sana doğru yolu gösterecek.",
-        "Bilgelik seninle yürüyor."
-      ]
-    },
-    "result": {
-      "footer": "Evren seninle konuştu"
+    "energy": {
+      "ascending": "Yükselen Enerji",
+      "descending": "Alçalan Enerji",
+      "stable": "Dengeli Enerji"
     },
     "info": {
       "title": "Nasıl Çalışır?",
       "steps": [
-        "Çarkı çevir butonuna tıkla",
-        "Çarkın durmasını bekle",
-        "Günlük mesajını oku",
-        "İlham al, motivasyonunu artır!"
+        "Her gün gece yarısı (00:00) yeni kader belirlenir",
+        "Çarkı çevir, kategorini öğren",
+        "Kartın açılsın, mesajını oku",
+        "Ertesi güne kadar aynı kader geçerli"
       ]
     },
-    "disclaimer": "Bu uygulama tamamen eğlence amaçlıdır. Kumar içermez."
+    "disclaimer": "Bu uygulama eğlence amaçlıdır."
   }
 }
