@@ -313,7 +313,7 @@ export function getTimeUntilMidnightGMT3(): number {
 /**
  * Tarih ve kullanıcı bazlı seed ile tutarlı rastgele sayı
  */
-function seededRandom(seed: string): number {
+export function seededRandom(seed: string): number {
   let hash = 0
   for (let i = 0; i < seed.length; i++) {
     const char = seed.charCodeAt(i)
@@ -484,8 +484,9 @@ if (typeof window !== 'undefined') {
 /**
  * Belirtilen kategori için "Ters/Kötü" mesaj getirir
  * Mevcut mesajdan farklı bir negatif mesaj seçmeye çalışır
+ * Seed parametresi ile deterministik sonuç üretir
  */
-export function getReverseMessage(category: FortuneCategory, currentMessageIndex: number = -1): FortuneMessage {
+export function getReverseMessage(category: FortuneCategory, seed: number): FortuneMessage {
   const messages = FORTUNE_MESSAGES[category]
   // Negatif veya uyarı mesajlarını filtrele
   const negativeMessages = messages.filter(m => m.tone === 'negative' || m.type === 'warning')
@@ -500,12 +501,7 @@ export function getReverseMessage(category: FortuneCategory, currentMessageIndex
     }
   }
 
-  // Rastgele bir negatif mesaj seç
-  // Eğer mevcut mesaj zaten negatifse, farklı bir tane seçmeye çalış
-  let candidates = negativeMessages
-  // Mevcut mesaj indexini bulmamız zor çünkü filtered array farklı, ama text karşılaştırması yapabiliriz
-  // Şimdilik sadece rastgele seçelim
-  
-  const randomIndex = Math.floor(Math.random() * negativeMessages.length)
-  return negativeMessages[randomIndex]
+  // Seed kullanarak deterministik seçim yap
+  const index = seed % negativeMessages.length
+  return negativeMessages[index]
 }
