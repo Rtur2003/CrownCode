@@ -74,17 +74,34 @@ const CrownFortunePage: NextPage = () => {
   useEffect(() => {
     if (!mounted) return
 
-    const daily = getDailyDestiny()
-    setDestiny(daily)
+    const loadDestiny = () => {
+      const daily = getDailyDestiny()
+      const today = getTurkeyDate()
 
-    // Eğer bugün zaten bakıldıysa
-    const revealed = localStorage.getItem('crown_destiny_revealed')
-    if (revealed === daily.date) {
-      const catIndex = FORTUNE_CATEGORIES.findIndex(c => c.key === daily.category)
-      setRotation(catIndex * 72 + 720 + 36)
-      setShowCard(true)
-      setIsCardFlipped(true)
+      // Eğer revealed flag eski tarihli ise temizle
+      const revealed = localStorage.getItem('crown_destiny_revealed')
+      if (revealed && revealed !== today) {
+        localStorage.removeItem('crown_destiny_revealed')
+      }
+
+      setDestiny(daily)
+
+      // Eğer bugün zaten bakıldıysa ve tarihler eşleşiyorsa
+      const currentRevealed = localStorage.getItem('crown_destiny_revealed')
+      if (currentRevealed === daily.date && daily.date === today) {
+        const catIndex = FORTUNE_CATEGORIES.findIndex(c => c.key === daily.category)
+        setRotation(catIndex * 72 + 720 + 36)
+        setShowCard(true)
+        setIsCardFlipped(true)
+      } else {
+        // Yeni gün, sıfırla
+        setShowCard(false)
+        setIsCardFlipped(false)
+        setRotation(0)
+      }
     }
+
+    loadDestiny()
   }, [mounted])
 
   // Countdown
@@ -104,23 +121,34 @@ const CrownFortunePage: NextPage = () => {
     return () => clearInterval(interval)
   }, [mounted])
 
-  // Midnight reset
+  // Midnight reset - her 30 saniyede kontrol
   useEffect(() => {
     if (!mounted) return
 
     const check = () => {
       const today = getTurkeyDate()
+
+      // Revealed flag eski mi kontrol et
+      const revealed = localStorage.getItem('crown_destiny_revealed')
+      if (revealed && revealed !== today) {
+        localStorage.removeItem('crown_destiny_revealed')
+      }
+
+      // Destiny tarihi bugün değilse yenile
       if (destiny && destiny.date !== today) {
         const newDestiny = getDailyDestiny()
         setDestiny(newDestiny)
         setShowCard(false)
         setIsCardFlipped(false)
         setRotation(0)
-        localStorage.removeItem('crown_destiny_revealed')
       }
     }
 
-    const interval = setInterval(check, 60000)
+    // İlk kontrol hemen yap
+    check()
+
+    // Her 30 saniyede kontrol et
+    const interval = setInterval(check, 30000)
     return () => clearInterval(interval)
   }, [mounted, destiny])
 
