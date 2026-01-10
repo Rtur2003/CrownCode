@@ -15,6 +15,13 @@ export interface TarotCard {
     health: string[]    // Sağlık
     spirit: string[]    // Ruhsallık
   }
+  reverseMeanings: {    // Ters Anlamlar (Kötü Talih/Uyarı)
+    love: string
+    career: string
+    money: string
+    health: string
+    spirit: string
+  }
 }
 
 export type FortuneCategory = 'love' | 'career' | 'money' | 'health' | 'spirit'
@@ -59,6 +66,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Meditasyon veya yeni bir manevi pratik dene.',
         'İç sesine kulak ver, o seni doğru yöne yönlendiriyor.'
       ]
+    },
+    reverseMeanings: {
+      love: 'İlişkide fazla saflık veya dikkatsizlik hayal kırıklığı yaratabilir.',
+      career: 'Dürtüsel iş kararları riskli sonuçlar doğurabilir, planlı ol.',
+      money: 'Gereksiz harcamalar bütçeni sarsabilir, dikkat et.',
+      health: 'Kazalara karşı dikkatli ol, ihmalkarlık yapma.',
+      spirit: 'Gerçeklerden kaçıyor olabilirsin, yüzleşme zamanı.'
     }
   },
   {
@@ -92,6 +106,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Manifestasyon gücün bugün çok yüksek.',
         'Spiritüel yeteneklerin gelişiyor, fark et.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Manipülatif davranışlara veya yanlış yönlendirmelere dikkat et.',
+      career: 'Yeteneklerini yanlış kullanıyor olabilirsin, odaklanma sorunu var.',
+      money: 'Dolandırıcılık veya yanıltıcı fırsatlara karşı uyanık ol.',
+      health: 'Enerjini boşa harcıyorsun, stres kaynaklı sorunlar olabilir.',
+      spirit: 'İçsel gücünü bloke ediyorsun, kendine güvenin azalmış.'
     }
   },
   {
@@ -125,6 +146,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Rüyaların önemli mesajlar taşıyor.',
         'Gizemli bir bilgelik seni bekliyor.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Duygusal kopukluk veya sezgilerini görmezden gelme sorunu var.',
+      career: 'Yüzeyde kalıyorsun, derinlemesine analiz yapmıyorsun.',
+      money: 'Finansal gerçekleri görmezden gelmek sorun yaratabilir.',
+      health: 'Hormonal dengesizlikler veya kadın sağlığı konularına dikkat.',
+      spirit: 'İç sesini duyamıyorsun, gürültüden uzaklaş.'
     }
   },
   {
@@ -158,6 +186,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Bolluk bilinci seni sarmalıyor.',
         'Yaratıcı enerjin ruhsal gelişimini destekliyor.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Aşırı bağımlılık veya boğucu bir ilgi ilişkileri zorlayabilir.',
+      career: 'Yaratıcılık tıkanıklığı yaşıyorsun, ilham eksikliği var.',
+      money: 'Maddi güvensizlik hissi veya israf eğilimi.',
+      health: 'Kendini ihmal ediyorsun, fiziksel bakımına özen göster.',
+      spirit: 'Doğadan kopuksun, topraklanma ihtiyacın var.'
     }
   },
   {
@@ -191,6 +226,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'İç otoriteni tanı ve güçlendir.',
         'Düzen içinde özgürlük bulacaksın.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Otoriter veya kontrolcü davranışlar ilişkiye zarar verebilir.',
+      career: 'Güç savaşları veya katı kurallar ilerlemeni engelliyor.',
+      money: 'Maddi konularda esnek olamamak kayıplara yol açabilir.',
+      health: 'Katılık ve stres kas gerginliklerine neden olabilir.',
+      spirit: 'Maddi dünyaya aşırı odaklanıp ruhsal yanı unutma.'
     }
   },
   {
@@ -224,6 +266,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Bir spiritüel öğretmen arayışındasın.',
         'Toplu ibadet veya meditasyon faydalı olabilir.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Geleneksel kalıplar seni kısıtlıyor, özgürleşme isteği.',
+      career: 'Kurallara isyan etme veya yanlış bir mentoru takip etme riski.',
+      money: 'Riskli veya gelenek dışı finansal hamleler tehlikeli olabilir.',
+      health: 'Yanlış teşhis veya tavsiyelere dikkat et.',
+      spirit: 'Dogmatik inançlardan sıyrılıp kendi yolunu çizmelisin.'
     }
   },
   {
@@ -249,7 +298,7 @@ export const TAROT_CARDS: TarotCard[] = [
       ],
       health: [
         'Duygusal sağlık fiziksel sağlığı etkiliyor.',
-        'Sevgi dolu ilişkiler şifa getiriyor.',
+        'Sevgi dolu ilişkiler şifa getirir.',
         'Kalp sağlığına önem ver.'
       ],
       spirit: [
@@ -257,6 +306,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Zıtlıkların uyumu içinde denge bul.',
         'Sevgi evrensel bir güç, onu hisset.'
       ]
+    },
+    reverseMeanings: {
+      love: 'İlişkide uyumsuzluk veya yanlış seçimler gündemde.',
+      career: 'İş ortaklıklarında anlaşmazlıklar çıkabilir.',
+      money: 'Dürtüsel harcamalar veya finansal sorumsuzluk.',
+      health: 'Duygusal dengesizlik fiziksel sağlığı bozabilir.',
+      spirit: 'Kendinle çatışma halindesin, iç huzuru bul.'
     }
   },
   {
@@ -290,6 +346,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'İrade ve niyet gücün çok yüksek.',
         'Engelleri aşarak aydınlanmaya yaklaş.'
       ]
+    },
+    reverseMeanings: {
+      love: 'İlişkide kontrol kaybı veya agresif tutumlar.',
+      career: 'Hırsına yenik düşme veya yönsüzlük hissi.',
+      money: 'Hızlı para kazanma hırsı kaybettirebilir.',
+      health: 'Aşırı zorlama sonucu sakatlanma riski.',
+      spirit: 'Ego savaşları ruhsal gelişimi engelliyor.'
     }
   },
   {
@@ -323,6 +386,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Şefkat ve güç bir arada, denge bul.',
         'Spiritüel gücün artıyor.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Güvensizlik veya kıskançlık ilişkiyi zayıflatabilir.',
+      career: 'Kendine güven eksikliği fırsatları kaçırmana neden oluyor.',
+      money: 'Maddi korkulara teslim olma, cesaret eksikliği.',
+      health: 'Zayıf irade sağlık hedeflerini bozuyor.',
+      spirit: 'İçsel korkuların seni yönetmesine izin verme.'
     }
   },
   {
@@ -356,6 +426,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'İçindeki ışığı bul ve takip et.',
         'Spiritüel arayış yoğunlaşıyor.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Aşırı izolasyon yalnızlık hissine yol açabilir.',
+      career: 'Takım çalışmasından kaçmak işleri zorlaştırıyor.',
+      money: 'Tavsiyeleri dinlememek finansal hata yaptırabilir.',
+      health: 'Depresif ruh hali veya içine kapanma.',
+      spirit: 'Spiritüel kopukluk, yolunu kaybetme hissi.'
     }
   },
   {
@@ -389,6 +466,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Evren senin için çalışıyor.',
         'Kader yolun aydınlanıyor.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Talihsizlikler veya kötü zamanlama aşkta sorun yaratabilir.',
+      career: 'Beklenmedik aksilikler planları bozabilir, esnek ol.',
+      money: 'Maddi kayıplar veya şanssızlık dönemi.',
+      health: 'Eski sağlık sorunları nüks edebilir, dikkatli ol.',
+      spirit: 'Karmik derslere direnme, akışa güven.'
     }
   },
   {
@@ -422,6 +506,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Doğru ile yanlışı ayırt etme gücün artıyor.',
         'Evrensel adalet işliyor.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Haksızlık veya adaletsizlik hissi ilişkiyi zedeliyor.',
+      career: 'İş yerinde taraflı tutumlar veya haksız eleştiriler.',
+      money: 'Finansal dengesizlik veya borçların artması.',
+      health: 'Dengesiz yaşam tarzı sağlığı bozuyor.',
+      spirit: 'Kendine karşı dürüst olmamak ruhsal yük yaratır.'
     }
   },
   {
@@ -455,6 +546,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Farklı bir bilinç seviyesine ulaşıyorsun.',
         'Fedakarlık spiritüel büyüme getirir.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Boşa kürek çekme veya gereksiz fedakarlık.',
+      career: 'İşlerin tıkanması, ilerleyememe hissi.',
+      money: 'Maddi durgunluk veya kötü yatırımlarda ısrar.',
+      health: 'Kendini ihmal etme, fiziksel tükenmişlik.',
+      spirit: 'Ego direnci aydınlanmayı engelliyor.'
     }
   },
   {
@@ -488,6 +586,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Spiritüel dönüşüm yoğun.',
         'Eski inançlar dökülüyor, yenileri geliyor.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Değişime direnç göstermek acıyı uzatır.',
+      career: 'Kariyerde stagnasyon, yeniliğe kapalılık.',
+      money: 'Maddi kayıp korkusu gelişimi engelliyor.',
+      health: 'İyileşme sürecine direnç veya korku.',
+      spirit: 'İçsel dönüşümden korkma, eskiye takılı kalma.'
     }
   },
   {
@@ -521,6 +626,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Zıtlıklar uyum içinde.',
         'Spiritüel simya gerçekleşiyor.'
       ]
+    },
+    reverseMeanings: {
+      love: 'İlişkide dengesizlik veya aşırılıklar.',
+      career: 'İş hayatında uyumsuzluk veya acelecilik.',
+      money: 'Aşırı harcama veya cimrilik dengesizliği.',
+      health: 'Sağlıksız alışkanlıklar dengeyi bozuyor.',
+      spirit: 'Ruhsal ve dünyevi yaşam arasında kopukluk.'
     }
   },
   {
@@ -554,6 +666,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Spiritüel esaret farkındalığı.',
         'Özgürleşme yolu açılıyor.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Toksik ilişkiden kurtuluş veya yüzleşme.',
+      career: 'Seni kısıtlayan işten ayrılma cesareti.',
+      money: 'Maddi takıntılardan özgürleşme.',
+      health: 'Bağımlılıklardan kurtulmak için adım atma.',
+      spirit: 'Karanlık düşüncelerden aydınlığa çıkış.'
     }
   },
   {
@@ -587,6 +706,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Spiritüel uyanış ani olabilir.',
         'Yıkımdan doğan aydınlanma.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Kaçınılmaz sondan kaçmaya çalışma, erteleme.',
+      career: 'Değişim korkusuyla kötü bir işte kalma.',
+      money: 'Maddi çöküşü inkar etme.',
+      health: 'Hastalık belirtilerini görmezden gelme.',
+      spirit: 'Uyanışa direnç, eski benliğe tutunma.'
     }
   },
   {
@@ -620,6 +746,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'İlham yukarıdan geliyor.',
         'Spiritüel rehberlik alıyorsun.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Umutsuzluk veya karamsarlık aşkı gölgeliyor.',
+      career: 'Yaratıcılık eksikliği veya ilham kaybı.',
+      money: 'Maddi hedeflere inancını kaybetme.',
+      health: 'Negatif düşünceler iyileşmeyi geciktiriyor.',
+      spirit: 'Evrenle bağlantının koptuğunu hissetme.'
     }
   },
   {
@@ -653,6 +786,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Rüyalar mesajlar taşıyor.',
         'Gizemli bir dönemden geçiyorsun.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Korkular ve illüzyonlar gerçeği görmeni engelliyor.',
+      career: 'Yanlış anlaşılmalar ve kafa karışıklığı.',
+      money: 'Aldanma riski, finansal konularda dikkatli ol.',
+      health: 'Psikolojik stres fiziksel sağlığı etkiliyor.',
+      spirit: 'Kabuslar veya içsel korkularla yüzleşme.'
     }
   },
   {
@@ -686,6 +826,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'İçindeki ışık parlıyor.',
         'Neşe ve şükran ruhunu besliyor.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Geçici bir bulutlanma veya aşırı ego çatışması.',
+      career: 'Başarının gecikmesi veya hak ettiğini alamama.',
+      money: 'Maddi konularda aşırı iyimserlik hatası.',
+      health: 'Enerji düşüklüğü veya güneş çarpması riski.',
+      spirit: 'İçsel neşeyi bulmakta zorlanma.'
     }
   },
   {
@@ -719,6 +866,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Yüksek benliğinle bağlantı kur.',
         'Karmik hesaplaşma ve arınma.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Geçmişi bırakamama, pişmanlıklar.',
+      career: 'Çağrını duymazdan gelme, fırsatları kaçırma.',
+      money: 'Maddi hatalardan ders almama.',
+      health: 'Sağlık uyarılarını dikkate almama.',
+      spirit: 'İçsel sesi bastırma, uyanışa direnç.'
     }
   },
   {
@@ -752,6 +906,13 @@ export const TAROT_CARDS: TarotCard[] = [
         'Evrenle bir olma hissi.',
         'Kozmik bilinçle bağlantı.'
       ]
+    },
+    reverseMeanings: {
+      love: 'Tamamlanmamış duygular veya yarım kalan işler.',
+      career: 'Hedefe ulaşmada son engeller, gecikme.',
+      money: 'Maddi doyuma ulaşamama hissi.',
+      health: 'Tedavinin tamamlanmaması, nüksetme riski.',
+      spirit: 'Döngüyü kapatamama, takılı kalma.'
     }
   }
 ]
