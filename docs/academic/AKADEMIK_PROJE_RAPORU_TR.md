@@ -1,4 +1,4 @@
-# Web Tabanlı Yapay Zeka Müzik Detektörü ve Veri Manipülasyonu Platformu
+# AURIS: Web ve Mobil Platformları ile Yapay Zeka Müzik Tespit Sistemi
 
 **Geliştirici:** Hasan Arthur Altuntaş
 **Kurum:** Düzce Üniversitesi
@@ -12,11 +12,11 @@
 
 ## Özet
 
-Bu çalışma, yapay zeka tarafından üretilen müziklerin insan tarafından üretilen müziklerden ayırt edilmesi problemi üzerine odaklanmaktadır. Gelişen yapay zeka teknolojileri ile birlikte, ses üretim araçlarının yaygınlaşması müzik endüstrisinde yeni güvenlik ve telif hakkı sorunları yaratmıştır. Bu projede, wav2vec2 tabanlı derin öğrenme modelleri kullanılarak otomatik müzik deteksiyon sistemi geliştirilmiş ve web tabanlı bir platform oluşturulmuştur.
+Bu çalışma, yapay zeka tarafından üretilen müziklerin insan tarafından üretilen müziklerden ayırt edilmesi problemi üzerine odaklanmaktadır. Gelişen yapay zeka teknolojileri ile birlikte, ses üretim araçlarının yaygınlaşması müzik endüstrisinde yeni güvenlik ve telif hakkı sorunları yaratmıştır. Bu projede, wav2vec2 tabanlı derin öğrenme modelleri kullanılarak AURIS adlı otomatik müzik deteksiyon sistemi geliştirilmiş ve web ile mobil platformlarda kullanıma sunulmuştur.
 
-Platform, iki ana modülden oluşmaktadır: (1) Yapay zeka müzik detektörü - %97.2 doğruluk oranı ile AI üretimi müzikleri tespit eden sistem, (2) Veri manipülasyonu modülü - araştırmacıların veri setlerini web tabanlı olarak işleyebilmesini sağlayan sistem. Proje, modüler mimari yaklaşımı benimser ve fail-safe tasarım ilkeleri ile geliştirilmiştir.
+AURIS, %97.2 doğruluk oranı ile AI üretimi müzikleri tespit eden çok platformlu bir yapay zeka müzik tespit sistemidir. Sistem şunları içermektedir: (1) Next.js 14 ve TypeScript ile geliştirilen responsive web platformu, (2) Kotlin ve Jetpack Compose ile geliştirilen native Android uygulaması, (3) ML çıkarımı için PyTorch kullanan FastAPI backend. Proje, modüler mimari yaklaşımı benimser ve fail-safe tasarım ilkeleri ile geliştirilmiştir.
 
-**Anahtar Kelimeler:** Yapay zeka müzik deteksiyonu, wav2vec2, derin öğrenme, web platformu, audio analizi, transfer learning
+**Anahtar Kelimeler:** Yapay zeka müzik deteksiyonu, wav2vec2, derin öğrenme, web platformu, mobil uygulama, Android, Jetpack Compose, audio analizi, transfer learning
 
 ---
 
