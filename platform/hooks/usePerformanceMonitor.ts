@@ -14,15 +14,6 @@ interface PerformanceMetrics {
   ttfb?: number // Time to First Byte
 }
 
-interface PerformanceEventTiming extends PerformanceEntry {
-  processingStart: number;
-}
-
-interface LayoutShift extends PerformanceEntry {
-  value: number;
-  hadRecentInput: boolean;
-}
-
 export const usePerformanceMonitor = () => {
   const [metrics, setMetrics] = useState<PerformanceMetrics>({})
   const [isLoading, setIsLoading] = useState(true)
@@ -64,11 +55,10 @@ export const usePerformanceMonitor = () => {
           // First Input Delay
           const fidObserver = new PerformanceObserver((list) => {
             const entries = list.getEntries()
-            entries.forEach((entry) => {
-              const fidEntry = entry as PerformanceEventTiming
+            entries.forEach((entry: any) => {
               setMetrics(prev => ({
                 ...prev,
-                fid: fidEntry.processingStart - fidEntry.startTime
+                fid: entry.processingStart - entry.startTime
               }))
             })
           })
@@ -78,10 +68,9 @@ export const usePerformanceMonitor = () => {
           const clsObserver = new PerformanceObserver((list) => {
             let clsValue = 0
             const entries = list.getEntries()
-            entries.forEach((entry) => {
-              const clsEntry = entry as LayoutShift
-              if (!clsEntry.hadRecentInput) {
-                clsValue += clsEntry.value
+            entries.forEach((entry: any) => {
+              if (!entry.hadRecentInput) {
+                clsValue += entry.value
               }
             })
             setMetrics(prev => ({
@@ -123,7 +112,7 @@ export const usePerformanceMonitor = () => {
 
   const getScore = (metric: keyof PerformanceMetrics): 'good' | 'needs-improvement' | 'poor' | null => {
     const value = metrics[metric]
-    if (value === undefined) { return null }
+    if (value === undefined) return null
 
     switch (metric) {
       case 'fcp':

@@ -1,173 +1,471 @@
 // =========================================================================
-// AI MUSIC DETECTION PAGE - YOUTUBE WORKFLOW
+// AI MUSIC DETECTION PAGE - FRONTEND INTERFACE DEMO
 // =========================================================================
-// YouTube-first interface for the AI music detection pipeline.
-// Backend integrations are optional; preview mode is always available.
+// Professional frontend interface for AI-powered music detection system.
+// This is a DEMONSTRATION of the planned system architecture and UI/UX design.
 //
-// @author Hasan Arthur Altuntas
-// @version 1.1.0
+// CURRENT STATUS: Frontend UI Implementation (Q1 2025)
+// PLANNED: Backend AI integration with wav2vec2 model (Q2 2025)
+//
+// Features Implemented:
+// - File upload interface with validation
+// - URL parsing for streaming platforms
+// - Demo analysis workflow visualization
+// - Professional UI/UX design
+//
+// Features Planned:
+// - Real AI model inference (PyTorch backend)
+// - Actual audio feature extraction
+// - wav2vec2-based classification
+// - Production-ready accuracy metrics
+//
+// @author Hasan Arthur Altuntaş
+// @version 1.0.0-demo
 // @since 2025-01-01
 // =========================================================================
 
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useState, useCallback, useRef } from 'react'
 import type { NextPage } from 'next'
 import { motion } from 'framer-motion'
+import { MainLayout } from '@/components/Layout/MainLayout'
 import {
-  AlertTriangle,
-  BarChart3,
-  CheckCircle,
-  Clock,
-  Download,
-  Link as LinkIcon,
+  Upload,
   Music,
   Shield,
-  Upload,
+  BarChart3,
+  Download,
+  Link as LinkIcon,
+  Music2,
   Youtube,
+  Cloud,
+  Phone,
+  AlertTriangle,
+  CheckCircle,
+  Clock,
   Zap
 } from 'lucide-react'
-import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
-import { useFileAnalysis } from '@/hooks/useFileAnalysis'
-import { useYouTubeAnalysis } from '@/hooks/useYouTubeAnalysis'
 import styles from '@/styles/pages/ai-detection.module.css'
 
-const AIMusicDetectionPage: NextPage = () => {
-  const { t } = useLanguage()
-  const {
-    url,
-    setUrl,
-    processingState: youtubeProcessingState,
-    analysisResult: youtubeResult,
-    error: youtubeError,
-    runAnalysis: runYouTubeAnalysis,
-    reset: resetYouTube
-  } = useYouTubeAnalysis()
-  const {
-    selectedFile,
-    processingState: fileProcessingState,
-    analysisResult: fileResult,
-    error: fileError,
-    selectFile,
-    runAnalysis: runFileAnalysis,
-    reset: resetFile
-  } = useFileAnalysis()
-  const [activeSource, setActiveSource] = useState<'youtube' | 'file'>('youtube')
-  const [isDragOver, setIsDragOver] = useState(false)
-  const fileInputRef = useRef<HTMLInputElement>(null)
+// =========================================================================
+// TYPE DEFINITIONS
+// =========================================================================
 
-  const processingState = activeSource === 'youtube' ? youtubeProcessingState : fileProcessingState
-  const analysisResult = activeSource === 'youtube' ? youtubeResult : fileResult
-  const error = activeSource === 'youtube' ? youtubeError : fileError
-
-  const isProcessing = ['validating', 'downloading', 'analyzing'].includes(processingState)
-
-  const handleFileSelect = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      setActiveSource('file')
-      resetYouTube()
-      selectFile(file)
-    }
-    event.target.value = ''
-  }, [resetYouTube, selectFile])
-
-  const handleDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    setIsDragOver(false)
-    const file = event.dataTransfer.files?.[0]
-    if (file) {
-      setActiveSource('file')
-      resetYouTube()
-      selectFile(file)
-    }
-  }, [resetYouTube, selectFile])
-
-  const handleDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    setIsDragOver(true)
-  }, [])
-
-  const handleDragLeave = useCallback(() => {
-    setIsDragOver(false)
-  }, [])
-
-  const handleFileAnalyze = useCallback(() => {
-    setActiveSource('file')
-    resetYouTube()
-    runFileAnalysis()
-  }, [resetYouTube, runFileAnalysis])
-
-  const handleUrlAnalyze = useCallback(() => {
-    setActiveSource('youtube')
-    resetFile()
-    runYouTubeAnalysis()
-  }, [resetFile, runYouTubeAnalysis])
-
-  const resetAll = useCallback(() => {
-    resetYouTube()
-    resetFile()
-    setActiveSource('youtube')
-  }, [resetFile, resetYouTube])
-
-  const formatFileSize = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(2)} MB`
-
-  const resolveErrorMessage = (errorKey: string | null) => {
-    if (!errorKey) return null
-    switch (errorKey) {
-      case 'enterUrl':
-        return t.aiDetection.errors?.enterUrl || t.aiDetection.error.title
-      case 'invalidYouTubeUrl':
-        return t.aiDetection.errors?.invalidYouTubeUrl || t.aiDetection.error.title
-      case 'missingFile':
-        return t.aiDetection.errors?.missingFile || t.aiDetection.error.title
-    case 'unsupportedFileType':
-      return t.aiDetection.errors?.unsupportedFileType || t.aiDetection.error.title
-    case 'fileTooLarge':
-      return t.aiDetection.errors?.fileTooLarge || t.aiDetection.error.title
-    case 'fileTooSmall':
-      return t.aiDetection.errors?.fileTooSmall || t.aiDetection.error.title
-    case 'invalidFileName':
-      return t.aiDetection.errors?.invalidFileName || t.aiDetection.error.title
-    case 'backend_not_configured':
-      return t.aiDetection.errors?.backend_not_configured || t.aiDetection.error.title
-    case 'backend_unreachable':
-      return t.aiDetection.errors?.backend_unreachable || t.aiDetection.error.title
-    case 'backend_unexpected_response':
-      return t.aiDetection.errors?.backend_unexpected_response || t.aiDetection.error.title
-    default:
-      return t.aiDetection.error.title
+/**
+ * Analysis result interface
+ */
+interface AnalysisResult {
+  isAIGenerated: boolean
+  confidence: number
+  processingTime: number
+  modelVersion: string
+  features: {
+    spectralRegularity: number
+    temporalPatterns: number
+    harmonicStructure: number
+    artificialIndicators: string[]
+  }
+  audioInfo: {
+    duration: number
+    sampleRate: number
+    bitrate: number
+    format: string
   }
 }
 
-  const errorMessage = resolveErrorMessage(error)
+/**
+ * Supported streaming platforms
+ */
+type SupportedPlatform = 'spotify' | 'youtube' | 'soundcloud' | 'apple' | 'youtubemusic'
 
-  const stepOrder: Array<'validating' | 'downloading' | 'analyzing' | 'complete'> = [
-    'validating',
-    'downloading',
-    'analyzing',
-    'complete'
-  ]
-  const currentStepIndex = stepOrder.indexOf(
-    processingState === 'idle' || processingState === 'error' ? 'validating' : (processingState as 'validating' | 'downloading' | 'analyzing' | 'complete')
-  )
+/**
+ * Processing state
+ */
+type ProcessingState = 'idle' | 'uploading' | 'analyzing' | 'complete' | 'error'
 
-  const getDecisionLabel = (source: string) => {
-    const labels = t.aiDetection.result.sources
-    if (!labels) return source
-    if (source === 'music_ai') return labels.musicAi
-    if (source === 'ses_analizi') return labels.sesAnalizi
-    return labels.preview
+// =========================================================================
+// AI MUSIC DETECTION PAGE COMPONENT
+// =========================================================================
+
+const AIMusicDetectionPage: NextPage = () => {
+  // -----------------------------------------------------------------------
+  // HOOKS & STATE
+  // -----------------------------------------------------------------------
+
+  const { t } = useLanguage()
+
+  // File and URL processing
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [musicUrl, setMusicUrl] = useState<string>('')
+  const [processingState, setProcessingState] = useState<ProcessingState>('idle')
+  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  // Upload interface
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [isDragOver, setIsDragOver] = useState<boolean>(false)
+
+  // -----------------------------------------------------------------------
+  // FILE UPLOAD HANDLERS
+  // -----------------------------------------------------------------------
+
+  /**
+   * Comprehensive file validation with security measures
+   */
+  const validateAndSetFile = useCallback(async (file: File) => {
+    try {
+      // File type validation
+      const allowedTypes = ['audio/mpeg', 'audio/wav', 'audio/flac', 'audio/mp4', 'audio/m4a', 'audio/x-wav']
+      const allowedExtensions = ['.mp3', '.wav', '.flac', '.m4a', '.mp4']
+
+      // Size limits for security (100MB max)
+      const maxSize = 100 * 1024 * 1024
+      const minSize = 1024 // 1KB minimum to prevent empty files
+
+      // File name security checks
+      const fileName = file.name.toLowerCase()
+      const fileExtension = fileName.substring(fileName.lastIndexOf('.'))
+
+      // Basic security validations
+      if (file.size < minSize) {
+        setError('File is too small. Minimum file size is 1KB.')
+        return
+      }
+
+      if (file.size > maxSize) {
+        setError('File size exceeds 100MB limit. Please use a smaller file.')
+        return
+      }
+
+      // MIME type validation
+      if (!allowedTypes.includes(file.type)) {
+        setError(`Unsupported file format: ${file.type}. Allowed formats: MP3, WAV, FLAC, M4A`)
+        return
+      }
+
+      // File extension validation
+      if (!allowedExtensions.includes(fileExtension)) {
+        setError(`Unsupported file extension: ${fileExtension}. Allowed extensions: .mp3, .wav, .flac, .m4a`)
+        return
+      }
+
+      // File name security checks
+      if (fileName.includes('..') || fileName.includes('/') || fileName.includes('\\')) {
+        setError('Invalid file name. File name contains prohibited characters.')
+        return
+      }
+
+      // Additional security: Check for suspicious file names
+      const suspiciousPatterns = ['.exe', '.bat', '.cmd', '.scr', '.vbs', '.js', '.jar']
+      if (suspiciousPatterns.some(pattern => fileName.includes(pattern))) {
+        setError('File name contains suspicious patterns. Please rename your audio file.')
+        return
+      }
+
+      // Verify file header for additional security (basic magic number check)
+      await validateFileHeader(file)
+
+      // All validations passed
+      setSelectedFile(file)
+      setError(null)
+      setAnalysisResult(null)
+
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'File validation failed. Please try a different file.'
+      setError(errorMessage)
+    }
+  }, [])
+
+  /**
+   * Handle file selection from input
+   */
+  const handleFileSelect = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      validateAndSetFile(file)
+    }
+  }, [validateAndSetFile])
+
+  /**
+   * Handle drag and drop file upload
+   */
+  const handleDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    setIsDragOver(false)
+
+    const file = event.dataTransfer.files[0]
+    if (file) {
+      validateAndSetFile(file)
+    }
+  }, [validateAndSetFile])
+
+  /**
+   * Validate file header to ensure it's actually an audio file (magic number check)
+   */
+  const validateFileHeader = async (file: File): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+
+      reader.onload = function(e) {
+        const arrayBuffer = e.target?.result as ArrayBuffer
+        if (!arrayBuffer) {
+          reject(new Error('Could not read file header'))
+          return
+        }
+
+        const bytes = new Uint8Array(arrayBuffer.slice(0, 12))
+
+        // Check common audio file signatures (magic numbers)
+        const header = Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('')
+
+        // MP3: ID3 tag (49443320) or frame sync (fffb, fff3, fff2)
+        // WAV: RIFF (52494646)
+        // FLAC: fLaC (664c6143)
+        // M4A/MP4: ftyp (66747970)
+
+        const validHeaders = [
+          '494433', // ID3
+          'fff', // MP3 frame sync (partial)
+          '52494646', // RIFF (WAV)
+          '664c6143', // fLaC
+          '66747970', // ftyp (M4A/MP4)
+        ]
+
+        const isValidHeader = validHeaders.some(validHeader =>
+          header.toLowerCase().startsWith(validHeader.toLowerCase())
+        )
+
+        if (!isValidHeader) {
+          reject(new Error('File does not appear to be a valid audio file based on file header analysis.'))
+          return
+        }
+
+        resolve()
+      }
+
+      reader.onerror = function() {
+        reject(new Error('Error reading file header'))
+      }
+
+      // Read first 12 bytes for header validation
+      const blob = file.slice(0, 12)
+      reader.readAsArrayBuffer(blob)
+    })
   }
 
+  // -----------------------------------------------------------------------
+  // URL PROCESSING HANDLERS
+  // -----------------------------------------------------------------------
+
+  /**
+   * Detect and validate streaming platform URLs with comprehensive parsing
+   */
+  const detectPlatform = useCallback((url: string): SupportedPlatform | null => {
+    try {
+      const urlObj = new URL(url)
+      const domain = urlObj.hostname.toLowerCase()
+
+      // Spotify URL patterns
+      if (domain.includes('spotify.com')) {
+        // Valid Spotify URLs: https://open.spotify.com/track/... or https://spotify.com/track/...
+        if (urlObj.pathname.includes('/track/') || urlObj.pathname.includes('/album/')) {
+          return 'spotify'
+        }
+      }
+
+      // YouTube URL patterns
+      if (domain.includes('youtube.com') || domain.includes('youtu.be')) {
+        if (domain.includes('music.youtube.com')) {
+          // YouTube Music: https://music.youtube.com/watch?v=...
+          if (urlObj.searchParams.get('v') || urlObj.pathname.includes('/watch')) {
+            return 'youtubemusic'
+          }
+        } else {
+          // Regular YouTube: https://www.youtube.com/watch?v=... or https://youtu.be/...
+          if (urlObj.searchParams.get('v') || domain.includes('youtu.be')) {
+            return 'youtube'
+          }
+        }
+      }
+
+      // SoundCloud URL patterns
+      if (domain.includes('soundcloud.com')) {
+        // Valid SoundCloud URLs: https://soundcloud.com/artist/track
+        if (urlObj.pathname.split('/').length >= 3) {
+          return 'soundcloud'
+        }
+      }
+
+      // Apple Music URL patterns
+      if (domain.includes('music.apple.com')) {
+        // Valid Apple Music URLs: https://music.apple.com/country/album/...
+        if (urlObj.pathname.includes('/album/') || urlObj.pathname.includes('/song/')) {
+          return 'apple'
+        }
+      }
+
+      return null
+    } catch {
+      // Invalid URL format - intentionally ignoring error details
+      return null
+    }
+  }, [])
+
+  /**
+   * ⚠️ DEMO FUNCTION - NOT REAL AI ANALYSIS
+   * This function generates RANDOM results for UI demonstration purposes only.
+   * Real implementation will use PyTorch backend with wav2vec2 model.
+   *
+   * @param audioSource - File or URL (NOT analyzed, just for UI demo)
+   * @returns Demo AnalysisResult with random confidence scores
+   */
+  const performAIAnalysis = useCallback(async (audioSource: File | string) => {
+    setProcessingState('analyzing')
+    setError(null)
+
+    // ⚠️ DEMO: Simulated processing delay (real AI would take 3-5s)
+    await new Promise(resolve => setTimeout(resolve, 3000))
+
+    // ⚠️ DEMO: Random results for interface testing ONLY
+    const demoResult: AnalysisResult = {
+      isAIGenerated: Math.random() > 0.5,  // ⚠️ RANDOM - not real prediction
+      confidence: 0.85 + Math.random() * 0.14,  // ⚠️ FAKE confidence score
+      processingTime: 2.1,
+      modelVersion: 'demo-interface-v1.0',  // ⚠️ Not a real model
+      features: {
+        spectralRegularity: Math.random(),
+        temporalPatterns: Math.random(),
+        harmonicStructure: Math.random(),
+        artificialIndicators: [
+          'Demo analysis - Frontend interface only',
+          'Backend AI processing to be implemented',
+          'Professional demo interface'
+        ]
+      },
+      audioInfo: {
+        duration: audioSource instanceof File ? 180 : 200,
+        sampleRate: 44100,
+        bitrate: 320,
+        format: audioSource instanceof File ? audioSource.name.split('.').pop()?.toUpperCase() || 'UNKNOWN' : 'STREAM'
+      }
+    }
+
+    setAnalysisResult(demoResult)
+    setProcessingState('complete')
+  }, [])
+
+  /**
+   * Simulate URL analysis for streaming platforms
+   * ⚠️ DEMO: Uses same random analysis as file upload
+   */
+  const simulateUrlAnalysis = useCallback(async (url: string, _platform: SupportedPlatform) => {
+    // Simulate platform-specific processing
+    await new Promise(resolve => setTimeout(resolve, 3000))
+
+    // Perform demo analysis
+    await performAIAnalysis(url)
+  }, [performAIAnalysis])
+
+  /**
+   * Handle URL analysis with comprehensive validation
+   */
+  const handleUrlAnalysis = useCallback(async () => {
+    if (!musicUrl.trim()) {
+      setError('Please enter a valid music URL.')
+      return
+    }
+
+    // Basic URL format validation
+    try {
+      new URL(musicUrl)
+    } catch {
+      setError('Invalid URL format. Please enter a complete URL starting with http:// or https://')
+      return
+    }
+
+    const platform = detectPlatform(musicUrl)
+    if (!platform) {
+      setError(`Unsupported URL format. {t.aiDetection.url.supportedPlatforms}
+      • Spotify: https://open.spotify.com/track/... or https://spotify.com/track/...
+      • YouTube: https://www.youtube.com/watch?v=... or https://youtu.be/...
+      • YouTube Music: https://music.youtube.com/watch?v=...
+      • SoundCloud: https://soundcloud.com/artist/track
+      • Apple Music: https://music.apple.com/country/album/...`)
+      return
+    }
+
+    setProcessingState('analyzing')
+    setError(null)
+
+    try {
+      // Validate URL accessibility (simulate API availability check)
+      await validateUrlAccess(musicUrl, platform)
+
+      // Extract audio and perform analysis
+      await simulateUrlAnalysis(musicUrl, platform)
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to analyze the provided URL. Please try again.'
+      setError(errorMessage)
+      setProcessingState('error')
+    }
+  }, [musicUrl, detectPlatform, simulateUrlAnalysis])
+
+  /**
+   * Validate URL accessibility and platform-specific requirements
+   */
+  const validateUrlAccess = async (url: string, platform: SupportedPlatform): Promise<void> => {
+    // Simulate platform-specific validation
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    // Simulate various validation scenarios
+    const random = Math.random()
+
+    if (random < 0.1) {
+      throw new Error(`${platform.charAt(0).toUpperCase() + platform.slice(1)} track is private or unavailable.`)
+    }
+
+    if (random < 0.15) {
+      throw new Error(`Region-restricted content. This ${platform} track is not available in your region.`)
+    }
+
+    if (random < 0.2) {
+      throw new Error(`${platform.charAt(0).toUpperCase() + platform.slice(1)} API rate limit exceeded. Please try again in a few minutes.`)
+    }
+
+    // Simulate successful validation
+    return Promise.resolve()
+  }
+
+  // -----------------------------------------------------------------------
+  // RENDER HELPERS
+  // -----------------------------------------------------------------------
+
+  /**
+   * Render platform icon
+   */
+  const renderPlatformIcon = (_platform: SupportedPlatform) => {
+    const iconProps = { size: 20, className: "text-current" }
+
+    switch (_platform) {
+      case 'spotify': return <Music2 {...iconProps} />
+      case 'youtube':
+      case 'youtubemusic': return <Youtube {...iconProps} />
+      case 'soundcloud': return <Cloud {...iconProps} />
+      case 'apple': return <Phone {...iconProps} />
+      default: return <Music {...iconProps} />
+    }
+  }
+
+  /**
+   * Render analysis result card
+   */
   const renderAnalysisResult = () => {
     if (!analysisResult) {
       return null
     }
 
-    const confidence = Math.round(analysisResult.confidence * 100)
-    const decisionLabel = getDecisionLabel(analysisResult.decisionSource)
     const isAI = analysisResult.isAIGenerated
-    const source = analysisResult.source
+    const confidence = Math.round(analysisResult.confidence * 100)
 
     return (
       <motion.div
@@ -184,7 +482,7 @@ const AIMusicDetectionPage: NextPage = () => {
               {isAI ? t.aiDetection.result.aiDetected : t.aiDetection.result.humanDetected}
             </h3>
             <p className={styles['result-subtitle']}>
-              {t.aiDetection.result.confidence}: {confidence}% | {t.aiDetection.result.model}: {analysisResult.modelVersion} | {t.aiDetection.result.decisionSource}: {decisionLabel}
+              {t.aiDetection.result.confidence}: {confidence}% | {t.aiDetection.result.model}: {analysisResult.modelVersion}
             </p>
           </div>
         </div>
@@ -206,49 +504,6 @@ const AIMusicDetectionPage: NextPage = () => {
           </div>
         </div>
 
-        <div className={styles['result-source']}>
-          {source.kind === 'youtube' && (
-            <>
-              <div className={styles['result-source-item']}>
-                <span>{t.aiDetection.result.videoId}</span>
-                <span>{source.videoId}</span>
-              </div>
-              <div className={styles['result-source-item']}>
-                <span>{t.aiDetection.result.normalizedUrl}</span>
-                <span>{source.normalizedUrl}</span>
-              </div>
-            </>
-          )}
-          {source.kind === 'spotify' && (
-            <>
-              <div className={styles['result-source-item']}>
-                <span>{t.aiDetection.result.spotifyTrack}</span>
-                <span>{source.trackId}</span>
-              </div>
-              <div className={styles['result-source-item']}>
-                <span>{t.aiDetection.result.normalizedUrl}</span>
-                <span>{source.normalizedUrl}</span>
-              </div>
-            </>
-          )}
-          {source.kind === 'file' && (
-            <>
-              <div className={styles['result-source-item']}>
-                <span>{t.aiDetection.result.fileName}</span>
-                <span>{source.fileName}</span>
-              </div>
-              <div className={styles['result-source-item']}>
-                <span>{t.aiDetection.result.fileSize}</span>
-                <span>{formatFileSize(source.fileSizeBytes)}</span>
-              </div>
-              <div className={styles['result-source-item']}>
-                <span>{t.aiDetection.result.fileFormat}</span>
-                <span>{analysisResult.audioInfo.format}</span>
-              </div>
-            </>
-          )}
-        </div>
-
         <div className={styles['artificial-indicators']}>
           <h4>{t.aiDetection.result.analysisDetails}</h4>
           <ul>
@@ -265,7 +520,12 @@ const AIMusicDetectionPage: NextPage = () => {
           </button>
           <button
             className={styles['btn-primary']}
-            onClick={resetAll}
+            onClick={() => {
+              setSelectedFile(null)
+              setMusicUrl('')
+              setAnalysisResult(null)
+              setProcessingState('idle')
+            }}
           >
             {t.aiDetection.result.analyzeAnother}
           </button>
@@ -273,6 +533,10 @@ const AIMusicDetectionPage: NextPage = () => {
       </motion.div>
     )
   }
+
+  // -----------------------------------------------------------------------
+  // MAIN RENDER
+  // -----------------------------------------------------------------------
 
   return (
     <MainLayout
@@ -282,6 +546,7 @@ const AIMusicDetectionPage: NextPage = () => {
     >
       <div className={styles['ai-detection-page']}>
         <div className={styles['detection-container']}>
+          {/* Page Header */}
           <motion.div
             className={styles['detection-header']}
             initial={{ opacity: 0, y: 20 }}
@@ -298,6 +563,7 @@ const AIMusicDetectionPage: NextPage = () => {
               {t.aiDetection.header.subtitle}
             </p>
 
+            {/* ⚠️ CRITICAL: Demo Warning - Academic Honesty */}
             <div className={styles['demo-warning-container']}>
               <div className={styles['demo-warning-card']}>
                 <div className={styles['warning-header']}>
@@ -313,127 +579,95 @@ const AIMusicDetectionPage: NextPage = () => {
             </div>
           </motion.div>
 
-          {!analysisResult && processingState !== 'complete' && !errorMessage && (
+          {/* Main Interface */}
+          {!analysisResult && processingState !== 'complete' && processingState !== 'error' && (
             <motion.div
               className={styles['detection-interface']}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <div className={styles['input-stack']}>
-                <div className={styles['input-sources']}>
-                  <span>{t.aiDetection.url.supportedPlatforms}</span>
-                  <div className={styles['source-chips']}>
-                    <span className={`${styles['source-chip']} ${styles['source-chip-active']}`}>
-                      <Youtube size={16} className={styles['source-chip-icon']} />
-                      {t.aiDetection.url.sources.youtube}
-                    </span>
-                    <span className={`${styles['source-chip']} ${styles['source-chip-active']}`}>
-                      <Upload size={16} className={styles['source-chip-icon']} />
-                      {t.aiDetection.url.sources.upload}
-                    </span>
-                    <span className={`${styles['source-chip']} ${styles['source-chip-soon']}`}>
-                      {t.aiDetection.url.sources.spotify}
-                    </span>
-                    <span className={`${styles['source-chip']} ${styles['source-chip-soon']}`}>
-                      {t.aiDetection.url.sources.appleMusic}
-                    </span>
+              {/* File Upload Section */}
+              <div className={styles['upload-section']}>
+                <h2>{t.aiDetection.upload.title}</h2>
+                <div
+                  className={`${styles['upload-dropzone']} ${isDragOver ? styles['drag-over'] : ''}`}
+                  onDrop={handleDrop}
+                  onDragOver={(e) => { e.preventDefault(); setIsDragOver(true) }}
+                  onDragLeave={() => setIsDragOver(false)}
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <Upload size={48} />
+                  <h3>{t.aiDetection.upload.dropHere}</h3>
+                  <p>{t.aiDetection.upload.orClick}</p>
+                  <div className={styles['supported-formats']}>
+                    <span>{t.aiDetection.upload.supported}</span>
                   </div>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="audio/*"
+                    onChange={handleFileSelect}
+                    className={styles['hidden']}
+                    aria-label="Upload audio file for AI music detection"
+                    title="Upload audio file for AI music detection"
+                  />
                 </div>
 
-                <div className={styles['upload-section']}>
-                  <h2>{t.aiDetection.upload.title}</h2>
-                  <div
-                    className={`${styles['upload-dropzone']} ${isDragOver ? styles['drag-over'] : ''}`}
-                    onDrop={handleDrop}
-                    onDragOver={handleDragOver}
-                    onDragLeave={handleDragLeave}
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    <Upload size={48} />
-                    <h3>{t.aiDetection.upload.dropHere}</h3>
-                    <p>{t.aiDetection.upload.orClick}</p>
-                    <div className={styles['supported-formats']}>
-                      <span>{t.aiDetection.upload.supported}</span>
-                    </div>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="audio/*,.mp3,.wav,.flac,.m4a,.mp4,.aac"
-                      onChange={handleFileSelect}
-                      className={styles['hidden']}
-                      aria-label="Upload audio file for AI music detection"
-                      title="Upload audio file for AI music detection"
-                    />
-                  </div>
-
-                  {selectedFile && (
-                    <div className={styles['selected-file']}>
-                      <Music size={20} />
-                      <span>{selectedFile.name}</span>
-                      <button
-                        onClick={handleFileAnalyze}
-                        disabled={isProcessing}
-                        className={`${styles['btn-primary']} ${isProcessing ? styles['loading'] : ''}`}
-                      >
-                        {isProcessing ? t.aiDetection.upload.analyzing : t.aiDetection.upload.analyzeButton}
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                <div className={styles['url-section']} id="url">
-                  <h2>{t.aiDetection.url.title}</h2>
-                  <div className={styles['url-input-container']}>
-                    <div className={styles['url-input-wrapper']}>
-                      <LinkIcon size={20} />
-                      <input
-                        type="url"
-                        placeholder={t.aiDetection.url.placeholder}
-                        value={url}
-                        onChange={(event) => setUrl(event.target.value)}
-                        className={styles['url-input']}
-                      />
-                    </div>
+                {selectedFile && (
+                  <div className={styles['selected-file']}>
+                    <Music size={20} />
+                    <span>{selectedFile.name}</span>
                     <button
-                      onClick={handleUrlAnalyze}
-                      disabled={!url.trim() || isProcessing}
-                      className={`${styles['btn-primary']} ${isProcessing ? styles['loading'] : ''}`}
+                      onClick={() => performAIAnalysis(selectedFile)}
+                      className={`${styles['btn-primary']} ${processingState === 'analyzing' ? styles['loading'] : ''}`}
+                      disabled={processingState === 'analyzing'}
                     >
-                      {isProcessing ? t.aiDetection.url.analyzing : t.aiDetection.url.analyzeButton}
+                      {processingState === 'analyzing' ? t.aiDetection.upload.analyzing : t.aiDetection.upload.analyzeButton}
                     </button>
                   </div>
-                </div>
+                )}
               </div>
 
-              <div className={styles['pipeline-section']}>
-                <h2>{t.aiDetection.pipeline.title}</h2>
-                <ul className={styles['pipeline-list']}>
-                  <li className={styles['pipeline-item']}>
-                    <span>{t.aiDetection.pipeline.items.download}</span>
-                    <span className={styles['pipeline-tag']}>{t.aiDetection.pipeline.tags.ytDlp}</span>
-                  </li>
-                  <li className={styles['pipeline-item']}>
-                    <span>{t.aiDetection.pipeline.items.musicAi}</span>
-                    <span className={styles['pipeline-tag']}>{t.aiDetection.pipeline.tags.optional}</span>
-                  </li>
-                  <li className={styles['pipeline-item']}>
-                    <span>{t.aiDetection.pipeline.items.sesAnalizi}</span>
-                    <span className={styles['pipeline-tag']}>{t.aiDetection.pipeline.tags.optional}</span>
-                  </li>
-                  <li className={styles['pipeline-item']}>
-                    <span>{t.aiDetection.pipeline.items.preview}</span>
-                    <span className={styles['pipeline-tag']}>{t.aiDetection.pipeline.tags.always}</span>
-                  </li>
-                </ul>
-                <p className={styles['pipeline-note']}>
-                  {t.aiDetection.pipeline.note}
-                </p>
+              {/* URL Analysis Section */}
+              <div className={styles['url-section']}>
+                <h2>{t.aiDetection.url.title}</h2>
+                <div className={styles['url-input-container']}>
+                  <div className={styles['url-input-wrapper']}>
+                    <LinkIcon size={20} />
+                    <input
+                      type="url"
+                      placeholder={t.aiDetection.url.placeholder}
+                      value={musicUrl}
+                      onChange={(e) => setMusicUrl(e.target.value)}
+                      className={styles['url-input']}
+                    />
+                  </div>
+                  <button
+                    onClick={handleUrlAnalysis}
+                    disabled={!musicUrl.trim() || processingState === 'analyzing'}
+                    className={`${styles['btn-primary']} ${processingState === 'analyzing' ? styles['loading'] : ''}`}
+                  >
+                    {processingState === 'analyzing' ? t.aiDetection.url.analyzing : t.aiDetection.url.analyzeButton}
+                  </button>
+                </div>
+
+                <div className={styles['supported-platforms']}>
+                  <span>{t.aiDetection.url.supportedPlatforms}</span>
+                  <div className={styles['platform-icons']}>
+                    {['spotify', 'youtube', 'soundcloud', 'apple'].map((platform) => (
+                      <div key={platform} className={styles['platform-icon']}>
+                        {renderPlatformIcon(platform as SupportedPlatform)}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </motion.div>
           )}
 
-          {isProcessing && (
+          {/* Processing State */}
+          {processingState === 'analyzing' && (
             <motion.div
               className={styles['processing-state']}
               initial={{ opacity: 0 }}
@@ -445,19 +679,16 @@ const AIMusicDetectionPage: NextPage = () => {
               <h3>{t.aiDetection.processing.title}</h3>
               <p>{t.aiDetection.processing.subtitle}</p>
               <div className={styles['processing-steps']}>
-                {stepOrder.map((step, index) => (
-                  <div
-                    key={step}
-                    className={`${styles['step']} ${index <= currentStepIndex ? styles['active'] : ''}`}
-                  >
-                    {t.aiDetection.processing.steps[step]}
-                  </div>
-                ))}
+                <div className={`${styles['step']} ${styles['active']}`}>{t.aiDetection.processing.steps.simulation}</div>
+                <div className={`${styles['step']} ${styles['active']}`}>{t.aiDetection.processing.steps.generation}</div>
+                <div className={`${styles['step']} ${styles['active']}`}>{t.aiDetection.processing.steps.testing}</div>
+                <div className={styles['step']}>{t.aiDetection.processing.steps.completion}</div>
               </div>
             </motion.div>
           )}
 
-          {errorMessage && (
+          {/* Error State */}
+          {error && (
             <motion.div
               className={styles['error-state']}
               initial={{ opacity: 0 }}
@@ -465,9 +696,12 @@ const AIMusicDetectionPage: NextPage = () => {
             >
               <AlertTriangle size={48} />
               <h3>{t.aiDetection.error.title}</h3>
-              <p>{errorMessage}</p>
+              <p>{error}</p>
               <button
-                onClick={resetAll}
+                onClick={() => {
+                  setError(null)
+                  setProcessingState('idle')
+                }}
                 className={styles['btn-primary']}
               >
                 {t.aiDetection.error.tryAgain}
@@ -475,6 +709,7 @@ const AIMusicDetectionPage: NextPage = () => {
             </motion.div>
           )}
 
+          {/* Analysis Results */}
           {analysisResult && renderAnalysisResult()}
         </div>
       </div>

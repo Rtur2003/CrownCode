@@ -10,6 +10,18 @@ import {
 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
+interface FooterLink {
+  label: string
+  href: string
+  external?: boolean
+}
+
+interface FooterSection {
+  title: string
+  links: FooterLink[]
+}
+
+
 export const Footer: React.FC = () => {
   const { t } = useLanguage()
   const currentYear = new Date().getFullYear()
@@ -27,7 +39,6 @@ export const Footer: React.FC = () => {
       links: [
         { label: t.footer.sections.products.aiMusic, href: '/ai-music-detection' },
         { label: t.footer.sections.products.dataProcessing, href: '/data-manipulation' },
-        { label: t.footer.sections.products.fortune || 'Crown Fortune', href: '/crown-fortune' },
       ],
     },
     {

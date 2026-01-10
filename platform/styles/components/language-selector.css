@@ -72,7 +72,7 @@
 }
 
 .language-option.active {
-  background: rgba(231, 199, 122, 0.12);
+  background: rgba(251, 191, 36, 0.1);
   color: var(--color-gold-400);
 }
 

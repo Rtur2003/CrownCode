@@ -1,168 +1,199 @@
 # CrownCode Backend
 
-YouTube-first backend service for AI music detection workflows.
+Backend services for AI Music Detection and Data Processing
 
----
-
-## Hugging Face Spaces Deployment
-
-### Quick Deploy
-
-1. **Hugging Face Space Olustur**
-   - [huggingface.co/new-space](https://huggingface.co/new-space) adresine git
-   - Space Name: `crowncode-backend`
-   - SDK: **Docker** (onemli!)
-   - Hardware: **CPU Basic (Free)**
-
-2. **Dosyalari Yukle**
-   - Space sayfasinda "Files" sekmesine git
-   - "Add file" > "Upload files" tikla
-   - Su dosyalari yukle:
-     - `Dockerfile`
-     - `requirements.txt`
-     - `app/` klasoru (tum icerigi ile)
-
-3. **Deploy**
-   - "Commit changes" butonuna bas
-   - 3-5 dakika icinde build tamamlanir
-
-### URL Format
-```
-https://KULLANICI_ADI-crowncode-backend.hf.space
-```
-
-### Test Endpoints
-```
-GET  /api/health     -> {"status": "healthy"}
-GET  /docs           -> Swagger UI
-POST /api/youtube/analyze
-```
-
----
-
-## What This Service Does
-
-- Accepts a YouTube URL
-- Downloads audio via `yt-dlp`
-- Optionally forwards the audio to external services:
-  - Music-AIDetector (`/predict`)
-  - Ses-Analizi (`/analyze`)
-- Produces a deterministic preview decision if no model is available
-
----
-
-## Structure
+## 🏗️ Structure
 
 ```
 backend/
-  Dockerfile          <- Hugging Face Spaces icin
-  requirements.txt    <- CPU-compatible dependencies
-  app/
-    main.py
-    schemas.py
-    routes/
-      health.py
-      youtube.py
-      data_processing.py
-    services/
-      external_clients.py
-      url_parser.py
-      youtube_analysis.py
-      youtube_downloader.py
-      audio_processor.py
-      validation.py
-      logging_config.py
-      preview_model.py
+├── api/              # API endpoints
+│   ├── analyze.py    # Music analysis endpoint
+│   ├── health.py     # Health check endpoint
+│   └── version.py    # Version information endpoint
+├── services/         # Business logic
+│   ├── audio.py      # Audio processing
+│   └── model.py      # AI model inference
+├── validators/       # Input validation
+│   └── audio.py      # Audio file validation
+├── config.py         # Configuration management
+├── exceptions.py     # Custom exceptions
+├── logging_config.py # Logging infrastructure
+├── main.py           # Application entry point
+└── requirements.txt  # Python dependencies
 ```
 
----
+## 🔧 Technology Stack
 
-## API Endpoints
+### Core Framework
+- **Python**: 3.11+
+- **Framework**: FastAPI with async support
+- **Validation**: Pydantic v2
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/health` | Health check |
-| POST | `/api/youtube/analyze` | Analyze YouTube video |
-| POST | `/api/data/augment/audio` | Audio augmentation |
-| POST | `/api/data/augment/image` | Image augmentation |
+### AI/ML
+- **PyTorch**: 2.4+ with CUDA 12.9 support (optional)
+- **Transformers**: Hugging Face transformers library
+- **Model**: facebook/wav2vec2-base + custom classifier (ready for integration)
 
-### POST /api/youtube/analyze
+### Audio Processing
+- **librosa**: Audio analysis and feature extraction
+- **soundfile**: Audio file I/O
+- **audioread**: Additional format support
 
-Request body:
-```json
-{
-  "url": "https://www.youtube.com/watch?v=VIDEO_ID",
-  "include_raw": false
-}
-```
+### Data Processing
+- **numpy**: Numerical operations
+- **pandas**: Data manipulation
 
-Response:
-```json
-{
-  "summary": {
-    "decision": "ai_generated",
-    "confidence": 0.85,
-    "source": "preview_model"
-  },
-  "music_ai": { ... },
-  "ses_analizi": { ... },
-  "warnings": [],
-  "errors": []
-}
-```
+## 📦 Installation
 
----
+### 1. Prerequisites
 
-## Environment Variables
+- Python 3.11 or higher
+- pip 23.0+
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `CROWNCODE_CORS_ORIGINS` | `*` | Allowed CORS origins |
-| `MUSIC_AI_API_URL` | - | Music-AIDetector service URL |
-| `SES_ANALIZI_API_URL` | - | Ses-Analizi service URL |
-| `CROWNCODE_API_TIMEOUT_SEC` | `30` | External service timeout |
-| `SES_ANALIZI_THRESHOLD` | `0.5` | Authenticity score threshold |
-| `LOG_LEVEL` | `INFO` | Logging level |
-
----
-
-## Frontend Configuration
-
-Backend deploy edildikten sonra frontend `.env` dosyasini guncelle:
-
-```env
-NEXT_PUBLIC_API_URL=https://kullaniciadi-crowncode-backend.hf.space
-```
-
----
-
-## Local Development
+### 2. Create Virtual Environment
 
 ```bash
-# Install dependencies
+cd backend
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+### 3. Install Dependencies
+
+```bash
+# Install base dependencies
 pip install -r requirements.txt
 
-# Install PyTorch CPU
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-
-# Run server
-uvicorn app.main:app --reload --port 8000
+# Optional: Install PyTorch with CUDA support for GPU acceleration
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 ```
 
----
-
-## Docker Local Build
+### 4. Configure Environment
 
 ```bash
-docker build -t crowncode-backend .
-docker run -p 7860:7860 crowncode-backend
+cp .env.example .env
+# Edit .env with your configuration
 ```
+
+### 5. Run Development Server
+
+```bash
+# Using uvicorn directly
+uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
+
+# Or using Python module
+python -m uvicorn backend.main:app --reload
+```
+
+The API will be available at:
+- **API**: http://localhost:8000
+- **Interactive Docs**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
+
+## 🚀 Available Endpoints
+
+### Health & Info
+- `GET /api/v1/health` - System health check
+- `GET /api/v1/version` - Version and feature information
+
+### Analysis
+- `POST /api/v1/analyze` - Analyze audio file for AI detection
+
+## 🧪 Testing
+
+```bash
+# Run tests
+pytest
+
+# Run with coverage
+pytest --cov=backend --cov-report=html
+
+# Run specific test file
+pytest tests/test_audio.py
+```
+
+## 🎨 Code Quality
+
+### Linting with Ruff
+
+```bash
+# Check code
+ruff check .
+
+# Fix auto-fixable issues
+ruff check --fix .
+```
+
+### Formatting with Black
+
+```bash
+# Check formatting
+black --check .
+
+# Format code
+black .
+```
+
+## 📝 Development Status
+
+### ✅ Completed
+- [x] FastAPI application structure
+- [x] Configuration management with environment variables
+- [x] Structured logging with rotation
+- [x] Audio file validation
+- [x] Error handling and custom exceptions
+- [x] Health check endpoint
+- [x] Version information endpoint
+- [x] Analysis endpoint structure
+- [x] Audio processing service
+- [x] Model service infrastructure
+
+### 🚧 In Progress / Planned
+- [ ] Actual wav2vec2 model integration
+- [ ] Real audio feature extraction with librosa
+- [ ] Model training pipeline
+- [ ] Batch processing endpoints
+- [ ] Streaming platform integration (YouTube, Spotify, SoundCloud)
+- [ ] Data augmentation endpoints
+- [ ] Comprehensive test suite
+- [ ] API rate limiting
+- [ ] Caching layer
+- [ ] Database integration
+
+## 🎯 Current Implementation Notes
+
+The backend is currently in **demo mode** with placeholder responses for the AI model:
+
+1. **Model Service** (`services/model.py`): Ready for wav2vec2 integration, currently returns demo predictions
+2. **Audio Processing** (`services/audio.py`): File validation works, feature extraction is placeholder
+3. **Analysis Endpoint** (`api/analyze.py`): Full workflow implemented, uses demo model
+
+This structure ensures the frontend can develop against a working API while the AI model is being trained.
+
+## 🔐 Security
+
+- Input validation on all endpoints
+- File size limits enforced
+- Temporary file cleanup
+- Type-safe with Pydantic models
+- Proper error handling
+
+## 📊 Monitoring
+
+- Structured logging with loguru
+- Health check with system metrics
+- Request/response logging
+- Error tracking
+
+## 🤝 Contributing
+
+1. Follow Python PEP 8 style guide
+2. Use type hints
+3. Write docstrings for all functions
+4. Add tests for new features
+5. Run linters before committing
 
 ---
 
-## Notes
-
-- `yt-dlp` requires network access and works best with `ffmpeg` installed
-- When external services are not configured, returns preview decision
-- Hugging Face free tier has 16GB RAM and 2 vCPU
-- Build may take 5-10 minutes due to PyTorch installation
+**Status**: Active Development
+**Target**: Q2 2025 for full AI model integration

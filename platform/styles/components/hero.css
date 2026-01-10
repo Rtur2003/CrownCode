@@ -6,10 +6,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background:
-    radial-gradient(120% 120% at 20% 10%, rgba(234, 192, 111, 0.15) 0%, transparent 45%),
-    radial-gradient(120% 120% at 80% 0%, rgba(138, 95, 43, 0.2) 0%, transparent 55%),
-    linear-gradient(180deg, #0b0a08 0%, #0f0d0a 50%, #0b0a08 100%);
+  background: var(--color-background);
   padding-top: 5rem; /* 80px clearance for fixed header (64px) + spacing */
 }
 
@@ -23,33 +20,21 @@
 .hero-gradient {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(60% 60% at 15% 20%, rgba(231, 199, 122, 0.18) 0%, transparent 65%),
-    radial-gradient(50% 50% at 85% 25%, rgba(154, 107, 43, 0.2) 0%, transparent 70%),
-    linear-gradient(180deg, rgba(11, 10, 8, 0.9) 0%, rgba(11, 10, 8, 0.4) 100%);
+  background: radial-gradient(
+    ellipse 80% 50% at 50% 40%,
+    rgba(251, 191, 36, 0.1) 0%,
+    rgba(251, 191, 36, 0.05) 40%,
+    transparent 100%
+  );
 }
 
 .hero-pattern {
   position: absolute;
   inset: 0;
-  opacity: 0.5;
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(244, 237, 227, 0.05) 1px, transparent 0),
-    linear-gradient(120deg, rgba(138, 95, 43, 0.08), rgba(0, 0, 0, 0) 60%);
-  background-size: 24px 24px, 100% 100%;
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
   animation: patternFloat 20s linear infinite;
-}
-
-.hero-background::after {
-  content: '';
-  position: absolute;
-  inset: -10% -10% auto;
-  height: 120%;
-  background: url('/images/panel/discord.png') right 10% top 20% / 320px auto no-repeat;
-  opacity: 0.12;
-  mix-blend-mode: screen;
-  filter: saturate(0.9) contrast(1.05);
-  pointer-events: none;
 }
 
 @keyframes patternFloat {
@@ -93,17 +78,17 @@
   font-size: 0.875rem;
   font-weight: 500;
   width: fit-content;
-  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   animation: badgePulse 3s ease-in-out infinite;
 }
 
 @keyframes badgePulse {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(201, 147, 71, 0.35);
+    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.3);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(201, 147, 71, 0);
+    box-shadow: 0 0 0 8px rgba(251, 191, 36, 0);
   }
 }
 
@@ -125,8 +110,8 @@
   font-size: clamp(2.5rem, 7vw, 4rem);
   font-weight: 300;
   background: var(--gradient-primary);
-  -webkit-background-clip: text;
   background-clip: text;
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% 200%;
   animation: gradientShift 4s ease-in-out infinite;
@@ -174,8 +159,6 @@
 
 .hero-btn-primary,
 .hero-btn-secondary {
-.hero-btn-primary,
-.hero-btn-secondary {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -193,19 +176,16 @@
 }
 
 .hero-btn-primary {
-.hero-btn-primary {
   background: var(--gradient-primary);
   color: var(--color-text-inverse);
-  box-shadow: 0 4px 18px rgba(201, 147, 71, 0.35);
+  box-shadow: 0 4px 16px rgba(251, 191, 36, 0.3);
 }
 
-.hero-btn-primary:hover {
 .hero-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 36px rgba(201, 147, 71, 0.45);
+  box-shadow: 0 8px 32px rgba(251, 191, 36, 0.4);
 }
 
-.hero-btn-primary:active {
 .hero-btn-primary:active {
   transform: translateY(0);
 }
@@ -221,48 +201,16 @@
 }
 
 .hero-btn-secondary {
-.hero-btn-secondary {
   background: transparent;
   color: var(--color-text-primary);
   border: 2px solid var(--color-border);
 }
 
 .hero-btn-secondary:hover {
-.hero-btn-secondary:hover {
   border-color: var(--color-gold-400);
   color: var(--color-gold-400);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(201, 147, 71, 0.12);
-}
-
-.hero-visual-panels {
-  position: absolute;
-  inset: -10% -10% -10% -10%;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero-panel {
-  position: absolute;
-  max-width: 260px;
-  width: 60%;
-  height: auto;
-  opacity: 0.8;
-  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.4));
-  transform: rotate(-6deg);
-}
-
-.hero-panel-primary {
-  top: 12%;
-  right: 0;
-  opacity: 0.7;
-}
-
-.hero-panel-secondary {
-  bottom: 12%;
-  right: 20%;
-  opacity: 0.6;
-  transform: rotate(8deg);
+  box-shadow: 0 8px 32px rgba(251, 191, 36, 0.1);
 }
 
 /* Visual Element */
@@ -271,7 +219,6 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  isolation: isolate;
 }
 
 .hero-card {
@@ -280,13 +227,11 @@
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-2xl);
-  -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   animation: float 6s ease-in-out infinite;
-  position: relative;
-  z-index: 1;
 }
 
 .hero-card-header {
@@ -294,7 +239,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.5rem;
-  background: rgba(15, 12, 9, 0.85);
+  background: rgba(26, 26, 26, 0.8);
   border-bottom: 1px solid var(--glass-border);
 }
 
@@ -311,15 +256,15 @@
 }
 
 .hero-card-dots span:nth-child(1) {
-  background: var(--color-error);
+  background: #ef4444;
 }
 
 .hero-card-dots span:nth-child(2) {
-  background: var(--color-warning);
+  background: #f59e0b;
 }
 
 .hero-card-dots span:nth-child(3) {
-  background: var(--color-success);
+  background: #10b981;
 }
 
 .hero-card-title {
@@ -343,23 +288,23 @@
 }
 
 .code-comment {
-  color: var(--color-text-muted);
+  color: #6b7280;
 }
 
 .code-keyword {
-  color: var(--color-primary);
+  color: #ec4899;
 }
 
 .code-variable {
-  color: var(--color-info);
+  color: #3b82f6;
 }
 
 .code-function {
-  color: var(--color-success);
+  color: #10b981;
 }
 
 .code-string {
-  color: var(--color-gold-500);
+  color: #f59e0b;
 }
 
 .code-brace,
@@ -460,11 +405,7 @@
 
   .hero-btn-primary,
   .hero-btn-secondary {
-
-  .hero-btn-primary,
-  .hero-btn-secondary {
     width: 100%;
-    max-width: 320px;
     max-width: 320px;
     justify-content: center;
   }
@@ -507,8 +448,8 @@
   .hero-title-accent {
     animation: none;
     background: var(--color-gold-400);
-    -webkit-background-clip: text;
     background-clip: text;
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   

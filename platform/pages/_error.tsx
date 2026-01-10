@@ -10,7 +10,6 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { AlertTriangle, Home, RefreshCcw } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
-import { useLanguage } from '@/context/LanguageContext'
 
 interface ErrorProps {
   statusCode?: number
@@ -18,29 +17,28 @@ interface ErrorProps {
 }
 
 const ErrorPage: NextPage<ErrorProps> = ({ statusCode, title }) => {
-  const { t } = useLanguage()
   const isServerError = statusCode && statusCode >= 500
   const isClientError = statusCode && statusCode >= 400 && statusCode < 500
 
   const getErrorTitle = () => {
     if (title) { return title }
-    if (statusCode === 404) { return t.errorPage.titles.notFound }
-    if (isServerError) { return t.errorPage.titles.serverError }
-    if (isClientError) { return t.errorPage.titles.clientError }
-    return t.errorPage.titles.default
+    if (statusCode === 404) { return 'Sayfa Bulunamadı' }
+    if (isServerError) { return 'Sunucu Hatası' }
+    if (isClientError) { return 'İstek Hatası' }
+    return 'Bir Hata Oluştu'
   }
 
   const getErrorMessage = () => {
     if (statusCode === 404) {
-      return t.errorPage.messages.notFound
+      return 'Aradığınız sayfa bulunamadı.'
     }
     if (isServerError) {
-      return t.errorPage.messages.serverError
+      return 'Sunucumuzda bir sorun oluştu. Lütfen daha sonra tekrar deneyin.'
     }
     if (isClientError) {
-      return t.errorPage.messages.clientError
+      return 'İsteğiniz işlenirken bir hata oluştu.'
     }
-    return t.errorPage.messages.default
+    return 'Beklenmeyen bir hata oluştu.'
   }
 
   return (
@@ -91,12 +89,12 @@ const ErrorPage: NextPage<ErrorProps> = ({ statusCode, title }) => {
                 className="btn btn-primary"
               >
                 <RefreshCcw size={18} />
-                <span>{t.errorPage.actions.refresh}</span>
+                <span>Sayfayı Yenile</span>
               </button>
 
               <Link href="/" className="btn btn-secondary">
                 <Home size={18} />
-                <span>{t.errorPage.actions.home}</span>
+                <span>Ana Sayfaya Dön</span>
               </Link>
             </div>
 
@@ -104,7 +102,7 @@ const ErrorPage: NextPage<ErrorProps> = ({ statusCode, title }) => {
             {isServerError && (
               <div className="error-help-text">
                 <p>
-                  {t.errorPage.helpPrefix}{' '}
+                  Sorun devam ederse, lütfen{' '}
                   <a
                     href="https://github.com/Rtur2003?tab=repositories"
                     target="_blank"
@@ -113,7 +111,7 @@ const ErrorPage: NextPage<ErrorProps> = ({ statusCode, title }) => {
                   >
                     GitHub
                   </a>
-                  {' '}{t.errorPage.helpSuffix}
+                  {' '}üzerinden bize ulaşın.
                 </p>
               </div>
             )}

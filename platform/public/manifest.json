@@ -1,24 +1,16 @@
 {
   "name": "CrownCode - AI Research Platform",
-  "name": "CrownCode - AI Research Platform",
   "short_name": "CrownCode",
-  "description": "AI-powered music detection and data analysis research platform",
   "description": "AI-powered music detection and data analysis research platform",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0b0a08",
-  "theme_color": "#e7c77a",
+  "background_color": "#0f0f0f",
+  "theme_color": "#fbbf24",
   "orientation": "portrait-primary",
   "icons": [
     {
       "src": "/favicon.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/logo-main.png",
-      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
@@ -32,10 +24,6 @@
     {
       "name": "ML Toolkit",
       "url": "/data-manipulation"
-    },
-    {
-      "name": "Crown Destiny",
-      "url": "/crown-fortune"
     }
   ]
 }

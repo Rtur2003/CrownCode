@@ -3,29 +3,7 @@
 @tailwind utilities;
 
 /* Fonts */
-@font-face {
-  font-family: 'IM Fell Double Pica';
-  src: url('/fonts/im-fell-double-pica-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IM Fell Double Pica';
-  src: url('/fonts/im-fell-double-pica-italic.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Portmanteau';
-  src: url('/fonts/portmanteau-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
 
 /* Base Styles - Order matters! */
 @import './base/variables.css';

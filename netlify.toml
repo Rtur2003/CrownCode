@@ -1,15 +1,11 @@
 [build]
   base = "platform"
-  command = "corepack prepare npm@10.9.2 --activate && npm install --prefix . && npm run build --prefix ."
+  command = "npm install --prefix . && npm run build --prefix ."
   publish = "out"
-
-[functions]
-  directory = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "20"
   NODE_OPTIONS = "--max-old-space-size=4096"
-  SECRETS_SCAN_ENABLED = "false"
 
 [[redirects]]
   from = "/*"

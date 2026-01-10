@@ -17,31 +17,12 @@ env/
 ENV/
 .venv
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-venv/
-env/
-ENV/
-.venv
-
 # Build outputs
 .next/
 out/
 build/
 dist/
 coverage/
-
-# AI/ML Models
-*.pth
-*.pt
-*.ckpt
-*.safetensors
-models/checkpoints/
-models/weights/
 
 # AI/ML Models
 *.pth
@@ -107,8 +88,6 @@ coverage/
 
 # Claude
 .claude
-CLAUDE_SYSTEM_PROMPT.md
-
 # Source Maps (production - don't commit)
 *.map
 !**/*.map.d.ts
@@ -125,7 +104,3 @@ react-native/
 *.apk
 *.ipa
 *.aab
-.mypy_cache/
-.dmypy.json
-.pyre/
-.pytype/    

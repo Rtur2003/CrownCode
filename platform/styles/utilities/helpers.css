@@ -17,7 +17,7 @@
 }
 
 .text-shadow-glow {
-  text-shadow: 0 0 20px rgba(201, 147, 71, 0.5);
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
 }
 
 /* Background Utilities */
@@ -53,11 +53,11 @@
 
 /* Shadow Utilities */
 .shadow-glow {
-  box-shadow: 0 0 20px rgba(201, 147, 71, 0.3);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
 }
 
 .shadow-glow-strong {
-  box-shadow: 0 0 30px rgba(201, 147, 71, 0.5);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
 }
 
 .shadow-elevated {
@@ -76,8 +76,8 @@
 }
 
 .border-glow {
-  border: 1px solid rgba(201, 147, 71, 0.3);
-  box-shadow: 0 0 10px rgba(201, 147, 71, 0.2);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
 }
 
 /* Flexbox Utilities */
@@ -183,6 +183,7 @@
 
 .scrollbar-hide {
   -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -269,7 +270,7 @@
   display: inline-block;
   width: 1em;
   height: 1em;
-  border: 2px solid rgba(201, 147, 71, 0.3);
+  border: 2px solid rgba(245, 158, 11, 0.3);
   border-top-color: var(--color-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -285,7 +286,6 @@
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  line-clamp: 2; /* Added standard property */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -293,7 +293,6 @@
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
-  line-clamp: 3; /* Added standard property */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

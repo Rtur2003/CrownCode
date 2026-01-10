@@ -52,9 +52,16 @@ export const useSearch = () => {
     },
     // Features
     {
+      id: 'upload',
+      title: t.search?.features?.upload || 'Upload File',
+      description: 'Upload audio file for analysis',
+      href: '/ai-music-detection#upload',
+      category: 'features' as const
+    },
+    {
       id: 'url-analysis',
       title: t.search?.features?.urlAnalysis || 'URL Analysis',
-      description: 'Analyze a YouTube link',
+      description: 'Analyze from URL',
       href: '/ai-music-detection#url',
       category: 'features' as const
     },

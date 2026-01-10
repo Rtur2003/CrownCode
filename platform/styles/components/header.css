@@ -11,8 +11,8 @@
 
 .header-scrolled {
   background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--glass-border);
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.2);
 }
@@ -58,17 +58,11 @@
   border-radius: var(--radius-lg);
   color: var(--color-text-inverse);
   transition: all var(--animation-normal) var(--ease-out-cubic);
-  position: relative;
-}
-
-.logo-icon svg {
-  position: relative;
-  z-index: 1;
 }
 
 .header-logo:hover .logo-icon {
   transform: rotate(5deg) scale(1.1);
-  box-shadow: 0 8px 24px rgba(201, 147, 71, 0.35);
+  box-shadow: 0 8px 24px rgba(251, 191, 36, 0.3);
 }
 
 .logo-text {
@@ -175,7 +169,7 @@
 .action-button:hover {
   color: var(--color-text-inverse);
   border-color: var(--color-gold-400);
-  box-shadow: 0 8px 24px rgba(201, 147, 71, 0.25);
+  box-shadow: 0 8px 24px rgba(251, 191, 36, 0.2);
 }
 
 .action-button:hover::before {
@@ -215,8 +209,8 @@
   left: 1.5rem;
   right: 1.5rem;
   background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);

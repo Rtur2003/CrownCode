@@ -82,9 +82,6 @@
 /.github/workflows/ @Rtur2003
 /.github/ISSUE_TEMPLATE/ @Rtur2003
 /.github/PULL_REQUEST_TEMPLATE/ @Rtur2003
-/.github/ENGINEERING_STANDARDS.md @Rtur2003
-/.commitlintrc.js @Rtur2003
-/.pre-commit-config.yaml @Rtur2003
 
 # Deployment configuration
 /vercel.json @Rtur2003

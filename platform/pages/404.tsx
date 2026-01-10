@@ -23,7 +23,7 @@ const NotFoundPage: NextPage = () => {
           >
             {/* 404 Number */}
             <motion.h1
-              className="text-9xl font-bold bg-gradient-to-r from-accent via-primary to-secondary bg-clip-text text-transparent mb-8"
+              className="text-9xl font-bold bg-gradient-to-r from-amber-400 via-yellow-500 to-orange-600 bg-clip-text text-transparent mb-8"
               initial={{ scale: 0.5 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.5, type: "spring" }}
@@ -32,12 +32,12 @@ const NotFoundPage: NextPage = () => {
             </motion.h1>
 
             {/* Title */}
-            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               {language === 'tr' ? 'Sayfa Bulunamadı' : 'Page Not Found'}
             </h2>
 
             {/* Description */}
-            <p className="text-lg text-text-secondary mb-8 max-w-md mx-auto">
+            <p className="text-lg text-gray-400 mb-8 max-w-md mx-auto">
               {language === 'tr'
                 ? 'Aradığınız sayfa taşınmış, silinmiş veya hiç var olmamış olabilir.'
                 : 'The page you are looking for might have been moved, deleted, or never existed.'
@@ -61,25 +61,25 @@ const NotFoundPage: NextPage = () => {
             </div>
 
             {/* Helpful Links */}
-            <div className="mt-12 pt-8 border-t border-border">
-              <p className="text-sm text-text-muted mb-4">
+            <div className="mt-12 pt-8 border-t border-gray-800">
+              <p className="text-sm text-gray-500 mb-4">
                 {language === 'tr' ? 'Size yardımcı olabilecek sayfalar:' : 'Pages that might help:'}
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
-                <Link href="/#products" className="text-primary hover:text-accent transition-colors">
+                <Link href="/#products" className="text-amber-400 hover:text-amber-300 transition-colors">
                   {language === 'tr' ? 'Projeler' : 'Projects'}
                 </Link>
-                <Link href="/ai-music-detection" className="text-primary hover:text-accent transition-colors">
+                <Link href="/ai-music-detection" className="text-amber-400 hover:text-amber-300 transition-colors">
                   AI Music Detection
                 </Link>
-                <Link href="/data-manipulation" className="text-primary hover:text-accent transition-colors">
+                <Link href="/data-manipulation" className="text-amber-400 hover:text-amber-300 transition-colors">
                   ML Toolkit
                 </Link>
                 <a
                   href="https://github.com/Rtur2003?tab=repositories"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary hover:text-accent transition-colors"
+                  className="text-amber-400 hover:text-amber-300 transition-colors"
                 >
                   GitHub
                 </a>
