@@ -48,7 +48,7 @@ const CATEGORY_COLORS: Record<FortuneCategory, string> = {
 }
 
 const CrownFortunePage: NextPage = () => {
-  const { language } = useLanguage()
+  const { language, t } = useLanguage()
   const [destiny, setDestiny] = useState<DailyDestiny | null>(null)
   const [isSpinning, setIsSpinning] = useState(false)
   const [isCardFlipped, setIsCardFlipped] = useState(false)
