@@ -39,7 +39,7 @@ export default function Document() {
               author: {
                 '@type': 'Person',
                 name: 'Hasan Arthur Altuntaş',
-                url: 'https://github.com/hasanarthuraltuntas'
+                url: 'https://github.com/Rtur2003'
               },
               potentialAction: {
                 '@type': 'SearchAction',

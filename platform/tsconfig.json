@@ -26,7 +26,8 @@
       "@/hooks/*": ["./hooks/*"],
       "@/context/*": ["./context/*"],
       "@/public/*": ["./public/*"],
-      "@/locales/*": ["./locales/*"]
+      "@/locales/*": ["./locales/*"],
+      "@/data/*": ["./data/*"]
     },
     "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": false,
