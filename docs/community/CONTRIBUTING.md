@@ -43,7 +43,7 @@ git remote add upstream https://github.com/hasanarthuraltuntas/ai-music-platform
 cd frontend && npm install
 
 # Backend dependencies
-cd ../backend && npm install
+cd ../backend && pip install -r requirements.txt
 ```
 
 2. Environment dosyalarını oluşturun:

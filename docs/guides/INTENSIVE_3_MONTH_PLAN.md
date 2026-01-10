@@ -22,7 +22,7 @@ npm install -g netlify-cli@latest
 
 # Proje dependencies:
 cd frontend && npm install
-cd ../backend && npm install
+cd ../backend && pip install -r requirements.txt
 
 # Environment variables:
 cp .env.example .env.local
@@ -36,8 +36,8 @@ cd frontend && npm run dev
 # http://localhost:3000 kontrol et
 
 # Backend test:
-cd backend && npm run dev
-# http://localhost:3001/api/health kontrol et
+cd backend && uvicorn app.main:app --reload --port 8000
+# http://localhost:8000/api/health kontrol et
 ```
 
 ---
