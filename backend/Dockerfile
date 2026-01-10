@@ -4,7 +4,8 @@
 # SDK: Docker | Hardware: CPU Basic (Free)
 # ============================================
 
-FROM python:3.10-slim
+# Python 3.11 slim imajını kullan
+FROM python:3.11-slim
 
 # Çalışma dizini
 WORKDIR /app

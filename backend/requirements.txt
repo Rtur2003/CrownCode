@@ -1,45 +1,46 @@
-# ============================================
-# CrownCode Backend Dependencies
-# Hugging Face Spaces (CPU Basic - Free Tier)
-# ============================================
-# PyTorch CPU version is installed via Dockerfile
-# ============================================
-
 # === Core Framework ===
-fastapi==0.109.0
-uvicorn[standard]==0.27.0
-pydantic==2.5.3
-python-multipart==0.0.6
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.3
+python-multipart>=0.0.6
 
-# === AI/ML (CPU) ===
-# PyTorch CPU installed separately in Dockerfile
-transformers==4.37.0
-accelerate==0.26.0
-datasets==2.16.1
+# === AI/ML (CPU version for Hugging Face Spaces) ===
+# We will install torch CPU explicitly in Dockerfile to save space, 
+# but keeping it here without version pin is good practice for local dev.
+# torch
+# torchvision
+# torchaudio
+
+transformers>=4.37.0
+accelerate>=0.26.0
+datasets>=2.16.1
 
 # === Audio Processing ===
-librosa==0.10.1
-soundfile==0.12.1
-audioread==3.0.1
-resampy==0.4.2
+librosa>=0.10.1
+soundfile>=0.12.1
+audioread>=3.0.1
+resampy>=0.4.2
 
 # === Data Processing ===
-numpy==1.26.3
-pandas==2.1.4
-scipy==1.11.4
+numpy>=1.26.3
+pandas>=2.1.4
+scipy>=1.11.4
 
 # === API & Web ===
-aiohttp==3.9.1
-httpx==0.26.0
-requests==2.31.0
+aiohttp>=3.9.1
+httpx>=0.26.0
+requests>=2.31.0
 
 # === Utilities ===
-python-dotenv==1.0.0
-pyyaml==6.0.1
-click==8.1.7
+python-dotenv>=1.0.0
+pyyaml>=6.0.1
+click>=8.1.7
 
 # === Monitoring & Logging ===
-loguru==0.7.2
+loguru>=0.7.2
+prometheus-client>=0.19.0
 
-# === YouTube Download ===
-yt-dlp==2024.1.0
+# === YouTube/Spotify ===
+# yt-dlp should always be latest to support new youtube updates
+yt-dlp>=2024.1.0
+spotdl>=4.2.4
