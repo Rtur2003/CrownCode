@@ -28,13 +28,22 @@ import {
 } from '@/data/destiny'
 import styles from '@/styles/pages/crown-fortune.module.css'
 
-// Kategori ikonları
+// Kategori ikonları - Wheel için
 const CATEGORY_ICONS: Record<FortuneCategory, React.ReactNode> = {
-  love: <Heart size={28} />,
-  career: <Briefcase size={28} />,
-  money: <Coins size={28} />,
-  health: <Activity size={28} />,
-  spirit: <Sparkles size={28} />
+  love: <Heart size={24} />,
+  career: <Briefcase size={24} />,
+  money: <Coins size={24} />,
+  health: <Activity size={24} />,
+  spirit: <Sparkles size={24} />
+}
+
+// Kart içindeki küçük ikonlar
+const CATEGORY_ICONS_SMALL: Record<FortuneCategory, React.ReactNode> = {
+  love: <Heart size={12} />,
+  career: <Briefcase size={12} />,
+  money: <Coins size={12} />,
+  health: <Activity size={12} />,
+  spirit: <Sparkles size={12} />
 }
 
 // Kategori renkleri
@@ -285,40 +294,61 @@ const CrownFortunePage: NextPage = () => {
                       <span className={styles['card-back-text']}>Crown Destiny</span>
                     </div>
 
-                    {/* CARD FRONT */}
+                    {/* CARD FRONT - Full Image Background */}
                     <div className={`${styles['card-face']} ${styles['card-front']}`}>
-                      <div className={styles['card-image-container']}>
+                      {/* Full Background Image */}
+                      <div className={styles['card-background']}>
                         <Image
                           src={details.card.image}
                           alt={cardName}
                           fill
-                          className={styles['card-image']}
+                          className={styles['card-bg-image']}
                           sizes="(max-width: 768px) 100vw, 300px"
                           priority
                         />
                       </div>
-                      <h2 className={styles['card-name']}>{cardName}</h2>
-                      <div
-                        className={styles['card-category']}
-                        style={{ backgroundColor: CATEGORY_COLORS[destiny.category] }}
-                      >
-                        {CATEGORY_ICONS[destiny.category]}
-                        <span>{catLabel}</span>
-                      </div>
-                      <div className={styles['card-energy']}>
-                        {energyText}
-                      </div>
-                      <div className={styles['card-message']}>
-                        <p>{details.message.text}</p>
-                      </div>
-                      <div className={styles['card-footer']}>
-                        <Star size={12} />
-                        <span className={styles['card-date']}>
-                          {new Date().toLocaleDateString(language === 'tr' ? 'tr-TR' : 'en-US', {
-                            day: 'numeric',
-                            month: 'long'
-                          })}
-                        </span>
+
+                      {/* Gradient Overlay */}
+                      <div className={styles['card-overlay']} />
+
+                      {/* Sheen Effect */}
+                      <div className={styles['card-sheen']} />
+
+                      {/* Content at Bottom */}
+                      <div className={styles['card-content']}>
+                        {/* Header: Symbol + Name */}
+                        <div className={styles['card-header']}>
+                          <span className={styles['card-symbol']}>{details.card.symbol}</span>
+                          <h2 className={styles['card-name']}>{cardName}</h2>
+                        </div>
+
+                        {/* Meta: Category + Energy */}
+                        <div className={styles['card-meta']}>
+                          <div
+                            className={styles['card-category']}
+                            style={{ backgroundColor: CATEGORY_COLORS[destiny.category] }}
+                          >
+                            {CATEGORY_ICONS_SMALL[destiny.category]}
+                            <span>{catLabel}</span>
+                          </div>
+                          <span className={styles['card-energy']}>{energyText}</span>
+                        </div>
+
+                        {/* Message */}
+                        <div className={styles['card-message']}>
+                          <p>{details.message.text}</p>
+                        </div>
+
+                        {/* Footer */}
+                        <div className={styles['card-footer']}>
+                          <Star size={12} />
+                          <span className={styles['card-date']}>
+                            {new Date().toLocaleDateString(language === 'tr' ? 'tr-TR' : 'en-US', {
+                              day: 'numeric',
+                              month: 'long'
+                            })}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
