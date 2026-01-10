@@ -4,6 +4,7 @@
 
 .ai-detection-page {
   min-height: 100vh;
+
   background:
     radial-gradient(120% 120% at 18% 10%, rgba(231, 199, 122, 0.18) 0%, transparent 45%),
     radial-gradient(110% 90% at 85% 0%, rgba(138, 95, 43, 0.25) 0%, transparent 55%),
@@ -34,6 +35,7 @@
   mix-blend-mode: screen;
   filter: saturate(0.9) contrast(1.05);
   pointer-events: none;
+
 }
 
 .detection-container {
@@ -41,7 +43,9 @@
   margin: 0 auto;
   padding: 7rem 2rem 2rem; /* 112px top padding (80px header + 32px spacing) */
   position: relative;
+
   z-index: 1;
+
 }
 
 /* =========================================================================
@@ -58,11 +62,13 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+
   background: rgba(231, 199, 122, 0.12);
   border: 1px solid rgba(201, 147, 71, 0.4);
   padding: 0.5rem 1rem;
   border-radius: 2rem;
   color: var(--color-primary);
+
   font-size: 0.875rem;
   font-weight: 500;
   margin-bottom: 1.5rem;
@@ -73,7 +79,9 @@
 .detection-title {
   font-size: 3.5rem;
   font-weight: 800;
+
   background: linear-gradient(135deg, var(--color-text-primary) 0%, var(--color-primary) 100%);
+
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -83,12 +91,17 @@
 
 .detection-subtitle {
   font-size: 1.25rem;
+
   color: var(--color-text-muted);
+
   max-width: 700px;
   margin: 0 auto 2rem;
   line-height: 1.6;
 }
 
+/* =========================================================================
+   DEMO WARNING
+   ========================================================================= */
 .demo-warning-container {
   display: flex;
   justify-content: center;
@@ -127,7 +140,6 @@
   line-height: 1.5;
 }
 
-
 /* =========================================================================
    MAIN INTERFACE
    ========================================================================= */
@@ -139,11 +151,13 @@
   margin-bottom: 3rem;
 }
 
+
 .input-stack {
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
 }
+
 
 @media (max-width: 768px) {
   .detection-interface {
@@ -218,25 +232,32 @@
 
 .upload-dropzone {
   border: 2px dashed rgba(201, 147, 71, 0.4);
+
   border-radius: 1rem;
   padding: 3rem 2rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
+
   background: rgba(21, 17, 14, 0.65);
+
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
 .upload-dropzone:hover,
 .upload-dropzone.drag-over {
+
   border-color: var(--color-primary);
   background: rgba(231, 199, 122, 0.12);
+
   transform: translateY(-2px);
 }
 
 .upload-dropzone svg {
+
   color: var(--color-primary);
+
   margin-bottom: 1rem;
 }
 
@@ -244,19 +265,23 @@
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
+
   color: var(--color-text-primary);
 }
 
 .upload-dropzone p {
   color: var(--color-text-muted);
+
   margin-bottom: 1.5rem;
 }
 
 .supported-formats {
+
   background: rgba(231, 199, 122, 0.12);
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
   color: var(--color-primary);
+
   font-size: 0.875rem;
   font-weight: 500;
 }
@@ -265,12 +290,14 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+
   background: rgba(127, 176, 105, 0.12);
   border: 1px solid rgba(127, 176, 105, 0.4);
   border-radius: 0.75rem;
   padding: 1rem;
   margin-top: 1rem;
   color: var(--color-success);
+
 }
 
 .selected-file span {
@@ -289,8 +316,10 @@
 .url-input-wrapper {
   display: flex;
   align-items: center;
+
   background: rgba(21, 17, 14, 0.85);
   border: 1px solid rgba(201, 147, 71, 0.4);
+
   border-radius: 0.75rem;
   padding: 0 1rem;
   margin-bottom: 1rem;
@@ -298,11 +327,13 @@
 }
 
 .url-input-wrapper:focus-within {
+
   border-color: var(--color-primary);
 }
 
 .url-input-wrapper svg {
   color: var(--color-text-muted);
+
   margin-right: 0.75rem;
 }
 
@@ -317,6 +348,7 @@
 }
 
 .url-input::placeholder {
+
   color: var(--color-text-muted);
 }
 
@@ -371,6 +403,7 @@
   color: var(--color-text-muted);
   font-size: 0.875rem;
   line-height: 1.5;
+
 }
 
 /* =========================================================================
@@ -378,10 +411,12 @@
    ========================================================================= */
 
 .btn-primary {
+
   background: var(--gradient-primary);
   border: none;
   border-radius: 0.75rem;
   color: var(--color-text-inverse);
+
   font-weight: 600;
   padding: 0.875rem 1.5rem;
   cursor: pointer;
@@ -390,11 +425,14 @@
   align-items: center;
   gap: 0.5rem;
   text-decoration: none;
+
   box-shadow: 0 8px 20px rgba(201, 147, 71, 0.3);
+
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
+
   box-shadow: 0 12px 28px rgba(201, 147, 71, 0.4);
 }
 
@@ -404,6 +442,7 @@
   transform: none;
   background: linear-gradient(135deg, #6b5d4f 0%, #4a3f35 100%);
   box-shadow: none;
+
 }
 
 .btn-primary.loading {
@@ -420,7 +459,9 @@
   width: 20px;
   height: 20px;
   margin: -10px 0 0 -10px;
+
   border: 2px solid var(--color-text-primary);
+
   border-radius: 50%;
   border-top-color: transparent;
   animation: spin 1s linear infinite;
@@ -432,10 +473,12 @@
 }
 
 .btn-secondary {
+
   background: rgba(231, 199, 122, 0.12);
   border: 1px solid rgba(201, 147, 71, 0.4);
   border-radius: 0.75rem;
   color: var(--color-gold-400);
+
   font-weight: 600;
   padding: 0.875rem 1.5rem;
   cursor: pointer;
@@ -447,16 +490,20 @@
 }
 
 .btn-secondary:hover:not(:disabled) {
+
   background: rgba(231, 199, 122, 0.2);
+
   transform: translateY(-2px);
 }
 
 .btn-secondary:disabled {
+
   opacity: 0.55;
   cursor: not-allowed;
   background: rgba(90, 78, 66, 0.2);
   border-color: rgba(90, 78, 66, 0.4);
   color: var(--color-text-muted);
+
 }
 
 /* =========================================================================
@@ -475,8 +522,10 @@
 .spinner {
   width: 60px;
   height: 60px;
+
   border: 3px solid rgba(201, 147, 71, 0.4);
   border-top: 3px solid var(--color-primary);
+
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto;
@@ -723,7 +772,6 @@
     flex-direction: column;
     gap: 0.5rem;
   }
-
 
   .result-actions {
     flex-direction: column;

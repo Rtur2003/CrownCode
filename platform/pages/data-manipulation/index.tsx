@@ -56,6 +56,22 @@ const AudioDatasetPage: NextPage = () => {
 
   const tools = [
     {
+      id: 'upload',
+      title: t.audioDataset.tools.upload.title,
+      description: t.audioDataset.tools.upload.description,
+      icon: Upload,
+      gradient: 'from-primary to-secondary',
+      status: 'available'
+    },
+    {
+      id: 'convert',
+      title: t.audioDataset.tools.convert.title,
+      description: t.audioDataset.tools.convert.description,
+      icon: RefreshCw,
+      gradient: 'from-primary to-secondary',
+      status: 'available'
+    },
+    {
       id: 'augment' as ToolId,
       title: t.audioDataset.tools.augment.title,
       description: t.audioDataset.tools.augment.description,
@@ -289,7 +305,6 @@ const AudioDatasetPage: NextPage = () => {
           </AnimatePresence>
         </div>
       </div>
-
     </MainLayout>
   )
 }

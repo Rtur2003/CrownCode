@@ -10,6 +10,9 @@
 [![GitHub Repo](https://img.shields.io/badge/📦_GitHub-CrownCode-black?style=for-the-badge&logo=github)](https://github.com/Rtur2003/CrownCode)
 [![Thesis Report](https://img.shields.io/badge/📄_Thesis-Academic_Report-green?style=for-the-badge)](./docs/academic/ACADEMIC_PROJECT_REPORT_EN.md)
 [![Build Status](https://img.shields.io/badge/🔧_Build-In_Development-yellow?style=for-the-badge)](#)
+[![GitHub Repo](https://img.shields.io/badge/📦_GitHub-CrownCode-black?style=for-the-badge&logo=github)](https://github.com/Rtur2003/CrownCode)
+[![Thesis Report](https://img.shields.io/badge/📄_Thesis-Academic_Report-green?style=for-the-badge)](./docs/academic/ACADEMIC_PROJECT_REPORT_EN.md)
+[![Build Status](https://img.shields.io/badge/🔧_Build-In_Development-yellow?style=for-the-badge)](#)
 
 ---
 
@@ -146,11 +149,18 @@ CrownCode is an advanced web-based platform that combines **artificial intellige
    ```
 
 3. **Install platform dependencies**
+2. **Switch to development branch**
+   ```bash
+   git checkout geliştirme
+   ```
+
+3. **Install platform dependencies**
    ```bash
    cd platform
    npm install
    ```
 
+4. **Setup environment variables**
 4. **Setup environment variables**
    ```bash
    cp .env.example .env.local
@@ -158,13 +168,21 @@ CrownCode is an advanced web-based platform that combines **artificial intellige
    ```
 
 5. **Run development server**
+5. **Run development server**
    ```bash
    npm run dev
    ```
 
 6. **Access the platform**
+6. **Access the platform**
    - Local: `http://localhost:3000`
    - Production: `https://hasanarthuraltuntas.xyz`
+
+### Available Branches
+
+- **`master`**: Production-ready stable release
+- **`geliştirme`**: Active development branch
+- **`arayüz`**: UI/UX focused development
 
 ### Available Branches
 
@@ -246,8 +264,16 @@ class MusicDetectionModel(nn.Module):
 - 📄 [Turkish Academic Report](./docs/academic/AKADEMIK_PROJE_RAPORU_TR.md) - Detailed Turkish documentation
 - 📊 [AI Model Strategy](./docs/technical/AI_MODEL_STRATEGY.md) - Model development methodology
 - 🏗️ [Architecture Documentation](./docs/technical/MODULAR_ARCHITECTURE.md) - System design principles
+- 📄 [English Academic Report](./docs/academic/ACADEMIC_PROJECT_REPORT_EN.md) - Comprehensive technical documentation
+- 📄 [Turkish Academic Report](./docs/academic/AKADEMIK_PROJE_RAPORU_TR.md) - Detailed Turkish documentation
+- 📊 [AI Model Strategy](./docs/technical/AI_MODEL_STRATEGY.md) - Model development methodology
+- 🏗️ [Architecture Documentation](./docs/technical/MODULAR_ARCHITECTURE.md) - System design principles
 
 ### Project Documentation
+- 📋 [Deployment Configuration](./docs/technical/DEPLOYMENT_CONFIG.md) - Infrastructure setup
+- 🚀 [Development Roadmap](./docs/guides/INTENSIVE_3_MONTH_PLAN.md) - Project timeline
+- 📱 [Mobile Design](./docs/technical/MOBILE_RESPONSIVE_DESIGN.md) - Responsive implementation
+- 🤖 [Automation Strategy](./docs/technical/COMPLETE_AUTOMATION_STRATEGY.md) - DevOps processes
 - 📋 [Deployment Configuration](./docs/technical/DEPLOYMENT_CONFIG.md) - Infrastructure setup
 - 🚀 [Development Roadmap](./docs/guides/INTENSIVE_3_MONTH_PLAN.md) - Project timeline
 - 📱 [Mobile Design](./docs/technical/MOBILE_RESPONSIVE_DESIGN.md) - Responsive implementation
@@ -402,7 +428,7 @@ This project is released under the MIT License - see the [LICENSE](./LICENSE) fi
 
 ### Developer Contact
 - **Name**: Hasan Arthur Altuntaş
-- **Email**: contact@hasanarthuraltuntas.xyz
+- **Email**: hasannarthurrr@gmail.com
 - **University**: Düzce University - Computer Engineering
 - **LinkedIn**: [linkedin.com/in/hasan-arthur-altuntas](https://linkedin.com/in/hasan-arthur-altuntas)
 - **GitHub**: [@Rtur2003](https://github.com/Rtur2003)
@@ -412,6 +438,7 @@ This project is released under the MIT License - see the [LICENSE](./LICENSE) fi
 - 📚 **Documentation**: [Academic Reports](./ACADEMIC_PROJECT_REPORT_EN.md)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/Rtur2003/CrownCode/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/Rtur2003/CrownCode/discussions)
+- 🌿 **Development Branch**: [geliştirme](https://github.com/Rtur2003/CrownCode/tree/geliştirme)
 - 🌿 **Development Branch**: [geliştirme](https://github.com/Rtur2003/CrownCode/tree/geliştirme)
 
 ---

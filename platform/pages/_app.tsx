@@ -2,8 +2,10 @@
  * Next.js App Component
  * Kullanım: Tüm sayfalar için global wrapper
  * Bağımlılıklar: ThemeProvider, LanguageProvider, ToastProvider, ErrorBoundary, LoadingScreen, global styles
+ * Bağımlılıklar: ThemeProvider, LanguageProvider, ToastProvider, ErrorBoundary, LoadingScreen, global styles
  */
 
+import React, { useState, useEffect, lazy, Suspense } from 'react'
 import React, { useState, useEffect, lazy, Suspense } from 'react'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'next-themes'
@@ -12,7 +14,15 @@ import { ToastProvider } from '@/context/ToastContext'
 import { ToastContainer } from '@/components/UI/Toast/ToastContainer'
 import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary'
 import { LoadingScreen } from '@/components/Loading/LoadingScreen'
+import { ToastProvider } from '@/context/ToastContext'
+import { ToastContainer } from '@/components/UI/Toast/ToastContainer'
+import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary'
+import { LoadingScreen } from '@/components/Loading/LoadingScreen'
 import '@/styles/globals.css'
+
+// Dynamic imports for better code splitting - load modals only when needed
+const ShortcutsModal = lazy(() => import('@/components/KeyboardShortcuts/ShortcutsModal').then(m => ({ default: m.ShortcutsModal })))
+const SearchModal = lazy(() => import('@/components/Search/SearchModal').then(m => ({ default: m.SearchModal })))
 
 // Dynamic imports for better code splitting - load modals only when needed
 const ShortcutsModal = lazy(() => import('@/components/KeyboardShortcuts/ShortcutsModal').then(m => ({ default: m.ShortcutsModal })))
@@ -49,6 +59,27 @@ function MyApp({ Component, pageProps }: AppProps) {
   }
 
   return (
+    <ErrorBoundary>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem={true}
+        themes={['light', 'dark', 'system']}
+      >
+        <LanguageProvider>
+          <ToastProvider>
+            {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
+            <Component {...pageProps} />
+            <ToastContainer />
+            {/* Lazy load modals for better initial load performance */}
+            <Suspense fallback={null}>
+              <ShortcutsModal />
+              <SearchModal />
+            </Suspense>
+          </ToastProvider>
+        </LanguageProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
     <ErrorBoundary>
       <ThemeProvider
         attribute="class"

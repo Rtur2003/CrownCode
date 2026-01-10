@@ -1,22 +1,4 @@
-# CrownCode Backend - Linting and Formatting Configuration
-
-[tool.black]
-line-length = 100
-target-version = ['py311']
-include = '\.pyi?$'
-extend-exclude = '''
-/(
-  # directories
-  \.eggs
-  | \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | build
-  | dist
-)/
-'''
+# Python tooling configuration for CrownCode Backend
 
 [tool.ruff]
 line-length = 100
@@ -26,7 +8,7 @@ select = [
     "W",   # pycodestyle warnings
     "F",   # pyflakes
     "I",   # isort
-    "C",   # flake8-comprehensions
+    "C4",  # flake8-comprehensions
     "B",   # flake8-bugbear
     "UP",  # pyupgrade
     "N",   # pep8-naming
@@ -45,6 +27,24 @@ ignore = [
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401"]  # unused imports
 "tests/*" = ["S101"]      # assert allowed in tests
+
+[tool.black]
+line-length = 100
+target-version = ['py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
 
 [tool.mypy]
 python_version = "3.11"

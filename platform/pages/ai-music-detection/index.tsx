@@ -160,7 +160,9 @@ const AIMusicDetectionPage: NextPage = () => {
   }
 
   const renderAnalysisResult = () => {
-    if (!analysisResult) return null
+    if (!analysisResult) {
+      return null
+    }
 
     const confidence = Math.round(analysisResult.confidence * 100)
     const decisionLabel = getDecisionLabel(analysisResult.decisionSource)

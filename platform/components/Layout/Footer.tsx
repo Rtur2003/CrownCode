@@ -14,7 +14,7 @@ export const Footer: React.FC = () => {
   const { t } = useLanguage()
   const currentYear = new Date().getFullYear()
 
-  const footerSections = [
+  const footerSections: FooterSection[] = [
     {
       title: t.footer.sections.platform.title,
       links: [

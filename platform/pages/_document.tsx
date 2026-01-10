@@ -8,7 +8,9 @@ export default function Document() {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
+        {/* PWA Manifest */}
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
 
@@ -86,3 +88,4 @@ export default function Document() {
     </Html>
   )
 }
+

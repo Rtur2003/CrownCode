@@ -1,6 +1,8 @@
 {
   "name": "CrownCode - AI Research Platform",
+  "name": "CrownCode - AI Research Platform",
   "short_name": "CrownCode",
+  "description": "AI-powered music detection and data analysis research platform",
   "description": "AI-powered music detection and data analysis research platform",
   "start_url": "/",
   "display": "standalone",
