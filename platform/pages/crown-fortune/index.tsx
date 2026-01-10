@@ -143,12 +143,16 @@ const CrownFortunePage: NextPage = () => {
 
   if (!mounted || !destiny) {
     return (
-      <MainLayout title="Crown Destiny" description="Günlük kaderinizi keşfedin">
+      <MainLayout
+        title={t.crownFortune.meta.title}
+        description={t.crownFortune.meta.description}
+        keywords={t.crownFortune.meta.keywords}
+      >
         <div className={styles['fortune-page']}>
           <div className={styles['fortune-container']}>
             <div className={styles['loading']}>
               <Sparkles className={styles['loading-icon']} size={32} />
-              <span>Yükleniyor...</span>
+              <span>{t.crownFortune.loading}</span>
             </div>
           </div>
         </div>
