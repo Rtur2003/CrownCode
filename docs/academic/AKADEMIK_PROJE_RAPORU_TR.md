@@ -40,11 +40,12 @@ Bu çalışmanın temel amacı, yapay zeka tarafından üretilen müziklerin oto
 
 ### 1.3. Araştırmanın Kapsamı
 
-Çalışma kapsamında geliştirilen platform, aşağıdaki temel bileşenleri içermektedir:
+Çalışma kapsamında geliştirilen AURIS platformu, aşağıdaki temel bileşenleri içermektedir:
 
 - **AI Müzik Detektörü:** wav2vec2 tabanlı classification modeli
 - **Veri İşleme Sistemi:** Otomatik dataset toplama ve labeling
 - **Web Platformu:** React/Next.js tabanlı kullanıcı arayüzü
+- **Mobil Uygulama:** Kotlin ve Jetpack Compose ile geliştirilen native Android uygulaması
 - **API Sistemi:** RESTful servisler ile sistem entegrasyonu
 - **Otomasyon Motoru:** Sürekli öğrenme ve gelişim sistemi
 
@@ -88,7 +89,7 @@ wav2vec2 modeli, Facebook AI Research tarafından geliştirilmiş ve self-superv
 | Ircam AI Detector | %99.8 | 3-5 saniye | Ücretli | API |
 | Believe AI Radar | %98 | 2-3 saniye | Ticari | Kapalı |
 | YouTube Detection | %93 | Real-time | Ücretsiz | Platform-specific |
-| **Bu Çalışma** | **%97.2** | **<2 saniye** | **Ücretsiz** | **Web/API** |
+| **AURIS (Bu Çalışma)** | **%97.2** | **<2 saniye** | **Ücretsiz** | **Web/Android/API** |
 
 ---
 
@@ -337,9 +338,180 @@ class HealthMonitor {
 }
 ```
 
-### 3.4. Otomasyon ve DevOps
+### 3.4. Mobil Uygulama Geliştirme
 
-#### 3.4.1. Sürekli İntegrasyon Pipeline
+AURIS platformu, web uygulamasına ek olarak native Android mobil uygulaması ile genişletilmiştir. Bu bölümde mobil uygulamanın teknik altyapısı ve tasarım kararları açıklanmaktadır.
+
+#### 3.4.1. Mobil Teknoloji Stack
+
+| Katman | Teknoloji | Versiyon | Amaç |
+|---|---|---|---|
+| UI Framework | Jetpack Compose | 2024.01.00 | Deklaratif UI geliştirme |
+| Programlama Dili | Kotlin | 2.0.0 | Modern, güvenli Android geliştirme |
+| Bağımlılık Enjeksiyonu | Hilt | 2.50 | Dagger tabanlı DI framework |
+| Asenkron İşlemler | Kotlin Coroutines | 1.8.0 | Structured concurrency |
+| HTTP İstemcisi | Retrofit | 2.9.0 | REST API iletişimi |
+| JSON İşleme | Kotlinx Serialization | 1.6.3 | Kotlin-native JSON parsing |
+| Navigation | Compose Navigation | 2.7.6 | Single Activity navigasyon |
+| Design System | Material 3 | 1.2.0 | Modern material theming |
+
+#### 3.4.2. Uygulama Mimarisi
+
+Mobil uygulama, Clean Architecture prensipleri doğrultusunda geliştirilmiştir:
+
+**Katmanlı Mimari:**
+```
+app/
+├── data/                    # Data katmanı
+│   ├── remote/             # API servisleri
+│   ├── local/              # Room database
+│   └── repository/         # Repository implementasyonları
+├── domain/                  # Domain katmanı
+│   ├── model/              # Domain modelleri
+│   ├── repository/         # Repository interface'leri
+│   └── usecase/            # İş mantığı
+└── presentation/            # Presentation katmanı
+    ├── screens/            # Compose ekranları
+    ├── components/         # Reusable UI bileşenleri
+    ├── navigation/         # Navigasyon grafiği
+    └── theme/              # Material 3 tema
+```
+
+**Screen Yapısı Örneği:**
+```kotlin
+@Composable
+fun AurisHomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
+    onNavigateToAnalysis: () -> Unit
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    Scaffold(
+        topBar = {
+            AurisTopBar(
+                title = stringResource(R.string.app_name),
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = AurisGold
+                )
+            )
+        }
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // AI Music Detection Card
+            AurisFeatureCard(
+                title = "AI Müzik Tespiti",
+                description = "Müziğin yapay zeka ile üretilip üretilmediğini analiz edin",
+                icon = Icons.Default.MusicNote,
+                onClick = onNavigateToAnalysis
+            )
+        }
+    }
+}
+```
+
+#### 3.4.3. Design System
+
+AURIS mobil uygulaması, marka tutarlılığı için özel bir renk paleti kullanmaktadır:
+
+**Renk Teması:**
+```kotlin
+object AurisColors {
+    // Primary Colors
+    val Gold = Color(0xFFD4AF37)          // Ana marka rengi
+    val DarkGold = Color(0xFFB8860B)      // Koyu altın
+    val Bronze = Color(0xFFCD7F32)        // Bronz aksan
+
+    // Background Colors
+    val DarkBackground = Color(0xFF1A1A2E) // Koyu arkaplan
+    val CardBackground = Color(0xFF16213E) // Kart arkaplanı
+
+    // Text Colors
+    val TextPrimary = Color(0xFFFFFFFF)   // Birincil metin
+    val TextSecondary = Color(0xFFB0B0B0) // İkincil metin
+}
+```
+
+**Material 3 Tema Entegrasyonu:**
+```kotlin
+@Composable
+fun AurisTheme(
+    darkTheme: Boolean = true,
+    content: @Composable () -> Unit
+) {
+    val colorScheme = darkColorScheme(
+        primary = AurisColors.Gold,
+        secondary = AurisColors.Bronze,
+        background = AurisColors.DarkBackground,
+        surface = AurisColors.CardBackground,
+        onPrimary = Color.Black,
+        onSecondary = Color.White,
+        onBackground = AurisColors.TextPrimary,
+        onSurface = AurisColors.TextPrimary
+    )
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = AurisTypography,
+        content = content
+    )
+}
+```
+
+#### 3.4.4. Backend Entegrasyonu
+
+Mobil uygulama, AURIS backend API'si ile Retrofit üzerinden iletişim kurmaktadır:
+
+**API Servis Tanımı:**
+```kotlin
+interface AurisApiService {
+    @Multipart
+    @POST("api/analyze")
+    suspend fun analyzeAudio(
+        @Part file: MultipartBody.Part
+    ): Response<AnalysisResult>
+
+    @GET("api/history")
+    suspend fun getAnalysisHistory(): Response<List<AnalysisRecord>>
+}
+```
+
+**Repository Pattern:**
+```kotlin
+class AudioRepositoryImpl @Inject constructor(
+    private val apiService: AurisApiService,
+    private val audioProcessor: AudioProcessor
+) : AudioRepository {
+
+    override suspend fun analyzeAudio(uri: Uri): Result<AnalysisResult> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val file = audioProcessor.prepareFile(uri)
+                val part = MultipartBody.Part.createFormData(
+                    "file", file.name, file.asRequestBody()
+                )
+                val response = apiService.analyzeAudio(part)
+
+                if (response.isSuccessful) {
+                    Result.success(response.body()!!)
+                } else {
+                    Result.failure(ApiException(response.code()))
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+}
+```
+
+### 3.5. Otomasyon ve DevOps
+
+#### 3.5.1. Sürekli Entegrasyon Pipeline
 
 **GitHub Actions Workflow:**
 ```yaml
@@ -388,7 +560,7 @@ jobs:
           vercel-args: '--prod'
 ```
 
-#### 3.4.2. Otomatik Model Training
+#### 3.5.2. Otomatik Model Training
 
 **Haftalık Training Pipeline:**
 ```python
@@ -597,7 +769,7 @@ Task Completion Rates:
 **İyileştirme Önerileri:**
 1. "Batch upload özelliği eklensin" (%45)
 2. "Daha detaylı analiz raporları" (%38)
-3. "Mobil uygulama geliştirilsin" (%52)
+3. ~~"Mobil uygulama geliştirilsin" (%52)~~ ✅ Tamamlandı (Android)
 4. "API erişimi verilsin" (%29)
 
 ---
@@ -641,13 +813,14 @@ Load testing sonuçları, platformun production kullanım için hazır olduğunu
 
 **Metodolojik Farklılıklar:**
 
-| Aspect | Kumar et al. (2025) | Chen et al. (2024) | Bu Çalışma |
+| Aspect | Kumar et al. (2025) | Chen et al. (2024) | AURIS (Bu Çalışma) |
 |---|---|---|---|
 | Dataset Size | 50,000 | 25,000 | 10,000 |
 | Labeling Method | Manuel | Semi-otomatik | Tam otomatik |
 | Model Architecture | Custom CNN | ResNet-based | wav2vec2 + MLP |
-| Deployment | Research only | API only | Full web platform |
+| Deployment | Research only | API only | Web + Android + API |
 | Real-time | No | Partial | Yes |
+| Mobile Support | No | No | Native Android |
 
 **Performans Karşılaştırması:**
 
@@ -662,20 +835,22 @@ Bu çalışmanın %96.8 accuracy oranı, literatürdeki %94-99 bandında yer alm
 
 #### 5.2.2. Ticari Sistemlerle Karşılaştırma
 
-**Ircam AI Detector vs Bu Çalışma:**
+**Ircam AI Detector vs AURIS:**
 
-| Metric | Ircam AI Detector | Bu Çalışma |
+| Metric | Ircam AI Detector | AURIS (Bu Çalışma) |
 |---|---|---|
 | Accuracy | %99.8 | %96.8 |
 | Response Time | 3-5s | 1.4s |
 | Cost | Ücretli | Ücretsiz |
 | API Access | Limited | Full REST API |
 | Web Interface | No | Yes |
+| Mobile App | No | Native Android |
 | Open Source | No | Planned |
 
-Bu çalışmanın avantajları:
+AURIS'un avantajları:
 - Daha hızlı inference time
 - Tam web platform entegrasyonu
+- Native Android mobil uygulama
 - Açık kaynak yaklaşımı
 - Eğitim amaçlı kullanım uygunluğu
 
@@ -693,14 +868,14 @@ Bu çalışmanın avantajları:
 1. **Concurrent Processing:** 500 simultaneous analysis limit
 2. **Storage Capacity:** 50GB monthly upload limit
 3. **Geographic Latency:** Non-EU regions'da yavaş response
-4. **Mobile Optimization:** Limited mobile browser support
+4. ~~**Mobile Optimization:** Limited mobile browser support~~ → Native Android uygulaması ile çözüldü
 
 #### 5.3.2. Gelişim Potansiyeli
 
 **Kısa Vadeli İyileştirmeler (3-6 ay):**
 1. **Model Ensemble:** Multiple model voting system
 2. **Batch Processing:** Bulk upload ve analysis
-3. **Mobile App:** Native iOS/Android applications
+3. ~~**Mobile App:** Native iOS/Android applications~~ ✅ Android tamamlandı, iOS planlanıyor
 4. **API Expansion:** Advanced API features
 
 **Uzun Vadeli Gelişimler (6-12 ay):**
@@ -745,7 +920,7 @@ Bu çalışmanın avantajları:
 
 ### 6.1. Araştırma Sonuçlarının Özeti
 
-Bu çalışmada geliştirilen web tabanlı yapay zeka müzik detektörü platformu, belirlenen hedefleri büyük ölçüde karşılamıştır:
+Bu çalışmada geliştirilen AURIS çok platformlu yapay zeka müzik detektörü sistemi, belirlenen hedefleri büyük ölçüde karşılamıştır:
 
 **Teknik Başarılar:**
 - ✅ %96.8 test accuracy (hedef: >%95)
@@ -756,6 +931,7 @@ Bu çalışmada geliştirilen web tabanlı yapay zeka müzik detektörü platfor
 
 **Platform Başarıları:**
 - ✅ Production-ready web deployment
+- ✅ Native Android mobil uygulama
 - ✅ Modüler ve fail-safe architecture
 - ✅ Comprehensive API ecosystem
 - ✅ Automated CI/CD pipeline
@@ -883,19 +1059,20 @@ Kullanım Alanları:
 
 ### 6.5. Sonuç
 
-Bu çalışma, yapay zeka müzik deteksiyonu alanında akademik araştırma ile pratik uygulama arasında köprü görevi görmektedir. Geliştirilen platform, hem teknik olarak başarılı sonuçlar elde etmiş hem de gerçek dünya kullanımı için hazır hale getirilmiştir.
+Bu çalışma, yapay zeka müzik deteksiyonu alanında akademik araştırma ile pratik uygulama arasında köprü görevi görmektedir. Geliştirilen AURIS platformu, hem teknik olarak başarılı sonuçlar elde etmiş hem de web ve mobil platformlarda gerçek dünya kullanımı için hazır hale getirilmiştir.
 
 **Ana Başarılar:**
 - **Yüksek Performans:** %96.8 accuracy ile competitive results
+- **Çok Platform Desteği:** Web platformu ve native Android uygulaması
 - **Production Readiness:** 500+ concurrent user support
 - **Automation:** Manuel müdahale gerektirmeyen pipeline
 - **Open Access:** Araştırmacılar ve geliştiriciler için erişilebilir platform
 
 **Gelecek Potansiyeli:**
-Elde edilen sonuçlar, AI müzik deteksiyonunun practical deployment'ının mümkün olduğunu göstermektedir. Platform'un modüler mimarisi ve sürekli öğrenme kabiliyeti, gelecekteki AI müzik teknolojilerindeki gelişmelere adaptasyonu kolaylaştıracaktır.
+Elde edilen sonuçlar, AI müzik deteksiyonunun practical deployment'ının mümkün olduğunu göstermektedir. AURIS'un modüler mimarisi ve sürekli öğrenme kabiliyeti, gelecekteki AI müzik teknolojilerindeki gelişmelere adaptasyonu kolaylaştıracaktır. Mevcut Android uygulaması, iOS platformuna genişletme için temel oluşturmaktadır.
 
 **Toplumsal Katkı:**
-Bu çalışma, AI teknolojilerinin sorumlu kullanımı ve insan yaratıcılığının korunması konularında önemli bir araç sunmaktadır. Açık kaynak yaklaşımı ile bilimsel şeffaflığı desteklerken, pratik uygulamaları ile de endüstriyel ihtiyaçları karşılamaktadır.
+Bu çalışma, AI teknolojilerinin sorumlu kullanımı ve insan yaratıcılığının korunması konularında önemli bir araç sunmaktadır. Web ve mobil platformlarda yaygın erişilebilirlik, açık kaynak yaklaşımı ile bilimsel şeffaflığı desteklerken, pratik uygulamaları ile de endüstriyel ihtiyaçları karşılamaktadır.
 
 ---
 
