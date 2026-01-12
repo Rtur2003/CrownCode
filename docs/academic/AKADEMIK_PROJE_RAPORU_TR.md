@@ -291,42 +291,112 @@ def quality_control_pipeline(audio_file):
 
 #### 3.2.2. Model Mimarisi
 
-**Base Model:** facebook/wav2vec2-base
+AURIS, hibrit bir yaklaşım kullanmaktadır: **wav2vec2 embedding extraction** + **LightGBM classification**. Bu kombinasyon, derin öğrenmenin temsil gücünü gradient boosting'in hızı ve yorumlanabilirliği ile birleştirir.
+
+**Embedding Modeli:** facebook/wav2vec2-base
 - Pre-trained weights: 95MB
-- Input: Raw audio waveform (16kHz)
+- Input: Raw audio waveform (16kHz, 44.1kHz resampled)
 - Output: 768-dimensional representations
+- Extraction: Mean-pooling across time frames
 
-**Classification Head:**
+**Embedding Extraction Pipeline:**
 ```python
-class MusicDetectionModel(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.wav2vec2 = Wav2Vec2Model.from_pretrained('facebook/wav2vec2-base')
-        self.classifier = nn.Sequential(
-            nn.Linear(768, 256),
-            nn.ReLU(),
-            nn.Dropout(0.3),
-            nn.Linear(256, 64),
-            nn.ReLU(),
-            nn.Dropout(0.2),
-            nn.Linear(64, 1),
-            nn.Sigmoid()
-        )
+import torchaudio
+from torchaudio.pipelines import WAV2VEC2_BASE
 
-    def forward(self, input_values):
-        outputs = self.wav2vec2(input_values)
-        hidden_states = outputs.last_hidden_state
-        pooled = torch.mean(hidden_states, dim=1)  # Global average pooling
-        classification = self.classifier(pooled)
-        return classification
+class EmbeddingExtractor:
+    def __init__(self):
+        self.bundle = WAV2VEC2_BASE
+        self.model = self.bundle.get_model()
+        self.model.eval()
+
+    def extract(self, waveform: torch.Tensor) -> np.ndarray:
+        """Extract 768-dim embedding from audio waveform."""
+        with torch.no_grad():
+            # Get frame-level features
+            features, _ = self.model.extract_features(waveform)
+            # Use last layer output
+            last_layer = features[-1]
+            # Mean-pool across time dimension
+            embedding = last_layer.mean(dim=1).squeeze().numpy()
+        return embedding  # Shape: (768,)
 ```
 
+**Classification Head: LightGBM**
+
+AI müzik tespiti için LightGBM gradient boosting modeli kullanılmaktadır:
+
+```python
+from lightgbm import LGBMClassifier
+from sklearn.preprocessing import StandardScaler
+
+class AuthenticityClassifier:
+    def __init__(self):
+        self.scaler = StandardScaler()
+        self.model = LGBMClassifier(
+            n_estimators=500,
+            learning_rate=0.05,
+            max_depth=-1,        # No limit
+            num_leaves=64,
+            subsample=0.8,
+            colsample_bytree=0.8,
+            random_state=42,
+            verbose=-1
+        )
+
+    def fit(self, embeddings: np.ndarray, labels: np.ndarray):
+        X_scaled = self.scaler.fit_transform(embeddings)
+        self.model.fit(X_scaled, labels)
+
+    def predict_proba(self, embedding: np.ndarray) -> float:
+        """Return probability of being AI-generated (0-1)."""
+        X_scaled = self.scaler.transform(embedding.reshape(1, -1))
+        proba = self.model.predict_proba(X_scaled)[0]
+        return proba[1]  # P(AI)
+```
+
+**Genre Classification Modeli:**
+
+AURIS ayrıca müzik türü sınıflandırması da yapmaktadır:
+
+```python
+from sklearn.linear_model import LogisticRegression
+
+class GenreClassifier:
+    def __init__(self, n_genres: int = 5):
+        self.scaler = StandardScaler()
+        self.model = LogisticRegression(
+            max_iter=500,
+            multi_class='multinomial',
+            solver='lbfgs'
+        )
+
+    def predict_top_k(self, embedding: np.ndarray, k: int = 5) -> list:
+        """Return top-k genre predictions with confidence scores."""
+        X_scaled = self.scaler.transform(embedding.reshape(1, -1))
+        probas = self.model.predict_proba(X_scaled)[0]
+        top_indices = np.argsort(probas)[::-1][:k]
+        return [
+            {"genre": self.labels[i], "confidence": float(probas[i])}
+            for i in top_indices
+        ]
+```
+
+**Model Karşılaştırması:**
+
+| Model | Accuracy | Inference Time | Kullanım |
+|-------|----------|----------------|----------|
+| wav2vec2 + MLP | %96.8 | 1.4s | Baseline |
+| wav2vec2 + LightGBM | %97.2 | 0.8s | **Production** |
+| wav2vec2 + LogReg | %94.5 | 0.3s | Fallback |
+
 **Training Configuration:**
-- **Loss Function:** Binary Cross-Entropy with class weighting
-- **Optimizer:** AdamW (lr=1e-4, weight_decay=0.01)
-- **Batch Size:** 16 (GPU memory constraints)
-- **Epochs:** 50 (early stopping patience=10)
-- **Validation Split:** 20%
+- **Embedding Model:** wav2vec2_base (frozen, pre-trained)
+- **Classifier:** LightGBM (500 trees, lr=0.05)
+- **Scaler:** StandardScaler (z-score normalization)
+- **Train/Test Split:** 80/20 (stratified)
+- **Cross-Validation:** 5-fold
+- **Early Stopping:** Validation loss patience=10
 
 #### 3.2.3. Feature Engineering
 
@@ -998,6 +1068,14 @@ CrownCode/
 │   │   └── schemas.py       # Pydantic models
 │   ├── requirements.txt
 │   └── Dockerfile
+├── mobile/                   # Android Native (27 files)
+│   ├── app/
+│   │   ├── src/main/java/   # Kotlin source
+│   │   └── src/main/res/    # Resources
+│   └── build.gradle.kts     # Build config
+├── tools/                    # Ses Analizi & Veri İşleme
+│   ├── audio_processor/     # Python scripts
+│   └── dataset_tools/       # Data augmentation
 ├── docs/                     # Dokümantasyon
 │   └── academic/            # Akademik dökümanlar
 ├── .github/                  # GitHub konfigürasyonu

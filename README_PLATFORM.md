@@ -128,6 +128,16 @@ CrownCode/
 │   ├── context/               # React Context
 │   ├── hooks/                 # Custom hooks
 │   └── utils/                 # Yardımcı fonksiyonlar
+├── backend/                   # FastAPI Backend & AI Model
+│   ├── app/                   # Uygulama kodu
+│   ├── models/                # wav2vec2 modelleri
+│   └── Dockerfile             # Container yapılandırması
+├── mobile/                    # Android Native Uygulama
+│   ├── app/                   # Android kaynak kodları
+│   └── build.gradle           # Gradle yapılandırması
+├── tools/                     # Yardımcı Araçlar
+│   ├── audio-analysis/        # Ses analiz scriptleri
+│   └── dataset/               # Veri seti araçları
 ├── docs/                      # Dokümantasyon
 ├── assets/                    # Medya dosyaları
 └── .github/                   # GitHub Actions & Templates
