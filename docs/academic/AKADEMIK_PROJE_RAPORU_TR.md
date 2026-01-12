@@ -100,22 +100,155 @@ wav2vec2 modeli, Facebook AI Research tarafından geliştirilmiş ve self-superv
 Platform, modüler mimari yaklaşımı benimser ve üç ana katmandan oluşur:
 
 #### 3.1.1. Presentation Layer (Frontend)
-- **Framework:** Next.js 14.2.18 (App Router)
-- **UI Framework:** Tailwind CSS 3.4.17 + Radix UI
-- **State Management:** Zustand 4.5.5
-- **Audio Processing:** Web Audio API + WaveSurfer.js 7.8.6
+
+| Teknoloji | Versiyon | Amaç |
+|-----------|----------|------|
+| Next.js | 14.2.18 | React framework (Static Export) |
+| React | 18.3.1 | UI library |
+| TypeScript | 5.7.2 | Type-safe JavaScript |
+| Tailwind CSS | 3.4.17 | Utility-first CSS framework |
+| Framer Motion | 11.18.2 | Animasyon kütüphanesi |
+| Lucide React | 0.454.0 | İkon kütüphanesi |
+| next-themes | 0.3.0 | Tema yönetimi (dark/light) |
+| clsx + tailwind-merge | 2.1.1 / 2.5.4 | Conditional class utilities |
+
+**Build Konfigürasyonu:**
+- **Node.js:** 20.18.1 LTS
+- **npm:** 10.9.2 (Corepack managed)
+- **Output:** Static export (`out/` directory)
+- **Memory:** 4GB max heap size
 
 #### 3.1.2. Business Logic Layer (Backend)
-- **Runtime:** Node.js 20.18.1 LTS
-- **Framework:** Express.js 4.21.2
-- **Database:** PostgreSQL 16.6 + Prisma ORM 5.23.0
-- **Authentication:** NextAuth.js 4.24.10
+
+| Teknoloji | Versiyon | Amaç |
+|-----------|----------|------|
+| Python | 3.11 | Runtime environment |
+| FastAPI | >=0.103.0 | Modern async web framework |
+| uvicorn | >=0.23.2 | ASGI server |
+| PyTorch | CPU build | Deep learning framework |
+| transformers | >=4.37.0 | HuggingFace model library |
+| librosa | >=0.10.1 | Audio analysis |
+| soundfile | >=0.12.1 | Audio file I/O |
+| yt-dlp | >=2024.1.0 | YouTube integration |
+| httpx | >=0.26.0 | Async HTTP client |
+| loguru | >=0.7.2 | Logging framework |
+
+**API Endpoints:**
+| Method | Endpoint | Açıklama |
+|--------|----------|----------|
+| GET | `/api/health` | Servis sağlık kontrolü |
+| POST | `/api/youtube/analyze` | YouTube video analizi |
+| POST | `/api/data/augment/audio` | Ses augmentation işlemleri |
 
 #### 3.1.3. Data Layer
-- **Primary Storage:** Vercel Postgres
-- **Caching:** Redis 7.4.1
-- **File Storage:** Vercel Blob Storage
-- **Model Storage:** TensorFlow.js 4.22.0
+- **Audio Processing:** librosa + soundfile + scipy
+- **ML Models:** HuggingFace Hub (wav2vec2)
+- **Caching:** In-memory + HuggingFace cache
+- **File Storage:** Temporary file system
+
+#### 3.1.4. Deployment Platformları
+
+AURIS, production ortamında aşağıdaki cloud platformlarını kullanmaktadır:
+
+**Netlify (Frontend Hosting):**
+```toml
+# netlify.toml konfigürasyonu
+[build]
+  base = "platform"
+  command = "corepack prepare npm@10.9.2 --activate && npm install && npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NODE_OPTIONS = "--max-old-space-size=4096"
+```
+
+| Özellik | Değer |
+|---------|-------|
+| Platform | Netlify |
+| Build Command | npm run build (static export) |
+| Node Version | 20.x |
+| Memory | 4GB heap |
+| Domain | hasanarthuraltuntas.xyz |
+| SSL | Otomatik Let's Encrypt |
+
+**Hugging Face Spaces (Backend Hosting):**
+```dockerfile
+# Backend Dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+
+ENV TRANSFORMERS_CACHE=/app/.cache/huggingface
+ENV HF_HOME=/app/.cache/huggingface
+ENV TORCH_HOME=/app/.cache/torch
+
+# System dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg libsndfile1 git curl
+
+# PyTorch CPU installation
+RUN pip install --no-cache-dir torch torchvision torchaudio \
+    --index-url https://download.pytorch.org/whl/cpu
+
+EXPOSE 7860
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "7860"]
+```
+
+| Özellik | Değer |
+|---------|-------|
+| Platform | Hugging Face Spaces |
+| SDK | Docker |
+| Hardware | CPU Basic (Free tier) |
+| Python | 3.11 slim |
+| Port | 7860 |
+| Cache | Persistent HF/PyTorch models |
+
+**Docker Compose (Local Development):**
+```yaml
+services:
+  platform:
+    build:
+      context: ./platform
+      dockerfile: Dockerfile
+    container_name: crowncode-platform
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider",
+             "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+```
+
+**Deployment Mimarisi:**
+```
+┌─────────────────────────────────────────────────────────┐
+│              AURIS PRODUCTION INFRASTRUCTURE            │
+├─────────────────────────────────────────────────────────┤
+│  Netlify                                                │
+│  ├─ Frontend (Next.js static export)                   │
+│  ├─ CDN: Global edge network                           │
+│  ├─ Build: Node 20, npm 10.9.2                         │
+│  └─ Domain: hasanarthuraltuntas.xyz                    │
+├─────────────────────────────────────────────────────────┤
+│  Hugging Face Spaces                                    │
+│  ├─ Backend (FastAPI + Python)                         │
+│  ├─ Runtime: Python 3.11 slim                          │
+│  ├─ ML: PyTorch CPU + transformers                     │
+│  ├─ Audio: FFmpeg + librosa                            │
+│  └─ Port: 7860                                         │
+├─────────────────────────────────────────────────────────┤
+│  GitHub                                                 │
+│  ├─ Source Control                                     │
+│  ├─ CI/CD: GitHub Actions                              │
+│  ├─ Security: Dependabot                               │
+│  └─ Automation: Pre-commit hooks                       │
+└─────────────────────────────────────────────────────────┘
+```
 
 ### 3.2. AI Model Geliştirme Metodolojisi
 
@@ -346,14 +479,28 @@ AURIS platformu, web uygulamasına ek olarak native Android mobil uygulaması il
 
 | Katman | Teknoloji | Versiyon | Amaç |
 |---|---|---|---|
-| UI Framework | Jetpack Compose | 2024.01.00 | Deklaratif UI geliştirme |
-| Programlama Dili | Kotlin | 2.0.0 | Modern, güvenli Android geliştirme |
-| Bağımlılık Enjeksiyonu | Hilt | 2.50 | Dagger tabanlı DI framework |
-| Asenkron İşlemler | Kotlin Coroutines | 1.8.0 | Structured concurrency |
-| HTTP İstemcisi | Retrofit | 2.9.0 | REST API iletişimi |
-| JSON İşleme | Kotlinx Serialization | 1.6.3 | Kotlin-native JSON parsing |
-| Navigation | Compose Navigation | 2.7.6 | Single Activity navigasyon |
-| Design System | Material 3 | 1.2.0 | Modern material theming |
+| UI Framework | Jetpack Compose BOM | 2024.12.01 | Deklaratif UI geliştirme |
+| Programlama Dili | Kotlin | 2.0.21 | Modern, güvenli Android geliştirme |
+| Bağımlılık Enjeksiyonu | Hilt | 2.53.1 | Dagger tabanlı DI framework |
+| Asenkron İşlemler | Kotlin Coroutines | 1.9.0 | Structured concurrency |
+| HTTP İstemcisi | Retrofit | 2.11.0 | REST API iletişimi |
+| HTTP Client | OkHttp | 4.12.0 | Network layer |
+| JSON İşleme | Kotlinx Serialization | 1.7.3 | Kotlin-native JSON parsing |
+| Navigation | Compose Navigation | 2.8.5 | Single Activity navigasyon |
+| Local Database | Room | 2.6.1 | SQLite abstraction |
+| Preferences | DataStore | 1.1.1 | Modern SharedPreferences |
+| Image Loading | Coil | 2.7.0 | Kotlin-first image loading |
+| Design System | Material 3 | Latest | Modern material theming |
+
+**Android SDK Konfigürasyonu:**
+| Parametre | Değer |
+|-----------|-------|
+| compileSdk | 35 |
+| targetSdk | 35 |
+| minSdk | 26 (Android 8.0) |
+| Java Version | 17 |
+| Gradle | 8.5.2 |
+| KSP | 2.0.21-1.0.27 |
 
 #### 3.4.2. Uygulama Mimarisi
 
