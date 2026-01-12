@@ -658,17 +658,19 @@ class AudioRepositoryImpl @Inject constructor(
 
 ### 3.5. Otomasyon ve DevOps
 
-#### 3.5.1. Sürekli Entegrasyon Pipeline
+#### 3.5.1. Sürekli Entegrasyon Pipeline (CI/CD)
 
-**GitHub Actions Workflow:**
+**GitHub Actions Ana Workflow (ci.yml):**
 ```yaml
 name: CI/CD Pipeline
 on:
   push:
-    branches: [main]
+    branches: [master, geliştirme]
+  pull_request:
+    branches: [master]
 
 jobs:
-  test:
+  quality-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -676,38 +678,278 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.18.1'
-
       - name: Install dependencies
         run: npm ci
-
-      - name: Run tests
-        run: npm run test
-
-      - name: Type checking
+      - name: TypeScript type checking
         run: npm run type-check
+      - name: ESLint linting
+        run: npm run lint
 
-  deploy-frontend:
-    needs: test
+  build:
+    needs: quality-check
     runs-on: ubuntu-latest
+    steps:
+      - name: Build Next.js application
+        run: npm run build
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: platform/out/
+          retention-days: 7
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: npm audit
+        run: npm audit --audit-level=high
+        continue-on-error: true
+      - name: Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          severity: 'CRITICAL,HIGH'
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          urls: |
+            https://hasanarthuraltuntas.xyz/
+            https://hasanarthuraltuntas.xyz/ai-music-detection
+          uploadArtifacts: true
+
+  deploy-production:
+    needs: [build, security-scan]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
     steps:
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2.0
         with:
-          publish-dir: './frontend/dist'
-          production-branch: main
-
-  deploy-backend:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-args: '--prod'
+          publish-dir: './platform/out'
+          production-branch: master
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 ```
 
-#### 3.5.2. Otomatik Model Training
+**CI/CD Pipeline Aşamaları:**
+| Aşama | Araç | Açıklama |
+|-------|------|----------|
+| Quality Check | TypeScript + ESLint | Tip kontrolü ve kod kalitesi |
+| Build | Next.js | Static site generation |
+| Security Scan | npm audit + Trivy | Güvenlik taraması |
+| Lighthouse | Google Lighthouse | Performance testing |
+| Deploy | Netlify Action | Production deployment |
+
+#### 3.5.2. Pre-commit Hooks
+
+Kod kalitesini commit öncesi garanti altına almak için kapsamlı pre-commit hook sistemi kullanılmaktadır:
+
+**Pre-commit Konfigürasyonu (.pre-commit-config.yaml):**
+```yaml
+repos:
+  # Python kod formatlama
+  - repo: https://github.com/psf/black
+    rev: 24.1.0
+    hooks:
+      - id: black
+        args: [--line-length=100]
+
+  # Python import sıralama
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: [--profile=black]
+
+  # Python linting (hızlı)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.14
+    hooks:
+      - id: ruff
+        args: [--select=E,W,F,I,C,B,UP,N,S,A,T20]
+
+  # Python statik tip kontrolü
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        args: [--ignore-missing-imports]
+
+  # Python güvenlik analizi
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.7
+    hooks:
+      - id: bandit
+        args: [-r, app/, -ll]
+
+  # Genel dosya kontrolleri
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-json
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb=1000]
+
+  # Gizli bilgi tespiti
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args: [--baseline, .secrets.baseline]
+
+  # JavaScript/TypeScript linting
+  - repo: local
+    hooks:
+      - id: eslint
+        name: ESLint
+        entry: npm run lint --prefix platform
+        language: system
+        types: [javascript, typescript]
+
+      - id: prettier
+        name: Prettier
+        entry: npm run format --prefix platform
+        language: system
+        types: [javascript, typescript, css]
+
+  # Commit mesajı formatı
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v3.0.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+```
+
+**Pre-commit Hook Özeti:**
+| Hook | Dil | Amaç |
+|------|-----|------|
+| black | Python | Kod formatlama |
+| isort | Python | Import sıralama |
+| ruff | Python | Hızlı linting |
+| mypy | Python | Statik tip kontrolü |
+| bandit | Python | Güvenlik analizi |
+| eslint | TypeScript | JS/TS linting |
+| prettier | TypeScript | Kod formatlama |
+| detect-secrets | All | Gizli bilgi tespiti |
+| conventional-pre-commit | All | Commit mesajı formatı |
+
+#### 3.5.3. Makefile Komutları
+
+Geliştirme süreçlerini standartlaştırmak için Makefile kullanılmaktadır:
+
+```makefile
+# Kurulum
+install:              ## Tüm bağımlılıkları yükle
+	npm ci --prefix platform
+	pip install -r backend/requirements.txt
+
+install-hooks:        ## Pre-commit hooks kurulumu
+	pre-commit install
+	pre-commit install --hook-type commit-msg
+
+# Kod Kalitesi
+lint:                 ## Tüm kodu lint et
+	npm run lint --prefix platform
+	ruff check backend/
+
+format:               ## Tüm kodu formatla
+	npm run format --prefix platform
+	black backend/
+	isort backend/
+
+type-check:           ## Tip kontrolü yap
+	npm run type-check --prefix platform
+	mypy backend/app/
+
+# Test
+test:                 ## Tüm testleri çalıştır
+	npm run test --prefix platform
+	pytest backend/tests/
+
+test-coverage:        ## Coverage raporu ile test
+	npm run test:coverage --prefix platform
+	pytest backend/tests/ --cov=app --cov-report=html
+
+# Geliştirme
+dev-frontend:         ## Frontend development server
+	npm run dev --prefix platform
+
+dev-backend:          ## Backend development server
+	uvicorn app.main:app --reload --port 8000
+
+# Güvenlik
+security:             ## Güvenlik taraması
+	npm audit --prefix platform
+	bandit -r backend/app/ -ll
+	trivy fs .
+
+# Temizlik
+clean:                ## Build artifact temizliği
+	rm -rf platform/out platform/.next
+	rm -rf backend/__pycache__ backend/.pytest_cache
+	find . -type d -name __pycache__ -exec rm -rf {} +
+```
+
+#### 3.5.4. Dependabot Konfigürasyonu
+
+Bağımlılık güncellemelerini otomatize etmek için Dependabot kullanılmaktadır:
+
+```yaml
+# .github/dependabot.yml
+version: 2
+updates:
+  # npm (Frontend)
+  - package-ecosystem: "npm"
+    directory: "/platform"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "frontend"
+
+  # pip (Backend)
+  - package-ecosystem: "pip"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "backend"
+
+  # Docker
+  - package-ecosystem: "docker"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "docker"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "ci"
+```
+
+#### 3.5.5. Otomatik Model Training
 
 **Haftalık Training Pipeline:**
 ```python
@@ -727,6 +969,44 @@ class AutoMLPipeline:
         if accuracy > self.current_accuracy:
             self.deploy_model(model)
             self.notify_stakeholders(accuracy)
+```
+
+#### 3.5.6. Kod İstatistikleri
+
+| Bileşen | Dosya Sayısı | Dil |
+|---------|--------------|-----|
+| Frontend | 64 | TypeScript/TSX |
+| Backend | 16 | Python |
+| Mobile | 27 | Kotlin |
+| Config | 15 | YAML/TOML/JSON |
+| **Toplam** | **122** | - |
+
+**Repository Yapısı:**
+```
+CrownCode/
+├── platform/                 # Next.js frontend (64 files)
+│   ├── pages/               # Sayfa komponentleri
+│   ├── components/          # UI komponentleri
+│   ├── styles/              # CSS modülleri
+│   ├── hooks/               # React hooks
+│   ├── context/             # React context
+│   └── locales/             # i18n dosyaları
+├── backend/                  # FastAPI backend (16 files)
+│   ├── app/
+│   │   ├── routes/          # API endpoints
+│   │   ├── services/        # Business logic
+│   │   └── schemas.py       # Pydantic models
+│   ├── requirements.txt
+│   └── Dockerfile
+├── docs/                     # Dokümantasyon
+│   └── academic/            # Akademik dökümanlar
+├── .github/                  # GitHub konfigürasyonu
+│   ├── workflows/           # CI/CD pipelines
+│   └── dependabot.yml       # Dependency updates
+├── netlify.toml             # Netlify konfigürasyonu
+├── docker-compose.yml       # Local development
+├── Makefile                 # Build komutları
+└── .pre-commit-config.yaml  # Pre-commit hooks
 ```
 
 ---
