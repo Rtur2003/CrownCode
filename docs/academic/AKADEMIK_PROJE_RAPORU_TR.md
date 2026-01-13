@@ -1302,6 +1302,116 @@ CrownCode/
 - **AI Üretimi Müzik:** 5,000 (50%)
 - **İnsan Üretimi Müzik:** 5,000 (50%)
 - **Ortalama Süre:** 45 saniye
+
+**Şekil 4.1: Dataset Dağılımı**
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+def plot_dataset_distribution():
+    """
+    AURIS dataset dağılım görselleştirmesi.
+    """
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+    gold = '#D4AF37'
+    dark = '#1a1a2e'
+    colors_ai = ['#FF6B6B', '#FF8E8E', '#FFB0B0', '#FFD2D2']
+    colors_human = ['#4ECDC4', '#6FD9D1', '#90E5DE', '#B1F1EB']
+
+    # 1. AI vs Human Distribution (Pie Chart)
+    ax1 = axes[0]
+    labels = ['AI Üretimi', 'İnsan Üretimi']
+    sizes = [5000, 5000]
+    colors = [gold, dark]
+    explode = (0.05, 0)
+
+    wedges, texts, autotexts = ax1.pie(sizes, explode=explode, labels=labels,
+                                        colors=colors, autopct='%1.1f%%',
+                                        shadow=True, startangle=90)
+    ax1.set_title('Şekil 4.1a: Label Dağılımı', fontsize=14, fontweight='bold')
+
+    # 2. AI Source Distribution
+    ax2 = axes[1]
+    ai_sources = ['Suno.ai', 'MusicGen', 'Udio.com', 'Mubert']
+    ai_counts = [2000, 1500, 1000, 500]
+
+    bars = ax2.barh(ai_sources, ai_counts, color=colors_ai, edgecolor=dark)
+    ax2.set_xlabel('Sample Sayısı', fontsize=12)
+    ax2.set_title('Şekil 4.1b: AI Müzik Kaynakları', fontsize=14, fontweight='bold')
+    for bar, count in zip(bars, ai_counts):
+        ax2.text(count + 50, bar.get_y() + bar.get_height()/2,
+                f'{count} ({count/50:.0f}%)', va='center', fontsize=10)
+    ax2.set_xlim(0, 2500)
+    ax2.grid(True, axis='x', alpha=0.3)
+
+    # 3. Human Source Distribution
+    ax3 = axes[2]
+    human_sources = ['Free Music Archive', 'GTZAN', 'Jamendo', 'Musopen']
+    human_counts = [2500, 1000, 1000, 500]
+
+    bars = ax3.barh(human_sources, human_counts, color=colors_human, edgecolor=dark)
+    ax3.set_xlabel('Sample Sayısı', fontsize=12)
+    ax3.set_title('Şekil 4.1c: Human Müzik Kaynakları', fontsize=14, fontweight='bold')
+    for bar, count in zip(bars, human_counts):
+        ax3.text(count + 50, bar.get_y() + bar.get_height()/2,
+                f'{count} ({count/50:.0f}%)', va='center', fontsize=10)
+    ax3.set_xlim(0, 3000)
+    ax3.grid(True, axis='x', alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('dataset_distribution.png', dpi=300, bbox_inches='tight', facecolor='white')
+    plt.show()
+
+plot_dataset_distribution()
+```
+
+**Şekil 4.2: Genre Dağılımı**
+
+```python
+def plot_genre_distribution():
+    """
+    Dataset içindeki genre dağılımı.
+    """
+    fig, ax = plt.subplots(figsize=(14, 8))
+
+    genres = [
+        'Pop', 'Electronic', 'Rock', 'Hip-Hop', 'Classical',
+        'Jazz', 'R&B/Soul', 'Folk/Country', 'Metal', 'Latin',
+        'Ambient/Lofi', 'Blues', 'Reggae', 'Soundtrack', 'World',
+        'Children', 'EDM-House', 'EDM-Techno', 'EDM-Trance', 'EDM-DNB'
+    ]
+
+    # Balanced distribution across genres
+    ai_per_genre = [250] * 20  # 5000 / 20 = 250
+    human_per_genre = [250] * 20
+
+    x = np.arange(len(genres))
+    width = 0.35
+
+    bars1 = ax.bar(x - width/2, ai_per_genre, width, label='AI', color='#FF6B6B', edgecolor='white')
+    bars2 = ax.bar(x + width/2, human_per_genre, width, label='Human', color='#4ECDC4', edgecolor='white')
+
+    ax.set_ylabel('Sample Sayısı', fontsize=12)
+    ax.set_title('Şekil 4.2: Genre Bazında Dataset Dağılımı', fontsize=16, fontweight='bold')
+    ax.set_xticks(x)
+    ax.set_xticklabels(genres, rotation=45, ha='right', fontsize=10)
+    ax.legend()
+    ax.set_ylim(0, 350)
+    ax.grid(True, axis='y', alpha=0.3)
+
+    # Add total annotation
+    ax.text(0.98, 0.95, f'Toplam: 10,000 sample\n(20 genre × 500)',
+            transform=ax.transAxes, fontsize=11, ha='right', va='top',
+            bbox=dict(boxstyle='round', facecolor='#F5E6C8', alpha=0.9))
+
+    plt.tight_layout()
+    plt.savefig('genre_distribution.png', dpi=300, bbox_inches='tight', facecolor='white')
+    plt.show()
+
+plot_genre_distribution()
+```
 - **Format:** WAV, 16kHz, mono
 
 **Kaynak Dağılımı:**
