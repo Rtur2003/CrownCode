@@ -100,6 +100,7 @@ wav2vec2 modeli, Facebook AI Research tarafından geliştirilmiş ve self-superv
 Platform, modüler mimari yaklaşımı benimser ve üç ana katmandan oluşur:
 
 #### 3.1.1. Presentation Layer (Frontend)
+#### 3.1.1. Sunum Katmanı (Frontend)
 
 | Teknoloji | Versiyon | Amaç |
 |-----------|----------|------|
@@ -119,6 +120,7 @@ Platform, modüler mimari yaklaşımı benimser ve üç ana katmandan oluşur:
 - **Memory:** 4GB max heap size
 
 #### 3.1.2. Business Logic Layer (Backend)
+#### 3.1.2. İş Mantığı Katmanı (Backend)
 
 | Teknoloji | Versiyon | Amaç |
 |-----------|----------|------|
@@ -177,12 +179,14 @@ Platform, modüler mimari yaklaşımı benimser ve üç ana katmandan oluşur:
 | 500 | Internal Error | Model veya özellik çıkarım hatası |
 
 #### 3.1.3. Data Layer
+#### 3.1.3. Veri Katmanı
 - **Audio Processing:** librosa + soundfile + scipy
 - **ML Models:** HuggingFace Hub (wav2vec2)
 - **Caching:** In-memory + HuggingFace cache
 - **File Storage:** Temporary file system
 
 #### 3.1.4. Deployment Platformları
+#### 3.1.4. Dağıtım (Deployment) Platformları
 
 AURIS, production ortamında aşağıdaki cloud platformlarını kullanmaktadır:
 
@@ -289,6 +293,7 @@ services:
 ### 3.2. AI Model Geliştirme Metodolojisi
 
 #### 3.2.1. Dataset Toplama Stratejisi
+#### 3.2.1. Veri Seti Toplama Stratejisi
 
 Geleneksel yaklaşımların aksine, bu çalışmada manuel etiketleme gerektirmeyen otomatik dataset toplama yöntemi kullanılmıştır:
 
