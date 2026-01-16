@@ -211,17 +211,33 @@ const CrownFortunePage: NextPage = () => {
 
   const handleReverseDestiny = useCallback(() => {
     if (!destiny) return
-    
-    // Zaten reverse ise işlem yapma
-    if (isReversed) return
 
-    const msg = getReverseMessage(destiny.category, destiny.messageIndex)
-    setReverseMessage(msg)
-    setIsReversed(true)
-    
-    localStorage.setItem('crown_destiny_is_reversed', 'true')
-    localStorage.setItem('crown_destiny_reverse_msg', JSON.stringify(msg))
-  }, [destiny, isReversed])
+    // Zaten reverse ise veya flip devam ediyorsa işlem yapma
+    if (isReversed || isFlipping) return
+
+    // Start flip animation
+    setIsFlipping(true)
+    flipProgress.set(0)
+
+    // Animate to 1 (full flip)
+    const animateFlip = () => {
+      flipProgress.set(1)
+    }
+
+    // Start animation after a tiny delay for state to settle
+    requestAnimationFrame(animateFlip)
+
+    // Get reverse message and update state after animation peak
+    setTimeout(() => {
+      const msg = getReverseMessage(destiny.category, destiny.messageIndex)
+      setReverseMessage(msg)
+      setIsReversed(true)
+      setIsFlipping(false)
+
+      localStorage.setItem('crown_destiny_is_reversed', 'true')
+      localStorage.setItem('crown_destiny_reverse_msg', JSON.stringify(msg))
+    }, 400) // Halfway through the animation
+  }, [destiny, isReversed, isFlipping, flipProgress])
 
   if (!mounted || !destiny) {
     return (
