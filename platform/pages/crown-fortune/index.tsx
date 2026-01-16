@@ -378,18 +378,30 @@ const CrownFortunePage: NextPage = () => {
                 transition={{ duration: 0.6 }}
               >
                 <div className={styles['card-container']}>
-                  <div
-                    className={`${styles['card-flipper']} ${isCardFlipped ? styles['flipped'] : ''}`}
-                    onClick={() => isCardFlipped && setIsModalOpen(true)}
+                  <motion.div
+                    className={`${styles['card-flipper']} ${isCardFlipped ? styles['flipped'] : ''} ${isReversed ? styles['reversed'] : ''}`}
+                    onClick={() => isCardFlipped && !isFlipping && setIsModalOpen(true)}
+                    animate={{
+                      rotateY: isReversed ? 360 : (isCardFlipped ? 180 : 0)
+                    }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 260,
+                      damping: 20,
+                      mass: 1
+                    }}
+                    style={{
+                      transformStyle: 'preserve-3d'
+                    }}
                   >
-                    {/* CARD BACK */}
+                    {/* CARD BACK - Initial Crown Destiny */}
                     <div className={`${styles['card-face']} ${styles['card-back']}`}>
                       <div className={styles['card-back-pattern']} />
                       <Crown className={styles['card-back-logo']} size={80} />
                       <span className={styles['card-back-text']}>Crown Destiny</span>
                     </div>
 
-                    {/* CARD FRONT */}
+                    {/* CARD FRONT - Tarot Image */}
                     <div className={`${styles['card-face']} ${styles['card-front']}`}>
                       <div className={styles['card-background']}>
                         <Image
@@ -399,31 +411,30 @@ const CrownFortunePage: NextPage = () => {
                           className={styles['card-bg-image']}
                           sizes="(max-width: 768px) 100vw, 300px"
                           priority
-                          style={{
-                            transform: isReversed ? 'rotate(180deg)' : 'none',
-                            transition: 'transform 0.6s ease'
-                          }}
                         />
                       </div>
 
                       <div className={styles['card-overlay']} />
-                      <div className={styles['card-sheen']} />
+
+                      {/* Animated Sheen Effect */}
+                      <motion.div
+                        className={styles['card-sheen-animated']}
+                        style={{
+                          x: sheenX,
+                          opacity: sheenOpacity
+                        }}
+                      />
 
                       <div className={styles['card-content']}>
                         <div className={styles['card-header']}>
                           <span className={styles['card-symbol']}>{details.card.symbol}</span>
-                          <h2 className={styles['card-name']}>
-                            {cardName} {isReversed && (language === 'tr' ? '(Ters)' : '(Reversed)')}
-                          </h2>
+                          <h2 className={styles['card-name']}>{cardName}</h2>
                         </div>
 
                         <div className={styles['card-meta']}>
                           <div
                             className={styles['card-category']}
-                            style={{ 
-                              backgroundColor: isReversed ? '#e74c3c' : CATEGORY_COLORS[destiny.category],
-                              transition: 'background-color 0.3s ease'
-                            }}
+                            style={{ backgroundColor: CATEGORY_COLORS[destiny.category] }}
                           >
                             {CATEGORY_ICONS_SMALL[destiny.category]}
                             <span>{catLabel}</span>
@@ -432,7 +443,7 @@ const CrownFortunePage: NextPage = () => {
                         </div>
 
                         <div className={styles['card-message']}>
-                          <p>{displayMessage}</p>
+                          <p>{language === 'tr' ? details.message.text : details.message.textEn}</p>
                         </div>
 
                         <div className={styles['card-footer']}>
@@ -446,8 +457,49 @@ const CrownFortunePage: NextPage = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
-                  
+
+                    {/* CARD DARK BACK - Reverse Fortune */}
+                    <div className={`${styles['card-face']} ${styles['card-dark-back']}`}>
+                      <div className={styles['card-dark-pattern']} />
+
+                      {/* Ominous background image - same but inverted/darker */}
+                      <div className={styles['card-dark-bg']}>
+                        <Image
+                          src={details.card.image}
+                          alt={cardName}
+                          fill
+                          className={styles['card-dark-image']}
+                          sizes="(max-width: 768px) 100vw, 300px"
+                        />
+                      </div>
+
+                      <div className={styles['card-dark-overlay']} />
+
+                      <div className={styles['card-dark-content']}>
+                        <div className={styles['card-dark-header']}>
+                          <Skull className={styles['card-dark-icon']} size={48} />
+                          <h2 className={styles['card-dark-title']}>
+                            {language === 'tr' ? 'Karanlık Kader' : 'Dark Fate'}
+                          </h2>
+                        </div>
+
+                        <div className={styles['card-dark-name']}>
+                          <span className={styles['card-symbol']}>{details.card.symbol}</span>
+                          <span>{cardName} {language === 'tr' ? '(Ters)' : '(Reversed)'}</span>
+                        </div>
+
+                        <div className={styles['card-dark-message']}>
+                          <p>{reverseMessage ? (language === 'tr' ? reverseMessage.text : reverseMessage.textEn) : ''}</p>
+                        </div>
+
+                        <div className={styles['card-dark-footer']}>
+                          <AlertTriangle size={14} />
+                          <span>{language === 'tr' ? 'Dikkatli ol...' : 'Be warned...'}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+
                   {isCardFlipped && (
                     <div style={{ display: 'flex', gap: '10px', marginTop: '16px', flexDirection: 'column', alignItems: 'center' }}>
                       <motion.div
@@ -470,22 +522,40 @@ const CrownFortunePage: NextPage = () => {
                             e.stopPropagation()
                             handleReverseDestiny()
                           }}
-                          className={styles['spin-button']} // Reusing spin button style for consistency
-                          style={{ 
-                            fontSize: '0.9rem', 
-                            padding: '0.5rem 1rem',
-                            background: 'rgba(0,0,0,0.6)',
-                            border: '1px solid rgba(255,255,255,0.2)',
-                            marginTop: '0.5rem'
-                          }}
-                          whileHover={{ scale: 1.05, backgroundColor: 'rgba(200, 50, 50, 0.8)' }}
+                          disabled={isFlipping}
+                          className={styles['tempt-fate-button']}
+                          whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >
-                          <AlertTriangle size={16} />
-                          <span style={{ marginLeft: '8px' }}>
-                            {language === 'tr' ? 'Kötü Talihini Gör' : 'See Your Dark Fate'}
+                          <motion.div
+                            className={styles['tempt-fate-glow']}
+                            animate={{
+                              opacity: [0.3, 0.7, 0.3],
+                              scale: [1, 1.1, 1]
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              ease: 'easeInOut'
+                            }}
+                          />
+                          <Skull size={18} />
+                          <span>
+                            {language === 'tr' ? 'Karanlık Kaderi Gör' : 'Reveal Dark Fate'}
                           </span>
                         </motion.button>
+                      )}
+
+                      {/* Reversed indicator */}
+                      {isReversed && (
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          className={styles['reversed-indicator']}
+                        >
+                          <Skull size={14} />
+                          <span>{language === 'tr' ? 'Karanlık kader açığa çıktı' : 'Dark fate revealed'}</span>
+                        </motion.div>
                       )}
                     </div>
                   )}
