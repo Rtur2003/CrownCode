@@ -323,7 +323,11 @@
 }
 
 .card-flipper.flipped {
-  transform: rotateY(180deg);
+  /* Now handled by Framer Motion */
+}
+
+.card-flipper.reversed {
+  /* Now handled by Framer Motion */
 }
 
 .card-face {
