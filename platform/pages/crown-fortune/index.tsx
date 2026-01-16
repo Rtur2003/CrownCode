@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion'
 import {
   Crown,
   Sparkles,
@@ -16,7 +16,8 @@ import {
   Star,
   X,
   Maximize2,
-  AlertTriangle
+  AlertTriangle,
+  Skull
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import BackgroundFloatingCards from '@/components/CrownFortune/BackgroundFloatingCards'
@@ -75,6 +76,19 @@ const CrownFortunePage: NextPage = () => {
   // Reverse / Tempt Fate State
   const [isReversed, setIsReversed] = useState(false)
   const [reverseMessage, setReverseMessage] = useState<FortuneMessage | null>(null)
+  const [isFlipping, setIsFlipping] = useState(false)
+
+  // Spring animation for card flip
+  const flipProgress = useMotionValue(0)
+  const springFlip = useSpring(flipProgress, {
+    stiffness: 260,
+    damping: 20,
+    mass: 1
+  })
+
+  // Transform for sheen effect during flip
+  const sheenX = useTransform(springFlip, [0, 0.5, 1], ['-100%', '0%', '100%'])
+  const sheenOpacity = useTransform(springFlip, [0, 0.3, 0.5, 0.7, 1], [0, 0.8, 1, 0.8, 0])
 
   // Client mount
   useEffect(() => {
