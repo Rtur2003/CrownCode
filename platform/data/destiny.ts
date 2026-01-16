@@ -137,6 +137,37 @@ export const FORTUNE_MESSAGES: Record<FortuneCategory, FortuneMessage[]> = {
     { text: 'Aşk hayatında durağan bir dönem, bu da geçici.', textEn: 'A quiet period in love life, this too shall pass.', tone: 'neutral', type: 'general' },
     { text: 'Kendinle vakit geçirmek için ideal bir gün.', textEn: 'An ideal day to spend time with yourself.', tone: 'neutral', type: 'general' },
     { text: 'İlişkilerde sabır anahtarın bugün.', textEn: 'Patience is your key in relationships today.', tone: 'neutral', type: 'advice' },
+
+    // === YENİ MESAJLAR - ÖZEL VE DETAYLI ===
+    // Zaman Bazlı
+    { text: 'Akşam saatlerinde gelen mesaj hayatını değiştirebilir.', textEn: 'A message arriving in the evening could change your life.', tone: 'positive', type: 'specific' },
+    { text: 'Öğleden sonra beklenmedik bir davet alabilirsin.', textEn: 'You may receive an unexpected invitation this afternoon.', tone: 'positive', type: 'specific' },
+    { text: 'Sabah saatlerinde içine doğan his doğru, ona güven.', textEn: 'The feeling you have in the morning is right, trust it.', tone: 'positive', type: 'advice' },
+    { text: 'Bu hafta sonu romantik bir karşılaşma mümkün.', textEn: 'A romantic encounter is possible this weekend.', tone: 'positive', type: 'specific' },
+
+    // Şans Elementleri
+    { text: 'Kırmızı renk bugün aşk enerjini artırıyor, giy veya taşı.', textEn: 'Red enhances your love energy today, wear or carry it.', tone: 'positive', type: 'advice' },
+    { text: 'Pembe tonları bugün şansını artırıyor.', textEn: 'Pink shades increase your luck today.', tone: 'positive', type: 'advice' },
+    { text: 'Çift sayılar bugün şanslı - saat 22:22\'yi dikkatle izle.', textEn: 'Even numbers are lucky today - watch for 22:22.', tone: 'positive', type: 'specific' },
+    { text: '7 sayısı bugün aşk hayatında uğurlu.', textEn: 'Number 7 is lucky in love today.', tone: 'positive', type: 'specific' },
+
+    // Senaryo Bazlı
+    { text: 'Kahve molasında tanışacağın biri önemli olabilir.', textEn: 'Someone you meet during a coffee break could be important.', tone: 'positive', type: 'specific' },
+    { text: 'Bir arkadaşının arkadaşı dikkatini çekecek.', textEn: 'A friend of a friend will catch your attention.', tone: 'positive', type: 'specific' },
+    { text: 'Tesadüf dediğin şey aslında kader - bu karşılaşma öyle.', textEn: 'What you call coincidence is actually fate - this meeting is one.', tone: 'positive', type: 'specific' },
+    { text: 'Telefona bakma cesaretini göster, mesaj gönder.', textEn: 'Have the courage to not just look at your phone - send a message.', tone: 'positive', type: 'advice' },
+    { text: 'Kalabalık bir ortamda gözler buluşacak.', textEn: 'Eyes will meet in a crowded place.', tone: 'positive', type: 'specific' },
+
+    // Gizemli/İlgi Çekici
+    { text: 'Rüyanda gördüğün yüz gerçek olabilir.', textEn: 'The face you saw in your dream might be real.', tone: 'positive', type: 'specific' },
+    { text: 'Evren sana işaretler gönderiyor, dikkatli bak.', textEn: 'The universe is sending you signs, look carefully.', tone: 'neutral', type: 'advice' },
+    { text: 'Bir şarkı çalarken aklına gelen kişi... onu düşün.', textEn: 'The person who comes to mind when a song plays... think of them.', tone: 'neutral', type: 'specific' },
+
+    // Daha Fazla Negatif/Uyarı
+    { text: 'Mesajlaşırken yanlış anlama riski var, yüz yüze konuş.', textEn: 'Risk of misunderstanding while texting, talk face to face.', tone: 'negative', type: 'warning' },
+    { text: 'Kıskançlık bugün düşmanın, kontrol et.', textEn: 'Jealousy is your enemy today, keep it in check.', tone: 'negative', type: 'warning' },
+    { text: 'Geçmişten biri dönebilir ama niyeti sorgulanmalı.', textEn: 'Someone from your past may return but question their intentions.', tone: 'negative', type: 'warning' },
+    { text: 'Hemen karar verme, bir gece düşün.', textEn: 'Don\'t decide immediately, sleep on it.', tone: 'neutral', type: 'advice' },
   ],
 
   career: [
