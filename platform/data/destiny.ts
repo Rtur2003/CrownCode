@@ -269,6 +269,35 @@ export const FORTUNE_MESSAGES: Record<FortuneCategory, FortuneMessage[]> = {
     { text: 'Bütçeni gözden geçirmek için iyi zaman.', textEn: 'A good time to review your budget.', tone: 'neutral', type: 'general' },
     { text: 'Para konusunda sabırlı ol, zaman senin yanında.', textEn: 'Be patient with money, time is on your side.', tone: 'neutral', type: 'general' },
     { text: 'Küçük adımlar büyük servetler yaratır.', textEn: 'Small steps create great fortunes.', tone: 'neutral', type: 'advice' },
+
+    // === YENİ MESAJLAR - ÖZEL VE DETAYLI ===
+    // Zaman Bazlı
+    { text: 'Ayın ilk haftası finansal kararlar için ideal.', textEn: 'The first week of the month is ideal for financial decisions.', tone: 'positive', type: 'specific' },
+    { text: 'Akşam saatlerinde beklenmedik bir kazanç haberi gelebilir.', textEn: 'News of unexpected gain may come in the evening.', tone: 'positive', type: 'specific' },
+    { text: 'Bu ay tasarruf odaklı ol, gelecek ay meyvesini verecek.', textEn: 'Focus on saving this month, next month will bear fruit.', tone: 'positive', type: 'advice' },
+    { text: 'Pazartesi günleri yatırım için şanslı.', textEn: 'Mondays are lucky for investments.', tone: 'positive', type: 'specific' },
+
+    // Şans Elementleri
+    { text: 'Yeşil cüzdan veya aksesuar bolluk çekiyor.', textEn: 'A green wallet or accessory attracts abundance.', tone: 'positive', type: 'advice' },
+    { text: 'Altın rengi bugün para enerjini güçlendiriyor.', textEn: 'Gold color strengthens your money energy today.', tone: 'positive', type: 'advice' },
+    { text: '8 ve 9 sayıları bugün finansal şans getiriyor.', textEn: 'Numbers 8 and 9 bring financial luck today.', tone: 'positive', type: 'specific' },
+    { text: 'Kuzey yönünde yapılan işler bugün karlı.', textEn: 'Business done in the north direction is profitable today.', tone: 'positive', type: 'specific' },
+
+    // Senaryo Bazlı
+    { text: 'Bir tanıdık sana iş fırsatı sunabilir, kulaklarını aç.', textEn: 'An acquaintance may offer you a business opportunity, keep your ears open.', tone: 'positive', type: 'specific' },
+    { text: 'İkinci el eşya satışı beklenenden fazla getirebilir.', textEn: 'Selling second-hand items may bring more than expected.', tone: 'positive', type: 'specific' },
+    { text: 'Banka hesabını kontrol et, unuttuğun bir para olabilir.', textEn: 'Check your bank account, there might be money you forgot.', tone: 'positive', type: 'advice' },
+    { text: 'Alışverişte pazarlık yap, başarılı olacaksın.', textEn: 'Negotiate while shopping, you\'ll be successful.', tone: 'positive', type: 'advice' },
+
+    // Gizemli/İlgi Çekici
+    { text: 'Yolda bulduğun bozuk para şans habercisi.', textEn: 'A coin you find on the street is a sign of luck.', tone: 'positive', type: 'specific' },
+    { text: 'Rüyanda gördüğün rakamları not et, şans getirebilir.', textEn: 'Note the numbers you see in your dreams, they may bring luck.', tone: 'neutral', type: 'advice' },
+
+    // Daha Fazla Negatif/Uyarı
+    { text: 'Bugün kredi kartını cebinde tut, gereksiz harcama yapma.', textEn: 'Keep your credit card in your pocket today, avoid unnecessary spending.', tone: 'negative', type: 'warning' },
+    { text: 'Arkadaşlara borç verme, geri almakta zorlanırsın.', textEn: 'Don\'t lend money to friends, you\'ll have trouble getting it back.', tone: 'negative', type: 'warning' },
+    { text: 'Çok cazip görünen teklif aslında tuzak olabilir.', textEn: 'An offer that looks too tempting might actually be a trap.', tone: 'negative', type: 'warning' },
+    { text: 'Online alışverişte dikkatli ol, dolandırıcılık riski var.', textEn: 'Be careful with online shopping, there\'s a risk of fraud.', tone: 'negative', type: 'warning' },
   ],
 
   health: [
