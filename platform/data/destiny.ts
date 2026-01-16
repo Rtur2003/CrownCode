@@ -397,6 +397,36 @@ export const FORTUNE_MESSAGES: Record<FortuneCategory, FortuneMessage[]> = {
     { text: 'Ruhsal denge için ideal gün, korumaya al.', textEn: 'An ideal day for spiritual balance, protect it.', tone: 'neutral', type: 'general' },
     { text: 'Sorular cevaplardan önemli, sorgula.', textEn: 'Questions are more important than answers, keep questioning.', tone: 'neutral', type: 'general' },
     { text: 'Bugün sadece var ol, hiçbir şey yapma.', textEn: 'Just be today, do nothing.', tone: 'neutral', type: 'advice' },
+
+    // === YENİ MESAJLAR - ÖZEL VE DETAYLI ===
+    // Zaman Bazlı
+    { text: 'Sabah ilk ışıklarla meditasyon bugün çok güçlü.', textEn: 'Meditation at first light is very powerful today.', tone: 'positive', type: 'specific' },
+    { text: 'Akşam 7-9 arası ruhsal bağlantı en güçlü.', textEn: 'Spiritual connection is strongest between 7-9 PM.', tone: 'positive', type: 'specific' },
+    { text: 'Dolunay yaklaşıyor, niyetlerini belirle.', textEn: 'Full moon is approaching, set your intentions.', tone: 'positive', type: 'advice' },
+    { text: 'Bu hafta üçüncü göz çakran aktif, sezgilerine güven.', textEn: 'Your third eye chakra is active this week, trust your intuition.', tone: 'positive', type: 'specific' },
+
+    // Şans Elementleri
+    { text: 'Mor renk bugün ruhsal enerjini yükseltiyor.', textEn: 'Purple color elevates your spiritual energy today.', tone: 'positive', type: 'advice' },
+    { text: 'Ametist taşı bugün yanında olsun, koruyacak.', textEn: 'Keep an amethyst stone with you today, it will protect you.', tone: 'positive', type: 'advice' },
+    { text: '11 ve 22 sayıları bugün meleksel mesajlar taşıyor.', textEn: 'Numbers 11 and 22 carry angelic messages today.', tone: 'positive', type: 'specific' },
+    { text: 'Batı yönünde oturmak ruhsal açılımı destekliyor.', textEn: 'Sitting facing west supports spiritual awakening.', tone: 'positive', type: 'specific' },
+
+    // Senaryo Bazlı
+    { text: 'Rastgele açtığın kitap sayfası sana mesaj veriyor.', textEn: 'The random book page you open gives you a message.', tone: 'positive', type: 'specific' },
+    { text: 'Bir yabancının sözleri evrenin mesajı olabilir.', textEn: 'A stranger\'s words might be a message from the universe.', tone: 'positive', type: 'specific' },
+    { text: 'Doğada geçireceğin zaman ruhunu arındıracak.', textEn: 'Time spent in nature will cleanse your soul.', tone: 'positive', type: 'advice' },
+    { text: 'Bugün yazdığın günlük gelecekte sana ışık tutacak.', textEn: 'The journal entry you write today will guide you in the future.', tone: 'positive', type: 'advice' },
+
+    // Gizemli/İlgi Çekici
+    { text: 'Saat 11:11\'i gördüğünde bir dilek tut, gerçekleşecek.', textEn: 'When you see 11:11, make a wish, it will come true.', tone: 'positive', type: 'specific' },
+    { text: 'Rüyanda uçmak özgürlüğe yaklaştığının işareti.', textEn: 'Flying in your dream is a sign you\'re approaching freedom.', tone: 'positive', type: 'specific' },
+    { text: 'Bir kelebek veya kuş görürsen, geçmiş yaşamından mesaj.', textEn: 'If you see a butterfly or bird, it\'s a message from a past life.', tone: 'neutral', type: 'specific' },
+
+    // Daha Fazla Negatif/Uyarı
+    { text: 'Bugün tartışmalardan uzak dur, enerji hırsızları var.', textEn: 'Stay away from arguments today, energy vampires are around.', tone: 'negative', type: 'warning' },
+    { text: 'Sosyal medya bugün ruhunu yoracak, ara ver.', textEn: 'Social media will tire your soul today, take a break.', tone: 'negative', type: 'warning' },
+    { text: 'Kalabalıklardan uzak dur, auran hassas.', textEn: 'Stay away from crowds, your aura is sensitive.', tone: 'negative', type: 'warning' },
+    { text: 'Karanlık düşünceler geçici, onlara tutunma.', textEn: 'Dark thoughts are temporary, don\'t cling to them.', tone: 'negative', type: 'advice' },
   ],
 }
 
