@@ -112,7 +112,9 @@ const AIMusicDetectionPage: NextPage = () => {
   const formatFileSize = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(2)} MB`
 
   const resolveErrorMessage = (errorKey: string | null) => {
-    if (!errorKey) return null
+    if (!errorKey) {
+      return null
+    }
     switch (errorKey) {
       case 'enterUrl':
         return t.aiDetection.errors?.enterUrl || t.aiDetection.error.title
@@ -153,14 +155,22 @@ const AIMusicDetectionPage: NextPage = () => {
 
   const getDecisionLabel = (source: string) => {
     const labels = t.aiDetection.result.sources
-    if (!labels) return source
-    if (source === 'music_ai') return labels.musicAi
-    if (source === 'ses_analizi') return labels.sesAnalizi
+    if (!labels) {
+      return source
+    }
+    if (source === 'music_ai') {
+      return labels.musicAi
+    }
+    if (source === 'ses_analizi') {
+      return labels.sesAnalizi
+    }
     return labels.preview
   }
 
   const renderAnalysisResult = () => {
-    if (!analysisResult) return null
+    if (!analysisResult) {
+      return null
+    }
 
     const confidence = Math.round(analysisResult.confidence * 100)
     const decisionLabel = getDecisionLabel(analysisResult.decisionSource)

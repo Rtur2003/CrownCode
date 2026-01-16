@@ -19,7 +19,6 @@ import type { NextPage } from 'next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import {
-  Upload,
   RefreshCw,
   Music,
   FolderOpen,
@@ -117,8 +116,9 @@ const AudioDatasetPage: NextPage = () => {
       const blob = await response.blob()
       const url = window.URL.createObjectURL(blob)
       setProcessedFileUrl(url)
-    } catch (err: any) {
-      setError(err.message || t.audioDataset.interface.errors.unexpected)
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : t.audioDataset.interface.errors.unexpected
+      setError(errorMessage)
     } finally {
       setIsProcessing(false)
     }
