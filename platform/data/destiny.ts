@@ -204,6 +204,35 @@ export const FORTUNE_MESSAGES: Record<FortuneCategory, FortuneMessage[]> = {
     { text: 'Planlama ve organizasyon için ideal gün.', textEn: 'An ideal day for planning and organization.', tone: 'neutral', type: 'general' },
     { text: 'Bugün tohumları ek, yarın hasat zamanı.', textEn: 'Plant the seeds today, harvest time is tomorrow.', tone: 'neutral', type: 'general' },
     { text: 'Öğrenmeye açık ol, yeni bilgiler geliyor.', textEn: 'Be open to learning, new knowledge is coming.', tone: 'neutral', type: 'advice' },
+
+    // === YENİ MESAJLAR - ÖZEL VE DETAYLI ===
+    // Zaman Bazlı
+    { text: 'Sabahki toplantı kritik, erken hazırlan.', textEn: 'Morning meeting is critical, prepare early.', tone: 'positive', type: 'specific' },
+    { text: 'Öğleden sonra 3-5 arası verimlilik pik yapacak.', textEn: 'Productivity will peak between 3-5 PM.', tone: 'positive', type: 'specific' },
+    { text: 'Bu hafta içinde önemli bir gelişme bekleniyor.', textEn: 'An important development is expected this week.', tone: 'positive', type: 'specific' },
+    { text: 'Cuma günü iyi haberler gelebilir.', textEn: 'Good news may come on Friday.', tone: 'positive', type: 'specific' },
+
+    // Şans Elementleri
+    { text: 'Mavi renk bugün başarı getiriyor, kravat veya aksesuar olabilir.', textEn: 'Blue brings success today, could be a tie or accessory.', tone: 'positive', type: 'advice' },
+    { text: 'Güneydoğu yönü bugün şanslı, masanı öyle konumlandır.', textEn: 'Southeast direction is lucky today, position your desk accordingly.', tone: 'positive', type: 'advice' },
+    { text: '3 ve 8 sayıları bugün kariyer için uğurlu.', textEn: 'Numbers 3 and 8 are lucky for career today.', tone: 'positive', type: 'specific' },
+    { text: 'Kalem veya defter hediye almak şans getirecek.', textEn: 'Receiving a pen or notebook as a gift will bring luck.', tone: 'positive', type: 'specific' },
+
+    // Senaryo Bazlı
+    { text: 'Asansörde karşılaşacağın biri kariyerinde önemli rol oynayabilir.', textEn: 'Someone you meet in the elevator could play an important role in your career.', tone: 'positive', type: 'specific' },
+    { text: 'E-posta kutunu kontrol et, kaçırdığın bir fırsat olabilir.', textEn: 'Check your email inbox, you might have missed an opportunity.', tone: 'positive', type: 'advice' },
+    { text: 'Bir meslektaşın tavsiyesi altın değerinde olacak.', textEn: 'A colleague\'s advice will be worth its weight in gold.', tone: 'positive', type: 'specific' },
+    { text: 'LinkedIn\'de beklenmedik bir bağlantı kapıları açacak.', textEn: 'An unexpected LinkedIn connection will open doors.', tone: 'positive', type: 'specific' },
+
+    // Gizemli/İlgi Çekici
+    { text: 'Rüyanda gördüğün iş fikri gerçekleştirilebilir.', textEn: 'The business idea you saw in your dream can be realized.', tone: 'positive', type: 'specific' },
+    { text: 'İstemeden duyacağın bir konuşma ipucu verecek.', textEn: 'A conversation you overhear will give you a clue.', tone: 'neutral', type: 'specific' },
+
+    // Daha Fazla Negatif/Uyarı
+    { text: 'Bugün imzalayacağın belgeleri iki kez kontrol et.', textEn: 'Double-check any documents you sign today.', tone: 'negative', type: 'warning' },
+    { text: 'Ofis politikalarına karışma, uzak dur.', textEn: 'Don\'t get involved in office politics, stay away.', tone: 'negative', type: 'warning' },
+    { text: 'Bir rakip gizlice senin fikirlerini takip ediyor olabilir.', textEn: 'A rival might be secretly following your ideas.', tone: 'negative', type: 'warning' },
+    { text: 'Hızlı kararlar bugün riskli, bekle.', textEn: 'Quick decisions are risky today, wait.', tone: 'negative', type: 'warning' },
   ],
 
   money: [
