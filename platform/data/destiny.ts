@@ -333,6 +333,35 @@ export const FORTUNE_MESSAGES: Record<FortuneCategory, FortuneMessage[]> = {
     { text: 'Bedenini dinle, o sana ne istediğini söylüyor.', textEn: 'Listen to your body, it\'s telling you what it needs.', tone: 'neutral', type: 'general' },
     { text: 'Küçük değişiklikler büyük sonuçlar yaratır.', textEn: 'Small changes create big results.', tone: 'neutral', type: 'general' },
     { text: 'Önleme tedaviden iyidir, bugün buna odaklan.', textEn: 'Prevention is better than cure, focus on that today.', tone: 'neutral', type: 'advice' },
+
+    // === YENİ MESAJLAR - ÖZEL VE DETAYLI ===
+    // Zaman Bazlı
+    { text: 'Sabah 6-8 arası egzersiz yapmak bugün çok etkili.', textEn: 'Exercise between 6-8 AM will be very effective today.', tone: 'positive', type: 'specific' },
+    { text: 'Öğlen saatlerinde 15 dakikalık yürüyüş mucize yaratır.', textEn: 'A 15-minute walk at noon will work wonders.', tone: 'positive', type: 'advice' },
+    { text: 'Akşam 10\'dan önce yatmak vücudunu yenileyecek.', textEn: 'Going to bed before 10 PM will rejuvenate your body.', tone: 'positive', type: 'advice' },
+    { text: 'Bu hafta bağışıklık sistemin güçlü, tadını çıkar.', textEn: 'Your immune system is strong this week, enjoy it.', tone: 'positive', type: 'general' },
+
+    // Şans Elementleri
+    { text: 'Yeşil renkli yiyecekler bugün sağlığını destekliyor.', textEn: 'Green colored foods support your health today.', tone: 'positive', type: 'advice' },
+    { text: 'Doğu yönünde uyumak enerji akışını iyileştiriyor.', textEn: 'Sleeping facing east improves energy flow.', tone: 'positive', type: 'advice' },
+    { text: '4 ve 6 sayıları bugün sağlık için uğurlu.', textEn: 'Numbers 4 and 6 are lucky for health today.', tone: 'positive', type: 'specific' },
+    { text: 'Turkuaz renk bugün şifa enerjisi taşıyor.', textEn: 'Turquoise color carries healing energy today.', tone: 'positive', type: 'specific' },
+
+    // Senaryo Bazlı
+    { text: 'Bir arkadaşın önerdiği egzersiz programı sana çok uygun.', textEn: 'The exercise program a friend suggested suits you well.', tone: 'positive', type: 'specific' },
+    { text: 'Bugün deneyeceğin yeni tarif vücuduna iyi gelecek.', textEn: 'A new recipe you try today will be good for your body.', tone: 'positive', type: 'specific' },
+    { text: 'Tesadüfen karşılaştığın bilgi sağlığına faydalı olacak.', textEn: 'Information you stumble upon will benefit your health.', tone: 'positive', type: 'specific' },
+    { text: 'Eski bir alışkanlığı bırakmak için bugün mükemmel.', textEn: 'Today is perfect for breaking an old habit.', tone: 'positive', type: 'advice' },
+
+    // Gizemli/İlgi Çekici
+    { text: 'Bedenin sana bir mesaj gönderiyor, o ağrıyı dinle.', textEn: 'Your body is sending you a message, listen to that ache.', tone: 'neutral', type: 'advice' },
+    { text: 'Rüyanda suyun içinde yüzmek şifa işareti.', textEn: 'Swimming in water in your dream is a sign of healing.', tone: 'positive', type: 'specific' },
+
+    // Daha Fazla Negatif/Uyarı
+    { text: 'Bugün aşırı fiziksel aktiviteden kaçın.', textEn: 'Avoid excessive physical activity today.', tone: 'negative', type: 'warning' },
+    { text: 'Soğuk içeceklerden uzak dur, mide hassas.', textEn: 'Stay away from cold drinks, your stomach is sensitive.', tone: 'negative', type: 'warning' },
+    { text: 'Ertelediğin doktor randevusunu bugün al.', textEn: 'Make that doctor\'s appointment you\'ve been postponing.', tone: 'negative', type: 'warning' },
+    { text: 'Gece geç saatlere kadar uyanık kalma, bedenin dinlenme istiyor.', textEn: 'Don\'t stay up late at night, your body wants to rest.', tone: 'negative', type: 'warning' },
   ],
 
   spirit: [
