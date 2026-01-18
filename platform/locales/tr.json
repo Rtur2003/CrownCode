@@ -88,6 +88,17 @@
           "Motivasyon",
           "Günlük İlham"
         ]
+      },
+      "dreams": {
+        "title": "Crown Dreams",
+        "description": "Neural Rüya Günlüğü - Rüyalarınızı kaydedin, analiz edin ve bilinçaltınızı keşfedin. AI destekli analiz ve lüsid rüya takibi.",
+        "status": "Aktif",
+        "stats": "%72 Lüsidlik",
+        "features": [
+          "Rüya Günlüğü",
+          "AI Analizi",
+          "Lüsid Takip"
+        ]
       }
     }
   },

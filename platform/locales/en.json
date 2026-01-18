@@ -88,6 +88,17 @@
           "Motivation",
           "Daily Inspiration"
         ]
+      },
+      "dreams": {
+        "title": "Crown Dreams",
+        "description": "Neural Dream Journal - Record your dreams, analyze them, and explore your subconscious. AI-powered analysis and lucid dream tracking.",
+        "status": "Active",
+        "stats": "72% Lucidity",
+        "features": [
+          "Dream Journal",
+          "AI Analysis",
+          "Lucid Tracking"
+        ]
       }
     }
   },
