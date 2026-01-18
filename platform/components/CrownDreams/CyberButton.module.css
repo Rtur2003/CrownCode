@@ -1,0 +1,208 @@
+/* CyberButton - Futuristic Button Component */
+
+.cyberButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid;
+  border-radius: 2px;
+  font-family: var(--font-family-sans, system-ui);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sizes */
+.size-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.625rem;
+}
+
+.size-md {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.75rem;
+}
+
+.size-lg {
+  padding: 1rem 2rem;
+  font-size: 0.875rem;
+}
+
+/* Variants */
+.variant-primary {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.5);
+  color: #D4AF37;
+}
+
+.variant-primary:hover {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: #D4AF37;
+  color: #FFD700;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.variant-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.variant-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+}
+
+.variant-ghost {
+  background: transparent;
+  border-color: transparent;
+  color: rgba(212, 175, 55, 0.7);
+}
+
+.variant-ghost:hover {
+  background: rgba(212, 175, 55, 0.1);
+  color: #D4AF37;
+}
+
+.variant-danger {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #EF4444;
+}
+
+.variant-danger:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.variant-success {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #10B981;
+}
+
+.variant-success:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.5);
+}
+
+/* Disabled state */
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Shimmer effect */
+.shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.cyberButton:hover .shimmer {
+  opacity: 1;
+}
+
+/* Loading spinner */
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  animation: spin 1s linear infinite;
+}
+
+.spinnerTrack {
+  opacity: 0.25;
+}
+
+.spinnerHead {
+  opacity: 0.75;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Icon */
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Text */
+.text {
+  position: relative;
+  z-index: 1;
+}
+
+/* Bottom line accent */
+.bottomLine {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 0;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+
+.cyberButton:hover .bottomLine {
+  width: 100%;
+}
+
+/* ============ ICON BUTTON ============ */
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #D4AF37;
+}
+
+.iconVariant-default {
+  background: rgba(21, 17, 14, 0.5);
+  border-color: rgba(212, 175, 55, 0.2);
+}
+
+.iconVariant-default:hover {
+  background: rgba(21, 17, 14, 0.8);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.iconVariant-ghost {
+  background: transparent;
+  border-color: transparent;
+}
+
+.iconVariant-ghost:hover {
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.iconVariant-glow {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.iconVariant-glow:hover {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
