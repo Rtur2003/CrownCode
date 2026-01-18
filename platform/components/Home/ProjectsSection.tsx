@@ -22,7 +22,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
-import { Music, Brain, ArrowUpRight, Sparkles, Activity, LucideIcon, Crown } from 'lucide-react'
+import { Music, Brain, ArrowUpRight, Sparkles, Activity, LucideIcon, Crown, Moon } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
 // =========================================================================
@@ -165,6 +165,17 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
       status: t.products.items.fortune?.status || 'Active',
       stats: t.products.items.fortune?.stats || '8 Categories',
       features: t.products.items.fortune?.features || ['Fortune Wheel', 'Motivation', 'Daily Inspiration']
+    },
+    {
+      id: 'crown-dreams',
+      title: t.products.items.dreams?.title || 'Crown Dreams',
+      description: t.products.items.dreams?.description || 'Neural Dream Journal - Record and analyze your dreams.',
+      href: '/crown-dreams',
+      icon: Moon,
+      gradient: 'from-purple-400 via-violet-500 to-indigo-600',
+      status: t.products.items.dreams?.status || 'Active',
+      stats: t.products.items.dreams?.stats || '72% Lucidity',
+      features: t.products.items.dreams?.features || ['Dream Journal', 'AI Analysis', 'Lucid Tracking']
     }
   ]
 
