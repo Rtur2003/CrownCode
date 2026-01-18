@@ -60,7 +60,7 @@ export function GlassCard({
 interface StatCardProps {
   label: string
   value: string | number
-  icon?: React.ElementType
+  icon?: ReactNode
   trend?: number
   delay?: number
   className?: string
@@ -69,7 +69,7 @@ interface StatCardProps {
 export function StatCard({
   label,
   value,
-  icon: Icon,
+  icon,
   trend,
   delay = 0,
   className = ''
@@ -77,9 +77,9 @@ export function StatCard({
   return (
     <GlassCard delay={delay} className={`${styles.statCard} ${className}`}>
       <div className={styles.statHeader}>
-        {Icon && (
+        {icon && (
           <div className={styles.statIcon}>
-            <Icon size={18} />
+            {icon}
           </div>
         )}
         {trend !== undefined && (
