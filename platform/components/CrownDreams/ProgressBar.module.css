@@ -1,0 +1,115 @@
+/* ProgressBar - Linear and Circular Progress Components */
+
+/* ============ LINEAR PROGRESS ============ */
+.progressContainer {
+  width: 100%;
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.progressLabel {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(212, 175, 55, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.progressPercent {
+  font-size: 0.7rem;
+  font-family: var(--font-family-mono, monospace);
+  color: rgba(212, 175, 55, 0.8);
+}
+
+.progressTrack {
+  width: 100%;
+  background: rgba(212, 175, 55, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+/* Sizes */
+.size-sm {
+  height: 4px;
+}
+
+.size-md {
+  height: 8px;
+}
+
+.size-lg {
+  height: 12px;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 999px;
+  position: relative;
+}
+
+/* Variants */
+.variant-gold {
+  background: linear-gradient(90deg, #FFD700 0%, #D4AF37 100%);
+}
+
+.variant-bronze {
+  background: linear-gradient(90deg, #CD7F32 0%, #8B4513 100%);
+}
+
+.variant-gradient {
+  background: linear-gradient(90deg, #FFD700 0%, #D4AF37 50%, #CD7F32 100%);
+}
+
+/* ============ CIRCULAR PROGRESS ============ */
+.circularContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circularSvg {
+  transform: rotate(-90deg);
+}
+
+.circularTrack {
+  fill: none;
+  stroke: rgba(212, 175, 55, 0.1);
+}
+
+.circularFill {
+  fill: none;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+}
+
+.circularContent {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.circularValue {
+  font-size: 1.75rem;
+  font-weight: 600;
+  font-family: var(--font-family-serif, serif);
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.circularLabel {
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(212, 175, 55, 0.6);
+  margin-top: 0.25rem;
+}
