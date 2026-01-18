@@ -16,7 +16,6 @@ import {
   BookOpen,
   X,
   Clock,
-  Heart,
   AlertTriangle,
   Repeat,
   Compass,
@@ -34,8 +33,7 @@ import {
   formatDreamDate,
   truncateDreamContent,
   type DreamEntry,
-  type DreamType,
-  type EmotionType
+  type DreamType
 } from '@/data/dreams'
 import styles from '@/styles/pages/crown-dreams.module.css'
 
@@ -50,7 +48,7 @@ const DREAM_TYPE_ICONS: Record<DreamType, React.ReactNode> = {
 }
 
 const CrownDreamsPage: NextPage = () => {
-  const { language, t } = useLanguage()
+  const { language } = useLanguage()
   const [selectedDream, setSelectedDream] = useState<DreamEntry | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [activeFilter, setActiveFilter] = useState<DreamType | 'all'>('all')
@@ -158,7 +156,7 @@ const CrownDreamsPage: NextPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            {statCards.map((stat, i) => (
+            {statCards.map((stat) => (
               <div key={stat.label} className={styles['stat-card']}>
                 <div className={styles['stat-header']}>
                   <div className={styles['stat-icon']}>

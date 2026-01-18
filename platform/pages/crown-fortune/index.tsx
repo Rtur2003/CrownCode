@@ -97,7 +97,9 @@ const CrownFortunePage: NextPage = () => {
 
   // Load destiny
   useEffect(() => {
-    if (!mounted) return
+    if (!mounted) {
+      return
+    }
 
     const loadDestiny = () => {
       const daily = getDailyDestiny()
@@ -145,7 +147,9 @@ const CrownFortunePage: NextPage = () => {
 
   // Countdown
   useEffect(() => {
-    if (!mounted) return
+    if (!mounted) {
+      return
+    }
 
     const update = () => {
       const ms = getTimeUntilMidnightGMT3()
@@ -162,7 +166,9 @@ const CrownFortunePage: NextPage = () => {
 
   // Midnight reset check
   useEffect(() => {
-    if (!mounted) return
+    if (!mounted) {
+      return
+    }
 
     const check = () => {
       const today = getTurkeyDate()
@@ -188,7 +194,9 @@ const CrownFortunePage: NextPage = () => {
   }, [mounted, destiny])
 
   const spinWheel = useCallback(() => {
-    if (!destiny || isSpinning || showCard) return
+    if (!destiny || isSpinning || showCard) {
+      return
+    }
 
     setIsSpinning(true)
 
@@ -210,10 +218,14 @@ const CrownFortunePage: NextPage = () => {
   }, [destiny, isSpinning, showCard])
 
   const handleReverseDestiny = useCallback(() => {
-    if (!destiny) return
+    if (!destiny) {
+      return
+    }
 
     // Zaten reverse ise veya flip devam ediyorsa işlem yapma
-    if (isReversed || isFlipping) return
+    if (isReversed || isFlipping) {
+      return
+    }
 
     // Start flip animation
     setIsFlipping(true)
