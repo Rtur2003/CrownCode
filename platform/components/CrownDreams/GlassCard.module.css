@@ -1,0 +1,217 @@
+/* GlassCard - Glass Morphism Card Component */
+
+.glassCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Variants */
+.variantDefault {
+  border-color: rgba(255, 255, 255, 0.05);
+  background: rgba(21, 17, 14, 0.4);
+}
+
+.variantBordered {
+  border-color: rgba(212, 175, 55, 0.2);
+  background: rgba(21, 17, 14, 0.3);
+}
+
+.variantGlow {
+  border-color: rgba(212, 175, 55, 0.3);
+  background: rgba(21, 17, 14, 0.5);
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.1);
+}
+
+.variantNeural {
+  border-color: rgba(212, 175, 55, 0.1);
+  background: rgba(21, 17, 14, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Hover Effect */
+.hoverEffect:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.15);
+  transform: translateY(-4px);
+}
+
+/* Glow Effect */
+.glowEffect {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.1); }
+  50% { box-shadow: 0 0 50px rgba(212, 175, 55, 0.2); }
+}
+
+/* Gradient Overlay */
+.gradientOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.glassCard:hover .gradientOverlay {
+  opacity: 1;
+}
+
+/* Corner Accent */
+.cornerAccent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(225deg, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Content */
+.content {
+  position: relative;
+  z-index: 10;
+}
+
+/* ============ STAT CARD ============ */
+.statCard {
+  height: 136px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.statHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.statIcon {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  color: #D4AF37;
+  transition: all 0.3s ease;
+}
+
+.statCard:hover .statIcon {
+  background: rgba(212, 175, 55, 0.2);
+  color: #FFD700;
+}
+
+.statTrend {
+  font-size: 0.7rem;
+  font-family: var(--font-family-mono, monospace);
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+}
+
+.statTrend.positive {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10B981;
+}
+
+.statTrend.negative {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+}
+
+.statLabel {
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(212, 175, 55, 0.6);
+  margin-bottom: 0.25rem;
+}
+
+.statValue {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  font-family: var(--font-family-serif, serif);
+}
+
+/* ============ FEATURE CARD ============ */
+.featureCard {
+  cursor: default;
+}
+
+.featureCard.clickable {
+  cursor: pointer;
+}
+
+.featureCard.clickable:hover {
+  transform: scale(1.02) translateY(-4px);
+}
+
+.featureContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.featureIcon {
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  color: #D4AF37;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.featureCard:hover .featureIcon {
+  background: rgba(212, 175, 55, 0.2);
+}
+
+.featureText {
+  flex: 1;
+}
+
+.featureTitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: rgba(212, 175, 55, 0.9);
+  margin: 0 0 0.5rem 0;
+  font-family: var(--font-family-serif, serif);
+  transition: color 0.3s ease;
+}
+
+.featureCard:hover .featureTitle {
+  color: #D4AF37;
+}
+
+.featureDescription {
+  font-size: 0.875rem;
+  color: rgba(212, 175, 55, 0.5);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  .glassCard {
+    padding: 1rem;
+  }
+
+  .statCard {
+    height: 120px;
+  }
+
+  .statValue {
+    font-size: 1.5rem;
+  }
+}
