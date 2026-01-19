@@ -22,6 +22,7 @@ export const CyberButton = forwardRef<HTMLButtonElement, CyberButtonProps>(
     rightIcon,
     children,
     disabled,
+    style,
     ...props
   }, ref) => {
     const classes = [
@@ -37,6 +38,7 @@ export const CyberButton = forwardRef<HTMLButtonElement, CyberButtonProps>(
         ref={ref}
         disabled={disabled || isLoading}
         className={classes}
+        style={style || {}}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         {...props}
@@ -85,7 +87,7 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ className = '', variant = 'default', children, ...props }, ref) => {
+  ({ className = '', variant = 'default', children, style, ...props }, ref) => {
     const classes = [
       styles.iconButton,
       styles[`iconVariant-${variant}`],
@@ -96,6 +98,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       <motion.button
         ref={ref}
         className={classes}
+        style={style || {}}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         {...props}
