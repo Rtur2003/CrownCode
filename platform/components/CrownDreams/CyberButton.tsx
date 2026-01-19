@@ -1,15 +1,16 @@
 'use client'
 
 import React, { forwardRef, ButtonHTMLAttributes } from 'react'
-import { motion } from 'framer-motion'
+import { motion, type MotionStyle } from 'framer-motion'
 import styles from './CyberButton.module.css'
 
-interface CyberButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface CyberButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'style'> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'success'
   size?: 'sm' | 'md' | 'lg'
   isLoading?: boolean
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
+  style?: MotionStyle
 }
 
 export const CyberButton = forwardRef<HTMLButtonElement, CyberButtonProps>(
@@ -38,7 +39,7 @@ export const CyberButton = forwardRef<HTMLButtonElement, CyberButtonProps>(
         ref={ref}
         disabled={disabled || isLoading}
         className={classes}
-        style={style || {}}
+        style={style}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         {...props}
