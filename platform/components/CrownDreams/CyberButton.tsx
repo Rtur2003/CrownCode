@@ -1,16 +1,20 @@
 'use client'
 
-import React, { forwardRef, ButtonHTMLAttributes } from 'react'
-import { motion, type MotionStyle } from 'framer-motion'
+import React, { forwardRef } from 'react'
+import { motion } from 'framer-motion'
 import styles from './CyberButton.module.css'
 
-interface CyberButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'style'> {
+interface CyberButtonProps {
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'success'
   size?: 'sm' | 'md' | 'lg'
   isLoading?: boolean
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
-  style?: MotionStyle
+  className?: string
+  disabled?: boolean
+  children?: React.ReactNode
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
+  type?: 'button' | 'submit' | 'reset'
 }
 
 export const CyberButton = forwardRef<HTMLButtonElement, CyberButtonProps>(
@@ -23,8 +27,8 @@ export const CyberButton = forwardRef<HTMLButtonElement, CyberButtonProps>(
     rightIcon,
     children,
     disabled,
-    style,
-    ...props
+    onClick,
+    type = 'button'
   }, ref) => {
     const classes = [
       styles.cyberButton,
@@ -37,12 +41,12 @@ export const CyberButton = forwardRef<HTMLButtonElement, CyberButtonProps>(
     return (
       <motion.button
         ref={ref}
+        type={type}
         disabled={disabled || isLoading}
         className={classes}
-        style={style}
+        onClick={onClick}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        {...props}
       >
         {/* Shimmer effect */}
         <div className={styles.shimmer} />
@@ -83,12 +87,18 @@ export const CyberButton = forwardRef<HTMLButtonElement, CyberButtonProps>(
 CyberButton.displayName = 'CyberButton'
 
 // Icon Button variant
-interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface IconButtonProps {
   variant?: 'default' | 'ghost' | 'glow'
+  className?: string
+  children?: React.ReactNode
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
+  disabled?: boolean
+  type?: 'button' | 'submit' | 'reset'
+  'aria-label'?: string
 }
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ className = '', variant = 'default', children, style, ...props }, ref) => {
+  ({ className = '', variant = 'default', children, onClick, disabled, type = 'button', 'aria-label': ariaLabel }, ref) => {
     const classes = [
       styles.iconButton,
       styles[`iconVariant-${variant}`],
@@ -98,11 +108,13 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     return (
       <motion.button
         ref={ref}
+        type={type}
         className={classes}
-        style={style || {}}
+        onClick={onClick}
+        disabled={disabled}
+        aria-label={ariaLabel}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        {...props}
       >
         {children}
       </motion.button>
