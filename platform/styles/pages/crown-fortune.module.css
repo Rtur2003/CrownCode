@@ -568,6 +568,61 @@
   color: var(--color-gold-400, #eac06f);
 }
 
+.card-date-dark {
+  color: #e74c3c;
+}
+
+/* ===== CARD FRONT REVERSED STATE ===== */
+.card-front-reversed {
+  border-color: #8b0000;
+}
+
+.card-front-reversed .card-bg-image {
+  filter: grayscale(30%) contrast(110%) brightness(0.7);
+}
+
+.card-overlay-dark {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(26, 10, 10, 0.98) 0%,
+    rgba(26, 10, 10, 0.85) 25%,
+    rgba(26, 10, 10, 0.5) 50%,
+    rgba(10, 5, 5, 0.2) 75%,
+    transparent 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.card-message-dark {
+  background: rgba(139, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  border-radius: var(--radius-lg, 0.75rem);
+  padding: 0.875rem 1rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(231, 76, 60, 0.1);
+}
+
+.card-message-dark p {
+  font-size: clamp(0.85rem, 3vw, 0.95rem);
+  color: var(--color-text-primary, #f4ede3);
+  line-height: 1.6;
+  text-align: center;
+  font-style: italic;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* =============== DARK BACK FACE =============== */
 .card-dark-back {
   transform: rotateY(360deg);
@@ -1006,6 +1061,10 @@
   object-position: center;
 }
 
+.card-modal-image-reversed {
+  filter: grayscale(30%) contrast(110%) brightness(0.7);
+}
+
 /* Modal card info */
 .card-modal-info {
   position: absolute;
@@ -1104,21 +1163,23 @@
   transform: scale(1.1);
 }
 
-/* Click hint on card */
-.card-click-hint {
-  position: absolute;
-  bottom: -2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.7rem;
-  color: var(--color-text-muted, #9a8d7d);
-  opacity: 0;
-  transition: opacity var(--animation-normal, 0.3s) ease;
-  white-space: nowrap;
+/* Card actions container */
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
 }
 
-.card-container:hover .card-click-hint {
-  opacity: 1;
+/* Click hint on card */
+.card-click-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #9a8d7d);
+  white-space: nowrap;
 }
 
 /* Make card clickable */

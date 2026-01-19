@@ -394,7 +394,7 @@ const CrownFortunePage: NextPage = () => {
                     className={`${styles['card-flipper']} ${isCardFlipped ? styles['flipped'] : ''} ${isReversed ? styles['reversed'] : ''}`}
                     onClick={() => isCardFlipped && !isFlipping && setIsModalOpen(true)}
                     animate={{
-                      rotateY: isReversed ? 360 : (isCardFlipped ? 180 : 0)
+                      rotateY: isCardFlipped ? 180 : 0
                     }}
                     transition={{
                       type: 'spring',
@@ -413,8 +413,8 @@ const CrownFortunePage: NextPage = () => {
                       <span className={styles['card-back-text']}>Crown Destiny</span>
                     </div>
 
-                    {/* CARD FRONT - Tarot Image */}
-                    <div className={`${styles['card-face']} ${styles['card-front']}`}>
+                    {/* CARD FRONT - Tarot Image (tek kart, ters/düz durumuna göre içerik değişir) */}
+                    <div className={`${styles['card-face']} ${styles['card-front']} ${isReversed ? styles['card-front-reversed'] : ''}`}>
                       <div className={styles['card-background']}>
                         <Image
                           src={details.card.image}
@@ -426,7 +426,7 @@ const CrownFortunePage: NextPage = () => {
                         />
                       </div>
 
-                      <div className={styles['card-overlay']} />
+                      <div className={isReversed ? styles['card-overlay-dark'] : styles['card-overlay']} />
 
                       {/* Animated Sheen Effect */}
                       <motion.div
@@ -440,88 +440,52 @@ const CrownFortunePage: NextPage = () => {
                       <div className={styles['card-content']}>
                         <div className={styles['card-header']}>
                           <span className={styles['card-symbol']}>{details.card.symbol}</span>
-                          <h2 className={styles['card-name']}>{cardName}</h2>
+                          <h2 className={styles['card-name']}>
+                            {cardName} {isReversed && (language === 'tr' ? '(Ters)' : '(Reversed)')}
+                          </h2>
                         </div>
 
                         <div className={styles['card-meta']}>
                           <div
                             className={styles['card-category']}
-                            style={{ backgroundColor: CATEGORY_COLORS[destiny.category] }}
+                            style={{ backgroundColor: isReversed ? '#8b0000' : CATEGORY_COLORS[destiny.category] }}
                           >
-                            {CATEGORY_ICONS_SMALL[destiny.category]}
-                            <span>{catLabel}</span>
+                            {isReversed ? <Skull size={12} /> : CATEGORY_ICONS_SMALL[destiny.category]}
+                            <span>{isReversed ? (language === 'tr' ? 'Karanlık Kader' : 'Dark Fate') : catLabel}</span>
                           </div>
                           <span className={styles['card-energy']}>{energyText}</span>
                         </div>
 
-                        <div className={styles['card-message']}>
-                          <p>{language === 'tr' ? details.message.text : details.message.textEn}</p>
+                        <div className={isReversed ? styles['card-message-dark'] : styles['card-message']}>
+                          <p>{displayMessage}</p>
                         </div>
 
                         <div className={styles['card-footer']}>
-                          <Star size={12} />
-                          <span className={styles['card-date']}>
-                            {new Date().toLocaleDateString(language === 'tr' ? 'tr-TR' : 'en-US', {
-                              day: 'numeric',
-                              month: 'long'
-                            })}
+                          {isReversed ? <AlertTriangle size={12} color="#e74c3c" /> : <Star size={12} />}
+                          <span className={isReversed ? styles['card-date-dark'] : styles['card-date']}>
+                            {isReversed
+                              ? (language === 'tr' ? 'Dikkatli ol...' : 'Be warned...')
+                              : new Date().toLocaleDateString(language === 'tr' ? 'tr-TR' : 'en-US', {
+                                  day: 'numeric',
+                                  month: 'long'
+                                })
+                            }
                           </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* CARD DARK BACK - Reverse Fortune */}
-                    <div className={`${styles['card-face']} ${styles['card-dark-back']}`}>
-                      <div className={styles['card-dark-pattern']} />
-
-                      {/* Ominous background image - same but inverted/darker */}
-                      <div className={styles['card-dark-bg']}>
-                        <Image
-                          src={details.card.image}
-                          alt={cardName}
-                          fill
-                          className={styles['card-dark-image']}
-                          sizes="(max-width: 768px) 100vw, 300px"
-                        />
-                      </div>
-
-                      <div className={styles['card-dark-overlay']} />
-
-                      <div className={styles['card-dark-content']}>
-                        <div className={styles['card-dark-header']}>
-                          <Skull className={styles['card-dark-icon']} size={48} />
-                          <h2 className={styles['card-dark-title']}>
-                            {language === 'tr' ? 'Karanlık Kader' : 'Dark Fate'}
-                          </h2>
-                        </div>
-
-                        <div className={styles['card-dark-name']}>
-                          <span className={styles['card-symbol']}>{details.card.symbol}</span>
-                          <span>{cardName} {language === 'tr' ? '(Ters)' : '(Reversed)'}</span>
-                        </div>
-
-                        <div className={styles['card-dark-message']}>
-                          <p>{reverseMessage ? (language === 'tr' ? reverseMessage.text : reverseMessage.textEn) : ''}</p>
-                        </div>
-
-                        <div className={styles['card-dark-footer']}>
-                          <AlertTriangle size={14} />
-                          <span>{language === 'tr' ? 'Dikkatli ol...' : 'Be warned...'}</span>
                         </div>
                       </div>
                     </div>
                   </motion.div>
 
                   {isCardFlipped && (
-                    <div style={{ display: 'flex', gap: '10px', marginTop: '16px', flexDirection: 'column', alignItems: 'center' }}>
+                    <div className={styles['card-actions']}>
                       <motion.div
                         className={styles['card-click-hint']}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1 }}
                       >
-                        <Maximize2 size={12} style={{ marginRight: 4, display: 'inline' }} />
-                        {language === 'tr' ? 'Büyütmek için tıkla' : 'Click to enlarge'}
+                        <Maximize2 size={12} />
+                        <span>{language === 'tr' ? 'Büyütmek için tıkla' : 'Click to enlarge'}</span>
                       </motion.div>
 
                       {/* Tempt Fate Button */}
@@ -610,13 +574,9 @@ const CrownFortunePage: NextPage = () => {
                         src={details.card.image}
                         alt={cardName}
                         fill
-                        className={styles['card-modal-image']}
+                        className={`${styles['card-modal-image']} ${isReversed ? styles['card-modal-image-reversed'] : ''}`}
                         sizes="(max-width: 600px) 85vw, 500px"
                         priority
-                        style={{
-                            transform: isReversed ? 'rotate(180deg)' : 'none',
-                            transition: 'transform 0.6s ease'
-                        }}
                       />
 
                       <div className={styles['card-modal-info']}>
