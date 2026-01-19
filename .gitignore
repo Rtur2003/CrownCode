@@ -109,4 +109,30 @@ react-native/
 .mypy_cache/
 .dmypy.json
 .pyre/
-.pytype/    
+.pytype/
+
+# ==========================================
+# Project-specific ignores
+# ==========================================
+
+# DataSet - Large data files, ignore completely
+DataSet/
+
+# Audio files (large)
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.m4a
+
+# Video files (large)
+*.mp4
+*.avi
+*.mkv
+*.mov
+
+# Large model files
+*.h5
+*.pkl
+*.pickle
+*.joblib    
