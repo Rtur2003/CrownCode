@@ -1,0 +1,70 @@
+# ==========================================
+# CrownCode Platform (Next.js) - .gitignore
+# ==========================================
+
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+
+# Environment
+.env
+.env.*
+!.env.example
+!.env.local.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Cache
+.cache/
+*.tsbuildinfo
+.eslintcache
+.stylelintcache
+
+# Temporary
+tmp/
+temp/
+*.tmp
+
+# Vercel/Netlify
+.vercel/
+.netlify/
+
+# Bundle analysis
+bundle-report.html
+stats.json
+
+# TypeScript
+*.tsbuildinfo
+
+# Storybook
+storybook-static/
+
+# PWA
+public/sw.js
+public/workbox-*.js
