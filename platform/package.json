@@ -24,6 +24,8 @@
     "bundle-analyzer": "npx @next/bundle-analyzer"
   },
   "dependencies": {
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.18.2",
     "lucide-react": "^0.454.0",
@@ -31,12 +33,14 @@
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tailwind-merge": "^2.5.4"
+    "tailwind-merge": "^2.5.4",
+    "three": "^0.169.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@types/three": "^0.182.0",
     "@typescript-eslint/eslint-plugin": "^8.17.0",
     "@typescript-eslint/parser": "^8.17.0",
     "autoprefixer": "^10.4.20",
