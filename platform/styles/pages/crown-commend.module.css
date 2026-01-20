@@ -3,7 +3,7 @@
 .commendPage {
   position: relative;
   min-height: 100vh;
-  padding: 2rem 0;
+  padding: 6rem 0 4rem;
   overflow: hidden;
 }
 
@@ -382,4 +382,66 @@
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.5);
   line-height: 1.6;
+}
+
+/* =============== RESPONSIVE =============== */
+@media (max-width: 768px) {
+  .commendPage {
+    padding: 5.5rem 0 3rem;
+  }
+
+  .commendContainer {
+    padding: 0 1rem;
+  }
+
+  .inputCard {
+    padding: 1.5rem;
+  }
+
+  .optionsRow {
+    grid-template-columns: 1fr;
+  }
+
+  .featuresGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .commendPage {
+    padding: 5rem 0 2.5rem;
+  }
+
+  .commendContainer {
+    padding: 0 0.75rem;
+  }
+
+  .commendTitle {
+    font-size: 1.75rem;
+  }
+
+  .inputCard {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+
+  .urlInput {
+    padding: 14px 16px;
+    padding-left: 44px;
+    font-size: 0.9rem;
+  }
+
+  .generateButton {
+    padding: 16px 24px;
+    font-size: 1rem;
+  }
+
+  .featureCard {
+    padding: 1.25rem;
+  }
+
+  .disclaimerFooter {
+    margin-top: 2rem;
+    padding: 1rem;
+  }
 }
