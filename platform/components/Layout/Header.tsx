@@ -30,6 +30,7 @@ export const Header: React.FC = () => {
     { label: t.nav.home, href: '/' },
     { label: t.nav.products, action: scrollToProducts },
     { label: t.nav.fortune, href: '/crown-fortune' },
+    { label: t.nav.commend, href: '/crown-commend' },
     { label: t.nav.github, href: 'https://github.com/Rtur2003?tab=repositories', external: true },
   ]
 
