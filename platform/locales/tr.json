@@ -101,6 +101,17 @@
           "AI Analizi",
           "Lüsid Takip"
         ]
+      },
+      "commend": {
+        "title": "Crown Commend",
+        "description": "YouTube için AI destekli yorum üretici. Gemini AI ile akıllı, bağlamsal yorumlar oluşturun ve doğrudan YouTube'a gönderin.",
+        "status": "Aktif",
+        "stats": "5 Dil Desteği",
+        "features": [
+          "AI Yorumlar",
+          "YouTube API",
+          "Çoklu Dil"
+        ]
       }
     }
   },

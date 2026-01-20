@@ -22,7 +22,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
-import { Music, Brain, ArrowUpRight, Sparkles, Activity, LucideIcon, Crown, Moon } from 'lucide-react'
+import { Music, Brain, ArrowUpRight, Sparkles, Activity, LucideIcon, Crown, Moon, Youtube } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
 // =========================================================================
@@ -176,6 +176,17 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
       status: t.products.items.dreams?.status || 'Active',
       stats: t.products.items.dreams?.stats || '72% Lucidity',
       features: t.products.items.dreams?.features || ['Dream Journal', 'AI Analysis', 'Lucid Tracking']
+    },
+    {
+      id: 'crown-commend',
+      title: t.products.items.commend?.title || 'Crown Commend',
+      description: t.products.items.commend?.description || 'AI-powered YouTube comment generator using Gemini.',
+      href: '/crown-commend',
+      icon: Youtube,
+      gradient: 'from-red-500 via-red-600 to-amber-500',
+      status: t.products.items.commend?.status || 'Active',
+      stats: t.products.items.commend?.stats || '5 Languages',
+      features: t.products.items.commend?.features || ['AI Comments', 'YouTube API', 'Multi-Language']
     }
   ]
 

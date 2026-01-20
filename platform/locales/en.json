@@ -101,6 +101,17 @@
           "AI Analysis",
           "Lucid Tracking"
         ]
+      },
+      "commend": {
+        "title": "Crown Commend",
+        "description": "AI-powered YouTube comment generator. Create intelligent, contextual comments using Gemini AI and post directly to YouTube.",
+        "status": "Active",
+        "stats": "5 Languages",
+        "features": [
+          "AI Comments",
+          "YouTube API",
+          "Multi-Language"
+        ]
       }
     }
   },
