@@ -115,6 +115,11 @@ react-native/
 # Project-specific ignores
 # ==========================================
 
+# Separate repositories (have their own git repos)
+Android-App-CrownCode/
+hf-crowncode-backend/
+Commend-AI/
+
 # DataSet - Large data files, ignore completely
 DataSet/
 
