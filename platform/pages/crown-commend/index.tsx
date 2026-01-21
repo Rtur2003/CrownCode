@@ -301,10 +301,10 @@ const CrownCommendPage: NextPage = () => {
                 >
                   <CommentEditor
                     comment={generatedComment}
-                    onChange={updateComment}
                     onRegenerate={generateComment}
                     onPost={postComment}
                     isPosting={state === 'posting'}
+                    isAlreadyPosted={postResult?.status === 'success'}
                     hasTranscript={hasTranscript}
                     processingTime={processingTime}
                     language={language}
