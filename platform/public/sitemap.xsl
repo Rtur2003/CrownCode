@@ -240,7 +240,7 @@
               <a href="https://www.sitemaps.org/" target="_blank">XML Sitemaps</a>
             </p>
             <p style="margin-top: 0.5rem;">
-              Generated for <a href="https://crowncode.vercel.app">CrownCode Platform</a>
+              Generated for <a href="https://hasanarthuraltuntas.xyz">CrownCode Platform</a>
             </p>
           </div>
         </div>
