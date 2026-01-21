@@ -231,6 +231,12 @@
   transform: none;
 }
 
+.postButtonDisabled {
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%) !important;
+  box-shadow: 0 4px 20px rgba(46, 204, 113, 0.35) !important;
+  opacity: 1 !important;
+}
+
 .spinning {
   animation: spin 1s linear infinite;
 }
