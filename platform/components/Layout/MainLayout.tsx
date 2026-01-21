@@ -39,8 +39,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     },
     "author": {
       "@type": "Person",
-      "name": "Hasan Arthur Altuntaş (Rthur)",
-      "url": "https://hasanarthuraltuntas.xyz"
+      "name": "Rthur",
+      "url": "https://github.com/Rtur2003"
     },
     "image": imageUrl,
     "url": baseUrl,
