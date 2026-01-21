@@ -50,7 +50,6 @@ const CrownCommendPage: NextPage = () => {
     setStyle,
     generateComment,
     postComment,
-    updateComment,
     reset
   } = useCommend()
 
@@ -304,7 +303,7 @@ const CrownCommendPage: NextPage = () => {
                     onRegenerate={generateComment}
                     onPost={postComment}
                     isPosting={state === 'posting'}
-                    isAlreadyPosted={postResult?.status === 'success'}
+                    isAlreadyPosted={postResult?.status === 'success' || postResult?.alreadyCommented === true}
                     hasTranscript={hasTranscript}
                     processingTime={processingTime}
                     language={language}
