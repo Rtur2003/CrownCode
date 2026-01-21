@@ -33,8 +33,8 @@ export const Footer: React.FC = () => {
     {
       title: t.footer.sections.developer.title,
       links: [
-        { label: t.footer.sections.developer.contact, href: 'mailto:contact@hasanarthuraltuntas.xyz', external: true },
-        { label: t.footer.sections.developer.portfolio, href: 'https://hasanarthuraltuntas.xyz', external: true },
+        { label: t.footer.sections.developer.contact, href: 'https://github.com/Rtur2003', external: true },
+        { label: t.footer.sections.developer.portfolio, href: 'https://github.com/Rtur2003', external: true },
       ],
     },
   ]
@@ -74,20 +74,13 @@ export const Footer: React.FC = () => {
                 <Github size={20} />
               </a>
               <a
-                href="https://hasanarthuraltuntas.xyz"
+                href="https://github.com/Rtur2003"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"
                 aria-label="Website"
               >
                 <Globe size={20} />
-              </a>
-              <a
-                href="mailto:contact@hasanarthuraltuntas.xyz"
-                className="social-link"
-                aria-label="Email"
-              >
-                <Mail size={20} />
               </a>
             </div>
           </div>
@@ -148,12 +141,12 @@ export const Footer: React.FC = () => {
                 <Heart size={14} className="heart-icon" />
                 {' '}{t.footer.bottom.by}{' '}
                 <a
-                  href="https://hasanarthuraltuntas.xyz"
+                  href="https://github.com/Rtur2003"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="author-link"
                 >
-                  Hasan Arthur Altuntaş
+                  Rthur
                 </a>
               </span>
             </div>
