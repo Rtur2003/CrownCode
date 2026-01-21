@@ -117,6 +117,7 @@ const CrownCommendPage: NextPage = () => {
         title={language === 'tr' ? 'Crown Commend - AI YouTube Yorum Üretici' : 'Crown Commend - AI YouTube Comment Generator'}
         description={t.subtitle}
         keywords={language === 'tr' ? 'youtube yorum, ai yorum, yapay zeka, commend ai' : 'youtube comment, ai comment, artificial intelligence, commend ai'}
+        url="https://hasanarthuraltuntas.xyz/crown-commend"
       >
         <div className={styles.commendPage}>
           <div className={styles.commendContainer}>
