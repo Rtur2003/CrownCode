@@ -85,26 +85,11 @@ export const CommentEditor: React.FC<CommentEditorProps> = ({
         )}
       </div>
 
-      {/* Comment Text */}
+      {/* Comment Text (Read-only) */}
       <div className={styles.commentWrapper}>
-        {isEditing ? (
-          <textarea
-            className={styles.textarea}
-            value={comment}
-            onChange={(e) => onChange(e.target.value)}
-            onBlur={() => setIsEditing(false)}
-            autoFocus
-            rows={6}
-          />
-        ) : (
-          <motion.div
-            className={styles.commentText}
-            onClick={() => setIsEditing(true)}
-            whileHover={{ backgroundColor: 'rgba(255, 215, 0, 0.05)' }}
-          >
-            {comment}
-          </motion.div>
-        )}
+        <div className={styles.commentText}>
+          {comment}
+        </div>
       </div>
 
       {/* Actions */}
