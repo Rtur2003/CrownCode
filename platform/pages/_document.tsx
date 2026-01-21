@@ -35,15 +35,15 @@ export default function Document() {
               '@type': 'WebSite',
               name: 'CrownCode Platform',
               description: 'Central platform showcasing software projects, research work, and development processes',
-              url: 'https://crowncode.vercel.app',
+              url: 'https://hasanarthuraltuntas.xyz',
               author: {
                 '@type': 'Person',
-                name: 'Rthur',
+                name: 'Hasan Arthur Altuntaş',
                 url: 'https://github.com/Rtur2003'
               },
               potentialAction: {
                 '@type': 'SearchAction',
-                target: 'https://crowncode.vercel.app/search?q={search_term_string}',
+                target: 'https://hasanarthuraltuntas.xyz/search?q={search_term_string}',
                 'query-input': 'required name=search_term_string'
               }
             })
@@ -58,16 +58,17 @@ export default function Document() {
               '@context': 'https://schema.org',
               '@type': 'Organization',
               name: 'CrownCode',
-              url: 'https://crowncode.vercel.app',
-              logo: 'https://crowncode.vercel.app/logo-main.png',
+              url: 'https://hasanarthuraltuntas.xyz',
+              logo: 'https://hasanarthuraltuntas.xyz/logo-main.png',
               description: 'Open-source project showcase and demo applications platform',
               founder: {
                 '@type': 'Person',
-                name: 'Rthur',
+                name: 'Hasan Arthur Altuntaş',
                 url: 'https://github.com/Rtur2003'
               },
               sameAs: [
-                'https://github.com/Rtur2003'
+                'https://github.com/Rtur2003',
+                'https://hasanarthuraltuntas.com.tr'
               ],
               contactPoint: {
                 '@type': 'ContactPoint',
