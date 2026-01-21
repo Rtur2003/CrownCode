@@ -1,39 +1,78 @@
 {
-  "name": "CrownCode - AI Research Platform",
+  "name": "CrownCode - AI-Powered Project Platform",
   "short_name": "CrownCode",
-  "description": "AI-powered music detection and data analysis research platform",
+  "description": "Yapay zeka destekli açık kaynak proje platformu. AI müzik tespiti, YouTube yorum üretici ve fal yorumlama.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0b0a08",
   "theme_color": "#e7c77a",
   "orientation": "portrait-primary",
+  "lang": "tr",
+  "dir": "ltr",
+  "scope": "/",
+  "id": "crowncode-platform",
   "icons": [
     {
-      "src": "/favicon.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
     },
     {
-      "src": "/logo-main.png",
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "apple touch icon"
     }
   ],
-  "categories": ["productivity", "education"],
+  "categories": ["productivity", "entertainment", "utilities"],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "label": "CrownCode Platform Homepage"
+    }
+  ],
   "shortcuts": [
     {
+      "name": "Crown Commend",
+      "short_name": "Commend",
+      "description": "AI YouTube Yorum Üretici",
+      "url": "/crown-commend",
+      "icons": [{ "src": "/favicon.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Crown Fortune",
+      "short_name": "Fortune",
+      "description": "AI Fal Yorumlama",
+      "url": "/crown-fortune",
+      "icons": [{ "src": "/favicon.png", "sizes": "192x192" }]
+    },
+    {
       "name": "AI Music Detection",
-      "url": "/ai-music-detection"
-    },
-    {
-      "name": "ML Toolkit",
-      "url": "/data-manipulation"
-    },
-    {
-      "name": "Crown Destiny",
-      "url": "/crown-fortune"
+      "short_name": "AURIS",
+      "description": "Yapay Zeka Müzik Tespiti",
+      "url": "/ai-music-detection",
+      "icons": [{ "src": "/favicon.png", "sizes": "192x192" }]
     }
-  ]
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
 }
