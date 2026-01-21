@@ -37,6 +37,7 @@ export interface PostResponse {
   message: string
   commentId?: string
   postedAt?: string
+  alreadyCommented?: boolean
 }
 
 export type CommendState = 'idle' | 'fetching' | 'generating' | 'posting' | 'success' | 'error'
@@ -147,9 +148,24 @@ export const useCommend = () => {
         })
       })
 
+      // Handle already commented (409 Conflict)
+      if (response.status === 409) {
+        const errorData = await response.json().catch(() => ({ detail: {} }))
+        const detail = typeof errorData.detail === 'object' ? errorData.detail : { message: errorData.detail }
+        setPostResult({
+          status: 'success',
+          message: detail.message || 'Already commented',
+          alreadyCommented: true,
+          commentId: detail.previousCommentId,
+          postedAt: detail.postedAt
+        })
+        setState('success')
+        return
+      }
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }))
-        throw new Error(errorData.detail || `HTTP ${response.status}`)
+        throw new Error(typeof errorData.detail === 'string' ? errorData.detail : JSON.stringify(errorData.detail))
       }
 
       const data: PostResponse = await response.json()
