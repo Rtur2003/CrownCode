@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter, usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Github, ExternalLink, Menu, X, Code2 } from 'lucide-react'
 import { LanguageSelector } from '@/components/Navigation/LanguageSelector'
@@ -11,6 +12,8 @@ export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { t } = useLanguage()
+  const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,9 +24,28 @@ export const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Handle scroll to products after navigation
+  useEffect(() => {
+    if (pathname === '/' && window.location.hash === '#products') {
+      // Small delay to ensure page is loaded
+      setTimeout(() => {
+        document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
+        // Clear the hash after scrolling
+        window.history.replaceState(null, '', '/')
+      }, 100)
+    }
+  }, [pathname])
+
   const scrollToProducts = () => {
-    document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
     setIsMobileMenuOpen(false)
+
+    // If already on home page, just scroll
+    if (pathname === '/') {
+      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      // Navigate to home page with hash
+      router.push('/#products')
+    }
   }
 
   const navItems = [
