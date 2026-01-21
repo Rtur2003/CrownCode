@@ -148,12 +148,12 @@ export const Footer: React.FC = () => {
                 <Heart size={14} className="heart-icon" />
                 {' '}{t.footer.bottom.by}{' '}
                 <a
-                  href="https://github.com/Rtur2003"
+                  href="https://hasanarthuraltuntas.xyz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="author-link"
                 >
-                  Rthur
+                  Hasan Arthur Altuntaş
                 </a>
               </span>
             </div>
