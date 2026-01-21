@@ -4,7 +4,7 @@
 // YouTube-first interface for the AI music detection pipeline.
 // Backend integrations are optional; preview mode is always available.
 //
-// @author Rthur (github.com/Rtur2003)
+// @author Hasan Arthur Altuntas
 // @version 1.1.0
 // @since 2025-01-01
 // =========================================================================
