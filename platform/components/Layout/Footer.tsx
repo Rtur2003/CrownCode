@@ -3,6 +3,7 @@ import Link from 'next/link'
 import {
   Github,
   ExternalLink,
+  Mail,
   Globe,
   Heart,
   Code2
