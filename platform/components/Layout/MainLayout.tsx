@@ -18,11 +18,11 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   title = 'CrownCode by Rthur - AURIS AI Music Detection Platform',
   description = 'AURIS - AI muzik tespiti ve veri manipulasyonu icin profesyonel platform. wav2vec2 tabanli derin ogrenme teknolojisi.',
   keywords = 'AURIS, AI, machine learning, music detection, data processing, web development, developer tools, CrownCode, Rthur, artificial intelligence',
-  image = '/logo-main.png',
-  url = 'https://crowncode.dev',
+  image = '/og-image.png',
+  url = 'https://hasanarthuraltuntas.xyz',
   noCache = false,
 }) => {
-  const baseUrl = url || 'https://crowncode.dev'
+  const baseUrl = url || 'https://hasanarthuraltuntas.xyz'
   const imageUrl = image.startsWith('http') ? image : `${baseUrl}${image}`
 
   const structuredData = {
