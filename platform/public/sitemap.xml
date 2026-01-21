@@ -3,45 +3,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- Homepage -->
+  <!-- Homepage - XYZ Domain -->
   <url>
-    <loc>https://crowncode.vercel.app/</loc>
+    <loc>https://hasanarthuraltuntas.xyz/</loc>
     <lastmod>2026-01-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://crowncode.vercel.app/?lang=tr"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://crowncode.vercel.app/?lang=en"/>
-    <xhtml:link rel="canonical" href="https://crowncode.vercel.app/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.xyz/?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.xyz/?lang=en"/>
+    <xhtml:link rel="canonical" href="https://hasanarthuraltuntas.xyz/"/>
   </url>
 
-  <!-- AI Music Detection -->
+  <!-- Homepage - COM.TR Domain -->
   <url>
-    <loc>https://crowncode.vercel.app/ai-music-detection</loc>
+    <loc>https://hasanarthuraltuntas.com.tr/</loc>
+    <lastmod>2026-01-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.com.tr/?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.com.tr/?lang=en"/>
+    <xhtml:link rel="canonical" href="https://hasanarthuraltuntas.com.tr/"/>
+  </url>
+
+  <!-- AI Music Detection - XYZ Domain -->
+  <url>
+    <loc>https://hasanarthuraltuntas.xyz/ai-music-detection</loc>
     <lastmod>2026-01-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://crowncode.vercel.app/ai-music-detection?lang=tr"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://crowncode.vercel.app/ai-music-detection?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.xyz/ai-music-detection?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.xyz/ai-music-detection?lang=en"/>
   </url>
 
-  <!-- Crown Fortune -->
+  <!-- AI Music Detection - COM.TR Domain -->
   <url>
-    <loc>https://crowncode.vercel.app/crown-fortune</loc>
+    <loc>https://hasanarthuraltuntas.com.tr/ai-music-detection</loc>
+    <lastmod>2026-01-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.com.tr/ai-music-detection?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.com.tr/ai-music-detection?lang=en"/>
+  </url>
+
+  <!-- Crown Fortune - XYZ Domain -->
+  <url>
+    <loc>https://hasanarthuraltuntas.xyz/crown-fortune</loc>
     <lastmod>2026-01-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://crowncode.vercel.app/crown-fortune?lang=tr"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://crowncode.vercel.app/crown-fortune?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.xyz/crown-fortune?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.xyz/crown-fortune?lang=en"/>
   </url>
 
-  <!-- Crown Commend -->
+  <!-- Crown Fortune - COM.TR Domain -->
   <url>
-    <loc>https://crowncode.vercel.app/crown-commend</loc>
+    <loc>https://hasanarthuraltuntas.com.tr/crown-fortune</loc>
+    <lastmod>2026-01-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.com.tr/crown-fortune?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.com.tr/crown-fortune?lang=en"/>
+  </url>
+
+  <!-- Crown Commend - XYZ Domain -->
+  <url>
+    <loc>https://hasanarthuraltuntas.xyz/crown-commend</loc>
     <lastmod>2026-01-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://crowncode.vercel.app/crown-commend?lang=tr"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://crowncode.vercel.app/crown-commend?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.xyz/crown-commend?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.xyz/crown-commend?lang=en"/>
+  </url>
+
+  <!-- Crown Commend - COM.TR Domain -->
+  <url>
+    <loc>https://hasanarthuraltuntas.com.tr/crown-commend</loc>
+    <lastmod>2026-01-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://hasanarthuraltuntas.com.tr/crown-commend?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hasanarthuraltuntas.com.tr/crown-commend?lang=en"/>
   </url>
 
 </urlset>
