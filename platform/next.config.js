@@ -25,7 +25,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'crowncode.vercel.app',
+        hostname: 'hasanarthuraltuntas.xyz',
         port: '',
         pathname: '/**',
       },
