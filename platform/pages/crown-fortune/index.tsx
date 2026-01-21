@@ -257,6 +257,7 @@ const CrownFortunePage: NextPage = () => {
         title={t.crownFortune.meta.title}
         description={t.crownFortune.meta.description}
         keywords={t.crownFortune.meta.keywords}
+        url="https://hasanarthuraltuntas.xyz/crown-fortune"
         noCache={true}
       >
         <div className={styles['fortune-page']}>
