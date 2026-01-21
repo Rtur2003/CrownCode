@@ -128,17 +128,9 @@ export const CommentEditor: React.FC<CommentEditorProps> = ({
 
           <button
             className={styles.actionButton}
-            onClick={() => setIsEditing(!isEditing)}
-            title={t.edit}
-          >
-            <Edit3 size={16} />
-            {t.edit}
-          </button>
-
-          <button
-            className={styles.actionButton}
             onClick={onRegenerate}
             title={t.regenerate}
+            disabled={isAlreadyPosted}
           >
             <RefreshCw size={16} />
             {t.regenerate}
@@ -146,16 +138,21 @@ export const CommentEditor: React.FC<CommentEditorProps> = ({
         </div>
 
         <motion.button
-          className={styles.postButton}
+          className={`${styles.postButton} ${isAlreadyPosted ? styles.postButtonDisabled : ''}`}
           onClick={onPost}
-          disabled={isPosting}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          disabled={isPosting || isAlreadyPosted}
+          whileHover={!isAlreadyPosted ? { scale: 1.02 } : {}}
+          whileTap={!isAlreadyPosted ? { scale: 0.98 } : {}}
         >
           {isPosting ? (
             <>
               <RefreshCw size={18} className={styles.spinning} />
               {t.posting}
+            </>
+          ) : isAlreadyPosted ? (
+            <>
+              <Check size={18} />
+              {t.alreadyPosted}
             </>
           ) : (
             <>
@@ -169,7 +166,7 @@ export const CommentEditor: React.FC<CommentEditorProps> = ({
       {/* Disclaimer */}
       <div className={styles.disclaimer}>
         <AlertCircle size={14} />
-        <span>{t.disclaimer}</span>
+        <span>{isAlreadyPosted ? t.alreadyPostedNote : t.disclaimer}</span>
       </div>
     </motion.div>
   )
