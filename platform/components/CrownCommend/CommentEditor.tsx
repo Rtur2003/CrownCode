@@ -1,19 +1,20 @@
 /**
  * Comment Editor Component
- * Editable generated comment with copy and post functionality
+ * Read-only generated comment with copy and post functionality
+ * Note: Editing disabled to maintain AI-generated content integrity
  */
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Copy, Check, Sparkles, Edit3, RefreshCw, Send, AlertCircle } from 'lucide-react'
+import { Copy, Check, Sparkles, RefreshCw, Send, AlertCircle } from 'lucide-react'
 import styles from './CommentEditor.module.css'
 
 interface CommentEditorProps {
   comment: string
-  onChange: (text: string) => void
   onRegenerate: () => void
   onPost: () => void
   isPosting: boolean
+  isAlreadyPosted: boolean
   hasTranscript: boolean
   processingTime: number | null
   language: 'tr' | 'en'
@@ -21,16 +22,15 @@ interface CommentEditorProps {
 
 export const CommentEditor: React.FC<CommentEditorProps> = ({
   comment,
-  onChange,
   onRegenerate,
   onPost,
   isPosting,
+  isAlreadyPosted,
   hasTranscript,
   processingTime,
   language
 }) => {
   const [copied, setCopied] = useState(false)
-  const [isEditing, setIsEditing] = useState(false)
 
   const t = {
     aiGenerated: language === 'tr' ? 'AI Tarafından Üretildi' : 'AI Generated',
