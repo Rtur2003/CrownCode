@@ -172,7 +172,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
               />
             </Link>
             <a
-              href="https://github.com/hasanarthuraltuntas/Data-Manipilasyonu"
+              href="https://github.com/Rtur2003/CrownCode"
               target="_blank"
               rel="noopener noreferrer"
               className="hero-btn-secondary"
