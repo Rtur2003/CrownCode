@@ -17,6 +17,7 @@ import '@/styles/globals.css'
 // Dynamic imports for better code splitting - load modals only when needed
 const ShortcutsModal = lazy(() => import('@/components/KeyboardShortcuts/ShortcutsModal').then(m => ({ default: m.ShortcutsModal })))
 const SearchModal = lazy(() => import('@/components/Search/SearchModal').then(m => ({ default: m.SearchModal })))
+const ExternalLinkWarning = lazy(() => import('@/components/ExternalLink/ExternalLinkWarning').then(m => ({ default: m.ExternalLinkWarning })))
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true)
@@ -65,6 +66,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Suspense fallback={null}>
               <ShortcutsModal />
               <SearchModal />
+              <ExternalLinkWarning />
             </Suspense>
           </ToastProvider>
         </LanguageProvider>
