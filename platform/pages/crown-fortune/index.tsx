@@ -164,7 +164,15 @@ const CrownFortunePage: NextPage = () => {
     return () => clearInterval(interval)
   }, [mounted])
 
-  // Midnight reset check
+  // Midnight reset check - destiny'yi ref ile takip et, infinite loop önle
+  const destinyDateRef = React.useRef<string | null>(null)
+
+  useEffect(() => {
+    if (destiny) {
+      destinyDateRef.current = destiny.date
+    }
+  }, [destiny])
+
   useEffect(() => {
     if (!mounted) {
       return
@@ -172,8 +180,8 @@ const CrownFortunePage: NextPage = () => {
 
     const check = () => {
       const today = getTurkeyDate()
-      
-      if (destiny && destiny.date !== today) {
+
+      if (destinyDateRef.current && destinyDateRef.current !== today) {
         const newDestiny = getDailyDestiny()
         setDestiny(newDestiny)
         setShowCard(false)
@@ -181,7 +189,7 @@ const CrownFortunePage: NextPage = () => {
         setRotation(0)
         setIsReversed(false)
         setReverseMessage(null)
-        
+
         localStorage.removeItem('crown_destiny_revealed')
         localStorage.removeItem('crown_destiny_is_reversed')
         localStorage.removeItem('crown_destiny_reverse_msg')
@@ -191,7 +199,7 @@ const CrownFortunePage: NextPage = () => {
     check()
     const interval = setInterval(check, 30000)
     return () => clearInterval(interval)
-  }, [mounted, destiny])
+  }, [mounted])
 
   const spinWheel = useCallback(() => {
     if (!destiny || isSpinning || showCard) {
