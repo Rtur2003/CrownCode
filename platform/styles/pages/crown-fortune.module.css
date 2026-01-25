@@ -677,6 +677,11 @@
   opacity: 0.5;
 }
 
+.tempt-fate-button:focus-visible {
+  outline: 2px solid #e74c3c;
+  outline-offset: 3px;
+}
+
 .tempt-fate-glow {
   position: absolute;
   inset: -2px;
