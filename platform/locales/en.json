@@ -29,7 +29,8 @@
     "aiMusicBadge": "Active",
     "fortune": "Fortune",
     "dreams": "Dreams",
-    "commend": "AI Comment"
+    "commend": "AI Comment",
+    "vote": "Crown Vote"
   },
   "hero": {
     "title": {
@@ -111,6 +112,17 @@
           "AI Comments",
           "YouTube API",
           "Multi-Language"
+        ]
+      },
+      "vote": {
+        "title": "Crown Vote - VOTRYX",
+        "description": "Selenium-based automated voting desktop application for DistroKid Spotlight. Parallel processing and system tray support.",
+        "status": "Active",
+        "stats": "Desktop App",
+        "features": [
+          "Selenium Automation",
+          "Parallel Processing",
+          "System Tray"
         ]
       }
     }
