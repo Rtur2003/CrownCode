@@ -26,7 +26,7 @@ interface VotryxConfig {
 
 export const ConfigGenerator: React.FC = () => {
   const { t, language } = useLanguage()
-  const { showToast } = useToast()
+  const { success } = useToast()
 
   const [config, setConfig] = useState<VotryxConfig>({
     paths: {
@@ -62,18 +62,14 @@ export const ConfigGenerator: React.FC = () => {
     a.click()
     URL.revokeObjectURL(url)
 
-    showToast({
-      type: 'success',
-      message: language === 'tr' ? 'config.json indirildi!' : 'config.json downloaded!',
-    })
+    success(
+      language === 'tr' ? 'config.json indirildi!' : 'config.json downloaded!'
+    )
   }
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(configJson)
-    showToast({
-      type: 'success',
-      message: t.toast?.success?.copied || 'Copied to clipboard',
-    })
+    success(t.toast?.success?.copied || 'Copied to clipboard')
   }
 
   const fields = t.crownVote?.configGenerator?.fields
