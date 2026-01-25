@@ -370,6 +370,8 @@ const CrownFortunePage: NextPage = () => {
                 className={`${styles['spin-button']} ${isSpinning ? styles['spinning'] : ''}`}
                 onClick={spinWheel}
                 disabled={isSpinning}
+                aria-label={isSpinning ? t.crownFortune.buttons.spinning : t.crownFortune.buttons.spin}
+                aria-busy={isSpinning}
                 whileHover={{ scale: isSpinning ? 1 : 1.05 }}
                 whileTap={{ scale: isSpinning ? 1 : 0.95 }}
               >
