@@ -1038,6 +1038,11 @@
   transform: scale(1.1);
 }
 
+.card-modal-close:focus-visible {
+  outline: 2px solid var(--color-gold-400, #eac06f);
+  outline-offset: 2px;
+}
+
 /* Card actions container */
 .card-actions {
   display: flex;
