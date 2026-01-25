@@ -283,6 +283,11 @@
   opacity: 0.7;
 }
 
+.spin-button:focus-visible {
+  outline: 2px solid var(--color-gold-400, #eac06f);
+  outline-offset: 3px;
+}
+
 .spin-button.spinning {
   background: var(--color-surface, #15110e);
   color: var(--color-gold-400, #eac06f);
