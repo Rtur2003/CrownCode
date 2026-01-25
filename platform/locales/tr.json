@@ -494,7 +494,8 @@
       "aiMusic": "AI Müzik Tespiti",
       "mlToolkit": "ML Araç Seti",
       "projects": "Projeler",
-      "crownFortune": "Kraliyet Şansı"
+      "crownFortune": "Kraliyet Şansı",
+      "crownVote": "Crown Vote - VOTRYX"
     },
     "features": {
       "urlAnalysis": "YouTube Analizi",
@@ -542,5 +543,107 @@
       ]
     },
     "disclaimer": "Bu uygulama eğlence amaçlıdır."
+  },
+  "crownVote": {
+    "meta": {
+      "title": "Crown Vote - VOTRYX Otomasyon Aracı",
+      "description": "DistroKid Spotlight için otomatik oylama aracı. Selenium tabanlı masaüstü uygulaması.",
+      "keywords": "votryx, distrokid, spotlight, otomasyon, oylama, selenium"
+    },
+    "header": {
+      "badge": "Masaüstü Uygulaması",
+      "title": "VOTRYX",
+      "subtitle": "DistroKid Spotlight için Otomatik Oylama Zekası"
+    },
+    "tabs": {
+      "download": "İndir",
+      "config": "Yapılandırma"
+    },
+    "features": {
+      "automation": {
+        "title": "Selenium Otomasyonu",
+        "description": "Chrome tabanlı güçlü browser otomasyonu ile güvenilir oylama"
+      },
+      "parallel": {
+        "title": "Paralel İşlem",
+        "description": "Birden fazla tarayıcı penceresi ile eşzamanlı oylama"
+      },
+      "tray": {
+        "title": "Sistem Tepsisi",
+        "description": "Arka planda çalışma ve sistem tepsisi desteği"
+      },
+      "logging": {
+        "title": "Detaylı Loglama",
+        "description": "Dosya ve UI bazlı kapsamlı log sistemi"
+      },
+      "safety": {
+        "title": "Güvenlik Limitleri",
+        "description": "Yapılandırılabilir hata limitleri ve backoff mekanizması"
+      },
+      "config": {
+        "title": "Esnek Yapılandırma",
+        "description": "JSON tabanlı kolay yapılandırma sistemi"
+      }
+    },
+    "download": {
+      "title": "Uygulamayı İndir",
+      "description": "Windows için VOTRYX installer'ı indirin",
+      "button": "Windows Installer İndir",
+      "version": "Sürüm",
+      "size": "Boyut",
+      "requirements": {
+        "title": "Sistem Gereksinimleri",
+        "items": [
+          "Windows 10/11",
+          "Google Chrome (güncel sürüm)",
+          "İnternet bağlantısı"
+        ]
+      }
+    },
+    "installation": {
+      "title": "Kurulum Adımları",
+      "steps": [
+        {
+          "title": "Installer'ı İndirin",
+          "description": "Yukarıdaki butona tıklayarak installer'ı indirin"
+        },
+        {
+          "title": "Kurulumu Başlatın",
+          "description": "İndirilen .exe dosyasını çalıştırın ve yönergeleri izleyin"
+        },
+        {
+          "title": "Chrome Doğrulayın",
+          "description": "Google Chrome'un kurulu olduğunu doğrulayın"
+        },
+        {
+          "title": "Uygulamayı Başlatın",
+          "description": "VOTRYX'i başlatın ve hedef URL'nizi yapılandırın"
+        }
+      ]
+    },
+    "configGenerator": {
+      "title": "Yapılandırma Oluşturucu",
+      "description": "config.json dosyanızı web üzerinden oluşturun ve indirin",
+      "fields": {
+        "targetUrl": "Hedef URL",
+        "pauseBetween": "Oylar Arası Bekleme (saniye)",
+        "batchSize": "Batch Boyutu",
+        "parallelWorkers": "Paralel İşçi Sayısı",
+        "headless": "Headless Mod",
+        "timeout": "Zaman Aşımı (saniye)",
+        "maxErrors": "Maksimum Hata",
+        "useRandomAgent": "Rastgele User-Agent",
+        "blockImages": "Görsel Engelleme"
+      },
+      "generate": "config.json Oluştur",
+      "download": "Dosyayı İndir",
+      "preview": "Önizleme",
+      "copy": "Kopyala"
+    },
+    "github": {
+      "title": "Kaynak Kodu",
+      "description": "VOTRYX açık kaynak bir projedir",
+      "button": "GitHub'da Gör"
+    }
   }
 }
