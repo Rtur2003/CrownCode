@@ -29,7 +29,8 @@
     "aiMusicBadge": "Aktif",
     "fortune": "Şans Çarkı",
     "dreams": "Rüya Günlüğü",
-    "commend": "AI Yorum"
+    "commend": "AI Yorum",
+    "vote": "Crown Vote"
   },
   "hero": {
     "title": {
@@ -112,6 +113,17 @@
           "YouTube API",
           "Çoklu Dil"
         ]
+      },
+      "vote": {
+        "title": "Crown Vote - VOTRYX",
+        "description": "DistroKid Spotlight için Selenium tabanlı otomatik oylama masaüstü uygulaması. Paralel işlem ve sistem tepsisi desteği.",
+        "status": "Aktif",
+        "stats": "Masaüstü App",
+        "features": [
+          "Selenium Otomasyon",
+          "Paralel İşlem",
+          "Sistem Tepsisi"
+        ]
       }
     }
   },
@@ -186,7 +198,8 @@
         "dataProcessing": "Veri İşleme Paketi",
         "mlToolkit": "ML Araç Seti",
         "allProjects": "Tüm Projeler",
-        "fortune": "Şans Çarkı"
+        "fortune": "Şans Çarkı",
+        "vote": "Crown Vote"
       },
       "developer": {
         "title": "Geliştirici",
