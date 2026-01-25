@@ -187,6 +187,17 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
       status: t.products.items.commend?.status || 'Active',
       stats: t.products.items.commend?.stats || '5 Languages',
       features: t.products.items.commend?.features || ['AI Comments', 'YouTube API', 'Multi-Language']
+    },
+    {
+      id: 'crown-vote',
+      title: t.products.items.vote?.title || 'Crown Vote - VOTRYX',
+      description: t.products.items.vote?.description || 'Selenium-based automated voting desktop application for DistroKid Spotlight.',
+      href: '/crown-vote',
+      icon: Bot,
+      gradient: 'from-emerald-400 via-green-500 to-teal-600',
+      status: t.products.items.vote?.status || 'Active',
+      stats: t.products.items.vote?.stats || 'Desktop App',
+      features: t.products.items.vote?.features || ['Selenium Automation', 'Parallel Processing', 'System Tray']
     }
   ]
 
