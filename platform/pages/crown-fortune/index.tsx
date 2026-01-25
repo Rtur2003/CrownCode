@@ -556,6 +556,9 @@ const CrownFortunePage: NextPage = () => {
             {isModalOpen && (
               <motion.div
                 className={styles['card-modal-overlay']}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-card-title"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
