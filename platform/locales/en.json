@@ -198,7 +198,8 @@
         "dataProcessing": "Data Processing Suite",
         "mlToolkit": "ML Toolkit",
         "allProjects": "All Projects",
-        "fortune": "Crown Fortune"
+        "fortune": "Crown Fortune",
+        "vote": "Crown Vote"
       },
       "developer": {
         "title": "Developer",
@@ -493,7 +494,8 @@
       "aiMusic": "AI Music Detection",
       "mlToolkit": "ML Toolkit",
       "projects": "Projects",
-      "crownFortune": "Crown Fortune"
+      "crownFortune": "Crown Fortune",
+      "crownVote": "Crown Vote - VOTRYX"
     },
     "features": {
       "urlAnalysis": "YouTube Analysis",
@@ -541,5 +543,107 @@
       ]
     },
     "disclaimer": "This application is for entertainment purposes only."
+  },
+  "crownVote": {
+    "meta": {
+      "title": "Crown Vote - VOTRYX Automation Tool",
+      "description": "Automated voting tool for DistroKid Spotlight. Selenium-based desktop application.",
+      "keywords": "votryx, distrokid, spotlight, automation, voting, selenium"
+    },
+    "header": {
+      "badge": "Desktop Application",
+      "title": "VOTRYX",
+      "subtitle": "Automated Voting Intelligence for DistroKid Spotlight"
+    },
+    "tabs": {
+      "download": "Download",
+      "config": "Configuration"
+    },
+    "features": {
+      "automation": {
+        "title": "Selenium Automation",
+        "description": "Reliable voting with Chrome-based powerful browser automation"
+      },
+      "parallel": {
+        "title": "Parallel Processing",
+        "description": "Simultaneous voting with multiple browser windows"
+      },
+      "tray": {
+        "title": "System Tray",
+        "description": "Background operation and system tray support"
+      },
+      "logging": {
+        "title": "Detailed Logging",
+        "description": "Comprehensive file and UI-based logging system"
+      },
+      "safety": {
+        "title": "Safety Limits",
+        "description": "Configurable error limits and backoff mechanism"
+      },
+      "config": {
+        "title": "Flexible Configuration",
+        "description": "Easy JSON-based configuration system"
+      }
+    },
+    "download": {
+      "title": "Download Application",
+      "description": "Download VOTRYX installer for Windows",
+      "button": "Download Windows Installer",
+      "version": "Version",
+      "size": "Size",
+      "requirements": {
+        "title": "System Requirements",
+        "items": [
+          "Windows 10/11",
+          "Google Chrome (latest version)",
+          "Internet connection"
+        ]
+      }
+    },
+    "installation": {
+      "title": "Installation Steps",
+      "steps": [
+        {
+          "title": "Download Installer",
+          "description": "Click the button above to download the installer"
+        },
+        {
+          "title": "Run Setup",
+          "description": "Run the downloaded .exe file and follow the instructions"
+        },
+        {
+          "title": "Verify Chrome",
+          "description": "Ensure Google Chrome is installed"
+        },
+        {
+          "title": "Launch Application",
+          "description": "Start VOTRYX and configure your target URL"
+        }
+      ]
+    },
+    "configGenerator": {
+      "title": "Configuration Generator",
+      "description": "Create and download your config.json file from the web",
+      "fields": {
+        "targetUrl": "Target URL",
+        "pauseBetween": "Pause Between Votes (seconds)",
+        "batchSize": "Batch Size",
+        "parallelWorkers": "Parallel Workers",
+        "headless": "Headless Mode",
+        "timeout": "Timeout (seconds)",
+        "maxErrors": "Max Errors",
+        "useRandomAgent": "Random User-Agent",
+        "blockImages": "Block Images"
+      },
+      "generate": "Generate config.json",
+      "download": "Download File",
+      "preview": "Preview",
+      "copy": "Copy"
+    },
+    "github": {
+      "title": "Source Code",
+      "description": "VOTRYX is an open-source project",
+      "button": "View on GitHub"
+    }
   }
 }
