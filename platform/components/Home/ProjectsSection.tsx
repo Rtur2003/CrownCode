@@ -22,7 +22,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
-import { Music, Brain, ArrowUpRight, Sparkles, Activity, LucideIcon, Crown, Moon, Youtube } from 'lucide-react'
+import { Music, Brain, ArrowUpRight, Sparkles, Activity, LucideIcon, Crown, Moon, Youtube, Bot } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
 // =========================================================================
