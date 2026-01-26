@@ -888,14 +888,6 @@ const CrownFortunePage: NextPage = () => {
               </motion.section>
             )}
           </AnimatePresence>
-                        </motion.div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </motion.section>
-            )}
-          </AnimatePresence>
 
           {/* CARD MODAL */}
           <AnimatePresence>
