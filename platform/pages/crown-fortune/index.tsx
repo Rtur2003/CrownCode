@@ -487,7 +487,7 @@ const CrownFortunePage: NextPage = () => {
                           {isReversed ? <AlertTriangle size={12} color="#e74c3c" /> : <Star size={12} />}
                           <span className={isReversed ? styles['card-date-dark'] : styles['card-date']}>
                             {isReversed
-                              ? (language === 'tr' ? 'Dikkatli ol...' : 'Be warned...')
+                              ? t.crownFortune.card.beWarned
                               : new Date().toLocaleDateString(language === 'tr' ? 'tr-TR' : 'en-US', {
                                   day: 'numeric',
                                   month: 'long'
