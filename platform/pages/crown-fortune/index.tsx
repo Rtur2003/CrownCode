@@ -107,28 +107,28 @@ const CrownFortunePage: NextPage = () => {
       const today = getTurkeyDate()
 
       // Eski revealed flag'leri temizle
-      const revealed = localStorage.getItem('crown_destiny_revealed')
+      const revealed = localStorage.getItem(STORAGE_KEYS.REVEALED)
       if (revealed && revealed !== today) {
-        localStorage.removeItem('crown_destiny_revealed')
-        localStorage.removeItem('crown_destiny_is_reversed')
-        localStorage.removeItem('crown_destiny_reverse_msg')
+        localStorage.removeItem(STORAGE_KEYS.REVEALED)
+        localStorage.removeItem(STORAGE_KEYS.IS_REVERSED)
+        localStorage.removeItem(STORAGE_KEYS.REVERSE_MESSAGE)
       }
 
       setDestiny(daily)
 
       // Eğer bugün zaten bakıldıysa
-      const currentRevealed = localStorage.getItem('crown_destiny_revealed')
+      const currentRevealed = localStorage.getItem(STORAGE_KEYS.REVEALED)
       if (currentRevealed === daily.date && daily.date === today) {
         const catIndex = FORTUNE_CATEGORIES.findIndex(c => c.key === daily.category)
         setRotation(catIndex * 72 + 720 + 36)
         setShowCard(true)
         setIsCardFlipped(true)
-        
+
         // Reverse durumunu kontrol et
-        const reversed = localStorage.getItem('crown_destiny_is_reversed')
+        const reversed = localStorage.getItem(STORAGE_KEYS.IS_REVERSED)
         if (reversed === 'true') {
           setIsReversed(true)
-          const savedMsg = localStorage.getItem('crown_destiny_reverse_msg')
+          const savedMsg = localStorage.getItem(STORAGE_KEYS.REVERSE_MESSAGE)
           if (savedMsg) {
             setReverseMessage(JSON.parse(savedMsg))
           }
