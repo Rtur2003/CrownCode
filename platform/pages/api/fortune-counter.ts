@@ -28,6 +28,38 @@ let counterStore: CounterStore = {
   count: 0
 }
 
+// Simple rate limiter (in-memory, resets on server restart)
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
+const RATE_LIMIT = {
+  MAX_REQUESTS: 10,
+  WINDOW_MS: 60 * 1000 // 1 minute
+}
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const record = rateLimitMap.get(ip)
+
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT.WINDOW_MS })
+    return false
+  }
+
+  if (record.count >= RATE_LIMIT.MAX_REQUESTS) {
+    return true
+  }
+
+  record.count++
+  return false
+}
+
+function getClientIp(req: NextApiRequest): string {
+  const forwarded = req.headers['x-forwarded-for']
+  if (typeof forwarded === 'string') {
+    return forwarded.split(',')[0].trim()
+  }
+  return req.socket?.remoteAddress || 'unknown'
+}
+
 // Get Turkey date (GMT+3) in YYYY-MM-DD format
 function getTurkeyDate(): string {
   const now = new Date()
@@ -78,6 +110,35 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<CounterResponse | { error: string }>
 ) {
+  // CORS - allow only same origin (or specific domains in production)
+  const origin = req.headers.origin || ''
+  const allowedOrigins = [
+    'https://hasanarthuraltuntas.xyz',
+    'https://www.hasanarthuraltuntas.xyz',
+    'http://localhost:3000',
+    'http://localhost:3001'
+  ]
+
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin)
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST')
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
+
+  // Handle preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end()
+  }
+
+  // Rate limiting for POST requests
+  if (req.method === 'POST') {
+    const clientIp = getClientIp(req)
+    if (isRateLimited(clientIp)) {
+      return res.status(429).json({ error: 'Too many requests. Please try again later.' })
+    }
+  }
+
   const today = getTurkeyDate()
 
   // Reset counter if it's a new day
@@ -87,10 +148,6 @@ export default async function handler(
       count: getBaseCount()
     }
   }
-
-  // Set CORS and cache headers
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
 
   if (req.method === 'GET') {
     return res.status(200).json({
