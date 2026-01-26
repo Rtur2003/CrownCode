@@ -539,9 +539,7 @@ const CrownFortunePage: NextPage = () => {
                             }}
                           />
                           <Skull size={18} />
-                          <span>
-                            {language === 'tr' ? 'Karanlık Kaderi Gör' : 'Reveal Dark Fate'}
-                          </span>
+                          <span>{t.crownFortune.card.revealDarkFate}</span>
                         </motion.button>
                       )}
 
