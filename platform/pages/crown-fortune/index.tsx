@@ -581,7 +581,7 @@ const CrownFortunePage: NextPage = () => {
                   <button
                     className={styles['card-modal-close']}
                     onClick={() => setIsModalOpen(false)}
-                    aria-label={language === 'tr' ? 'Kapat' : 'Close'}
+                    aria-label={t.crownFortune.modal.close}
                   >
                     <X size={20} />
                   </button>
