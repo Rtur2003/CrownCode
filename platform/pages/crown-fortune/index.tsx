@@ -171,6 +171,15 @@ const CrownFortunePage: NextPage = () => {
   // Card ref for download feature
   const cardRef = useRef<HTMLDivElement>(null)
 
+  // Streak state
+  const [streak, setStreak] = useState<StreakData>({
+    count: 0,
+    lastDate: '',
+    currentMilestone: null,
+    nextMilestone: null,
+    daysToNext: 0
+  })
+
   // Modal ESC key handler + body scroll lock
   useEffect(() => {
     if (!isModalOpen) {
