@@ -575,7 +575,7 @@ export function getDailyDestiny(): DailyDestiny {
     tone
   }
 
-  localStorage.setItem(storageKey, JSON.stringify(destiny))
+  localStorage.setItem(STORAGE_KEYS.DAILY_DESTINY, JSON.stringify(destiny))
   return destiny
 }
 
