@@ -653,6 +653,30 @@ const CrownFortunePage: NextPage = () => {
                   <span className={styles['counter-suffix']}>{t.crownFortune.counter?.suffix || 'fortunes'}</span>
                 </div>
               )}
+              {streak.count > 0 && (
+                <motion.div
+                  className={styles['streak-counter']}
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                  title={streak.nextMilestone
+                    ? `${streak.daysToNext} ${language === 'tr' ? 'gün kaldı' : 'days to'} ${streak.nextMilestone.badge}`
+                    : ''
+                  }
+                >
+                  <Flame size={16} className={styles['streak-icon']} />
+                  <span className={styles['streak-value']}>{streak.count}</span>
+                  {streak.currentMilestone && (
+                    <span className={styles['streak-badge']}>{streak.currentMilestone.badge}</span>
+                  )}
+                  {streak.nextMilestone && (
+                    <div className={styles['streak-progress']}>
+                      <TrendingUp size={12} />
+                      <span>{streak.daysToNext}</span>
+                    </div>
+                  )}
+                </motion.div>
+              )}
               <button
                 type="button"
                 className={styles['sound-toggle']}
