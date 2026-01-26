@@ -1,9 +1,11 @@
 'use client'
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion'
+import confetti from 'canvas-confetti'
+import useSound from 'use-sound'
 import {
   Crown,
   Sparkles,
@@ -18,7 +20,11 @@ import {
   Maximize2,
   AlertTriangle,
   Skull,
-  Users
+  Users,
+  Volume2,
+  VolumeX,
+  Download,
+  Share2
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import BackgroundFloatingCards from '@/components/CrownFortune/BackgroundFloatingCards'
@@ -74,6 +80,60 @@ const ANIMATION = {
   COUNTDOWN_INTERVAL: 1000,
 } as const
 
+// Haptic feedback patterns (ms)
+const HAPTIC = {
+  LIGHT: 50,
+  MEDIUM: 100,
+  SUCCESS: [100, 50, 100] as const,
+  WHEEL_SPIN: [50, 30, 50, 30, 50] as const,
+} as const
+
+// Trigger haptic feedback if supported
+const triggerHaptic = (pattern: number | readonly number[]) => {
+  if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+    navigator.vibrate(pattern as number | number[])
+  }
+}
+
+// Celebration confetti effect
+const celebrateConfetti = (isReversed = false) => {
+  const duration = 3000
+  const animationEnd = Date.now() + duration
+  const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 }
+
+  // Color scheme based on fortune type
+  const colors = isReversed
+    ? ['#8b0000', '#4a0000', '#2d0000', '#dc143c'] // Dark reds for reversed
+    : ['#FFD700', '#9b59b6', '#3498db', '#e74c3c', '#27ae60'] // Golden + category colors
+
+  const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min
+
+  const interval = setInterval(() => {
+    const timeLeft = animationEnd - Date.now()
+
+    if (timeLeft <= 0) {
+      clearInterval(interval)
+      return
+    }
+
+    const particleCount = 50 * (timeLeft / duration)
+
+    // Burst from both sides
+    confetti({
+      ...defaults,
+      particleCount,
+      origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+      colors,
+    })
+    confetti({
+      ...defaults,
+      particleCount,
+      origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+      colors,
+    })
+  }, 250)
+}
+
 const CrownFortunePage: NextPage = () => {
   const { language, t } = useLanguage()
   const [destiny, setDestiny] = useState<DailyDestiny | null>(null)
@@ -93,6 +153,18 @@ const CrownFortunePage: NextPage = () => {
   // Daily counter state
   const [dailyCount, setDailyCount] = useState<number>(0)
   const [counterAvailable, setCounterAvailable] = useState<boolean>(true)
+
+  // Sound settings state
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(true)
+
+  // Sound effects (files should be in /public/sounds/)
+  const [playWhoosh] = useSound('/sounds/whoosh.mp3', { volume: 0.5, soundEnabled })
+  const [playReveal] = useSound('/sounds/reveal.mp3', { volume: 0.6, soundEnabled })
+  const [playSuccess] = useSound('/sounds/success.mp3', { volume: 0.5, soundEnabled })
+  const [playDark] = useSound('/sounds/dark.mp3', { volume: 0.4, soundEnabled })
+
+  // Card ref for download feature
+  const cardRef = useRef<HTMLDivElement>(null)
 
   // Modal ESC key handler + body scroll lock
   useEffect(() => {
@@ -292,6 +364,10 @@ const CrownFortunePage: NextPage = () => {
       return
     }
 
+    // Haptic feedback on spin start
+    triggerHaptic(HAPTIC.WHEEL_SPIN)
+    playWhoosh()
+
     setIsSpinning(true)
 
     // Increment daily counter (non-blocking, won't stop spin if fails)
@@ -318,13 +394,19 @@ const CrownFortunePage: NextPage = () => {
     setTimeout(() => {
       setIsSpinning(false)
       setShowCard(true)
+      playReveal()
 
       setTimeout(() => {
         setIsCardFlipped(true)
         localStorage.setItem(STORAGE_KEYS.REVEALED, destiny.date)
+
+        // Celebration effects
+        triggerHaptic(HAPTIC.SUCCESS)
+        playSuccess()
+        celebrateConfetti(false)
       }, ANIMATION.CARD_FLIP_DELAY)
     }, ANIMATION.WHEEL_SPIN_DURATION)
-  }, [destiny, isSpinning, showCard, counterAvailable])
+  }, [destiny, isSpinning, showCard, counterAvailable, playWhoosh, playReveal, playSuccess])
 
   const handleReverseDestiny = useCallback(() => {
     if (!destiny) {
@@ -335,6 +417,10 @@ const CrownFortunePage: NextPage = () => {
     if (isReversed || isFlipping) {
       return
     }
+
+    // Haptic feedback on dark fate reveal
+    triggerHaptic(HAPTIC.MEDIUM)
+    playDark()
 
     // Start flip animation
     setIsFlipping(true)
@@ -355,10 +441,14 @@ const CrownFortunePage: NextPage = () => {
       setIsReversed(true)
       setIsFlipping(false)
 
+      // Dark celebration effects
+      triggerHaptic(HAPTIC.SUCCESS)
+      celebrateConfetti(true)
+
       localStorage.setItem(STORAGE_KEYS.IS_REVERSED, 'true')
       localStorage.setItem(STORAGE_KEYS.REVERSE_MESSAGE, JSON.stringify(msg))
     }, ANIMATION.REVERSE_ANIMATION_PEAK)
-  }, [destiny, isReversed, isFlipping, flipProgress])
+  }, [destiny, isReversed, isFlipping, flipProgress, playDark])
 
   // Memoized card details - MUST be before any conditional returns (React hooks rule)
   const { details, cardName, catLabel, energyText, displayMessage } = useMemo(() => {
@@ -468,6 +558,14 @@ const CrownFortunePage: NextPage = () => {
                   <span className={styles['counter-suffix']}>{t.crownFortune.counter?.suffix || 'fortunes'}</span>
                 </div>
               )}
+              <button
+                type="button"
+                className={styles['sound-toggle']}
+                onClick={() => setSoundEnabled(!soundEnabled)}
+                aria-label={soundEnabled ? 'Mute sounds' : 'Enable sounds'}
+              >
+                {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
+              </button>
             </div>
           </motion.header>
 
@@ -541,7 +639,7 @@ const CrownFortunePage: NextPage = () => {
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: 0.6 }}
               >
-                <div className={styles['card-container']}>
+                <div className={styles['card-container']} ref={cardRef}>
                   <motion.div
                     className={`${styles['card-flipper']} ${isCardFlipped ? styles['flipped'] : ''} ${isReversed ? styles['reversed'] : ''}`}
                     onClick={() => isCardFlipped && !isFlipping && setIsModalOpen(true)}
