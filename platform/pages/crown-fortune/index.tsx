@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion'
@@ -280,15 +280,26 @@ const CrownFortunePage: NextPage = () => {
     )
   }
 
-  const details = getDestinyDetails(destiny)
-  const cardName = language === 'tr' ? details.card.nameTr : details.card.name
-  const catLabel = t.crownFortune.categories[destiny.category as keyof typeof t.crownFortune.categories]
-  const energyText = t.crownFortune.energy[details.card.energy as keyof typeof t.crownFortune.energy]
-  
-  // Mesaj: Reverse ise yeni mesajı, değilse orijinali göster
-  const displayMessage = isReversed && reverseMessage 
-    ? (language === 'tr' ? reverseMessage.text : reverseMessage.textEn)
-    : (language === 'tr' ? details.message.text : details.message.textEn)
+  // Memoized card details - re-render optimizasyonu
+  const { details, cardName, catLabel, energyText, displayMessage } = useMemo(() => {
+    const cardDetails = getDestinyDetails(destiny)
+    const name = language === 'tr' ? cardDetails.card.nameTr : cardDetails.card.name
+    const category = t.crownFortune.categories[destiny.category as keyof typeof t.crownFortune.categories]
+    const energy = t.crownFortune.energy[cardDetails.card.energy as keyof typeof t.crownFortune.energy]
+
+    // Mesaj: Reverse ise yeni mesajı, değilse orijinali göster
+    const message = isReversed && reverseMessage
+      ? (language === 'tr' ? reverseMessage.text : reverseMessage.textEn)
+      : (language === 'tr' ? cardDetails.message.text : cardDetails.message.textEn)
+
+    return {
+      details: cardDetails,
+      cardName: name,
+      catLabel: category,
+      energyText: energy,
+      displayMessage: message
+    }
+  }, [destiny, language, t.crownFortune.categories, t.crownFortune.energy, isReversed, reverseMessage])
 
   return (
     <MainLayout
