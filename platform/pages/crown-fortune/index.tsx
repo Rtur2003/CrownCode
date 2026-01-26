@@ -464,7 +464,7 @@ const CrownFortunePage: NextPage = () => {
                         <div className={styles['card-header']}>
                           <span className={styles['card-symbol']}>{details.card.symbol}</span>
                           <h2 className={styles['card-name']}>
-                            {cardName} {isReversed && (language === 'tr' ? '(Ters)' : '(Reversed)')}
+                            {cardName} {isReversed && t.crownFortune.card.reversed}
                           </h2>
                         </div>
 
@@ -474,7 +474,7 @@ const CrownFortunePage: NextPage = () => {
                             style={{ backgroundColor: isReversed ? '#8b0000' : CATEGORY_COLORS[destiny.category] }}
                           >
                             {isReversed ? <Skull size={12} /> : CATEGORY_ICONS_SMALL[destiny.category]}
-                            <span>{isReversed ? (language === 'tr' ? 'Karanlık Kader' : 'Dark Fate') : catLabel}</span>
+                            <span>{isReversed ? t.crownFortune.card.darkFate : catLabel}</span>
                           </div>
                           <span className={styles['card-energy']}>{energyText}</span>
                         </div>
