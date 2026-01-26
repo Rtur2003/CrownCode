@@ -31,25 +31,30 @@ let counterStore: CounterStore = {
 // Get Turkey date (GMT+3) in YYYY-MM-DD format
 function getTurkeyDate(): string {
   const now = new Date()
-  const turkeyOffset = 3 * 60 // GMT+3 in minutes
-  const utcMinutes = now.getUTCHours() * 60 + now.getUTCMinutes()
-  const turkeyMinutes = utcMinutes + turkeyOffset
+  // Use Intl.DateTimeFormat for reliable timezone handling
+  const formatter = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Istanbul',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  })
+  return formatter.format(now) // Returns YYYY-MM-DD format
+}
 
-  const turkeyDate = new Date(now)
-
-  if (turkeyMinutes >= 24 * 60) {
-    turkeyDate.setUTCDate(turkeyDate.getUTCDate() + 1)
-  } else if (turkeyMinutes < 0) {
-    turkeyDate.setUTCDate(turkeyDate.getUTCDate() - 1)
-  }
-
-  return turkeyDate.toISOString().split('T')[0]
+// Get Turkey hour (0-23)
+function getTurkeyHour(): number {
+  const now = new Date()
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Europe/Istanbul',
+    hour: 'numeric',
+    hour12: false
+  })
+  return parseInt(formatter.format(now), 10)
 }
 
 // Generate a realistic base count for the day
 function getBaseCount(): number {
-  const now = new Date()
-  const turkeyHour = (now.getUTCHours() + 3) % 24
+  const turkeyHour = getTurkeyHour()
 
   // Simulate activity based on time of day
   // More activity during evening hours (18-23)
