@@ -373,10 +373,26 @@ const CrownFortunePage: NextPage = () => {
             <p className={styles['fortune-subtitle']}>
               {t.crownFortune.header.subtitle}
             </p>
-            <div className={styles['countdown']}>
-              <Clock size={16} />
-              <span>{t.crownFortune.countdown.label}</span>
-              <span className={styles['countdown-time']}>{countdown}</span>
+            <div className={styles['header-stats']}>
+              <div className={styles['countdown']}>
+                <Clock size={16} />
+                <span>{t.crownFortune.countdown.label}</span>
+                <span className={styles['countdown-time']}>{countdown}</span>
+              </div>
+              <div className={styles['daily-counter']}>
+                <Users size={16} />
+                <span>{t.crownFortune.counter?.label || 'Today:'}</span>
+                <motion.span
+                  className={styles['counter-value']}
+                  key={dailyCount}
+                  initial={{ scale: 1.2, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {dailyCount.toLocaleString()}
+                </motion.span>
+                <span className={styles['counter-suffix']}>{t.crownFortune.counter?.suffix || 'fortunes'}</span>
+              </div>
             </div>
           </motion.header>
 
