@@ -5,15 +5,12 @@ import type { NextPage } from 'next'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Youtube,
-  Sparkles,
   Wand2,
   Loader2,
   AlertCircle,
   CheckCircle,
   Brain,
-  Globe,
   MessageSquare,
-  Zap,
   Shield,
   Languages
 } from 'lucide-react'
@@ -182,7 +179,9 @@ const CrownCommendPage: NextPage = () => {
                     value={videoUrl}
                     onChange={(e) => {
                       setVideoUrl(e.target.value)
-                      if (generatedComment) reset()
+                      if (generatedComment) {
+                        reset()
+                      }
                     }}
                     disabled={isLoading}
                   />

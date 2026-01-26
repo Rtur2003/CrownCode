@@ -53,13 +53,19 @@ export const ExternalLinkWarning: React.FC<ExternalLinkWarningProps> = ({
     const target = e.target as HTMLElement
     const link = target.closest('a')
 
-    if (!link) return
+    if (!link) {
+      return
+    }
 
     const href = link.getAttribute('href')
-    if (!href) return
+    if (!href) {
+      return
+    }
 
     // Skip internal links and non-http links
-    if (!href.startsWith('http')) return
+    if (!href.startsWith('http')) {
+      return
+    }
 
     // Check if external
     if (isExternalLink(href)) {
@@ -71,7 +77,9 @@ export const ExternalLinkWarning: React.FC<ExternalLinkWarningProps> = ({
   }, [isExternalLink])
 
   useEffect(() => {
-    if (!enabled) return
+    if (!enabled) {
+      return
+    }
 
     document.addEventListener('click', handleLinkClick, true)
     return () => {

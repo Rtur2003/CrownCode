@@ -29,7 +29,7 @@ import {
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
-import { GlassCard, StatCard, FeatureCard } from '@/components/CrownDreams/GlassCard'
+import { GlassCard, StatCard } from '@/components/CrownDreams/GlassCard'
 import { ProgressBar, CircularProgress } from '@/components/CrownDreams/ProgressBar'
 import { CyberButton } from '@/components/CrownDreams/CyberButton'
 import {
@@ -71,7 +71,8 @@ const CrownDreamsPage: NextPage = () => {
   const [selectedDream, setSelectedDream] = useState<DreamEntry | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [activeFilter, setActiveFilter] = useState<DreamType | 'all'>('all')
-  const [activeTab, setActiveTab] = useState<'journal' | 'analytics'>('journal')
+  // Tab state - reserved for future analytics feature
+  const [_activeTab, _setActiveTab] = useState<'journal' | 'analytics'>('journal')
 
   // Filtered dreams
   const filteredDreams = useMemo(() => {
