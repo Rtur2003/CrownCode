@@ -221,7 +221,7 @@ const CrownFortunePage: NextPage = () => {
 
       setTimeout(() => {
         setIsCardFlipped(true)
-        localStorage.setItem('crown_destiny_revealed', destiny.date)
+        localStorage.setItem(STORAGE_KEYS.REVEALED, destiny.date)
       }, 500)
     }, 4000)
   }, [destiny, isSpinning, showCard])
