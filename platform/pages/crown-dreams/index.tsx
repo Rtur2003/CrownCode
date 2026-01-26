@@ -71,7 +71,8 @@ const CrownDreamsPage: NextPage = () => {
   const [selectedDream, setSelectedDream] = useState<DreamEntry | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [activeFilter, setActiveFilter] = useState<DreamType | 'all'>('all')
-  const [activeTab, setActiveTab] = useState<'journal' | 'analytics'>('journal')
+  // activeTab value is set but UI rendering based on it is TODO
+  const [_activeTab, setActiveTab] = useState<'journal' | 'analytics'>('journal')
 
   // Filtered dreams
   const filteredDreams = useMemo(() => {
