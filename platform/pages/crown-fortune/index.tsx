@@ -238,7 +238,7 @@ const CrownFortunePage: NextPage = () => {
     }
 
     update()
-    const interval = setInterval(update, 1000)
+    const interval = setInterval(update, ANIMATION.COUNTDOWN_INTERVAL)
     return () => clearInterval(interval)
   }, [mounted])
 
@@ -275,7 +275,7 @@ const CrownFortunePage: NextPage = () => {
     }
 
     check()
-    const interval = setInterval(check, 30000)
+    const interval = setInterval(check, ANIMATION.MIDNIGHT_CHECK_INTERVAL)
     return () => clearInterval(interval)
   }, [mounted])
 
@@ -314,8 +314,8 @@ const CrownFortunePage: NextPage = () => {
       setTimeout(() => {
         setIsCardFlipped(true)
         localStorage.setItem(STORAGE_KEYS.REVEALED, destiny.date)
-      }, 500)
-    }, 4000)
+      }, ANIMATION.CARD_FLIP_DELAY)
+    }, ANIMATION.WHEEL_SPIN_DURATION)
   }, [destiny, isSpinning, showCard, counterAvailable])
 
   const handleReverseDestiny = useCallback(() => {
@@ -349,7 +349,7 @@ const CrownFortunePage: NextPage = () => {
 
       localStorage.setItem(STORAGE_KEYS.IS_REVERSED, 'true')
       localStorage.setItem(STORAGE_KEYS.REVERSE_MESSAGE, JSON.stringify(msg))
-    }, 400) // Halfway through the animation
+    }, ANIMATION.REVERSE_ANIMATION_PEAK)
   }, [destiny, isReversed, isFlipping, flipProgress])
 
   // Memoized card details - MUST be before any conditional returns (React hooks rule)
