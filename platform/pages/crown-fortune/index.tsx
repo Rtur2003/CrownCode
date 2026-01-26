@@ -607,7 +607,7 @@ const CrownFortunePage: NextPage = () => {
                         <div className={styles['card-modal-title']}>
                           <span className={styles['card-modal-symbol']}>{details.card.symbol}</span>
                           <h2 className={styles['card-modal-name']}>
-                             {cardName} {isReversed && (language === 'tr' ? '(Ters)' : '(Reversed)')}
+                             {cardName} {isReversed && t.crownFortune.card.reversed}
                           </h2>
                         </div>
 
