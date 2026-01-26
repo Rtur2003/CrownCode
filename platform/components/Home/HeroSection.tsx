@@ -21,6 +21,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
 import { ChevronDown, Code, Shield } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
