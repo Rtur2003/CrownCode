@@ -523,11 +523,9 @@ export function getDailyDestiny(): DailyDestiny {
 
   const today = getTurkeyDate()
   const userId = getUserId()
-  const storageKey = 'crown_daily_destiny'
-  const revealedKey = 'crown_destiny_revealed'
 
   // Kayıtlı kaderi kontrol et
-  const stored = localStorage.getItem(storageKey)
+  const stored = localStorage.getItem(STORAGE_KEYS.DAILY_DESTINY)
   if (stored) {
     try {
       const parsed: DailyDestiny = JSON.parse(stored)
@@ -535,10 +533,10 @@ export function getDailyDestiny(): DailyDestiny {
         return parsed
       }
       // Tarih değişmiş, revealed flag'i temizle
-      localStorage.removeItem(revealedKey)
+      localStorage.removeItem(STORAGE_KEYS.REVEALED)
     } catch {
       // Parse hatası, yeni oluştur
-      localStorage.removeItem(revealedKey)
+      localStorage.removeItem(STORAGE_KEYS.REVEALED)
     }
   }
 
