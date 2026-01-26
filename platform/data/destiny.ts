@@ -495,10 +495,10 @@ function seededChoice<T>(array: T[], seed: number): T {
 export function getUserId(): string {
   if (typeof window === 'undefined') return 'server'
 
-  let userId = localStorage.getItem('crown_destiny_user_id')
+  let userId = localStorage.getItem(STORAGE_KEYS.USER_ID)
   if (!userId) {
     userId = 'crown_' + Math.random().toString(36).substring(2, 15) + Date.now().toString(36)
-    localStorage.setItem('crown_destiny_user_id', userId)
+    localStorage.setItem(STORAGE_KEYS.USER_ID, userId)
   }
   return userId
 }
