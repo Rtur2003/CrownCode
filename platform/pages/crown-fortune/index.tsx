@@ -96,7 +96,9 @@ const CrownFortunePage: NextPage = () => {
 
   // Modal ESC key handler + body scroll lock
   useEffect(() => {
-    if (!isModalOpen) return
+    if (!isModalOpen) {
+      return
+    }
 
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -133,7 +135,9 @@ const CrownFortunePage: NextPage = () => {
 
   // Fetch daily counter
   useEffect(() => {
-    if (!mounted) return
+    if (!mounted) {
+      return
+    }
 
     let isMounted = true
 
@@ -142,7 +146,9 @@ const CrownFortunePage: NextPage = () => {
         const res = await fetch('/api/fortune-counter')
         if (!res.ok) {
           // API not available (404, 500, etc.)
-          if (isMounted) setCounterAvailable(false)
+          if (isMounted) {
+            setCounterAvailable(false)
+          }
           return
         }
         const data = await res.json()
@@ -150,9 +156,11 @@ const CrownFortunePage: NextPage = () => {
           setDailyCount(data.count)
           setCounterAvailable(true)
         }
-      } catch (error) {
+      } catch {
         // Network error or API unavailable
-        if (isMounted) setCounterAvailable(false)
+        if (isMounted) {
+          setCounterAvailable(false)
+        }
       }
     }
 
@@ -381,7 +389,7 @@ const CrownFortunePage: NextPage = () => {
       energyText: energy,
       displayMessage: message
     }
-  }, [destiny, language, t.crownFortune.categories, t.crownFortune.energy, isReversed, reverseMessage])
+  }, [destiny, language, t, isReversed, reverseMessage])
 
   // Loading state - after all hooks
   if (!mounted || !destiny || !details) {
