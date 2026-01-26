@@ -193,19 +193,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
           aria-label="Interactive code preview"
         >
           <div className="hero-visual-panels" aria-hidden="true">
-            <img
+            <Image
               src="/images/panel/discord.png"
               alt=""
+              width={300}
+              height={200}
               className="hero-panel hero-panel-primary"
               loading="lazy"
-              decoding="async"
             />
-            <img
+            <Image
               src="/images/panel/about-me.png"
               alt=""
+              width={300}
+              height={200}
               className="hero-panel hero-panel-secondary"
               loading="lazy"
-              decoding="async"
             />
           </div>
           <div className="hero-card">
