@@ -508,7 +508,7 @@ const CrownFortunePage: NextPage = () => {
                         transition={{ delay: 1 }}
                       >
                         <Maximize2 size={12} />
-                        <span>{language === 'tr' ? 'Büyütmek için tıkla' : 'Click to enlarge'}</span>
+                        <span>{t.crownFortune.card.clickToEnlarge}</span>
                       </motion.div>
 
                       {/* Tempt Fate Button */}
