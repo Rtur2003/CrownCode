@@ -628,13 +628,15 @@ export function getEnergyDescription(energy: DestinyCard['energy'], language: 't
  */
 export function clearDestinyData(): void {
   if (typeof window === 'undefined') return
-  localStorage.removeItem('crown_daily_destiny')
-  localStorage.removeItem('crown_destiny_revealed')
+  localStorage.removeItem(STORAGE_KEYS.DAILY_DESTINY)
+  localStorage.removeItem(STORAGE_KEYS.REVEALED)
+  localStorage.removeItem(STORAGE_KEYS.IS_REVERSED)
+  localStorage.removeItem(STORAGE_KEYS.REVERSE_MESSAGE)
   console.log('Crown Destiny data cleared. Refresh the page.')
 }
 
-// Global'e ekle (debug için)
-if (typeof window !== 'undefined') {
+// Global'e ekle (sadece development modunda)
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   (window as unknown as { clearDestinyData: typeof clearDestinyData }).clearDestinyData = clearDestinyData
 }
 
