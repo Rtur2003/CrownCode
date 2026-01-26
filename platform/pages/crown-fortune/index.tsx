@@ -24,6 +24,7 @@ import BackgroundFloatingCards from '@/components/CrownFortune/BackgroundFloatin
 import { useLanguage } from '@/context/LanguageContext'
 import {
   FORTUNE_CATEGORIES,
+  STORAGE_KEYS,
   getDailyDestiny,
   getDestinyDetails,
   getTimeUntilMidnightGMT3,
