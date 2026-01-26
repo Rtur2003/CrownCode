@@ -24,7 +24,9 @@ import {
   Volume2,
   VolumeX,
   Download,
-  Share2
+  Share2,
+  Flame,
+  TrendingUp
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import BackgroundFloatingCards from '@/components/CrownFortune/BackgroundFloatingCards'
@@ -37,9 +39,12 @@ import {
   getTimeUntilMidnightGMT3,
   getTurkeyDate,
   getReverseMessage,
+  getStreakData,
+  updateStreak,
   type FortuneCategory,
   type DailyDestiny,
-  type FortuneMessage
+  type FortuneMessage,
+  type StreakData
 } from '@/data/destiny'
 import styles from '@/styles/pages/crown-fortune.module.css'
 

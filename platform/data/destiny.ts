@@ -13,7 +13,28 @@ export const STORAGE_KEYS = {
   IS_REVERSED: 'crown_destiny_is_reversed',
   REVERSE_MESSAGE: 'crown_destiny_reverse_msg',
   USER_ID: 'crown_destiny_user_id',
+  STREAK_COUNT: 'crown_destiny_streak',
+  STREAK_LAST_DATE: 'crown_destiny_streak_date',
 } as const
+
+// Streak milestone badges
+export const STREAK_MILESTONES = [
+  { days: 3, badge: '🌱', label: { tr: 'Filiz', en: 'Seedling' } },
+  { days: 7, badge: '🔥', label: { tr: 'Ateş Ruhu', en: 'Fire Spirit' } },
+  { days: 14, badge: '⭐', label: { tr: 'Yıldız Avcısı', en: 'Star Hunter' } },
+  { days: 30, badge: '🌙', label: { tr: 'Ay Çocuğu', en: 'Moon Child' } },
+  { days: 60, badge: '👁️', label: { tr: 'Üçüncü Göz', en: 'Third Eye' } },
+  { days: 100, badge: '👑', label: { tr: 'Kader Kralı', en: 'Destiny King' } },
+  { days: 365, badge: '🔮', label: { tr: 'Efsane', en: 'Legend' } },
+] as const
+
+export interface StreakData {
+  count: number
+  lastDate: string
+  currentMilestone: typeof STREAK_MILESTONES[number] | null
+  nextMilestone: typeof STREAK_MILESTONES[number] | null
+  daysToNext: number
+}
 
 export type FortuneCategory = 'love' | 'career' | 'money' | 'health' | 'spirit'
 export type MessageTone = 'positive' | 'negative' | 'neutral'
@@ -638,6 +659,99 @@ export function clearDestinyData(): void {
 // Global'e ekle (sadece development modunda)
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   (window as unknown as { clearDestinyData: typeof clearDestinyData }).clearDestinyData = clearDestinyData
+}
+
+// =============== STREAK SİSTEMİ ===============
+
+/**
+ * Get yesterday's date in Turkey timezone (YYYY-MM-DD)
+ */
+function getYesterdayTurkeyDate(): string {
+  const now = new Date()
+  // Subtract 1 day
+  now.setDate(now.getDate() - 1)
+  const formatter = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Istanbul',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  })
+  return formatter.format(now)
+}
+
+/**
+ * Calculate current milestone and next milestone
+ */
+function calculateMilestones(streakCount: number) {
+  let currentMilestone: typeof STREAK_MILESTONES[number] | null = null
+  let nextMilestone: typeof STREAK_MILESTONES[number] | null = null
+
+  for (const milestone of STREAK_MILESTONES) {
+    if (streakCount >= milestone.days) {
+      currentMilestone = milestone
+    } else if (!nextMilestone) {
+      nextMilestone = milestone
+    }
+  }
+
+  const daysToNext = nextMilestone ? nextMilestone.days - streakCount : 0
+
+  return { currentMilestone, nextMilestone, daysToNext }
+}
+
+/**
+ * Get current streak data
+ */
+export function getStreakData(): StreakData {
+  if (typeof window === 'undefined') {
+    return { count: 0, lastDate: '', currentMilestone: null, nextMilestone: STREAK_MILESTONES[0], daysToNext: STREAK_MILESTONES[0].days }
+  }
+
+  const storedCount = localStorage.getItem(STORAGE_KEYS.STREAK_COUNT)
+  const storedDate = localStorage.getItem(STORAGE_KEYS.STREAK_LAST_DATE)
+
+  const count = storedCount ? parseInt(storedCount, 10) : 0
+  const lastDate = storedDate || ''
+
+  const { currentMilestone, nextMilestone, daysToNext } = calculateMilestones(count)
+
+  return { count, lastDate, currentMilestone, nextMilestone, daysToNext }
+}
+
+/**
+ * Update streak when user reveals their fortune
+ * Call this when the fortune is revealed (card flipped)
+ */
+export function updateStreak(): StreakData {
+  if (typeof window === 'undefined') {
+    return { count: 0, lastDate: '', currentMilestone: null, nextMilestone: STREAK_MILESTONES[0], daysToNext: STREAK_MILESTONES[0].days }
+  }
+
+  const today = getTurkeyDate()
+  const yesterday = getYesterdayTurkeyDate()
+  const storedDate = localStorage.getItem(STORAGE_KEYS.STREAK_LAST_DATE)
+  const storedCount = localStorage.getItem(STORAGE_KEYS.STREAK_COUNT)
+
+  let newCount: number
+
+  if (storedDate === today) {
+    // Already checked today, don't increment
+    newCount = storedCount ? parseInt(storedCount, 10) : 1
+  } else if (storedDate === yesterday) {
+    // Consecutive day! Increment streak
+    newCount = (storedCount ? parseInt(storedCount, 10) : 0) + 1
+  } else {
+    // Streak broken or first time, start fresh
+    newCount = 1
+  }
+
+  // Save updated streak
+  localStorage.setItem(STORAGE_KEYS.STREAK_COUNT, newCount.toString())
+  localStorage.setItem(STORAGE_KEYS.STREAK_LAST_DATE, today)
+
+  const { currentMilestone, nextMilestone, daysToNext } = calculateMilestones(newCount)
+
+  return { count: newCount, lastDate: today, currentMilestone, nextMilestone, daysToNext }
 }
 
 /**
