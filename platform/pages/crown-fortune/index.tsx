@@ -347,7 +347,7 @@ const CrownFortunePage: NextPage = () => {
   }, [destiny, language, t.crownFortune.categories, t.crownFortune.energy, isReversed, reverseMessage])
 
   // Loading state - after all hooks
-  if (!mounted || !destiny) {
+  if (!mounted || !destiny || !details) {
     return (
       <MainLayout
         title={t.crownFortune.meta.title}
