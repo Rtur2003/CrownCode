@@ -545,8 +545,10 @@
     "card": {
       "reversed": "(Ters)",
       "clickToEnlarge": "Büyütmek için tıkla",
-      "temptFate": "Kadere Meydan Oku",
-      "reversedWarning": "Kader tersine döndü"
+      "revealDarkFate": "Karanlık Kaderi Gör",
+      "darkFateRevealed": "Karanlık kader açığa çıktı",
+      "darkFate": "Karanlık Kader",
+      "beWarned": "Dikkatli ol..."
     },
     "modal": {
       "close": "Kapat"
