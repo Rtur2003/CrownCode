@@ -1145,3 +1145,96 @@
     transform: none;
   }
 }
+
+/* =============== SOUND TOGGLE =============== */
+.sound-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(201, 147, 71, 0.1);
+  border: 1px solid var(--glass-border, rgba(201, 147, 71, 0.25));
+  border-radius: var(--radius-full, 999px);
+  color: var(--color-gold-400, #eac06f);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sound-toggle:hover {
+  background: rgba(201, 147, 71, 0.2);
+  transform: scale(1.05);
+}
+
+.sound-toggle:active {
+  transform: scale(0.95);
+}
+
+/* =============== SHARE ACTIONS =============== */
+.share-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background: linear-gradient(
+    135deg,
+    rgba(201, 147, 71, 0.15),
+    rgba(138, 95, 43, 0.1)
+  );
+  border: 1px solid var(--glass-border, rgba(201, 147, 71, 0.3));
+  border-radius: var(--radius-lg, 12px);
+  color: var(--color-gold-400, #eac06f);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.action-button:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(201, 147, 71, 0.25),
+    rgba(138, 95, 43, 0.15)
+  );
+  border-color: var(--color-gold-400, #eac06f);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(201, 147, 71, 0.2);
+}
+
+.action-button:active {
+  transform: translateY(0);
+}
+
+.action-button svg {
+  flex-shrink: 0;
+}
+
+/* Mobile responsive for share actions */
+@media (max-width: 480px) {
+  .share-actions {
+    gap: 0.5rem;
+  }
+
+  .action-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .action-button span {
+    display: none;
+  }
+
+  .action-button svg {
+    width: 18px;
+    height: 18px;
+  }
+}
