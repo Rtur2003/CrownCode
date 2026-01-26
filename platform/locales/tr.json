@@ -542,6 +542,15 @@
         "Ertesi güne kadar aynı kader geçerli"
       ]
     },
+    "card": {
+      "reversed": "(Ters)",
+      "clickToEnlarge": "Büyütmek için tıkla",
+      "temptFate": "Kadere Meydan Oku",
+      "reversedWarning": "Kader tersine döndü"
+    },
+    "modal": {
+      "close": "Kapat"
+    },
     "disclaimer": "Bu uygulama eğlence amaçlıdır."
   },
   "crownVote": {
