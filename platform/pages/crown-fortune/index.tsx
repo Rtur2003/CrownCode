@@ -191,9 +191,9 @@ const CrownFortunePage: NextPage = () => {
         setIsReversed(false)
         setReverseMessage(null)
 
-        localStorage.removeItem('crown_destiny_revealed')
-        localStorage.removeItem('crown_destiny_is_reversed')
-        localStorage.removeItem('crown_destiny_reverse_msg')
+        localStorage.removeItem(STORAGE_KEYS.REVEALED)
+        localStorage.removeItem(STORAGE_KEYS.IS_REVERSED)
+        localStorage.removeItem(STORAGE_KEYS.REVERSE_MESSAGE)
       }
     }
 
