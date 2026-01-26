@@ -315,6 +315,38 @@ const CrownFortunePage: NextPage = () => {
     }, 400) // Halfway through the animation
   }, [destiny, isReversed, isFlipping, flipProgress])
 
+  // Memoized card details - MUST be before any conditional returns (React hooks rule)
+  const { details, cardName, catLabel, energyText, displayMessage } = useMemo(() => {
+    if (!destiny) {
+      return {
+        details: null,
+        cardName: '',
+        catLabel: '',
+        energyText: '',
+        displayMessage: ''
+      }
+    }
+
+    const cardDetails = getDestinyDetails(destiny)
+    const name = language === 'tr' ? cardDetails.card.nameTr : cardDetails.card.name
+    const category = t.crownFortune.categories[destiny.category as keyof typeof t.crownFortune.categories]
+    const energy = t.crownFortune.energy[cardDetails.card.energy as keyof typeof t.crownFortune.energy]
+
+    // Mesaj: Reverse ise yeni mesajı, değilse orijinali göster
+    const message = isReversed && reverseMessage
+      ? (language === 'tr' ? reverseMessage.text : reverseMessage.textEn)
+      : (language === 'tr' ? cardDetails.message.text : cardDetails.message.textEn)
+
+    return {
+      details: cardDetails,
+      cardName: name,
+      catLabel: category,
+      energyText: energy,
+      displayMessage: message
+    }
+  }, [destiny, language, t.crownFortune.categories, t.crownFortune.energy, isReversed, reverseMessage])
+
+  // Loading state - after all hooks
   if (!mounted || !destiny) {
     return (
       <MainLayout
@@ -335,27 +367,6 @@ const CrownFortunePage: NextPage = () => {
       </MainLayout>
     )
   }
-
-  // Memoized card details - re-render optimizasyonu
-  const { details, cardName, catLabel, energyText, displayMessage } = useMemo(() => {
-    const cardDetails = getDestinyDetails(destiny)
-    const name = language === 'tr' ? cardDetails.card.nameTr : cardDetails.card.name
-    const category = t.crownFortune.categories[destiny.category as keyof typeof t.crownFortune.categories]
-    const energy = t.crownFortune.energy[cardDetails.card.energy as keyof typeof t.crownFortune.energy]
-
-    // Mesaj: Reverse ise yeni mesajı, değilse orijinali göster
-    const message = isReversed && reverseMessage
-      ? (language === 'tr' ? reverseMessage.text : reverseMessage.textEn)
-      : (language === 'tr' ? cardDetails.message.text : cardDetails.message.textEn)
-
-    return {
-      details: cardDetails,
-      cardName: name,
-      catLabel: category,
-      energyText: energy,
-      displayMessage: message
-    }
-  }, [destiny, language, t.crownFortune.categories, t.crownFortune.energy, isReversed, reverseMessage])
 
   return (
     <MainLayout
