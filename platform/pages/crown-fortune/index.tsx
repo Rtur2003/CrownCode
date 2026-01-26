@@ -17,7 +17,8 @@ import {
   X,
   Maximize2,
   AlertTriangle,
-  Skull
+  Skull,
+  Users
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import BackgroundFloatingCards from '@/components/CrownFortune/BackgroundFloatingCards'
@@ -79,6 +80,9 @@ const CrownFortunePage: NextPage = () => {
   const [reverseMessage, setReverseMessage] = useState<FortuneMessage | null>(null)
   const [isFlipping, setIsFlipping] = useState(false)
 
+  // Daily counter state
+  const [dailyCount, setDailyCount] = useState<number>(0)
+
   // Spring animation for card flip
   const flipProgress = useMotionValue(0)
   const springFlip = useSpring(flipProgress, {
@@ -95,6 +99,29 @@ const CrownFortunePage: NextPage = () => {
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // Fetch daily counter
+  useEffect(() => {
+    if (!mounted) return
+
+    const fetchCounter = async () => {
+      try {
+        const res = await fetch('/api/fortune-counter')
+        const data = await res.json()
+        if (data.success) {
+          setDailyCount(data.count)
+        }
+      } catch (error) {
+        console.error('Failed to fetch counter:', error)
+      }
+    }
+
+    fetchCounter()
+
+    // Refresh counter every 30 seconds
+    const interval = setInterval(fetchCounter, 30000)
+    return () => clearInterval(interval)
+  }, [mounted])
 
   // Load destiny
   useEffect(() => {
@@ -202,12 +229,23 @@ const CrownFortunePage: NextPage = () => {
     return () => clearInterval(interval)
   }, [mounted])
 
-  const spinWheel = useCallback(() => {
+  const spinWheel = useCallback(async () => {
     if (!destiny || isSpinning || showCard) {
       return
     }
 
     setIsSpinning(true)
+
+    // Increment daily counter
+    try {
+      const res = await fetch('/api/fortune-counter', { method: 'POST' })
+      const data = await res.json()
+      if (data.success) {
+        setDailyCount(data.count)
+      }
+    } catch (error) {
+      console.error('Failed to increment counter:', error)
+    }
 
     // Hedef kategori indeksi
     const catIndex = FORTUNE_CATEGORIES.findIndex(c => c.key === destiny.category)
