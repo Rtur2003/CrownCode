@@ -125,6 +125,42 @@
   letter-spacing: 0.05em;
 }
 
+/* Header Stats Container */
+.header-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* Daily Counter */
+.daily-counter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background: var(--glass-bg, rgba(21, 17, 14, 0.78));
+  border: 1px solid var(--glass-border, rgba(201, 147, 71, 0.25));
+  border-radius: var(--radius-full, 999px);
+  color: var(--color-text-secondary, #c8b9a7);
+  font-size: 0.8rem;
+}
+
+.counter-value {
+  font-family: var(--font-family-mono, 'JetBrains Mono', monospace);
+  font-weight: 700;
+  color: var(--color-gold-400, #eac06f);
+  letter-spacing: 0.05em;
+  min-width: 2.5rem;
+  text-align: center;
+}
+
+.counter-suffix {
+  color: var(--color-text-muted, #8a7a6a);
+  font-size: 0.75rem;
+}
+
 /* =============== WHEEL =============== */
 .wheel-section {
   display: flex;

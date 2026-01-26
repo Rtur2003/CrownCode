@@ -517,6 +517,10 @@
     "countdown": {
       "label": "Yeni kader:"
     },
+    "counter": {
+      "label": "Bugün:",
+      "suffix": "kader açıldı"
+    },
     "buttons": {
       "spin": "Çarkı Çevir",
       "spinning": "Çevriliyor..."

@@ -517,6 +517,10 @@
     "countdown": {
       "label": "New destiny:"
     },
+    "counter": {
+      "label": "Today:",
+      "suffix": "fortunes revealed"
+    },
     "buttons": {
       "spin": "Spin the Wheel",
       "spinning": "Spinning..."
