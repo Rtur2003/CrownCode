@@ -4,6 +4,16 @@
  * Çeşitli mesajlar: olumlu, olumsuz, nötr, genel, özel
  */
 
+// ============================================================
+// LOCALSTORAGE KEYS - Merkezi yönetim
+// ============================================================
+export const STORAGE_KEYS = {
+  DAILY_DESTINY: 'crown_daily_destiny',
+  REVEALED: 'crown_destiny_revealed',
+  IS_REVERSED: 'crown_destiny_is_reversed',
+  REVERSE_MESSAGE: 'crown_destiny_reverse_msg',
+} as const
+
 export type FortuneCategory = 'love' | 'career' | 'money' | 'health' | 'spirit'
 export type MessageTone = 'positive' | 'negative' | 'neutral'
 export type MessageType = 'general' | 'specific' | 'advice' | 'warning'
