@@ -255,8 +255,8 @@ const CrownFortunePage: NextPage = () => {
       setIsReversed(true)
       setIsFlipping(false)
 
-      localStorage.setItem('crown_destiny_is_reversed', 'true')
-      localStorage.setItem('crown_destiny_reverse_msg', JSON.stringify(msg))
+      localStorage.setItem(STORAGE_KEYS.IS_REVERSED, 'true')
+      localStorage.setItem(STORAGE_KEYS.REVERSE_MESSAGE, JSON.stringify(msg))
     }, 400) // Halfway through the animation
   }, [destiny, isReversed, isFlipping, flipProgress])
 
