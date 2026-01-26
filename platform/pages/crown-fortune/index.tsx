@@ -907,6 +907,7 @@ const CrownFortunePage: NextPage = () => {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <button
+                    type="button"
                     className={styles['card-modal-close']}
                     onClick={() => setIsModalOpen(false)}
                     aria-label={t.crownFortune.modal.close}
