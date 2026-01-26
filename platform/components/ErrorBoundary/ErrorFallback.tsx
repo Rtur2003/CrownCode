@@ -1,13 +1,15 @@
 /**
  * Error Fallback Component
  * Kullanım: Error boundary fallback UI
+ *
+ * NOT: Bu komponent LanguageProvider dışında render edilebilir,
+ * bu yüzden useLanguage kullanmıyoruz - statik fallback metinleri kullanıyoruz.
  */
 
 import React, { ErrorInfo } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { AlertTriangle, Home, RefreshCcw } from 'lucide-react'
-import { useLanguage } from '@/context/LanguageContext'
 
 interface ErrorFallbackProps {
   error: Error | null
@@ -15,12 +17,19 @@ interface ErrorFallbackProps {
   resetError?: () => void
 }
 
+// Static fallback strings (no hooks - safe outside providers)
+const FALLBACK_TEXT = {
+  title: 'Bir Hata Oluştu',
+  message: 'Beklenmeyen bir hata oluştu. Lütfen sayfayı yenileyin.',
+  reload: 'Sayfayı Yenile',
+  home: 'Ana Sayfa'
+}
+
 export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
   error,
   errorInfo,
   resetError
 }) => {
-  const { t } = useLanguage()
 
   const handleReload = () => {
     if (resetError) {
@@ -50,12 +59,12 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
 
           {/* Title */}
           <h1 className="error-title">
-            {t.toast?.error?.title || 'Error'}
+            {FALLBACK_TEXT.title}
           </h1>
 
           {/* Message */}
           <p className="error-message">
-            {error?.message || t.toast?.error?.general || 'An unexpected error occurred'}
+            {error?.message || FALLBACK_TEXT.message}
           </p>
 
           {/* Error Details (Development Only) */}
@@ -77,12 +86,12 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
               className="btn btn-primary"
             >
               <RefreshCcw size={18} />
-              <span>Reload Page</span>
+              <span>{FALLBACK_TEXT.reload}</span>
             </button>
 
             <Link href="/" className="btn btn-secondary">
               <Home size={18} />
-              <span>{t.nav.home}</span>
+              <span>{FALLBACK_TEXT.home}</span>
             </Link>
           </div>
         </motion.div>

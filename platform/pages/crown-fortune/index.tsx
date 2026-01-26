@@ -82,6 +82,7 @@ const CrownFortunePage: NextPage = () => {
 
   // Daily counter state
   const [dailyCount, setDailyCount] = useState<number>(0)
+  const [counterAvailable, setCounterAvailable] = useState<boolean>(true)
 
   // Spring animation for card flip
   const flipProgress = useMotionValue(0)
@@ -104,23 +105,35 @@ const CrownFortunePage: NextPage = () => {
   useEffect(() => {
     if (!mounted) return
 
+    let isMounted = true
+
     const fetchCounter = async () => {
       try {
         const res = await fetch('/api/fortune-counter')
+        if (!res.ok) {
+          // API not available (404, 500, etc.)
+          if (isMounted) setCounterAvailable(false)
+          return
+        }
         const data = await res.json()
-        if (data.success) {
+        if (isMounted && data.success) {
           setDailyCount(data.count)
+          setCounterAvailable(true)
         }
       } catch (error) {
-        console.error('Failed to fetch counter:', error)
+        // Network error or API unavailable
+        if (isMounted) setCounterAvailable(false)
       }
     }
 
     fetchCounter()
 
-    // Refresh counter every 30 seconds
+    // Refresh counter every 30 seconds (only if available)
     const interval = setInterval(fetchCounter, 30000)
-    return () => clearInterval(interval)
+    return () => {
+      isMounted = false
+      clearInterval(interval)
+    }
   }, [mounted])
 
   // Load destiny
@@ -236,15 +249,19 @@ const CrownFortunePage: NextPage = () => {
 
     setIsSpinning(true)
 
-    // Increment daily counter
-    try {
-      const res = await fetch('/api/fortune-counter', { method: 'POST' })
-      const data = await res.json()
-      if (data.success) {
-        setDailyCount(data.count)
+    // Increment daily counter (non-blocking, won't stop spin if fails)
+    if (counterAvailable) {
+      try {
+        const res = await fetch('/api/fortune-counter', { method: 'POST' })
+        if (res.ok) {
+          const data = await res.json()
+          if (data.success) {
+            setDailyCount(data.count)
+          }
+        }
+      } catch {
+        // Silently fail - counter is not critical for spin functionality
       }
-    } catch (error) {
-      console.error('Failed to increment counter:', error)
     }
 
     // Hedef kategori indeksi
@@ -262,7 +279,7 @@ const CrownFortunePage: NextPage = () => {
         localStorage.setItem(STORAGE_KEYS.REVEALED, destiny.date)
       }, 500)
     }, 4000)
-  }, [destiny, isSpinning, showCard])
+  }, [destiny, isSpinning, showCard, counterAvailable])
 
   const handleReverseDestiny = useCallback(() => {
     if (!destiny) {
@@ -379,20 +396,22 @@ const CrownFortunePage: NextPage = () => {
                 <span>{t.crownFortune.countdown.label}</span>
                 <span className={styles['countdown-time']}>{countdown}</span>
               </div>
-              <div className={styles['daily-counter']}>
-                <Users size={16} />
-                <span>{t.crownFortune.counter?.label || 'Today:'}</span>
-                <motion.span
-                  className={styles['counter-value']}
-                  key={dailyCount}
-                  initial={{ scale: 1.2, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {dailyCount.toLocaleString()}
-                </motion.span>
-                <span className={styles['counter-suffix']}>{t.crownFortune.counter?.suffix || 'fortunes'}</span>
-              </div>
+              {counterAvailable && (
+                <div className={styles['daily-counter']}>
+                  <Users size={16} />
+                  <span>{t.crownFortune.counter?.label || 'Today:'}</span>
+                  <motion.span
+                    className={styles['counter-value']}
+                    key={dailyCount}
+                    initial={{ scale: 1.2, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {dailyCount.toLocaleString()}
+                  </motion.span>
+                  <span className={styles['counter-suffix']}>{t.crownFortune.counter?.suffix || 'fortunes'}</span>
+                </div>
+              )}
             </div>
           </motion.header>
 
