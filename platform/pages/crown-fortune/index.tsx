@@ -219,6 +219,15 @@ const CrownFortunePage: NextPage = () => {
     setMounted(true)
   }, [])
 
+  // Load streak data on mount
+  useEffect(() => {
+    if (!mounted) {
+      return
+    }
+    const streakData = getStreakData()
+    setStreak(streakData)
+  }, [mounted])
+
   // Fetch daily counter
   useEffect(() => {
     if (!mounted) {
