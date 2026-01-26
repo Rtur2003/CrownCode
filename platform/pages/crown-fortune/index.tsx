@@ -423,6 +423,10 @@ const CrownFortunePage: NextPage = () => {
         setIsCardFlipped(true)
         localStorage.setItem(STORAGE_KEYS.REVEALED, destiny.date)
 
+        // Update streak
+        const newStreak = updateStreak()
+        setStreak(newStreak)
+
         // Celebration effects
         triggerHaptic(HAPTIC.SUCCESS)
         playSuccess()
