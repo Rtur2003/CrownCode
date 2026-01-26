@@ -849,6 +849,47 @@ const CrownFortunePage: NextPage = () => {
                           <span>{t.crownFortune.card.darkFateRevealed}</span>
                         </motion.div>
                       )}
+
+                      {/* Share & Download Actions */}
+                      <motion.div
+                        className={styles['share-actions']}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 2 }}
+                      >
+                        <button
+                          type="button"
+                          className={styles['action-button']}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleShare('native')
+                          }}
+                          aria-label={language === 'tr' ? 'Paylaş' : 'Share'}
+                        >
+                          <Share2 size={16} />
+                          <span>{language === 'tr' ? 'Paylaş' : 'Share'}</span>
+                        </button>
+                        <button
+                          type="button"
+                          className={styles['action-button']}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleDownload()
+                          }}
+                          aria-label={language === 'tr' ? 'İndir' : 'Download'}
+                        >
+                          <Download size={16} />
+                          <span>{language === 'tr' ? 'İndir' : 'Download'}</span>
+                        </button>
+                      </motion.div>
+                    </div>
+                  )}
+                </div>
+              </motion.section>
+            )}
+          </AnimatePresence>
+                        </motion.div>
+                      )}
                     </div>
                   )}
                 </div>
