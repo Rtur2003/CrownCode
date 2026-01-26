@@ -542,7 +542,18 @@
         "Your destiny stays the same until the next day"
       ]
     },
-    "disclaimer": "This application is for entertainment purposes only."
+    "disclaimer": "This application is for entertainment purposes only.",
+    "card": {
+      "reversed": "(Reversed)",
+      "clickToEnlarge": "Click to enlarge",
+      "revealDarkFate": "Reveal Dark Fate",
+      "darkFateRevealed": "Dark fate revealed",
+      "darkFate": "Dark Fate",
+      "beWarned": "Be warned..."
+    },
+    "modal": {
+      "close": "Close"
+    }
   },
   "crownVote": {
     "meta": {
