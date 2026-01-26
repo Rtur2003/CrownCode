@@ -64,6 +64,16 @@ const CATEGORY_COLORS: Record<FortuneCategory, string> = {
   spirit: '#9b59b6'
 }
 
+// Animation timing constants (ms)
+const ANIMATION = {
+  WHEEL_SPIN_DURATION: 4000,
+  CARD_FLIP_DELAY: 500,
+  REVERSE_ANIMATION_PEAK: 400,
+  COUNTER_REFRESH_INTERVAL: 30000,
+  MIDNIGHT_CHECK_INTERVAL: 30000,
+  COUNTDOWN_INTERVAL: 1000,
+} as const
+
 const CrownFortunePage: NextPage = () => {
   const { language, t } = useLanguage()
   const [destiny, setDestiny] = useState<DailyDestiny | null>(null)
@@ -83,6 +93,26 @@ const CrownFortunePage: NextPage = () => {
   // Daily counter state
   const [dailyCount, setDailyCount] = useState<number>(0)
   const [counterAvailable, setCounterAvailable] = useState<boolean>(true)
+
+  // Modal ESC key handler + body scroll lock
+  useEffect(() => {
+    if (!isModalOpen) return
+
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsModalOpen(false)
+      }
+    }
+
+    // Lock body scroll
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleEsc)
+
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', handleEsc)
+    }
+  }, [isModalOpen])
 
   // Spring animation for card flip
   const flipProgress = useMotionValue(0)
@@ -170,7 +200,14 @@ const CrownFortunePage: NextPage = () => {
           setIsReversed(true)
           const savedMsg = localStorage.getItem(STORAGE_KEYS.REVERSE_MESSAGE)
           if (savedMsg) {
-            setReverseMessage(JSON.parse(savedMsg))
+            try {
+              setReverseMessage(JSON.parse(savedMsg))
+            } catch {
+              // Invalid JSON, clear corrupted data
+              localStorage.removeItem(STORAGE_KEYS.REVERSE_MESSAGE)
+              localStorage.removeItem(STORAGE_KEYS.IS_REVERSED)
+              setIsReversed(false)
+            }
           }
         }
       } else {
