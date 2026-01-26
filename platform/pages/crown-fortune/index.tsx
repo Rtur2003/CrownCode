@@ -551,7 +551,7 @@ const CrownFortunePage: NextPage = () => {
                           className={styles['reversed-indicator']}
                         >
                           <Skull size={14} />
-                          <span>{language === 'tr' ? 'Karanlık kader açığa çıktı' : 'Dark fate revealed'}</span>
+                          <span>{t.crownFortune.card.darkFateRevealed}</span>
                         </motion.div>
                       )}
                     </div>
