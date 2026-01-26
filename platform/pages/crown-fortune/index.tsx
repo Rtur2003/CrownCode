@@ -159,7 +159,7 @@ const CrownFortunePage: NextPage = () => {
     fetchCounter()
 
     // Refresh counter every 30 seconds (only if available)
-    const interval = setInterval(fetchCounter, 30000)
+    const interval = setInterval(fetchCounter, ANIMATION.COUNTER_REFRESH_INTERVAL)
     return () => {
       isMounted = false
       clearInterval(interval)
