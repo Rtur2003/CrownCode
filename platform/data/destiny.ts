@@ -12,6 +12,7 @@ export const STORAGE_KEYS = {
   REVEALED: 'crown_destiny_revealed',
   IS_REVERSED: 'crown_destiny_is_reversed',
   REVERSE_MESSAGE: 'crown_destiny_reverse_msg',
+  USER_ID: 'crown_destiny_user_id',
 } as const
 
 export type FortuneCategory = 'love' | 'career' | 'money' | 'health' | 'spirit'
