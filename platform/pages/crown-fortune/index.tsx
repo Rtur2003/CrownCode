@@ -743,6 +743,29 @@ const CrownFortunePage: NextPage = () => {
                   )}
                 </motion.div>
               )}
+              {moonPhase && (
+                <div
+                  className={styles['moon-phase']}
+                  title={language === 'tr'
+                    ? `${moonPhase.name} - ${moonPhase.energy} enerjisi`
+                    : `${moonPhase.nameEn} - ${moonPhase.energyEn} energy`
+                  }
+                >
+                  <span className={styles['moon-emoji']}>{moonPhase.emoji}</span>
+                  <span className={styles['moon-name']}>
+                    {language === 'tr' ? moonPhase.name : moonPhase.nameEn}
+                  </span>
+                </div>
+              )}
+              <button
+                type="button"
+                className={styles['collection-badge']}
+                onClick={() => setIsCollectionModalOpen(true)}
+                title={language === 'tr' ? 'Kart Koleksiyonu' : 'Card Collection'}
+              >
+                <BookOpen size={16} />
+                <span>{collection.seenCardIds.length}/22</span>
+              </button>
               <button
                 type="button"
                 className={styles['sound-toggle']}
