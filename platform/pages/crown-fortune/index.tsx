@@ -610,7 +610,7 @@ const CrownFortunePage: NextPage = () => {
     if (urls[platform]) {
       window.open(urls[platform], '_blank', 'noopener,noreferrer,width=600,height=400')
     }
-  }, [destiny, details, cardName, catLabel, displayMessage, isReversed, language])
+  }, [destiny, details, cardName, catLabel, displayMessage, isReversed, language, t.crownFortune.share.title])
 
   // Download card as PNG
   const handleDownload = useCallback(async () => {
