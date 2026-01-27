@@ -591,7 +591,7 @@ const CrownFortunePage: NextPage = () => {
     if (platform === 'native' && navigator.share) {
       try {
         await navigator.share({
-          title: language === 'tr' ? 'Crown Destiny - Günlük Kaderim' : 'Crown Destiny - My Daily Fortune',
+          title: t.crownFortune.share.title,
           text: shareText,
           url: shareUrl,
         })
@@ -1218,7 +1218,7 @@ const CrownFortunePage: NextPage = () => {
                   {collection.collectionProgress === 100 && (
                     <div className={styles['collection-complete']}>
                       <Crown size={24} />
-                      <span>{language === 'tr' ? 'Koleksiyon Tamamlandı!' : 'Collection Complete!'}</span>
+                      <span>{t.crownFortune.collection.complete}</span>
                     </div>
                   )}
                 </motion.div>
