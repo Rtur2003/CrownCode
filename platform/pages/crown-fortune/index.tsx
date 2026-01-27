@@ -1188,7 +1188,10 @@ const CrownFortunePage: NextPage = () => {
                   </div>
 
                   <div className={styles['collection-grid']}>
-                    {DESTINY_CARDS.map((card) => {
+                    {DESTINY_CARDS && DESTINY_CARDS.length > 0 && DESTINY_CARDS.map((card) => {
+                      if (!card) {
+                        return null
+                      }
                       const isSeen = collection.seenCardIds.includes(card.id)
                       const seenDate = collection.firstSeenDates[card.id]
                       return (
