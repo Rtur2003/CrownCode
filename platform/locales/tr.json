@@ -557,7 +557,32 @@
     "modal": {
       "close": "Kapat"
     },
-    "disclaimer": "Bu uygulama eğlence amaçlıdır."
+    "disclaimer": "Bu uygulama eğlence amaçlıdır.",
+    "share": {
+      "button": "Paylaş",
+      "download": "İndir",
+      "title": "Crown Destiny - Günlük Kaderim"
+    },
+    "streak": {
+      "daysTo": "gün kaldı"
+    },
+    "moonPhase": {
+      "energySuffix": "enerjisi"
+    },
+    "lucky": {
+      "numbers": "Şanslı Sayılar:",
+      "color": "Şanslı Renk:",
+      "direction": "Yön:"
+    },
+    "collection": {
+      "title": "Kart Koleksiyonu",
+      "complete": "Koleksiyon Tamamlandı!",
+      "notSeen": "Henüz görülmedi",
+      "close": "Kapat"
+    },
+    "quote": {
+      "title": "Günün Sözü"
+    }
   },
   "crownVote": {
     "meta": {
