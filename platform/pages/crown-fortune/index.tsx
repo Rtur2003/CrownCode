@@ -1197,7 +1197,7 @@ const CrownFortunePage: NextPage = () => {
                           className={`${styles['collection-card']} ${isSeen ? styles['seen'] : styles['locked']}`}
                           title={isSeen
                             ? `${language === 'tr' ? card.nameTr : card.name} - ${seenDate}`
-                            : language === 'tr' ? 'Henüz görülmedi' : 'Not seen yet'
+                            : t.crownFortune.collection.notSeen
                           }
                         >
                           {isSeen ? (
