@@ -779,17 +779,34 @@ export function getDailyDestiny(): DailyDestiny {
 /**
  * Kader detaylarını getir
  */
+// Default card for fallback
+const DEFAULT_CARD: DestinyCard = {
+  id: 0,
+  name: 'The Wanderer',
+  nameTr: 'Gezgin',
+  symbol: '🌟',
+  image: '/tarot/the-fool.png',
+  element: 'air',
+  energy: 'ascending'
+}
+
 export function getDestinyDetails(destiny: DailyDestiny) {
-  const card = DESTINY_CARDS[destiny.cardId] || DESTINY_CARDS[0]
-  const category = FORTUNE_CATEGORIES.find(c => c.key === destiny.category) || FORTUNE_CATEGORIES[0]
-  const messages = FORTUNE_MESSAGES[destiny.category] || FORTUNE_MESSAGES.love
-  const message = messages[destiny.messageIndex] || messages[0]
+  // Ensure cardId is a valid number within range
+  const cardId = typeof destiny?.cardId === 'number'
+    ? Math.max(0, Math.min(21, destiny.cardId))
+    : 0
+
+  // Get card with multiple fallbacks
+  const card = DESTINY_CARDS?.[cardId] ?? DESTINY_CARDS?.[0] ?? DEFAULT_CARD
+  const category = FORTUNE_CATEGORIES.find(c => c.key === destiny?.category) || FORTUNE_CATEGORIES[0]
+  const messages = FORTUNE_MESSAGES[destiny?.category] || FORTUNE_MESSAGES.love
+  const message = messages?.[destiny?.messageIndex] || messages?.[0]
 
   return {
     card,
     category,
     message,
-    tone: destiny.tone
+    tone: destiny?.tone || 'neutral'
   }
 }
 

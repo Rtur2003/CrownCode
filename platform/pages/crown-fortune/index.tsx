@@ -1194,27 +1194,28 @@ const CrownFortunePage: NextPage = () => {
                   </div>
 
                   <div className={styles['collection-grid']}>
-                    {DESTINY_CARDS && DESTINY_CARDS.length > 0 && DESTINY_CARDS.map((card) => {
-                      if (!card) {
+                    {Array.isArray(DESTINY_CARDS) && DESTINY_CARDS.map((card, index) => {
+                      if (!card || typeof card !== 'object') {
                         return null
                       }
-                      const isSeen = collection.seenCardIds.includes(card.id)
-                      const seenDate = collection.firstSeenDates[card.id]
+                      const cardId = typeof card.id === 'number' ? card.id : index
+                      const isSeen = collection.seenCardIds.includes(cardId)
+                      const seenDate = collection.firstSeenDates[cardId] || ''
+                      const cardSymbol = card.symbol || '?'
+                      const cardName = language === 'tr' ? (card.nameTr || card.name || '?') : (card.name || '?')
                       return (
                         <div
-                          key={card.id}
+                          key={cardId}
                           className={`${styles['collection-card']} ${isSeen ? styles['seen'] : styles['locked']}`}
                           title={isSeen
-                            ? `${language === 'tr' ? card.nameTr : card.name} - ${seenDate}`
+                            ? `${cardName} - ${seenDate}`
                             : t.crownFortune.collection.notSeen
                           }
                         >
                           {isSeen ? (
                             <>
-                              <span className={styles['card-symbol']}>{card?.symbol || '?'}</span>
-                              <span className={styles['card-name-small']}>
-                                {language === 'tr' ? card?.nameTr : card?.name}
-                              </span>
+                              <span className={styles['card-symbol']}>{cardSymbol}</span>
+                              <span className={styles['card-name-small']}>{cardName}</span>
                             </>
                           ) : (
                             <Lock size={20} className={styles['lock-icon']} />
