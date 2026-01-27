@@ -5,16 +5,11 @@ const CACHE_NAME = 'devforge-suite-v1'
 const STATIC_CACHE = 'devforge-static-v1'
 const DYNAMIC_CACHE = 'devforge-dynamic-v1'
 
-// Assets to cache
+// Assets to cache - only files that definitely exist
 const STATIC_ASSETS = [
   '/',
   '/manifest.json',
   '/favicon.ico',
-  '/favicon-16x16.png',
-  '/favicon-32x32.png',
-  '/apple-touch-icon.png',
-  '/hasan-arthur-profile.jpg',
-  '/_next/static/css/app.css',
 ]
 
 // Pages to cache
