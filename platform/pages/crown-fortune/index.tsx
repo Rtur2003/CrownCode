@@ -260,6 +260,36 @@ const CrownFortunePage: NextPage = () => {
     setStreak(streakData)
   }, [mounted])
 
+  // Load moon phase on mount
+  useEffect(() => {
+    if (!mounted) {
+      return
+    }
+    const phase = getMoonPhase()
+    setMoonPhase(phase)
+  }, [mounted])
+
+  // Load card collection on mount
+  useEffect(() => {
+    if (!mounted) {
+      return
+    }
+    const col = getCardCollection()
+    setCollection(col)
+  }, [mounted])
+
+  // Load lucky elements and daily quote when destiny is ready
+  useEffect(() => {
+    if (!mounted || !destiny) {
+      return
+    }
+    const lucky = getLuckyElements(destiny.cardId, destiny.date)
+    setLuckyElements(lucky)
+
+    const quote = getDailyQuote(destiny.cardId, destiny.date)
+    setDailyQuote(quote)
+  }, [mounted, destiny])
+
   // Fetch daily counter
   useEffect(() => {
     if (!mounted) {
