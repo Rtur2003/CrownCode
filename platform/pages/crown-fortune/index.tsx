@@ -1162,13 +1162,13 @@ const CrownFortunePage: NextPage = () => {
                   <div className={styles['collection-header']}>
                     <h2>
                       <BookOpen size={20} />
-                      {language === 'tr' ? 'Kart Koleksiyonu' : 'Card Collection'}
+                      {t.crownFortune.collection.title}
                     </h2>
                     <button
                       type="button"
                       onClick={() => setIsCollectionModalOpen(false)}
                       className={styles['collection-close']}
-                      aria-label={language === 'tr' ? 'Kapat' : 'Close'}
+                      aria-label={t.crownFortune.collection.close}
                     >
                       <X size={20} />
                     </button>
