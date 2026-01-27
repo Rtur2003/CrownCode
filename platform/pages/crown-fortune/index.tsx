@@ -1145,6 +1145,87 @@ const CrownFortunePage: NextPage = () => {
             )}
           </AnimatePresence>
 
+          {/* COLLECTION MODAL */}
+          <AnimatePresence>
+            {isCollectionModalOpen && (
+              <motion.div
+                className={styles['collection-modal-overlay']}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsCollectionModalOpen(false)}
+              >
+                <motion.div
+                  className={styles['collection-modal']}
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.9, opacity: 0 }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className={styles['collection-header']}>
+                    <h2>
+                      <BookOpen size={20} />
+                      {language === 'tr' ? 'Kart Koleksiyonu' : 'Card Collection'}
+                    </h2>
+                    <button
+                      type="button"
+                      onClick={() => setIsCollectionModalOpen(false)}
+                      className={styles['collection-close']}
+                      aria-label={language === 'tr' ? 'Kapat' : 'Close'}
+                    >
+                      <X size={20} />
+                    </button>
+                  </div>
+
+                  <div className={styles['collection-progress']}>
+                    <div className={styles['progress-bar']}>
+                      <div
+                        className={styles['progress-fill']}
+                        style={{ width: `${collection.collectionProgress}%` }}
+                      />
+                    </div>
+                    <span>{collection.seenCardIds.length} / 22 ({collection.collectionProgress}%)</span>
+                  </div>
+
+                  <div className={styles['collection-grid']}>
+                    {DESTINY_CARDS.map((card) => {
+                      const isSeen = collection.seenCardIds.includes(card.id)
+                      const seenDate = collection.firstSeenDates[card.id]
+                      return (
+                        <div
+                          key={card.id}
+                          className={`${styles['collection-card']} ${isSeen ? styles['seen'] : styles['locked']}`}
+                          title={isSeen
+                            ? `${language === 'tr' ? card.nameTr : card.name} - ${seenDate}`
+                            : language === 'tr' ? 'Henüz görülmedi' : 'Not seen yet'
+                          }
+                        >
+                          {isSeen ? (
+                            <>
+                              <span className={styles['card-symbol']}>{card.symbol}</span>
+                              <span className={styles['card-name-small']}>
+                                {language === 'tr' ? card.nameTr : card.name}
+                              </span>
+                            </>
+                          ) : (
+                            <Lock size={20} className={styles['lock-icon']} />
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+
+                  {collection.collectionProgress === 100 && (
+                    <div className={styles['collection-complete']}>
+                      <Crown size={24} />
+                      <span>{language === 'tr' ? 'Koleksiyon Tamamlandı!' : 'Collection Complete!'}</span>
+                    </div>
+                  )}
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* INFO SECTION */}
           <motion.section
             className={styles['info-section']}
