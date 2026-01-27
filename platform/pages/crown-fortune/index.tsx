@@ -726,7 +726,7 @@ const CrownFortunePage: NextPage = () => {
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.3 }}
                   title={streak.nextMilestone
-                    ? `${streak.daysToNext} ${language === 'tr' ? 'gün kaldı' : 'days to'} ${streak.nextMilestone.badge}`
+                    ? `${streak.daysToNext} ${t.crownFortune.streak.daysTo} ${streak.nextMilestone.badge}`
                     : ''
                   }
                 >
@@ -746,10 +746,7 @@ const CrownFortunePage: NextPage = () => {
               {moonPhase && (
                 <div
                   className={styles['moon-phase']}
-                  title={language === 'tr'
-                    ? `${moonPhase.name} - ${moonPhase.energy} enerjisi`
-                    : `${moonPhase.nameEn} - ${moonPhase.energyEn} energy`
-                  }
+                  title={`${language === 'tr' ? moonPhase.name : moonPhase.nameEn} - ${language === 'tr' ? moonPhase.energy : moonPhase.energyEn} ${t.crownFortune.moonPhase.energySuffix}`}
                 >
                   <span className={styles['moon-emoji']}>{moonPhase.emoji}</span>
                   <span className={styles['moon-name']}>
