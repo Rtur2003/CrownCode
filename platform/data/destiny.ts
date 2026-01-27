@@ -15,6 +15,7 @@ export const STORAGE_KEYS = {
   USER_ID: 'crown_destiny_user_id',
   STREAK_COUNT: 'crown_destiny_streak',
   STREAK_LAST_DATE: 'crown_destiny_streak_date',
+  CARD_COLLECTION: 'crown_destiny_collection',
 } as const
 
 // Streak milestone badges
