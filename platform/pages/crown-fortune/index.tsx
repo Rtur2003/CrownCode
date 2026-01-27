@@ -903,7 +903,7 @@ const CrownFortunePage: NextPage = () => {
 
                       <div className={styles['card-content']}>
                         <div className={styles['card-header']}>
-                          <span className={styles['card-symbol']}>{details.card.symbol}</span>
+                          <span className={styles['card-symbol']}>{details?.card?.symbol || '✨'}</span>
                           <h2 className={styles['card-name']}>
                             {cardName} {isReversed && t.crownFortune.card.reversed}
                           </h2>
