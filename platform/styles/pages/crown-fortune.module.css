@@ -1330,3 +1330,356 @@
     display: none;
   }
 }
+
+/* =============== MOON PHASE =============== */
+.moon-phase {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  background: linear-gradient(
+    135deg,
+    rgba(147, 112, 219, 0.15),
+    rgba(75, 0, 130, 0.1)
+  );
+  border: 1px solid rgba(147, 112, 219, 0.3);
+  border-radius: var(--radius-full, 999px);
+  color: #dda0dd;
+  font-size: 0.8125rem;
+  cursor: default;
+}
+
+.moon-emoji {
+  font-size: 1.125rem;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
+}
+
+.moon-name {
+  font-weight: 500;
+}
+
+/* =============== COLLECTION BADGE =============== */
+.collection-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  background: linear-gradient(
+    135deg,
+    rgba(201, 147, 71, 0.15),
+    rgba(138, 95, 43, 0.1)
+  );
+  border: 1px solid var(--glass-border, rgba(201, 147, 71, 0.3));
+  border-radius: var(--radius-full, 999px);
+  color: var(--color-gold-400, #eac06f);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.collection-badge:hover {
+  background: rgba(201, 147, 71, 0.25);
+  transform: scale(1.05);
+}
+
+/* =============== LUCKY ELEMENTS =============== */
+.lucky-elements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(
+    135deg,
+    rgba(39, 174, 96, 0.1),
+    rgba(46, 204, 113, 0.05)
+  );
+  border: 1px solid rgba(39, 174, 96, 0.2);
+  border-radius: var(--radius-lg, 12px);
+}
+
+.lucky-numbers,
+.lucky-color,
+.lucky-direction {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.lucky-numbers svg {
+  color: #27ae60;
+}
+
+.lucky-numbers strong {
+  color: #2ecc71;
+  font-weight: 600;
+}
+
+.color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 8px currentColor;
+}
+
+.lucky-direction span:first-child {
+  font-size: 1rem;
+  color: #3498db;
+}
+
+/* =============== DAILY QUOTE =============== */
+.daily-quote {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: linear-gradient(
+    135deg,
+    rgba(155, 89, 182, 0.1),
+    rgba(142, 68, 173, 0.05)
+  );
+  border: 1px solid rgba(155, 89, 182, 0.2);
+  border-radius: var(--radius-lg, 12px);
+  border-left: 3px solid #9b59b6;
+}
+
+.quote-icon {
+  flex-shrink: 0;
+  color: #9b59b6;
+  margin-top: 0.125rem;
+}
+
+.daily-quote blockquote {
+  margin: 0;
+}
+
+.daily-quote p {
+  font-size: 0.9375rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  margin: 0 0 0.5rem 0;
+}
+
+.daily-quote cite {
+  font-size: 0.8125rem;
+  color: rgba(155, 89, 182, 0.8);
+  font-style: normal;
+}
+
+/* =============== COLLECTION MODAL =============== */
+.collection-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.8);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.collection-modal {
+  width: 100%;
+  max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 46, 0.98),
+    rgba(15, 15, 30, 0.98)
+  );
+  border: 1px solid var(--glass-border, rgba(201, 147, 71, 0.3));
+  border-radius: var(--radius-xl, 16px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.collection-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(201, 147, 71, 0.2);
+}
+
+.collection-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--color-gold-400, #eac06f);
+}
+
+.collection-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.collection-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.collection-progress {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #eac06f, #c99347);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.collection-progress span {
+  font-size: 0.875rem;
+  color: var(--color-gold-400, #eac06f);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.75rem;
+  padding: 1rem 1.5rem 1.5rem;
+}
+
+.collection-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 1rem 0.5rem;
+  border-radius: var(--radius-md, 8px);
+  text-align: center;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.collection-card.seen {
+  background: linear-gradient(
+    135deg,
+    rgba(201, 147, 71, 0.2),
+    rgba(138, 95, 43, 0.1)
+  );
+  border: 1px solid rgba(201, 147, 71, 0.3);
+}
+
+.collection-card.locked {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+.collection-card.seen:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(201, 147, 71, 0.2);
+}
+
+.collection-card .card-symbol {
+  font-size: 1.5rem;
+}
+
+.collection-card .card-name-small {
+  font-size: 0.6875rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.2;
+}
+
+.lock-icon {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.collection-complete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  margin: 0 1.5rem 1.5rem;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 0, 0.2),
+    rgba(201, 147, 71, 0.15)
+  );
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: var(--radius-md, 8px);
+  color: #FFD700;
+  font-weight: 600;
+}
+
+/* Mobile responsive for new features */
+@media (max-width: 480px) {
+  .moon-phase {
+    padding: 0.375rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .moon-name {
+    display: none;
+  }
+
+  .collection-badge span {
+    display: none;
+  }
+
+  .lucky-elements {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .daily-quote {
+    padding: 0.75rem;
+  }
+
+  .daily-quote p {
+    font-size: 0.875rem;
+  }
+
+  .collection-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .collection-card {
+    padding: 0.75rem 0.25rem;
+  }
+
+  .collection-card .card-symbol {
+    font-size: 1.25rem;
+  }
+
+  .collection-card .card-name-small {
+    font-size: 0.625rem;
+  }
+}
