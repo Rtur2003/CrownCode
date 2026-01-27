@@ -37,6 +37,181 @@ export interface StreakData {
   daysToNext: number
 }
 
+// ============================================================
+// MOON PHASE SYSTEM
+// ============================================================
+export const MOON_PHASES = [
+  { id: 0, name: 'Yeni Ay', nameEn: 'New Moon', emoji: '🌑', energy: 'başlangıç', energyEn: 'beginning' },
+  { id: 1, name: 'Hilal', nameEn: 'Waxing Crescent', emoji: '🌒', energy: 'büyüme', energyEn: 'growth' },
+  { id: 2, name: 'İlk Dördün', nameEn: 'First Quarter', emoji: '🌓', energy: 'aksiyon', energyEn: 'action' },
+  { id: 3, name: 'Şişkin Ay', nameEn: 'Waxing Gibbous', emoji: '🌔', energy: 'gelişim', energyEn: 'development' },
+  { id: 4, name: 'Dolunay', nameEn: 'Full Moon', emoji: '🌕', energy: 'doruk', energyEn: 'peak' },
+  { id: 5, name: 'Azalan Şişkin', nameEn: 'Waning Gibbous', emoji: '🌖', energy: 'yansıma', energyEn: 'reflection' },
+  { id: 6, name: 'Son Dördün', nameEn: 'Last Quarter', emoji: '🌗', energy: 'bırakma', energyEn: 'release' },
+  { id: 7, name: 'Azalan Hilal', nameEn: 'Waning Crescent', emoji: '🌘', energy: 'dinlenme', energyEn: 'rest' },
+] as const
+
+export type MoonPhase = typeof MOON_PHASES[number]
+
+// ============================================================
+// LUCKY ELEMENTS SYSTEM
+// ============================================================
+export const LUCKY_COLORS = [
+  { name: 'Altın', nameEn: 'Gold', hex: '#FFD700' },
+  { name: 'Mor', nameEn: 'Purple', hex: '#9b59b6' },
+  { name: 'Zümrüt', nameEn: 'Emerald', hex: '#27ae60' },
+  { name: 'Safir', nameEn: 'Sapphire', hex: '#3498db' },
+  { name: 'Yakut', nameEn: 'Ruby', hex: '#e74c3c' },
+  { name: 'Gümüş', nameEn: 'Silver', hex: '#bdc3c7' },
+  { name: 'Kehribar', nameEn: 'Amber', hex: '#f39c12' },
+  { name: 'Gül', nameEn: 'Rose', hex: '#e91e63' },
+] as const
+
+export const DIRECTIONS = [
+  { name: 'Kuzey', nameEn: 'North', symbol: '↑' },
+  { name: 'Güney', nameEn: 'South', symbol: '↓' },
+  { name: 'Doğu', nameEn: 'East', symbol: '→' },
+  { name: 'Batı', nameEn: 'West', symbol: '←' },
+] as const
+
+export interface LuckyElements {
+  numbers: number[]
+  color: typeof LUCKY_COLORS[number]
+  direction: typeof DIRECTIONS[number]
+}
+
+// ============================================================
+// CARD COLLECTION SYSTEM
+// ============================================================
+export interface CardCollection {
+  seenCardIds: number[]
+  firstSeenDates: Record<number, string>
+  totalCards: 22
+  collectionProgress: number
+}
+
+// ============================================================
+// MOTIVATION QUOTES (22 kartın her biri için)
+// ============================================================
+export const MOTIVATION_QUOTES: Record<number, { tr: string; en: string; author: string }[]> = {
+  0: [ // The Wanderer (Gezgin)
+    { tr: 'Her yolculuk tek bir adımla başlar.', en: 'Every journey begins with a single step.', author: 'Lao Tzu' },
+    { tr: 'Kaybolmak, kendini bulmanın ilk adımıdır.', en: 'Getting lost is the first step to finding yourself.', author: 'Anonim' },
+    { tr: 'Macera, konfor alanının dışında başlar.', en: 'Adventure begins where comfort ends.', author: 'Neale Donald Walsch' },
+  ],
+  1: [ // The Creator (Yaratıcı)
+    { tr: 'Hayal gücü bilgiden daha önemlidir.', en: 'Imagination is more important than knowledge.', author: 'Einstein' },
+    { tr: 'Yaratıcılık, hata yapmaya cesaret etmektir.', en: 'Creativity is allowing yourself to make mistakes.', author: 'Scott Adams' },
+    { tr: 'Her usta bir zamanlar öğrenciydi.', en: 'Every master was once a beginner.', author: 'Anonim' },
+  ],
+  2: [ // The Oracle (Kahin)
+    { tr: 'Bilgelik, bilmediğini bilmektir.', en: 'Wisdom is knowing what you do not know.', author: 'Sokrates' },
+    { tr: 'Sezgilerine güven, onlar gizli bilgiyi taşır.', en: 'Trust your intuition, it carries hidden wisdom.', author: 'Anonim' },
+    { tr: 'Gerçek bilgi içsel sessizlikte bulunur.', en: 'True knowledge is found in inner silence.', author: 'Rumi' },
+  ],
+  3: [ // The Mother (Ana)
+    { tr: 'Sevgi, en güçlü iyileştiricidir.', en: 'Love is the most powerful healer.', author: 'Anonim' },
+    { tr: 'Şefkat göstermek, cesaret ister.', en: 'It takes courage to show compassion.', author: 'Buddha' },
+    { tr: 'Veren el, alan elden üstündür.', en: 'The giving hand is above the receiving hand.', author: 'Türk Atasözü' },
+  ],
+  4: [ // The Father (Baba)
+    { tr: 'Liderlik, örnek olmaktır.', en: 'Leadership is leading by example.', author: 'Albert Schweitzer' },
+    { tr: 'Güç, kontrol etmek değil, yönlendirmektir.', en: 'Power is not control, but guidance.', author: 'Anonim' },
+    { tr: 'Disiplin, özgürlüğün köprüsüdür.', en: 'Discipline is the bridge to freedom.', author: 'Jim Rohn' },
+  ],
+  5: [ // The Guide (Rehber)
+    { tr: 'Öğretmen kapıyı açar, içeri girmek sana kalmış.', en: 'The teacher opens the door, but you must enter.', author: 'Çin Atasözü' },
+    { tr: 'Her karşılaşma bir derstir.', en: 'Every encounter is a lesson.', author: 'Anonim' },
+    { tr: 'Bilgi paylaşıldıkça çoğalır.', en: 'Knowledge grows when shared.', author: 'Türk Atasözü' },
+  ],
+  6: [ // The Lovers (Aşıklar)
+    { tr: 'Gerçek aşk, birbirine tutunmak değil, birlikte büyümektir.', en: 'True love is not holding on, but growing together.', author: 'Anonim' },
+    { tr: 'Kalbinle seç, aklınla yürü.', en: 'Choose with your heart, walk with your mind.', author: 'Anonim' },
+    { tr: 'Sevgi, iki ruhun tek bir bedende buluşmasıdır.', en: 'Love is two souls meeting in one body.', author: 'Aristoteles' },
+  ],
+  7: [ // The Chariot (Savaş Arabası)
+    { tr: 'Zafer, yoldan çıkmamaktır.', en: 'Victory is staying on the path.', author: 'Anonim' },
+    { tr: 'İrade, kaderi değiştirir.', en: 'Willpower changes destiny.', author: 'Anonim' },
+    { tr: 'Başarı, hazırlık ve fırsatın buluşmasıdır.', en: 'Success is where preparation meets opportunity.', author: 'Seneca' },
+  ],
+  8: [ // Strength (Güç)
+    { tr: 'Gerçek güç, öfkeyi kontrol etmektir.', en: 'True strength is controlling anger.', author: 'Buddha' },
+    { tr: 'Cesaret, korkunun yokluğu değil, korkuya rağmen ilerlemektir.', en: 'Courage is not the absence of fear, but moving forward despite it.', author: 'Nelson Mandela' },
+    { tr: 'İç güç, dış engelleri aşar.', en: 'Inner strength overcomes outer obstacles.', author: 'Anonim' },
+  ],
+  9: [ // The Hermit (Münzevi)
+    { tr: 'Yalnızlık, kendinle tanışma fırsatıdır.', en: 'Solitude is an opportunity to meet yourself.', author: 'Osho' },
+    { tr: 'Sessizlikte en yüksek sesler duyulur.', en: 'In silence, the loudest voices are heard.', author: 'Anonim' },
+    { tr: 'İçe dönüş, dışarıya açılmanın anahtarıdır.', en: 'Going inward is the key to opening outward.', author: 'Rumi' },
+  ],
+  10: [ // Wheel of Fortune (Kader Çarkı)
+    { tr: 'Değişim, hayatın tek sabiti.', en: 'Change is the only constant in life.', author: 'Heraklitos' },
+    { tr: 'Her düşüş, yeni bir yükselişin başlangıcıdır.', en: 'Every fall is the beginning of a new rise.', author: 'Anonim' },
+    { tr: 'Bugün zor, yarın daha güzel.', en: 'Today is hard, tomorrow is beautiful.', author: 'Türk Atasözü' },
+  ],
+  11: [ // Justice (Adalet)
+    { tr: 'Ne ekersen onu biçersin.', en: 'You reap what you sow.', author: 'Türk Atasözü' },
+    { tr: 'Adalet, herkese hak ettiğini vermektir.', en: 'Justice is giving everyone what they deserve.', author: 'Platon' },
+    { tr: 'Denge, iç huzurun temelidir.', en: 'Balance is the foundation of inner peace.', author: 'Anonim' },
+  ],
+  12: [ // The Hanged (Asılı Adam)
+    { tr: 'Bazen bırakmak, kazanmaktır.', en: 'Sometimes letting go is winning.', author: 'Anonim' },
+    { tr: 'Farklı bir bakış açısı, her şeyi değiştirir.', en: 'A different perspective changes everything.', author: 'Anonim' },
+    { tr: 'Sabır, acı bir tohum ama meyvesi tatlıdır.', en: 'Patience is bitter, but its fruit is sweet.', author: 'Aristoteles' },
+  ],
+  13: [ // Death (Ölüm - Dönüşüm)
+    { tr: 'Her son, yeni bir başlangıçtır.', en: 'Every ending is a new beginning.', author: 'Anonim' },
+    { tr: 'Dönüşüm, acı verebilir ama kaçınılmazdır.', en: 'Transformation may hurt, but it is inevitable.', author: 'Anonim' },
+    { tr: 'Eski yapraklar dökülmeden yenileri gelmez.', en: 'New leaves cannot come until the old ones fall.', author: 'Anonim' },
+  ],
+  14: [ // Temperance (Denge)
+    { tr: 'Aşırılık, her şeyin düşmanıdır.', en: 'Excess is the enemy of everything.', author: 'Anonim' },
+    { tr: 'Orta yol, en güvenli yoldur.', en: 'The middle path is the safest.', author: 'Buddha' },
+    { tr: 'Uyum, zıtların birleşmesidir.', en: 'Harmony is the union of opposites.', author: 'Anonim' },
+  ],
+  15: [ // The Shadow (Gölge)
+    { tr: 'Karanlığı kabul etmeden ışığı bulamazsın.', en: 'You cannot find light without accepting darkness.', author: 'Carl Jung' },
+    { tr: 'Korkularınla yüzleşmek, onları yenmektir.', en: 'Facing your fears is defeating them.', author: 'Anonim' },
+    { tr: 'Zincirler zihinsel, anahtar irade.', en: 'Chains are mental, the key is willpower.', author: 'Anonim' },
+  ],
+  16: [ // The Tower (Kule)
+    { tr: 'Yıkım, yeniden inşanın habercisidir.', en: 'Destruction heralds reconstruction.', author: 'Anonim' },
+    { tr: 'Şimşek çakınca, karanlık aydınlanır.', en: 'When lightning strikes, darkness is illuminated.', author: 'Anonim' },
+    { tr: 'Kriz, fırsatın başka adıdır.', en: 'Crisis is another name for opportunity.', author: 'Çin Atasözü' },
+  ],
+  17: [ // The Star (Yıldız)
+    { tr: 'Umut, en karanlık gecede bile parlar.', en: 'Hope shines even in the darkest night.', author: 'Anonim' },
+    { tr: 'Yıldızlara ulaşmak için ayaklarını yerden kesme.', en: 'To reach the stars, keep your feet on the ground.', author: 'Theodore Roosevelt' },
+    { tr: 'Her gece bir güne, her kış bir bahara gebedir.', en: 'Every night is pregnant with a day, every winter with spring.', author: 'Rumi' },
+  ],
+  18: [ // The Moon (Ay)
+    { tr: 'Gece en karanlık olduğunda, şafak en yakındır.', en: 'When the night is darkest, dawn is nearest.', author: 'Anonim' },
+    { tr: 'Sezgiler, aklın göremediğini görür.', en: 'Intuition sees what reason cannot.', author: 'Anonim' },
+    { tr: 'Gölgelerden korkmak yerine, ışığı ara.', en: 'Instead of fearing shadows, seek the light.', author: 'Anonim' },
+  ],
+  19: [ // The Sun (Güneş)
+    { tr: 'Güneş herkese eşit ışır.', en: 'The sun shines equally on everyone.', author: 'Anonim' },
+    { tr: 'Mutluluk, dışarıda değil içeride bulunur.', en: 'Happiness is found within, not without.', author: 'Buddha' },
+    { tr: 'Gülümsemek, güneşi çağırmaktır.', en: 'To smile is to summon the sun.', author: 'Türk Atasözü' },
+  ],
+  20: [ // Judgement (Yargı)
+    { tr: 'Kendini affetmeden başkalarını affedemezsin.', en: 'You cannot forgive others without forgiving yourself.', author: 'Anonim' },
+    { tr: 'Her gün yeniden doğmak için bir fırsattır.', en: 'Every day is an opportunity to be reborn.', author: 'Anonim' },
+    { tr: 'Geçmiş, gelecek için ders olmalı, hapishane değil.', en: 'The past should be a lesson, not a prison.', author: 'Anonim' },
+  ],
+  21: [ // The Crown (Taç)
+    { tr: 'Yolculuğun sonu, yeni bir başlangıçtır.', en: 'The end of the journey is a new beginning.', author: 'T.S. Eliot' },
+    { tr: 'Bütünlük, parçaların toplamından fazlasıdır.', en: 'The whole is greater than the sum of its parts.', author: 'Aristoteles' },
+    { tr: 'Taç giyen baş, sorumluluk taşır.', en: 'The crowned head carries responsibility.', author: 'Türk Atasözü' },
+  ],
+}
+
+export interface MotivationQuote {
+  tr: string
+  en: string
+  author: string
+}
+
 export type FortuneCategory = 'love' | 'career' | 'money' | 'health' | 'spirit'
 export type MessageTone = 'positive' | 'negative' | 'neutral'
 export type MessageType = 'general' | 'specific' | 'advice' | 'warning'
@@ -778,4 +953,129 @@ export function getReverseMessage(category: FortuneCategory, seed: number): Fort
   // Seed kullanarak deterministik seçim yap
   const index = seed % negativeMessages.length
   return negativeMessages[index]
+}
+
+// =============== AY FAZI SİSTEMİ ===============
+
+/**
+ * Gerçek ay fazını hesapla (synodic döngü kullanarak)
+ * Referans: 6 Ocak 2000 = Yeni Ay
+ */
+export function getMoonPhase(): MoonPhase {
+  const LUNAR_CYCLE = 29.53058867 // Synodic ay döngüsü (gün)
+  const KNOWN_NEW_MOON = new Date('2000-01-06T18:14:00Z').getTime()
+  const now = Date.now()
+  const daysSince = (now - KNOWN_NEW_MOON) / (1000 * 60 * 60 * 24)
+  const phase = (daysSince % LUNAR_CYCLE) / LUNAR_CYCLE
+
+  // 0-1 arası değeri 8 faza böl
+  const phaseIndex = Math.floor(phase * 8) % 8
+  return MOON_PHASES[phaseIndex]
+}
+
+// =============== ŞANSLI ELEMENTLER SİSTEMİ ===============
+
+/**
+ * Kart ve güne göre şanslı elementleri getir (deterministik)
+ */
+export function getLuckyElements(cardId: number, date: string): LuckyElements {
+  const seed1 = seededRandom(`${cardId}_${date}_lucky1`)
+  const seed2 = seededRandom(`${cardId}_${date}_lucky2`)
+  const seed3 = seededRandom(`${cardId}_${date}_lucky3`)
+
+  return {
+    numbers: [
+      Math.floor(seed1 * 49) + 1,
+      Math.floor(seed2 * 49) + 1,
+      Math.floor(seed3 * 49) + 1,
+    ].sort((a, b) => a - b), // Küçükten büyüğe sırala
+    color: LUCKY_COLORS[cardId % LUCKY_COLORS.length],
+    direction: DIRECTIONS[Math.floor(seed1 * 4)],
+  }
+}
+
+// =============== MOTİVASYON SÖZÜ SİSTEMİ ===============
+
+/**
+ * Kart ve güne göre günlük motivasyon sözünü getir
+ */
+export function getDailyQuote(cardId: number, date: string): MotivationQuote {
+  const quotes = MOTIVATION_QUOTES[cardId] || MOTIVATION_QUOTES[0]
+  const seed = seededRandom(`${cardId}_${date}_quote`)
+  const index = Math.floor(seed * quotes.length)
+  return quotes[index]
+}
+
+// =============== KART KOLEKSİYONU SİSTEMİ ===============
+
+/**
+ * Kart koleksiyonunu getir
+ */
+export function getCardCollection(): CardCollection {
+  if (typeof window === 'undefined') {
+    return {
+      seenCardIds: [],
+      firstSeenDates: {},
+      totalCards: 22,
+      collectionProgress: 0
+    }
+  }
+
+  const stored = localStorage.getItem(STORAGE_KEYS.CARD_COLLECTION)
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored)
+      return {
+        seenCardIds: parsed.seenCardIds || [],
+        firstSeenDates: parsed.firstSeenDates || {},
+        totalCards: 22,
+        collectionProgress: Math.round(((parsed.seenCardIds?.length || 0) / 22) * 100)
+      }
+    } catch {
+      // Invalid JSON, return empty collection
+    }
+  }
+
+  return {
+    seenCardIds: [],
+    firstSeenDates: {},
+    totalCards: 22,
+    collectionProgress: 0
+  }
+}
+
+/**
+ * Kart koleksiyonuna yeni kart ekle
+ * Aynı kart tekrar eklenmez
+ */
+export function addCardToCollection(cardId: number): CardCollection {
+  if (typeof window === 'undefined') {
+    return getCardCollection()
+  }
+
+  const collection = getCardCollection()
+  const today = getTurkeyDate()
+
+  // Kart zaten koleksiyonda mı?
+  if (!collection.seenCardIds.includes(cardId)) {
+    collection.seenCardIds.push(cardId)
+    collection.firstSeenDates[cardId] = today
+    collection.collectionProgress = Math.round((collection.seenCardIds.length / 22) * 100)
+
+    // Kaydet
+    localStorage.setItem(STORAGE_KEYS.CARD_COLLECTION, JSON.stringify({
+      seenCardIds: collection.seenCardIds,
+      firstSeenDates: collection.firstSeenDates
+    }))
+  }
+
+  return collection
+}
+
+/**
+ * Koleksiyon tamamlandı mı? (22 kart)
+ */
+export function isCollectionComplete(): boolean {
+  const collection = getCardCollection()
+  return collection.seenCardIds.length >= 22
 }
