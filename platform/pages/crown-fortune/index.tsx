@@ -758,7 +758,7 @@ const CrownFortunePage: NextPage = () => {
                 type="button"
                 className={styles['collection-badge']}
                 onClick={() => setIsCollectionModalOpen(true)}
-                title={language === 'tr' ? 'Kart Koleksiyonu' : 'Card Collection'}
+                title={t.crownFortune.collection.title}
               >
                 <BookOpen size={16} />
                 <span>{collection.seenCardIds.length}/22</span>
@@ -1001,10 +1001,10 @@ const CrownFortunePage: NextPage = () => {
                             e.stopPropagation()
                             handleShare('native')
                           }}
-                          aria-label={language === 'tr' ? 'Paylaş' : 'Share'}
+                          aria-label={t.crownFortune.share.button}
                         >
                           <Share2 size={16} />
-                          <span>{language === 'tr' ? 'Paylaş' : 'Share'}</span>
+                          <span>{t.crownFortune.share.button}</span>
                         </button>
                         <button
                           type="button"
@@ -1013,10 +1013,10 @@ const CrownFortunePage: NextPage = () => {
                             e.stopPropagation()
                             handleDownload()
                           }}
-                          aria-label={language === 'tr' ? 'İndir' : 'Download'}
+                          aria-label={t.crownFortune.share.download}
                         >
                           <Download size={16} />
-                          <span>{language === 'tr' ? 'İndir' : 'Download'}</span>
+                          <span>{t.crownFortune.share.download}</span>
                         </button>
                       </motion.div>
 
