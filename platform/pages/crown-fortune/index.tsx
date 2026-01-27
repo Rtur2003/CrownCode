@@ -556,6 +556,15 @@ const CrownFortunePage: NextPage = () => {
     }
 
     const cardDetails = getDestinyDetails(destiny)
+    if (!cardDetails.card) {
+      return {
+        details: null,
+        cardName: '',
+        catLabel: '',
+        energyText: '',
+        displayMessage: ''
+      }
+    }
     const name = language === 'tr' ? cardDetails.card.nameTr : cardDetails.card.name
     const category = t.crownFortune.categories[destiny.category as keyof typeof t.crownFortune.categories]
     const energy = t.crownFortune.energy[cardDetails.card.energy as keyof typeof t.crownFortune.energy]
