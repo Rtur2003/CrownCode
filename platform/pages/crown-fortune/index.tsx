@@ -26,7 +26,11 @@ import {
   Download,
   Share2,
   Flame,
-  TrendingUp
+  TrendingUp,
+  BookOpen,
+  Clover,
+  Quote,
+  Lock
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import BackgroundFloatingCards from '@/components/CrownFortune/BackgroundFloatingCards'
@@ -34,6 +38,7 @@ import { useLanguage } from '@/context/LanguageContext'
 import {
   FORTUNE_CATEGORIES,
   STORAGE_KEYS,
+  DESTINY_CARDS,
   getDailyDestiny,
   getDestinyDetails,
   getTimeUntilMidnightGMT3,
@@ -41,10 +46,19 @@ import {
   getReverseMessage,
   getStreakData,
   updateStreak,
+  getMoonPhase,
+  getLuckyElements,
+  getDailyQuote,
+  getCardCollection,
+  addCardToCollection,
   type FortuneCategory,
   type DailyDestiny,
   type FortuneMessage,
-  type StreakData
+  type StreakData,
+  type MoonPhase,
+  type LuckyElements,
+  type CardCollection,
+  type MotivationQuote
 } from '@/data/destiny'
 import styles from '@/styles/pages/crown-fortune.module.css'
 
