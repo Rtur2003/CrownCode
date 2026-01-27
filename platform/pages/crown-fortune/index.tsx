@@ -1030,7 +1030,7 @@ const CrownFortunePage: NextPage = () => {
                         >
                           <div className={styles['lucky-numbers']}>
                             <Clover size={14} />
-                            <span>{language === 'tr' ? 'Şanslı Sayılar:' : 'Lucky Numbers:'}</span>
+                            <span>{t.crownFortune.lucky.numbers}</span>
                             <strong>{luckyElements.numbers.join(', ')}</strong>
                           </div>
                           <div className={styles['lucky-color']}>
