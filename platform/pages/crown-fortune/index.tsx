@@ -1050,8 +1050,8 @@ const CrownFortunePage: NextPage = () => {
                             <span>{language === 'tr' ? luckyElements.color.name : luckyElements.color.nameEn}</span>
                           </div>
                           <div className={styles['lucky-direction']}>
-                            <span>{luckyElements.direction.symbol}</span>
-                            <span>{language === 'tr' ? luckyElements.direction.name : luckyElements.direction.nameEn}</span>
+                            <span>{luckyElements?.direction?.symbol || '→'}</span>
+                            <span>{language === 'tr' ? luckyElements?.direction?.name : luckyElements?.direction?.nameEn}</span>
                           </div>
                         </motion.div>
                       )}
