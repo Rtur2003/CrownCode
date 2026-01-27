@@ -557,6 +557,32 @@
     },
     "modal": {
       "close": "Close"
+    },
+    "disclaimer": "This application is for entertainment purposes only.",
+    "share": {
+      "button": "Share",
+      "download": "Download",
+      "title": "Crown Destiny - My Daily Fortune"
+    },
+    "streak": {
+      "daysTo": "days to"
+    },
+    "moonPhase": {
+      "energySuffix": "energy"
+    },
+    "lucky": {
+      "numbers": "Lucky Numbers:",
+      "color": "Lucky Color:",
+      "direction": "Direction:"
+    },
+    "collection": {
+      "title": "Card Collection",
+      "complete": "Collection Complete!",
+      "notSeen": "Not seen yet",
+      "close": "Close"
+    },
+    "quote": {
+      "title": "Daily Quote"
     }
   },
   "crownVote": {
