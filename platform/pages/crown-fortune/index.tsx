@@ -881,7 +881,7 @@ const CrownFortunePage: NextPage = () => {
                     <div className={`${styles['card-face']} ${styles['card-front']} ${isReversed ? styles['card-front-reversed'] : ''}`}>
                       <div className={styles['card-background']}>
                         <Image
-                          src={details.card.image}
+                          src={details?.card?.image || '/tarot/the-fool.png'}
                           alt={cardName}
                           fill
                           className={styles['card-bg-image']}
@@ -1113,7 +1113,7 @@ const CrownFortunePage: NextPage = () => {
                   >
                     <div className={styles['card-modal-image-wrapper']}>
                       <Image
-                        src={details.card.image}
+                        src={details?.card?.image || '/tarot/the-fool.png'}
                         alt={cardName}
                         fill
                         className={`${styles['card-modal-image']} ${isReversed ? styles['card-modal-image-reversed'] : ''}`}
@@ -1123,7 +1123,7 @@ const CrownFortunePage: NextPage = () => {
 
                       <div className={styles['card-modal-info']}>
                         <div className={styles['card-modal-title']}>
-                          <span className={styles['card-modal-symbol']}>{details.card.symbol}</span>
+                          <span className={styles['card-modal-symbol']}>{details?.card?.symbol || '✨'}</span>
                           <h2 className={styles['card-modal-name']}>
                              {cardName} {isReversed && t.crownFortune.card.reversed}
                           </h2>
@@ -1211,9 +1211,9 @@ const CrownFortunePage: NextPage = () => {
                         >
                           {isSeen ? (
                             <>
-                              <span className={styles['card-symbol']}>{card.symbol}</span>
+                              <span className={styles['card-symbol']}>{card?.symbol || '?'}</span>
                               <span className={styles['card-name-small']}>
-                                {language === 'tr' ? card.nameTr : card.name}
+                                {language === 'tr' ? card?.nameTr : card?.name}
                               </span>
                             </>
                           ) : (
