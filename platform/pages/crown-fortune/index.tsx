@@ -1066,8 +1066,8 @@ const CrownFortunePage: NextPage = () => {
                         >
                           <Quote size={14} className={styles['quote-icon']} />
                           <blockquote>
-                            <p>{language === 'tr' ? dailyQuote.tr : dailyQuote.en}</p>
-                            <cite>— {dailyQuote.author}</cite>
+                            <p>{language === 'tr' ? dailyQuote?.tr : dailyQuote?.en}</p>
+                            <cite>— {dailyQuote?.author || 'Unknown'}</cite>
                           </blockquote>
                         </motion.div>
                       )}
