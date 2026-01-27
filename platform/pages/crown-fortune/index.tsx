@@ -194,6 +194,24 @@ const CrownFortunePage: NextPage = () => {
     daysToNext: 0
   })
 
+  // Moon phase state
+  const [moonPhase, setMoonPhase] = useState<MoonPhase | null>(null)
+
+  // Lucky elements state
+  const [luckyElements, setLuckyElements] = useState<LuckyElements | null>(null)
+
+  // Daily quote state
+  const [dailyQuote, setDailyQuote] = useState<MotivationQuote | null>(null)
+
+  // Card collection state
+  const [collection, setCollection] = useState<CardCollection>({
+    seenCardIds: [],
+    firstSeenDates: {},
+    totalCards: 22,
+    collectionProgress: 0
+  })
+  const [isCollectionModalOpen, setIsCollectionModalOpen] = useState(false)
+
   // Modal ESC key handler + body scroll lock
   useEffect(() => {
     if (!isModalOpen) {
