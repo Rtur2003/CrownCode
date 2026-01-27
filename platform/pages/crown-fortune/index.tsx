@@ -489,6 +489,10 @@ const CrownFortunePage: NextPage = () => {
         const newStreak = updateStreak()
         setStreak(newStreak)
 
+        // Add card to collection
+        const newCollection = addCardToCollection(destiny.cardId)
+        setCollection(newCollection)
+
         // Celebration effects
         triggerHaptic(HAPTIC.SUCCESS)
         playSuccess()
