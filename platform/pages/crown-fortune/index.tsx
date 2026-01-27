@@ -1040,14 +1040,14 @@ const CrownFortunePage: NextPage = () => {
                           <div className={styles['lucky-numbers']}>
                             <Clover size={14} />
                             <span>{t.crownFortune.lucky.numbers}</span>
-                            <strong>{luckyElements.numbers.join(', ')}</strong>
+                            <strong>{luckyElements?.numbers?.join(', ') || '7, 14, 21'}</strong>
                           </div>
                           <div className={styles['lucky-color']}>
                             <span
                               className={styles['color-dot']}
-                              style={{ backgroundColor: luckyElements.color.hex }}
+                              style={{ backgroundColor: luckyElements?.color?.hex || '#FFD700' }}
                             />
-                            <span>{language === 'tr' ? luckyElements.color.name : luckyElements.color.nameEn}</span>
+                            <span>{language === 'tr' ? luckyElements?.color?.name : luckyElements?.color?.nameEn}</span>
                           </div>
                           <div className={styles['lucky-direction']}>
                             <span>{luckyElements?.direction?.symbol || '→'}</span>
