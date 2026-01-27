@@ -780,9 +780,9 @@ export function getDailyDestiny(): DailyDestiny {
  * Kader detaylarını getir
  */
 export function getDestinyDetails(destiny: DailyDestiny) {
-  const card = DESTINY_CARDS[destiny.cardId]
-  const category = FORTUNE_CATEGORIES.find(c => c.key === destiny.category)!
-  const messages = FORTUNE_MESSAGES[destiny.category]
+  const card = DESTINY_CARDS[destiny.cardId] || DESTINY_CARDS[0]
+  const category = FORTUNE_CATEGORIES.find(c => c.key === destiny.category) || FORTUNE_CATEGORIES[0]
+  const messages = FORTUNE_MESSAGES[destiny.category] || FORTUNE_MESSAGES.love
   const message = messages[destiny.messageIndex] || messages[0]
 
   return {
