@@ -1022,6 +1022,49 @@ const CrownFortunePage: NextPage = () => {
                           <span>{language === 'tr' ? 'İndir' : 'Download'}</span>
                         </button>
                       </motion.div>
+
+                      {/* Lucky Elements */}
+                      {luckyElements && (
+                        <motion.div
+                          className={styles['lucky-elements']}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 2.5 }}
+                        >
+                          <div className={styles['lucky-numbers']}>
+                            <Clover size={14} />
+                            <span>{language === 'tr' ? 'Şanslı Sayılar:' : 'Lucky Numbers:'}</span>
+                            <strong>{luckyElements.numbers.join(', ')}</strong>
+                          </div>
+                          <div className={styles['lucky-color']}>
+                            <span
+                              className={styles['color-dot']}
+                              style={{ backgroundColor: luckyElements.color.hex }}
+                            />
+                            <span>{language === 'tr' ? luckyElements.color.name : luckyElements.color.nameEn}</span>
+                          </div>
+                          <div className={styles['lucky-direction']}>
+                            <span>{luckyElements.direction.symbol}</span>
+                            <span>{language === 'tr' ? luckyElements.direction.name : luckyElements.direction.nameEn}</span>
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {/* Daily Quote */}
+                      {dailyQuote && (
+                        <motion.div
+                          className={styles['daily-quote']}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 3 }}
+                        >
+                          <Quote size={14} className={styles['quote-icon']} />
+                          <blockquote>
+                            <p>{language === 'tr' ? dailyQuote.tr : dailyQuote.en}</p>
+                            <cite>— {dailyQuote.author}</cite>
+                          </blockquote>
+                        </motion.div>
+                      )}
                     </div>
                   )}
                 </div>
