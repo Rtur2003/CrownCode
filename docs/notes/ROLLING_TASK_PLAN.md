@@ -43,14 +43,14 @@
 
 - [x] Kullanilmayan hook/bilesen dosyalarini tespit et ve kararla (usePWA, useLazyLoad, usePerformanceMonitor, MobileNavigation). → Hepsi silindi (hicbiri import edilmiyordu).
 - [x] Eski/guncel olmayan dokumanlari temizle (TECHNOLOGY_STACK_2025.md icerik kontrolu). → DevForge/Express/PostgreSQL/Redis referanslari temizlendi, FastAPI/HuggingFace Spaces ile guncellendi.
-- [x] Frontend icin minimum smoke testleri ekle (en az 3 sayfa render testi). → jest.config.js, jest.setup.ts, __tests__/pages/smoke.test.tsx (6 test, 3 sayfa).
+- [x] Frontend icin minimum smoke testleri ekle (en az 3 sayfa render testi). → jest.config.js, jest.setup.ts, `__tests__/pages/smoke.test.tsx` (6 test, 3 sayfa).
 - [x] Backend icin tests/ altinda route bazli temel testleri baslat. → conftest.py, test_health.py, test_youtube.py, test_commend.py (7 test).
 
-### P3 - Dusuk (Iyilestirme) - KISMI TAMAMLANDI
+### P3 - Dusuk (Iyilestirme) - TAMAMLANDI
 
-- [ ] Search sayfasini CSS module ile yeniden stil ver (su an inline style kullaniliyor).
+- [x] Search sayfasini CSS module ile yeniden stil ver. → 20 inline style kaldirildi, `search.module.css` olusturuldu, hover efektleri CSS'e tasindi.
 - [x] `platform/data/` icinde component dosyalari var (DestinyBackground.tsx, useDestinySystem.ts) - uygun konuma tasi. → Kullanilmiyor, silindi (tarot.ts dahil). destiny.ts ve dreams.ts aktif olarak kullaniliyor, yerinde kaldi.
-- [ ] `next.config.js` icinde `eslint.ignoreDuringBuilds: true` kapatilip gercek lint kontrolu acilsin mi degerlendirmesi.
+- [x] `next.config.js` icinde `eslint.ignoreDuringBuilds: true` kaldirildi. → ESLint artik build sirasinda calisiyor, lint+tsc+build temiz gecti.
 
 ### Ek Gorevler (3 Mart 2026)
 
@@ -59,14 +59,19 @@
 - [x] docs/SECURITY_NOTES.md olusturuldu (credential rotation rehberi).
 - [x] Teknoloji migration plani olusturuldu: docs/technical/MIGRATION_PLAN_2026.md (Next.js 15, React 19, TS 5.8, Node.js 22).
 
+### Master Execution Prompt Gorevleri (3 Mart 2026) - TAMAMLANDI
+
+- [x] [P0-1] `eslint.ignoreDuringBuilds: true` kaldirildi. lint+tsc+build temiz gecti.
+- [x] [P0-2] Eski marka/mimari izleri temizlendi: `.env.example` tamamen yeniden yazildi (DevForge → CrownCode), `PLATFORM_GITHUB_CONFIG.md` ve `CODEOWNERS` guncellendi.
+- [x] [P1-3] Search sayfasi inline style → CSS Module refactor. 20 inline style kaldirildi, `search.module.css` olusturuldu.
+- [x] [P1-4] Python runtime standardizasyonu: `requires-python >= 3.11` eklendi, pytest filterwarnings eklendi (0 warning).
+- [x] [P2-5] Guvenlik operasyonu dokumantasyonu: SECURITY_NOTES.md genisletildi (client_secret.json/token.json proseduru, repo-disi secret yonetimi, rotation schedule, prevention controls).
+
 ---
 
 ## Siradaki Adim
 
-P3'ten kalan gorevler:
-
-1. Search sayfasi CSS module refactor
-2. `eslint.ignoreDuringBuilds` degerlendirmesi
+Tum gorevler tamamlandi. Yeni tur icin gorev listesi olusturulabilir.
 
 ## Tamamlananlar (Log)
 
@@ -81,3 +86,9 @@ P3'ten kalan gorevler:
 - [x] 2026-03-03: Test altyapisi: Frontend 6 smoke test (Jest) + Backend 7 pytest testi eklendi.
 - [x] 2026-03-03: Olu kod temizligi: 8 dosya silindi (usePWA, useLazyLoad, usePerformanceMonitor, MobileNavigation, DestinyBackground, destiny-background.module.css, useDestinySystem, tarot).
 - [x] 2026-03-03: Migration plani olusturuldu: MIGRATION_PLAN_2026.md (Next.js 15 + React 19, TS 5.8, Node.js 22, App Router degerlendirmesi).
+- [x] 2026-03-03: Crown Fortune bug fix: indirilen PNG aynalama sorunu cozuldu (html-to-image 3D transform flatten) + sans sayilari/renkler cakisma duzeltildi (card-actions konumu).
+- [x] 2026-03-03: [P0-1] eslint.ignoreDuringBuilds kaldirildi, ESLint artik build'de calisiyor.
+- [x] 2026-03-03: [P0-2] .env.example tamamen yeniden yazildi (DevForge → CrownCode/FastAPI/HF Spaces). PLATFORM_GITHUB_CONFIG.md + CODEOWNERS guncellendi.
+- [x] 2026-03-03: [P1-3] Search sayfasi 20 inline style → CSS Module refactor (search.module.css).
+- [x] 2026-03-03: [P1-4] Python runtime: requires-python >= 3.11, pytest filterwarnings (11 → 0 warning).
+- [x] 2026-03-03: [P2-5] SECURITY_NOTES.md genisletildi: credential envanteri, client_secret/token.json proseduru, repo-disi secret yonetimi (local/HF/CI), rotation schedule, prevention controls.
