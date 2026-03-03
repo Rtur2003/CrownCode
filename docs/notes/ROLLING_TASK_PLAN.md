@@ -14,7 +14,7 @@
 
 ## Tur Durumu
 
-- Son guncelleme: **24 Subat 2026**
+- Son guncelleme: **3 Mart 2026**
 - Mod: Adim adim ilerleme + tamamlandi isaretleme
 
 ---
@@ -39,24 +39,34 @@
 - [x] privacy.tsx: encoding bozulmasi giderildi + `privacy` namespace ile locale'a tasindi.
 - [x] terms.tsx: encoding bozulmasi giderildi + `terms` namespace ile locale'a tasindi.
 
-### P2 - Orta (Temizlik ve Kalite)
+### P2 - Orta (Temizlik ve Kalite) - TAMAMLANDI
 
-- [ ] Kullanilmayan hook/bilesen dosyalarini tespit et ve kararla (usePWA, useLazyLoad, usePerformanceMonitor, MobileNavigation).
-- [ ] Eski/guncel olmayan dokumanlari temizle (TECHNOLOGY_STACK_2025.md icerik kontrolu).
-- [ ] Frontend icin minimum smoke testleri ekle (en az 3 sayfa render testi).
-- [ ] Backend icin tests/ altinda route bazli temel testleri baslat.
+- [x] Kullanilmayan hook/bilesen dosyalarini tespit et ve kararla (usePWA, useLazyLoad, usePerformanceMonitor, MobileNavigation). → Hepsi silindi (hicbiri import edilmiyordu).
+- [x] Eski/guncel olmayan dokumanlari temizle (TECHNOLOGY_STACK_2025.md icerik kontrolu). → DevForge/Express/PostgreSQL/Redis referanslari temizlendi, FastAPI/HuggingFace Spaces ile guncellendi.
+- [x] Frontend icin minimum smoke testleri ekle (en az 3 sayfa render testi). → jest.config.js, jest.setup.ts, __tests__/pages/smoke.test.tsx (6 test, 3 sayfa).
+- [x] Backend icin tests/ altinda route bazli temel testleri baslat. → conftest.py, test_health.py, test_youtube.py, test_commend.py (7 test).
 
-### P3 - Dusuk (Iyilestirme)
+### P3 - Dusuk (Iyilestirme) - KISMI TAMAMLANDI
 
 - [ ] Search sayfasini CSS module ile yeniden stil ver (su an inline style kullaniliyor).
-- [ ] `platform/data/` icinde component dosyalari var (DestinyBackground.tsx, useDestinySystem.ts) - uygun konuma tasi.
+- [x] `platform/data/` icinde component dosyalari var (DestinyBackground.tsx, useDestinySystem.ts) - uygun konuma tasi. → Kullanilmiyor, silindi (tarot.ts dahil). destiny.ts ve dreams.ts aktif olarak kullaniliyor, yerinde kaldi.
 - [ ] `next.config.js` icinde `eslint.ignoreDuringBuilds: true` kapatilip gercek lint kontrolu acilsin mi degerlendirmesi.
+
+### Ek Gorevler (3 Mart 2026)
+
+- [x] Merge conflict marker'lari temizlendi (4 dosya: ai-music-detection/index.tsx, ai-detection.module.css, en.json, tr.json).
+- [x] Guvenlik taramasi: .env.example dosyalarindaki gercek API anahtarlari/secret'lar placeholder ile degistirildi.
+- [x] docs/SECURITY_NOTES.md olusturuldu (credential rotation rehberi).
+- [x] Teknoloji migration plani olusturuldu: docs/technical/MIGRATION_PLAN_2026.md (Next.js 15, React 19, TS 5.8, Node.js 22).
 
 ---
 
 ## Siradaki Adim
 
-P2'den devam: Kullanilmayan hook/bilesen tespiti ve temizlik.
+P3'ten kalan gorevler:
+
+1. Search sayfasi CSS module refactor
+2. `eslint.ignoreDuringBuilds` degerlendirmesi
 
 ## Tamamlananlar (Log)
 
@@ -65,3 +75,9 @@ P2'den devam: Kullanilmayan hook/bilesen tespiti ve temizlik.
 - [x] 2026-02-24: Yeni locale namespace'leri eklendi: `crownDreams`, `notFound`, `externalLink`, `searchPage`, `privacy`, `terms`.
 - [x] 2026-02-24: Search sayfasi aranabilir icerik 3 -> 7 proje (tum aktif projeler).
 - [x] 2026-02-24: next.config.js `i.ytimg.com` remote pattern eklendi (VideoPreview YouTube thumbnail destegi).
+- [x] 2026-03-03: Merge conflict marker'lari temizlendi (4 dosya: index.tsx, ai-detection.module.css, en.json, tr.json).
+- [x] 2026-03-03: Guvenlik taramasi: .env.example'lardaki gercek secret'lar placeholder ile degistirildi + SECURITY_NOTES.md olusturuldu.
+- [x] 2026-03-03: Dokumantasyon hizalamasi: DevForge/Express/PostgreSQL/Redis referanslari temizlendi (README, CHANGELOG, TECHNOLOGY_STACK, MOBILE_RESPONSIVE_DESIGN).
+- [x] 2026-03-03: Test altyapisi: Frontend 6 smoke test (Jest) + Backend 7 pytest testi eklendi.
+- [x] 2026-03-03: Olu kod temizligi: 8 dosya silindi (usePWA, useLazyLoad, usePerformanceMonitor, MobileNavigation, DestinyBackground, destiny-background.module.css, useDestinySystem, tarot).
+- [x] 2026-03-03: Migration plani olusturuldu: MIGRATION_PLAN_2026.md (Next.js 15 + React 19, TS 5.8, Node.js 22, App Router degerlendirmesi).
