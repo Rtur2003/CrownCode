@@ -34,57 +34,46 @@ jest.mock('next/head', () => {
   }
 })
 
-// Mock framer-motion to avoid animation issues in tests
-jest.mock('framer-motion', () => ({
-  motion: {
-    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => (
-      <div {...filterDomProps(props)}>{children}</div>
-    ),
-    h1: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => (
-      <h1 {...filterDomProps(props)}>{children}</h1>
-    ),
-    p: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => (
-      <p {...filterDomProps(props)}>{children}</p>
-    ),
-    span: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => (
-      <span {...filterDomProps(props)}>{children}</span>
-    ),
-    button: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => (
-      <button {...filterDomProps(props)}>{children}</button>
-    ),
-    a: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => (
-      <a {...filterDomProps(props)}>{children}</a>
-    ),
-    ul: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => (
-      <ul {...filterDomProps(props)}>{children}</ul>
-    ),
-    li: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => (
-      <li {...filterDomProps(props)}>{children}</li>
-    ),
-  },
-  AnimatePresence: ({ children }: React.PropsWithChildren) => <>{children}</>,
-  useAnimation: () => ({ start: jest.fn() }),
-  useInView: () => true,
-}))
+// Non-DOM prop list to filter out from framer-motion
+const MOTION_PROPS = new Set([
+  'initial', 'animate', 'exit', 'transition', 'whileHover', 'whileTap',
+  'whileInView', 'viewport', 'variants', 'layout', 'layoutId', 'onAnimationComplete',
+  'whileFocus', 'whileDrag', 'drag', 'dragConstraints', 'dragElastic',
+])
 
-// Filter out non-DOM props from framer-motion
-function filterDomProps(props: Record<string, unknown>) {
+function filterProps(props: Record<string, unknown>) {
   const filtered: Record<string, unknown> = {}
   for (const key of Object.keys(props)) {
-    if (
-      !['initial', 'animate', 'exit', 'transition', 'whileHover', 'whileTap', 'whileInView', 'viewport', 'variants', 'layout', 'layoutId'].includes(key)
-    ) {
+    if (!MOTION_PROPS.has(key)) {
       filtered[key] = props[key]
     }
   }
   return filtered
 }
 
+// Create a proxy-based motion mock that works for any HTML element
+const motionHandler: ProxyHandler<object> = {
+  get(_target, prop: string) {
+    return function MotionComponent({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) {
+      return React.createElement(prop, filterProps(props), children)
+    }
+  },
+}
+
+jest.mock('framer-motion', () => ({
+  motion: new Proxy({}, motionHandler),
+  AnimatePresence: ({ children }: React.PropsWithChildren) => <>{children}</>,
+  useAnimation: () => ({ start: jest.fn() }),
+  useInView: () => true,
+}))
+
+// Shared variable for motion handler
+const motionHandlerRef = motionHandler
+
 function renderWithProviders(ui: React.ReactElement) {
   return render(<LanguageProvider>{ui}</LanguageProvider>)
 }
 
-// Lazy import pages to avoid module-level errors
 describe('Page Smoke Tests', () => {
   describe('Home Page (/)', () => {
     it('renders without crashing', async () => {
