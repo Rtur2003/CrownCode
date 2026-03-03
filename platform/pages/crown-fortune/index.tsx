@@ -633,11 +633,46 @@ const CrownFortunePage: NextPage = () => {
       // Dynamic import for code splitting
       const { toPng } = await import('html-to-image')
 
-      const dataUrl = await toPng(cardRef.current, {
+      // Flatten 3D transforms – html-to-image cannot handle rotateY correctly
+      const container = cardRef.current
+      const flipper = container.querySelector(`.${styles['card-flipper']}`) as HTMLElement | null
+      const front = container.querySelector(`.${styles['card-front']}`) as HTMLElement | null
+      const back = container.querySelector(`.${styles['card-back']}`) as HTMLElement | null
+
+      container.style.setProperty('perspective', 'none', 'important')
+      if (flipper) {
+        flipper.style.setProperty('transform', 'none', 'important')
+        flipper.style.setProperty('transform-style', 'flat', 'important')
+      }
+      if (front) {
+        front.style.setProperty('transform', 'none', 'important')
+        front.style.setProperty('backface-visibility', 'visible', 'important')
+        front.style.setProperty('position', 'relative', 'important')
+      }
+      if (back) {
+        back.style.setProperty('display', 'none', 'important')
+      }
+
+      const dataUrl = await toPng(container, {
         quality: 1,
         pixelRatio: 2,
-        backgroundColor: '#1a1a2e',
+        backgroundColor: isReversed ? '#1a0a0a' : '#1a1a2e',
       })
+
+      // Restore inline overrides so framer-motion takes back control
+      container.style.removeProperty('perspective')
+      if (flipper) {
+        flipper.style.removeProperty('transform')
+        flipper.style.removeProperty('transform-style')
+      }
+      if (front) {
+        front.style.removeProperty('transform')
+        front.style.removeProperty('backface-visibility')
+        front.style.removeProperty('position')
+      }
+      if (back) {
+        back.style.removeProperty('display')
+      }
 
       const link = document.createElement('a')
       link.download = `crown-destiny-${destiny?.date || 'card'}.png`
@@ -649,7 +684,7 @@ const CrownFortunePage: NextPage = () => {
       // Error generating image
       console.error('Failed to generate card image')
     }
-  }, [details, destiny])
+  }, [details, destiny, isReversed])
 
   // Loading state - after all hooks
   if (!mounted || !destiny || !details) {
@@ -939,9 +974,10 @@ const CrownFortunePage: NextPage = () => {
                       </div>
                     </div>
                   </motion.div>
+                </div>
 
-                  {isCardFlipped && (
-                    <div className={styles['card-actions']}>
+                {isCardFlipped && (
+                  <div className={styles['card-actions']}>
                       <motion.div
                         className={styles['card-click-hint']}
                         initial={{ opacity: 0 }}
