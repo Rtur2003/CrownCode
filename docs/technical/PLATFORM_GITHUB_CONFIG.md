@@ -1,4 +1,4 @@
-# 🔧 DevForge Suite - Ana Platform GitHub Yapılandırması
+# 🔧 CrownCode Platform - Ana Platform GitHub Yapılandırması
 
 ## 📁 Repository Yapısı
 
@@ -317,7 +317,7 @@ jobs:
 ```yaml
 # .github/ISSUE_TEMPLATE/bug_report.yml
 name: 🐛 Bug Report
-description: Report a bug to help us improve DevForge Suite
+description: Report a bug to help us improve CrownCode Platform
 title: '[BUG] '
 labels: ['bug', 'needs-triage']
 assignees: ['Rtur2003']
@@ -408,7 +408,7 @@ body:
 ```yaml
 # .github/ISSUE_TEMPLATE/feature_request.yml
 name: ✨ Feature Request
-description: Suggest a new feature for DevForge Suite
+description: Suggest a new feature for CrownCode Platform
 title: '[FEATURE] '
 labels: ['enhancement', 'needs-discussion']
 
@@ -473,7 +473,7 @@ body:
 ```yaml
 # .github/ISSUE_TEMPLATE/project_proposal.yml
 name: 🚀 New Project Proposal
-description: Propose a new project for DevForge Suite
+description: Propose a new project for CrownCode Platform
 title: '[PROJECT] '
 labels: ['new-project', 'needs-discussion']
 
@@ -748,4 +748,4 @@ Labels:
     color: "bfd4f2"
 ```
 
-Bu GitHub yapılandırması ile DevForge Suite platformu profesyonel bir şekilde yönetilebilecek! 🚀🔧
+Bu GitHub yapılandırması ile CrownCode Platform platformu profesyonel bir şekilde yönetilebilecek! 🚀🔧
