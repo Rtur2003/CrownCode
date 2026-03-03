@@ -83,5 +83,8 @@
   },
   "workspaces": [
     "platform"
-  ]
+  ],
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1"
+  }
 }
