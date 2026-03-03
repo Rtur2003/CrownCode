@@ -96,13 +96,8 @@
 }
 
 .demo-warning-card {
-<<<<<<< Updated upstream
   background: rgba(201, 147, 71, 0.12);
   border: 1px solid rgba(201, 147, 71, 0.35);
-=======
-  background: rgba(249, 115, 22, 0.08);
-  border: 1px solid rgba(249, 115, 22, 0.25);
->>>>>>> Stashed changes
   border-radius: 1rem;
   padding: 1.5rem;
   max-width: 720px;
@@ -117,30 +112,18 @@
 }
 
 .warning-icon {
-<<<<<<< Updated upstream
   color: var(--color-warning);
-=======
-  color: #f97316;
->>>>>>> Stashed changes
 }
 
 .warning-title {
   font-size: 1rem;
   font-weight: 700;
-<<<<<<< Updated upstream
   color: var(--color-warning);
-=======
-  color: #f97316;
->>>>>>> Stashed changes
 }
 
 .warning-content p {
   margin: 0.4rem 0;
-<<<<<<< Updated upstream
   color: var(--color-text-secondary);
-=======
-  color: #cbd5f5;
->>>>>>> Stashed changes
   line-height: 1.5;
 }
 
@@ -173,10 +156,7 @@
    PANELS
    ========================================================================= */
 
-<<<<<<< Updated upstream
 .upload-section h2,
-=======
->>>>>>> Stashed changes
 .url-section h2,
 .pipeline-section h2 {
   font-size: 1.5rem;
@@ -185,7 +165,6 @@
   color: var(--color-text-primary);
 }
 
-<<<<<<< Updated upstream
 /* =========================================================================
    INPUT SOURCES
    ========================================================================= */
@@ -299,8 +278,6 @@
   font-weight: 500;
 }
 
-=======
->>>>>>> Stashed changes
 /* =========================================================================
    URL SECTION
    ========================================================================= */
@@ -392,59 +369,6 @@
 .pipeline-note {
   margin-top: 1rem;
   color: var(--color-text-muted);
-  font-size: 0.875rem;
-  line-height: 1.5;
-}
-
-/* =========================================================================
-   PIPELINE SECTION
-   ========================================================================= */
-
-.pipeline-section {
-  background: rgba(30, 41, 59, 0.6);
-  border: 1px solid rgba(56, 189, 248, 0.2);
-  border-radius: 1rem;
-  padding: 2rem;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-}
-
-.pipeline-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 0.75rem;
-}
-
-.pipeline-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  color: #cbd5f5;
-  font-size: 0.95rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(56, 189, 248, 0.1);
-}
-
-.pipeline-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.pipeline-tag {
-  font-size: 0.75rem;
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
-  background: rgba(56, 189, 248, 0.12);
-  color: #38bdf8;
-  font-weight: 600;
-}
-
-.pipeline-note {
-  margin-top: 1rem;
-  color: #94a3b8;
   font-size: 0.875rem;
   line-height: 1.5;
 }
@@ -558,11 +482,6 @@
   margin: 0 auto;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 .processing-state h3 {
   font-size: 1.5rem;
   font-weight: 700;
@@ -631,7 +550,7 @@
   background: rgba(21, 17, 14, 0.85);
   border: 1px solid rgba(201, 147, 71, 0.4);
   border-radius: 1rem;
-  padding: 2rem; /* 112px top padding (80px header + 32px spacing) */
+  padding: 2rem;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   margin-top: 2rem;
@@ -728,30 +647,6 @@
   margin-top: 0.5rem;
 }
 
-.result-source {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(56, 189, 248, 0.15);
-  border-radius: 0.75rem;
-  padding: 1rem;
-  margin-bottom: 2rem;
-}
-
-.result-source-item {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  color: #cbd5f5;
-  font-size: 0.875rem;
-}
-
-.result-source-item span:first-child {
-  color: #94a3b8;
-}
-
-.result-source-item + .result-source-item {
-  margin-top: 0.5rem;
-}
-
 .artificial-indicators {
   margin-bottom: 2rem;
 }
@@ -833,7 +728,6 @@
   .input-sources {
     align-items: center;
     text-align: center;
-    align-items: center;
   }
 
   .source-chips {
