@@ -5,16 +5,7 @@ const isStaticExport = deploymentTarget === 'static'
 const nextConfig = {
   reactStrictMode: true,
   
-  // ESLint configuration
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
-  },
-
-  experimental: {
-    // Using pages directory for now
-  },
+  // ESLint now runs during builds (ignoreDuringBuilds removed).
 
   // Image optimization
   images: {

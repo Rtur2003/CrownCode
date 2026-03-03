@@ -3,7 +3,7 @@
 ## 📁 Repository Yapısı
 
 ```
-DevForge-Suite-with-Rthur/
+CrownCode/
 ├── 📋 README.md                        # Ana platform README
 ├── 📜 LICENSE                          # MIT License
 ├── 🔐 SECURITY.md                      # Güvenlik politikaları
@@ -238,7 +238,7 @@ jobs:
       - name: Update deployment status
         run: |
           echo "✅ Production deployment successful!"
-          echo "🌐 URL: https://devforge-suite.com"
+          echo "🌐 URL: https://hasanarthuraltuntas.xyz"
 ```
 
 ### 🔧 Project-Specific CI/CD
