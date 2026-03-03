@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Crown Commend Hook
  * AI-powered YouTube comment generation
  */
@@ -47,9 +47,29 @@ export interface CommendError {
   message: string
 }
 
+export interface CommendMessages {
+  invalidUrl: string
+  apiNotConfigured: string
+  unknownError: string
+  failedToGenerate: string
+  noCommentToPost: string
+  alreadyCommented: string
+  failedToPost: string
+}
+
+const DEFAULT_MESSAGES: CommendMessages = {
+  invalidUrl: 'Please enter a valid YouTube URL',
+  apiNotConfigured: 'API not configured',
+  unknownError: 'Unknown error',
+  failedToGenerate: 'Failed to generate comment',
+  noCommentToPost: 'No comment to post',
+  alreadyCommented: 'Already commented',
+  failedToPost: 'Failed to post comment'
+}
+
 const YOUTUBE_URL_REGEX = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|shorts\/)|youtu\.be\/)[a-zA-Z0-9_-]{11}/
 
-export const useCommend = () => {
+export const useCommend = (messages: Partial<CommendMessages> = {}) => {
   const [state, setState] = useState<CommendState>('idle')
   const [videoUrl, setVideoUrl] = useState('')
   const [language, setLanguage] = useState<CommentLanguage>('Turkish')
@@ -62,6 +82,10 @@ export const useCommend = () => {
   const [postResult, setPostResult] = useState<PostResponse | null>(null)
 
   const apiBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_API_URL?.trim(), [])
+  const i18nMessages = useMemo(
+    () => ({ ...DEFAULT_MESSAGES, ...messages }),
+    [messages]
+  )
 
   const isValidUrl = useMemo(() => {
     return YOUTUBE_URL_REGEX.test(videoUrl)
@@ -79,13 +103,13 @@ export const useCommend = () => {
 
   const generateComment = useCallback(async () => {
     if (!isValidUrl) {
-      setError({ code: 'invalid_url', message: 'Please enter a valid YouTube URL' })
+      setError({ code: 'invalid_url', message: i18nMessages.invalidUrl })
       setState('error')
       return
     }
 
     if (!apiBaseUrl) {
-      setError({ code: 'no_api', message: 'API not configured' })
+      setError({ code: 'no_api', message: i18nMessages.apiNotConfigured })
       setState('error')
       return
     }
@@ -105,7 +129,7 @@ export const useCommend = () => {
       })
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }))
+        const errorData = await response.json().catch(() => ({ detail: i18nMessages.unknownError }))
         throw new Error(errorData.detail || `HTTP ${response.status}`)
       }
 
@@ -118,20 +142,20 @@ export const useCommend = () => {
       setState('success')
 
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to generate comment'
+      const message = err instanceof Error ? err.message : i18nMessages.failedToGenerate
       setError({ code: 'generate_failed', message })
       setState('error')
     }
-  }, [videoUrl, language, style, isValidUrl, apiBaseUrl])
+  }, [videoUrl, language, style, isValidUrl, apiBaseUrl, i18nMessages])
 
   const postComment = useCallback(async () => {
     if (!generatedComment || !videoUrl) {
-      setError({ code: 'no_comment', message: 'No comment to post' })
+      setError({ code: 'no_comment', message: i18nMessages.noCommentToPost })
       return
     }
 
     if (!apiBaseUrl) {
-      setError({ code: 'no_api', message: 'API not configured' })
+      setError({ code: 'no_api', message: i18nMessages.apiNotConfigured })
       return
     }
 
@@ -154,7 +178,7 @@ export const useCommend = () => {
         const detail = typeof errorData.detail === 'object' ? errorData.detail : { message: errorData.detail }
         setPostResult({
           status: 'success',
-          message: detail.message || 'Already commented',
+          message: detail.message || i18nMessages.alreadyCommented,
           alreadyCommented: true,
           commentId: detail.previousCommentId,
           postedAt: detail.postedAt
@@ -164,7 +188,7 @@ export const useCommend = () => {
       }
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }))
+        const errorData = await response.json().catch(() => ({ detail: i18nMessages.unknownError }))
         throw new Error(typeof errorData.detail === 'string' ? errorData.detail : JSON.stringify(errorData.detail))
       }
 
@@ -173,11 +197,11 @@ export const useCommend = () => {
       setState('success')
 
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to post comment'
+      const message = err instanceof Error ? err.message : i18nMessages.failedToPost
       setError({ code: 'post_failed', message })
       setState('error')
     }
-  }, [generatedComment, videoUrl, apiBaseUrl])
+  }, [generatedComment, videoUrl, apiBaseUrl, i18nMessages])
 
   const updateComment = useCallback((text: string) => {
     setGeneratedComment(text)
@@ -208,32 +232,12 @@ export const useCommend = () => {
   }
 }
 
-export const COMMENT_STYLES: { id: CommentStyle; name: { tr: string; en: string }; description: { tr: string; en: string } }[] = [
-  {
-    id: 'supportive',
-    name: { tr: 'Destekleyici', en: 'Supportive' },
-    description: { tr: 'Pozitif ve teşvik edici', en: 'Positive and encouraging' }
-  },
-  {
-    id: 'analytical',
-    name: { tr: 'Analitik', en: 'Analytical' },
-    description: { tr: 'Detaylı ve düşündürücü', en: 'Detailed and thought-provoking' }
-  },
-  {
-    id: 'humorous',
-    name: { tr: 'Esprili', en: 'Humorous' },
-    description: { tr: 'Eğlenceli ve samimi', en: 'Fun and friendly' }
-  },
-  {
-    id: 'curious',
-    name: { tr: 'Meraklı', en: 'Curious' },
-    description: { tr: 'Soru soran ve ilgili', en: 'Questioning and engaged' }
-  },
-  {
-    id: 'professional',
-    name: { tr: 'Profesyonel', en: 'Professional' },
-    description: { tr: 'Resmi ve saygılı', en: 'Formal and respectful' }
-  }
+export const COMMENT_STYLES: { id: CommentStyle }[] = [
+  { id: 'supportive' },
+  { id: 'analytical' },
+  { id: 'humorous' },
+  { id: 'curious' },
+  { id: 'professional' }
 ]
 
 export const COMMENT_LANGUAGES: { code: CommentLanguage; name: string; flag: string }[] = [

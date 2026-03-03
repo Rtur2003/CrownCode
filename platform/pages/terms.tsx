@@ -8,57 +8,23 @@ import { ArrowLeft, FileText, CheckCircle, AlertTriangle, Scale, Users, Mail } f
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
 
-const TermsPage: NextPage = () => {
-  const { language } = useLanguage()
+const SECTION_ICONS = [CheckCircle, Users, Scale, AlertTriangle] as const
+const SECTION_KEYS = ['acceptableUse', 'userResponsibilities', 'intellectualProperty', 'disclaimer'] as const
 
-  const sections = language === 'tr' ? [
-    {
-      icon: CheckCircle,
-      title: 'Kabul Edilen Kullanım',
-      content: 'CrownCode platformunu kullanarak bu koşulları kabul etmiş olursunuz. Platform, yazılım geliştirme araçları, AI destekli uygulamalar ve açık kaynak projeler sunar. Platformu yasal amaçlar için kullanmayı kabul edersiniz.'
-    },
-    {
-      icon: Users,
-      title: 'Kullanıcı Sorumlulukları',
-      content: 'Crown Commend gibi AI araçlarını sorumlu bir şekilde kullanmayı kabul edersiniz. Spam, kötüye kullanım veya platformların hizmet şartlarını ihlal eden içerik oluşturmak yasaktır. Tüm AI içerikleri bunu belirten bir açıklama içerir.'
-    },
-    {
-      icon: Scale,
-      title: 'Fikri Mülkiyet',
-      content: 'CrownCode platformu ve içeriği Hasan Arthur Altuntaş\'a aittir. Açık kaynak projeler kendi lisansları altında sunulur (genellikle MIT). Platform kaynak kodunu kendi lisans koşulları altında kullanabilirsiniz.'
-    },
-    {
-      icon: AlertTriangle,
-      title: 'Sorumluluk Reddi',
-      content: 'Platform "olduğu gibi" sunulmaktadır. AI araçları deneysel niteliktedir ve sonuçların doğruluğu garanti edilmez. Platform kesintileri veya veri kaybından sorumlu değiliz. Üçüncü taraf hizmetlerin kullanılabilirliğini garanti etmiyoruz.'
-    }
-  ] : [
-    {
-      icon: CheckCircle,
-      title: 'Acceptable Use',
-      content: 'By using the CrownCode platform, you agree to these terms. The platform provides software development tools, AI-powered applications, and open-source projects. You agree to use the platform for lawful purposes only.'
-    },
-    {
-      icon: Users,
-      title: 'User Responsibilities',
-      content: 'You agree to use AI tools like Crown Commend responsibly. Creating spam, abuse, or content that violates platform terms of service is prohibited. All AI-generated content includes a disclaimer indicating this.'
-    },
-    {
-      icon: Scale,
-      title: 'Intellectual Property',
-      content: 'The CrownCode platform and content belong to Hasan Arthur Altuntaş. Open-source projects are provided under their respective licenses (typically MIT). You may use platform source code under its license terms.'
-    },
-    {
-      icon: AlertTriangle,
-      title: 'Disclaimer',
-      content: 'The platform is provided "as is". AI tools are experimental and result accuracy is not guaranteed. We are not responsible for platform interruptions or data loss. We do not guarantee third-party service availability.'
-    }
-  ]
+const TermsPage: NextPage = () => {
+  const { t } = useLanguage()
+  const tm = t.terms
+
+  const sections = SECTION_KEYS.map((key, i) => ({
+    icon: SECTION_ICONS[i],
+    title: tm.sections[key].title,
+    content: tm.sections[key].content
+  }))
 
   return (
     <MainLayout
-      title={language === 'tr' ? 'Kullanım Koşulları - CrownCode' : 'Terms of Service - CrownCode'}
-      description={language === 'tr' ? 'CrownCode platformu kullanım koşulları' : 'CrownCode platform terms of service'}
+      title={tm.meta.title}
+      description={tm.meta.description}
       url="https://hasanarthuraltuntas.xyz/terms"
     >
       <div className="min-h-screen py-24 px-4">
@@ -74,7 +40,7 @@ const TermsPage: NextPage = () => {
               className="inline-flex items-center gap-2 text-text-secondary hover:text-primary transition-colors mb-8"
             >
               <ArrowLeft size={20} />
-              <span>{language === 'tr' ? 'Ana Sayfaya Dön' : 'Back to Home'}</span>
+              <span>{tm.backToHome}</span>
             </Link>
 
             {/* Header */}
@@ -83,21 +49,17 @@ const TermsPage: NextPage = () => {
                 <FileText size={32} className="text-primary" />
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-4">
-                {language === 'tr' ? 'Kullanım Koşulları' : 'Terms of Service'}
+                {tm.title}
               </h1>
               <p className="text-text-secondary text-lg">
-                {language === 'tr'
-                  ? 'Son güncelleme: Ocak 2025'
-                  : 'Last updated: January 2025'}
+                {tm.lastUpdated}
               </p>
             </div>
 
             {/* Introduction */}
             <div className="glass-card p-6 md:p-8 rounded-2xl mb-8">
               <p className="text-text-secondary leading-relaxed">
-                {language === 'tr'
-                  ? 'CrownCode platformunu kullanmadan önce lütfen bu kullanım koşullarını dikkatlice okuyunuz. Platform üzerindeki tüm hizmetler bu koşullara tabidir.'
-                  : 'Please read these terms of service carefully before using the CrownCode platform. All services on the platform are subject to these terms.'}
+                {tm.intro}
               </p>
             </div>
 
@@ -105,7 +67,7 @@ const TermsPage: NextPage = () => {
             <div className="space-y-6">
               {sections.map((section, index) => (
                 <motion.div
-                  key={section.title}
+                  key={SECTION_KEYS[index]}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -136,12 +98,10 @@ const TermsPage: NextPage = () => {
               className="mt-8 glass-card p-6 md:p-8 rounded-2xl border-l-4 border-primary"
             >
               <h3 className="text-lg font-semibold text-text-primary mb-2">
-                {language === 'tr' ? 'Açık Kaynak Lisansları' : 'Open Source Licenses'}
+                {tm.openSource.title}
               </h3>
               <p className="text-text-secondary">
-                {language === 'tr'
-                  ? 'CrownCode açık kaynak bir projedir. Kaynak kodu MIT lisansı altında GitHub\'da mevcuttur. Üçüncü taraf kütüphaneler kendi lisanslarına tabidir.'
-                  : 'CrownCode is an open-source project. Source code is available on GitHub under the MIT license. Third-party libraries are subject to their own licenses.'}
+                {tm.openSource.content}
               </p>
               <a
                 href="https://github.com/Rtur2003/CrownCode"
@@ -149,7 +109,7 @@ const TermsPage: NextPage = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors mt-4"
               >
-                <span>{language === 'tr' ? 'GitHub\'da Görüntüle' : 'View on GitHub'}</span>
+                <span>{tm.openSource.viewOnGithub}</span>
               </a>
             </motion.div>
 
@@ -161,9 +121,7 @@ const TermsPage: NextPage = () => {
               className="mt-12 text-center"
             >
               <p className="text-text-secondary mb-4">
-                {language === 'tr'
-                  ? 'Koşullar hakkında sorularınız için:'
-                  : 'For questions about these terms:'}
+                {tm.contactLabel}
               </p>
               <a
                 href="mailto:contact@hasanarthuraltuntas.xyz"

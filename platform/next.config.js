@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+const deploymentTarget = process.env.DEPLOYMENT_TARGET || 'static'
+const isStaticExport = deploymentTarget === 'static'
+
 const nextConfig = {
   reactStrictMode: true,
   
@@ -15,14 +18,10 @@ const nextConfig = {
 
   // Image optimization
   images: {
-    unoptimized: true, // Required for static export
+    // For static export mode, keep next/image unoptimized.
+    // For server mode, Next can optimize images at runtime.
+    unoptimized: isStaticExport,
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'devforge-suite.com',
-        port: '',
-        pathname: '/**',
-      },
       {
         protocol: 'https',
         hostname: 'hasanarthuraltuntas.xyz',
@@ -38,6 +37,12 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'avatars.githubusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ytimg.com',
         port: '',
         pathname: '/**',
       },
@@ -78,8 +83,12 @@ const nextConfig = {
   },
 
   // Output configuration for Netlify
-  output: 'export',
-  distDir: 'out',
+  ...(isStaticExport
+    ? {
+        output: 'export',
+        distDir: 'out',
+      }
+    : {}),
   trailingSlash: false, // Changed to false for better sitemap compatibility
 
   // Compression

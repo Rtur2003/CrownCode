@@ -50,13 +50,11 @@ import {
 } from '@/data/dreams'
 import styles from '@/styles/pages/crown-dreams.module.css'
 
-// Lazy load GoldenParticles for performance
 const GoldenParticles = dynamic(
   () => import('@/components/CrownDreams/GoldenParticles'),
   { ssr: false }
 )
 
-// Dream type icons
 const DREAM_TYPE_ICONS: Record<DreamType, React.ReactNode> = {
   normal: <Moon size={14} />,
   lucid: <Sparkles size={14} />,
@@ -67,14 +65,12 @@ const DREAM_TYPE_ICONS: Record<DreamType, React.ReactNode> = {
 }
 
 const CrownDreamsPage: NextPage = () => {
-  const { language } = useLanguage()
+  const { language, t } = useLanguage()
+  const cd = t.crownDreams
   const [selectedDream, setSelectedDream] = useState<DreamEntry | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [activeFilter, setActiveFilter] = useState<DreamType | 'all'>('all')
-  // activeTab value is set but UI rendering based on it is TODO
-  const [_activeTab, setActiveTab] = useState<'journal' | 'analytics'>('journal')
 
-  // Filtered dreams
   const filteredDreams = useMemo(() => {
     let dreams = MOCK_DREAMS
 
@@ -95,56 +91,35 @@ const CrownDreamsPage: NextPage = () => {
     return dreams
   }, [activeFilter, searchQuery, language])
 
-  // Starred dreams
   const starredDreams = MOCK_DREAMS.filter(d => d.isStarred)
   const recentDreams = MOCK_DREAMS.slice(0, 4)
 
-  // Stat cards data
   const statCards = [
-    {
-      label: language === 'tr' ? 'Toplam Rüya' : 'Total Dreams',
-      value: MOCK_STATS.totalDreams,
-      icon: Moon,
-      trend: 12
-    },
-    {
-      label: language === 'tr' ? 'Lüsid Rüya' : 'Lucid Dreams',
-      value: MOCK_STATS.lucidDreams,
-      icon: Sparkles,
-      trend: 24
-    },
-    {
-      label: language === 'tr' ? 'Günlük Seri' : 'Current Streak',
-      value: `${MOCK_STATS.streakDays} ${language === 'tr' ? 'gün' : 'days'}`,
-      icon: Flame,
-      trend: 8
-    },
-    {
-      label: language === 'tr' ? 'Ort. Netlik' : 'Avg Clarity',
-      value: `${MOCK_STATS.avgClarity}/5`,
-      icon: Eye,
-      trend: 5
-    }
+    { label: cd.stats.totalDreams, value: MOCK_STATS.totalDreams, icon: Moon, trend: 12 },
+    { label: cd.stats.lucidDreams, value: MOCK_STATS.lucidDreams, icon: Sparkles, trend: 24 },
+    { label: cd.stats.currentStreak, value: `${MOCK_STATS.streakDays} ${cd.stats.days}`, icon: Flame, trend: 8 },
+    { label: cd.stats.avgClarity, value: `${MOCK_STATS.avgClarity}/5`, icon: Eye, trend: 5 }
   ]
+
+  const getDreamTitle = (dream: DreamEntry) => language === 'tr' ? dream.title : dream.titleEn
+  const getDreamContent = (dream: DreamEntry) => language === 'tr' ? dream.content : dream.contentEn
 
   return (
     <MainLayout
-      title={language === 'tr' ? 'Crown Dreams - Rüya Günlüğü' : 'Crown Dreams - Dream Journal'}
-      description={language === 'tr' ? 'Rüyalarınızı kaydedin, analiz edin ve bilinçaltınızı keşfedin.' : 'Record your dreams, analyze them, and explore your subconscious.'}
-      keywords={language === 'tr' ? 'rüya günlüğü, lüsid rüya, rüya analizi' : 'dream journal, lucid dream, dream analysis'}
+      title={cd.meta.title}
+      description={cd.meta.description}
+      keywords={cd.meta.keywords}
     >
       <div className={styles['dreams-page']}>
-        {/* 3D Particle Background */}
         <GoldenParticles />
 
-        {/* Background overlays */}
         <div className={styles['dreams-background']}>
           <div className={styles['dreams-gradient']} />
           <div className={styles['dreams-stars']} />
         </div>
 
         <div className={styles['dreams-container']}>
-          {/* HEADER SECTION */}
+          {/* HEADER */}
           <motion.header
             className={styles['dreams-header']}
             initial={{ opacity: 0, y: -20 }}
@@ -155,31 +130,21 @@ const CrownDreamsPage: NextPage = () => {
               <div>
                 <div className={styles['header-badge']}>
                   <Zap size={12} />
-                  <span>{language === 'tr' ? 'Neural Link Aktif' : 'Neural Link Active'}</span>
+                  <span>{cd.header.badge}</span>
                 </div>
                 <h1 className={styles['dreams-title']}>
-                  {language === 'tr' ? `Hoş Geldin, ${MOCK_USER.name}` : `Welcome back, ${MOCK_USER.name}`}
+                  {cd.header.welcomeBack} {MOCK_USER.name}
                 </h1>
                 <p className={styles['dreams-subtitle']}>
-                  {language === 'tr'
-                    ? `${MOCK_STATS.streakDays} günlük seri • %${MOCK_STATS.lucidPercentage} lüsid oranı`
-                    : `${MOCK_STATS.streakDays} day streak • ${MOCK_STATS.lucidPercentage}% lucid rate`
-                  }
+                  {MOCK_STATS.streakDays} {cd.header.streakLabel} &bull; %{MOCK_STATS.lucidPercentage} {cd.header.lucidRateLabel}
                 </p>
               </div>
               <div className={styles['header-actions']}>
-                <CyberButton
-                  leftIcon={<BookOpen size={14} />}
-                  onClick={() => setActiveTab('journal')}
-                >
-                  {language === 'tr' ? 'Yeni Rüya' : 'New Dream'}
+                <CyberButton leftIcon={<BookOpen size={14} />}>
+                  {cd.header.newDream}
                 </CyberButton>
-                <CyberButton
-                  variant="ghost"
-                  leftIcon={<BarChart3 size={14} />}
-                  onClick={() => setActiveTab('analytics')}
-                >
-                  {language === 'tr' ? 'Analitik' : 'Analytics'}
+                <CyberButton variant="ghost" leftIcon={<BarChart3 size={14} />}>
+                  {cd.header.analytics}
                 </CyberButton>
               </div>
             </div>
@@ -206,9 +171,9 @@ const CrownDreamsPage: NextPage = () => {
 
           {/* MAIN CONTENT GRID */}
           <div className={styles['main-grid']}>
-            {/* LEFT COLUMN - Lucid Mastery + Recent Dreams */}
+            {/* LEFT COLUMN */}
             <div className={styles['left-column']}>
-              {/* Lucid Mastery Card */}
+              {/* Lucid Mastery */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -217,26 +182,26 @@ const CrownDreamsPage: NextPage = () => {
                 <GlassCard variant="bordered" className={styles['mastery-card']}>
                   <h3 className={styles['section-title']}>
                     <Brain size={16} />
-                    {language === 'tr' ? 'Lüsid Ustalık' : 'Lucid Mastery'}
+                    {cd.sections.lucidMastery}
                   </h3>
 
                   <div className={styles['mastery-content']}>
                     <CircularProgress
                       value={MOCK_USER.lucidMastery}
                       size={140}
-                      label={language === 'tr' ? 'Ustalık' : 'Mastery'}
+                      label={cd.sections.lucidMastery}
                     />
 
                     <div className={styles['mastery-stats']}>
                       <ProgressBar
                         value={MOCK_STATS.avgClarity * 20}
-                        label={language === 'tr' ? 'Rüya Netliği' : 'Dream Clarity'}
+                        label={cd.sections.dreamClarity}
                         showPercentage
                         size="sm"
                       />
                       <ProgressBar
                         value={MOCK_STATS.avgSleepQuality}
-                        label={language === 'tr' ? 'Uyku Kalitesi' : 'Sleep Quality'}
+                        label={cd.sections.sleepQuality}
                         showPercentage
                         variant="bronze"
                         size="sm"
@@ -246,19 +211,19 @@ const CrownDreamsPage: NextPage = () => {
 
                   <div className={styles['mastery-footer']}>
                     <p className={styles['milestone-label']}>
-                      {language === 'tr' ? 'Sonraki seviye' : 'Next milestone'}
+                      {cd.sections.nextMilestone}
                     </p>
                     <p className={styles['milestone-text']}>
-                      %{100 - MOCK_USER.lucidMastery} {language === 'tr' ? 'kaldı' : 'to'}{' '}
+                      %{100 - MOCK_USER.lucidMastery} {cd.sections.remaining}{' '}
                       <span className={styles['milestone-rank']}>
-                        {language === 'tr' ? 'Bilinç Kaşifi' : 'Consciousness Explorer'}
+                        {cd.sections.milestoneRank}
                       </span>
                     </p>
                   </div>
                 </GlassCard>
               </motion.div>
 
-              {/* Recent Dreams Card */}
+              {/* Recent Dreams */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -268,13 +233,10 @@ const CrownDreamsPage: NextPage = () => {
                   <div className={styles['section-header']}>
                     <h3 className={styles['section-title']}>
                       <Moon size={16} />
-                      {language === 'tr' ? 'Son Rüyalar' : 'Recent Dreams'}
+                      {cd.sections.recentDreams}
                     </h3>
-                    <button
-                      className={styles['view-all-btn']}
-                      onClick={() => setActiveTab('journal')}
-                    >
-                      {language === 'tr' ? 'Tümünü Gör' : 'View All'}
+                    <button type="button" className={styles['view-all-btn']}>
+                      {cd.sections.viewAll}
                       <ChevronRight size={14} />
                     </button>
                   </div>
@@ -296,14 +258,14 @@ const CrownDreamsPage: NextPage = () => {
                               style={{ backgroundColor: DREAM_TYPE_COLORS[dream.type] }}
                             />
                             <span className={styles['recent-item-title']}>
-                              {language === 'tr' ? dream.title : dream.titleEn}
+                              {getDreamTitle(dream)}
                             </span>
                             {dream.isStarred && (
                               <Star size={12} className={styles['star-icon']} />
                             )}
                           </div>
                           <p className={styles['recent-item-preview']}>
-                            {truncateDreamContent(language === 'tr' ? dream.content : dream.contentEn, 60)}
+                            {truncateDreamContent(getDreamContent(dream), 60)}
                           </p>
                         </div>
                         <div className={styles['recent-item-meta']}>
@@ -312,7 +274,7 @@ const CrownDreamsPage: NextPage = () => {
                           </span>
                           {dream.type === 'lucid' && (
                             <span className={styles['lucid-badge']}>
-                              {language === 'tr' ? 'Lüsid' : 'Lucid'}
+                              {cd.journal.lucid}
                             </span>
                           )}
                         </div>
@@ -323,7 +285,7 @@ const CrownDreamsPage: NextPage = () => {
               </motion.div>
             </div>
 
-            {/* CENTER COLUMN - Dream Journal */}
+            {/* CENTER COLUMN - Journal */}
             <motion.div
               className={styles['center-column']}
               initial={{ opacity: 0, y: 20 }}
@@ -331,18 +293,18 @@ const CrownDreamsPage: NextPage = () => {
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               <GlassCard variant="bordered" className={styles['journal-card']}>
-                {/* Search & Filter */}
                 <div className={styles['search-filter']}>
                   <div className={styles['search-box']}>
                     <Search size={16} />
                     <input
                       type="text"
-                      placeholder={language === 'tr' ? 'Rüya ara...' : 'Search dreams...'}
+                      placeholder={cd.journal.searchPlaceholder}
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                     />
                     {searchQuery && (
                       <button
+                        type="button"
                         onClick={() => setSearchQuery('')}
                         className={styles['search-clear']}
                       >
@@ -353,13 +315,15 @@ const CrownDreamsPage: NextPage = () => {
 
                   <div className={styles['filter-chips']}>
                     <button
+                      type="button"
                       className={`${styles['filter-chip']} ${activeFilter === 'all' ? styles['active'] : ''}`}
                       onClick={() => setActiveFilter('all')}
                     >
-                      {language === 'tr' ? 'Tümü' : 'All'}
+                      {cd.journal.filterAll}
                     </button>
                     {(['lucid', 'normal', 'nightmare', 'symbolic', 'recurring', 'prophetic'] as DreamType[]).map(type => (
                       <button
+                        type="button"
                         key={type}
                         className={`${styles['filter-chip']} ${activeFilter === type ? styles['active'] : ''}`}
                         onClick={() => setActiveFilter(type)}
@@ -375,12 +339,11 @@ const CrownDreamsPage: NextPage = () => {
                   </div>
                 </div>
 
-                {/* Dream List */}
                 <div className={styles['dreams-list']}>
                   {filteredDreams.length === 0 ? (
                     <div className={styles['no-dreams']}>
                       <Moon size={32} />
-                      <p>{language === 'tr' ? 'Rüya bulunamadı' : 'No dreams found'}</p>
+                      <p>{cd.journal.noDreams}</p>
                     </div>
                   ) : (
                     filteredDreams.map((dream, i) => (
@@ -398,12 +361,12 @@ const CrownDreamsPage: NextPage = () => {
                             style={{ backgroundColor: DREAM_TYPE_COLORS[dream.type] }}
                           />
                           <span className={styles['dream-title']}>
-                            {language === 'tr' ? dream.title : dream.titleEn}
+                            {getDreamTitle(dream)}
                           </span>
                           {dream.isStarred && <Star size={12} className={styles['dream-star']} />}
                         </div>
                         <p className={styles['dream-preview']}>
-                          {truncateDreamContent(language === 'tr' ? dream.content : dream.contentEn)}
+                          {truncateDreamContent(getDreamContent(dream))}
                         </p>
                         <div className={styles['dream-card-footer']}>
                           <span className={styles['dream-date']}>
@@ -454,7 +417,7 @@ const CrownDreamsPage: NextPage = () => {
                             <span>{DREAM_TYPE_LABELS[selectedDream.type][language]}</span>
                           </div>
                           <h2 className={styles['detail-title']}>
-                            {language === 'tr' ? selectedDream.title : selectedDream.titleEn}
+                            {getDreamTitle(selectedDream)}
                           </h2>
                           <span className={styles['detail-date']}>
                             <Calendar size={12} />
@@ -462,6 +425,7 @@ const CrownDreamsPage: NextPage = () => {
                           </span>
                         </div>
                         <button
+                          type="button"
                           className={styles['close-detail']}
                           onClick={() => setSelectedDream(null)}
                         >
@@ -469,31 +433,29 @@ const CrownDreamsPage: NextPage = () => {
                         </button>
                       </div>
 
-                      {/* Dream Stats */}
                       <div className={styles['detail-stats']}>
                         <div className={styles['detail-stat']}>
                           <Eye size={14} />
-                          <span>{language === 'tr' ? 'Netlik' : 'Clarity'}</span>
+                          <span>{cd.detail.clarity}</span>
                           <strong>{selectedDream.clarity}/5</strong>
                         </div>
                         <div className={styles['detail-stat']}>
                           <Sparkles size={14} />
-                          <span>{language === 'tr' ? 'Lüsidlik' : 'Lucidity'}</span>
+                          <span>{cd.detail.lucidity}</span>
                           <strong>{selectedDream.lucidity}%</strong>
                         </div>
                         <div className={styles['detail-stat']}>
                           <Bed size={14} />
-                          <span>{language === 'tr' ? 'Uyku' : 'Sleep'}</span>
+                          <span>{cd.detail.sleep}</span>
                           <strong>{getSleepQualityLabel(selectedDream.sleepQuality, language)}</strong>
                         </div>
                         <div className={styles['detail-stat']}>
                           <Clock size={14} />
-                          <span>{language === 'tr' ? 'Süre' : 'Duration'}</span>
-                          <strong>{selectedDream.duration} {language === 'tr' ? 'dk' : 'min'}</strong>
+                          <span>{cd.detail.duration}</span>
+                          <strong>{selectedDream.duration} {cd.detail.durationUnit}</strong>
                         </div>
                       </div>
 
-                      {/* Lucidity Level */}
                       <div className={styles['lucidity-bar']}>
                         <div className={styles['lucidity-label']}>
                           <Target size={14} />
@@ -506,14 +468,12 @@ const CrownDreamsPage: NextPage = () => {
                         />
                       </div>
 
-                      {/* Content */}
                       <div className={styles['detail-content']}>
-                        <p>{language === 'tr' ? selectedDream.content : selectedDream.contentEn}</p>
+                        <p>{getDreamContent(selectedDream)}</p>
                       </div>
 
-                      {/* Emotions */}
                       <div className={styles['detail-emotions']}>
-                        <h4>{language === 'tr' ? 'Duygular' : 'Emotions'}</h4>
+                        <h4>{cd.detail.emotions}</h4>
                         <div className={styles['emotion-tags']}>
                           {selectedDream.emotions.map(emotion => (
                             <span
@@ -531,9 +491,8 @@ const CrownDreamsPage: NextPage = () => {
                         </div>
                       </div>
 
-                      {/* Symbols */}
                       <div className={styles['detail-symbols']}>
-                        <h4>{language === 'tr' ? 'Semboller' : 'Symbols'}</h4>
+                        <h4>{cd.detail.symbols}</h4>
                         <div className={styles['symbol-tags']}>
                           {selectedDream.symbols.map(symbol => (
                             <span key={symbol} className={styles['symbol-tag']}>
@@ -543,30 +502,28 @@ const CrownDreamsPage: NextPage = () => {
                         </div>
                       </div>
 
-                      {/* Characters & Locations */}
                       {(selectedDream.characters.length > 0 || selectedDream.locations.length > 0) && (
                         <div className={styles['detail-extra']}>
                           {selectedDream.characters.length > 0 && (
                             <div className={styles['extra-section']}>
-                              <h4>{language === 'tr' ? 'Karakterler' : 'Characters'}</h4>
+                              <h4>{cd.detail.characters}</h4>
                               <p>{selectedDream.characters.join(', ')}</p>
                             </div>
                           )}
                           {selectedDream.locations.length > 0 && (
                             <div className={styles['extra-section']}>
-                              <h4>{language === 'tr' ? 'Mekanlar' : 'Locations'}</h4>
+                              <h4>{cd.detail.locations}</h4>
                               <p>{selectedDream.locations.join(', ')}</p>
                             </div>
                           )}
                         </div>
                       )}
 
-                      {/* AI Analysis */}
                       {selectedDream.aiAnalysis && (
                         <div className={styles['ai-analysis']}>
                           <h4>
                             <Brain size={14} />
-                            {language === 'tr' ? 'AI Analizi' : 'AI Analysis'}
+                            {cd.detail.aiAnalysis}
                           </h4>
                           <p>{language === 'tr' ? selectedDream.aiAnalysis : selectedDream.aiAnalysisEn}</p>
                         </div>
@@ -585,12 +542,13 @@ const CrownDreamsPage: NextPage = () => {
                     <GlassCard className={styles['panel-card']}>
                       <h3 className={styles['panel-title']}>
                         <Star size={16} className={styles['star-filled']} />
-                        {language === 'tr' ? 'Yıldızlı Rüyalar' : 'Starred Dreams'}
+                        {cd.sections.starredDreams}
                       </h3>
                       <div className={styles['starred-list']}>
                         {starredDreams.length > 0 ? (
                           starredDreams.map(dream => (
                             <button
+                              type="button"
                               key={dream.id}
                               className={styles['starred-item']}
                               onClick={() => setSelectedDream(dream)}
@@ -600,7 +558,7 @@ const CrownDreamsPage: NextPage = () => {
                                 style={{ backgroundColor: DREAM_TYPE_COLORS[dream.type] }}
                               />
                               <span className={styles['starred-title']}>
-                                {language === 'tr' ? dream.title : dream.titleEn}
+                                {getDreamTitle(dream)}
                               </span>
                               <ChevronRight size={14} />
                             </button>
@@ -608,7 +566,7 @@ const CrownDreamsPage: NextPage = () => {
                         ) : (
                           <div className={styles['empty-starred']}>
                             <Star size={24} />
-                            <p>{language === 'tr' ? 'Henüz yıldızlı rüya yok' : 'No starred dreams yet'}</p>
+                            <p>{cd.sections.noStarred}</p>
                           </div>
                         )}
                       </div>
@@ -618,7 +576,7 @@ const CrownDreamsPage: NextPage = () => {
                     <GlassCard className={styles['panel-card']}>
                       <h3 className={styles['panel-title']}>
                         <TrendingUp size={16} />
-                        {language === 'tr' ? 'İç Görüler' : 'Dream Insights'}
+                        {cd.sections.dreamInsights}
                       </h3>
                       <div className={styles['insights-list']}>
                         {MOCK_PATTERNS.slice(0, 3).map((pattern, i) => (
@@ -627,20 +585,13 @@ const CrownDreamsPage: NextPage = () => {
                             className={`${styles['insight-card']} ${i === 2 ? styles['insight-highlight'] : ''}`}
                           >
                             <span className={styles['insight-label']}>
-                              {pattern.type === 'theme' && (language === 'tr' ? 'En Yaygın Tema' : 'Most Common Theme')}
-                              {pattern.type === 'emotion' && (language === 'tr' ? 'Baskın Duygu' : 'Dominant Emotion')}
-                              {pattern.type === 'symbol' && (language === 'tr' ? 'Lüsid Tetikleyici' : 'Lucid Trigger')}
-                              {pattern.type === 'location' && (language === 'tr' ? 'Sık Görülen Mekan' : 'Frequent Location')}
-                              {pattern.type === 'character' && (language === 'tr' ? 'Tekrarlayan Karakter' : 'Recurring Character')}
+                              {cd.patterns[pattern.type as keyof typeof cd.patterns]}
                             </span>
                             <span className={styles['insight-value']}>
                               {language === 'tr' ? pattern.name : pattern.nameEn}
                             </span>
                             <span className={styles['insight-sub']}>
-                              {language === 'tr'
-                                ? `${pattern.frequency} rüyada görüldü`
-                                : `Appears in ${pattern.frequency} dreams`
-                              }
+                              {`${pattern.frequency} ${cd.patterns.appearsIn}`}
                             </span>
                           </div>
                         ))}
@@ -651,7 +602,7 @@ const CrownDreamsPage: NextPage = () => {
                     <GlassCard className={styles['panel-card']}>
                       <h3 className={styles['panel-title']}>
                         <Flame size={16} />
-                        {language === 'tr' ? 'Haftalık Aktivite' : 'Weekly Activity'}
+                        {cd.sections.weeklyActivity}
                       </h3>
                       <div className={styles['weekly-chart']}>
                         {MOCK_STATS.weeklyActivity.map((day, i) => (

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Video Preview Component
  * Shows YouTube video details with a sleek design
  */
@@ -10,9 +10,16 @@ import { Play, Eye, ThumbsUp, MessageCircle, Clock, Users } from 'lucide-react'
 import type { VideoDetails } from '@/hooks/useCommend'
 import styles from './VideoPreview.module.css'
 
+interface VideoPreviewLabels {
+  views: string
+  likes: string
+  comments: string
+  subscribers: string
+}
+
 interface VideoPreviewProps {
   details: VideoDetails
-  language: 'tr' | 'en'
+  labels: VideoPreviewLabels
 }
 
 const formatNumber = (num: number): string => {
@@ -36,14 +43,7 @@ const formatDuration = (seconds: number): string => {
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 
-export const VideoPreview: React.FC<VideoPreviewProps> = ({ details, language }) => {
-  const t = {
-    views: language === 'tr' ? 'görüntüleme' : 'views',
-    likes: language === 'tr' ? 'beğeni' : 'likes',
-    comments: language === 'tr' ? 'yorum' : 'comments',
-    subscribers: language === 'tr' ? 'abone' : 'subscribers'
-  }
-
+export const VideoPreview: React.FC<VideoPreviewProps> = ({ details, labels }) => {
   return (
     <motion.div
       className={styles.container}
@@ -84,20 +84,20 @@ export const VideoPreview: React.FC<VideoPreviewProps> = ({ details, language })
         <div className={styles.stats}>
           <div className={styles.stat}>
             <Eye size={14} />
-            <span>{formatNumber(details.viewCount)} {t.views}</span>
+            <span>{formatNumber(details.viewCount)} {labels.views}</span>
           </div>
           <div className={styles.stat}>
             <ThumbsUp size={14} />
-            <span>{formatNumber(details.likeCount)} {t.likes}</span>
+            <span>{formatNumber(details.likeCount)} {labels.likes}</span>
           </div>
           <div className={styles.stat}>
             <MessageCircle size={14} />
-            <span>{formatNumber(details.commentCount)} {t.comments}</span>
+            <span>{formatNumber(details.commentCount)} {labels.comments}</span>
           </div>
           {details.subscriberCount && (
             <div className={styles.stat}>
               <Users size={14} />
-              <span>{formatNumber(details.subscriberCount)} {t.subscribers}</span>
+              <span>{formatNumber(details.subscriberCount)} {labels.subscribers}</span>
             </div>
           )}
         </div>

@@ -1,0 +1,3 @@
+"""
+CrownCode backend application package.
+"""

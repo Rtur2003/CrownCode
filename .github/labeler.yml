@@ -1,62 +1,30 @@
-# DevForge Suite - Auto Labeler Configuration
-
-# ===========================================
-# PROJECT LABELS
-# ===========================================
+# CrownCode - Auto Labeler Configuration (Current Structure)
 
 platform:
-  - platform/**
-  - platform/**/*
-
-ai-music-detection:
-  - projects/ai-music-detection/**
-  - projects/ai-music-detection/**/*
-
-data-manipulation:
-  - projects/data-manipulation/**
-  - projects/data-manipulation/**/*
-
-ml-toolkit:
-  - projects/ml-toolkit/**
-  - projects/ml-toolkit/**/*
-
-# ===========================================
-# COMPONENT LABELS
-# ===========================================
-
-frontend:
-  - "**/frontend/**"
-  - "**/client/**"
-  - "**/ui/**"
-  - "**/components/**"
-  - "**/pages/**"
-  - "**/styles/**"
+  - "platform/**"
 
 backend:
-  - "**/backend/**"
-  - "**/server/**"
-  - "**/api/**"
-  - "**/services/**"
-  - "**/controllers/**"
-  - "**/routes/**"
+  - "hf-crowncode-backend/**"
 
-database:
-  - "**/database/**"
-  - "**/db/**"
-  - "**/migrations/**"
-  - "**/models/**"
-  - "**/schema/**"
+android:
+  - "Android-App-CrownCode/**"
 
-# ===========================================
-# TECHNOLOGY LABELS
-# ===========================================
+docs:
+  - "docs/**"
+  - "*.md"
 
-javascript:
-  - "**/*.js"
-  - "**/*.jsx"
-  - "**/*.mjs"
+github-actions:
+  - ".github/workflows/**"
+  - ".github/actions/**"
 
-typescript:
+github-config:
+  - ".github/**"
+
+ci:
+  - ".github/workflows/ci.yml"
+  - ".github/workflows/engineering-standards.yml"
+
+types:
   - "**/*.ts"
   - "**/*.tsx"
   - "**/tsconfig.json"
@@ -65,199 +33,67 @@ typescript:
 python:
   - "**/*.py"
   - "**/requirements.txt"
-  - "**/Pipfile"
   - "**/pyproject.toml"
-  - "**/setup.py"
-
-react:
-  - "**/components/**"
-  - "**/hooks/**"
-  - "**/context/**"
-  - "**/*.jsx"
-  - "**/*.tsx"
-
-nextjs:
-  - "**/pages/**"
-  - "**/app/**"
-  - "**/next.config.js"
-  - "**/next.config.ts"
-
-nodejs:
-  - "**/package.json"
-  - "**/package-lock.json"
-  - "**/yarn.lock"
-  - "**/pnpm-lock.yaml"
-
-# ===========================================
-# FILE TYPE LABELS
-# ===========================================
-
-documentation:
-  - "**/*.md"
-  - "**/*.mdx"
-  - "**/docs/**"
-  - "**/README*"
-  - "**/CHANGELOG*"
-  - "**/CONTRIBUTING*"
-  - "**/LICENSE*"
-
-configuration:
-  - "**/*.json"
-  - "**/*.yml"
-  - "**/*.yaml"
-  - "**/*.toml"
-  - "**/*.ini"
-  - "**/.env*"
-  - "**/config/**"
-  - "**/*config*"
 
 styles:
   - "**/*.css"
-  - "**/*.scss"
-  - "**/*.sass"
-  - "**/*.less"
   - "**/styles/**"
-  - "**/tailwind.config.*"
 
 tests:
   - "**/*.test.*"
   - "**/*.spec.*"
   - "**/tests/**"
-  - "**/test/**"
   - "**/__tests__/**"
-  - "**/cypress/**"
-  - "**/playwright/**"
-  - "**/jest.config.*"
-  - "**/vitest.config.*"
-
-# ===========================================
-# GITHUB SPECIFIC LABELS
-# ===========================================
-
-github-actions:
-  - ".github/workflows/**"
-  - ".github/actions/**"
-
-github-config:
-  - ".github/**"
-  - ".github/ISSUE_TEMPLATE/**"
-  - ".github/PULL_REQUEST_TEMPLATE/**"
-  - ".github/CODEOWNERS"
-  - ".github/dependabot.yml"
-  - ".github/labeler.yml"
-
-# ===========================================
-# DEPLOYMENT LABELS
-# ===========================================
-
-deployment:
-  - "**/vercel.json"
-  - "**/netlify.toml"
-  - "**/Dockerfile"
-  - "**/docker-compose.*"
-  - "**/kubernetes/**"
-  - "**/k8s/**"
-
-scripts:
-  - "**/scripts/**"
-  - "**/*.sh"
-  - "**/*.bat"
-  - "**/*.ps1"
-
-# ===========================================
-# DEPENDENCY LABELS
-# ===========================================
-
-dependencies:
-  - "**/package.json"
-  - "**/package-lock.json"
-  - "**/yarn.lock"
-  - "**/pnpm-lock.yaml"
-  - "**/requirements.txt"
-  - "**/Pipfile.lock"
-  - "**/Cargo.lock"
-
-security:
-  - "**/SECURITY.md"
-  - "**/.nvmrc"
-  - "**/security/**"
-
-# ===========================================
-# FEATURE AREA LABELS
-# ===========================================
-
-authentication:
-  - "**/auth/**"
-  - "**/authentication/**"
-  - "**/login/**"
-  - "**/signup/**"
 
 api:
-  - "**/api/**"
-  - "**/routes/**"
-  - "**/endpoints/**"
+  - "platform/pages/api/**"
+  - "hf-crowncode-backend/app/routes/**"
 
-ui-ux:
-  - "**/components/**"
-  - "**/ui/**"
-  - "**/design/**"
-  - "**/assets/**"
+ai-music-detection:
+  - "platform/pages/ai-music-detection/**"
+  - "platform/hooks/useYouTubeAnalysis.ts"
+  - "platform/hooks/useFileAnalysis.ts"
+  - "platform/hooks/analysisGateway.ts"
+  - "platform/styles/pages/ai-detection.module.css"
 
-performance:
-  - "**/optimization/**"
-  - "**/performance/**"
-  - "**/lazy/**"
-  - "**/cache/**"
+data-manipulation:
+  - "platform/pages/data-manipulation/**"
+  - "platform/components/MLToolkit/**"
+  - "platform/styles/pages/data-manipulation*.css"
 
-accessibility:
-  - "**/a11y/**"
-  - "**/accessibility/**"
+crown-fortune:
+  - "platform/pages/crown-fortune/**"
+  - "platform/components/CrownFortune/**"
+  - "platform/data/destiny.ts"
+  - "platform/styles/pages/crown-fortune.module.css"
 
-mobile:
-  - "**/mobile/**"
-  - "**/responsive/**"
-  - "**/touch/**"
+crown-commend:
+  - "platform/pages/crown-commend/**"
+  - "platform/components/CrownCommend/**"
+  - "platform/hooks/useCommend.ts"
+  - "platform/styles/pages/crown-commend.module.css"
 
-# ===========================================
-# AI/ML SPECIFIC LABELS
-# ===========================================
+crown-dreams:
+  - "platform/pages/crown-dreams/**"
+  - "platform/components/CrownDreams/**"
+  - "platform/data/dreams.ts"
+  - "platform/styles/pages/crown-dreams.module.css"
 
-machine-learning:
-  - "**/models/**"
-  - "**/ml/**"
-  - "**/ai/**"
-  - "**/*.pkl"
-  - "**/*.h5"
-  - "**/*.onnx"
+crown-vote:
+  - "platform/pages/crown-vote/**"
+  - "platform/components/CrownVote/**"
+  - "platform/styles/pages/crown-vote.module.css"
 
-tensorflow:
-  - "**/tensorflow/**"
-  - "**/tf/**"
-  - "**/*tensorflow*"
+i18n:
+  - "platform/locales/**"
+  - "platform/context/LanguageContext.tsx"
 
-audio-processing:
-  - "**/audio/**"
-  - "**/sound/**"
-  - "**/wav2vec2/**"
-  - "**/spectral/**"
+layout-navigation:
+  - "platform/components/Layout/**"
+  - "platform/components/Navigation/**"
+  - "platform/components/Home/ProjectsSection.tsx"
 
-# ===========================================
-# DATA PROCESSING LABELS
-# ===========================================
-
-data-processing:
-  - "**/data/**"
-  - "**/processing/**"
-  - "**/transform/**"
-  - "**/etl/**"
-
-file-upload:
-  - "**/upload/**"
-  - "**/file/**"
-  - "**/storage/**"
-
-visualization:
-  - "**/charts/**"
-  - "**/graphs/**"
-  - "**/visualization/**"
-  - "**/dashboard/**"
+search:
+  - "platform/pages/search.tsx"
+  - "platform/components/Search/**"
+  - "platform/hooks/useSearch.ts"

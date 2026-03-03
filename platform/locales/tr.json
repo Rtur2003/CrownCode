@@ -253,6 +253,7 @@
       "analyzing": "Analiz Ediliyor..."
     },
     "url": {
+<<<<<<< Updated upstream
       "title": "YouTube Bağlantısını Analiz Et",
       "placeholder": "YouTube linki yapıştırın (youtube.com veya youtu.be)...",
       "supportedPlatforms": "Girdi seçenekleri:",
@@ -288,6 +289,36 @@
         "downloading": "Ses Hazırlama",
         "analyzing": "Sinyal Analizi",
         "complete": "Rapor Tamamlama"
+=======
+      "title": "YouTube Baglantisini Analiz Et",
+      "placeholder": "Spotify, YouTube, SoundCloud veya Apple Music URL'si yapıştırın...",
+      "supportedPlatforms": "Desteklenen platform:",
+      "analyzeButton": "Baglantiyi Isle",
+      "analyzing": "Isleniyor..."
+    },
+    "pipeline": {
+      "title": "Pipeline Modulleri",
+      "items": {
+        "download": "YouTube ses yakalama",
+        "musicAi": "Music-AIDetector cikarim",
+        "sesAnalizi": "Ses-Analizi raporu",
+        "preview": "Onizleme yedegi"
+      },
+      "note": "Model yoksa onizleme modu her zaman kullanilabilir."
+    },
+    "processing": {
+      "title": "Analiz Devam Ediyor...",
+      "subtitle": "Arayüz gösterimi için AI tespit iş akışı simüle ediliyor.",
+      "steps": {
+        "validating": "URL Dogrulama",
+        "downloading": "Ses Hazirlama",
+        "analyzing": "Sinyal Analizi",
+        "complete": "Rapor Tamamlama",
+        "simulation": "UI simülasyonu",
+        "generation": "Rastgele sonuç üretimi",
+        "testing": "Arayüz testi",
+        "completion": "Demo tamamlanıyor"
+>>>>>>> Stashed changes
       }
     },
     "error": {
@@ -303,6 +334,7 @@
       "sampleRate": "Örnekleme Hızı",
       "duration": "Süre",
       "analysisDetails": "Analiz Detayları:",
+<<<<<<< Updated upstream
       "exportReport": "Raporu Dışarı Aktar",
       "analyzeAnother": "Başka Analiz Et",
       "spotifyTrack": "Spotify Parçası",
@@ -329,6 +361,31 @@
       "backend_not_configured": "Backend ayarlanamadı. Yalnızca önizleme sonucu gösteriliyor.",
       "backend_unreachable": "Backend şu anda ulaşılamıyor. Yalnızca önizleme sonucu gösteriliyor.",
       "backend_unexpected_response": "Backend beklenmedik cevap verdi. Yalnızca önizleme sonucu gösteriliyor."
+=======
+      "exportReport": "Rapor Dışa Aktar",
+      "analyzeAnother": "Başka Analiz Et"
+      ,"decisionSource": "Karar Kaynagi",
+      "sources": {
+        "musicAi": "Music-AIDetector",
+        "sesAnalizi": "Ses-Analizi",
+        "preview": "Onizleme"
+      },
+      "videoId": "Video ID",
+      "normalizedUrl": "Normalize URL"
+    },
+    "errors": {
+      "invalidYouTubeUrl": "Gecersiz YouTube URL'si. https://www.youtube.com/watch?v=... veya https://youtu.be/... kullanin.",
+      "enterUrl": "Lütfen geçerli bir müzik URL'si girin.",
+      "invalidUrl": "Geçersiz URL formatı. Lütfen http:// veya https:// ile başlayan tam bir URL girin",
+      "unsupportedFormat": "Desteklenmeyen dosya formatı: {format}. İzin verilen formatlar: MP3, WAV, FLAC, M4A",
+      "fileTooSmall": "Dosya çok küçük. Minimum dosya boyutu 1KB.",
+      "fileTooLarge": "Dosya boyutu 100MB limitini aşıyor. Lütfen daha küçük bir dosya kullanın.",
+      "invalidFileName": "Geçersiz dosya adı. Dosya adı yasak karakterler içeriyor.",
+      "suspiciousFile": "Dosya adı şüpheli desenler içeriyor. Lütfen ses dosyanızı yeniden adlandırın.",
+      "invalidHeader": "Dosya başlık analizine göre geçerli bir ses dosyası gibi görünmüyor.",
+      "headerReadError": "Dosya başlığı okunurken hata oluştu",
+      "validationFailed": "Dosya doğrulaması başarısız. Lütfen farklı bir dosya deneyin."
+>>>>>>> Stashed changes
     }
   },
   "mlToolkit": {
@@ -498,8 +555,14 @@
       "crownVote": "Crown Vote - VOTRYX"
     },
     "features": {
+<<<<<<< Updated upstream
       "urlAnalysis": "YouTube Analizi",
       "dataAugmentation": "Veri Artırma"
+=======
+      "upload": "Dosya Yukle",
+      "urlAnalysis": "YouTube Analizi",
+      "dataAugmentation": "Veri Artirma"
+>>>>>>> Stashed changes
     }
   },
   "crownFortune": {
@@ -685,5 +748,261 @@
       "description": "VOTRYX açık kaynak bir projedir",
       "button": "GitHub'da Gör"
     }
+  },
+  "crownDreams": {
+    "meta": {
+      "title": "Crown Dreams - Rüya Günlüğü",
+      "description": "Rüyalarınızı kaydedin, analiz edin ve bilinçaltınızı keşfedin.",
+      "keywords": "rüya günlüğü, lüsid rüya, rüya analizi"
+    },
+    "header": {
+      "badge": "Neural Link Aktif",
+      "welcomeBack": "Hoş Geldin,",
+      "streakLabel": "günlük seri",
+      "lucidRateLabel": "lüsid oranı",
+      "newDream": "Yeni Rüya",
+      "analytics": "Analitik"
+    },
+    "stats": {
+      "totalDreams": "Toplam Rüya",
+      "lucidDreams": "Lüsid Rüya",
+      "currentStreak": "Günlük Seri",
+      "avgClarity": "Ort. Netlik",
+      "days": "gün"
+    },
+    "sections": {
+      "lucidMastery": "Lüsid Ustalık",
+      "dreamClarity": "Rüya Netliği",
+      "sleepQuality": "Uyku Kalitesi",
+      "nextMilestone": "Sonraki seviye",
+      "remaining": "kaldı",
+      "milestoneRank": "Bilinç Kaşifi",
+      "recentDreams": "Son Rüyalar",
+      "viewAll": "Tümünü Gör",
+      "starredDreams": "Yıldızlı Rüyalar",
+      "noStarred": "Henüz yıldızlı rüya yok",
+      "dreamInsights": "İç Görüler",
+      "weeklyActivity": "Haftalık Aktivite"
+    },
+    "journal": {
+      "searchPlaceholder": "Rüya ara...",
+      "filterAll": "Tümü",
+      "noDreams": "Rüya bulunamadı",
+      "lucid": "Lüsid"
+    },
+    "detail": {
+      "clarity": "Netlik",
+      "lucidity": "Lüsidlik",
+      "sleep": "Uyku",
+      "duration": "Süre",
+      "durationUnit": "dk",
+      "emotions": "Duygular",
+      "symbols": "Semboller",
+      "characters": "Karakterler",
+      "locations": "Mekanlar",
+      "aiAnalysis": "AI Analizi"
+    },
+    "patterns": {
+      "theme": "En Yaygın Tema",
+      "emotion": "Baskın Duygu",
+      "symbol": "Lüsid Tetikleyici",
+      "location": "Sık Görülen Mekan",
+      "character": "Tekrarlayan Karakter",
+      "appearsIn": "rüyada görüldü"
+    }
+  },
+  "crownCommend": {
+    "meta": {
+      "title": "Crown Commend - AI YouTube Yorum Üretici",
+      "description": "Yapay zeka ile YouTube videolarına özgün, yaratıcı ve etkileyici yorumlar üretin.",
+      "keywords": "youtube yorum, ai yorum, yapay zeka, commend ai"
+    },
+    "header": {
+      "badge": "YouTube AI Asistanı",
+      "title": "Crown Commend",
+      "subtitle": "Yapay zeka ile YouTube videolarına özgün, yaratıcı ve etkileyici yorumlar üretin."
+    },
+    "form": {
+      "urlLabel": "YouTube Video URL",
+      "urlPlaceholder": "https://youtube.com/watch?v=... veya https://youtu.be/...",
+      "languageLabel": "Yorum Dili",
+      "styleLabel": "Yorum Stili",
+      "generateButton": "Yorum Üret",
+      "generating": "Üretiliyor..."
+    },
+    "feedback": {
+      "errorTitle": "Hata",
+      "successMessage": "Yorum başarıyla YouTube'a gönderildi!"
+    },
+    "styles": {
+      "supportive": {
+        "name": "Destekleyici",
+        "description": "Pozitif ve teşvik edici"
+      },
+      "analytical": {
+        "name": "Analitik",
+        "description": "Detaylı ve düşündürücü"
+      },
+      "humorous": {
+        "name": "Esprili",
+        "description": "Eğlenceli ve samimi"
+      },
+      "curious": {
+        "name": "Meraklı",
+        "description": "Soru soran ve ilgili"
+      },
+      "professional": {
+        "name": "Profesyonel",
+        "description": "Resmi ve saygılı"
+      }
+    },
+    "features": {
+      "title": "Özellikler",
+      "items": {
+        "advancedAI": {
+          "title": "Gelişmiş AI",
+          "description": "Google Gemini ile video içeriğini analiz eder ve bağlamsal yorumlar üretir."
+        },
+        "multiLanguage": {
+          "title": "Çoklu Dil",
+          "description": "Türkçe, İngilizce, Rusça, Çince ve Japonca dillerinde yorum üretir."
+        },
+        "transcript": {
+          "title": "Transcript Analizi",
+          "description": "Video altyazılarını analiz ederek daha alakalı yorumlar üretir."
+        },
+        "transparency": {
+          "title": "Şeffaf AI",
+          "description": "Tüm yorumların AI tarafından üretildiğini belirten bir not içerir."
+        }
+      }
+    },
+    "preview": {
+      "stats": {
+        "views": "görüntüleme",
+        "likes": "beğeni",
+        "comments": "yorum",
+        "subscribers": "abone"
+      }
+    },
+    "editor": {
+      "aiGenerated": "AI Tarafından Üretildi",
+      "withTranscript": "Transcript analizi yapıldı",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "regenerate": "Yeniden Üret",
+      "post": "YouTube'a Gönder",
+      "posting": "Gönderiliyor...",
+      "alreadyPosted": "Zaten Gönderildi",
+      "processingTimeTemplate": "{{seconds}} saniyede üretildi",
+      "disclaimer": "Yorum YouTube'a gönderildiğinde AI tarafından üretildiğini belirten bir not içerecektir.",
+      "alreadyPostedNote": "Bu videoya zaten bir yorum gönderilmiş. Her videoya yalnızca bir yorum gönderilebilir."
+    },
+    "disclaimer": "Crown Commend, YouTube'un hizmet şartlarına uygun şekilde çalışır. Üretilen tüm yorumlar AI tarafından oluşturulduğunu belirten bir not içerir. Spam veya kötüye kullanım amaçlı kullanım yasaktır.",
+    "errors": {
+      "invalidUrl": "Lütfen geçerli bir YouTube URL'si girin.",
+      "apiNotConfigured": "API yapılandırılmadı.",
+      "unknownError": "Bilinmeyen hata",
+      "failedToGenerate": "Yorum üretilemedi.",
+      "noCommentToPost": "Gönderilecek yorum yok.",
+      "alreadyCommented": "Zaten yorum gönderilmiş",
+      "failedToPost": "Yorum gönderilemedi."
+    }
+  },
+  "privacy": {
+    "meta": {
+      "title": "Gizlilik Politikası - CrownCode",
+      "description": "CrownCode platformu gizlilik politikası"
+    },
+    "backToHome": "Ana Sayfaya Dön",
+    "title": "Gizlilik Politikası",
+    "lastUpdated": "Son güncelleme: 24 Şubat 2026",
+    "intro": "CrownCode, kullanıcı gizliliğine saygı gösterir. Bu politika, platformumuzun veri toplama ve kullanım uygulamalarını açıklar.",
+    "sections": {
+      "dataCollection": {
+        "title": "Toplanan Veriler",
+        "content": "CrownCode platformu, kullanıcı deneyimini iyileştirmek için minimal veri toplar. Bunlar arasında tarayıcı bilgileri, tercih edilen dil ve tema ayarları bulunur. Kişisel olarak tanımlanabilir bilgi toplamamaktayız."
+      },
+      "dataUsage": {
+        "title": "Veri Kullanımı",
+        "content": "Toplanan veriler yalnızca platform işlevselliğini sağlamak için kullanılır. Verileriniz üçüncü taraflarla paylaşılmaz veya satılmaz. AI araçları (Crown Commend, Crown Fortune) kullanıcı verilerini saklamaz."
+      },
+      "dataSecurity": {
+        "title": "Veri Güvenliği",
+        "content": "Tüm veri aktarımları HTTPS ile şifrelenir. Yerel depolama (localStorage) yalnızca kullanıcı tercihlerini saklar. Oturum verileri tarayıcı kapatıldığında silinir."
+      },
+      "cookies": {
+        "title": "Çerezler",
+        "content": "Platform, temel işlevsellik için gerekli çerezleri kullanır. Bu çerezler dil tercihi ve tema ayarlarını içerir. Üçüncü taraf izleme çerezleri kullanılmamaktadır."
+      }
+    },
+    "contactLabel": "Gizlilik ile ilgili sorularınız için:"
+  },
+  "notFound": {
+    "meta": {
+      "title": "404 - Sayfa Bulunamadı",
+      "description": "Aradığınız sayfa bulunamadı."
+    },
+    "title": "Sayfa Bulunamadı",
+    "description": "Aradığınız sayfa taşınmış, silinmiş veya hiç var olmamış olabilir.",
+    "goHome": "Ana Sayfaya Dön",
+    "goBack": "Geri Git",
+    "helpfulPages": "Size yardımcı olabilecek sayfalar:",
+    "projects": "Projeler"
+  },
+  "externalLink": {
+    "title": "Harici Bağlantı Uyarısı",
+    "description": "Bu bağlantı sizi harici bir web sitesine yönlendirecek:",
+    "note": "Bu bağlantının güvenli olduğundan emin misiniz?",
+    "continue": "Devam Et",
+    "cancel": "İptal",
+    "tip": "Harici siteler CrownCode tarafından kontrol edilmez."
+  },
+  "searchPage": {
+    "meta": {
+      "title": "Arama",
+      "description": "CrownCode platformunda proje ve içerik arama."
+    },
+    "title": "Arama",
+    "subtitle": "CrownCode platformunda proje ve içerik arayın",
+    "placeholder": "Ara...",
+    "button": "Ara",
+    "resultsFound": "sonuç bulundu",
+    "noResults": "Sonuç bulunamadı",
+    "emptyState": "Aramaya başlamak için yukarıdaki alana bir şeyler yazın"
+  },
+  "terms": {
+    "meta": {
+      "title": "Kullanım Koşulları - CrownCode",
+      "description": "CrownCode platformu kullanım koşulları"
+    },
+    "backToHome": "Ana Sayfaya Dön",
+    "title": "Kullanım Koşulları",
+    "lastUpdated": "Son güncelleme: 24 Şubat 2026",
+    "intro": "CrownCode platformunu kullanmadan önce lütfen bu kullanım koşullarını dikkatlice okuyunuz. Platform üzerindeki tüm hizmetler bu koşullara tabidir.",
+    "sections": {
+      "acceptableUse": {
+        "title": "Kabul Edilen Kullanım",
+        "content": "CrownCode platformunu kullanarak bu koşulları kabul etmiş olursunuz. Platform, yazılım geliştirme araçları, AI destekli uygulamalar ve açık kaynak projeler sunar. Platformu yasal amaçlar için kullanmayı kabul edersiniz."
+      },
+      "userResponsibilities": {
+        "title": "Kullanıcı Sorumlulukları",
+        "content": "Crown Commend gibi AI araçlarını sorumlu bir şekilde kullanmayı kabul edersiniz. Spam, kötüye kullanım veya platformların hizmet şartlarını ihlal eden içerik oluşturmak yasaktır. Tüm AI içerikleri bunu belirten bir açıklama içerir."
+      },
+      "intellectualProperty": {
+        "title": "Fikri Mülkiyet",
+        "content": "CrownCode platformu ve içeriği Hasan Arthur Altuntaş'a aittir. Açık kaynak projeler kendi lisansları altında sunulur (genellikle MIT). Platform kaynak kodunu kendi lisans koşulları altında kullanabilirsiniz."
+      },
+      "disclaimer": {
+        "title": "Sorumluluk Reddi",
+        "content": "Platform \"olduğu gibi\" sunulmaktadır. AI araçları deneysel niteliktedir ve sonuçların doğruluğu garanti edilmez. Platform kesintileri veya veri kaybından sorumlu değiliz. Üçüncü taraf hizmetlerin kullanılabilirliğini garanti etmiyoruz."
+      }
+    },
+    "openSource": {
+      "title": "Açık Kaynak Lisansları",
+      "content": "CrownCode açık kaynak bir projedir. Kaynak kodu MIT lisansı altında GitHub'da mevcuttur. Üçüncü taraf kütüphaneler kendi lisanslarına tabidir.",
+      "viewOnGithub": "GitHub'da Görüntüle"
+    },
+    "contactLabel": "Koşullar hakkında sorularınız için:"
   }
 }

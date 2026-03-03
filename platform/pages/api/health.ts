@@ -3,6 +3,8 @@
  * Returns application health status and system information
  *
  * @route GET /api/health
+ * Note: Active only when running in server deployment mode.
+ * In static export mode (`DEPLOYMENT_TARGET=static`) this route is not served.
  */
 
 import type { NextApiRequest, NextApiResponse } from 'next'

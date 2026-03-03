@@ -7,12 +7,13 @@ import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
 
 const NotFoundPage: NextPage = () => {
-  const { language } = useLanguage()
+  const { t } = useLanguage()
+  const nf = t.notFound
 
   return (
     <MainLayout
-      title={language === 'tr' ? '404 - Sayfa Bulunamadı' : '404 - Page Not Found'}
-      description={language === 'tr' ? 'Aradığınız sayfa bulunamadı.' : 'The page you are looking for could not be found.'}
+      title={nf.meta.title}
+      description={nf.meta.description}
     >
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="max-w-2xl w-full text-center">
@@ -33,41 +34,39 @@ const NotFoundPage: NextPage = () => {
 
             {/* Title */}
             <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">
-              {language === 'tr' ? 'Sayfa Bulunamadı' : 'Page Not Found'}
+              {nf.title}
             </h2>
 
             {/* Description */}
             <p className="text-lg text-text-secondary mb-8 max-w-md mx-auto">
-              {language === 'tr'
-                ? 'Aradığınız sayfa taşınmış, silinmiş veya hiç var olmamış olabilir.'
-                : 'The page you are looking for might have been moved, deleted, or never existed.'
-              }
+              {nf.description}
             </p>
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="/" className="btn-primary flex items-center gap-2">
                 <Home size={20} />
-                <span>{language === 'tr' ? 'Ana Sayfaya Dön' : 'Go to Home'}</span>
+                <span>{nf.goHome}</span>
               </Link>
 
               <button
+                type="button"
                 onClick={() => window.history.back()}
                 className="btn-secondary flex items-center gap-2"
               >
                 <ArrowLeft size={20} />
-                <span>{language === 'tr' ? 'Geri Git' : 'Go Back'}</span>
+                <span>{nf.goBack}</span>
               </button>
             </div>
 
             {/* Helpful Links */}
             <div className="mt-12 pt-8 border-t border-border">
               <p className="text-sm text-text-muted mb-4">
-                {language === 'tr' ? 'Size yardımcı olabilecek sayfalar:' : 'Pages that might help:'}
+                {nf.helpfulPages}
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <Link href="/#products" className="text-primary hover:text-accent transition-colors">
-                  {language === 'tr' ? 'Projeler' : 'Projects'}
+                  {nf.projects}
                 </Link>
                 <Link href="/ai-music-detection" className="text-primary hover:text-accent transition-colors">
                   AI Music Detection

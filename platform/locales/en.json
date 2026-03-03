@@ -226,6 +226,7 @@
   },
   "aiDetection": {
     "meta": {
+<<<<<<< Updated upstream
       "title": "AURIS - AI Music Detection",
       "description": "AURIS - YouTube-first analysis flow for AI music detection. Uses backend integrations when available and a deterministic preview when models are offline.",
       "keywords": "AURIS, AI music detection, YouTube analysis, audio analysis, CrownCode"
@@ -239,11 +240,27 @@
       "title": "AURIS Preview Mode",
       "currentStatus": "Current Status:",
       "currentStatusText": "AURIS model inference is optional and may be offline.",
+=======
+      "title": "AI Music Detection - YouTube Workflow",
+      "description": "YouTube-first analysis flow for AI music detection. Uses backend integrations when available and a deterministic preview when models are offline.",
+      "keywords": "AI music detection, YouTube analysis, audio analysis, preview workflow, CrownCode"
+    },
+    "header": {
+      "badge": "AI Music Detection",
+      "title": "Detect AI-Generated Music",
+      "subtitle": "YouTube-first analysis interface with optional backend integrations and a safe preview fallback."
+    },
+    "warning": {
+      "title": "YouTube Preview Mode",
+      "currentStatus": "Current Status:",
+      "currentStatusText": "Model inference is optional and may be offline.",
+>>>>>>> Stashed changes
       "analysisResults": "Analysis Results:",
       "analysisResultsText": "Preview results are deterministic and URL-based.",
       "plannedImplementation": "Planned Implementation:",
       "plannedImplementationText": "AURIS - Backend AI integration with PyTorch + wav2vec2 model (Q2 2025)."
     },
+<<<<<<< Updated upstream
     "upload": {
       "title": "Upload Audio File",
       "dropHere": "Drop your audio file here",
@@ -262,10 +279,17 @@
         "spotify": "Spotify (coming soon)",
         "appleMusic": "Apple Music (coming soon)"
       },
+=======
+    "url": {
+      "title": "Analyze YouTube Link",
+      "placeholder": "Paste a YouTube link (youtube.com or youtu.be)...",
+      "supportedPlatforms": "Supported platform:",
+>>>>>>> Stashed changes
       "analyzeButton": "Process Link",
       "analyzing": "Processing..."
     },
     "pipeline": {
+<<<<<<< Updated upstream
       "title": "AURIS Pipeline",
       "items": {
         "download": "Audio intake",
@@ -285,6 +309,22 @@
       "subtitle": "Validating the source and preparing the analysis pipeline.",
       "steps": {
         "validating": "Validate source",
+=======
+      "title": "Pipeline Modules",
+      "items": {
+        "download": "YouTube audio capture",
+        "musicAi": "Music-AIDetector inference",
+        "sesAnalizi": "Ses-Analizi report",
+        "preview": "Preview fallback"
+      },
+      "note": "Preview mode is always available when models are offline."
+    },
+    "processing": {
+      "title": "Analysis in Progress...",
+      "subtitle": "Validating the link and preparing the analysis pipeline.",
+      "steps": {
+        "validating": "Validate URL",
+>>>>>>> Stashed changes
         "downloading": "Prepare audio",
         "analyzing": "Analyze signals",
         "complete": "Finalize report"
@@ -305,14 +345,21 @@
       "analysisDetails": "Analysis Details:",
       "exportReport": "Export Report",
       "analyzeAnother": "Analyze Another",
+<<<<<<< Updated upstream
       "spotifyTrack": "Spotify Track",
       "decisionSource": "Decision Source",
       "sources": {
         "musicAi": "AURIS",
+=======
+      "decisionSource": "Decision Source",
+      "sources": {
+        "musicAi": "Music-AIDetector",
+>>>>>>> Stashed changes
         "sesAnalizi": "Ses-Analizi",
         "preview": "Preview"
       },
       "videoId": "Video ID",
+<<<<<<< Updated upstream
       "normalizedUrl": "Normalized URL",
       "fileName": "File Name",
       "fileSize": "File Size",
@@ -329,6 +376,13 @@
       "backend_not_configured": "Backend is not configured. Showing preview-only result.",
       "backend_unreachable": "Backend is unreachable right now. Showing preview-only result.",
       "backend_unexpected_response": "Backend returned an unexpected response. Showing preview-only result."
+=======
+      "normalizedUrl": "Normalized URL"
+    },
+    "errors": {
+      "enterUrl": "Please enter a YouTube URL.",
+      "invalidYouTubeUrl": "Invalid YouTube URL. Use https://www.youtube.com/watch?v=... or https://youtu.be/..."
+>>>>>>> Stashed changes
     }
   },
   "mlToolkit": {
@@ -498,6 +552,10 @@
       "crownVote": "Crown Vote - VOTRYX"
     },
     "features": {
+<<<<<<< Updated upstream
+=======
+      "upload": "Upload File",
+>>>>>>> Stashed changes
       "urlAnalysis": "YouTube Analysis",
       "dataAugmentation": "Data Augmentation"
     }
@@ -686,5 +744,261 @@
       "description": "VOTRYX is an open-source project",
       "button": "View on GitHub"
     }
+  },
+  "crownDreams": {
+    "meta": {
+      "title": "Crown Dreams - Dream Journal",
+      "description": "Record your dreams, analyze them, and explore your subconscious.",
+      "keywords": "dream journal, lucid dream, dream analysis"
+    },
+    "header": {
+      "badge": "Neural Link Active",
+      "welcomeBack": "Welcome back,",
+      "streakLabel": "day streak",
+      "lucidRateLabel": "lucid rate",
+      "newDream": "New Dream",
+      "analytics": "Analytics"
+    },
+    "stats": {
+      "totalDreams": "Total Dreams",
+      "lucidDreams": "Lucid Dreams",
+      "currentStreak": "Current Streak",
+      "avgClarity": "Avg Clarity",
+      "days": "days"
+    },
+    "sections": {
+      "lucidMastery": "Lucid Mastery",
+      "dreamClarity": "Dream Clarity",
+      "sleepQuality": "Sleep Quality",
+      "nextMilestone": "Next milestone",
+      "remaining": "to",
+      "milestoneRank": "Consciousness Explorer",
+      "recentDreams": "Recent Dreams",
+      "viewAll": "View All",
+      "starredDreams": "Starred Dreams",
+      "noStarred": "No starred dreams yet",
+      "dreamInsights": "Dream Insights",
+      "weeklyActivity": "Weekly Activity"
+    },
+    "journal": {
+      "searchPlaceholder": "Search dreams...",
+      "filterAll": "All",
+      "noDreams": "No dreams found",
+      "lucid": "Lucid"
+    },
+    "detail": {
+      "clarity": "Clarity",
+      "lucidity": "Lucidity",
+      "sleep": "Sleep",
+      "duration": "Duration",
+      "durationUnit": "min",
+      "emotions": "Emotions",
+      "symbols": "Symbols",
+      "characters": "Characters",
+      "locations": "Locations",
+      "aiAnalysis": "AI Analysis"
+    },
+    "patterns": {
+      "theme": "Most Common Theme",
+      "emotion": "Dominant Emotion",
+      "symbol": "Lucid Trigger",
+      "location": "Frequent Location",
+      "character": "Recurring Character",
+      "appearsIn": "Appears in {{count}} dreams"
+    }
+  },
+  "crownCommend": {
+    "meta": {
+      "title": "Crown Commend - AI YouTube Comment Generator",
+      "description": "Generate unique, creative and engaging comments for YouTube videos with AI.",
+      "keywords": "youtube comment, ai comment, artificial intelligence, commend ai"
+    },
+    "header": {
+      "badge": "YouTube AI Assistant",
+      "title": "Crown Commend",
+      "subtitle": "Generate unique, creative and engaging comments for YouTube videos with AI."
+    },
+    "form": {
+      "urlLabel": "YouTube Video URL",
+      "urlPlaceholder": "https://youtube.com/watch?v=... or https://youtu.be/...",
+      "languageLabel": "Comment Language",
+      "styleLabel": "Comment Style",
+      "generateButton": "Generate Comment",
+      "generating": "Generating..."
+    },
+    "feedback": {
+      "errorTitle": "Error",
+      "successMessage": "Comment successfully posted to YouTube!"
+    },
+    "styles": {
+      "supportive": {
+        "name": "Supportive",
+        "description": "Positive and encouraging"
+      },
+      "analytical": {
+        "name": "Analytical",
+        "description": "Detailed and thought-provoking"
+      },
+      "humorous": {
+        "name": "Humorous",
+        "description": "Fun and friendly"
+      },
+      "curious": {
+        "name": "Curious",
+        "description": "Questioning and engaged"
+      },
+      "professional": {
+        "name": "Professional",
+        "description": "Formal and respectful"
+      }
+    },
+    "features": {
+      "title": "Features",
+      "items": {
+        "advancedAI": {
+          "title": "Advanced AI",
+          "description": "Analyzes video content with Google Gemini and generates contextual comments."
+        },
+        "multiLanguage": {
+          "title": "Multi-Language",
+          "description": "Generates comments in Turkish, English, Russian, Chinese and Japanese."
+        },
+        "transcript": {
+          "title": "Transcript Analysis",
+          "description": "Analyzes video subtitles to generate more relevant comments."
+        },
+        "transparency": {
+          "title": "Transparent AI",
+          "description": "All comments include a disclaimer indicating they were generated by AI."
+        }
+      }
+    },
+    "preview": {
+      "stats": {
+        "views": "views",
+        "likes": "likes",
+        "comments": "comments",
+        "subscribers": "subscribers"
+      }
+    },
+    "editor": {
+      "aiGenerated": "AI Generated",
+      "withTranscript": "Transcript analyzed",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "regenerate": "Regenerate",
+      "post": "Post to YouTube",
+      "posting": "Posting...",
+      "alreadyPosted": "Already Posted",
+      "processingTimeTemplate": "Generated in {{seconds}}s",
+      "disclaimer": "The comment will include a note indicating it was generated by AI when posted to YouTube.",
+      "alreadyPostedNote": "A comment has already been posted to this video. Only one comment per video is allowed."
+    },
+    "disclaimer": "Crown Commend operates in compliance with YouTube's terms of service. All generated comments include a note indicating they were created by AI. Use for spam or abuse is prohibited.",
+    "errors": {
+      "invalidUrl": "Please enter a valid YouTube URL.",
+      "apiNotConfigured": "API is not configured.",
+      "unknownError": "Unknown error",
+      "failedToGenerate": "Failed to generate comment.",
+      "noCommentToPost": "No comment to post.",
+      "alreadyCommented": "Already commented",
+      "failedToPost": "Failed to post comment."
+    }
+  },
+  "privacy": {
+    "meta": {
+      "title": "Privacy Policy - CrownCode",
+      "description": "CrownCode platform privacy policy"
+    },
+    "backToHome": "Back to Home",
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: February 24, 2026",
+    "intro": "CrownCode respects user privacy. This policy explains our platform's data collection and usage practices.",
+    "sections": {
+      "dataCollection": {
+        "title": "Data Collection",
+        "content": "CrownCode platform collects minimal data to improve user experience. This includes browser information, preferred language and theme settings. We do not collect personally identifiable information."
+      },
+      "dataUsage": {
+        "title": "Data Usage",
+        "content": "Collected data is used solely to provide platform functionality. Your data is not shared with or sold to third parties. AI tools (Crown Commend, Crown Fortune) do not store user data."
+      },
+      "dataSecurity": {
+        "title": "Data Security",
+        "content": "All data transfers are encrypted via HTTPS. Local storage (localStorage) only stores user preferences. Session data is cleared when the browser is closed."
+      },
+      "cookies": {
+        "title": "Cookies",
+        "content": "The platform uses essential cookies required for basic functionality. These cookies include language preference and theme settings. No third-party tracking cookies are used."
+      }
+    },
+    "contactLabel": "For privacy-related questions:"
+  },
+  "notFound": {
+    "meta": {
+      "title": "404 - Page Not Found",
+      "description": "The page you are looking for could not be found."
+    },
+    "title": "Page Not Found",
+    "description": "The page you are looking for might have been moved, deleted, or never existed.",
+    "goHome": "Go to Home",
+    "goBack": "Go Back",
+    "helpfulPages": "Pages that might help:",
+    "projects": "Projects"
+  },
+  "externalLink": {
+    "title": "External Link Warning",
+    "description": "This link will take you to an external website:",
+    "note": "Are you sure this link is safe?",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "tip": "External sites are not controlled by CrownCode."
+  },
+  "searchPage": {
+    "meta": {
+      "title": "Search",
+      "description": "Search projects and content on CrownCode platform."
+    },
+    "title": "Search",
+    "subtitle": "Search for projects and content on CrownCode platform",
+    "placeholder": "Search...",
+    "button": "Search",
+    "resultsFound": "result(s) found",
+    "noResults": "No results found",
+    "emptyState": "Start typing in the search box above to find projects and content"
+  },
+  "terms": {
+    "meta": {
+      "title": "Terms of Service - CrownCode",
+      "description": "CrownCode platform terms of service"
+    },
+    "backToHome": "Back to Home",
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: February 24, 2026",
+    "intro": "Please read these terms of service carefully before using the CrownCode platform. All services on the platform are subject to these terms.",
+    "sections": {
+      "acceptableUse": {
+        "title": "Acceptable Use",
+        "content": "By using the CrownCode platform, you agree to these terms. The platform provides software development tools, AI-powered applications, and open-source projects. You agree to use the platform for lawful purposes only."
+      },
+      "userResponsibilities": {
+        "title": "User Responsibilities",
+        "content": "You agree to use AI tools like Crown Commend responsibly. Creating spam, abuse, or content that violates platform terms of service is prohibited. All AI-generated content includes a disclaimer indicating this."
+      },
+      "intellectualProperty": {
+        "title": "Intellectual Property",
+        "content": "The CrownCode platform and content belong to Hasan Arthur Altuntaş. Open-source projects are provided under their respective licenses (typically MIT). You may use platform source code under its license terms."
+      },
+      "disclaimer": {
+        "title": "Disclaimer",
+        "content": "The platform is provided \"as is\". AI tools are experimental and result accuracy is not guaranteed. We are not responsible for platform interruptions or data loss. We do not guarantee third-party service availability."
+      }
+    },
+    "openSource": {
+      "title": "Open Source Licenses",
+      "content": "CrownCode is an open-source project. Source code is available on GitHub under the MIT license. Third-party libraries are subject to their own licenses.",
+      "viewOnGithub": "View on GitHub"
+    },
+    "contactLabel": "For questions about these terms:"
   }
 }

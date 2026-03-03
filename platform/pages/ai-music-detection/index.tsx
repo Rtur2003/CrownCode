@@ -9,7 +9,11 @@
 // @since 2025-01-01
 // =========================================================================
 
+<<<<<<< Updated upstream
 import React, { useCallback, useRef, useState } from 'react'
+=======
+import React from 'react'
+>>>>>>> Stashed changes
 import type { NextPage } from 'next'
 import { motion } from 'framer-motion'
 import {
@@ -19,15 +23,22 @@ import {
   Clock,
   Download,
   Link as LinkIcon,
+<<<<<<< Updated upstream
   Music,
   Shield,
   Upload,
+=======
+  Shield,
+>>>>>>> Stashed changes
   Youtube,
   Zap
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
+<<<<<<< Updated upstream
 import { useFileAnalysis } from '@/hooks/useFileAnalysis'
+=======
+>>>>>>> Stashed changes
 import { useYouTubeAnalysis } from '@/hooks/useYouTubeAnalysis'
 import styles from '@/styles/pages/ai-detection.module.css'
 
@@ -36,6 +47,7 @@ const AIMusicDetectionPage: NextPage = () => {
   const {
     url,
     setUrl,
+<<<<<<< Updated upstream
     processingState: youtubeProcessingState,
     analysisResult: youtubeResult,
     error: youtubeError,
@@ -142,6 +154,17 @@ const AIMusicDetectionPage: NextPage = () => {
 }
 
   const errorMessage = resolveErrorMessage(error)
+=======
+    processingState,
+    analysisResult,
+    error,
+    runAnalysis,
+    reset
+  } = useYouTubeAnalysis()
+
+  const isProcessing = ['validating', 'downloading', 'analyzing'].includes(processingState)
+  const errorMessage = error ? (t.aiDetection.errors?.[error] || t.aiDetection.error.title) : null
+>>>>>>> Stashed changes
 
   const stepOrder: Array<'validating' | 'downloading' | 'analyzing' | 'complete'> = [
     'validating',
@@ -155,6 +178,7 @@ const AIMusicDetectionPage: NextPage = () => {
 
   const getDecisionLabel = (source: string) => {
     const labels = t.aiDetection.result.sources
+<<<<<<< Updated upstream
     if (!labels) {
       return source
     }
@@ -164,6 +188,11 @@ const AIMusicDetectionPage: NextPage = () => {
     if (source === 'ses_analizi') {
       return labels.sesAnalizi
     }
+=======
+    if (!labels) return source
+    if (source === 'music_ai') return labels.musicAi
+    if (source === 'ses_analizi') return labels.sesAnalizi
+>>>>>>> Stashed changes
     return labels.preview
   }
 
@@ -175,7 +204,10 @@ const AIMusicDetectionPage: NextPage = () => {
     const confidence = Math.round(analysisResult.confidence * 100)
     const decisionLabel = getDecisionLabel(analysisResult.decisionSource)
     const isAI = analysisResult.isAIGenerated
+<<<<<<< Updated upstream
     const source = analysisResult.source
+=======
+>>>>>>> Stashed changes
 
     return (
       <motion.div
@@ -215,6 +247,7 @@ const AIMusicDetectionPage: NextPage = () => {
         </div>
 
         <div className={styles['result-source']}>
+<<<<<<< Updated upstream
           {source.kind === 'youtube' && (
             <>
               <div className={styles['result-source-item']}>
@@ -255,6 +288,16 @@ const AIMusicDetectionPage: NextPage = () => {
               </div>
             </>
           )}
+=======
+          <div className={styles['result-source-item']}>
+            <span>{t.aiDetection.result.videoId}</span>
+            <span>{analysisResult.source.videoId}</span>
+          </div>
+          <div className={styles['result-source-item']}>
+            <span>{t.aiDetection.result.normalizedUrl}</span>
+            <span>{analysisResult.source.normalizedUrl}</span>
+          </div>
+>>>>>>> Stashed changes
         </div>
 
         <div className={styles['artificial-indicators']}>
@@ -273,7 +316,11 @@ const AIMusicDetectionPage: NextPage = () => {
           </button>
           <button
             className={styles['btn-primary']}
+<<<<<<< Updated upstream
             onClick={resetAll}
+=======
+            onClick={reset}
+>>>>>>> Stashed changes
           >
             {t.aiDetection.result.analyzeAnother}
           </button>
@@ -328,6 +375,7 @@ const AIMusicDetectionPage: NextPage = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
+<<<<<<< Updated upstream
               <div className={styles['input-stack']}>
                 <div className={styles['input-sources']}>
                   <span>{t.aiDetection.url.supportedPlatforms}</span>
@@ -410,6 +458,36 @@ const AIMusicDetectionPage: NextPage = () => {
                     >
                       {isProcessing ? t.aiDetection.url.analyzing : t.aiDetection.url.analyzeButton}
                     </button>
+=======
+              <div className={styles['url-section']} id="url">
+                <h2>{t.aiDetection.url.title}</h2>
+                <div className={styles['url-input-container']}>
+                  <div className={styles['url-input-wrapper']}>
+                    <LinkIcon size={20} />
+                    <input
+                      type="url"
+                      placeholder={t.aiDetection.url.placeholder}
+                      value={url}
+                      onChange={(event) => setUrl(event.target.value)}
+                      className={styles['url-input']}
+                    />
+                  </div>
+                  <button
+                    onClick={runAnalysis}
+                    disabled={!url.trim() || isProcessing}
+                    className={`${styles['btn-primary']} ${isProcessing ? styles['loading'] : ''}`}
+                  >
+                    {isProcessing ? t.aiDetection.url.analyzing : t.aiDetection.url.analyzeButton}
+                  </button>
+                </div>
+
+                <div className={styles['supported-platforms']}>
+                  <span>{t.aiDetection.url.supportedPlatforms}</span>
+                  <div className={styles['platform-icons']}>
+                    <div className={styles['platform-icon']}>
+                      <Youtube size={20} className="text-current" />
+                    </div>
+>>>>>>> Stashed changes
                   </div>
                 </div>
               </div>
@@ -419,6 +497,7 @@ const AIMusicDetectionPage: NextPage = () => {
                 <ul className={styles['pipeline-list']}>
                   <li className={styles['pipeline-item']}>
                     <span>{t.aiDetection.pipeline.items.download}</span>
+<<<<<<< Updated upstream
                     <span className={styles['pipeline-tag']}>{t.aiDetection.pipeline.tags.ytDlp}</span>
                   </li>
                   <li className={styles['pipeline-item']}>
@@ -432,6 +511,21 @@ const AIMusicDetectionPage: NextPage = () => {
                   <li className={styles['pipeline-item']}>
                     <span>{t.aiDetection.pipeline.items.preview}</span>
                     <span className={styles['pipeline-tag']}>{t.aiDetection.pipeline.tags.always}</span>
+=======
+                    <span className={styles['pipeline-tag']}>yt-dlp</span>
+                  </li>
+                  <li className={styles['pipeline-item']}>
+                    <span>{t.aiDetection.pipeline.items.musicAi}</span>
+                    <span className={styles['pipeline-tag']}>optional</span>
+                  </li>
+                  <li className={styles['pipeline-item']}>
+                    <span>{t.aiDetection.pipeline.items.sesAnalizi}</span>
+                    <span className={styles['pipeline-tag']}>optional</span>
+                  </li>
+                  <li className={styles['pipeline-item']}>
+                    <span>{t.aiDetection.pipeline.items.preview}</span>
+                    <span className={styles['pipeline-tag']}>always</span>
+>>>>>>> Stashed changes
                   </li>
                 </ul>
                 <p className={styles['pipeline-note']}>
@@ -475,7 +569,11 @@ const AIMusicDetectionPage: NextPage = () => {
               <h3>{t.aiDetection.error.title}</h3>
               <p>{errorMessage}</p>
               <button
+<<<<<<< Updated upstream
                 onClick={resetAll}
+=======
+                onClick={reset}
+>>>>>>> Stashed changes
                 className={styles['btn-primary']}
               >
                 {t.aiDetection.error.tryAgain}

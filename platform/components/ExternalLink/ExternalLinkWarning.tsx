@@ -1,7 +1,6 @@
 /**
  * External Link Warning Component
  * Shows a warning modal when users click external links
- * Cross-pollinated from my_music_page
  */
 
 import React, { useState, useEffect, useCallback } from 'react'
@@ -20,22 +19,8 @@ export const ExternalLinkWarning: React.FC<ExternalLinkWarningProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [targetUrl, setTargetUrl] = useState('')
-  const { language } = useLanguage()
-
-  const t = {
-    title: language === 'tr' ? 'Harici Bağlantı Uyarısı' : 'External Link Warning',
-    description: language === 'tr'
-      ? 'Bu bağlantı sizi harici bir web sitesine yönlendirecek:'
-      : 'This link will take you to an external website:',
-    note: language === 'tr'
-      ? 'Bu bağlantının güvenli olduğundan emin misiniz?'
-      : 'Are you sure this link is safe?',
-    continue: language === 'tr' ? 'Devam Et' : 'Continue',
-    cancel: language === 'tr' ? 'İptal' : 'Cancel',
-    tip: language === 'tr'
-      ? 'Harici siteler CrownCode tarafından kontrol edilmez.'
-      : 'External sites are not controlled by CrownCode.'
-  }
+  const { t } = useLanguage()
+  const el = t.externalLink
 
   const isExternalLink = useCallback((url: string): boolean => {
     try {
@@ -142,10 +127,10 @@ export const ExternalLinkWarning: React.FC<ExternalLinkWarningProps> = ({
             </div>
 
             {/* Title */}
-            <h3 className="external-link-title">{t.title}</h3>
+            <h3 className="external-link-title">{el.title}</h3>
 
             {/* Description */}
-            <p className="external-link-description">{t.description}</p>
+            <p className="external-link-description">{el.description}</p>
 
             {/* URL Display */}
             <div className="external-link-url">
@@ -154,29 +139,31 @@ export const ExternalLinkWarning: React.FC<ExternalLinkWarningProps> = ({
             </div>
 
             {/* Note */}
-            <p className="external-link-note">{t.note}</p>
+            <p className="external-link-note">{el.note}</p>
 
             {/* Buttons */}
             <div className="external-link-buttons">
               <button
+                type="button"
                 className="external-link-btn primary"
                 onClick={handleContinue}
               >
                 <ExternalLink size={18} />
-                {t.continue}
+                {el.continue}
               </button>
               <button
+                type="button"
                 className="external-link-btn secondary"
                 onClick={handleClose}
               >
-                {t.cancel}
+                {el.cancel}
               </button>
             </div>
 
             {/* Tip */}
             <div className="external-link-tip">
               <ShieldAlert size={14} />
-              <span>{t.tip}</span>
+              <span>{el.tip}</span>
             </div>
           </motion.div>
         </motion.div>

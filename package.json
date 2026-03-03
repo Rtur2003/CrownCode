@@ -1,42 +1,32 @@
 {
-  "name": "devforge-suite-with-rthur",
+  "name": "crowncode-workspace",
   "version": "1.0.0",
-  "description": "Comprehensive Development Platform for Modern Web Applications",
+  "description": "CrownCode workspace orchestration scripts for platform development",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npm run dev:platform\" \"npm run dev:projects\"",
-    "dev:platform": "cd platform && npm run dev",
-    "dev:projects": "npm run dev:ai-music",
-    "dev:ai-music": "cd projects/ai-music-detection && npm run dev",
-    "build": "npm run build:platform && npm run build:projects",
-    "build:platform": "cd platform && npm run build",
-    "build:projects": "npm run build:ai-music",
-    "build:ai-music": "cd projects/ai-music-detection && npm run build",
-    "test": "npm run test:platform && npm run test:projects",
-    "test:platform": "cd platform && npm test",
-    "test:projects": "npm run test:ai-music",
-    "test:ai-music": "cd projects/ai-music-detection && npm test",
+    "dev": "npm run dev:platform",
+    "dev:platform": "npm --prefix platform run dev",
+    "build": "npm run build:platform",
+    "build:platform": "npm --prefix platform run build",
+    "test": "npm run test:platform",
+    "test:platform": "npm --prefix platform run test --if-present",
     "test:all": "npm run test",
-    "lint": "npm run lint:platform && npm run lint:projects",
-    "lint:platform": "cd platform && npm run lint",
-    "lint:projects": "npm run lint:ai-music",
-    "lint:ai-music": "cd projects/ai-music-detection && npm run lint",
+    "lint": "npm run lint:platform",
+    "lint:platform": "npm --prefix platform run lint",
+    "type-check": "npm run type-check:platform",
+    "type-check:platform": "npm --prefix platform run type-check",
     "deploy:staging": "npm run build && npm run deploy:staging:platform",
     "deploy:production": "npm run build && npm run deploy:production:platform",
     "deploy:staging:platform": "cd platform && vercel --target staging",
     "deploy:production:platform": "cd platform && vercel --prod",
-    "setup": "npm install && npm run setup:platform && npm run setup:projects",
-    "setup:platform": "cd platform && npm install",
-    "setup:projects": "npm run setup:ai-music",
-    "setup:ai-music": "cd projects/ai-music-detection && npm install",
-    "clean": "npm run clean:platform && npm run clean:projects",
-    "clean:platform": "cd platform && rm -rf .next node_modules",
-    "clean:projects": "npm run clean:ai-music",
-    "clean:ai-music": "cd projects/ai-music-detection && rm -rf .next node_modules"
+    "setup": "npm install && npm run setup:platform",
+    "setup:platform": "npm --prefix platform install",
+    "clean": "npm run clean:platform",
+    "clean:platform": "npm --prefix platform run clean --if-present"
   },
   "keywords": [
-    "devforge",
-    "suite",
+    "crowncode",
+    "workspace",
     "platform",
     "ai",
     "music",
@@ -59,12 +49,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Rtur2003/DevForge-Suite-with-Rthur.git"
+    "url": "git+https://github.com/Rtur2003/CrownCode.git"
   },
   "bugs": {
-    "url": "https://github.com/Rtur2003/DevForge-Suite-with-Rthur/issues"
+    "url": "https://github.com/Rtur2003/CrownCode/issues"
   },
-  "homepage": "https://devforge-suite.com",
+  "homepage": "https://hasanarthuraltuntas.xyz",
   "engines": {
     "node": ">=20.18.1",
     "npm": ">=10.9.2"
@@ -92,7 +82,6 @@
     ]
   },
   "workspaces": [
-    "platform",
-    "projects/*"
+    "platform"
   ]
 }

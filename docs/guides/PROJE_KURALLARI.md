@@ -1,176 +1,58 @@
-# 🎯 DevForge Suite - KESİN PROJE KURALLARI
+# CrownCode - Kesin Proje Kurallari
 
-## 📋 1. PROJE DOSYALARINA UYUM SAĞLA
+## 1) Temel Ilke
+- Mevcut kod yapisini bozma, mevcut mimariye uy.
+- Dokuman + kod senkronu zorunlu: route, script, workflow degisikligi dokumana da yansir.
+- Refactor yaparken eski/kullanilmayan dosya birakma.
 
-### ✅ Yapılması Gerekenler:
-- Mevcut proje yapısına %100 uyum sağla
-- Gelişmiş versiyon yapabilirsin AMA kesinlikle dışına çıkma
-- Belgelenen tüm spesifikasyonlara uy
-- GitHub repository linklerini doğru kullan
+## 2) Dosya Organizasyonu
+### Frontend
+- Ana uygulama: `platform/`
+- Sayfalar: `platform/pages/`
+- Bilesenler: `platform/components/`
+- Hooklar: `platform/hooks/`
+- Cevri dosyalari: `platform/locales/tr.json`, `platform/locales/en.json`
+- Stiller: `platform/styles/`
 
-### ❌ Yapılmaması Gerekenler:
-- Proje dışı teknoloji ekleme
-- Dokümante edilmemiş özellik ekleme
-- Kendi yorumunla değiştirme
+### Backend
+- Bu workspace icinde aktif backend kodu `hf-crowncode-backend/` altindadir.
+- `backend/` adli root klasoru varsayilmaz.
 
----
+## 3) Kod Kurallari
+- TypeScript strict kurallari korunur.
+- `any` kullanma; tipleri tanimla.
+- Hardcoded metin yazma; i18n anahtari kullan.
+- Kisa, amaca donuk yorum yaz; gereksiz yorum ekleme.
+- Islevsiz TODO birakma; gorev dosyasina tasi.
 
-## 📂 2. MODÜLER DOSYA YAPISI
+## 4) CSS ve UI Kurallari
+- Global stil `platform/styles/globals.css` ve alt importlari ile yonetilir.
+- Sayfa ozel stiller icin CSS module tercih edilir.
+- Ayni sayfa icin duplicate stil dosyasi tutma.
 
-### ✅ Her Modül Ayrı Olmalı:
+## 5) Refactor ve Temizlik Protokolu
+1. Yeni yapiyi uygula.
+2. Import/export referanslarini guncelle.
+3. Kullanilmayan dosyalari sil.
+4. Lint ve type-check calistir.
+5. Dokumanlari guncelle.
 
-#### CSS Dosyaları:
-```
-styles/
-├── base/                    # Temel stiller
-│   ├── variables.css       # CSS değişkenleri
-│   ├── reset.css           # Reset stilleri
-│   ├── typography.css      # Tipografi
-│   └── animations.css      # Animasyonlar
-├── components/             # Komponent stilleri
-│   ├── header.css         # Header komponenti CSS
-│   ├── hero.css           # Hero section CSS
-│   ├── projects.css       # Projeler section CSS
-│   └── mobile-navigation.css # Mobil nav CSS
-└── utilities/              # Yardımcı sınıflar
-    └── helpers.css        # Helper sınıfları
-```
+## 6) Dogrulama Komutlari
+Root:
+- `npm run lint`
+- `npm run type-check`
 
-#### TSX Komponentleri:
-```
-components/
-├── Layout/                 # Layout komponentleri
-│   ├── MainLayout.tsx     # Ana layout
-│   ├── Header.tsx         # Header komponenti
-│   ├── Footer.tsx         # Footer komponenti
-│   └── MobileNavigation.tsx # Mobil navigasyon
-├── Home/                  # Ana sayfa komponentleri
-│   ├── HeroSection.tsx    # Hero bölümü
-│   ├── ProjectsSection.tsx # Projeler bölümü
-│   ├── FeaturesSection.tsx # Özellikler bölümü
-│   └── StatsSection.tsx   # İstatistikler bölümü
-└── Navigation/            # Navigasyon komponentleri
-    └── ProjectDropdown.tsx # Proje dropdown
-```
+Platform:
+- `npm --prefix platform run lint`
+- `npm --prefix platform run type-check`
 
-### 📝 Başlıklarla Belirtme:
-Her dosyada şu başlık olmalı:
-```css
-/* [Komponent Adı] Component Styles */
-/* Bu dosya [nerede kullanıldığı] için kullanılır */
-```
+## 7) PR Hazirlik Kontrolu
+- Kod degisikligi ve dokuman degisikligi tutarli mi?
+- Kaldirilan/degisen route veya scriptler dokumana yansidi mi?
+- Gereksiz dosya kaldi mi?
+- Lint ve type-check temiz mi?
 
-```tsx
-/**
- * [Komponent Adı] Component
- * Kullanım: [nerede kullanıldığı]
- * Bağımlılıklar: [hangi dosyalara bağlı]
- */
-```
-
----
-
-## 🔗 3. DOSYA BAĞLANTILARI KONTROLÜ
-
-### ✅ Kontrol Edilmesi Gerekenler:
-
-#### Import/Export Kontrolü:
-- Her import doğru dosyayı işaret ediyor mu?
-- Kullanılmayan import var mı?
-- Export edilen şeyler kullanılıyor mu?
-
-#### CSS Import Kontrolü:
-```css
-/* globals.css içinde */
-@import './components/header.css';     ✅ KULLANILIYOR
-@import './components/hero.css';       ✅ KULLANILIYOR
-@import './components/old-style.css';  ❌ SİLİNMELİ
-```
-
-#### TypeScript Path Kontrolü:
-```typescript
-// tsconfig.json paths kontrolü
-"@/components/*": ["./components/*"]   ✅ DOĞRU
-"@/styles/*": ["./styles/*"]           ✅ DOĞRU
-```
-
----
-
-## ⚠️ 4. ÇAKIŞMA ÖNLEME
-
-### 🗑️ ESKİ DOSYA TEMİZLİĞİ:
-
-#### Yeni Dosya Oluşturma Kuralı:
-1. Yeni dosya oluştur
-2. İçeriği taşı
-3. **ESKİ DOSYAYI SİL**
-4. Import/export linklerini güncelle
-5. Test et
-
-#### Çakışma Kontrol Listesi:
-- [ ] Aynı isimde iki dosya yok
-- [ ] Aynı CSS sınıfı iki yerde tanımlı değil
-- [ ] Aynı komponent iki yerde export edilmiyor
-- [ ] Kullanılmayan dosya kalmamış
-
-### 📝 Dosya Silme Protokolü:
-```bash
-# 1. Dosyanın kullanımını kontrol et
-grep -r "dosya-adi" .
-
-# 2. Eğer kullanılmıyorsa sil
-rm dosya-adi
-
-# 3. Git'ten de kaldır
-git rm dosya-adi
-```
-
----
-
-## 🔍 5. KONTROL LİSTESİ
-
-### Her Değişiklik Sonrası Yapılacaklar:
-
-#### ✅ Dosya Yapısı Kontrolü:
-- [ ] Her modül ayrı dosyada
-- [ ] CSS ve TSX ayrı
-- [ ] Başlıklar doğru yazılmış
-- [ ] Gereksiz dosya kalmamış
-
-#### ✅ Bağlantı Kontrolü:
-- [ ] Tüm import'lar doğru
-- [ ] Kullanılmayan import yok
-- [ ] Path'ler çalışıyor
-- [ ] CSS import'ları doğru
-
-#### ✅ Çakışma Kontrolü:
-- [ ] Duplicate dosya yok
-- [ ] Duplicate CSS sınıfı yok
-- [ ] Duplicate komponent yok
-- [ ] Kullanılmayan kod yok
-
-#### ✅ Proje Uyumu:
-- [ ] Dokümantasyona uygun
-- [ ] GitHub links doğru
-- [ ] Teknoloji stack'i doğru
-- [ ] Modüler yapıda
-
----
-
-## 🚨 UYARI: Bu kurallardan sapma yapmak YASAK!
-
-### Kural İhlali Örnekleri:
-❌ CSS'i TSX gibi dosyaları bir dosyada oluşturma
-❌ Tek dosyada birden fazla komponent
-❌ Eski dosyaları silmeme
-❌ Import'ları kontrol etmeme
-❌ Proje dışı teknoloji ekleme
-
-### Doğru Yaklaşım:
-✅ Her modül ayrı dosya
-✅ CSS ayrı dosyalar
-✅ Eski dosyaları sil
-✅ Import'ları kontrol et
-✅ Proje kurallarına uy
-
-Bu kurallar **KESİN** ve **DEĞİŞMEZ**dir!
+## 8) Yasaklar
+- Mevcut olmayan dizinlere bagli script eklemek.
+- Projede aktif olmayan mimariyi "aktifmis" gibi dokumante etmek.
+- Eski marka/adlandirma (DevForge vb.) ile yeni kodu karistirmak.

@@ -3,6 +3,8 @@
  * Returns application version and build information
  *
  * @route GET /api/version
+ * Note: Active only when running in server deployment mode.
+ * In static export mode (`DEPLOYMENT_TARGET=static`) this route is not served.
  */
 
 import type { NextApiRequest, NextApiResponse } from 'next'

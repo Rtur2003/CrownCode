@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react'
 import Head from 'next/head'
+import { useLanguage } from '@/context/LanguageContext'
 import { Header } from './Header'
 import { Footer } from './Footer'
 
@@ -22,8 +23,11 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   url = 'https://hasanarthuraltuntas.xyz',
   noCache = false,
 }) => {
+  const { language } = useLanguage()
   const baseUrl = url || 'https://hasanarthuraltuntas.xyz'
   const imageUrl = image.startsWith('http') ? image : `${baseUrl}${image}`
+  const metaLanguage = language === 'tr' ? 'Turkish' : 'English'
+  const ogLocale = language === 'tr' ? 'tr_TR' : 'en_US'
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -61,7 +65,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         <meta name="theme-color" content="#e7c77a" />
         <meta name="author" content="Hasan Arthur Altuntaş (Rthur)" />
         <meta name="robots" content="index, follow" />
-        <meta name="language" content="Turkish" />
+        <meta name="language" content={metaLanguage} />
         <link rel="canonical" href={baseUrl} />
 
         {/* Cache Control - Dinamik içerik için */}
@@ -82,7 +86,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         <meta property="og:image" content={imageUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:locale" content="tr_TR" />
+        <meta property="og:locale" content={ogLocale} />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />

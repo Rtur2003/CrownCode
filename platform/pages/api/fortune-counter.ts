@@ -6,6 +6,8 @@
  * @route POST /api/fortune-counter - Increment count
  *
  * Note: Uses in-memory storage. For production, use a database.
+ * Note: Active only when running in server deployment mode.
+ * In static export mode (`DEPLOYMENT_TARGET=static`) this route is not served.
  */
 
 import type { NextApiRequest, NextApiResponse } from 'next'

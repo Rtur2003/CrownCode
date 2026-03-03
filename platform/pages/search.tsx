@@ -1,8 +1,10 @@
+'use client'
+
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { MainLayout } from '@/components/Layout/MainLayout'
-import { Search as SearchIcon, ExternalLink, Music, Database } from 'lucide-react'
+import { Search as SearchIcon, ExternalLink, Music, Database, Sparkles, Moon, MessageSquare, Vote } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -17,40 +19,63 @@ interface SearchResult {
 
 const SearchPage: NextPage = () => {
   const router = useRouter()
-  const { language } = useLanguage()
+  const { t } = useLanguage()
+  const sp = t.searchPage
   const [query, setQuery] = useState<string>('')
   const [results, setResults] = useState<SearchResult[]>([])
 
-  // All searchable content
+  const items = t.products.items
   const searchableContent: SearchResult[] = useMemo(() => [
     {
-      title: language === 'tr' ? 'AI Müzik Tespiti' : 'AI Music Detection',
-      description: language === 'tr'
-        ? 'Yapay zeka ile üretilmiş müziği tespit etme platformu. Demo arayüzü ile analiz yapın.'
-        : 'AI-generated music detection platform. Analyze with demo interface.',
+      title: items.aiMusic.title,
+      description: items.aiMusic.description,
       url: '/ai-music-detection',
       type: 'project',
       icon: <Music size={20} />
     },
     {
-      title: language === 'tr' ? 'Veri Manipülasyonu & ML Toolkit' : 'Data Manipulation & ML Toolkit',
-      description: language === 'tr'
-        ? 'Makine öğrenimi için veri hazırlama araçları. Görüntü ve ses verisi manipülasyonu.'
-        : 'Data preparation tools for machine learning. Image and audio data manipulation.',
+      title: items.mlToolkit.title,
+      description: items.mlToolkit.description,
       url: '/data-manipulation',
       type: 'project',
       icon: <Database size={20} />
     },
     {
+      title: items.fortune.title,
+      description: items.fortune.description,
+      url: '/crown-fortune',
+      type: 'project',
+      icon: <Sparkles size={20} />
+    },
+    {
+      title: items.dreams.title,
+      description: items.dreams.description,
+      url: '/crown-dreams',
+      type: 'project',
+      icon: <Moon size={20} />
+    },
+    {
+      title: items.commend.title,
+      description: items.commend.description,
+      url: '/crown-commend',
+      type: 'project',
+      icon: <MessageSquare size={20} />
+    },
+    {
+      title: items.vote.title,
+      description: items.vote.description,
+      url: '/crown-vote',
+      type: 'project',
+      icon: <Vote size={20} />
+    },
+    {
       title: 'CrownCode Platform',
-      description: language === 'tr'
-        ? 'Açık kaynak proje sergisi ve demo uygulamalar platformu.'
-        : 'Open-source project showcase and demo applications platform.',
+      description: t.hero.subtitle,
       url: '/',
       type: 'page',
       icon: <ExternalLink size={20} />
     }
-  ], [language])
+  ], [items, t.hero.subtitle])
 
   const performSearch = useCallback((searchQuery: string) => {
     if (!searchQuery.trim()) {
@@ -67,7 +92,6 @@ const SearchPage: NextPage = () => {
     setResults(filtered)
   }, [searchableContent])
 
-  // Get query from URL
   useEffect(() => {
     const urlQuery = router.query.q as string
     if (urlQuery) {
@@ -86,10 +110,8 @@ const SearchPage: NextPage = () => {
 
   return (
     <MainLayout
-      title={`${language === 'tr' ? 'Arama' : 'Search'}: ${query || ''} - CrownCode`}
-      description={language === 'tr'
-        ? 'CrownCode platformunda proje ve içerik arama.'
-        : 'Search projects and content on CrownCode platform.'}
+      title={`${sp.meta.title}: ${query || ''} - CrownCode`}
+      description={sp.meta.description}
       keywords="search, arama, projeler, AI music detection, data manipulation"
     >
       <div style={{
@@ -113,16 +135,14 @@ const SearchPage: NextPage = () => {
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
           }}>
-            {language === 'tr' ? 'Arama' : 'Search'}
+            {sp.title}
           </h1>
           <p style={{
             fontSize: '1.1rem',
             color: 'var(--color-text-secondary)',
             marginBottom: '2rem'
           }}>
-            {language === 'tr'
-              ? 'CrownCode platformunda proje ve içerik arayın'
-              : 'Search for projects and content on CrownCode platform'}
+            {sp.subtitle}
           </p>
         </motion.div>
 
@@ -154,7 +174,7 @@ const SearchPage: NextPage = () => {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder={language === 'tr' ? 'Ara...' : 'Search...'}
+              placeholder={sp.placeholder}
               style={{
                 flex: 1,
                 padding: '1rem',
@@ -180,7 +200,7 @@ const SearchPage: NextPage = () => {
               onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
               onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              {language === 'tr' ? 'Ara' : 'Search'}
+              {sp.button}
             </button>
           </div>
         </motion.form>
@@ -198,12 +218,8 @@ const SearchPage: NextPage = () => {
               color: 'var(--color-text-primary)'
             }}>
               {results.length > 0
-                ? language === 'tr'
-                  ? `${results.length} sonuç bulundu`
-                  : `Found ${results.length} result${results.length !== 1 ? 's' : ''}`
-                : language === 'tr'
-                  ? 'Sonuç bulunamadı'
-                  : 'No results found'}
+                ? `${results.length} ${sp.resultsFound}`
+                : sp.noResults}
             </h2>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -284,9 +300,7 @@ const SearchPage: NextPage = () => {
           >
             <SearchIcon size={64} style={{ marginBottom: '1rem', opacity: 0.3 }} />
             <p style={{ fontSize: '1.1rem' }}>
-              {language === 'tr'
-                ? 'Aramaya başlamak için yukarıdaki alana bir şeyler yazın'
-                : 'Start typing in the search box above to find projects and content'}
+              {sp.emptyState}
             </p>
           </motion.div>
         )}
