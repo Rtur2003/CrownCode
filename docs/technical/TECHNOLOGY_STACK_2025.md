@@ -189,64 +189,47 @@
 ```json
 {
   "runtime": {
-    "name": "Node.js",
-    "version": "20.18.1 LTS",
-    "release_date": "2024-11-20",
+    "name": "Python",
+    "version": "3.10+",
     "justification": [
-      "LTS support until 2026-04",
-      "Vercel optimization",
-      "Performance improvements",
-      "TypeScript native support"
+      "FastAPI async performance",
+      "PyTorch / Transformers ecosystem",
+      "HuggingFace Spaces native support",
+      "Type hints with Pydantic"
     ]
   },
   "framework": {
-    "name": "Express.js",
-    "version": "4.21.2",
-    "release_date": "2024-12-20",
+    "name": "FastAPI",
+    "version": "0.110+",
     "justification": [
-      "Mature and stable ecosystem",
-      "Middleware architecture fits modular design",
-      "Extensive documentation",
-      "Easy Vercel serverless adaptation"
+      "Async-first high performance",
+      "Automatic OpenAPI documentation",
+      "Pydantic data validation",
+      "HuggingFace Spaces deployment ready"
     ]
   }
 }
 ```
 
-### **Database Layer**
+### **Hosting & Infrastructure**
 ```json
 {
-  "primary_database": {
-    "name": "PostgreSQL",
-    "version": "16.6",
-    "release_date": "2024-11-14",
+  "backend_hosting": {
+    "name": "HuggingFace Spaces",
     "justification": [
-      "ACID compliance",
-      "JSON/JSONB support for flexible data",
-      "Advanced indexing capabilities",
-      "Vercel Postgres compatibility"
+      "Free GPU/CPU hosting for ML models",
+      "Docker-based deployment",
+      "Secrets management",
+      "Git-based CI/CD"
     ]
   },
-  "orm": {
-    "name": "Prisma",
-    "version": "5.23.0",
-    "release_date": "2024-12-17",
+  "frontend_hosting": {
+    "name": "Netlify",
     "justification": [
-      "Type-safe database access",
-      "Auto-generated TypeScript types",
-      "Migration system",
-      "Query optimization"
-    ]
-  },
-  "caching": {
-    "name": "Redis",
-    "version": "7.4.1",
-    "release_date": "2024-12-11",
-    "justification": [
-      "In-memory performance",
-      "Session storage",
-      "Job queue management",
-      "Real-time analytics"
+      "Static site hosting with CDN",
+      "Automatic builds from git",
+      "Custom domain support",
+      "Edge functions available"
     ]
   }
 }
