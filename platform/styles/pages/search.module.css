@@ -1,0 +1,197 @@
+/* Search Page - CrownCode Teması (Gold/Bronze) */
+
+.search-page {
+  min-height: 80vh;
+  padding: 4rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* =============== HEADER =============== */
+.search-header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.search-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 1rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.search-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+}
+
+/* =============== SEARCH FORM =============== */
+.search-form {
+  margin-bottom: 3rem;
+}
+
+.search-bar {
+  display: flex;
+  gap: 1rem;
+  background: var(--glass-bg);
+  padding: 0.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
+}
+
+.search-icon {
+  margin: auto 0.5rem;
+  color: var(--color-text-secondary);
+}
+
+.search-input {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  background: transparent;
+  font-size: 1.1rem;
+  color: var(--color-text-primary);
+  outline: none;
+  font-family: inherit;
+}
+
+.search-input::placeholder {
+  color: var(--color-text-muted, #8a7a6a);
+}
+
+.search-button {
+  padding: 1rem 2rem;
+  background: var(--gradient-primary);
+  color: var(--color-text-inverse);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.search-button:hover {
+  transform: scale(1.05);
+}
+
+.search-button:active {
+  transform: scale(0.98);
+}
+
+/* =============== RESULTS =============== */
+.results-heading {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-text-primary);
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.result-link {
+  text-decoration: none;
+}
+
+.result-card {
+  padding: 1.5rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.result-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.result-icon {
+  color: var(--color-primary);
+}
+
+.result-title {
+  font-size: 1.25rem;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.result-badge {
+  margin-left: auto;
+  padding: 0.25rem 0.75rem;
+  background: rgba(231, 199, 122, 0.12);
+  color: var(--color-primary);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.result-description {
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* =============== EMPTY STATE =============== */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--color-text-secondary);
+}
+
+.empty-icon {
+  margin-bottom: 1rem;
+  opacity: 0.3;
+}
+
+.empty-text {
+  font-size: 1.1rem;
+}
+
+/* =============== RESPONSIVE =============== */
+@media (max-width: 640px) {
+  .search-page {
+    padding: 3rem 1rem;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .search-icon {
+    display: none;
+  }
+
+  .search-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .result-header {
+    flex-wrap: wrap;
+  }
+
+  .result-badge {
+    margin-left: 0;
+  }
+}
