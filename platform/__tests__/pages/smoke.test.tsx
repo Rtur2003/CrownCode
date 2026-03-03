@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { LanguageProvider } from '@/context/LanguageContext'
 
-// Mock next/router
+// Mock next/router (pages router)
 jest.mock('next/router', () => ({
   useRouter: () => ({
     pathname: '/',
@@ -11,7 +11,20 @@ jest.mock('next/router', () => ({
     push: jest.fn(),
     replace: jest.fn(),
     back: jest.fn(),
+    events: { on: jest.fn(), off: jest.fn(), emit: jest.fn() },
   }),
+}))
+
+// Mock next/navigation (app router - used by Header)
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    back: jest.fn(),
+    prefetch: jest.fn(),
+  }),
+  usePathname: () => '/',
+  useSearchParams: () => new URLSearchParams(),
 }))
 
 // Mock next/head
