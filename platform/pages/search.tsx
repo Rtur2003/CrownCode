@@ -8,6 +8,7 @@ import { Search as SearchIcon, ExternalLink, Music, Database, Sparkles, Moon, Me
 import { useLanguage } from '@/context/LanguageContext'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import styles from '@/styles/pages/search.module.css'
 
 interface SearchResult {
   title: string
@@ -114,34 +115,18 @@ const SearchPage: NextPage = () => {
       description={sp.meta.description}
       keywords="search, arama, projeler, AI music detection, data manipulation"
     >
-      <div style={{
-        minHeight: '80vh',
-        padding: '4rem 2rem',
-        maxWidth: '900px',
-        margin: '0 auto'
-      }}>
+      <div className={styles['search-page']}>
         {/* Search Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          style={{ marginBottom: '3rem', textAlign: 'center' }}
+          className={styles['search-header']}
         >
-          <h1 style={{
-            fontSize: 'clamp(2rem, 5vw, 3rem)',
-            marginBottom: '1rem',
-            background: 'var(--gradient-primary)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
-          }}>
+          <h1 className={styles['search-title']}>
             {sp.title}
           </h1>
-          <p style={{
-            fontSize: '1.1rem',
-            color: 'var(--color-text-secondary)',
-            marginBottom: '2rem'
-          }}>
+          <p className={styles['search-subtitle']}>
             {sp.subtitle}
           </p>
         </motion.div>
@@ -152,54 +137,18 @@ const SearchPage: NextPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
           onSubmit={handleSearch}
-          style={{ marginBottom: '3rem' }}
+          className={styles['search-form']}
         >
-          <div style={{
-            display: 'flex',
-            gap: '1rem',
-            background: 'var(--glass-bg)',
-            padding: '0.5rem',
-            borderRadius: '12px',
-            border: '1px solid var(--glass-border)',
-            boxShadow: 'var(--shadow-md)'
-          }}>
-            <SearchIcon
-              size={24}
-              style={{
-                margin: 'auto 0.5rem',
-                color: 'var(--color-text-secondary)'
-              }}
-            />
+          <div className={styles['search-bar']}>
+            <SearchIcon size={24} className={styles['search-icon']} />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={sp.placeholder}
-              style={{
-                flex: 1,
-                padding: '1rem',
-                border: 'none',
-                background: 'transparent',
-                fontSize: '1.1rem',
-                color: 'var(--color-text-primary)',
-                outline: 'none'
-              }}
+              className={styles['search-input']}
             />
-            <button
-              type="submit"
-              style={{
-                padding: '1rem 2rem',
-                background: 'var(--gradient-primary)',
-                color: 'var(--color-text-inverse)',
-                border: 'none',
-                borderRadius: '8px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'transform 0.2s'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-            >
+            <button type="submit" className={styles['search-button']}>
               {sp.button}
             </button>
           </div>
@@ -212,17 +161,13 @@ const SearchPage: NextPage = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h2 style={{
-              fontSize: '1.5rem',
-              marginBottom: '1.5rem',
-              color: 'var(--color-text-primary)'
-            }}>
+            <h2 className={styles['results-heading']}>
               {results.length > 0
                 ? `${results.length} ${sp.resultsFound}`
                 : sp.noResults}
             </h2>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div className={styles['results-list']}>
               {results.map((result, index) => (
                 <motion.div
                   key={result.url}
@@ -230,52 +175,18 @@ const SearchPage: NextPage = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  <Link href={result.url} style={{ textDecoration: 'none' }}>
-                    <div style={{
-                      padding: '1.5rem',
-                      background: 'var(--glass-bg)',
-                      border: '1px solid var(--glass-border)',
-                      borderRadius: '12px',
-                      transition: 'all 0.3s',
-                      cursor: 'pointer'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = 'var(--color-primary)'
-                      e.currentTarget.style.transform = 'translateY(-2px)'
-                      e.currentTarget.style.boxShadow = 'var(--shadow-glow)'
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = 'var(--glass-border)'
-                      e.currentTarget.style.transform = 'translateY(0)'
-                      e.currentTarget.style.boxShadow = 'none'
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-                        <span style={{ color: 'var(--color-primary)' }}>{result.icon}</span>
-                        <h3 style={{
-                          fontSize: '1.25rem',
-                          color: 'var(--color-text-primary)',
-                          margin: 0
-                        }}>
+                  <Link href={result.url} className={styles['result-link']}>
+                    <div className={styles['result-card']}>
+                      <div className={styles['result-header']}>
+                        <span className={styles['result-icon']}>{result.icon}</span>
+                        <h3 className={styles['result-title']}>
                           {result.title}
                         </h3>
-                        <span style={{
-                          marginLeft: 'auto',
-                          padding: '0.25rem 0.75rem',
-                          background: 'rgba(231, 199, 122, 0.12)',
-                          color: 'var(--color-primary)',
-                          borderRadius: '6px',
-                          fontSize: '0.85rem',
-                          fontWeight: 600,
-                          textTransform: 'uppercase'
-                        }}>
+                        <span className={styles['result-badge']}>
                           {result.type}
                         </span>
                       </div>
-                      <p style={{
-                        color: 'var(--color-text-secondary)',
-                        margin: 0,
-                        lineHeight: 1.6
-                      }}>
+                      <p className={styles['result-description']}>
                         {result.description}
                       </p>
                     </div>
@@ -292,14 +203,10 @@ const SearchPage: NextPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            style={{
-              textAlign: 'center',
-              padding: '4rem 2rem',
-              color: 'var(--color-text-secondary)'
-            }}
+            className={styles['empty-state']}
           >
-            <SearchIcon size={64} style={{ marginBottom: '1rem', opacity: 0.3 }} />
-            <p style={{ fontSize: '1.1rem' }}>
+            <SearchIcon size={64} className={styles['empty-icon']} />
+            <p className={styles['empty-text']}>
               {sp.emptyState}
             </p>
           </motion.div>
