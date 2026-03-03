@@ -1107,9 +1107,8 @@ const CrownFortunePage: NextPage = () => {
                           </blockquote>
                         </motion.div>
                       )}
-                    </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </motion.section>
             )}
           </AnimatePresence>
