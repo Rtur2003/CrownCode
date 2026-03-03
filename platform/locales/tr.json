@@ -253,7 +253,6 @@
       "analyzing": "Analiz Ediliyor..."
     },
     "url": {
-<<<<<<< Updated upstream
       "title": "YouTube Bağlantısını Analiz Et",
       "placeholder": "YouTube linki yapıştırın (youtube.com veya youtu.be)...",
       "supportedPlatforms": "Girdi seçenekleri:",
@@ -289,36 +288,6 @@
         "downloading": "Ses Hazırlama",
         "analyzing": "Sinyal Analizi",
         "complete": "Rapor Tamamlama"
-=======
-      "title": "YouTube Baglantisini Analiz Et",
-      "placeholder": "Spotify, YouTube, SoundCloud veya Apple Music URL'si yapıştırın...",
-      "supportedPlatforms": "Desteklenen platform:",
-      "analyzeButton": "Baglantiyi Isle",
-      "analyzing": "Isleniyor..."
-    },
-    "pipeline": {
-      "title": "Pipeline Modulleri",
-      "items": {
-        "download": "YouTube ses yakalama",
-        "musicAi": "Music-AIDetector cikarim",
-        "sesAnalizi": "Ses-Analizi raporu",
-        "preview": "Onizleme yedegi"
-      },
-      "note": "Model yoksa onizleme modu her zaman kullanilabilir."
-    },
-    "processing": {
-      "title": "Analiz Devam Ediyor...",
-      "subtitle": "Arayüz gösterimi için AI tespit iş akışı simüle ediliyor.",
-      "steps": {
-        "validating": "URL Dogrulama",
-        "downloading": "Ses Hazirlama",
-        "analyzing": "Sinyal Analizi",
-        "complete": "Rapor Tamamlama",
-        "simulation": "UI simülasyonu",
-        "generation": "Rastgele sonuç üretimi",
-        "testing": "Arayüz testi",
-        "completion": "Demo tamamlanıyor"
->>>>>>> Stashed changes
       }
     },
     "error": {
@@ -334,7 +303,6 @@
       "sampleRate": "Örnekleme Hızı",
       "duration": "Süre",
       "analysisDetails": "Analiz Detayları:",
-<<<<<<< Updated upstream
       "exportReport": "Raporu Dışarı Aktar",
       "analyzeAnother": "Başka Analiz Et",
       "spotifyTrack": "Spotify Parçası",
@@ -361,31 +329,6 @@
       "backend_not_configured": "Backend ayarlanamadı. Yalnızca önizleme sonucu gösteriliyor.",
       "backend_unreachable": "Backend şu anda ulaşılamıyor. Yalnızca önizleme sonucu gösteriliyor.",
       "backend_unexpected_response": "Backend beklenmedik cevap verdi. Yalnızca önizleme sonucu gösteriliyor."
-=======
-      "exportReport": "Rapor Dışa Aktar",
-      "analyzeAnother": "Başka Analiz Et"
-      ,"decisionSource": "Karar Kaynagi",
-      "sources": {
-        "musicAi": "Music-AIDetector",
-        "sesAnalizi": "Ses-Analizi",
-        "preview": "Onizleme"
-      },
-      "videoId": "Video ID",
-      "normalizedUrl": "Normalize URL"
-    },
-    "errors": {
-      "invalidYouTubeUrl": "Gecersiz YouTube URL'si. https://www.youtube.com/watch?v=... veya https://youtu.be/... kullanin.",
-      "enterUrl": "Lütfen geçerli bir müzik URL'si girin.",
-      "invalidUrl": "Geçersiz URL formatı. Lütfen http:// veya https:// ile başlayan tam bir URL girin",
-      "unsupportedFormat": "Desteklenmeyen dosya formatı: {format}. İzin verilen formatlar: MP3, WAV, FLAC, M4A",
-      "fileTooSmall": "Dosya çok küçük. Minimum dosya boyutu 1KB.",
-      "fileTooLarge": "Dosya boyutu 100MB limitini aşıyor. Lütfen daha küçük bir dosya kullanın.",
-      "invalidFileName": "Geçersiz dosya adı. Dosya adı yasak karakterler içeriyor.",
-      "suspiciousFile": "Dosya adı şüpheli desenler içeriyor. Lütfen ses dosyanızı yeniden adlandırın.",
-      "invalidHeader": "Dosya başlık analizine göre geçerli bir ses dosyası gibi görünmüyor.",
-      "headerReadError": "Dosya başlığı okunurken hata oluştu",
-      "validationFailed": "Dosya doğrulaması başarısız. Lütfen farklı bir dosya deneyin."
->>>>>>> Stashed changes
     }
   },
   "mlToolkit": {
@@ -555,14 +498,8 @@
       "crownVote": "Crown Vote - VOTRYX"
     },
     "features": {
-<<<<<<< Updated upstream
       "urlAnalysis": "YouTube Analizi",
       "dataAugmentation": "Veri Artırma"
-=======
-      "upload": "Dosya Yukle",
-      "urlAnalysis": "YouTube Analizi",
-      "dataAugmentation": "Veri Artirma"
->>>>>>> Stashed changes
     }
   },
   "crownFortune": {
