@@ -51,9 +51,8 @@ CrownCode is an advanced web-based platform that combines **artificial intellige
 ├─────────────────────────────────────────────────────────────┤
 │  Infrastructure                                            │
 │  ├── Netlify (Frontend Hosting)                          │
-│  ├── Vercel (Backend Services)                           │
-│  ├── PostgreSQL (Data Storage)                           │
-│  └── Redis (Caching Layer)                               │
+│  ├── HuggingFace Spaces (Backend Services)               │
+│  └── FastAPI (Python Backend)                            │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -109,16 +108,18 @@ CrownCode is an advanced web-based platform that combines **artificial intellige
 - **Deployment**: Netlify with automatic builds
 
 ### Backend & AI
-- **Runtime**: Node.js 20.18.1 LTS
+
+- **Runtime**: Python 3.10+
+- **Framework**: FastAPI (deployed on HuggingFace Spaces)
 - **AI Framework**: PyTorch with Hugging Face Transformers
 - **Model**: facebook/wav2vec2-base + custom classification head
 - **Audio Processing**: librosa, torchaudio
-- **API**: RESTful services with Express.js
+- **API**: RESTful services with FastAPI
 
 ### Infrastructure
-- **Database**: PostgreSQL 16.6 with Prisma ORM
-- **Caching**: Redis 7.4.1
-- **File Storage**: Vercel Blob Storage
+
+- **Frontend Hosting**: Netlify with automatic builds
+- **Backend Hosting**: HuggingFace Spaces
 - **Monitoring**: Custom health monitoring system
 - **Analytics**: Performance tracking and metrics
 
@@ -127,10 +128,9 @@ CrownCode is an advanced web-based platform that combines **artificial intellige
 ## 📋 Installation & Setup
 
 ### Prerequisites
+
 - Node.js 20.18.1+
-- Python 3.9+ (for AI model)
-- PostgreSQL 16.6+
-- Redis 7.4.1+
+- Python 3.10+ (for FastAPI backend and AI model)
 
 ### Quick Start
 
