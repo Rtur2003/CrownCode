@@ -132,6 +132,7 @@ const CrownDreamsPage: NextPage = () => {
                   <Zap size={12} />
                   <span>{cd.header.badge}</span>
                 </div>
+                <span className={styles['demo-badge']}>{cd.header.demoNotice}</span>
                 <h1 className={styles['dreams-title']}>
                   {cd.header.welcomeBack} {MOCK_USER.name}
                 </h1>
