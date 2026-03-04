@@ -107,6 +107,12 @@ const HAPTIC = {
   WHEEL_SPIN: [50, 30, 50, 30, 50] as const,
 } as const
 
+const WHEEL_SEGMENT_DEGREES = 72
+const DEFAULT_WHEEL_SPINS = 5
+
+const getWheelTargetRotation = (catIndex: number, spins = DEFAULT_WHEEL_SPINS) =>
+  (spins * 360) - (catIndex * WHEEL_SEGMENT_DEGREES)
+
 // Trigger haptic feedback if supported
 const triggerHaptic = (pattern: number | readonly number[]) => {
   if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
@@ -356,7 +362,7 @@ const CrownFortunePage: NextPage = () => {
       const currentRevealed = localStorage.getItem(STORAGE_KEYS.REVEALED)
       if (currentRevealed === daily.date && daily.date === today) {
         const catIndex = FORTUNE_CATEGORIES.findIndex(c => c.key === daily.category)
-        setRotation(catIndex * 72 + 720 + 36)
+        setRotation(catIndex >= 0 ? getWheelTargetRotation(catIndex) : 0)
         setShowCard(true)
         setIsCardFlipped(true)
 
@@ -473,7 +479,7 @@ const CrownFortunePage: NextPage = () => {
 
     // Hedef kategori indeksi
     const catIndex = FORTUNE_CATEGORIES.findIndex(c => c.key === destiny.category)
-    const target = (5 * 360) + (catIndex * 72) + 36
+    const target = getWheelTargetRotation(catIndex >= 0 ? catIndex : 0)
 
     setRotation(target)
 
@@ -634,49 +640,50 @@ const CrownFortunePage: NextPage = () => {
       // Dynamic import for code splitting
       const { toPng } = await import('html-to-image')
 
-      // Flatten 3D transforms – html-to-image cannot handle rotateY correctly
+      // Export from an isolated 2D clone to avoid mirrored output from 3D transforms
       const container = cardRef.current
-      const flipper = container.querySelector(`.${styles['card-flipper']}`) as HTMLElement | null
       const front = container.querySelector(`.${styles['card-front']}`) as HTMLElement | null
-      const back = container.querySelector(`.${styles['card-back']}`) as HTMLElement | null
-
-      container.style.setProperty('perspective', 'none', 'important')
-      if (flipper) {
-        flipper.style.setProperty('transform', 'none', 'important')
-        flipper.style.setProperty('transform-style', 'flat', 'important')
-      }
-      if (front) {
-        front.style.setProperty('transform', 'none', 'important')
-        front.style.setProperty('backface-visibility', 'visible', 'important')
-        front.style.setProperty('position', 'relative', 'important')
-      }
-      if (back) {
-        back.style.setProperty('display', 'none', 'important')
+      if (!front) {
+        throw new Error('Card front not found for PNG export')
       }
 
-      const dataUrl = await toPng(container, {
-        quality: 1,
-        pixelRatio: 2,
-        backgroundColor: isReversed ? '#1a0a0a' : '#1a1a2e',
-      })
+      const { width, height } = front.getBoundingClientRect()
+      const exportHost = document.createElement('div')
+      exportHost.setAttribute('aria-hidden', 'true')
+      exportHost.style.position = 'fixed'
+      exportHost.style.left = '-10000px'
+      exportHost.style.top = '0'
+      exportHost.style.width = `${Math.max(1, Math.ceil(width))}px`
+      exportHost.style.height = `${Math.max(1, Math.ceil(height))}px`
+      exportHost.style.pointerEvents = 'none'
+      exportHost.style.opacity = '1'
 
-      // Restore inline overrides so framer-motion takes back control
-      container.style.removeProperty('perspective')
-      if (flipper) {
-        flipper.style.removeProperty('transform')
-        flipper.style.removeProperty('transform-style')
-      }
-      if (front) {
-        front.style.removeProperty('transform')
-        front.style.removeProperty('backface-visibility')
-        front.style.removeProperty('position')
-      }
-      if (back) {
-        back.style.removeProperty('display')
+      const exportNode = front.cloneNode(true) as HTMLElement
+      exportNode.style.position = 'relative'
+      exportNode.style.width = '100%'
+      exportNode.style.height = '100%'
+      exportNode.style.transform = 'none'
+      exportNode.style.backfaceVisibility = 'visible'
+      exportNode.style.webkitBackfaceVisibility = 'visible'
+      exportNode.style.transformStyle = 'flat'
+      exportNode.style.inset = 'auto'
+
+      exportHost.appendChild(exportNode)
+      document.body.appendChild(exportHost)
+
+      let dataUrl = ''
+      try {
+        dataUrl = await toPng(exportNode, {
+          quality: 1,
+          pixelRatio: 2,
+          backgroundColor: isReversed ? '#1a0a0a' : '#1a1a2e',
+        })
+      } finally {
+        exportHost.remove()
       }
 
       const link = document.createElement('a')
-      link.download = `crown-destiny-${destiny?.date || 'card'}.png`
+      link.download = `crown-destiny-${destiny?.date || t.crownFortune.share.fileFallback}.png`
       link.href = dataUrl
       link.click()
 
@@ -685,7 +692,7 @@ const CrownFortunePage: NextPage = () => {
       // Error generating image
       console.error('Failed to generate card image')
     }
-  }, [details, destiny, isReversed])
+  }, [details, destiny, isReversed, t.crownFortune.share.fileFallback])
 
   // Loading state - after all hooks
   if (!mounted || !destiny || !details) {
@@ -751,7 +758,7 @@ const CrownFortunePage: NextPage = () => {
               {counterAvailable && (
                 <div className={styles['daily-counter']}>
                   <Users size={16} />
-                  <span>{t.crownFortune.counter?.label || 'Today:'}</span>
+                  <span>{t.crownFortune.counter.label}</span>
                   <motion.span
                     className={styles['counter-value']}
                     key={dailyCount}
@@ -761,7 +768,7 @@ const CrownFortunePage: NextPage = () => {
                   >
                     {dailyCount.toLocaleString()}
                   </motion.span>
-                  <span className={styles['counter-suffix']}>{t.crownFortune.counter?.suffix || 'fortunes'}</span>
+                  <span className={styles['counter-suffix']}>{t.crownFortune.counter.suffix}</span>
                 </div>
               )}
               {streak.count > 0 && (
@@ -812,7 +819,7 @@ const CrownFortunePage: NextPage = () => {
                 type="button"
                 className={styles['sound-toggle']}
                 onClick={() => setSoundEnabled(!soundEnabled)}
-                aria-label={soundEnabled ? 'Mute sounds' : 'Enable sounds'}
+                aria-label={soundEnabled ? t.crownFortune.sound.mute : t.crownFortune.sound.enable}
               >
                 {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
               </button>
@@ -1104,7 +1111,7 @@ const CrownFortunePage: NextPage = () => {
                           <Quote size={14} className={styles['quote-icon']} />
                           <blockquote>
                             <p>{language === 'tr' ? dailyQuote?.tr : dailyQuote?.en}</p>
-                            <cite>— {dailyQuote?.author || 'Unknown'}</cite>
+                            <cite>— {dailyQuote?.author || t.crownFortune.quote.unknownAuthor}</cite>
                           </blockquote>
                         </motion.div>
                       )}
