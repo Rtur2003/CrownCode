@@ -138,55 +138,6 @@ const buildPreviewResult = async (
   }
 }
 
-const mapBackendResponse = async (
-  parsed: ParsedSource,
-  url: string,
-  response: BackendResponse,
-  elapsedSec: number
-): Promise<AnalysisResult> => {
-  const seed = await buildSeed(parsed.kind === 'spotify' ? parsed.trackId : parsed.videoId)
-  const featureScores = buildFeatureScores(seed)
-  const indicators = response.summary.indicators || []
-  const warnings = response.warnings || []
-  const warningIndicators = warnings.length ? ['Warnings reported by the backend pipeline.'] : []
-
-  return {
-    isAIGenerated: response.summary.is_ai_generated,
-    confidence: response.summary.confidence,
-    processingTime: response.timings?.total_sec ?? elapsedSec,
-    modelVersion: response.summary.model_version,
-    decisionSource: response.summary.decision_source,
-    analysisMode: response.summary.decision_source === 'preview' ? 'preview' as const : 'production' as const,
-    source:
-      parsed.kind === 'youtube'
-        ? {
-            kind: 'youtube',
-            url,
-            normalizedUrl: response.source.normalized_url,
-            videoId: response.source.video_id,
-            ...(response.source.start_time_sec !== undefined
-              ? { startTimeSec: response.source.start_time_sec }
-              : {})
-          }
-        : {
-            kind: 'spotify',
-            url,
-            normalizedUrl: response.source.normalized_url || parsed.normalizedUrl,
-            trackId: parsed.trackId
-          },
-    features: {
-      ...featureScores,
-      artificialIndicators: [...indicators, ...warningIndicators]
-    },
-    audioInfo: {
-      duration: response.source.duration_sec ?? 0,
-      sampleRate: 44100,
-      bitrate: 192,
-      format: response.source.audio_format ?? (parsed.kind === 'spotify' ? 'SPOTIFY' : 'YOUTUBE')
-    }
-  }
-}
-
 export const useYouTubeAnalysis = () => {
   const [url, setUrl] = useState('')
   const [processingState, setProcessingState] = useState<ProcessingState>('idle')
