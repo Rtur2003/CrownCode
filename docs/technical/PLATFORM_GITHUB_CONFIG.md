@@ -594,10 +594,8 @@ Related to #
 /platform/ @Rtur2003
 /docs/ @Rtur2003
 
-# Project specific
-/projects/ai-music-detection/ @Rtur2003
-/projects/data-manipulation/ @Rtur2003
-/projects/ml-toolkit/ @Rtur2003
+# Backend
+/backend/ @Rtur2003
 
 # GitHub configuration
 /.github/ @Rtur2003
@@ -624,15 +622,6 @@ updates:
     labels:
       - "dependencies"
       - "platform"
-
-  # AI Music Detection project
-  - package-ecosystem: "npm"
-    directory: "/projects/ai-music-detection"
-    schedule:
-      interval: "weekly"
-    labels:
-      - "dependencies"
-      - "ai-music-detection"
 
   # GitHub Actions
   - package-ecosystem: "github-actions"
