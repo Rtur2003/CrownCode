@@ -169,9 +169,10 @@ const CrownFortunePage: NextPage = () => {
   const [reverseMessage, setReverseMessage] = useState<FortuneMessage | null>(null)
   const [isFlipping, setIsFlipping] = useState(false)
 
-  // Daily counter state
+  // Daily counter state — disabled in static export unless explicitly enabled
+  const counterEnabled = process.env.NEXT_PUBLIC_ENABLE_FORTUNE_COUNTER === 'true'
   const [dailyCount, setDailyCount] = useState<number>(0)
-  const [counterAvailable, setCounterAvailable] = useState<boolean>(true)
+  const [counterAvailable, setCounterAvailable] = useState<boolean>(counterEnabled)
 
   // Sound settings state
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true)
@@ -290,9 +291,9 @@ const CrownFortunePage: NextPage = () => {
     setDailyQuote(quote)
   }, [mounted, destiny])
 
-  // Fetch daily counter
+  // Fetch daily counter (skipped when feature flag is off)
   useEffect(() => {
-    if (!mounted) {
+    if (!mounted || !counterEnabled) {
       return
     }
 
