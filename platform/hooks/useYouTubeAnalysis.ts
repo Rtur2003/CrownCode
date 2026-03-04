@@ -134,6 +134,7 @@ const buildPreviewResult = async (
     processingTime: elapsedSec,
     modelVersion: 'preview-v2-enhanced',
     decisionSource: 'preview',
+    analysisMode: 'preview' as const,
     source:
       parsed.kind === 'youtube'
         ? {
