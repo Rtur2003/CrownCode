@@ -521,6 +521,10 @@
       "label": "Today:",
       "suffix": "fortunes revealed"
     },
+    "sound": {
+      "enable": "Enable sounds",
+      "mute": "Mute sounds"
+    },
     "buttons": {
       "spin": "Spin the Wheel",
       "spinning": "Spinning..."
@@ -562,7 +566,8 @@
     "share": {
       "button": "Share",
       "download": "Download",
-      "title": "Crown Destiny - My Daily Fortune"
+      "title": "Crown Destiny - My Daily Fortune",
+      "fileFallback": "card"
     },
     "streak": {
       "daysTo": "days to"
@@ -582,7 +587,8 @@
       "close": "Close"
     },
     "quote": {
-      "title": "Daily Quote"
+      "title": "Daily Quote",
+      "unknownAuthor": "Unknown"
     }
   },
   "crownVote": {
