@@ -41,10 +41,11 @@ CI/Makefile sadece `backend/` hedefliyor; `hf-crowncode-backend/` kendi yasam do
 
 ### Faz 1 - Guvenlik ve Fonksiyonel P0 Duzeltmeleri
 
-- [ ] URL dogrulama: substring yerine exact-host kontrolu (frontend + hf backend).
-- [ ] CORS: wildcard + credentials kombinasyonunu guvenli hale getir (her iki backend).
-- [ ] Audio augmentation: camelCase/snake_case option mapping uyumu.
-- [ ] Fortune counter: static export icin feature flag ile netlestirilmesi.
+- [x] URL dogrulama: `domain in url` substring → exact-host set lookup (validation.py, url_parser.py, useYouTubeAnalysis.ts).
+- [x] CORS: wildcard + credentials kombinasyonu duzeltildi — `allow_credentials` sadece explicit origin listesinde `True` (backend + hf-backend).
+- [x] Audio augmentation: Pydantic `AudioAugmentationOptions` camelCase alias + `populate_by_name` eklendi.
+- [x] Fortune counter: `NEXT_PUBLIC_ENABLE_FORTUNE_COUNTER` feature flag eklendi, false iken fetch yapilmaz.
+- [x] `analysisMode` field: `useFileAnalysis.ts` ve `useYouTubeAnalysis.ts` preview/production mode eklendi (build-blocking TS hatasi cozuldu).
 
 ### Faz 2 - Hibrit Preview Urunlestirme
 
