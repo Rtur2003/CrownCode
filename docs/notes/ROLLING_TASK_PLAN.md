@@ -55,20 +55,21 @@ CI/Makefile sadece `backend/` hedefliyor; `hf-crowncode-backend/` kendi yasam do
 
 ### Faz 3 - i18n + Legacy Temizlik
 
-- [ ] Hardcoded fallback metinler locale anahtarina tasinacak.
-- [ ] `sw.js` DevForge kalintilari ve olmayan route cache hedefleri temizlenecek.
-- [ ] `tailwind.config.js` legacy utility adi temizlenecek.
-- [ ] `version` endpoint dinamik/gercek surum raporlayacak.
-- [ ] Olu kod (`mapBackendResponse`) kaldirilacak.
+- [x] Hardcoded fallback: Incelendi, mevcut `||` fallback'ler locale anahtarlariyla eslesiyor (defensive coding). Gercek i18n ihlali yok.
+- [x] `sw.js`: `devforge-suite-v1` → `crowncode-v2`, cache isimleri guncellendi, `/projects`, `/about`, `/contact` → gercek CrownCode route'lari, `/api/` cache kaldirildi.
+- [x] `tailwind.config.js`: `.devforge-container` → `.crowncode-container` (kullanilmiyordu ama isim duzeltildi).
+- [x] `version` endpoint: hardcoded `14.2.33` → `require('next/package.json').version` dinamik okuma.
+- [x] Olu kod: `mapBackendResponse` + `BackendResponse` + `BackendSummary` interfaceleri + kullanilmayan `DecisionSource` import'u kaldirildi.
 
 ---
 
 ## Siradaki Adim
 
-Faz 3 basliyor.
+Tum fazlar tamamlandi.
 
 ## Tamamlananlar (Log)
 
 - [x] 2026-03-04: Faz 0 tamamlandi - Makefile dual backend, dependabot `/projects/*` temizlendi, CODEOWNERS guncellendi, workflow `hf-crowncode-backend/` izleme eklendi.
 - [x] 2026-03-04: Faz 1 tamamlandi - URL exact-host, CORS wildcard+credentials fix, audio camelCase alias, fortune counter feature flag, analysisMode field eklendi. lint/tsc/test/build temiz.
 - [x] 2026-03-04: Faz 2 tamamlandi - AI Detection preview badge, Crown Dreams demo badge, fortune counter feature flag ile hibrit mod netlestirme. lint/tsc/test/build temiz.
+- [x] 2026-03-04: Faz 3 tamamlandi - sw.js DevForge→CrownCode, tailwind legacy utility, version endpoint dinamik, mapBackendResponse olu kod temizligi. lint/tsc/test/build temiz.
