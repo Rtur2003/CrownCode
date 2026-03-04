@@ -16,86 +16,77 @@
 
 - Son guncelleme: **4 Mart 2026**
 - Mod: Faz bazli ilerleme + APEI protokolu
+- Tur: Sonraki Analiz Turu (Tur 2)
 
 ## Mimari Not
 
 Iki backend aktif:
 
-- `backend/` = core (minimal FastAPI: health + youtube analysis)
-- `hf-crowncode-backend/` = advanced (full FastAPI: commend, data processing, analyze, preview model)
+- `backend/` = core (minimal FastAPI: health + youtube analysis) — bu repoda
+- `hf-crowncode-backend/` = advanced (full FastAPI: commend, data processing, analyze, preview model) — ayri repo, `.gitignore` satirinda
 
-`hf-crowncode-backend/` root `.gitignore`'da ayri repo olarak ignore ediliyor (satir 120).
-CI/Makefile sadece `backend/` hedefliyor; `hf-crowncode-backend/` kendi yasam dongusune sahip.
+CI/dependabot/CODEOWNERS sadece `backend/` hedefliyor. `hf-crowncode-backend/` kendi yasam dongusune sahip.
+Kontrat spesifikasyonu: `docs/BACKEND_CONTRACT.md`
 
 ---
 
-## Bu Turun Gorevleri
+## Bu Turun Gorevleri (Tur 2)
 
-### Faz 0 - Repo Topolojisi ve Operasyon Senkronu
+### Faz 0 - Build ve CI Stabilizasyonu (P0)
 
-- [x] Makefile: dual backend target'lari eklendi (`*-core`, `*-hf`), kirik `backend/` yollari duzeltildi.
-- [x] `.github/dependabot.yml`: var olmayan `/projects/*` yollari kaldirildi, `hf-crowncode-backend` pip eklendi, target-branch `geliştirme` yapildi.
-- [x] `.github/CODEOWNERS`: var olmayan `/projects/*` bloklari kaldirildi, `/hf-crowncode-backend/` eklendi, phantom dosya referanslari temizlendi.
-- [x] `.github/workflows/engineering-standards.yml`: backend degisim kontrolune `hf-crowncode-backend/` eklendi.
-- [x] ROLLING_TASK_PLAN.md yeni tur olarak sifirlandi.
+- [x] `next.config.js`: default `DEPLOYMENT_TARGET` `static` → `server` olarak degistirildi.
+- [x] `ci.yml`: server build (varsayilan) + static build (ayri job) olarak ayrildi.
+- [x] Deploy job `build-static` artifact'indan cekilmesi icin guncellendi.
 
-### Faz 1 - Guvenlik ve Fonksiyonel P0 Duzeltmeleri
+### Faz 1 - Dual-Backend Parity Yonetisimi (P0)
 
-- [x] URL dogrulama: `domain in url` substring → exact-host set lookup (validation.py, url_parser.py, useYouTubeAnalysis.ts).
-- [x] CORS: wildcard + credentials kombinasyonu duzeltildi — `allow_credentials` sadece explicit origin listesinde `True` (backend + hf-backend).
-- [x] Audio augmentation: Pydantic `AudioAugmentationOptions` camelCase alias + `populate_by_name` eklendi.
-- [x] Fortune counter: `NEXT_PUBLIC_ENABLE_FORTUNE_COUNTER` feature flag eklendi, false iken fetch yapilmaz.
-- [x] `analysisMode` field: `useFileAnalysis.ts` ve `useYouTubeAnalysis.ts` preview/production mode eklendi (build-blocking TS hatasi cozuldu).
+- [x] `dependabot.yml`: gitignored `hf-crowncode-backend` pip entry kaldirildi, yorum eklendi.
+- [x] `CODEOWNERS`: gitignored `hf-crowncode-backend/` entry'leri kaldirildi, yorum eklendi.
+- [x] `engineering-standards.yml`: olu `hf-crowncode-backend/` grep referanslari temizlendi.
+- [x] `docs/BACKEND_CONTRACT.md`: API kontrat spesifikasyonu olusturuldu (analyze endpoint, response shape, parity checklist).
 
-### Faz 2 - Hibrit Preview Urunlestirme
+### Faz 2 - Guvenlik ve Kontrat Parity (P0-P1)
 
-- [x] AI Detection: `analysisMode === 'preview'` oldiginda sonuc kartinda "Preview" badge gosteriliyor (CSS: `.preview-badge`).
-- [x] Crown Dreams: header'a "Demo Data" / "Demo Verisi" badge eklendi (locale + CSS: `.demo-badge`).
-- [x] Fortune counter: `NEXT_PUBLIC_ENABLE_FORTUNE_COUNTER=false` ile counter gizli; true iken gercek API'den veri aliniyor (simulated base zaten sadece bootstrap).
+- [x] `backend/app/services/url_parser.py`: `"youtube.com" in host` substring → exact-host set lookup duzeltildi.
+- [x] `hf-crowncode-backend/app/routes/analyze.py`: `AnalysisResult` modeline `analysisMode` field eklendi (Literal["production", "preview"]).
+- [x] `hf-crowncode-backend/app/routes/analyze.py`: youtube ve file response builder'lara `analysisMode` degeri eklendi.
+- [x] `platform/hooks/analysisGateway.ts`: backend `analysisMode` donmezse `decisionSource`'dan runtime normalizer eklendi.
 
-### Faz 3 - i18n + Legacy Temizlik
+### Faz 3 - i18n ve Icerik Tutarliligi (P1)
 
-- [x] Hardcoded fallback: Incelendi, mevcut `||` fallback'ler locale anahtarlariyla eslesiyor (defensive coding). Gercek i18n ihlali yok.
-- [x] `sw.js`: `devforge-suite-v1` → `crowncode-v2`, cache isimleri guncellendi, `/projects`, `/about`, `/contact` → gercek CrownCode route'lari, `/api/` cache kaldirildi.
-- [x] `tailwind.config.js`: `.devforge-container` → `.crowncode-container` (kullanilmiyordu ama isim duzeltildi).
-- [x] `version` endpoint: hardcoded `14.2.33` → `require('next/package.json').version` dinamik okuma.
-- [x] Olu kod: `mapBackendResponse` + `BackendResponse` + `BackendSummary` interfaceleri + kullanilmayan `DecisionSource` import'u kaldirildi.
+- [x] `platform/locales/en.json`: duplicate `disclaimer` key (satir 553 ve 565) — ilk kopya kaldirildi.
+- [x] tr/en locale key parity dogrulandi — tum anahtarlar eslesik.
+- [x] Hardcoded fallback'ler incelendi — hepsi mevcut locale anahtarlarina karsilik gelen defensive `||` pattern'leri, gercek i18n ihlali yok.
+
+### Faz 4 - Dokuman ve Operasyon Senkronu (P2)
+
+- [x] `docs/technical/MOBILE_RESPONSIVE_DESIGN.md`: stale `/projects/*` import yollari guncellendi.
+- [x] `docs/technical/PLATFORM_GITHUB_CONFIG.md`: stale `/projects/*` CODEOWNERS ve dependabot ornekleri kaldirildi.
+- [x] `backend/requirements.txt`: olusturuldu (fastapi, pydantic, uvicorn, httpx, yt-dlp).
 
 ---
 
 ## Siradaki Adim
 
-Tum fazlar tamamlandi.
+Crown Fortune Hata Duzeltme Paketi:
+1. PNG mirror duzeltmesi (offscreen clone)
+2. Cark aci matematigi duzeltmesi
+3. i18n fallback temizligi
 
 ## Tamamlananlar (Log)
 
-- [x] 2026-03-04: Faz 0 tamamlandi - Makefile dual backend, dependabot `/projects/*` temizlendi, CODEOWNERS guncellendi, workflow `hf-crowncode-backend/` izleme eklendi.
-- [x] 2026-03-04: Faz 1 tamamlandi - URL exact-host, CORS wildcard+credentials fix, audio camelCase alias, fortune counter feature flag, analysisMode field eklendi. lint/tsc/test/build temiz.
-- [x] 2026-03-04: Faz 2 tamamlandi - AI Detection preview badge, Crown Dreams demo badge, fortune counter feature flag ile hibrit mod netlestirme. lint/tsc/test/build temiz.
-- [x] 2026-03-04: Faz 3 tamamlandi - sw.js DevForge→CrownCode, tailwind legacy utility, version endpoint dinamik, mapBackendResponse olu kod temizligi. lint/tsc/test/build temiz.
+### Tur 1 (2026-03-04)
 
----
+- [x] Faz 0: Makefile dual backend, dependabot `/projects/*` temizlendi, CODEOWNERS guncellendi, workflow izleme eklendi.
+- [x] Faz 1: URL exact-host, CORS wildcard+credentials fix, audio camelCase alias, fortune counter feature flag, analysisMode field.
+- [x] Faz 2: AI Detection preview badge, Crown Dreams demo badge, fortune counter feature flag.
+- [x] Faz 3: sw.js DevForge→CrownCode, tailwind legacy utility, version endpoint dinamik, olu kod temizligi.
+- [x] Ek: Crown Fortune hata duzeltme paketi (PNG mirror, cark acisi, i18n fallback).
 
-## Ek Tur - Crown Fortune Hata Duzeltme Paketi (2026-03-04)
+### Tur 2 (2026-03-04)
 
-### Kapsam
-
-- `platform/pages/crown-fortune/index.tsx`
-- `platform/styles/pages/crown-fortune.module.css`
-- `platform/locales/en.json`
-- `platform/locales/tr.json`
-
-### Gorevler
-
-- [x] PNG download mirror hatasi giderildi: 3D flatten yaklasimi kaldirildi, `card-front` uzerinden offscreen 2D clone ile export aliniyor.
-- [x] Cark hedef acisi duzeltildi: ortak helper ile hem spin hem restore akisinda ayni deterministic formul kullaniliyor.
-- [x] `+36` offset kaldirildi, hedef aci kategorinin merkezine gore hesaplanir hale getirildi.
-- [x] Crown Fortune icindeki kritik hardcoded fallback metinleri locale anahtarlarina tasindi (`sound`, `counter`, `quote`, `share` fallback).
-- [x] TR/EN locale parity korundu ve yeni anahtarlar eklendi.
-
-### Dogrulama Logu
-
-- [x] `cmd /c npm --prefix platform run lint` -> PASS (No ESLint warnings or errors)
-- [x] `cmd /c npm --prefix platform run type-check` -> PASS (`tsc --noEmit`)
-- [x] `cmd /c npm --prefix platform test -- --runInBand` -> PASS (1 suite, 6 test)
-- [x] `cmd /c "set DEPLOYMENT_TARGET=server&& npm --prefix platform run build"` -> PASS (Next.js build basarili)
+- [x] Faz 0: next.config.js server default, ci.yml split build. lint/tsc/build temiz.
+- [x] Faz 1: hf-crowncode-backend dead refs temizlendi, BACKEND_CONTRACT.md olusturuldu.
+- [x] Faz 2: core URL parser exact-host, HF analysisMode field, gateway normalizer. lint/tsc/build temiz.
+- [x] Faz 3: duplicate disclaimer key, locale parity verified.
+- [x] Faz 4: stale /projects/* doc refs, core backend requirements.txt.
