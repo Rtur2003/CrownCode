@@ -5,7 +5,7 @@
  */
 
 import { useCallback, useMemo, useRef, useState } from 'react'
-import type { AnalysisErrorCode, AnalysisResult, DecisionSource, ProcessingState } from '@/hooks/analysisTypes'
+import type { AnalysisErrorCode, AnalysisResult, ProcessingState } from '@/hooks/analysisTypes'
 import { analyzeSource } from '@/hooks/analysisGateway'
 import { buildFeatureScores, buildSeed, buildConfidence, buildIndicators } from '@/hooks/analysisUtils'
 
