@@ -194,6 +194,11 @@ const AIMusicDetectionPage: NextPage = () => {
             <p className={styles['result-subtitle']}>
               {t.aiDetection.result.confidence}: {confidence}% | {t.aiDetection.result.model}: {analysisResult.modelVersion} | {t.aiDetection.result.decisionSource}: {decisionLabel}
             </p>
+            {analysisResult.analysisMode === 'preview' && (
+              <span className={styles['preview-badge']}>
+                {t.aiDetection.result.sources?.preview || 'Preview'}
+              </span>
+            )}
           </div>
         </div>
 
