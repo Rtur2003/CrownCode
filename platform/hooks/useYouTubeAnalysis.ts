@@ -68,8 +68,10 @@ const parseYouTubeUrl = (input: string): ParsedSource | null => {
 
     let videoId: string | null = null
 
-    const isYouTubeHost = host.includes('youtube.com') || host.includes('youtu.be') || host.includes('music.youtube.com')
-    const isSpotifyHost = host.includes('spotify.com')
+    const YOUTUBE_HOSTS = new Set(['youtube.com', 'www.youtube.com', 'm.youtube.com', 'music.youtube.com', 'youtu.be', 'www.youtu.be'])
+    const SPOTIFY_HOSTS = new Set(['spotify.com', 'www.spotify.com', 'open.spotify.com'])
+    const isYouTubeHost = YOUTUBE_HOSTS.has(host)
+    const isSpotifyHost = SPOTIFY_HOSTS.has(host)
     if (!isYouTubeHost && !isSpotifyHost) {
       return null
     }
@@ -85,7 +87,7 @@ const parseYouTubeUrl = (input: string): ParsedSource | null => {
 
     if (host === 'youtu.be' || host === 'www.youtu.be') {
       videoId = path.replace('/', '').split('/')[0] || null
-    } else if (host.includes('youtube.com') || host.includes('music.youtube.com')) {
+    } else if (YOUTUBE_HOSTS.has(host)) {
       if (path === '/watch') {
         videoId = params.get('v')
       } else if (path.startsWith('/shorts/') || path.startsWith('/live/') || path.startsWith('/embed/')) {
