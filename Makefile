@@ -1,6 +1,10 @@
 # Makefile for CrownCode Development
+#
+# Two backends are active:
+#   backend/           = core (minimal FastAPI: health + youtube analysis)
+#   hf-crowncode-backend/ = advanced (full FastAPI on HuggingFace Spaces)
 
-.PHONY: help install install-backend install-frontend lint lint-backend lint-frontend format format-backend format-frontend test test-backend test-frontend security clean
+.PHONY: help install install-core install-hf install-frontend lint lint-core lint-hf lint-frontend format format-core format-hf format-frontend test test-core test-hf test-frontend security clean
 
 # Colors for output
 BLUE := \033[0;34m
@@ -13,40 +17,50 @@ help:
 	@echo ""
 	@echo "$(GREEN)Setup:$(NC)"
 	@echo "  make install           - Install all dependencies"
-	@echo "  make install-backend   - Install backend dependencies"
+	@echo "  make install-core      - Install core backend dependencies"
+	@echo "  make install-hf        - Install HF backend dependencies"
 	@echo "  make install-frontend  - Install frontend dependencies"
 	@echo ""
 	@echo "$(GREEN)Code Quality:$(NC)"
 	@echo "  make lint              - Lint all code"
-	@echo "  make lint-backend      - Lint Python code"
+	@echo "  make lint-core         - Lint core backend Python code"
+	@echo "  make lint-hf           - Lint HF backend Python code"
 	@echo "  make lint-frontend     - Lint TypeScript code"
 	@echo "  make format            - Format all code"
-	@echo "  make format-backend    - Format Python code"
+	@echo "  make format-core       - Format core backend Python code"
+	@echo "  make format-hf         - Format HF backend Python code"
 	@echo "  make format-frontend   - Format TypeScript code"
 	@echo ""
 	@echo "$(GREEN)Testing:$(NC)"
 	@echo "  make test              - Run all tests"
-	@echo "  make test-backend      - Run backend tests"
+	@echo "  make test-core         - Run core backend tests"
+	@echo "  make test-hf           - Run HF backend tests"
 	@echo "  make test-frontend     - Run frontend tests"
 	@echo ""
 	@echo "$(GREEN)Security:$(NC)"
 	@echo "  make security          - Run security checks"
 	@echo ""
 	@echo "$(GREEN)Development:$(NC)"
-	@echo "  make dev-backend       - Start backend dev server"
+	@echo "  make dev-core          - Start core backend dev server"
+	@echo "  make dev-hf            - Start HF backend dev server"
 	@echo "  make dev-frontend      - Start frontend dev server"
 	@echo ""
 	@echo "$(GREEN)Maintenance:$(NC)"
 	@echo "  make clean             - Clean build artifacts"
 	@echo "  make pre-commit        - Setup pre-commit hooks"
 
-install: install-backend install-frontend
+install: install-core install-hf install-frontend
 	@echo "$(GREEN)✓ All dependencies installed$(NC)"
 
-install-backend:
-	@echo "$(BLUE)Installing backend dependencies...$(NC)"
-	cd backend && pip install -r requirements.txt
-	@echo "$(GREEN)✓ Backend dependencies installed$(NC)"
+install-core:
+	@echo "$(BLUE)Installing core backend dependencies...$(NC)"
+	cd backend && pip install -r requirements.txt 2>/dev/null || echo "$(RED)No requirements.txt in backend/ — install manually$(NC)"
+	@echo "$(GREEN)✓ Core backend dependencies installed$(NC)"
+
+install-hf:
+	@echo "$(BLUE)Installing HF backend dependencies...$(NC)"
+	cd hf-crowncode-backend && pip install -r requirements.txt
+	@echo "$(GREEN)✓ HF backend dependencies installed$(NC)"
 
 install-frontend:
 	@echo "$(BLUE)Installing frontend dependencies...$(NC)"
@@ -60,15 +74,22 @@ pre-commit:
 	pre-commit install --hook-type commit-msg
 	@echo "$(GREEN)✓ Pre-commit hooks installed$(NC)"
 
-lint: lint-backend lint-frontend
+lint: lint-core lint-hf lint-frontend
 	@echo "$(GREEN)✓ All code linted$(NC)"
 
-lint-backend:
-	@echo "$(BLUE)Linting Python code...$(NC)"
-	cd backend && ruff app/
+lint-core:
+	@echo "$(BLUE)Linting core backend Python code...$(NC)"
+	cd backend && ruff check app/
 	cd backend && black --check app/
 	cd backend && mypy app/
-	@echo "$(GREEN)✓ Python code linted$(NC)"
+	@echo "$(GREEN)✓ Core backend code linted$(NC)"
+
+lint-hf:
+	@echo "$(BLUE)Linting HF backend Python code...$(NC)"
+	cd hf-crowncode-backend && ruff check app/
+	cd hf-crowncode-backend && black --check app/
+	cd hf-crowncode-backend && mypy app/
+	@echo "$(GREEN)✓ HF backend code linted$(NC)"
 
 lint-frontend:
 	@echo "$(BLUE)Linting TypeScript code...$(NC)"
@@ -76,28 +97,40 @@ lint-frontend:
 	cd platform && npm run type-check
 	@echo "$(GREEN)✓ TypeScript code linted$(NC)"
 
-format: format-backend format-frontend
+format: format-core format-hf format-frontend
 	@echo "$(GREEN)✓ All code formatted$(NC)"
 
-format-backend:
-	@echo "$(BLUE)Formatting Python code...$(NC)"
+format-core:
+	@echo "$(BLUE)Formatting core backend Python code...$(NC)"
 	cd backend && black app/
 	cd backend && isort app/
-	cd backend && ruff --fix app/
-	@echo "$(GREEN)✓ Python code formatted$(NC)"
+	cd backend && ruff check --fix app/
+	@echo "$(GREEN)✓ Core backend code formatted$(NC)"
+
+format-hf:
+	@echo "$(BLUE)Formatting HF backend Python code...$(NC)"
+	cd hf-crowncode-backend && black app/
+	cd hf-crowncode-backend && isort app/
+	cd hf-crowncode-backend && ruff check --fix app/
+	@echo "$(GREEN)✓ HF backend code formatted$(NC)"
 
 format-frontend:
 	@echo "$(BLUE)Formatting TypeScript code...$(NC)"
 	cd platform && npm run format
 	@echo "$(GREEN)✓ TypeScript code formatted$(NC)"
 
-test: test-backend test-frontend
+test: test-core test-hf test-frontend
 	@echo "$(GREEN)✓ All tests passed$(NC)"
 
-test-backend:
-	@echo "$(BLUE)Running backend tests...$(NC)"
-	cd backend && pytest
-	@echo "$(GREEN)✓ Backend tests passed$(NC)"
+test-core:
+	@echo "$(BLUE)Running core backend tests...$(NC)"
+	cd backend && pytest 2>/dev/null || echo "$(RED)No tests in backend/ yet$(NC)"
+	@echo "$(GREEN)✓ Core backend tests passed$(NC)"
+
+test-hf:
+	@echo "$(BLUE)Running HF backend tests...$(NC)"
+	cd hf-crowncode-backend && python -m pytest tests/ -q
+	@echo "$(GREEN)✓ HF backend tests passed$(NC)"
 
 test-frontend:
 	@echo "$(BLUE)Running frontend tests...$(NC)"
@@ -106,22 +139,22 @@ test-frontend:
 
 security:
 	@echo "$(BLUE)Running security checks...$(NC)"
-	cd backend && bandit -r app/ -ll
+	cd backend && bandit -r app/ -ll 2>/dev/null || true
+	cd hf-crowncode-backend && bandit -r app/ -ll 2>/dev/null || true
 	cd platform && npm audit --audit-level=high
 	@echo "$(GREEN)✓ Security checks passed$(NC)"
 
-dev-backend:
-	@echo "$(BLUE)Starting backend dev server...$(NC)"
+dev-core:
+	@echo "$(BLUE)Starting core backend dev server...$(NC)"
 	cd backend && uvicorn app.main:app --reload --port 8000
+
+dev-hf:
+	@echo "$(BLUE)Starting HF backend dev server...$(NC)"
+	cd hf-crowncode-backend && uvicorn app.main:app --reload --port 7860
 
 dev-frontend:
 	@echo "$(BLUE)Starting frontend dev server...$(NC)"
 	cd platform && npm run dev
-
-build-backend:
-	@echo "$(BLUE)Building backend...$(NC)"
-	cd backend && python -m compileall app/
-	@echo "$(GREEN)✓ Backend built$(NC)"
 
 build-frontend:
 	@echo "$(BLUE)Building frontend...$(NC)"

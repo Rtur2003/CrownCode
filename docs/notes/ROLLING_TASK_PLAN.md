@@ -14,81 +14,59 @@
 
 ## Tur Durumu
 
-- Son guncelleme: **3 Mart 2026**
-- Mod: Adim adim ilerleme + tamamlandi isaretleme
+- Son guncelleme: **4 Mart 2026**
+- Mod: Faz bazli ilerleme + APEI protokolu
+
+## Mimari Not
+
+Iki backend aktif:
+
+- `backend/` = core (minimal FastAPI: health + youtube analysis)
+- `hf-crowncode-backend/` = advanced (full FastAPI: commend, data processing, analyze, preview model)
+
+`hf-crowncode-backend/` root `.gitignore`'da ayri repo olarak ignore ediliyor (satir 120).
+CI/Makefile sadece `backend/` hedefliyor; `hf-crowncode-backend/` kendi yasam dongusune sahip.
 
 ---
 
 ## Bu Turun Gorevleri
 
-### P0 - Kritik (Codex Hata Duzeltme) - TAMAMLANDI
+### Faz 0 - Repo Topolojisi ve Operasyon Senkronu
 
-- [x] [H1] privacy.tsx ve terms.tsx encoding duzeltildi + i18n locale'a tasindi.
-- [x] [H2] next.config.js remotePatterns'den `devforge-suite.com` kaldirildi, `i.ytimg.com` eklendi.
-- [x] [H3] DEVFORGE_PLATFORM_STRUCTURE.md silindi.
-- [x] [H4] ProjectDropdown.tsx kullanilmiyor - silindi (olu kod temizligi).
-- [x] [H5] Duplicate `data-manipulation.css` silindi (sadece `.module.css` kaldi).
-- [x] [H6] crown-dreams `_activeTab` unused state ve TODO yorumu temizlendi.
+- [ ] Makefile: `backend/` komutlarini gercek yapiya hizala (`requirements.txt` yok, sadece `app/` var).
+- [ ] Makefile: `hf-crowncode-backend` icin ayri target'lar ekle (`*-hf`).
+- [ ] `.github/dependabot.yml`: var olmayan `/projects/*` yollarini kaldir, `hf-crowncode-backend` pip ekle.
+- [ ] `.github/CODEOWNERS`: var olmayan `/projects/*` bloklarini kaldir, `hf-crowncode-backend/` ekle.
+- [ ] `.github/workflows/engineering-standards.yml`: `backend/` yaninda `hf-crowncode-backend/` degisim izleme ekle.
+- [ ] ROLLING_TASK_PLAN.md guncelle.
 
-### P1 - Yuksek (i18n Standardizasyonu - Asama 2) - TAMAMLANDI
+### Faz 1 - Guvenlik ve Fonksiyonel P0 Duzeltmeleri
 
-- [x] crown-dreams/index.tsx: 80+ hardcoded metin `crownDreams` namespace ile locale'a tasindi.
-- [x] 404.tsx: tum metinler `notFound` namespace ile locale'a tasindi.
-- [x] search.tsx: tum metinler `searchPage` namespace ile locale'a tasindi + aranabilir icerik 3'ten 7'ye genisletildi (crown-fortune, crown-dreams, crown-commend, crown-vote eklendi).
-- [x] ExternalLinkWarning.tsx: inline `t` objesi `externalLink` namespace ile locale'a tasindi.
-- [x] privacy.tsx: encoding bozulmasi giderildi + `privacy` namespace ile locale'a tasindi.
-- [x] terms.tsx: encoding bozulmasi giderildi + `terms` namespace ile locale'a tasindi.
+- [ ] URL dogrulama: substring yerine exact-host kontrolu (frontend + hf backend).
+- [ ] CORS: wildcard + credentials kombinasyonunu guvenli hale getir (her iki backend).
+- [ ] Audio augmentation: camelCase/snake_case option mapping uyumu.
+- [ ] Fortune counter: static export icin feature flag ile netlestirilmesi.
 
-### P2 - Orta (Temizlik ve Kalite) - TAMAMLANDI
+### Faz 2 - Hibrit Preview Urunlestirme
 
-- [x] Kullanilmayan hook/bilesen dosyalarini tespit et ve kararla (usePWA, useLazyLoad, usePerformanceMonitor, MobileNavigation). → Hepsi silindi (hicbiri import edilmiyordu).
-- [x] Eski/guncel olmayan dokumanlari temizle (TECHNOLOGY_STACK_2025.md icerik kontrolu). → DevForge/Express/PostgreSQL/Redis referanslari temizlendi, FastAPI/HuggingFace Spaces ile guncellendi.
-- [x] Frontend icin minimum smoke testleri ekle (en az 3 sayfa render testi). → jest.config.js, jest.setup.ts, `__tests__/pages/smoke.test.tsx` (6 test, 3 sayfa).
-- [x] Backend icin tests/ altinda route bazli temel testleri baslat. → conftest.py, test_health.py, test_youtube.py, test_commend.py (7 test).
+- [ ] Preview/mock kaynaklari UI'da "Demo/Preview" etiketi ile isaretlenecek.
+- [ ] Crown Dreams ve Fortune sayac icin "simulated data" bildirimi.
+- [ ] AI Detection'da preview vs production mod gorunur olacak.
 
-### P3 - Dusuk (Iyilestirme) - TAMAMLANDI
+### Faz 3 - i18n + Legacy Temizlik
 
-- [x] Search sayfasini CSS module ile yeniden stil ver. → 20 inline style kaldirildi, `search.module.css` olusturuldu, hover efektleri CSS'e tasindi.
-- [x] `platform/data/` icinde component dosyalari var (DestinyBackground.tsx, useDestinySystem.ts) - uygun konuma tasi. → Kullanilmiyor, silindi (tarot.ts dahil). destiny.ts ve dreams.ts aktif olarak kullaniliyor, yerinde kaldi.
-- [x] `next.config.js` icinde `eslint.ignoreDuringBuilds: true` kaldirildi. → ESLint artik build sirasinda calisiyor, lint+tsc+build temiz gecti.
-
-### Ek Gorevler (3 Mart 2026)
-
-- [x] Merge conflict marker'lari temizlendi (4 dosya: ai-music-detection/index.tsx, ai-detection.module.css, en.json, tr.json).
-- [x] Guvenlik taramasi: .env.example dosyalarindaki gercek API anahtarlari/secret'lar placeholder ile degistirildi.
-- [x] docs/SECURITY_NOTES.md olusturuldu (credential rotation rehberi).
-- [x] Teknoloji migration plani olusturuldu: docs/technical/MIGRATION_PLAN_2026.md (Next.js 15, React 19, TS 5.8, Node.js 22).
-
-### Master Execution Prompt Gorevleri (3 Mart 2026) - TAMAMLANDI
-
-- [x] [P0-1] `eslint.ignoreDuringBuilds: true` kaldirildi. lint+tsc+build temiz gecti.
-- [x] [P0-2] Eski marka/mimari izleri temizlendi: `.env.example` tamamen yeniden yazildi (DevForge → CrownCode), `PLATFORM_GITHUB_CONFIG.md` ve `CODEOWNERS` guncellendi.
-- [x] [P1-3] Search sayfasi inline style → CSS Module refactor. 20 inline style kaldirildi, `search.module.css` olusturuldu.
-- [x] [P1-4] Python runtime standardizasyonu: `requires-python >= 3.11` eklendi, pytest filterwarnings eklendi (0 warning).
-- [x] [P2-5] Guvenlik operasyonu dokumantasyonu: SECURITY_NOTES.md genisletildi (client_secret.json/token.json proseduru, repo-disi secret yonetimi, rotation schedule, prevention controls).
+- [ ] Hardcoded fallback metinler locale anahtarina tasinacak.
+- [ ] `sw.js` DevForge kalintilari ve olmayan route cache hedefleri temizlenecek.
+- [ ] `tailwind.config.js` legacy utility adi temizlenecek.
+- [ ] `version` endpoint dinamik/gercek surum raporlayacak.
+- [ ] Olu kod (`mapBackendResponse`) kaldirilacak.
 
 ---
 
 ## Siradaki Adim
 
-Tum gorevler tamamlandi. Yeni tur icin gorev listesi olusturulabilir.
+Faz 0 basliyor.
 
 ## Tamamlananlar (Log)
 
-- [x] 2026-02-24: P0 tamamlandi - Codex hatalari duzeltildi (encoding, DevForge kalintilari, duplicate dosya, unused state).
-- [x] 2026-02-24: P1 tamamlandi - i18n Asama 2 (crown-dreams, 404, search, ExternalLinkWarning, privacy, terms).
-- [x] 2026-02-24: Yeni locale namespace'leri eklendi: `crownDreams`, `notFound`, `externalLink`, `searchPage`, `privacy`, `terms`.
-- [x] 2026-02-24: Search sayfasi aranabilir icerik 3 -> 7 proje (tum aktif projeler).
-- [x] 2026-02-24: next.config.js `i.ytimg.com` remote pattern eklendi (VideoPreview YouTube thumbnail destegi).
-- [x] 2026-03-03: Merge conflict marker'lari temizlendi (4 dosya: index.tsx, ai-detection.module.css, en.json, tr.json).
-- [x] 2026-03-03: Guvenlik taramasi: .env.example'lardaki gercek secret'lar placeholder ile degistirildi + SECURITY_NOTES.md olusturuldu.
-- [x] 2026-03-03: Dokumantasyon hizalamasi: DevForge/Express/PostgreSQL/Redis referanslari temizlendi (README, CHANGELOG, TECHNOLOGY_STACK, MOBILE_RESPONSIVE_DESIGN).
-- [x] 2026-03-03: Test altyapisi: Frontend 6 smoke test (Jest) + Backend 7 pytest testi eklendi.
-- [x] 2026-03-03: Olu kod temizligi: 8 dosya silindi (usePWA, useLazyLoad, usePerformanceMonitor, MobileNavigation, DestinyBackground, destiny-background.module.css, useDestinySystem, tarot).
-- [x] 2026-03-03: Migration plani olusturuldu: MIGRATION_PLAN_2026.md (Next.js 15 + React 19, TS 5.8, Node.js 22, App Router degerlendirmesi).
-- [x] 2026-03-03: Crown Fortune bug fix: indirilen PNG aynalama sorunu cozuldu (html-to-image 3D transform flatten) + sans sayilari/renkler cakisma duzeltildi (card-actions konumu).
-- [x] 2026-03-03: [P0-1] eslint.ignoreDuringBuilds kaldirildi, ESLint artik build'de calisiyor.
-- [x] 2026-03-03: [P0-2] .env.example tamamen yeniden yazildi (DevForge → CrownCode/FastAPI/HF Spaces). PLATFORM_GITHUB_CONFIG.md + CODEOWNERS guncellendi.
-- [x] 2026-03-03: [P1-3] Search sayfasi 20 inline style → CSS Module refactor (search.module.css).
-- [x] 2026-03-03: [P1-4] Python runtime: requires-python >= 3.11, pytest filterwarnings (11 → 0 warning).
-- [x] 2026-03-03: [P2-5] SECURITY_NOTES.md genisletildi: credential envanteri, client_secret/token.json proseduru, repo-disi secret yonetimi (local/HF/CI), rotation schedule, prevention controls.
+(Yeni tur - henuz tamamlanan yok)
