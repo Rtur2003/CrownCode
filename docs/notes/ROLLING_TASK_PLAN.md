@@ -48,3 +48,27 @@
 Not:
 - Build komutlari ayni anda paralel kosulmamali; `.next` uzerinde cakisma olusturabilir.
 
+---
+
+## Ek Backlog - Crown Fortune Deep (Analizden)
+
+Kaynak rapor:
+- `docs/notes/ANALYSIS_REPORT_CROWN_FORTUNE_DEEP_2026-03-04.md`
+
+### P1
+
+- [ ] `platform/data/destiny.ts`: `seededRandom` kullanimi duzeltilecek (int vs unit random ayrimi).
+- [ ] `platform/data/destiny.ts`: `getLuckyElements` aralik mantigi 1..49 olacak sekilde duzeltilecek.
+- [ ] `platform/data/destiny.ts`: `getDailyQuote` index secimi her zaman gecerli olacak.
+- [ ] `platform/pages/crown-fortune/index.tsx`: `native share` yoksa fallback davranisi eklenecek.
+- [ ] `platform/pages/ai-music-detection/index.tsx`: `unsupportedSource` case'i error resolver'a eklenecek.
+
+### P2
+
+- [ ] `platform/pages/crown-fortune/index.tsx`: `setTimeout` akislari unmount cleanup ile guvenli hale getirilecek.
+- [ ] Crown Fortune ve destiny icinde hardcoded `22` degerleri `DESTINY_CARDS.length` tabanli hale getirilecek.
+- [ ] Tarih/timezone helperlari standardize edilecek (`Europe/Istanbul` tek model).
+
+### Test
+
+- [ ] `platform` testlerine sansli sayilar / quote index / unsupportedSource / share fallback senaryolari eklenecek.
