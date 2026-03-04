@@ -4,311 +4,68 @@
 
 ```
 CrownCode/
-├── 📋 README.md                        # Ana platform README
-├── 📜 LICENSE                          # MIT License
-├── 🔐 SECURITY.md                      # Güvenlik politikaları
-├── 🤝 CONTRIBUTING.md                  # Katkı rehberi
-├── 📝 CHANGELOG.md                     # Değişiklik kayıtları
-├── ⚙️ package.json                     # Platform dependencies
-├── 🚫 .gitignore                       # Global gitignore
-├── 🔧 .env.example                     # Environment template
+├── README.md                           # Ana platform README
+├── LICENSE                             # MIT License
+├── SECURITY.md                         # Guvenlik politikalari
+├── CONTRIBUTING.md                     # Katki rehberi
+├── Makefile                            # Dev komutlari (lint, test, build)
+├── .gitignore                          # Global gitignore
+├── .env.example                        # Environment template
 │
-├── 🔄 .github/                         # GitHub Configurations
-│   ├── workflows/                      # GitHub Actions
-│   │   ├── platform-ci.yml            # Platform CI/CD
-│   │   ├── project-ci.yml              # Individual project CI
-│   │   ├── security-scan.yml           # Security scanning
-│   │   ├── deploy-staging.yml          # Staging deployment
-│   │   ├── deploy-production.yml       # Production deployment
-│   │   └── auto-assign.yml             # Auto-assign reviewers
+├── .github/                            # GitHub Configurations
+│   ├── workflows/
+│   │   ├── ci.yml                     # CI/CD Pipeline (lint, build, deploy)
+│   │   └── engineering-standards.yml  # PR quality gates
 │   │
-│   ├── ISSUE_TEMPLATE/                 # Issue templates
-│   │   ├── bug_report.yml              # Bug report template
-│   │   ├── feature_request.yml         # Feature request template
-│   │   ├── project_proposal.yml        # New project proposal
-│   │   └── question.yml                # Question template
-│   │
-│   ├── PULL_REQUEST_TEMPLATE/          # PR templates
-│   │   ├── default.md                  # Default PR template
-│   │   ├── feature.md                  # Feature PR template
-│   │   ├── bugfix.md                   # Bugfix PR template
-│   │   └── project.md                  # New project PR template
-│   │
-│   ├── CODEOWNERS                      # Code owners
-│   ├── dependabot.yml                  # Dependabot config
-│   └── labeler.yml                     # Auto-labeling config
+│   ├── ISSUE_TEMPLATE/                # Issue templates
+│   ├── PULL_REQUEST_TEMPLATE.md       # PR template
+│   ├── CODEOWNERS                     # Code owners
+│   ├── dependabot.yml                 # Dependabot config
+│   └── ENGINEERING_STANDARDS.md       # Muhendislik standartlari
 │
-├── 📚 docs/                            # Platform documentation
-├── 🎨 assets/                          # Shared assets
-├── 🔧 scripts/                         # Utility scripts
-├── 🧪 tests/                           # Platform tests
-└── 📦 projects/                        # Individual projects
-    ├── ai-music-detection/
-    ├── data-manipulation/
-    └── ml-toolkit/
+├── platform/                           # Next.js frontend (Pages Router)
+│   ├── pages/                         # Route'lar
+│   ├── hooks/                         # React hook'lari
+│   ├── components/                    # UI componentleri
+│   ├── styles/                        # CSS Modules
+│   ├── locales/                       # i18n (en.json, tr.json)
+│   ├── data/                          # Statik veri
+│   ├── public/                        # Static assets
+│   └── __tests__/                     # Jest testleri
+│
+├── backend/                            # Core backend (minimal FastAPI)
+│   └── app/                           # health, youtube analysis
+│
+├── docs/                               # Dokumantasyon
+│   ├── notes/                         # Rolling plan, analiz raporlari
+│   └── technical/                     # Teknik referanslar
+│
+└── scripts/                            # Utility scripts
 ```
 
-## 🔄 GitHub Actions Workflows
+> **Not:** `hf-crowncode-backend/` ayri bir repo olarak yonetilir ve `.gitignore`'da ignore edilir.
+> Detaylar: `docs/BACKEND_CONTRACT.md`
 
-### 🏗️ Platform CI/CD Pipeline
+## GitHub Actions Workflows
 
-```yaml
-# .github/workflows/platform-ci.yml
-name: 🚀 Platform CI/CD
+Repoda iki aktif workflow var:
 
-on:
-  push:
-    branches: [main, develop]
-    paths:
-      - 'platform/**'
-      - '.github/workflows/platform-ci.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'platform/**'
+1. **`.github/workflows/ci.yml`** — CI/CD Pipeline
+   - `quality-check`: TypeScript type check + ESLint
+   - `build`: Server mode build (varsayilan)
+   - `build-static`: Static export build (`DEPLOYMENT_TARGET=static`)
+   - `security`: npm audit + Trivy
+   - `lighthouse`: PR'larda performans testi
+   - `deploy`: Netlify'a static build deploy (master branch)
 
-env:
-  NODE_VERSION: '20.18.1'
-  PNPM_VERSION: '8.15.0'
+2. **`.github/workflows/engineering-standards.yml`** — PR Quality Gates
+   - Branch name validation
+   - Commit message validation (commitlint)
+   - Atomic commit check
+   - Python-first compliance (backend changes)
+   - PR template validation
 
-jobs:
-  # Code Quality
-  quality:
-    name: 🔍 Code Quality
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-          cache-dependency-path: platform/pnpm-lock.yaml
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Install dependencies
-        run: cd platform && pnpm install --frozen-lockfile
-
-      - name: Type check
-        run: cd platform && pnpm type-check
-
-      - name: Lint
-        run: cd platform && pnpm lint
-
-      - name: Format check
-        run: cd platform && pnpm format:check
-
-  # Security Scan
-  security:
-    name: 🛡️ Security Scan
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          scan-ref: './platform'
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-
-      - name: Upload Trivy scan results
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: 'trivy-results.sarif'
-
-  # Unit Tests
-  test:
-    name: 🧪 Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Install dependencies
-        run: cd platform && pnpm install --frozen-lockfile
-
-      - name: Run tests
-        run: cd platform && pnpm test:coverage
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: ./platform/coverage
-          flags: platform
-          name: platform-coverage
-
-  # Build
-  build:
-    name: 🏗️ Build
-    runs-on: ubuntu-latest
-    needs: [quality, test]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: cd platform && pnpm install --frozen-lockfile
-
-      - name: Build application
-        run: cd platform && pnpm build
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: platform-build
-          path: platform/.next
-
-  # Deploy to Staging
-  deploy-staging:
-    name: 🚀 Deploy Staging
-    runs-on: ubuntu-latest
-    needs: [build]
-    if: github.ref == 'refs/heads/develop'
-    environment: staging
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: platform-build
-          path: platform/.next
-
-      - name: Deploy to Vercel Staging
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_STAGING_PROJECT_ID }}
-          working-directory: ./platform
-
-  # Deploy to Production
-  deploy-production:
-    name: 🚀 Deploy Production
-    runs-on: ubuntu-latest
-    needs: [build]
-    if: github.ref == 'refs/heads/main'
-    environment: production
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: platform-build
-          path: platform/.next
-
-      - name: Deploy to Vercel Production
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
-          working-directory: ./platform
-
-      - name: Update deployment status
-        run: |
-          echo "✅ Production deployment successful!"
-          echo "🌐 URL: https://hasanarthuraltuntas.xyz"
-```
-
-### 🔧 Project-Specific CI/CD
-
-```yaml
-# .github/workflows/project-ci.yml
-name: 📦 Project CI/CD
-
-on:
-  push:
-    branches: [main, develop]
-    paths:
-      - 'projects/**'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'projects/**'
-
-jobs:
-  detect-changes:
-    name: 🔍 Detect Changed Projects
-    runs-on: ubuntu-latest
-    outputs:
-      projects: ${{ steps.changes.outputs.projects }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Detect changed projects
-        id: changes
-        run: |
-          CHANGED_PROJECTS=$(git diff --name-only HEAD~1 HEAD | grep '^projects/' | cut -d/ -f2 | sort -u | jq -R -s -c 'split("\n")[:-1]')
-          echo "projects=$CHANGED_PROJECTS" >> $GITHUB_OUTPUT
-
-  build-projects:
-    name: 🏗️ Build Projects
-    runs-on: ubuntu-latest
-    needs: detect-changes
-    if: needs.detect-changes.outputs.projects != '[]'
-    strategy:
-      matrix:
-        project: ${{ fromJson(needs.detect-changes.outputs.projects) }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.18.1'
-          cache: 'npm'
-          cache-dependency-path: projects/${{ matrix.project }}/package-lock.json
-
-      - name: Install dependencies
-        run: cd projects/${{ matrix.project }} && npm ci
-
-      - name: Run tests
-        run: cd projects/${{ matrix.project }} && npm test
-
-      - name: Build project
-        run: cd projects/${{ matrix.project }} && npm run build
-
-      - name: Deploy project (if main branch)
-        if: github.ref == 'refs/heads/main'
-        run: |
-          echo "Deploying ${{ matrix.project }} to production..."
-          # Project-specific deployment logic
-```
+Detaylar icin dogrudan workflow dosyalarina bakiniz.
 
 ## 📝 Issue Templates
 
