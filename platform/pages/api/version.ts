@@ -33,7 +33,7 @@ export default function handler(
       version: '0.0.0',
       buildDate: new Date().toISOString(),
       nodeVersion: process.version,
-      nextVersion: '14.2.33',
+      nextVersion: process.env.__NEXT_VERSION || '14.x',
       environment: process.env.NODE_ENV || 'development',
       features: {
         aiAnalysis: false,
@@ -49,7 +49,7 @@ export default function handler(
     version: process.env.NEXT_PUBLIC_APP_VERSION || '1.0.0',
     buildDate: new Date().toISOString(),
     nodeVersion: process.version,
-    nextVersion: '14.2.33',
+    nextVersion: process.env.__NEXT_VERSION || '14.x',
     environment: process.env.NODE_ENV || 'development',
     features: {
       aiAnalysis: process.env.FEATURE_AI_ANALYSIS === 'true',
