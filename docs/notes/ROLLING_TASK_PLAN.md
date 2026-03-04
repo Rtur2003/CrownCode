@@ -65,9 +65,10 @@ CI/Makefile sadece `backend/` hedefliyor; `hf-crowncode-backend/` kendi yasam do
 
 ## Siradaki Adim
 
-Faz 2 basliyor.
+Faz 3 basliyor.
 
 ## Tamamlananlar (Log)
 
 - [x] 2026-03-04: Faz 0 tamamlandi - Makefile dual backend, dependabot `/projects/*` temizlendi, CODEOWNERS guncellendi, workflow `hf-crowncode-backend/` izleme eklendi.
 - [x] 2026-03-04: Faz 1 tamamlandi - URL exact-host, CORS wildcard+credentials fix, audio camelCase alias, fortune counter feature flag, analysisMode field eklendi. lint/tsc/test/build temiz.
+- [x] 2026-03-04: Faz 2 tamamlandi - AI Detection preview badge, Crown Dreams demo badge, fortune counter feature flag ile hibrit mod netlestirme. lint/tsc/test/build temiz.
