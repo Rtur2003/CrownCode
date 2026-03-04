@@ -57,16 +57,16 @@ Kaynak rapor:
 
 ### P1
 
-- [ ] `platform/data/destiny.ts`: `seededRandom` kullanimi duzeltilecek (int vs unit random ayrimi).
-- [ ] `platform/data/destiny.ts`: `getLuckyElements` aralik mantigi 1..49 olacak sekilde duzeltilecek.
-- [ ] `platform/data/destiny.ts`: `getDailyQuote` index secimi her zaman gecerli olacak.
-- [ ] `platform/pages/crown-fortune/index.tsx`: `native share` yoksa fallback davranisi eklenecek.
+- [x] `platform/data/destiny.ts`: `seededRandom` kullanimi duzeltildi (unit float [0,1) donuyor).
+- [x] `platform/data/destiny.ts`: `getLuckyElements` aralik mantigi duzeltildi (seed artik 0..1 float, Math.floor(seed*49)+1 dogru calisir).
+- [x] `platform/data/destiny.ts`: `getDailyQuote` index secimi duzeltildi (Math.floor(seed*length) artik gecerli index verir).
+- [x] `platform/pages/crown-fortune/index.tsx`: `native share` fallback eklendi (clipboard -> twitter).
 - [x] `platform/pages/ai-music-detection/index.tsx`: `unsupportedSource` case'i error resolver'a eklenecek. (Tur 4 Faz 1'de tamamlandi.)
 
 ### P2
 
-- [ ] `platform/pages/crown-fortune/index.tsx`: `setTimeout` akislari unmount cleanup ile guvenli hale getirilecek.
-- [ ] Crown Fortune ve destiny icinde hardcoded `22` degerleri `DESTINY_CARDS.length` tabanli hale getirilecek.
+- [x] `platform/pages/crown-fortune/index.tsx`: `setTimeout` akislari unmount cleanup ile guvenli hale getirildi (pendingTimers ref).
+- [x] Crown Fortune ve destiny icinde hardcoded `22` degerleri `DESTINY_CARDS.length` tabanli hale getirildi.
 - [ ] Tarih/timezone helperlari standardize edilecek (`Europe/Istanbul` tek model).
 
 ### Test
@@ -91,13 +91,13 @@ Kaynak rapor:
 
 ### Faz A Cikisli Claude Gorevleri
 
-- [ ] P1: canonical URL route-bazli duzeltilecek (`MainLayout`).
-- [ ] P1: Header router katmani Pages Router ile netlestirilecek.
-- [ ] P1: Crown Fortune kalan buglar (seeded random + native share fallback) kapatilacak.
-- [ ] P2: i18n fallback temizligi (Footer, Crown Vote, Search, 404, shared UI) yapilacak.
-- [ ] P2: timeout cleanup standardi (Header, Loading, Crown Fortune) uygulanacak.
-- [ ] P2: `data-manipulation` backend URL davranisi production-safe hale getirilecek.
-- [ ] P2: core backend minimum test paketi eklenecek.
+- [x] P1: canonical URL route-bazli duzeltildi (`MainLayout` — `router.asPath` tabanli, og:url dahil).
+- [x] P1: Header router katmani Pages Router ile netlestirildi (`next/navigation` -> `next/router`, `'use client'` kaldirildi).
+- [x] P1: Crown Fortune kalan buglar kapatildi (seededRandom unit float, getLuckyElements/getDailyQuote/seededChoice duzeltildi, native share fallback eklendi, hardcoded 22 -> DESTINY_CARDS.length).
+- [x] P2: i18n fallback temizligi yapildi (Footer fortune fallback, Crown Vote meta fallback, 404 hardcoded linkler, locale key eklendi).
+- [x] P2: timeout cleanup standardi uygulandi (Header, LoadingScreen, Crown Fortune — pendingTimers ref + unmount cleanup).
+- [x] P2: `data-manipulation` backend URL davranisi production-safe hale getirildi (localhost fallback kaldirildi, env zorunlu).
+- [x] P2: core backend minimum test paketi eklendi (`backend/tests/` — 20 test: url_parser 19 + health 1).
 
 ### Faz B (Siradaki Analiz Turu)
 

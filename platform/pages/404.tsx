@@ -69,10 +69,10 @@ const NotFoundPage: NextPage = () => {
                   {nf.projects}
                 </Link>
                 <Link href="/ai-music-detection" className="text-primary hover:text-accent transition-colors">
-                  {t.nav.pages?.aiMusic || 'AI Music Detection'}
+                  {t.nav.aiMusic}
                 </Link>
                 <Link href="/data-manipulation" className="text-primary hover:text-accent transition-colors">
-                  {t.nav.pages?.mlToolkit || 'ML Toolkit'}
+                  {t.footer.sections.products.dataProcessing}
                 </Link>
                 <a
                   href="https://github.com/Rtur2003?tab=repositories"

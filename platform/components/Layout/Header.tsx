@@ -24,13 +24,14 @@ export const Header: React.FC = () => {
 
   // Handle scroll to products after navigation
   useEffect(() => {
-    if (pathname === '/' && window.location.hash === '#products') {
-      const timer = setTimeout(() => {
-        document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
-        window.history.replaceState(null, '', '/')
-      }, 100)
-      return () => clearTimeout(timer)
+    if (pathname !== '/' || window.location.hash !== '#products') {
+      return
     }
+    const timer = setTimeout(() => {
+      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
+      window.history.replaceState(null, '', '/')
+    }, 100)
+    return () => clearTimeout(timer)
   }, [pathname])
 
   const scrollToProducts = () => {
