@@ -94,13 +94,16 @@ Accepts both camelCase and snake_case field names via Pydantic aliases:
 
 ## Parity Checklist
 
-When modifying either backend, verify:
+### HF backend (`hf-crowncode-backend/`) — `/api/analyze` sahibi
 
-- [ ] `/api/analyze` response shape matches the `AnalysisResult` interface in `platform/hooks/analysisTypes.ts`
-- [ ] `analysisMode` field is present in all responses (`"production"` or `"preview"`)
-- [ ] `decisionSource` values are from the set: `music_ai`, `ses_analizi`, `preview`
-- [ ] URL validation uses exact hostname set lookup (not substring)
-- [ ] CORS does not combine `allow_credentials=True` with wildcard `*` origins
+- [ ] Response shape `AnalysisResult` interface ile uyumlu (`platform/hooks/analysisTypes.ts`)
+- [ ] `analysisMode` field tum response'larda mevcut (`"production"` veya `"preview"`)
+- [ ] `decisionSource` degerleri: `music_ai`, `ses_analizi`, `preview`
+
+### Her iki backend icin ortak
+
+- [ ] URL validation exact hostname set lookup kullanir (substring degil)
+- [ ] CORS: `allow_credentials=True` ile wildcard `*` origins birlikte kullanilmaz
 
 ## Frontend References
 

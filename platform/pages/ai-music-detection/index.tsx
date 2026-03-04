@@ -29,6 +29,7 @@ import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
 import { useFileAnalysis } from '@/hooks/useFileAnalysis'
 import { useYouTubeAnalysis } from '@/hooks/useYouTubeAnalysis'
+import type { AnalysisErrorCode } from '@/hooks/analysisTypes'
 import styles from '@/styles/pages/ai-detection.module.css'
 
 const AIMusicDetectionPage: NextPage = () => {
@@ -111,7 +112,7 @@ const AIMusicDetectionPage: NextPage = () => {
 
   const formatFileSize = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(2)} MB`
 
-  const resolveErrorMessage = (errorKey: string | null) => {
+  const resolveErrorMessage = (errorKey: AnalysisErrorCode | null) => {
     if (!errorKey) {
       return null
     }
@@ -120,6 +121,8 @@ const AIMusicDetectionPage: NextPage = () => {
         return t.aiDetection.errors?.enterUrl || t.aiDetection.error.title
       case 'invalidYouTubeUrl':
         return t.aiDetection.errors?.invalidYouTubeUrl || t.aiDetection.error.title
+      case 'unsupportedSource':
+        return t.aiDetection.errors?.unsupportedSource || t.aiDetection.error.title
       case 'missingFile':
         return t.aiDetection.errors?.missingFile || t.aiDetection.error.title
     case 'unsupportedFileType':

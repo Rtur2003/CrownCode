@@ -15,10 +15,10 @@
 
 ### Mevcut Yapı
 - **Router**: Pages Router (`pages/` dizini, 15+ sayfa)
-- **SSR/SSG**: Statik export (`next export`) - `DEPLOYMENT_TARGET=static`
+- **SSR/SSG**: Dual-mode — varsayilan `server` (`DEPLOYMENT_TARGET=server`), Netlify icin `static` (`DEPLOYMENT_TARGET=static`)
 - **State**: React Context API (LanguageContext)
 - **Styling**: CSS Modules + global CSS
-- **Hosting**: Netlify (static build)
+- **Hosting**: Netlify (static build, CI'da ayri job), server mode lokal gelistirme + runtime API route'lar icin
 - **App Router**: Kullanılmıyor (`app/` dizini yok)
 - **Not**: Header bileşeni `next/navigation` (App Router API) kullanıyor ama pages/_app.tsx içinde çalışıyor
 
@@ -27,7 +27,7 @@
 ### Faz 1: Next.js 14 → 15 (Öncelik: YÜKSEK)
 
 **Risk seviyesi**: Orta
-**Tahmini etki**: Düşük (statik export kullanıldığı için)
+**Tahmini etki**: Düşük (Pages Router korunuyor, dual-mode build)
 
 #### Checklist
 - [ ] `package.json` güncelle: `next@^15`, `react@^19`, `react-dom@^19`

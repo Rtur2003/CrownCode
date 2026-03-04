@@ -23,14 +23,12 @@
 
 ### Faz 1 - P1 Functional Fix
 
-- [ ] `platform/pages/ai-music-detection/index.tsx` icinde `unsupportedSource` hata case'i eklenecek.
-- [ ] Error resolver tipi `AnalysisErrorCode | null` olarak netlestirilecek.
-- [ ] Desteklenmeyen source durumunda generic degil locale ozel mesaj gosterilecek.
+- [x] `ai-music-detection/index.tsx`: `unsupportedSource` case eklendi, `AnalysisErrorCode` import edildi, resolver tipi `string | null` -> `AnalysisErrorCode | null` duzeltildi.
 
 ### Faz 2 - P2/P3 Dokuman Senkronu
 
-- [ ] `docs/technical/MIGRATION_PLAN_2026.md` deployment anlatisi dual-mode gercegine gore guncellenecek.
-- [ ] `docs/BACKEND_CONTRACT.md` parity checklist endpoint sahipligine gore daha net hale getirilecek.
+- [x] `MIGRATION_PLAN_2026.md`: "static export" anlatisi dual-mode gercegine guncellendi (server default, static Netlify icin).
+- [x] `BACKEND_CONTRACT.md`: parity checklist HF backend / ortak olarak ayrildi, endpoint sahipligi netlesti.
 
 ### Faz 3 - Regression Test Guvencesi
 
