@@ -155,7 +155,7 @@ jobs:
           HEAD_SHA="${{ github.event.pull_request.head.sha }}"
           
           # Check if backend files changed (either core or HF backend)
-          if git diff --name-only $BASE_SHA..$HEAD_SHA | grep -qE "^(backend|hf-crowncode-backend)/"; then
+          if git diff --name-only $BASE_SHA..$HEAD_SHA | grep -qE "^backend/"; then
             echo "backend_changed=true" >> $GITHUB_OUTPUT
           else
             echo "backend_changed=false" >> $GITHUB_OUTPUT
@@ -169,7 +169,7 @@ jobs:
           
           # Check for non-Python backend files
           NON_PYTHON=$(git diff --name-only $BASE_SHA..$HEAD_SHA | \
-            grep -E "^(backend|hf-crowncode-backend)/" | \
+            grep -E "^backend/" | \
             grep -v "\.py$" | \
             grep -v "\.md$" | \
             grep -v "\.txt$" | \
