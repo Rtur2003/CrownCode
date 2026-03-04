@@ -24,14 +24,11 @@ interface VersionResponse {
   }
 }
 
-// Read Next.js version once at module load (server-side only)
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const nextVersion: string = (() => {
   try {
-    return require('next/package.json').version as string
-  } catch {
-    return '14.x'
-  }
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    return (require('next/package.json') as { version: string }).version
+  } catch { return '14.x' }
 })()
 
 export default function handler(
