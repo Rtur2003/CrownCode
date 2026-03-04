@@ -115,7 +115,7 @@ Kaynak rapor:
 ### Faz B Sonuc
 
 - [x] Hook + context + modal katmani detay analizi tamamlandi.
-- [ ] Backend servis katmani (core + hf) sozlesme ve guvenlik analizi.
+- [x] Backend servis katmani (core + hf) sozlesme ve guvenlik analizi.
 - [ ] Dokuman/CI/devex zincirinde stale policy ve otomasyon bosluklari.
 
 ### Faz B Cikisli Claude Gorevleri
@@ -131,4 +131,42 @@ Kaynak rapor:
 
 ### Siradaki Analiz
 
-- [ ] Faz C: backend/core + hf servis/validation/kontrat zinciri derin analizi.
+- [x] Faz C: backend/core + hf servis/validation/kontrat zinciri derin analizi.
+
+---
+
+## Tur 5.2 - Faz C Tamamlandi (Backend/Contract Analizi)
+
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_C_BACKEND_CONTRACT_2026-03-04.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz C Sonuc
+
+- [x] Core backend + HF backend servis katmani capraz analiz edildi.
+- [x] Frontend-backend error/contract uyumu kontrol edildi.
+- [x] Backend test dogrulamasi tekrar kosuldu.
+- [ ] Dokuman/CI/devex stale policy fazi (Faz D) beklemede.
+
+### Faz C Cikisli Claude Gorevleri
+
+- [ ] P0: `hf-crowncode-backend/app/routes/commend/router.py` icin auth + rate-limit + abuse korumasi uygula (`/generate` ve `/post`).
+- [ ] P0: `hf-crowncode-backend/app/routes/commend/router.py` icin `/post` endpointini env feature-flag ile default kapali modele al.
+- [ ] P1: `hf-crowncode-backend/app/routes/commend/router.py` + `hf-crowncode-backend/app/routes/commend/youtube_service.py` URL validatorini exact-host + 11-char video id standardina cek.
+- [ ] P1: `hf-crowncode-backend/app/routes/analyze.py` icinde `yt_result.errors` ve partial state bilgisini response contractina yansit.
+- [ ] P1: `hf-crowncode-backend/app/routes/data_processing.py` icinde `content_type` null-safe kontrol + max payload limiti ekle.
+- [ ] P1: `hf-crowncode-backend/app/services/preview_model.py` deterministik davranis ve `is_ai_generated` / confidence threshold uyumunu duzelt.
+- [ ] P2: `platform/hooks/analysisGateway.ts` backend error map kapsamini genislet (`invalid_youtube_url`, `file_too_large`, `file_too_small`, `invalid_file_type`, `youtube_analysis_failed`).
+- [ ] P2: `backend/app/services/external_clients.py` + `hf-crowncode-backend/app/services/external_clients.py` health payloadindan `base_url` leakini kaldir (debug mod disi).
+- [ ] P2: `.github/workflows/ci.yml` icine core backend pytest job'u ekle; frontend pipeline ile birlikte zorunlu gate yap.
+- [ ] P2: `hf-crowncode-backend/README.md` endpoint/env/default anlatimini mevcut kodla senkronize et.
+- [ ] P2: HF backend testlerini `analyze`, `data_processing`, `commend` negatif/happy path ile genislet (coverage artisi hedefli).
+- [ ] P3: `hf-crowncode-backend/app/routes/analyze.py` mutable list defaultlarini `Field(default_factory=list)` standardina cek.
+
+### Faz C Dogrulama Logu (Analizci)
+
+- [x] `python -m pytest backend/tests -q` -> `20 passed`
+- [x] `python -m pytest hf-crowncode-backend/tests -q` -> `7 passed` (coverage toplam ~`%40`)
+
+### Siradaki Analiz
+
+- [ ] Faz D: dokuman/CI/devex zinciri derin analizi (stale policy, repo boundary, automation ownership).
