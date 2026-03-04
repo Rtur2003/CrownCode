@@ -7,39 +7,35 @@
 ## Tur Durumu
 
 - Son guncelleme: **4 Mart 2026**
-- Tur: **Tur 3 - Analiz Sonrasi Uygulama**
-- Mod: Faz bazli ilerleme (P0 -> P2)
-- Analiz raporu: `docs/notes/ANALYSIS_REPORT_TUR3_2026-03-04.md`
+- Tur: **Tur 4 - Kontrol Sonrasi Yeni Uygulama**
+- Mod: Faz bazli ilerleme (P1 -> P3)
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_TUR4_2026-03-04.md`
 
 ---
 
 ## Bu Turun Gorevleri
 
-### Faz 0 - Plan/Reality Senkronu (P0)
+### Faz 0 - Kontrol Dogrulama
 
-- [x] Kodex analiz raporu olusturuldu ve kanitlarla dosyalandi.
-- [x] Tur 2'den kalan yanlis `[x]` durumlari dogrulandi: 3 dokumanda stale `/projects/*` ref, 2 env.example'da stale `static` default, 1 workflow'da stale yorum, `.coverage` untracked.
-- [x] Plan dosyasi Tur 3 olarak sifirlanmis, sadece dogrulanmis maddeler `[x]` isaretli.
+- [x] Onceki tur commitleri ve dosyalari dogrulandi.
+- [x] Bagimsiz kalite komutlari kosuldu (lint, type-check, test, build-server, build-static).
+- [x] Yeni analiz raporu olusturuldu.
 
-### Faz 1 - Dokuman Drift Temizligi (P0/P1)
+### Faz 1 - P1 Functional Fix
 
-- [x] `PLATFORM_GITHUB_CONFIG.md`: repo agaci, workflow bolumu, labeler guncellendi. Phantom `platform-ci.yml`, `project-ci.yml`, `projects/` kaldirildi.
-- [x] `MOBILE_RESPONSIVE_DESIGN.md`: `/projects` nav ornegi `/ai-music-detection` olarak guncellendi.
-- [x] `PROJECT_ROUTING_SYSTEM.md`: deployment default `static` -> `server` guncellendi.
-- [x] `.env.example` + `platform/.env.example`: `DEPLOYMENT_TARGET=static` -> `server` guncellendi.
+- [ ] `platform/pages/ai-music-detection/index.tsx` icinde `unsupportedSource` hata case'i eklenecek.
+- [ ] Error resolver tipi `AnalysisErrorCode | null` olarak netlestirilecek.
+- [ ] Desteklenmeyen source durumunda generic degil locale ozel mesaj gosterilecek.
 
-### Faz 2 - Kontrat ve Hata Semantigi (P1)
+### Faz 2 - P2/P3 Dokuman Senkronu
 
-- [x] `BACKEND_CONTRACT.md`: `/api/analyze` sadece HF backend'e ait oldugu netlesti, core backend endpoint bilgisi eklendi.
-- [x] `analysisGateway.ts`: `unsupported_source` -> `unsupportedSource` (yeni code) olarak duzeltildi.
-- [x] `analysisTypes.ts`: `unsupportedSource` error code eklendi.
-- [x] `en.json` + `tr.json`: `unsupportedSource` hata mesaji eklendi, locale parity dogrulandi.
+- [ ] `docs/technical/MIGRATION_PLAN_2026.md` deployment anlatisi dual-mode gercegine gore guncellenecek.
+- [ ] `docs/BACKEND_CONTRACT.md` parity checklist endpoint sahipligine gore daha net hale getirilecek.
 
-### Faz 3 - Workflow Tutarliligi ve Hijyen (P2)
+### Faz 3 - Regression Test Guvencesi
 
-- [x] `engineering-standards.yml`: "either core or HF backend" yorumu -> "core backend" olarak duzeltildi.
-- [x] `ci.yml`: lighthouse job'a `npx serve` + `wait-on` adimlari eklendi, localhost URL'leri artik sunucu tarafindan karsilaniyor.
-- [x] `.gitignore`: `.coverage` eklendi (satir 26).
+- [ ] `unsupportedSource` hata akisini kapsayan en az bir test eklenecek.
+- [ ] Mumkunse `analysisGateway` mapping davranisi testle dogrulanacak.
 
 ---
 
@@ -51,9 +47,6 @@
 4. `cmd /c "set DEPLOYMENT_TARGET=server&& npm --prefix platform run build"`
 5. `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"`
 
----
+Not:
+- Build komutlari ayni anda paralel kosulmamali; `.next` uzerinde cakisma olusturabilir.
 
-## Notlar
-
-- Bu turda Kodex uygulama degil analiz ve raporlama yapti.
-- Claude uygulama bittikce maddeleri `[x]` isaretleyip dosya bazli log eklemeli.
