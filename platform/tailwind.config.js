@@ -65,7 +65,7 @@ module.exports = {
   plugins: [
     function({ addUtilities, addComponents }) {
       const newComponents = {
-        '.devforge-container': {
+        '.crowncode-container': {
           '@apply max-w-7xl mx-auto px-6': {},
         },
         '.project-gradient-ai': {
