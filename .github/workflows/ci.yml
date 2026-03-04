@@ -35,9 +35,9 @@ jobs:
         working-directory: ./platform
         run: npm run lint --if-present
 
-  # Build verification
+  # Default server build verification
   build:
-    name: Build Verification
+    name: Build Verification (Server)
     runs-on: ubuntu-latest
     needs: quality-check
 
@@ -56,7 +56,7 @@ jobs:
         working-directory: ./platform
         run: npm ci
 
-      - name: Build application
+      - name: Build application (server mode)
         working-directory: ./platform
         run: npm run build
         env:
@@ -65,7 +65,42 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-output
+          name: build-server
+          path: platform/.next/
+          retention-days: 7
+
+  # Static export build (for Netlify deploy)
+  build-static:
+    name: Build Verification (Static Export)
+    runs-on: ubuntu-latest
+    needs: quality-check
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.18.1'
+          cache: 'npm'
+          cache-dependency-path: platform/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./platform
+        run: npm ci
+
+      - name: Build application (static export)
+        working-directory: ./platform
+        run: npm run build
+        env:
+          NODE_ENV: production
+          DEPLOYMENT_TARGET: static
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-static
           path: platform/out/
           retention-days: 7
 
@@ -94,7 +129,7 @@ jobs:
   lighthouse:
     name: Lighthouse Performance
     runs-on: ubuntu-latest
-    needs: build
+    needs: build-static
     if: github.event_name == 'pull_request'
 
     steps:
@@ -113,6 +148,8 @@ jobs:
       - name: Build application
         working-directory: ./platform
         run: npm run build
+        env:
+          DEPLOYMENT_TARGET: static
 
       - name: Run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v10
@@ -128,12 +165,18 @@ jobs:
   deploy:
     name: Deploy to Production
     runs-on: ubuntu-latest
-    needs: [quality-check, build, security]
+    needs: [quality-check, build, build-static, security]
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Download static build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-static
+          path: platform/out/
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2.1
