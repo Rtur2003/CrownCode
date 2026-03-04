@@ -1,6 +1,7 @@
 export type ProcessingState = 'idle' | 'validating' | 'downloading' | 'analyzing' | 'complete' | 'error'
 
 export type DecisionSource = 'music_ai' | 'ses_analizi' | 'preview'
+export type AnalysisMode = 'production' | 'preview'
 
 export interface AnalysisFeatures {
   spectralRegularity: number
@@ -46,6 +47,7 @@ export interface AnalysisResult {
   processingTime: number
   modelVersion: string
   decisionSource: DecisionSource
+  analysisMode: AnalysisMode
   source: AnalysisSource
   features: AnalysisFeatures
   audioInfo: AudioInfo
