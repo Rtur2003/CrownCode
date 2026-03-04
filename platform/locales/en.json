@@ -699,7 +699,8 @@
       "streakLabel": "day streak",
       "lucidRateLabel": "lucid rate",
       "newDream": "New Dream",
-      "analytics": "Analytics"
+      "analytics": "Analytics",
+      "demoNotice": "Demo Data"
     },
     "stats": {
       "totalDreams": "Total Dreams",
