@@ -181,6 +181,7 @@ const mapBackendResponse = async (
     processingTime: response.timings?.total_sec ?? elapsedSec,
     modelVersion: response.summary.model_version,
     decisionSource: response.summary.decision_source,
+    analysisMode: response.summary.decision_source === 'preview' ? 'preview' as const : 'production' as const,
     source:
       parsed.kind === 'youtube'
         ? {
