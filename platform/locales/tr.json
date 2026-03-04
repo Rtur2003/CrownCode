@@ -521,6 +521,10 @@
       "label": "Bugün:",
       "suffix": "kader açıldı"
     },
+    "sound": {
+      "enable": "Sesleri aç",
+      "mute": "Sesleri kapat"
+    },
     "buttons": {
       "spin": "Çarkı Çevir",
       "spinning": "Çevriliyor..."
@@ -561,7 +565,8 @@
     "share": {
       "button": "Paylaş",
       "download": "İndir",
-      "title": "Crown Destiny - Günlük Kaderim"
+      "title": "Crown Destiny - Günlük Kaderim",
+      "fileFallback": "kart"
     },
     "streak": {
       "daysTo": "gün kaldı"
@@ -581,7 +586,8 @@
       "close": "Kapat"
     },
     "quote": {
-      "title": "Günün Sözü"
+      "title": "Günün Sözü",
+      "unknownAuthor": "Bilinmiyor"
     }
   },
   "crownVote": {
