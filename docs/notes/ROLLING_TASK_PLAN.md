@@ -73,3 +73,29 @@ Tum fazlar tamamlandi.
 - [x] 2026-03-04: Faz 1 tamamlandi - URL exact-host, CORS wildcard+credentials fix, audio camelCase alias, fortune counter feature flag, analysisMode field eklendi. lint/tsc/test/build temiz.
 - [x] 2026-03-04: Faz 2 tamamlandi - AI Detection preview badge, Crown Dreams demo badge, fortune counter feature flag ile hibrit mod netlestirme. lint/tsc/test/build temiz.
 - [x] 2026-03-04: Faz 3 tamamlandi - sw.js DevForge→CrownCode, tailwind legacy utility, version endpoint dinamik, mapBackendResponse olu kod temizligi. lint/tsc/test/build temiz.
+
+---
+
+## Ek Tur - Crown Fortune Hata Duzeltme Paketi (2026-03-04)
+
+### Kapsam
+
+- `platform/pages/crown-fortune/index.tsx`
+- `platform/styles/pages/crown-fortune.module.css`
+- `platform/locales/en.json`
+- `platform/locales/tr.json`
+
+### Gorevler
+
+- [x] PNG download mirror hatasi giderildi: 3D flatten yaklasimi kaldirildi, `card-front` uzerinden offscreen 2D clone ile export aliniyor.
+- [x] Cark hedef acisi duzeltildi: ortak helper ile hem spin hem restore akisinda ayni deterministic formul kullaniliyor.
+- [x] `+36` offset kaldirildi, hedef aci kategorinin merkezine gore hesaplanir hale getirildi.
+- [x] Crown Fortune icindeki kritik hardcoded fallback metinleri locale anahtarlarina tasindi (`sound`, `counter`, `quote`, `share` fallback).
+- [x] TR/EN locale parity korundu ve yeni anahtarlar eklendi.
+
+### Dogrulama Logu
+
+- [x] `cmd /c npm --prefix platform run lint` -> PASS (No ESLint warnings or errors)
+- [x] `cmd /c npm --prefix platform run type-check` -> PASS (`tsc --noEmit`)
+- [x] `cmd /c npm --prefix platform test -- --runInBand` -> PASS (1 suite, 6 test)
+- [x] `cmd /c "set DEPLOYMENT_TARGET=server&& npm --prefix platform run build"` -> PASS (Next.js build basarili)
