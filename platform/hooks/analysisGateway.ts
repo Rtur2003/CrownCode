@@ -68,6 +68,11 @@ export const analyzeSource = async (
       return { result: null, error: 'backend_unexpected_response' as AnalysisErrorCode }
     }
 
+    // Normalize analysisMode if backend omits it
+    if (!data.result.analysisMode) {
+      data.result.analysisMode = data.result.decisionSource === 'preview' ? 'preview' : 'production'
+    }
+
     return { result: data.result, error: null }
   } catch (error) {
     return { result: null, error: 'backend_unreachable' as AnalysisErrorCode }
