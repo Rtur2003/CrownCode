@@ -1,92 +1,57 @@
 # Rolling Task Plan (Gecici)
 
 > Amac: Bu dosya kalici referans degil, dongusel gorev panosudur.
-> Kural: Her yeni gorev turunda icerik tamamen temizlenir ve yeniden yazilir.
+> Kural: Her yeni turda icerik sifirlanir, sadece aktif tur yazilir.
 > Son Gecerlilik Tarihi: **31 Aralik 2026**
-> Bu tarihten sonra islem: **dosyayi sil veya tarihi guncelleyip yeni tur baslat**.
-
-## Yenileme Protokolu
-
-1. Once mevcut maddeleri tamamlandi/iptal olarak kapat.
-2. Dosya icerigini tamamen temizle.
-3. Yeni tur icin sadece guncel gorevleri ekle.
-4. Gerekirse "Son Gecerlilik Tarihi"ni ileri al.
 
 ## Tur Durumu
 
 - Son guncelleme: **4 Mart 2026**
-- Mod: Faz bazli ilerleme + APEI protokolu
-- Tur: Sonraki Analiz Turu (Tur 2)
-
-## Mimari Not
-
-Iki backend aktif:
-
-- `backend/` = core (minimal FastAPI: health + youtube analysis) — bu repoda
-- `hf-crowncode-backend/` = advanced (full FastAPI: commend, data processing, analyze, preview model) — ayri repo, `.gitignore` satirinda
-
-CI/dependabot/CODEOWNERS sadece `backend/` hedefliyor. `hf-crowncode-backend/` kendi yasam dongusune sahip.
-Kontrat spesifikasyonu: `docs/BACKEND_CONTRACT.md`
+- Tur: **Tur 3 - Analiz Sonrasi Uygulama**
+- Mod: Faz bazli ilerleme (P0 -> P2)
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_TUR3_2026-03-04.md`
 
 ---
 
-## Bu Turun Gorevleri (Tur 2)
+## Bu Turun Gorevleri
 
-### Faz 0 - Build ve CI Stabilizasyonu (P0)
+### Faz 0 - Plan/Reality Senkronu (P0)
 
-- [x] `next.config.js`: default `DEPLOYMENT_TARGET` `static` → `server` olarak degistirildi.
-- [x] `ci.yml`: server build (varsayilan) + static build (ayri job) olarak ayrildi.
-- [x] Deploy job `build-static` artifact'indan cekilmesi icin guncellendi.
+- [x] Kodex analiz raporu olusturuldu ve kanitlarla dosyalandi.
+- [ ] Tur 2'den kalan yanlis `[x]` durumlari Claude tarafinda dogrulanip duzeltilecek.
+- [ ] Plan dosyasi sadece gercek durumu yansitacak sekilde korunacak.
 
-### Faz 1 - Dual-Backend Parity Yonetisimi (P0)
+### Faz 1 - Dokuman Drift Temizligi (P0/P1)
 
-- [x] `dependabot.yml`: gitignored `hf-crowncode-backend` pip entry kaldirildi, yorum eklendi.
-- [x] `CODEOWNERS`: gitignored `hf-crowncode-backend/` entry'leri kaldirildi, yorum eklendi.
-- [x] `engineering-standards.yml`: olu `hf-crowncode-backend/` grep referanslari temizlendi.
-- [x] `docs/BACKEND_CONTRACT.md`: API kontrat spesifikasyonu olusturuldu (analyze endpoint, response shape, parity checklist).
+- [ ] `docs/technical/PLATFORM_GITHUB_CONFIG.md` guncel repo yapisina gore yeniden senkronize edilecek.
+- [ ] `docs/technical/MOBILE_RESPONSIVE_DESIGN.md` icindeki stale `/projects` ornegi aktif route setine uyarlanacak.
+- [ ] `docs/technical/PROJECT_ROUTING_SYSTEM.md` deployment default bilgisi kodla uyumlu hale getirilecek.
 
-### Faz 2 - Guvenlik ve Kontrat Parity (P0-P1)
+### Faz 2 - Kontrat ve Hata Semantigi (P1)
 
-- [x] `backend/app/services/url_parser.py`: `"youtube.com" in host` substring → exact-host set lookup duzeltildi.
-- [x] `hf-crowncode-backend/app/routes/analyze.py`: `AnalysisResult` modeline `analysisMode` field eklendi (Literal["production", "preview"]).
-- [x] `hf-crowncode-backend/app/routes/analyze.py`: youtube ve file response builder'lara `analysisMode` degeri eklendi.
-- [x] `platform/hooks/analysisGateway.ts`: backend `analysisMode` donmezse `decisionSource`'dan runtime normalizer eklendi.
+- [ ] `docs/BACKEND_CONTRACT.md` ile gercek backend capability'leri tutarli hale getirilecek.
+- [ ] `platform/hooks/analysisGateway.ts` icindeki `unsupported_source -> invalidYouTubeUrl` map'i ayrilacak.
+- [ ] `platform/hooks/analysisTypes.ts` ve ilgili locale hata metinleri yeni error code ile parity guncellenecek.
 
-### Faz 3 - i18n ve Icerik Tutarliligi (P1)
+### Faz 3 - Workflow Tutarliligi ve Hijyen (P2)
 
-- [x] `platform/locales/en.json`: duplicate `disclaimer` key (satir 553 ve 565) — ilk kopya kaldirildi.
-- [x] tr/en locale key parity dogrulandi — tum anahtarlar eslesik.
-- [x] Hardcoded fallback'ler incelendi — hepsi mevcut locale anahtarlarina karsilik gelen defensive `||` pattern'leri, gercek i18n ihlali yok.
-
-### Faz 4 - Dokuman ve Operasyon Senkronu (P2)
-
-- [x] `docs/technical/MOBILE_RESPONSIVE_DESIGN.md`: stale `/projects/*` import yollari guncellendi.
-- [x] `docs/technical/PLATFORM_GITHUB_CONFIG.md`: stale `/projects/*` CODEOWNERS ve dependabot ornekleri kaldirildi.
-- [x] `backend/requirements.txt`: olusturuldu (fastapi, pydantic, uvicorn, httpx, yt-dlp).
+- [ ] `.github/workflows/engineering-standards.yml` yorumlari gercek `backend/` kontrol davranisiyla hizalanacak.
+- [ ] `.github/workflows/ci.yml` lighthouse job icin explicit serving/start strategy eklenecek.
+- [ ] `.coverage` icin repo hijyen karari uygulanacak (`.gitignore` veya temizleme stratejisi).
 
 ---
 
-## Siradaki Adim
+## Zorunlu Dogrulama (Claude)
 
-Crown Fortune Hata Duzeltme Paketi:
-1. PNG mirror duzeltmesi (offscreen clone)
-2. Cark aci matematigi duzeltmesi
-3. i18n fallback temizligi
+1. `cmd /c npm --prefix platform run lint`
+2. `cmd /c npm --prefix platform run type-check`
+3. `cmd /c npm --prefix platform test -- --runInBand`
+4. `cmd /c "set DEPLOYMENT_TARGET=server&& npm --prefix platform run build"`
+5. `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"`
 
-## Tamamlananlar (Log)
+---
 
-### Tur 1 (2026-03-04)
+## Notlar
 
-- [x] Faz 0: Makefile dual backend, dependabot `/projects/*` temizlendi, CODEOWNERS guncellendi, workflow izleme eklendi.
-- [x] Faz 1: URL exact-host, CORS wildcard+credentials fix, audio camelCase alias, fortune counter feature flag, analysisMode field.
-- [x] Faz 2: AI Detection preview badge, Crown Dreams demo badge, fortune counter feature flag.
-- [x] Faz 3: sw.js DevForge→CrownCode, tailwind legacy utility, version endpoint dinamik, olu kod temizligi.
-- [x] Ek: Crown Fortune hata duzeltme paketi (PNG mirror, cark acisi, i18n fallback).
-
-### Tur 2 (2026-03-04)
-
-- [x] Faz 0: next.config.js server default, ci.yml split build. lint/tsc/build temiz.
-- [x] Faz 1: hf-crowncode-backend dead refs temizlendi, BACKEND_CONTRACT.md olusturuldu.
-- [x] Faz 2: core URL parser exact-host, HF analysisMode field, gateway normalizer. lint/tsc/build temiz.
-- [x] Faz 3: duplicate disclaimer key, locale parity verified.
-- [x] Faz 4: stale /projects/* doc refs, core backend requirements.txt.
+- Bu turda Kodex uygulama degil analiz ve raporlama yapti.
+- Claude uygulama bittikce maddeleri `[x]` isaretleyip dosya bazli log eklemeli.
