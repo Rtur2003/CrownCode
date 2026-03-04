@@ -18,8 +18,8 @@
 ### Faz 0 - Plan/Reality Senkronu (P0)
 
 - [x] Kodex analiz raporu olusturuldu ve kanitlarla dosyalandi.
-- [ ] Tur 2'den kalan yanlis `[x]` durumlari Claude tarafinda dogrulanip duzeltilecek.
-- [ ] Plan dosyasi sadece gercek durumu yansitacak sekilde korunacak.
+- [x] Tur 2'den kalan yanlis `[x]` durumlari dogrulandi: 3 dokumanda stale `/projects/*` ref, 2 env.example'da stale `static` default, 1 workflow'da stale yorum, `.coverage` untracked.
+- [x] Plan dosyasi Tur 3 olarak sifirlanmis, sadece dogrulanmis maddeler `[x]` isaretli.
 
 ### Faz 1 - Dokuman Drift Temizligi (P0/P1)
 
