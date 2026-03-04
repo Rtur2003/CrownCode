@@ -72,3 +72,35 @@ Kaynak rapor:
 ### Test
 
 - [ ] `platform` testlerine sansli sayilar / quote index / unsupportedSource / share fallback senaryolari eklenecek.
+
+---
+
+## Tur 5 - Asamali Platform Analizi (2026-03-04)
+
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASED_PLATFORM_AUDIT_2026-03-04.md`
+- Yontem: asamali tarama (ortak katman -> ana sayfa -> urun sayfalari -> API -> ops)
+- Rol: Analizci tespit yazar, Claude uygular.
+
+### Faz A (Tamamlandi - Analiz)
+
+- [x] Layout/Header/Footer/MainLayout detay analizi tamamlandi.
+- [x] Home + urun sayfalari tarandi.
+- [x] API route + operasyon dosyalari capraz kontrol edildi.
+- [x] Dogrulama komutlari calistirildi (lint/type-check/test/build server+static + hf tests).
+- [x] Yeni bulgular rapora islendi.
+
+### Faz A Cikisli Claude Gorevleri
+
+- [ ] P1: canonical URL route-bazli duzeltilecek (`MainLayout`).
+- [ ] P1: Header router katmani Pages Router ile netlestirilecek.
+- [ ] P1: Crown Fortune kalan buglar (seeded random + native share fallback) kapatilacak.
+- [ ] P2: i18n fallback temizligi (Footer, Crown Vote, Search, 404, shared UI) yapilacak.
+- [ ] P2: timeout cleanup standardi (Header, Loading, Crown Fortune) uygulanacak.
+- [ ] P2: `data-manipulation` backend URL davranisi production-safe hale getirilecek.
+- [ ] P2: core backend minimum test paketi eklenecek.
+
+### Faz B (Siradaki Analiz Turu)
+
+- [ ] Hook + context + modal katmani (a11y, memory, i18n parity) detay analizi.
+- [ ] Backend servis katmani (core + hf) sozlesme ve guvenlik analizi.
+- [ ] Dokuman/CI/devex zincirinde stale policy ve otomasyon bosluklari.
