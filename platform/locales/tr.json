@@ -329,7 +329,8 @@
       "invalidFileName": "Geçersiz dosya adı. Dosyayı yeniden adlandırın.",
       "backend_not_configured": "Backend ayarlanamadı. Yalnızca önizleme sonucu gösteriliyor.",
       "backend_unreachable": "Backend şu anda ulaşılamıyor. Yalnızca önizleme sonucu gösteriliyor.",
-      "backend_unexpected_response": "Backend beklenmedik cevap verdi. Yalnızca önizleme sonucu gösteriliyor."
+      "backend_unexpected_response": "Backend beklenmedik cevap verdi. Yalnızca önizleme sonucu gösteriliyor.",
+      "limitedBackendNote": "Not: Analiz, sınırlı backend erişimiyle tamamlandı."
     }
   },
   "mlToolkit": {

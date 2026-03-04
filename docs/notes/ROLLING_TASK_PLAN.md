@@ -104,3 +104,31 @@ Kaynak rapor:
 - [ ] Hook + context + modal katmani (a11y, memory, i18n parity) detay analizi.
 - [ ] Backend servis katmani (core + hf) sozlesme ve guvenlik analizi.
 - [ ] Dokuman/CI/devex zincirinde stale policy ve otomasyon bosluklari.
+
+---
+
+## Tur 5.1 - Faz B Tamamlandi (Hook/Context/Modal Analizi)
+
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_B_HOOK_CONTEXT_MODAL_2026-03-04.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz B Sonuc
+
+- [x] Hook + context + modal katmani detay analizi tamamlandi.
+- [ ] Backend servis katmani (core + hf) sozlesme ve guvenlik analizi.
+- [ ] Dokuman/CI/devex zincirinde stale policy ve otomasyon bosluklari.
+
+### Faz B Cikisli Claude Gorevleri
+
+- [ ] P1: `useKeyboardShortcuts` input/textarea/contenteditable guard eklenecek.
+- [ ] P1: Search/Shortcuts/ExternalLink icin ortak modal a11y standardi (`role=dialog`, `aria-modal`, focus trap, focus return) uygulanacak.
+- [ ] P1: `useYouTubeAnalysis`, `useFileAnalysis`, `useCommend` icin abort + stale request guard eklenecek.
+- [ ] P2: Hook/modal i18n fallback/hardcoded metinler locale key'lere tasinacak.
+- [ ] P2: `ShortcutsModal` no-op keyboard listener kaldirilacak.
+- [ ] P2: `useScrollAnimation` observer cleanup `disconnect()` ile guclendirilecek.
+- [ ] P2: `useIsMobile` icindeki `ts-ignore` kalintisi typed helper ile temizlenecek.
+- [ ] P3: Search/Shortcuts modal `AnimatePresence` exit akisi sadeleştirilecek.
+
+### Siradaki Analiz
+
+- [ ] Faz C: backend/core + hf servis/validation/kontrat zinciri derin analizi.

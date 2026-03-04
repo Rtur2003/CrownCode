@@ -676,14 +676,14 @@ export function seededRandom(seed: string): number {
     hash = ((hash << 5) - hash) + char
     hash = hash & hash
   }
-  return Math.abs(hash)
+  return (Math.abs(hash) % 1000000) / 1000000
 }
 
 /**
  * Seed bazlı rastgele seçim (array'den)
  */
 function seededChoice<T>(array: T[], seed: number): T {
-  return array[seed % array.length]
+  return array[Math.floor(seed * array.length)]
 }
 
 /**
@@ -741,10 +741,11 @@ export function getDailyDestiny(): DailyDestiny {
   const baseSeed = seededRandom(`${today}_${userId}`)
 
   // Kart seç
-  const cardId = baseSeed % DESTINY_CARDS.length
+  const cardId = Math.floor(baseSeed * DESTINY_CARDS.length)
 
-  // Kategori seç
-  const categoryIndex = Math.floor(baseSeed / DESTINY_CARDS.length) % FORTUNE_CATEGORIES.length
+  // Kategori seç — derive a second seed from baseSeed to avoid correlation
+  const seed2 = (baseSeed * 7919) % 1
+  const categoryIndex = Math.floor(seed2 * FORTUNE_CATEGORIES.length)
   const category = FORTUNE_CATEGORIES[categoryIndex].key
 
   // Ton belirle (kartın enerjisine göre ağırlıklı)
@@ -754,7 +755,8 @@ export function getDailyDestiny(): DailyDestiny {
     card.energy === 'descending' ? ['negative', 'negative', 'neutral', 'positive'] :
     ['positive', 'neutral', 'neutral', 'negative']
 
-  const toneIndex = Math.floor(baseSeed / (DESTINY_CARDS.length * FORTUNE_CATEGORIES.length)) % toneWeights.length
+  const seed3 = (baseSeed * 6271) % 1
+  const toneIndex = Math.floor(seed3 * toneWeights.length)
   const tone = toneWeights[toneIndex]
 
   // Mesaj seç (ton filtreli)
@@ -1029,11 +1031,13 @@ export function getDailyQuote(cardId: number, date: string): MotivationQuote {
  * Kart koleksiyonunu getir
  */
 export function getCardCollection(): CardCollection {
+  const total = DESTINY_CARDS.length as 22
+
   if (typeof window === 'undefined') {
     return {
       seenCardIds: [],
       firstSeenDates: {},
-      totalCards: 22,
+      totalCards: total,
       collectionProgress: 0
     }
   }
@@ -1042,11 +1046,12 @@ export function getCardCollection(): CardCollection {
   if (stored) {
     try {
       const parsed = JSON.parse(stored)
+      const seenCount = parsed.seenCardIds?.length || 0
       return {
         seenCardIds: parsed.seenCardIds || [],
         firstSeenDates: parsed.firstSeenDates || {},
-        totalCards: 22,
-        collectionProgress: Math.round(((parsed.seenCardIds?.length || 0) / 22) * 100)
+        totalCards: total,
+        collectionProgress: Math.round((seenCount / total) * 100)
       }
     } catch {
       // Invalid JSON, return empty collection
@@ -1056,7 +1061,7 @@ export function getCardCollection(): CardCollection {
   return {
     seenCardIds: [],
     firstSeenDates: {},
-    totalCards: 22,
+    totalCards: total,
     collectionProgress: 0
   }
 }
@@ -1077,7 +1082,7 @@ export function addCardToCollection(cardId: number): CardCollection {
   if (!collection.seenCardIds.includes(cardId)) {
     collection.seenCardIds.push(cardId)
     collection.firstSeenDates[cardId] = today
-    collection.collectionProgress = Math.round((collection.seenCardIds.length / 22) * 100)
+    collection.collectionProgress = Math.round((collection.seenCardIds.length / DESTINY_CARDS.length) * 100)
 
     // Kaydet
     localStorage.setItem(STORAGE_KEYS.CARD_COLLECTION, JSON.stringify({
@@ -1090,9 +1095,9 @@ export function addCardToCollection(cardId: number): CardCollection {
 }
 
 /**
- * Koleksiyon tamamlandı mı? (22 kart)
+ * Koleksiyon tamamlandı mı?
  */
 export function isCollectionComplete(): boolean {
   const collection = getCardCollection()
-  return collection.seenCardIds.length >= 22
+  return collection.seenCardIds.length >= DESTINY_CARDS.length
 }

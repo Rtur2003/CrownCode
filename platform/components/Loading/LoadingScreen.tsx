@@ -19,12 +19,13 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete 
   const { t } = useLanguage()
 
   useEffect(() => {
+    let completionTimer: ReturnType<typeof setTimeout>
     // Simulate loading progress
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval)
-          setTimeout(() => {
+          completionTimer = setTimeout(() => {
             setIsComplete(true)
             onLoadingComplete?.()
           }, 500)
@@ -34,7 +35,10 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete 
       })
     }, 200)
 
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+      clearTimeout(completionTimer)
+    }
   }, [onLoadingComplete])
 
   return (

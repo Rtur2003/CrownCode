@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
       links: [
         { label: t.footer.sections.products.aiMusic, href: '/ai-music-detection' },
         { label: t.footer.sections.products.dataProcessing, href: '/data-manipulation' },
-        { label: t.footer.sections.products.fortune || 'Crown Fortune', href: '/crown-fortune' },
+        { label: t.footer.sections.products.fortune, href: '/crown-fortune' },
       ],
     },
     {

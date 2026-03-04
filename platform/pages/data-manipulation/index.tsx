@@ -103,7 +103,11 @@ const AudioDatasetPage: NextPage = () => {
     formData.append('options', JSON.stringify(augmentOptions))
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/process/audio`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL
+      if (!apiUrl) {
+        throw new Error('Backend API URL is not configured.')
+      }
+      const response = await fetch(`${apiUrl}/api/process/audio`, {
         method: 'POST',
         body: formData,
       })

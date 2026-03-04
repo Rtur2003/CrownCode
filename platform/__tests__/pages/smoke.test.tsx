@@ -15,7 +15,7 @@ jest.mock('next/router', () => ({
   }),
 }))
 
-// Mock next/navigation (app router - used by Header)
+// Mock next/navigation (safety net – no longer actively imported)
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
     push: jest.fn(),

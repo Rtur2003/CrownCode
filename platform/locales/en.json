@@ -329,7 +329,8 @@
       "invalidFileName": "Invalid file name. Please rename your audio file.",
       "backend_not_configured": "Backend is not configured. Showing preview-only result.",
       "backend_unreachable": "Backend is unreachable right now. Showing preview-only result.",
-      "backend_unexpected_response": "Backend returned an unexpected response. Showing preview-only result."
+      "backend_unexpected_response": "Backend returned an unexpected response. Showing preview-only result.",
+      "limitedBackendNote": "Note: Analysis completed with limited backend availability."
     }
   },
   "mlToolkit": {

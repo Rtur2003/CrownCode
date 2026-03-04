@@ -1,8 +1,6 @@
-'use client'
-
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
 import { Github, ExternalLink, Menu, X, Code2 } from 'lucide-react'
 import { LanguageSelector } from '@/components/Navigation/LanguageSelector'
@@ -13,7 +11,7 @@ export const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { t } = useLanguage()
   const router = useRouter()
-  const pathname = usePathname()
+  const pathname = router.pathname
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,12 +25,11 @@ export const Header: React.FC = () => {
   // Handle scroll to products after navigation
   useEffect(() => {
     if (pathname === '/' && window.location.hash === '#products') {
-      // Small delay to ensure page is loaded
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
-        // Clear the hash after scrolling
         window.history.replaceState(null, '', '/')
       }, 100)
+      return () => clearTimeout(timer)
     }
   }, [pathname])
 

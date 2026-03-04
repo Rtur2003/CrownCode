@@ -19,13 +19,13 @@ const CrownVotePage: NextPage = () => {
   const { t } = useLanguage()
   const [activeTab, setActiveTab] = useState<'download' | 'config'>('download')
 
-  const meta = t.crownVote?.meta
+  const meta = t.crownVote.meta
 
   return (
     <MainLayout
-      title={meta?.title || 'Crown Vote - VOTRYX Automation Tool'}
-      description={meta?.description || 'Automated voting tool for DistroKid Spotlight'}
-      keywords={meta?.keywords || 'votryx, distrokid, spotlight, automation'}
+      title={meta.title}
+      description={meta.description}
+      keywords={meta.keywords}
     >
       <div className={styles['vote-page']}>
         {/* Background */}

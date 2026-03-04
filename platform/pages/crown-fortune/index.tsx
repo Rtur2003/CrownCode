@@ -192,6 +192,9 @@ const CrownFortunePage: NextPage = () => {
   // Card ref for download feature
   const cardRef = useRef<HTMLDivElement>(null)
 
+  // Timer refs for unmount cleanup
+  const pendingTimers = useRef<ReturnType<typeof setTimeout>[]>([])
+
   // Streak state
   const [streak, setStreak] = useState<StreakData>({
     count: 0,
@@ -218,6 +221,12 @@ const CrownFortunePage: NextPage = () => {
     collectionProgress: 0
   })
   const [isCollectionModalOpen, setIsCollectionModalOpen] = useState(false)
+
+  // Cleanup all pending timers on unmount
+  useEffect(() => {
+    const timers = pendingTimers.current
+    return () => { timers.forEach(clearTimeout) }
+  }, [])
 
   // Modal ESC key handler + body scroll lock
   useEffect(() => {
@@ -483,12 +492,12 @@ const CrownFortunePage: NextPage = () => {
 
     setRotation(target)
 
-    setTimeout(() => {
+    const spinTimer = setTimeout(() => {
       setIsSpinning(false)
       setShowCard(true)
       playReveal()
 
-      setTimeout(() => {
+      const flipTimer = setTimeout(() => {
         setIsCardFlipped(true)
         localStorage.setItem(STORAGE_KEYS.REVEALED, destiny.date)
 
@@ -505,7 +514,9 @@ const CrownFortunePage: NextPage = () => {
         playSuccess()
         celebrateConfetti(false)
       }, ANIMATION.CARD_FLIP_DELAY)
+      pendingTimers.current.push(flipTimer)
     }, ANIMATION.WHEEL_SPIN_DURATION)
+    pendingTimers.current.push(spinTimer)
   }, [destiny, isSpinning, showCard, counterAvailable, playWhoosh, playReveal, playSuccess])
 
   const handleReverseDestiny = useCallback(() => {
@@ -535,7 +546,7 @@ const CrownFortunePage: NextPage = () => {
     requestAnimationFrame(animateFlip)
 
     // Get reverse message and update state after animation peak
-    setTimeout(() => {
+    const reverseTimer = setTimeout(() => {
       const msg = getReverseMessage(destiny.category, destiny.messageIndex)
       setReverseMessage(msg)
       setIsReversed(true)
@@ -548,6 +559,7 @@ const CrownFortunePage: NextPage = () => {
       localStorage.setItem(STORAGE_KEYS.IS_REVERSED, 'true')
       localStorage.setItem(STORAGE_KEYS.REVERSE_MESSAGE, JSON.stringify(msg))
     }, ANIMATION.REVERSE_ANIMATION_PEAK)
+    pendingTimers.current.push(reverseTimer)
   }, [destiny, isReversed, isFlipping, flipProgress, playDark])
 
   // Memoized card details - MUST be before any conditional returns (React hooks rule)
@@ -604,15 +616,29 @@ const CrownFortunePage: NextPage = () => {
 
     triggerHaptic(HAPTIC.LIGHT)
 
-    if (platform === 'native' && navigator.share) {
+    if (platform === 'native') {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: t.crownFortune.share.title,
+            text: shareText,
+            url: shareUrl,
+          })
+          return
+        } catch {
+          // User cancelled or share failed — fall through to clipboard fallback
+        }
+      }
+      // Fallback: copy to clipboard when native share is unavailable
       try {
-        await navigator.share({
-          title: t.crownFortune.share.title,
-          text: shareText,
-          url: shareUrl,
-        })
+        await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`)
       } catch {
-        // User cancelled or error
+        // Clipboard API unavailable — open Twitter as last resort
+        window.open(
+          `https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
+          '_blank',
+          'noopener,noreferrer,width=600,height=400'
+        )
       }
       return
     }
