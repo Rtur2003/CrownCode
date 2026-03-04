@@ -32,8 +32,8 @@
 # Core backend (minimal FastAPI)
 /backend/ @Rtur2003
 
-# HF backend (advanced FastAPI on HuggingFace Spaces)
-/hf-crowncode-backend/ @Rtur2003
+# NOTE: hf-crowncode-backend/ is a separate repo (.gitignore line 120).
+# Its ownership is managed in that repo's own CODEOWNERS.
 
 # ===========================================
 # DOCUMENTATION
@@ -89,5 +89,4 @@
 # ===========================================
 
 /platform/__tests__/ @Rtur2003
-/hf-crowncode-backend/tests/ @Rtur2003
 /jest.config.js @Rtur2003
