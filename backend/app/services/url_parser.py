@@ -52,7 +52,7 @@ def _extract_video_id(parsed_url) -> Optional[str]:
         candidate = path.strip("/").split("/")[0]
         return candidate or None
 
-    if "youtube.com" in host or "music.youtube.com" in host:
+    if host in {"youtube.com", "www.youtube.com", "m.youtube.com", "music.youtube.com"}:
         if path == "/watch":
             return query.get("v", [None])[0]
         if path.startswith("/shorts/") or path.startswith("/live/") or path.startswith("/embed/"):
