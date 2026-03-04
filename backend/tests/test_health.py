@@ -8,6 +8,7 @@ client = TestClient(app)
 
 
 def test_health_returns_ok():
+    """Verify /api/health returns 200 with status ok."""
     response = client.get("/api/health")
     assert response.status_code == 200
     data = response.json()
