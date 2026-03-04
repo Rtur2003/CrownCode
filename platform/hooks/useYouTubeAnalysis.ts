@@ -13,31 +13,6 @@ type ParsedSource =
   | { kind: 'youtube'; videoId: string; normalizedUrl: string; startTimeSec?: number }
   | { kind: 'spotify'; trackId: string; normalizedUrl: string }
 
-interface BackendSummary {
-  is_ai_generated: boolean
-  confidence: number
-  decision_source: DecisionSource
-  model_version: string
-  indicators: string[]
-}
-
-interface BackendResponse {
-  status: 'ok' | 'partial'
-  source: {
-    normalized_url: string
-    video_id: string
-    start_time_sec?: number
-    duration_sec?: number
-    audio_format?: string
-  }
-  summary: BackendSummary
-  warnings?: string[]
-  errors?: string[]
-  timings?: {
-    total_sec?: number
-  }
-}
-
 const YOUTUBE_ID_RE = /^[a-zA-Z0-9_-]{11}$/
 
 const parseTimeOffset = (raw: string | null): number | undefined => {
