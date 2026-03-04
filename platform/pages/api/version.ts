@@ -24,6 +24,16 @@ interface VersionResponse {
   }
 }
 
+// Read Next.js version once at module load (server-side only)
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const nextVersion: string = (() => {
+  try {
+    return require('next/package.json').version as string
+  } catch {
+    return '14.x'
+  }
+})()
+
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<VersionResponse>
@@ -33,7 +43,7 @@ export default function handler(
       version: '0.0.0',
       buildDate: new Date().toISOString(),
       nodeVersion: process.version,
-      nextVersion: process.env.__NEXT_VERSION || '14.x',
+      nextVersion,
       environment: process.env.NODE_ENV || 'development',
       features: {
         aiAnalysis: false,
@@ -49,14 +59,14 @@ export default function handler(
     version: process.env.NEXT_PUBLIC_APP_VERSION || '1.0.0',
     buildDate: new Date().toISOString(),
     nodeVersion: process.version,
-    nextVersion: process.env.__NEXT_VERSION || '14.x',
+    nextVersion,
     environment: process.env.NODE_ENV || 'development',
     features: {
       aiAnalysis: process.env.FEATURE_AI_ANALYSIS === 'true',
       streamingPlatforms: process.env.FEATURE_STREAMING_PLATFORMS === 'true',
       batchProcessing: process.env.FEATURE_BATCH_PROCESSING === 'true',
-      webVitals: true, // Always enabled
-      pwa: true // Always enabled
+      webVitals: true,
+      pwa: true
     }
   }
 
