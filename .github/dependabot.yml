@@ -21,25 +21,8 @@ updates:
     reviewers:
       - "Rtur2003"
 
-  # HF backend Python dependencies
-  - package-ecosystem: "pip"
-    directory: "/hf-crowncode-backend"
-    schedule:
-      interval: "weekly"
-      day: "tuesday"
-      time: "09:00"
-    open-pull-requests-limit: 3
-    target-branch: "geliştirme"
-    labels:
-      - "dependencies"
-      - "python"
-      - "hf-backend"
-      - "automated"
-    commit-message:
-      prefix: "chore(deps-py):"
-      include: "scope"
-    assignees:
-      - "Rtur2003"
+  # NOTE: hf-crowncode-backend/ is a separate repo (.gitignore line 120).
+  # Its Python dependencies are managed in that repo's own CI.
 
   # GitHub Actions dependencies
   - package-ecosystem: "github-actions"
