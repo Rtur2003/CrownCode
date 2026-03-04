@@ -49,9 +49,9 @@ CI/Makefile sadece `backend/` hedefliyor; `hf-crowncode-backend/` kendi yasam do
 
 ### Faz 2 - Hibrit Preview Urunlestirme
 
-- [ ] Preview/mock kaynaklari UI'da "Demo/Preview" etiketi ile isaretlenecek.
-- [ ] Crown Dreams ve Fortune sayac icin "simulated data" bildirimi.
-- [ ] AI Detection'da preview vs production mod gorunur olacak.
+- [x] AI Detection: `analysisMode === 'preview'` oldiginda sonuc kartinda "Preview" badge gosteriliyor (CSS: `.preview-badge`).
+- [x] Crown Dreams: header'a "Demo Data" / "Demo Verisi" badge eklendi (locale + CSS: `.demo-badge`).
+- [x] Fortune counter: `NEXT_PUBLIC_ENABLE_FORTUNE_COUNTER=false` ile counter gizli; true iken gercek API'den veri aliniyor (simulated base zaten sadece bootstrap).
 
 ### Faz 3 - i18n + Legacy Temizlik
 
