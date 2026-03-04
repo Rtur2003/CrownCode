@@ -1,9 +1,9 @@
-// DevForge Suite - Service Worker
-// Version 1.0.0
+// CrownCode Platform - Service Worker
+// Version 2.0.0
 
-const CACHE_NAME = 'devforge-suite-v1'
-const STATIC_CACHE = 'devforge-static-v1'
-const DYNAMIC_CACHE = 'devforge-dynamic-v1'
+const CACHE_NAME = 'crowncode-v2'
+const STATIC_CACHE = 'crowncode-static-v2'
+const DYNAMIC_CACHE = 'crowncode-dynamic-v2'
 
 // Assets to cache - only files that definitely exist
 const STATIC_ASSETS = [
@@ -12,12 +12,16 @@ const STATIC_ASSETS = [
   '/favicon.ico',
 ]
 
-// Pages to cache
+// Pages to cache - current CrownCode routes
 const PAGES_TO_CACHE = [
   '/',
-  '/projects',
-  '/about',
-  '/contact'
+  '/ai-music-detection',
+  '/crown-fortune',
+  '/crown-dreams',
+  '/crown-commend',
+  '/crown-vote',
+  '/data-manipulation',
+  '/search'
 ]
 
 // Install event
@@ -100,7 +104,6 @@ self.addEventListener('fetch', (event) => {
             // Cache dynamic content
             if (
               request.url.includes('/_next/') ||
-              request.url.includes('/api/') ||
               PAGES_TO_CACHE.includes(url.pathname)
             ) {
               caches.open(DYNAMIC_CACHE)
