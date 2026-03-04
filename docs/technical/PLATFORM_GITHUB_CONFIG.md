@@ -397,11 +397,8 @@ updates:
 platform:
   - platform/**
 
-ai-music-detection:
-  - projects/ai-music-detection/**
-
-data-manipulation:
-  - projects/data-manipulation/**
+backend:
+  - backend/**
 
 documentation:
   - docs/**

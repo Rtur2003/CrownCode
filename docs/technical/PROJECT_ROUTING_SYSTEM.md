@@ -62,8 +62,9 @@ Asagidaki yapilar su an aktif degildir:
 Bu maddeler tekrar aktive edilecekse once mimari karar kaydi acilmali, sonra kod + dokuman birlikte alinmalidir.
 
 ## 6) Deployment Mode Decision
-Varsayilan deploy modu `static` olarak korunur:
+Varsayilan deploy modu `server` olarak ayarlanmistir (`next.config.js:2`):
+- `DEPLOYMENT_TARGET=server` (varsayilan) -> Next runtime acik, `pages/api/*` aktif, cikti `.next/`.
 - `DEPLOYMENT_TARGET=static` -> `next export` cikti (`out/`), runtime API route yok.
-- `DEPLOYMENT_TARGET=server` -> Next runtime acik, `pages/api/*` aktif.
 
-Bu sayede mevcut static pipeline bozulmadan, server mode gecisi de kontrollu sekilde yapilabilir.
+CI pipeline'da her iki mod ayri job olarak dogrulaniyor (`ci.yml: build` + `build-static`).
+Netlify deploy icin `build-static` artifact'i kullanilir.

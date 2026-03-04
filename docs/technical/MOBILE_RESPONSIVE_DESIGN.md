@@ -549,7 +549,7 @@ const HeavyComponent = lazy(() => import('@/components/HeavyComponent'))
   <nav role="navigation" aria-label="Ana navigasyon">
     <ul>
       <li><a href="/" aria-current="page">Ana Sayfa</a></li>
-      <li><a href="/projects">Projeler</a></li>
+      <li><a href="/ai-music-detection">AI Music Detection</a></li>
     </ul>
   </nav>
 </header>
