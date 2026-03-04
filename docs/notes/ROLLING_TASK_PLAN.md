@@ -33,12 +33,11 @@ CI/Makefile sadece `backend/` hedefliyor; `hf-crowncode-backend/` kendi yasam do
 
 ### Faz 0 - Repo Topolojisi ve Operasyon Senkronu
 
-- [ ] Makefile: `backend/` komutlarini gercek yapiya hizala (`requirements.txt` yok, sadece `app/` var).
-- [ ] Makefile: `hf-crowncode-backend` icin ayri target'lar ekle (`*-hf`).
-- [ ] `.github/dependabot.yml`: var olmayan `/projects/*` yollarini kaldir, `hf-crowncode-backend` pip ekle.
-- [ ] `.github/CODEOWNERS`: var olmayan `/projects/*` bloklarini kaldir, `hf-crowncode-backend/` ekle.
-- [ ] `.github/workflows/engineering-standards.yml`: `backend/` yaninda `hf-crowncode-backend/` degisim izleme ekle.
-- [ ] ROLLING_TASK_PLAN.md guncelle.
+- [x] Makefile: dual backend target'lari eklendi (`*-core`, `*-hf`), kirik `backend/` yollari duzeltildi.
+- [x] `.github/dependabot.yml`: var olmayan `/projects/*` yollari kaldirildi, `hf-crowncode-backend` pip eklendi, target-branch `geliştirme` yapildi.
+- [x] `.github/CODEOWNERS`: var olmayan `/projects/*` bloklari kaldirildi, `/hf-crowncode-backend/` eklendi, phantom dosya referanslari temizlendi.
+- [x] `.github/workflows/engineering-standards.yml`: backend degisim kontrolune `hf-crowncode-backend/` eklendi.
+- [x] ROLLING_TASK_PLAN.md yeni tur olarak sifirlandi.
 
 ### Faz 1 - Guvenlik ve Fonksiyonel P0 Duzeltmeleri
 
@@ -65,8 +64,8 @@ CI/Makefile sadece `backend/` hedefliyor; `hf-crowncode-backend/` kendi yasam do
 
 ## Siradaki Adim
 
-Faz 0 basliyor.
+Faz 1 basliyor.
 
 ## Tamamlananlar (Log)
 
-(Yeni tur - henuz tamamlanan yok)
+- [x] 2026-03-04: Faz 0 tamamlandi - Makefile dual backend, dependabot `/projects/*` temizlendi, CODEOWNERS guncellendi, workflow `hf-crowncode-backend/` izleme eklendi.
