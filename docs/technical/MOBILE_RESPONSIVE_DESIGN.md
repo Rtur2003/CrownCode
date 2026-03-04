@@ -523,11 +523,11 @@ const ImageComponent = ({ src, alt, priority = false }) => {
 ### 🚀 Code Splitting
 
 ```typescript
-// Route-based code splitting
-const ProjectRoutes = {
-  'ai-music-detection': lazy(() => import('@/projects/ai-music-detection/App')),
-  'data-manipulation': lazy(() => import('@/projects/data-manipulation/App')),
-  'ml-toolkit': lazy(() => import('@/projects/ml-toolkit/App'))
+// Route-based code splitting (Pages Router)
+const PageRoutes = {
+  'ai-music-detection': lazy(() => import('@/pages/ai-music-detection')),
+  'data-manipulation': lazy(() => import('@/pages/data-manipulation')),
+  'crown-fortune': lazy(() => import('@/pages/crown-fortune'))
 }
 
 // Component-based code splitting
