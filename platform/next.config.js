@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const deploymentTarget = process.env.DEPLOYMENT_TARGET || 'static'
+const deploymentTarget = process.env.DEPLOYMENT_TARGET || 'server'
 const isStaticExport = deploymentTarget === 'static'
 
 const nextConfig = {
