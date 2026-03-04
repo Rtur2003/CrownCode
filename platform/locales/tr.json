@@ -698,7 +698,8 @@
       "streakLabel": "günlük seri",
       "lucidRateLabel": "lüsid oranı",
       "newDream": "Yeni Rüya",
-      "analytics": "Analitik"
+      "analytics": "Analitik",
+      "demoNotice": "Demo Verisi"
     },
     "stats": {
       "totalDreams": "Toplam Rüya",
