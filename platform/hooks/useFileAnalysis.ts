@@ -74,6 +74,7 @@ const buildPreviewResult = async (file: File, elapsedSec: number): Promise<Analy
     processingTime: elapsedSec,
     modelVersion: 'preview-v2-enhanced',
     decisionSource: 'preview',
+    analysisMode: 'preview',
     source: {
       kind: 'file',
       fileName: file.name,
