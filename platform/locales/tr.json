@@ -321,6 +321,7 @@
     "errors": {
       "enterUrl": "Lütfen bir YouTube URL'si girin.",
       "invalidYouTubeUrl": "Geçersiz YouTube URL'si. https://www.youtube.com/watch?v=... veya https://youtu.be/... kullanın.",
+      "unsupportedSource": "Bu kaynak türü henüz desteklenmiyor. YouTube deneyin veya bir ses dosyası yükleyin.",
       "missingFile": "Lütfen analiz için bir ses dosyası seçin.",
       "unsupportedFileType": "Desteklenmeyen dosya formatı. MP3, WAV, FLAC, M4A kullanın.",
       "fileTooLarge": "Dosya boyutu 30MB (yaklaşık 6 dk) sınırını aşıyor. Daha küçük dosya seçin.",

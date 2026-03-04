@@ -60,7 +60,7 @@ export const analyzeSource = async (
     if (data.errors && data.errors.length) {
       // Map a few known errors to the existing codes
       if (data.errors.includes('missing_file')) return { result: null, error: 'missingFile' }
-      if (data.errors.includes('unsupported_source')) return { result: null, error: 'invalidYouTubeUrl' }
+      if (data.errors.includes('unsupported_source')) return { result: null, error: 'unsupportedSource' }
       return { result: null, error: 'backend_unexpected_response' as AnalysisErrorCode }
     }
 

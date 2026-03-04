@@ -23,6 +23,7 @@ out/
 build/
 dist/
 coverage/
+.coverage
 
 # AI/ML Models
 *.pth

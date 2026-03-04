@@ -1,21 +1,24 @@
 # Backend API Contract Specification
 
-> Defines the shared contract between the Next.js frontend (`platform/`) and both backends.
-> Both backends MUST conform to this contract for the frontend gateway (`analysisGateway.ts`) to work.
+> Defines the API contract between the Next.js frontend (`platform/`) and the backends.
 
 ## Architecture
 
-| Component | Path | Role |
-|-----------|------|------|
-| **Core backend** | `backend/` | Minimal FastAPI: health, youtube analysis |
-| **HF backend** | `hf-crowncode-backend/` (separate repo) | Advanced FastAPI: commend, data processing, analyze, audio augmentation |
-| **Frontend** | `platform/` | Next.js 14 (Pages Router) |
+| Component | Path | Role | Serves `/api/analyze`? |
+|-----------|------|------|------------------------|
+| **Core backend** | `backend/` | Minimal FastAPI: health, `/api/youtube/analyze` | No |
+| **HF backend** | `hf-crowncode-backend/` (separate repo) | Advanced FastAPI: commend, data processing, analyze, audio augmentation | **Yes** |
+| **Frontend** | `platform/` | Next.js 14 (Pages Router) | N/A |
 
 > `hf-crowncode-backend/` is **gitignored** in this repo (line 120).
 > It lives as a separate repository deployed to HuggingFace Spaces.
 > CI, dependabot, and CODEOWNERS for it are managed in that repo.
 
-## Analyze Endpoint
+> **Not:** Core backend (`backend/`) sunucu `/api/youtube/analyze` (JSON body, `YouTubeAnalyzeRequest`).
+> Frontend gateway (`analysisGateway.ts`) sadece HF backend'in `/api/analyze` endpointini hedefler.
+> Core backend'e dogrudan frontend'den erisim yoktur; ileride adaptor eklenebilir.
+
+## Analyze Endpoint (HF backend only)
 
 **POST** `/api/analyze`
 

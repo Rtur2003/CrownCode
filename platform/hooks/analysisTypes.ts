@@ -56,6 +56,7 @@ export interface AnalysisResult {
 export type AnalysisErrorCode =
   | 'enterUrl'
   | 'invalidYouTubeUrl'
+  | 'unsupportedSource'
   | 'missingFile'
   | 'unsupportedFileType'
   | 'fileTooLarge'
