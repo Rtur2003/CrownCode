@@ -32,8 +32,8 @@
 
 ### Faz 3 - Regression Test Guvencesi
 
-- [ ] `unsupportedSource` hata akisini kapsayan en az bir test eklenecek.
-- [ ] Mumkunse `analysisGateway` mapping davranisi testle dogrulanacak.
+- [x] `unsupportedSource` hata akisini kapsayan en az bir test eklenecek. (`__tests__/hooks/analysisGateway.test.ts`)
+- [x] `analysisGateway` mapping davranisi 10 test ile dogrulandi (unsupported_source, missing_file, fileTooLarge, enterUrl, backend_unreachable, backend_unexpected_response, analysisMode normalization).
 
 ---
 
@@ -61,7 +61,7 @@ Kaynak rapor:
 - [ ] `platform/data/destiny.ts`: `getLuckyElements` aralik mantigi 1..49 olacak sekilde duzeltilecek.
 - [ ] `platform/data/destiny.ts`: `getDailyQuote` index secimi her zaman gecerli olacak.
 - [ ] `platform/pages/crown-fortune/index.tsx`: `native share` yoksa fallback davranisi eklenecek.
-- [ ] `platform/pages/ai-music-detection/index.tsx`: `unsupportedSource` case'i error resolver'a eklenecek.
+- [x] `platform/pages/ai-music-detection/index.tsx`: `unsupportedSource` case'i error resolver'a eklenecek. (Tur 4 Faz 1'de tamamlandi.)
 
 ### P2
 
