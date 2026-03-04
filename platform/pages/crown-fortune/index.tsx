@@ -330,7 +330,7 @@ const CrownFortunePage: NextPage = () => {
       isMounted = false
       clearInterval(interval)
     }
-  }, [mounted])
+  }, [mounted, counterEnabled])
 
   // Load destiny
   useEffect(() => {
