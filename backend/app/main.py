@@ -22,10 +22,12 @@ def _load_origins() -> list[str]:
 
 app = FastAPI(title="CrownCode Backend API", version="0.1.0")
 
+_origins = _load_origins()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=_load_origins(),
-    allow_credentials=True,
+    allow_origins=_origins,
+    # credentials=True is only safe with an explicit origin list, not wildcard
+    allow_credentials="*" not in _origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
