@@ -29,12 +29,13 @@ export const useScrollAnimation = (options: UseScrollAnimationOptions = {}) => {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const isIntersecting = entry.isIntersecting
-
-        if (isIntersecting && (!triggerOnce || !hasTriggered)) {
+        if (entry.isIntersecting) {
           setIsVisible(true)
           setHasTriggered(true)
-        } else if (!triggerOnce && !isIntersecting) {
+          if (triggerOnce) {
+            observer.disconnect()
+          }
+        } else if (!triggerOnce) {
           setIsVisible(false)
         }
       },
@@ -47,9 +48,9 @@ export const useScrollAnimation = (options: UseScrollAnimationOptions = {}) => {
     observer.observe(element)
 
     return () => {
-      observer.unobserve(element)
+      observer.disconnect()
     }
-  }, [threshold, rootMargin, triggerOnce, hasTriggered])
+  }, [threshold, rootMargin, triggerOnce])
 
   return { elementRef, isVisible }
 }

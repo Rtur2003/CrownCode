@@ -68,11 +68,11 @@ export const ShortcutsModal: React.FC = () => {
     enabled: true
   })
 
-  const getCategoryLabel = (key: string) =>
-    (t.shortcuts as Record<string, unknown>)?.categories?.[key as keyof typeof t.shortcuts] as string || key
+  const categories = t.shortcuts?.categories as Record<string, string> | undefined
+  const items = t.shortcuts?.items as Record<string, string> | undefined
 
-  const getItemLabel = (key: string) =>
-    (t.shortcuts as Record<string, unknown>)?.items?.[key as keyof typeof t.shortcuts] as string || key
+  const getCategoryLabel = (key: string) => categories?.[key] || key
+  const getItemLabel = (key: string) => items?.[key] || key
 
   // Group shortcuts by category
   const groupedShortcuts = SHORTCUTS.reduce((acc, shortcut) => {
@@ -116,21 +116,14 @@ export const ShortcutsModal: React.FC = () => {
 
           {/* Content */}
           <div className="shortcuts-modal-content">
-            {Object.entries(groupedShortcuts).map(([category, shortcuts]) => (
-              <div key={category} className="shortcuts-category">
-                <h3 className="shortcuts-category-title">{category}</h3>
+            {Object.entries(groupedShortcuts).map(([categoryKey, shortcuts]) => (
+              <div key={categoryKey} className="shortcuts-category">
+                <h3 className="shortcuts-category-title">{getCategoryLabel(categoryKey)}</h3>
                 <div className="shortcuts-list">
                   {shortcuts.map((shortcut, index) => (
                     <div key={index} className="shortcut-item">
                       <span className="shortcut-description">
-                        {language === 'tr'
-                          ? shortcut.description === 'Search' ? 'Arama'
-                          : shortcut.description === 'Upload file' ? 'Dosya yükle'
-                          : shortcut.description === 'Show shortcuts' ? 'Kısayolları göster'
-                          : shortcut.description === 'Close modal' ? 'Modalı kapat'
-                          : shortcut.description
-                          : shortcut.description
-                        }
+                        {getItemLabel(shortcut.descriptionKey)}
                       </span>
                       <div className="shortcut-keys">
                         {formatShortcut(shortcut).split(' + ').map((key, i) => (

@@ -54,14 +54,14 @@ export const useSearch = () => {
     {
       id: 'url-analysis',
       title: t.search?.features?.urlAnalysis || 'URL Analysis',
-      description: 'Analyze a YouTube link',
+      description: t.search?.features?.urlAnalysisDesc || 'Analyze a YouTube link',
       href: '/ai-music-detection#url',
       category: 'features' as const
     },
     {
       id: 'data-augmentation',
       title: t.search?.features?.dataAugmentation || 'Data Augmentation',
-      description: 'Augment your dataset',
+      description: t.search?.features?.dataAugmentationDesc || 'Augment your dataset',
       href: '/data-manipulation',
       category: 'features' as const
     }
