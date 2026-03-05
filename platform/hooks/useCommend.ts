@@ -3,7 +3,7 @@
  * AI-powered YouTube comment generation
  */
 
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useRef } from 'react'
 
 export type CommentLanguage = 'Turkish' | 'English' | 'Russian' | 'Chinese' | 'Japanese'
 
@@ -82,6 +82,7 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
   const [postResult, setPostResult] = useState<PostResponse | null>(null)
 
   const apiBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_API_URL?.trim(), [])
+  const requestIdRef = useRef(0)
   const i18nMessages = useMemo(
     () => ({ ...DEFAULT_MESSAGES, ...messages }),
     [messages]
@@ -114,6 +115,9 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
       return
     }
 
+    const currentRequestId = ++requestIdRef.current
+    const isStale = () => requestIdRef.current !== currentRequestId
+
     setState('generating')
     setError(null)
 
@@ -128,12 +132,16 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
         })
       })
 
+      if (isStale()) return
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ detail: i18nMessages.unknownError }))
         throw new Error(errorData.detail || `HTTP ${response.status}`)
       }
 
       const data: GenerateResponse = await response.json()
+
+      if (isStale()) return
 
       setGeneratedComment(data.generatedText)
       setVideoDetails(data.videoDetails)
@@ -142,6 +150,7 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
       setState('success')
 
     } catch (err) {
+      if (isStale()) return
       const message = err instanceof Error ? err.message : i18nMessages.failedToGenerate
       setError({ code: 'generate_failed', message })
       setState('error')
