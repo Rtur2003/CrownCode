@@ -73,11 +73,9 @@ def service_status() -> dict:
     return {
         "music_ai": {
             "configured": bool(os.getenv("MUSIC_AI_API_URL")),
-            "base_url": os.getenv("MUSIC_AI_API_URL"),
         },
         "ses_analizi": {
             "configured": bool(os.getenv("SES_ANALIZI_API_URL")),
-            "base_url": os.getenv("SES_ANALIZI_API_URL"),
         },
     }
 

@@ -65,3 +65,4 @@ export type AnalysisErrorCode =
   | 'backend_not_configured'
   | 'backend_unreachable'
   | 'backend_unexpected_response'
+  | 'youtubeAnalysisFailed'
