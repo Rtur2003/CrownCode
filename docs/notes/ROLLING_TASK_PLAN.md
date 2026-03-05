@@ -145,7 +145,7 @@ Kaynak rapor:
 - [x] Core backend + HF backend servis katmani capraz analiz edildi.
 - [x] Frontend-backend error/contract uyumu kontrol edildi.
 - [x] Backend test dogrulamasi tekrar kosuldu.
-- [ ] Dokuman/CI/devex stale policy fazi (Faz D) beklemede.
+- [x] Dokuman/CI/devex stale policy fazi (Faz D) baslatildi.
 
 ### Faz C Cikisli Claude Gorevleri
 
@@ -169,4 +169,36 @@ Kaynak rapor:
 
 ### Siradaki Analiz
 
-- [ ] Faz D: dokuman/CI/devex zinciri derin analizi (stale policy, repo boundary, automation ownership).
+- [x] Faz D: dokuman/CI/devex zinciri derin analizi (Netlify deploy incident odakli) tamamlandi.
+
+---
+
+## Tur 5.3 - Faz D Tamamlandi (Deploy/DevEx Netlify Incident)
+
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_D_DEVEX_NETLIFY_2026-03-05.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz D Sonuc
+
+- [x] Netlify deploy incident kok nedeni dogrulandi.
+- [x] Server-mode vs static-export config cakismasi netlestirildi.
+- [x] Deploy/devex icin uygulanabilir gorev paketi cikarildi.
+
+### Faz D Cikisli Claude Gorevleri
+
+- [ ] P0: `netlify.toml` publish path conflict'i kaldirilacak (server-mode Next runtime ile uyumlu hale getirilecek).
+- [ ] P0: Netlify deploy modeli teklestirilecek (`plugin-nextjs` aktifken static `out` beklentisi zorlanmayacak).
+- [ ] P1: `netlify.toml` + dokumanlarda static/server deploy stratejisi acik ayrilacak (tek dosyada karisik davranis olmayacak).
+- [ ] P1: Branch-context deploy policy netlestirilecek (gelistirme branch production context'e dusmeyecek).
+- [ ] P2: npm/corepack komut zinciri deterministic hale getirilecek (engine warning gürültüsü azaltilacak).
+- [ ] P2: Deploy sonrasi check-list eklenecek (publish path, plugin-nextjs, route tipi dogrulamasi).
+
+### Faz D Kaynak Incident (Kullanici Logu)
+
+- [x] Netlify hata: `publish directory not found: /opt/build/repo/platform/out`
+- [x] Build basarili ama plugin `onBuild` adiminda fail.
+- [x] Dynamic route ciktilari (`ƒ /api/*`) server-mode build oldugunu dogruladi.
+
+### Siradaki Analiz
+
+- [ ] Faz E: sayfa bazli performans + bundle + runtime gozlenebilirlik analizi.
