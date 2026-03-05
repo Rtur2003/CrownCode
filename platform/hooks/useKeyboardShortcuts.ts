@@ -12,6 +12,7 @@ type KeyCombo = {
   modifiers?: KeyModifier[]
   callback: (event: KeyboardEvent) => void
   description?: string
+  allowInInput?: boolean
 }
 
 type ShortcutDisplay = {
@@ -34,8 +35,15 @@ export const useKeyboardShortcuts = ({
     (event: KeyboardEvent) => {
       if (!enabled) { return }
 
+      const target = event.target as HTMLElement
+      const tagName = target.tagName
+      const isInputFocused = tagName === 'INPUT' || tagName === 'TEXTAREA' || tagName === 'SELECT' || target.isContentEditable
+
       for (const shortcut of shortcuts) {
-        const { key, modifiers = [], callback } = shortcut
+        const { key, modifiers = [], callback, allowInInput } = shortcut
+
+        // Skip non-allowed shortcuts when user is typing
+        if (isInputFocused && !allowInInput) continue
 
         // Check if key matches
         const keyMatch = event.key.toLowerCase() === key.toLowerCase()

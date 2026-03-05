@@ -100,6 +100,7 @@ export const useFileAnalysis = () => {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null)
   const [error, setError] = useState<AnalysisErrorCode | null>(null)
   const startTimeRef = useRef<number>(0)
+  const requestIdRef = useRef(0)
   const apiBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_API_URL?.trim(), [])
 
   const validateFile = useCallback((file: File): AnalysisErrorCode | null => {
@@ -159,6 +160,9 @@ export const useFileAnalysis = () => {
       return
     }
 
+    const currentRequestId = ++requestIdRef.current
+    const isStale = () => requestIdRef.current !== currentRequestId
+
     setError(null)
     setProcessingState('validating')
     startTimeRef.current = Date.now()
@@ -172,6 +176,7 @@ export const useFileAnalysis = () => {
           `Note: Analysis completed with limited backend availability.`
         ]
       }
+      if (isStale()) return
       setAnalysisResult(preview)
       setProcessingState('complete')
     }
@@ -190,6 +195,8 @@ export const useFileAnalysis = () => {
         file: selectedFile
       })
 
+      if (isStale()) return
+
       if (result) {
         setAnalysisResult(result)
         setProcessingState('complete')
@@ -203,6 +210,7 @@ export const useFileAnalysis = () => {
         setProcessingState('error')
       }
     } catch (fetchError) {
+      if (isStale()) return
       fallbackToPreview('backend_unreachable')
     }
   }, [apiBaseUrl, selectedFile, validateFile])

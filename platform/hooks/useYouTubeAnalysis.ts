@@ -145,6 +145,7 @@ export const useYouTubeAnalysis = () => {
   const [error, setError] = useState<AnalysisErrorCode | null>(null)
   const [warnings, setWarnings] = useState<string[]>([])
   const startTimeRef = useRef<number>(0)
+  const requestIdRef = useRef(0)
 
   const apiBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_API_URL?.trim(), [])
   const minDurationMs = 4000
@@ -157,6 +158,8 @@ export const useYouTubeAnalysis = () => {
   }, [])
 
   const runAnalysis = useCallback(async () => {
+    const currentRequestId = ++requestIdRef.current
+    const isStale = () => requestIdRef.current !== currentRequestId
     if (!url.trim()) {
       setError('enterUrl')
       setProcessingState('error')
@@ -180,6 +183,7 @@ export const useYouTubeAnalysis = () => {
 
     const fallbackToPreview = async (warningKey?: string) => {
       await ensureMinDuration()
+      if (isStale()) return
       const elapsedSec = (Date.now() - startTimeRef.current) / 1000
       const warningsBuffer = warningKey ? [warningKey] : []
       const result = await buildPreviewResult(parsed, url, elapsedSec, warningsBuffer)
@@ -207,8 +211,11 @@ export const useYouTubeAnalysis = () => {
         url
       })
 
+      if (isStale()) return
+
       if (result) {
         await ensureMinDuration()
+        if (isStale()) return
         setAnalysisResult(result)
         setProcessingState('complete')
         return
@@ -221,6 +228,7 @@ export const useYouTubeAnalysis = () => {
         setProcessingState('error')
       }
     } catch (fetchError) {
+      if (isStale()) return
       fallbackToPreview('backend_unreachable')
     }
   }, [apiBaseUrl, url])
