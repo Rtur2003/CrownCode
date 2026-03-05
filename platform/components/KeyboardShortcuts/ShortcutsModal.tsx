@@ -13,34 +13,34 @@ import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'
 interface Shortcut {
   key: string
   modifiers?: ('ctrl' | 'cmd' | 'alt' | 'shift')[]
-  description: string
-  category: string
+  descriptionKey: string
+  categoryKey: string
 }
 
 const SHORTCUTS: Shortcut[] = [
   {
     key: 'k',
     modifiers: ['ctrl'],
-    description: 'Search',
-    category: 'Navigation'
+    descriptionKey: 'search',
+    categoryKey: 'navigation'
   },
   {
     key: 'u',
     modifiers: ['ctrl'],
-    description: 'Upload file',
-    category: 'Actions'
+    descriptionKey: 'uploadFile',
+    categoryKey: 'actions'
   },
   {
     key: '/',
     modifiers: ['ctrl'],
-    description: 'Show shortcuts',
-    category: 'Help'
+    descriptionKey: 'showShortcuts',
+    categoryKey: 'help'
   },
   {
     key: 'Escape',
     modifiers: [],
-    description: 'Close modal',
-    category: 'General'
+    descriptionKey: 'closeModal',
+    categoryKey: 'general'
   }
 ]
 
