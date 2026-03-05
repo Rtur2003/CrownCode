@@ -501,7 +501,24 @@
     },
     "features": {
       "urlAnalysis": "YouTube Analizi",
-      "dataAugmentation": "Veri Artırma"
+      "urlAnalysisDesc": "Bir YouTube bağlantısını analiz et",
+      "dataAugmentation": "Veri Artırma",
+      "dataAugmentationDesc": "Veri setinizi artırın"
+    }
+  },
+  "shortcuts": {
+    "title": "Klavye Kısayolları",
+    "categories": {
+      "navigation": "Gezinme",
+      "actions": "Eylemler",
+      "help": "Yardım",
+      "general": "Genel"
+    },
+    "items": {
+      "search": "Arama",
+      "uploadFile": "Dosya yükle",
+      "showShortcuts": "Kısayolları göster",
+      "closeModal": "Modalı kapat"
     }
   },
   "crownFortune": {

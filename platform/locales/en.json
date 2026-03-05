@@ -501,7 +501,24 @@
     },
     "features": {
       "urlAnalysis": "YouTube Analysis",
-      "dataAugmentation": "Data Augmentation"
+      "urlAnalysisDesc": "Analyze a YouTube link",
+      "dataAugmentation": "Data Augmentation",
+      "dataAugmentationDesc": "Augment your dataset"
+    }
+  },
+  "shortcuts": {
+    "title": "Keyboard Shortcuts",
+    "categories": {
+      "navigation": "Navigation",
+      "actions": "Actions",
+      "help": "Help",
+      "general": "General"
+    },
+    "items": {
+      "search": "Search",
+      "uploadFile": "Upload file",
+      "showShortcuts": "Show shortcuts",
+      "closeModal": "Close modal"
     }
   },
   "crownFortune": {
