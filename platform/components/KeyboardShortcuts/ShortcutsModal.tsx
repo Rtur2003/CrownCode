@@ -47,7 +47,7 @@ const SHORTCUTS: Shortcut[] = [
 export const ShortcutsModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { language } = useLanguage()
-  const { formatShortcut } = useKeyboardShortcuts({ shortcuts: [] })
+  const { formatShortcut } = useKeyboardShortcuts({ shortcuts: [], enabled: false })
 
   // Listen for Ctrl+/ to toggle modal
   useKeyboardShortcuts({
@@ -55,11 +55,13 @@ export const ShortcutsModal: React.FC = () => {
       {
         key: '/',
         modifiers: ['ctrl'],
+        allowInInput: true,
         callback: () => setIsOpen((prev) => !prev)
       },
       {
         key: 'Escape',
         modifiers: [],
+        allowInInput: true,
         callback: () => setIsOpen(false)
       }
     ],
@@ -79,9 +81,12 @@ export const ShortcutsModal: React.FC = () => {
 
   return (
     <AnimatePresence>
-      <div className="shortcuts-modal-overlay" onClick={() => setIsOpen(false)}>
+      <div className="shortcuts-modal-overlay" onClick={() => setIsOpen(false)} role="presentation">
         <motion.div
           className="shortcuts-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="shortcuts-modal-title"
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -92,7 +97,7 @@ export const ShortcutsModal: React.FC = () => {
           <div className="shortcuts-modal-header">
             <div className="shortcuts-modal-title">
               <Keyboard size={24} />
-              <h2>{language === 'tr' ? 'Klavye Kısayolları' : 'Keyboard Shortcuts'}</h2>
+              <h2 id="shortcuts-modal-title">{language === 'tr' ? 'Klavye Kısayolları' : 'Keyboard Shortcuts'}</h2>
             </div>
             <button
               onClick={() => setIsOpen(false)}

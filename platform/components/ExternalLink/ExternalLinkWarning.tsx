@@ -106,6 +106,9 @@ export const ExternalLinkWarning: React.FC<ExternalLinkWarningProps> = ({
         >
           <motion.div
             className="external-link-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="external-link-title"
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -127,7 +130,7 @@ export const ExternalLinkWarning: React.FC<ExternalLinkWarningProps> = ({
             </div>
 
             {/* Title */}
-            <h3 className="external-link-title">{el.title}</h3>
+            <h3 id="external-link-title" className="external-link-title">{el.title}</h3>
 
             {/* Description */}
             <p className="external-link-description">{el.description}</p>
