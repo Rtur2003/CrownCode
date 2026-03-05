@@ -83,22 +83,21 @@ export const ShortcutsModal: React.FC = () => {
     return acc
   }, {} as Record<string, Shortcut[]>)
 
-  if (!isOpen) { return null }
-
   return (
     <AnimatePresence>
-      <div className="shortcuts-modal-overlay" onClick={() => setIsOpen(false)} role="presentation">
-        <motion.div
-          className="shortcuts-modal"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="shortcuts-modal-title"
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          transition={{ duration: 0.2 }}
-          onClick={(e) => e.stopPropagation()}
-        >
+      {isOpen && (
+        <div className="shortcuts-modal-overlay" onClick={() => setIsOpen(false)} role="presentation">
+          <motion.div
+            className="shortcuts-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="shortcuts-modal-title"
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ duration: 0.2 }}
+            onClick={(e) => e.stopPropagation()}
+          >
           {/* Header */}
           <div className="shortcuts-modal-header">
             <div className="shortcuts-modal-title">
@@ -106,6 +105,7 @@ export const ShortcutsModal: React.FC = () => {
               <h2 id="shortcuts-modal-title">{t.shortcuts?.title || 'Keyboard Shortcuts'}</h2>
             </div>
             <button
+              type="button"
               onClick={() => setIsOpen(false)}
               className="shortcuts-modal-close"
               aria-label="Close"
@@ -138,8 +138,9 @@ export const ShortcutsModal: React.FC = () => {
               </div>
             ))}
           </div>
-        </motion.div>
-      </div>
+          </motion.div>
+        </div>
+      )}
     </AnimatePresence>
   )
 }

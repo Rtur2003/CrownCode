@@ -55,54 +55,54 @@ export const SearchModal: React.FC = () => {
     }
   }, [isOpen])
 
-  if (!isOpen) { return null }
-
   return (
     <AnimatePresence>
-      <div className="search-modal-overlay" onClick={closeSearch} role="presentation">
-        <motion.div
-          className="search-modal"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="search-modal-title"
-          initial={{ opacity: 0, scale: 0.95, y: -20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: -20 }}
-          transition={{ duration: 0.2 }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <span id="search-modal-title" className="sr-only">{t.search?.placeholder || 'Search'}</span>
-          {/* Search Input */}
-          <div className="search-input-wrapper">
-            <SearchIcon size={20} className="search-icon" />
-            <input
-              ref={inputRef}
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={t.search?.placeholder || 'Search... (Ctrl+K)'}
-              className="search-input"
-              autoComplete="off"
-              spellCheck="false"
-            />
-            <button
-              type="button"
-              onClick={closeSearch}
-              className="search-close"
-              aria-label="Close search"
-            >
-              <X size={18} />
-            </button>
-          </div>
+      {isOpen && (
+        <div className="search-modal-overlay" onClick={closeSearch} role="presentation">
+          <motion.div
+            className="search-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="search-modal-title"
+            initial={{ opacity: 0, scale: 0.95, y: -20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -20 }}
+            transition={{ duration: 0.2 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <span id="search-modal-title" className="sr-only">{t.search?.placeholder || 'Search'}</span>
+            {/* Search Input */}
+            <div className="search-input-wrapper">
+              <SearchIcon size={20} className="search-icon" />
+              <input
+                ref={inputRef}
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={t.search?.placeholder || 'Search... (Ctrl+K)'}
+                className="search-input"
+                autoComplete="off"
+                spellCheck="false"
+              />
+              <button
+                type="button"
+                onClick={closeSearch}
+                className="search-close"
+                aria-label="Close search"
+              >
+                <X size={18} />
+              </button>
+            </div>
 
-          {/* Search Results */}
-          <SearchResults
-            results={results}
-            query={query}
-            onSelect={navigateToItem}
-          />
-        </motion.div>
-      </div>
+            {/* Search Results */}
+            <SearchResults
+              results={results}
+              query={query}
+              onSelect={navigateToItem}
+            />
+          </motion.div>
+        </div>
+      )}
     </AnimatePresence>
   )
 }
