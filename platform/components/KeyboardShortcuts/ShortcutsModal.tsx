@@ -46,7 +46,7 @@ const SHORTCUTS: Shortcut[] = [
 
 export const ShortcutsModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const { language } = useLanguage()
+  const { t } = useLanguage()
   const { formatShortcut } = useKeyboardShortcuts({ shortcuts: [], enabled: false })
 
   // Listen for Ctrl+/ to toggle modal
@@ -68,12 +68,18 @@ export const ShortcutsModal: React.FC = () => {
     enabled: true
   })
 
+  const getCategoryLabel = (key: string) =>
+    (t.shortcuts as Record<string, unknown>)?.categories?.[key as keyof typeof t.shortcuts] as string || key
+
+  const getItemLabel = (key: string) =>
+    (t.shortcuts as Record<string, unknown>)?.items?.[key as keyof typeof t.shortcuts] as string || key
+
   // Group shortcuts by category
   const groupedShortcuts = SHORTCUTS.reduce((acc, shortcut) => {
-    if (!acc[shortcut.category]) {
-      acc[shortcut.category] = []
+    if (!acc[shortcut.categoryKey]) {
+      acc[shortcut.categoryKey] = []
     }
-    acc[shortcut.category].push(shortcut)
+    acc[shortcut.categoryKey].push(shortcut)
     return acc
   }, {} as Record<string, Shortcut[]>)
 
@@ -97,7 +103,7 @@ export const ShortcutsModal: React.FC = () => {
           <div className="shortcuts-modal-header">
             <div className="shortcuts-modal-title">
               <Keyboard size={24} />
-              <h2 id="shortcuts-modal-title">{language === 'tr' ? 'Klavye Kısayolları' : 'Keyboard Shortcuts'}</h2>
+              <h2 id="shortcuts-modal-title">{t.shortcuts?.title || 'Keyboard Shortcuts'}</h2>
             </div>
             <button
               onClick={() => setIsOpen(false)}
