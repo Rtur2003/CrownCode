@@ -186,12 +186,23 @@ Kaynak rapor:
 
 ### Faz D Cikisli Claude Gorevleri
 
-- [ ] P0: `netlify.toml` publish path conflict'i kaldirilacak (server-mode Next runtime ile uyumlu hale getirilecek).
-- [ ] P0: Netlify deploy modeli teklestirilecek (`plugin-nextjs` aktifken static `out` beklentisi zorlanmayacak).
-- [ ] P1: `netlify.toml` + dokumanlarda static/server deploy stratejisi acik ayrilacak (tek dosyada karisik davranis olmayacak).
-- [ ] P1: Branch-context deploy policy netlestirilecek (gelistirme branch production context'e dusmeyecek).
-- [ ] P2: npm/corepack komut zinciri deterministic hale getirilecek (engine warning gürültüsü azaltilacak).
-- [ ] P2: Deploy sonrasi check-list eklenecek (publish path, plugin-nextjs, route tipi dogrulamasi).
+- [x] P0: `netlify.toml` `publish = "out"` -> `publish = ".next"` (server-mode uyumlu).
+- [x] P0: Deploy modeli teklestirildi — `corepack` + `npm install` yerine `npm ci`, static `out` beklentisi kaldirildi.
+- [x] P1: `DEPLOYMENT_CONFIG.md` sifirdan yazildi (server-mode deploy stratejisi, branch policy, checklist).
+- [x] P1: `MIGRATION_PLAN_2026.md` mimari bolumu guncellendi (server-mode Netlify runtime, backend HF Spaces).
+- [x] P1: Branch-context deploy policy dokumante edildi (master=production, gelistirme=branch-deploy).
+- [x] P2: npm engine constraint sadeleştirildi (`npm>=10.9.2` kisitlamasi kaldirildi, `NODE_VERSION` pinlendi).
+- [x] P2: Post-deploy checklist `DEPLOYMENT_CONFIG.md` icine eklendi.
+
+### Faz D Dogrulama Logu
+
+- [x] ESLint: no warnings/errors
+- [x] TypeScript: passed
+- [x] Frontend tests: 16 passed
+- [x] Server build: compiled
+- [x] Static build: compiled
+- [x] Core backend tests: 20 passed
+- [x] HF backend tests: 21 passed
 
 ### Faz D Kaynak Incident (Kullanici Logu)
 
