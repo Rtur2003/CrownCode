@@ -15,12 +15,12 @@
 
 ### Mevcut Yapı
 - **Router**: Pages Router (`pages/` dizini, 15+ sayfa)
-- **SSR/SSG**: Dual-mode — varsayilan `server` (`DEPLOYMENT_TARGET=server`), Netlify icin `static` (`DEPLOYMENT_TARGET=static`)
+- **Build mode**: Server-mode default (`DEPLOYMENT_TARGET=server`). Static export (`DEPLOYMENT_TARGET=static`) yalnizca CI dogrulama icin kullanilir.
 - **State**: React Context API (LanguageContext)
 - **Styling**: CSS Modules + global CSS
-- **Hosting**: Netlify (static build, CI'da ayri job), server mode lokal gelistirme + runtime API route'lar icin
+- **Hosting**: Netlify — server-mode Next.js runtime (`@netlify/plugin-nextjs`, `publish = ".next"`)
+- **Backend**: Hugging Face Spaces (FastAPI, Docker) + core backend (lokal/CI)
 - **App Router**: Kullanılmıyor (`app/` dizini yok)
-- **Not**: Header bileşeni `next/navigation` (App Router API) kullanıyor ama pages/_app.tsx içinde çalışıyor
 
 ## Migration Stratejisi
 
@@ -52,7 +52,7 @@
 **Tahmini etki**: Yüksek (büyük refactor)
 
 #### Neden şimdi yapılmasın?
-1. Proje statik export kullanıyor - App Router'ın sunucu bileşenleri avantajı yok
+1. Proje Pages Router ile stabil calisiyor — App Router gecisi yuksek risk, dusuk ROI
 2. 15+ sayfa geçişi gerekiyor - büyük çaplı iş
 3. Pages Router hala destekleniyor ve deprecated değil
 4. Mevcut yapı stabil ve çalışıyor
@@ -114,9 +114,9 @@
 
 | Soru | Cevap | Gerekçe |
 |------|-------|---------|
-| App Router'a geçmeli mi? | Hayır (şimdilik) | Statik export kullanılıyor, avantaj düşük |
+| App Router'a geçmeli mi? | Hayır (şimdilik) | Pages Router stabil, avantaj düşük |
 | React 19'a geçmeli mi? | Evet, Next.js 15 ile | Zorunlu bağımlılık |
-| Server Components kullanmalı mı? | Hayır (şimdilik) | Statik export, server yok |
+| Server Components kullanmalı mı? | Opsiyonel | Server-mode aktif, ama Pages Router'da limitli |
 | Turbopack kullanmalı mı? | Dev ortamında test et | Production build hala webpack |
 
 ## Referanslar

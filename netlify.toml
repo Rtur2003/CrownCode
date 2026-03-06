@@ -1,20 +1,34 @@
+# ──────────────────────────────────────────────
+# Netlify Build Config — Server-mode Next.js
+# ──────────────────────────────────────────────
+# Deploy model: @netlify/plugin-nextjs ile server-mode runtime.
+# Static export (DEPLOYMENT_TARGET=static) kullanilmaz;
+# API routes ve dynamic pages server-side calisir.
+# ──────────────────────────────────────────────
+
 [build]
   base = "platform"
-  command = "corepack prepare npm@10.9.2 --activate && npm install --prefix . && npm run build --prefix ."
-  publish = "out"
-
-[functions]
-  directory = "netlify/functions"
+  command = "npm ci && npm run build"
+  publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "20.18.1"
   NODE_OPTIONS = "--max-old-space-size=4096"
-  SECRETS_SCAN_ENABLED = "false"
 
-[[redirects]]
-  from = "/*"
-  to = "/404.html"
-  status = 404
+# ── Branch deploy context ────────────────────
+# Production deploy YALNIZCA master branch'ten yapilir.
+# geliştirme branch'i preview context'e duser.
+
+[context.production]
+  command = "npm ci && npm run build"
+
+[context.deploy-preview]
+  command = "npm ci && npm run build"
+
+[context.branch-deploy]
+  command = "npm ci && npm run build"
+
+# ── Security headers ─────────────────────────
 
 [[headers]]
   for = "/*"
