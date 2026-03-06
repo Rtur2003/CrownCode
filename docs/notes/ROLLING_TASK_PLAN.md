@@ -149,23 +149,23 @@ Kaynak rapor:
 
 ### Faz C Cikisli Claude Gorevleri
 
-- [ ] P0: `hf-crowncode-backend/app/routes/commend/router.py` icin auth + rate-limit + abuse korumasi uygula (`/generate` ve `/post`).
-- [ ] P0: `hf-crowncode-backend/app/routes/commend/router.py` icin `/post` endpointini env feature-flag ile default kapali modele al.
-- [ ] P1: `hf-crowncode-backend/app/routes/commend/router.py` + `hf-crowncode-backend/app/routes/commend/youtube_service.py` URL validatorini exact-host + 11-char video id standardina cek.
-- [ ] P1: `hf-crowncode-backend/app/routes/analyze.py` icinde `yt_result.errors` ve partial state bilgisini response contractina yansit.
-- [ ] P1: `hf-crowncode-backend/app/routes/data_processing.py` icinde `content_type` null-safe kontrol + max payload limiti ekle.
-- [ ] P1: `hf-crowncode-backend/app/services/preview_model.py` deterministik davranis ve `is_ai_generated` / confidence threshold uyumunu duzelt.
-- [ ] P2: `platform/hooks/analysisGateway.ts` backend error map kapsamini genislet (`invalid_youtube_url`, `file_too_large`, `file_too_small`, `invalid_file_type`, `youtube_analysis_failed`).
-- [ ] P2: `backend/app/services/external_clients.py` + `hf-crowncode-backend/app/services/external_clients.py` health payloadindan `base_url` leakini kaldir (debug mod disi).
-- [ ] P2: `.github/workflows/ci.yml` icine core backend pytest job'u ekle; frontend pipeline ile birlikte zorunlu gate yap.
-- [ ] P2: `hf-crowncode-backend/README.md` endpoint/env/default anlatimini mevcut kodla senkronize et.
-- [ ] P2: HF backend testlerini `analyze`, `data_processing`, `commend` negatif/happy path ile genislet (coverage artisi hedefli).
-- [ ] P3: `hf-crowncode-backend/app/routes/analyze.py` mutable list defaultlarini `Field(default_factory=list)` standardina cek.
+- [x] P0: Commend auth + rate-limit uygulanadi (`COMMEND_API_KEY` env, 10 req/min/IP limiter, `/generate` + `/post`).
+- [x] P0: `/post` endpointi `COMMEND_ENABLE_POSTING` env feature-flag ile default kapali modele alindi.
+- [x] P1: Commend URL validatoru exact-host (`_YOUTUBE_HOSTS` frozenset) + 11-char video id regex standardina cekildi.
+- [x] P1: `analyze.py` icinde `yt_result.errors` response contractina yansitildi (hardcoded `errors=[]` kaldirildi).
+- [x] P1: `data_processing.py` icinde `content_type` null-safe kontrol + 30MB max payload limiti eklendi.
+- [x] P1: `preview_model.py` deterministik hale getirildi (seeded RNG), `is_ai_generated` final confidence'a gore belirleniyor.
+- [x] P2: `analysisGateway.ts` error map genisletildi (7 backend error -> frontend error code eslesmesi).
+- [x] P2: `external_clients.py` (core + hf) health payloadindan `base_url` leak kaldirildi.
+- [x] P2: `.github/workflows/ci.yml` icine core backend pytest job'u eklendi; deploy gate'e dahil edildi.
+- [x] P2: `hf-crowncode-backend/README.md` endpoint/env/structure anlatimi guncellendi.
+- [x] P2: HF backend testleri genisletildi (`test_analyze.py` 8 test, `test_data_processing.py` 3 test, `test_commend.py` 5 test).
+- [x] P3: `analyze.py` Pydantic mutable list defaultlari `Field(default_factory=list)` standardina cekildi.
 
-### Faz C Dogrulama Logu (Analizci)
+### Faz C Dogrulama Logu
 
 - [x] `python -m pytest backend/tests -q` -> `20 passed`
-- [x] `python -m pytest hf-crowncode-backend/tests -q` -> `7 passed` (coverage toplam ~`%40`)
+- [x] `python -m pytest hf-crowncode-backend/tests -q` -> `21 passed` (coverage ~46%)
 
 ### Siradaki Analiz
 
