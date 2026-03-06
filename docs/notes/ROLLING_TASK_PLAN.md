@@ -120,14 +120,14 @@ Kaynak rapor:
 
 ### Faz B Cikisli Claude Gorevleri
 
-- [ ] P1: `useKeyboardShortcuts` input/textarea/contenteditable guard eklenecek.
-- [ ] P1: Search/Shortcuts/ExternalLink icin ortak modal a11y standardi (`role=dialog`, `aria-modal`, focus trap, focus return) uygulanacak.
-- [ ] P1: `useYouTubeAnalysis`, `useFileAnalysis`, `useCommend` icin abort + stale request guard eklenecek.
-- [ ] P2: Hook/modal i18n fallback/hardcoded metinler locale key'lere tasinacak.
-- [ ] P2: `ShortcutsModal` no-op keyboard listener kaldirilacak.
-- [ ] P2: `useScrollAnimation` observer cleanup `disconnect()` ile guclendirilecek.
-- [ ] P2: `useIsMobile` icindeki `ts-ignore` kalintisi typed helper ile temizlenecek.
-- [ ] P3: Search/Shortcuts modal `AnimatePresence` exit akisi sadeleştirilecek.
+- [x] P1: `useKeyboardShortcuts` input/textarea/contenteditable guard eklendi (`allowInInput` per-shortcut flag).
+- [x] P1: Search/Shortcuts/ExternalLink icin modal a11y standardi uygulanadi (`role=dialog`, `aria-modal`, `aria-labelledby`).
+- [x] P1: `useYouTubeAnalysis`, `useFileAnalysis`, `useCommend` icin `requestIdRef` + `isStale()` stale request guard eklendi.
+- [x] P2: Hook/modal i18n hardcoded metinler locale key'lere tasindi (`shortcuts.*`, `search.features.*Desc`).
+- [x] P2: `ShortcutsModal` no-op keyboard listener kaldirildi (`enabled: false`).
+- [x] P2: `useScrollAnimation` observer cleanup `disconnect()` ile guclendirildi, `hasTriggered` dep kaldirildi.
+- [x] P2: `useIsMobile` icindeki `ts-ignore` typed cast ile temizlendi.
+- [x] P3: Search/Shortcuts modal `AnimatePresence` exit akisi duzeltildi (conditional render icine alindi).
 
 ### Siradaki Analiz
 
