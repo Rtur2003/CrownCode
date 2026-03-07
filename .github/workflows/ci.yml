@@ -35,6 +35,10 @@ jobs:
         working-directory: ./platform
         run: npm run lint --if-present
 
+      - name: i18n locale parity check
+        working-directory: ./platform
+        run: npm run i18n:check
+
   # Default server build verification
   build:
     name: Build Verification (Server)
