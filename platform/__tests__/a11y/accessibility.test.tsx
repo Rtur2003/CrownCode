@@ -100,16 +100,38 @@ describe('Accessibility Tests', () => {
   })
 
   describe('Dialog landmarks', () => {
-    it('search modal has role=dialog and aria-modal', async () => {
-      // SearchModal uses internal state — we test the rendered attributes
+    afterEach(() => {
+      jest.restoreAllMocks()
+      jest.resetModules()
+    })
+
+    it('search modal renders no dialog when closed', async () => {
       const { SearchModal } = await import('@/components/Search/SearchModal')
       const { container } = renderWithProviders(<SearchModal />)
-      // Modal is closed by default — no dialog should be present
       const dialog = container.querySelector('[role="dialog"]')
       expect(dialog).toBeNull()
     })
 
-    it('shortcuts modal has role=dialog and aria-modal', async () => {
+    it('search modal renders role=dialog and aria-modal when open', async () => {
+      jest.doMock('@/hooks/useSearch', () => ({
+        useSearch: () => ({
+          query: '',
+          setQuery: jest.fn(),
+          isOpen: true,
+          openSearch: jest.fn(),
+          closeSearch: jest.fn(),
+          results: [],
+          navigateToItem: jest.fn(),
+        }),
+      }))
+      const { SearchModal } = await import('@/components/Search/SearchModal')
+      const { container } = renderWithProviders(<SearchModal />)
+      const dialog = container.querySelector('[role="dialog"]')
+      expect(dialog).not.toBeNull()
+      expect(dialog?.getAttribute('aria-modal')).toBe('true')
+    })
+
+    it('shortcuts modal renders no dialog when closed', async () => {
       const { ShortcutsModal } = await import('@/components/KeyboardShortcuts/ShortcutsModal')
       const { container } = renderWithProviders(<ShortcutsModal />)
       const dialog = container.querySelector('[role="dialog"]')

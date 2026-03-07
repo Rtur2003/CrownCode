@@ -113,8 +113,10 @@ const AudioDatasetPage: NextPage = () => {
       })
 
       if (!response.ok) {
-        const errData = await response.json()
-        throw new Error(errData.detail || t.audioDataset.interface.errors.processingFailed)
+        const errData = await response.json().catch(() => ({ detail: {} }))
+        const detail = errData.detail
+        const message = typeof detail === 'object' && detail?.message ? detail.message : (typeof detail === 'string' ? detail : t.audioDataset.interface.errors.processingFailed)
+        throw new Error(message)
       }
 
       const blob = await response.blob()

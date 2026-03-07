@@ -106,6 +106,45 @@ describe('analysisGateway – analyzeSource', () => {
     expect(error).toBe('backend_unexpected_response')
   })
 
+  it('maps backend missing_url error to missingUrl', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ errors: ['missing_url'] }),
+    })
+    const { result, error } = await analyzeSource(API_BASE, {
+      sourceType: 'youtube',
+      url: 'https://youtube.com/watch?v=abc',
+    })
+    expect(result).toBeNull()
+    expect(error).toBe('missingUrl')
+  })
+
+  it('maps backend invalid_source_type error to invalidSourceType', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ errors: ['invalid_source_type'] }),
+    })
+    const { result, error } = await analyzeSource(API_BASE, {
+      sourceType: 'youtube',
+      url: 'https://youtube.com/watch?v=abc',
+    })
+    expect(result).toBeNull()
+    expect(error).toBe('invalidSourceType')
+  })
+
+  it('maps backend internal_error to internalError', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ errors: ['internal_error'] }),
+    })
+    const { result, error } = await analyzeSource(API_BASE, {
+      sourceType: 'youtube',
+      url: 'https://youtube.com/watch?v=abc',
+    })
+    expect(result).toBeNull()
+    expect(error).toBe('internalError')
+  })
+
   it('normalizes missing analysisMode based on decisionSource', async () => {
     mockFetch.mockResolvedValueOnce({
       ok: true,

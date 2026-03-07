@@ -55,6 +55,12 @@ export interface CommendMessages {
   noCommentToPost: string
   alreadyCommented: string
   failedToPost: string
+  rateLimitExceeded: string
+  unauthorized: string
+  postingDisabled: string
+  videoDetailsFailed: string
+  generationFailed: string
+  postingFailed: string
 }
 
 const DEFAULT_MESSAGES: CommendMessages = {
@@ -64,7 +70,29 @@ const DEFAULT_MESSAGES: CommendMessages = {
   failedToGenerate: 'Failed to generate comment',
   noCommentToPost: 'No comment to post',
   alreadyCommented: 'Already commented',
-  failedToPost: 'Failed to post comment'
+  failedToPost: 'Failed to post comment',
+  rateLimitExceeded: 'Too many requests. Please wait before trying again.',
+  unauthorized: 'Invalid or missing API key.',
+  postingDisabled: 'Comment posting is currently disabled.',
+  videoDetailsFailed: 'Could not fetch video details.',
+  generationFailed: 'Comment generation failed.',
+  postingFailed: 'Failed to post comment to YouTube.'
+}
+
+const COMMEND_ERROR_CODE_MAP: Record<string, keyof CommendMessages> = {
+  rate_limit_exceeded: 'rateLimitExceeded',
+  unauthorized: 'unauthorized',
+  posting_disabled: 'postingDisabled',
+  video_details_failed: 'videoDetailsFailed',
+  generation_failed: 'generationFailed',
+  posting_failed: 'postingFailed',
+  already_commented: 'alreadyCommented'
+}
+
+const mapCommendErrorCode = (code: string | undefined, msgs: CommendMessages): string | undefined => {
+  if (!code) return undefined
+  const key = COMMEND_ERROR_CODE_MAP[code]
+  return key ? msgs[key] : undefined
 }
 
 const YOUTUBE_URL_REGEX = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|shorts\/)|youtu\.be\/)[a-zA-Z0-9_-]{11}/
@@ -135,8 +163,11 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
       if (isStale()) return
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ detail: i18nMessages.unknownError }))
-        throw new Error(errorData.detail || `HTTP ${response.status}`)
+        const errorData = await response.json().catch(() => ({ detail: {} }))
+        const detail = errorData.detail
+        const backendCode = typeof detail === 'object' && detail?.code ? detail.code : undefined
+        const errorMessage = mapCommendErrorCode(backendCode, i18nMessages) ?? (typeof detail === 'string' ? detail : i18nMessages.failedToGenerate)
+        throw new Error(errorMessage)
       }
 
       const data: GenerateResponse = await response.json()
@@ -197,8 +228,11 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
       }
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ detail: i18nMessages.unknownError }))
-        throw new Error(typeof errorData.detail === 'string' ? errorData.detail : JSON.stringify(errorData.detail))
+        const errorData = await response.json().catch(() => ({ detail: {} }))
+        const detail = errorData.detail
+        const backendCode = typeof detail === 'object' && detail?.code ? detail.code : undefined
+        const errorMessage = mapCommendErrorCode(backendCode, i18nMessages) ?? (typeof detail === 'string' ? detail : i18nMessages.failedToPost)
+        throw new Error(errorMessage)
       }
 
       const data: PostResponse = await response.json()

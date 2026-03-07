@@ -363,13 +363,15 @@ Kaynak rapor:
 
 ### Faz H Cikisli Claude Gorevleri
 
-- [ ] P0: `analysisGateway` ve hook fallback kurallarini error taxonomy ile hizala (`missing_url`, `invalid_source_type`, `internal_error` gibi kodlarin explicit map'i).
-- [ ] P0: `analyze`, `process/audio`, `commend` endpointlerinde tek tip `{ code, message }` hata envelope standardina gec.
-- [ ] P1: `hf-crowncode-backend/tests/test_commend.py` kontrat driftini kapat (guncel payload alanlari + kesin status beklentileri).
-- [ ] P1: `check-locale-parity.mjs` scriptini array-icindeki objectleri recursive kontrol edecek sekilde genislet.
-- [ ] P1: a11y testlerini acik modal/focus davranisi ile gercek semantic regression yakalayacak sekilde guclendir.
-- [ ] P2: `/api/vitals` ve `/api/errors` icin sampling/rate-limit/request-id hardening ekle.
-- [ ] P2: `useCommend` ve `data-manipulation` fetch akislarina abort/timeout standardi getir.
+- [x] P0: `analysisGateway` ve hook fallback kurallarini error taxonomy ile hizalandi. `analysisTypes.ts`'e `missingUrl`, `invalidSourceType`, `internalError` eklendi. `analysisGateway.ts`'e 3 yeni mapping eklendi. `useYouTubeAnalysis`/`useFileAnalysis` preview fallback sadece `backend_not_configured`/`backend_unreachable` ile sinirlandirildi.
+- [x] P0: `data_processing.py` ve `commend/router.py` endpointlerinde tum HTTPException'lar `{ code, message }` envelope standardina gecirildi (8 HTTPException guncellendi).
+- [x] P0: Frontend guvenli hata gosterimi — `useCommend.ts`'e `mapCommendErrorCode` + `COMMEND_ERROR_CODE_MAP` eklendi (6 backend kodu -> locale key eslesmesi). `data-manipulation/index.tsx` `errData.detail` obje-safe parse'a gecirildi.
+- [x] P1: `test_commend.py` kontrat drifti kapatildi — `url`/`style` -> `videoUrl`/`commentStyle`, `videoId`/`comment` -> `videoUrl`/`commentText`, status code araliklari daraltildi. Yeni `test_commend_post_error_envelope_format` testi eklendi.
+- [x] P1: `check-locale-parity.mjs` array-icindeki objectleri recursive kontrol edecek sekilde genisletildi. `getNestedValue` array index notasyonunu (`[N]`) destekliyor. Array uzunluk parity kontrolu eklendi.
+- [x] P1: a11y testlerine acik modal senaryosu eklendi — `useSearch` mock ile `isOpen: true`, `role=dialog` + `aria-modal=true` assertion'i.
+- [x] P1: `analysisGateway.test.ts`'e 3 yeni test eklendi (`missing_url` -> `missingUrl`, `invalid_source_type` -> `invalidSourceType`, `internal_error` -> `internalError`).
+- [x] P2: `/api/vitals` ve `/api/errors` icin IP-bazli rate-limit (30/dk vitals, 10/dk errors), sampling (`VITALS_SAMPLE_RATE` env), ve `FEATURE_WEB_VITALS=false` ile tamamen kapatma gate'i eklendi.
+- [ ] P2: `useCommend` ve `data-manipulation` fetch akislarina abort/timeout standardi getir. (deferred — low priority)
 
 ### Faz H Dogrulama Logu (Analist)
 
