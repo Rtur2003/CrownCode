@@ -870,7 +870,13 @@
       "failedToGenerate": "Yorum üretilemedi.",
       "noCommentToPost": "Gönderilecek yorum yok.",
       "alreadyCommented": "Zaten yorum gönderilmiş",
-      "failedToPost": "Yorum gönderilemedi."
+      "failedToPost": "Yorum gönderilemedi.",
+      "rateLimitExceeded": "Çok fazla istek. Lütfen tekrar denemeden önce bekleyin.",
+      "unauthorized": "Geçersiz veya eksik API anahtarı.",
+      "postingDisabled": "Yorum gönderme şu anda devre dışı.",
+      "videoDetailsFailed": "Video bilgileri alınamadı.",
+      "generationFailed": "Yorum üretimi başarısız oldu.",
+      "postingFailed": "Yorum YouTube'a gönderilemedi."
     }
   },
   "privacy": {
