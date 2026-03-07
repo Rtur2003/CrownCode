@@ -6,10 +6,10 @@
 
 ## Tur Durumu
 
-- Son guncelleme: **4 Mart 2026**
-- Tur: **Tur 4 - Kontrol Sonrasi Yeni Uygulama**
-- Mod: Faz bazli ilerleme (P1 -> P3)
-- Analiz raporu: `docs/notes/ANALYSIS_REPORT_TUR4_2026-03-04.md`
+- Son guncelleme: **7 Mart 2026**
+- Tur: **Tur 5 - Asamali Platform Analizi (Faz E tamamlandi)**
+- Mod: Faz bazli ilerleme (P0 -> P3)
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_E_PERFORMANCE_OBSERVABILITY_2026-03-07.md`
 
 ---
 
@@ -230,20 +230,29 @@ Kaynak rapor:
 
 ### Faz E Cikisli Claude Gorevleri
 
-- [ ] P0: Deploy zinciri tek modele indirilecek (`.next` server-mode), Netlify UI ile repo config bire bir senkronlanacak.
-- [ ] P0: `ANALYZE=true` build onarilacak (bundle analyzer dependency/plugin standardi netlestirilecek).
-- [ ] P1: `_app` global modal lazy-load davranisi gercek lazy modele alinacak (state-gated mount).
-- [ ] P1: Production telemetry eklenecek (`reportWebVitals` + `ErrorBoundary` error sink).
-- [ ] P1: `sw.js` cache politikasi `crown-fortune` no-cache beklentisiyle uyumlu hale getirilecek.
-- [ ] P1: Crown Dreams 3D arka plani icin cihaz/reduced-motion bazli degrade stratejisi uygulanacak.
-- [ ] P1/P2: Asset ve toolchain temizlikleri (`tarot-original`, `sounds`, `vercel` scripts, orphan netlify function).
+- [x] P0: CI deploy job server-mode ile hizalandi (`.next` artifact, `netlify-cli deploy --build --prod`), Lighthouse job `next start` ile guncellendi.
+- [x] P0: `ANALYZE=true` build onarildi (`@next/bundle-analyzer` devDep, `withBundleAnalyzer` wrapper pattern, eski manual webpack-bundle-analyzer blogu kaldirildi).
+- [x] P1: `_app` global modal lazy-load gercek lazy modele alindi (first user interaction'a kadar `<Suspense>` mount edilmiyor).
+- [x] P1: Production telemetry eklendi (`reportWebVitals` -> `sendBeacon('/api/vitals')`, `ErrorBoundary` -> `sendBeacon('/api/errors')`).
+- [x] P1: `sw.js` v3 yazildi — `/crown-fortune` network-first, diger sayfa cache-first, `setInterval` cleanup kaldirildi, `trimCache` activate event icinde deterministik.
+- [x] P1: Crown Dreams 3D `GoldenParticles` icin `usePerformanceTier` eklendi — `prefers-reduced-motion` -> 3D tamamen kapali, dusuk cihaz (<=2 core veya mobil <=4 core) -> %77 azaltilmis particle/connection/orb/star sayilari + DPR 1.
+- [x] P1/P2: Root deploy scripts `vercel` -> `netlify-cli` guncellendi. Orphan `platform/netlify/functions/analyze.js` silindi. `removeConsole` production'da warn/error haric kaldiracak sekilde guncellendi.
 
-### Faz E Dogrulama Notu
+### Faz E Dogrulama Logu (Analiz Oncesi)
 
 - [x] `cmd /c npm --prefix platform run build` -> passed
 - [x] `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"` -> passed (beklenen static/API warning)
 - [x] `cmd /c "set ANALYZE=true&& npm --prefix platform run build"` -> failed (`webpack-bundle-analyzer` missing)
 - [x] Paralel build denemesinde gorulen `ENOTEMPTY` yarismasi not edildi; ardindan komutlar tek tek kosularak dogrulandi.
+
+### Faz E Dogrulama Logu (Uygulama Sonrasi)
+
+- [x] `cmd /c npm --prefix platform run lint` -> passed
+- [x] `cmd /c npm --prefix platform run type-check` -> passed
+- [x] `cmd /c npm --prefix platform test -- --runInBand` -> passed
+- [x] `cmd /c npm --prefix platform run build` -> passed (server mode)
+- [x] `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"` -> passed
+- [x] `cmd /c "set ANALYZE=true&& npm --prefix platform run build"` -> passed (P0 fix onaylandi)
 
 ### Siradaki Analiz
 
