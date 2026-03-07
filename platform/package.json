@@ -21,7 +21,8 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "analyze": "cross-env ANALYZE=true next build",
-    "bundle-analyzer": "npx @next/bundle-analyzer"
+    "bundle-analyzer": "npx @next/bundle-analyzer",
+    "i18n:check": "node scripts/check-locale-parity.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^9.122.0",
