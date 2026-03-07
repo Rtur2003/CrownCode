@@ -16,6 +16,11 @@ venv/
 env/
 ENV/
 .venv
+.pytest_cache/
+.ruff_cache/
+htmlcov/
+.coverage.*
+pytestdebug.log
 
 # Build outputs
 .next/
@@ -81,6 +86,8 @@ temp/
 test-results/
 playwright-report/
 coverage/
+.nyc_output/
+*.lcov
 
 # Backup
 *.backup
