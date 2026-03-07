@@ -7,9 +7,15 @@
 ## Tur Durumu
 
 - Son guncelleme: **7 Mart 2026**
-- Tur: **Tur 5 - Asamali Platform Analizi (Faz G tamamlandi)**
+- Tur: **Tur 5 - Asamali Platform Analizi (Faz H tamamlandi)**
 - Mod: Faz bazli ilerleme (P0 -> P3)
-- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_G_I18N_A11Y_AUTOMATION_2026-03-07.md`
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_H_API_UX_TELEMETRY_2026-03-07.md`
+
+## Isletim Protokolu (Zorunlu)
+
+- Claude sadece kod/dokuman degisikligi yapar; lint/test/build komutlarini kosmaz.
+- Tum dogrulama komutlarini analist (Codex) kosar ve sonucu plana isler.
+- Claude "tamamlandi" dedikten sonra yeni faza gecmeden once analist diff + test sonucunu capraz kontrol eder.
 
 ---
 
@@ -37,7 +43,7 @@
 
 ---
 
-## Zorunlu Dogrulama (Claude)
+## Zorunlu Dogrulama (Analist/Codex)
 
 1. `cmd /c npm --prefix platform run lint`
 2. `cmd /c npm --prefix platform run type-check`
@@ -47,6 +53,7 @@
 
 Not:
 - Build komutlari ayni anda paralel kosulmamali; `.next` uzerinde cakisma olusturabilir.
+- Bu komutlar Claude tarafinda kosulmaz; sadece analist tarafinda kosulur.
 
 ---
 
@@ -337,4 +344,41 @@ Kaynak rapor:
 
 ### Siradaki Analiz
 
-- [ ] Faz H: API UX contract + telemetry dashboardleme + production error taxonomy standardizasyonu.
+- [x] Faz H: API UX contract + telemetry dashboardleme + production error taxonomy standardizasyonu.
+
+---
+
+## Tur 5.7 - Faz H Tamamlandi (API UX Contract + Telemetry + Error Taxonomy)
+
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_H_API_UX_TELEMETRY_2026-03-07.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz H Sonuc
+
+- [x] Claude'un Faz G ciktilari analist tarafinda satir bazli dogrulandi.
+- [x] API hata sozlesmesinde sessiz degrade riskleri tespit edildi (`analyze` -> `backend_unexpected_response` -> preview fallback).
+- [x] Endpointler arasi error envelope tutarsizliklari raporlandi (`analyze`, `process/audio`, `commend`).
+- [x] Telemetry, i18n parity scripti ve a11y test kapsami icin kalan bosluklar belirlendi.
+- [x] Analist kalite komutlarini tekrar kostu (i18n/lint/type-check/test/build).
+
+### Faz H Cikisli Claude Gorevleri
+
+- [ ] P0: `analysisGateway` ve hook fallback kurallarini error taxonomy ile hizala (`missing_url`, `invalid_source_type`, `internal_error` gibi kodlarin explicit map'i).
+- [ ] P0: `analyze`, `process/audio`, `commend` endpointlerinde tek tip `{ code, message }` hata envelope standardina gec.
+- [ ] P1: `hf-crowncode-backend/tests/test_commend.py` kontrat driftini kapat (guncel payload alanlari + kesin status beklentileri).
+- [ ] P1: `check-locale-parity.mjs` scriptini array-icindeki objectleri recursive kontrol edecek sekilde genislet.
+- [ ] P1: a11y testlerini acik modal/focus davranisi ile gercek semantic regression yakalayacak sekilde guclendir.
+- [ ] P2: `/api/vitals` ve `/api/errors` icin sampling/rate-limit/request-id hardening ekle.
+- [ ] P2: `useCommend` ve `data-manipulation` fetch akislarina abort/timeout standardi getir.
+
+### Faz H Dogrulama Logu (Analist)
+
+- [x] `cmd /c npm --prefix platform run i18n:check` -> passed
+- [x] `cmd /c npm --prefix platform run lint` -> passed
+- [x] `cmd /c npm --prefix platform run type-check` -> passed
+- [x] `cmd /c npm --prefix platform test -- --runInBand` -> passed (4 suite / 26 test)
+- [x] `cmd /c npm --prefix platform run build` -> passed
+
+### Siradaki Analiz
+
+- [ ] Faz I: guvenlik/saldiri yuzu derin turu (rate limit dayanimi, telemetry abuse senaryolari, CORS/policy sertlestirme).
