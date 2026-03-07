@@ -62,7 +62,7 @@ export default function handler(
       aiAnalysis: process.env.FEATURE_AI_ANALYSIS === 'true',
       streamingPlatforms: process.env.FEATURE_STREAMING_PLATFORMS === 'true',
       batchProcessing: process.env.FEATURE_BATCH_PROCESSING === 'true',
-      webVitals: true,
+      webVitals: process.env.NODE_ENV === 'production',
       pwa: true
     }
   }
