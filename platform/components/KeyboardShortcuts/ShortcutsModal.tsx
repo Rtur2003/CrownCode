@@ -108,7 +108,7 @@ export const ShortcutsModal: React.FC = () => {
               type="button"
               onClick={() => setIsOpen(false)}
               className="shortcuts-modal-close"
-              aria-label="Close"
+              aria-label={t.aria?.closeModal || 'Close'}
             >
               <X size={20} />
             </button>
