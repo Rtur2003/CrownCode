@@ -968,5 +968,17 @@
       "viewOnGithub": "View on GitHub"
     },
     "contactLabel": "For questions about these terms:"
+  },
+  "aria": {
+    "homePage": "CrownCode Home",
+    "openMenu": "Open Menu",
+    "closeMenu": "Close Menu",
+    "closeSearch": "Close search",
+    "closeModal": "Close",
+    "closeNotification": "Close notification",
+    "github": "GitHub",
+    "website": "Website",
+    "email": "Email",
+    "uploadAudioFile": "Upload audio file for AI music detection"
   }
 }
