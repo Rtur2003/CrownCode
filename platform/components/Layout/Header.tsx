@@ -65,7 +65,7 @@ export const Header: React.FC = () => {
       <div className="header-container">
         <div className="header-content">
           {/* Logo */}
-          <Link href="/" className="header-logo" aria-label="CrownCode Ana Sayfa">
+          <Link href="/" className="header-logo" aria-label={t.aria?.homePage || 'CrownCode Home'}>
             <div className="logo-icon">
               <Code2 size={24} />
             </div>
@@ -126,7 +126,7 @@ export const Header: React.FC = () => {
             type="button"
             className="mobile-menu-button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label={isMobileMenuOpen ? 'Menüyü Kapat' : 'Menüyü Aç'}
+            aria-label={isMobileMenuOpen ? (t.aria?.closeMenu || 'Close Menu') : (t.aria?.openMenu || 'Open Menu')}
             aria-expanded={isMobileMenuOpen ? 'true' : 'false'}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
