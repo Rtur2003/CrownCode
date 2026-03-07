@@ -1,11 +1,13 @@
 /** @type {import('next').NextConfig} */
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 const deploymentTarget = process.env.DEPLOYMENT_TARGET || 'server'
 const isStaticExport = deploymentTarget === 'static'
 
 const nextConfig = {
   reactStrictMode: true,
-  
-  // ESLint now runs during builds (ignoreDuringBuilds removed).
 
   // Image optimization
   images: {
@@ -48,29 +50,12 @@ const nextConfig = {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
 
-  // Webpack configuration
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Add custom webpack configuration if needed
-    if (!dev && !isServer) {
-      // Bundle analyzer in production
-      if (process.env.ANALYZE === 'true') {
-        const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-        config.plugins.push(
-          new BundleAnalyzerPlugin({
-            analyzerMode: 'static',
-            openAnalyzer: false,
-          })
-        )
-      }
-    }
-
-    return config
-  },
-
   // Performance optimizations
   compiler: {
-    // Remove console logs in production
-    removeConsole: process.env.NODE_ENV === 'production',
+    // Remove console.log in production, keep console.warn/error for telemetry
+    removeConsole: process.env.NODE_ENV === 'production'
+      ? { exclude: ['warn', 'error'] }
+      : false,
   },
 
   // Output configuration for Netlify

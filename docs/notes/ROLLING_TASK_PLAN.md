@@ -247,4 +247,40 @@ Kaynak rapor:
 
 ### Siradaki Analiz
 
-- [ ] Faz F: sayfa bazli UX/IA derin tur (Home -> product pages -> API UX contract), performans fixleri sonrasi yeniden olcum.
+- [x] Faz F: sayfa bazli UX/IA derin tur (Home -> product pages -> API UX contract), performans fixleri sonrasi yeniden olcum.
+
+---
+
+## Tur 5.5 - Faz F Tamamlandi (UX/IA + i18n/a11y Contract)
+
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_F_UX_IA_2026-03-07.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz F Sonuc
+
+- [x] Home -> urun sayfalari -> global UI katmani UX/IA capraz analizi tamamlandi.
+- [x] i18n/a11y hardcoded alanlar satir-bazli tespit edildi.
+- [x] Search bilgi mimarisindeki split-brain kaynak sorunu dogrulandi.
+- [x] API UX contract tarafinda kullaniciya yansiyan hata/telemetry tutarsizliklari raporlandi.
+- [x] Lint + type-check tekrar kosuldu (green).
+
+### Faz F Cikisli Claude Gorevleri
+
+- [ ] P0: Dil/metadata sozlesmesi duzeltilecek (`Html lang`, locale bazli meta/title/keywords).
+- [ ] P1: Search veri kaynagi tekillestirilecek (global modal + `/search` ortak katalog).
+- [ ] P1: Crown Commend `mounted` gate kaldirilip SSR/hydration akisi iyilestirilecek.
+- [ ] P1: Header/Footer/SearchModal/Shortcuts/ExternalLink/Toast/AI upload icin hardcoded aria/title metinleri locale key'lere tasinacak.
+- [ ] P1: `ErrorFallback` locale-neutral fallback stratejisine alinacak.
+- [ ] P1: Data manipulation hata map'i son-kullanici odakli hale getirilecek.
+- [ ] P1: `/api/version` `webVitals` bayragi gercek telemetry durumuyla uyumlu hale getirilecek.
+- [ ] P2: Crown Vote fallback borcu kapatilacak (locale parity strict, fallback minimize).
+- [ ] P2: `DownloadSection` icin abort/timeout + locale-aware tarih formati eklenecek.
+
+### Faz F Dogrulama Logu
+
+- [x] `cmd /c npm --prefix platform run lint` -> passed
+- [x] `cmd /c npm --prefix platform run type-check` -> passed
+
+### Siradaki Analiz
+
+- [ ] Faz G: i18n kalite kapisi + locale parity otomasyonu (CI check) ve semantic accessibility audit (WCAG odakli) tasarimi.
