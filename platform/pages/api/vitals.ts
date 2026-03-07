@@ -1,13 +1,36 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const MAX_BODY_SIZE = 4096
-const SAMPLE_RATE = parseFloat(process.env.VITALS_SAMPLE_RATE || '1')
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 30
+const MAX_TRACKED_IPS = 10_000
+
+function clampSampleRate(raw: string | undefined): number {
+  const parsed = parseFloat(raw || '1')
+  if (isNaN(parsed) || parsed > 1) { return 1 }
+  if (parsed < 0) { return 0 }
+  return parsed
+}
+
+const SAMPLE_RATE = clampSampleRate(process.env.VITALS_SAMPLE_RATE)
 
 const ipHits = new Map<string, number[]>()
 
+function evictStaleEntries(): void {
+  if (ipHits.size <= MAX_TRACKED_IPS) { return }
+  const cutoff = Date.now() - RATE_LIMIT_WINDOW_MS
+  for (const [ip, hits] of ipHits) {
+    const fresh = hits.filter((t) => t > cutoff)
+    if (fresh.length === 0) {
+      ipHits.delete(ip)
+    } else {
+      ipHits.set(ip, fresh)
+    }
+  }
+}
+
 function isRateLimited(ip: string): boolean {
+  evictStaleEntries()
   const now = Date.now()
   const hits = (ipHits.get(ip) || []).filter((t) => t > now - RATE_LIMIT_WINDOW_MS)
   if (hits.length >= RATE_LIMIT_MAX) {
