@@ -968,5 +968,17 @@
       "viewOnGithub": "GitHub'da Görüntüle"
     },
     "contactLabel": "Koşullar hakkında sorularınız için:"
+  },
+  "aria": {
+    "homePage": "CrownCode Ana Sayfa",
+    "openMenu": "Menüyü Aç",
+    "closeMenu": "Menüyü Kapat",
+    "closeSearch": "Aramayı kapat",
+    "closeModal": "Kapat",
+    "closeNotification": "Bildirimi kapat",
+    "github": "GitHub",
+    "website": "Web Sitesi",
+    "email": "E-posta",
+    "uploadAudioFile": "AI müzik tespiti için ses dosyası yükle"
   }
 }
