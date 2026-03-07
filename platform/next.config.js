@@ -74,4 +74,4 @@ const nextConfig = {
   // This can be extended with next-pwa plugin
 }
 
-module.exports = nextConfig
+module.exports = withBundleAnalyzer(nextConfig)

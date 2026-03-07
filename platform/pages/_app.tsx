@@ -21,6 +21,7 @@ const ExternalLinkWarning = lazy(() => import('@/components/ExternalLink/Externa
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true)
+  const [modalsReady, setModalsReady] = useState(false)
 
   useEffect(() => {
     // Check if this is first load
@@ -28,6 +29,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (hasLoaded) {
       setIsLoading(false)
     }
+
+    // Defer modal chunk loading until first user interaction
+    const activateModals = () => setModalsReady(true)
+    window.addEventListener('keydown', activateModals, { once: true })
+    window.addEventListener('click', activateModals, { once: true })
 
     // Register service worker for PWA
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
@@ -41,6 +47,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           // eslint-disable-next-line no-console
           console.error('[SW] Service Worker registration failed:', error)
         })
+    }
+
+    return () => {
+      window.removeEventListener('keydown', activateModals)
+      window.removeEventListener('click', activateModals)
     }
   }, [])
 
@@ -62,12 +73,14 @@ function MyApp({ Component, pageProps }: AppProps) {
             {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
             <Component {...pageProps} />
             <ToastContainer />
-            {/* Lazy load modals for better initial load performance */}
-            <Suspense fallback={null}>
-              <ShortcutsModal />
-              <SearchModal />
-              <ExternalLinkWarning />
-            </Suspense>
+            {/* Mount modals only after first user interaction to avoid eager chunk loading */}
+            {modalsReady && (
+              <Suspense fallback={null}>
+                <ShortcutsModal />
+                <SearchModal />
+                <ExternalLinkWarning />
+              </Suspense>
+            )}
           </ToastProvider>
         </LanguageProvider>
       </ThemeProvider>
@@ -101,12 +114,19 @@ export function reportWebVitals(metric: WebVitalMetric) {
     })
   }
 
-  // Send to analytics in production (example)
+  // Send to analytics in production
   if (process.env.NODE_ENV === 'production') {
-    // Example: Send to analytics service
-    // window.gtag?.('event', metric.name, {
-    //   value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
-    //   event_category: 'Web Vitals',
-    // })
+    const body = JSON.stringify({
+      name: metric.name,
+      value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+      rating: metric.rating,
+      id: metric.id,
+      page: window.location.pathname,
+    })
+
+    // Use sendBeacon for reliable delivery without blocking navigation
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon('/api/vitals', body)
+    }
   }
 }

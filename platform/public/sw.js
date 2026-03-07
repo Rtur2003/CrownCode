@@ -1,133 +1,141 @@
 // CrownCode Platform - Service Worker
-// Version 2.0.0
+// Version 3.0.0
 
-const CACHE_NAME = 'crowncode-v2'
-const STATIC_CACHE = 'crowncode-static-v2'
-const DYNAMIC_CACHE = 'crowncode-dynamic-v2'
+const STATIC_CACHE = 'crowncode-static-v3'
+const DYNAMIC_CACHE = 'crowncode-dynamic-v3'
+const MAX_DYNAMIC_ENTRIES = 50
 
-// Assets to cache - only files that definitely exist
+// Assets to cache on install
 const STATIC_ASSETS = [
   '/',
   '/manifest.json',
   '/favicon.ico',
 ]
 
-// Pages to cache - current CrownCode routes
-const PAGES_TO_CACHE = [
+// Pages that use network-first (daily/dynamic content)
+const NETWORK_FIRST_PAGES = [
+  '/crown-fortune',
+]
+
+// Pages that use cache-first with background revalidation
+const CACHEABLE_PAGES = [
   '/',
   '/ai-music-detection',
-  '/crown-fortune',
   '/crown-dreams',
   '/crown-commend',
   '/crown-vote',
   '/data-manipulation',
-  '/search'
+  '/search',
 ]
 
 // Install event
 self.addEventListener('install', (event) => {
-  console.log('Service Worker: Installing...')
-
   event.waitUntil(
     caches.open(STATIC_CACHE)
-      .then((cache) => {
-        console.log('Service Worker: Caching static assets')
-        return cache.addAll(STATIC_ASSETS)
-      })
-      .then(() => {
-        console.log('Service Worker: Static assets cached')
-        return self.skipWaiting()
-      })
-      .catch((error) => {
-        console.error('Service Worker: Cache failed', error)
-      })
+      .then((cache) => cache.addAll(STATIC_ASSETS))
+      .then(() => self.skipWaiting())
   )
 })
 
-// Activate event
+// Activate event — clean old caches and trim dynamic cache
 self.addEventListener('activate', (event) => {
-  console.log('Service Worker: Activating...')
-
   event.waitUntil(
     caches.keys()
       .then((cacheNames) => {
         return Promise.all(
-          cacheNames.map((cacheName) => {
-            if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE) {
-              console.log('Service Worker: Deleting old cache', cacheName)
-              return caches.delete(cacheName)
-            }
-          })
+          cacheNames
+            .filter((name) => name !== STATIC_CACHE && name !== DYNAMIC_CACHE)
+            .map((name) => caches.delete(name))
         )
       })
-      .then(() => {
-        console.log('Service Worker: Activated')
-        return self.clients.claim()
-      })
+      .then(() => trimCache(DYNAMIC_CACHE, MAX_DYNAMIC_ENTRIES))
+      .then(() => self.clients.claim())
   )
 })
+
+// Trim cache to a maximum number of entries
+async function trimCache(cacheName, maxEntries) {
+  const cache = await caches.open(cacheName)
+  const keys = await cache.keys()
+  if (keys.length > maxEntries) {
+    const toDelete = keys.slice(0, keys.length - maxEntries)
+    await Promise.all(toDelete.map((key) => cache.delete(key)))
+  }
+}
 
 // Fetch event
 self.addEventListener('fetch', (event) => {
   const { request } = event
   const url = new URL(request.url)
 
-  // Skip non-GET requests
-  if (request.method !== 'GET') {
+  if (request.method !== 'GET') return
+  if (url.origin !== location.origin) return
+
+  // Network-first for pages with daily/dynamic content
+  if (NETWORK_FIRST_PAGES.includes(url.pathname)) {
+    event.respondWith(networkFirst(request))
     return
   }
 
-  // Skip external requests
-  if (url.origin !== location.origin) {
+  // Cache-first for static assets and cacheable pages
+  if (
+    request.url.includes('/_next/static/') ||
+    CACHEABLE_PAGES.includes(url.pathname)
+  ) {
+    event.respondWith(cacheFirst(request))
     return
   }
 
-  event.respondWith(
-    caches.match(request)
-      .then((cachedResponse) => {
-        // Return cached version if available
-        if (cachedResponse) {
-          return cachedResponse
-        }
+  // Network-first for other _next resources (data, chunks)
+  if (request.url.includes('/_next/')) {
+    event.respondWith(networkFirst(request))
+    return
+  }
 
-        // Fetch and cache new requests
-        return fetch(request)
-          .then((response) => {
-            // Don't cache if not ok
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response
-            }
-
-            // Clone response for caching
-            const responseToCache = response.clone()
-
-            // Cache dynamic content
-            if (
-              request.url.includes('/_next/') ||
-              PAGES_TO_CACHE.includes(url.pathname)
-            ) {
-              caches.open(DYNAMIC_CACHE)
-                .then((cache) => {
-                  cache.put(request, responseToCache)
-                })
-            }
-
-            return response
-          })
-          .catch(() => {
-            // Return offline page for navigation requests
-            if (request.mode === 'navigate') {
-              return caches.match('/offline.html')
-            }
-          })
-      })
-  )
+  // Default: network only (no caching for unknown routes)
+  event.respondWith(fetch(request))
 })
+
+async function cacheFirst(request) {
+  const cached = await caches.match(request)
+  if (cached) return cached
+
+  try {
+    const response = await fetch(request)
+    if (response && response.status === 200 && response.type === 'basic') {
+      const cache = await caches.open(DYNAMIC_CACHE)
+      cache.put(request, response.clone())
+    }
+    return response
+  } catch {
+    if (request.mode === 'navigate') {
+      return caches.match('/offline.html')
+    }
+    return new Response('', { status: 503 })
+  }
+}
+
+async function networkFirst(request) {
+  try {
+    const response = await fetch(request)
+    if (response && response.status === 200 && response.type === 'basic') {
+      const cache = await caches.open(DYNAMIC_CACHE)
+      cache.put(request, response.clone())
+    }
+    return response
+  } catch {
+    const cached = await caches.match(request)
+    if (cached) return cached
+    if (request.mode === 'navigate') {
+      return caches.match('/offline.html')
+    }
+    return new Response('', { status: 503 })
+  }
+}
 
 // Background sync
 self.addEventListener('sync', (event) => {
   if (event.tag === 'background-sync') {
-    console.log('Service Worker: Background sync triggered')
     event.waitUntil(doBackgroundSync())
   }
 })
@@ -169,7 +177,6 @@ self.addEventListener('notificationclick', (event) => {
 // Background sync function
 async function doBackgroundSync() {
   try {
-    // Sync offline data when connection is restored
     const cache = await caches.open(DYNAMIC_CACHE)
     const requests = await cache.keys()
 
@@ -179,25 +186,11 @@ async function doBackgroundSync() {
         if (response.ok) {
           await cache.put(request, response.clone())
         }
-      } catch (error) {
-        console.error('Background sync failed for:', request.url, error)
+      } catch {
+        // Skip failed requests during sync
       }
     }
-  } catch (error) {
-    console.error('Background sync failed:', error)
+  } catch {
+    // Sync failed, will retry on next sync event
   }
 }
-
-// Cache cleanup
-setInterval(() => {
-  caches.open(DYNAMIC_CACHE)
-    .then((cache) => {
-      cache.keys()
-        .then((requests) => {
-          if (requests.length > 50) {
-            // Remove oldest entries
-            cache.delete(requests[0])
-          }
-        })
-    })
-}, 60000) // Clean every minute

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useMemo, Suspense } from 'react'
+import React, { useRef, useMemo, useState, useEffect, Suspense } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Points, PointMaterial } from '@react-three/drei'
 import * as THREE from 'three'
@@ -57,12 +57,11 @@ function NeuralConnections({ count = 100 }: { count?: number }) {
   )
 }
 
-function ParticleField() {
+function ParticleField({ count = 3500 }: { count?: number }) {
   const ref = useRef<THREE.Points>(null)
   const { pointer } = useThree()
 
   const particles = useMemo(() => {
-    const count = 3500
     const positions = new Float32Array(count * 3)
     const colors = new Float32Array(count * 3)
 
@@ -103,7 +102,7 @@ function ParticleField() {
       colors[i * 3 + 2] = color.b
     }
     return { positions, colors }
-  }, [])
+  }, [count])
 
   useFrame((state) => {
     if (ref.current) {
@@ -240,13 +239,48 @@ function DreamStars({ count = 200 }: { count?: number }) {
   )
 }
 
-function Scene() {
+type PerformanceTier = 'full' | 'reduced' | 'none'
+
+function usePerformanceTier(): PerformanceTier {
+  const [tier, setTier] = useState<PerformanceTier>('full')
+
+  useEffect(() => {
+    // Respect prefers-reduced-motion
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (motionQuery.matches) {
+      setTier('none')
+      return
+    }
+
+    // Detect low-end devices: few cores or mobile with low memory
+    const cores = navigator.hardwareConcurrency || 2
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+    if (cores <= 2 || (isMobile && cores <= 4)) {
+      setTier('reduced')
+    }
+
+    const onChange = (e: MediaQueryListEvent) => {
+      setTier(e.matches ? 'none' : 'full')
+    }
+    motionQuery.addEventListener('change', onChange)
+    return () => motionQuery.removeEventListener('change', onChange)
+  }, [])
+
+  return tier
+}
+
+function Scene({ tier }: { tier: 'full' | 'reduced' }) {
+  const particleCount = tier === 'reduced' ? 800 : 3500
+  const connectionCount = tier === 'reduced' ? 20 : 60
+  const orbCount = tier === 'reduced' ? 3 : 8
+  const starCount = tier === 'reduced' ? 50 : 150
+
   return (
     <>
-      <ParticleField />
-      <NeuralConnections count={60} />
-      <FloatingOrbs count={8} />
-      <DreamStars count={150} />
+      <ParticleField count={particleCount} />
+      <NeuralConnections count={connectionCount} />
+      <FloatingOrbs count={orbCount} />
+      <DreamStars count={starCount} />
       <fog attach="fog" args={['#050505', 10, 30]} />
       <ambientLight intensity={0.08} />
     </>
@@ -254,11 +288,24 @@ function Scene() {
 }
 
 export default function GoldenParticles() {
+  const tier = usePerformanceTier()
+
+  // Skip 3D entirely for reduced-motion preference
+  if (tier === 'none') {
+    return (
+      <div className={styles.container}>
+        <div className={styles.gradientTop} />
+        <div className={styles.gradientBottom} />
+        <div className={styles.radialGlow} />
+      </div>
+    )
+  }
+
   return (
     <div className={styles.container}>
       <Canvas
         camera={{ position: [0, 0, 15], fov: 60 }}
-        dpr={[1, 1.5]}
+        dpr={tier === 'reduced' ? [1, 1] : [1, 1.5]}
         gl={{
           antialias: false,
           alpha: true,
@@ -266,7 +313,7 @@ export default function GoldenParticles() {
         }}
       >
         <Suspense fallback={null}>
-          <Scene />
+          <Scene tier={tier} />
         </Suspense>
       </Canvas>
 
