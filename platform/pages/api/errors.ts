@@ -3,10 +3,25 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 const MAX_BODY_SIZE = 8192
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 10
+const MAX_TRACKED_IPS = 10_000
 
 const ipHits = new Map<string, number[]>()
 
+function evictStaleEntries(): void {
+  if (ipHits.size <= MAX_TRACKED_IPS) { return }
+  const cutoff = Date.now() - RATE_LIMIT_WINDOW_MS
+  for (const [ip, hits] of ipHits) {
+    const fresh = hits.filter((t) => t > cutoff)
+    if (fresh.length === 0) {
+      ipHits.delete(ip)
+    } else {
+      ipHits.set(ip, fresh)
+    }
+  }
+}
+
 function isRateLimited(ip: string): boolean {
+  evictStaleEntries()
   const now = Date.now()
   const hits = (ipHits.get(ip) || []).filter((t) => t > now - RATE_LIMIT_WINDOW_MS)
   if (hits.length >= RATE_LIMIT_MAX) {
@@ -18,7 +33,8 @@ function isRateLimited(ip: string): boolean {
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (process.env.FEATURE_WEB_VITALS === 'false') {
+  // Separate gate from FEATURE_WEB_VITALS — errors have their own toggle
+  if (process.env.FEATURE_CLIENT_ERRORS === 'false') {
     return res.status(204).end()
   }
 
