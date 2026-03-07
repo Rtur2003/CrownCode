@@ -27,6 +27,13 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     }
   }, [])
 
+  // Sync document lang attribute with current language
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = language
+    }
+  }, [language])
+
   const setLanguage = (lang: Language) => {
     setLanguageState(lang)
 
