@@ -870,7 +870,13 @@
       "failedToGenerate": "Failed to generate comment.",
       "noCommentToPost": "No comment to post.",
       "alreadyCommented": "Already commented",
-      "failedToPost": "Failed to post comment."
+      "failedToPost": "Failed to post comment.",
+      "rateLimitExceeded": "Too many requests. Please wait before trying again.",
+      "unauthorized": "Invalid or missing API key.",
+      "postingDisabled": "Comment posting is currently disabled.",
+      "videoDetailsFailed": "Could not fetch video details.",
+      "generationFailed": "Comment generation failed.",
+      "postingFailed": "Failed to post comment to YouTube."
     }
   },
   "privacy": {
