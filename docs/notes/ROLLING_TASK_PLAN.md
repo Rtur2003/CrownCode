@@ -400,12 +400,12 @@ Kaynak rapor:
 
 ### Faz I Cikisli Claude Gorevleri
 
-- [ ] P0: `platform/pages/api/vitals.ts` ve `platform/pages/api/errors.ts` lint `curly` ihlalleri giderilsin; build kapisi tekrar yesile cekilsin.
-- [ ] P0: Telemetry handlerlarinda `req.headers`/`req.socket` null-safe ip cozumleme uygulanacak; `__tests__/api/telemetry.test.ts` ile uyumlu olacak.
-- [ ] P0: `__tests__/a11y/accessibility.test.tsx` icindeki `jest.resetModules()` kaynakli duplicate-react invalid hook call regresyonu kaldirilacak.
-- [ ] P1: `crownCommend.errors` locale sozlesmesi tamamlanacak (`rateLimitExceeded`, `unauthorized`, `postingDisabled`, `videoDetailsFailed`, `generationFailed`, `postingFailed`) TR/EN parity korunacak.
-- [ ] P1: Telemetry sampling/rate-limit hardening tamamlanacak (`VITALS_SAMPLE_RATE` clamp, map eviction stratejisi).
-- [ ] P2: Telemetry feature-flag ayrimi netlestirilecek (`FEATURE_WEB_VITALS` ve client error gate coupling'i acikca ayrilsin veya dokumante edilsin).
+- [x] P0: `vitals.ts` ve `errors.ts` lint `curly` ihlalleri giderildi — `isRateLimited` icindeki tek satirlik `if` bloklarina suslu parantez eklendi.
+- [x] P0: Telemetry handlerlarda `req.headers?.` ve `req.socket?.` null-safe optional chaining uygulanadi. Test mocklari `headers`/`socket` tanimlamasa da artik crash etmiyor.
+- [x] P0: a11y test `jest.resetModules()` + `jest.doMock` stratejisi kaldirildi. Open-modal testi artik inline component ile dialog attribute dogrulamasi yapiyor (duplicate-React riski ortadan kaldirildi).
+- [x] P1: `crownCommend.errors` locale sozlesmesi tamamlandi — 6 yeni key (`rateLimitExceeded`, `unauthorized`, `postingDisabled`, `videoDetailsFailed`, `generationFailed`, `postingFailed`) hem `en.json` hem `tr.json`'a eklendi. i18n parity korundu.
+- [x] P1: Telemetry hardening tamamlandi — `VITALS_SAMPLE_RATE` `clampSampleRate()` ile [0,1] araligina sabitlendi. IP hit maplari `MAX_TRACKED_IPS=10000` esik ile `evictStaleEntries()` stratejisine alindi.
+- [x] P2: Feature gate ayrimi yapildi — `/api/vitals` icin `FEATURE_WEB_VITALS=false`, `/api/errors` icin `FEATURE_CLIENT_ERRORS=false` ayri env degiskenleri kullaniliyor. Coupling ortadan kaldirildi.
 
 ### Faz I Dogrulama Logu (Analist)
 
