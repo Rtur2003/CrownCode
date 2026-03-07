@@ -119,7 +119,7 @@ export const ExternalLinkWarning: React.FC<ExternalLinkWarningProps> = ({
             <button
               className="external-link-close"
               onClick={handleClose}
-              aria-label="Close"
+              aria-label={t.aria?.closeModal || 'Close'}
             >
               <X size={20} />
             </button>
