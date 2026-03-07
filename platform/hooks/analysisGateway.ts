@@ -60,12 +60,15 @@ export const analyzeSource = async (
     if (data.errors && data.errors.length) {
       const errs = data.errors
       if (errs.includes('missing_file')) return { result: null, error: 'missingFile' }
+      if (errs.includes('missing_url')) return { result: null, error: 'missingUrl' }
       if (errs.includes('unsupported_source')) return { result: null, error: 'unsupportedSource' }
       if (errs.includes('invalid_youtube_url')) return { result: null, error: 'invalidYouTubeUrl' }
+      if (errs.includes('invalid_source_type')) return { result: null, error: 'invalidSourceType' }
       if (errs.includes('file_too_large')) return { result: null, error: 'fileTooLarge' }
       if (errs.includes('file_too_small')) return { result: null, error: 'fileTooSmall' }
       if (errs.includes('invalid_file_type')) return { result: null, error: 'unsupportedFileType' }
       if (errs.includes('youtube_analysis_failed')) return { result: null, error: 'youtubeAnalysisFailed' }
+      if (errs.includes('internal_error')) return { result: null, error: 'internalError' }
       return { result: null, error: 'backend_unexpected_response' as AnalysisErrorCode }
     }
 

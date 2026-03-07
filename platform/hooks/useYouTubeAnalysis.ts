@@ -221,7 +221,7 @@ export const useYouTubeAnalysis = () => {
         return
       }
 
-      if (gatewayError === 'backend_not_configured' || gatewayError === 'backend_unreachable' || gatewayError === 'backend_unexpected_response') {
+      if (gatewayError === 'backend_not_configured' || gatewayError === 'backend_unreachable') {
         fallbackToPreview(gatewayError)
       } else {
         setError(gatewayError || 'invalidYouTubeUrl')
