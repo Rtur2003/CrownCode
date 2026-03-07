@@ -88,7 +88,7 @@ export const SearchModal: React.FC = () => {
                 type="button"
                 onClick={closeSearch}
                 className="search-close"
-                aria-label="Close search"
+                aria-label={t.aria?.closeSearch || 'Close search'}
               >
                 <X size={18} />
               </button>

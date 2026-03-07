@@ -69,7 +69,7 @@ export const Footer: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"
-                aria-label="GitHub"
+                aria-label={t.aria?.github || 'GitHub'}
               >
                 <Github size={20} />
               </a>
@@ -78,14 +78,14 @@ export const Footer: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"
-                aria-label="Website"
+                aria-label={t.aria?.website || 'Website'}
               >
                 <Globe size={20} />
               </a>
               <a
                 href="mailto:contact@hasanarthuraltuntas.xyz"
                 className="social-link"
-                aria-label="Email"
+                aria-label={t.aria?.email || 'Email'}
               >
                 <Mail size={20} />
               </a>
