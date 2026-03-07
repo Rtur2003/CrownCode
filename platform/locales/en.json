@@ -772,7 +772,7 @@
       "symbol": "Lucid Trigger",
       "location": "Frequent Location",
       "character": "Recurring Character",
-      "appearsIn": "Appears in {{count}} dreams"
+      "appearsIn": "times in dreams"
     }
   },
   "crownCommend": {
