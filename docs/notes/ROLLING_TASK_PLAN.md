@@ -7,9 +7,9 @@
 ## Tur Durumu
 
 - Son guncelleme: **7 Mart 2026**
-- Tur: **Tur 5 - Asamali Platform Analizi (Faz H tamamlandi)**
+- Tur: **Tur 5 - Asamali Platform Analizi (Faz I analiz tamam, uygulama bekleniyor)**
 - Mod: Faz bazli ilerleme (P0 -> P3)
-- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_H_API_UX_TELEMETRY_2026-03-07.md`
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_I_POST_H_VERIFICATION_2026-03-07.md`
 
 ## Isletim Protokolu (Zorunlu)
 
@@ -384,3 +384,39 @@ Kaynak rapor:
 ### Siradaki Analiz
 
 - [ ] Faz I: guvenlik/saldiri yuzu derin turu (rate limit dayanimi, telemetry abuse senaryolari, CORS/policy sertlestirme).
+
+---
+
+## Tur 5.8 - Faz I Basladi (Post-H Dogrulama + Regresyon Turu)
+
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_I_POST_H_VERIFICATION_2026-03-07.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz I Sonuc
+
+- [x] Claude'un son root commit'i (`ebd89d8`) satir bazli diff ile dogrulandi.
+- [x] Core + HF backend testleri analist tarafinda tekrar kostu.
+- [x] Faz H tamamlandi denilen paketin kalite kapilarinda regresyon urettigi dogrulandi.
+
+### Faz I Cikisli Claude Gorevleri
+
+- [ ] P0: `platform/pages/api/vitals.ts` ve `platform/pages/api/errors.ts` lint `curly` ihlalleri giderilsin; build kapisi tekrar yesile cekilsin.
+- [ ] P0: Telemetry handlerlarinda `req.headers`/`req.socket` null-safe ip cozumleme uygulanacak; `__tests__/api/telemetry.test.ts` ile uyumlu olacak.
+- [ ] P0: `__tests__/a11y/accessibility.test.tsx` icindeki `jest.resetModules()` kaynakli duplicate-react invalid hook call regresyonu kaldirilacak.
+- [ ] P1: `crownCommend.errors` locale sozlesmesi tamamlanacak (`rateLimitExceeded`, `unauthorized`, `postingDisabled`, `videoDetailsFailed`, `generationFailed`, `postingFailed`) TR/EN parity korunacak.
+- [ ] P1: Telemetry sampling/rate-limit hardening tamamlanacak (`VITALS_SAMPLE_RATE` clamp, map eviction stratejisi).
+- [ ] P2: Telemetry feature-flag ayrimi netlestirilecek (`FEATURE_WEB_VITALS` ve client error gate coupling'i acikca ayrilsin veya dokumante edilsin).
+
+### Faz I Dogrulama Logu (Analist)
+
+- [x] `cmd /c npm --prefix platform run lint` -> **failed** (`curly` kurali: `pages/api/vitals.ts`, `pages/api/errors.ts`)
+- [x] `cmd /c npm --prefix platform run type-check` -> passed
+- [x] `cmd /c npm --prefix platform test -- --runInBand` -> **failed** (`a11y invalid hook call`, `telemetry req.headers undefined`)
+- [x] `cmd /c "set DEPLOYMENT_TARGET=server&& npm --prefix platform run build"` -> **failed** (lint blokaji)
+- [x] `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"` -> **failed** (lint blokaji)
+- [x] `python -m pytest backend/tests -q` -> passed (`20 passed`)
+- [x] `python -m pytest hf-crowncode-backend/tests -q` -> passed (`22 passed`)
+
+### Siradaki Analiz
+
+- [ ] Faz J: guvenlik/saldiri yuzu derin turu (Faz I P0/P1 yesile dondukten sonra).
