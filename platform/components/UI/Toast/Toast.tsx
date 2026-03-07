@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { X, CheckCircle, AlertCircle, AlertTriangle, Info } from 'lucide-react'
 import { Toast as ToastType, ToastType as TType } from '@/context/ToastContext'
+import { useLanguage } from '@/context/LanguageContext'
 
 interface ToastProps {
   toast: ToastType
@@ -22,6 +23,7 @@ const iconMap: Record<TType, React.ReactNode> = {
 }
 
 export const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
+  const { t } = useLanguage()
   const [progress, setProgress] = useState(100)
 
   useEffect(() => {
@@ -62,7 +64,7 @@ export const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
       <button
         onClick={() => onClose(toast.id)}
         className="toast-close"
-        aria-label="Close notification"
+        aria-label={t.aria?.closeNotification || 'Close notification'}
       >
         <X size={16} />
       </button>

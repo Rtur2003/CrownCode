@@ -378,8 +378,8 @@ const AIMusicDetectionPage: NextPage = () => {
                       accept="audio/*,.mp3,.wav,.flac,.m4a,.mp4,.aac"
                       onChange={handleFileSelect}
                       className={styles['hidden']}
-                      aria-label="Upload audio file for AI music detection"
-                      title="Upload audio file for AI music detection"
+                      aria-label={t.aria?.uploadAudioFile || 'Upload audio file for AI music detection'}
+                      title={t.aria?.uploadAudioFile || 'Upload audio file for AI music detection'}
                     />
                   </div>
 
