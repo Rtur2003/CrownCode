@@ -110,7 +110,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
   // -----------------------------------------------------------------------
 
   return (
-    <section className={`hero-section ${className}`} role="banner" aria-label="Hero section">
+    <section className={`hero-section ${className}`} aria-label="Hero section">
       {/* ===== BACKGROUND ELEMENTS ===== */}
       <div className="hero-background" aria-hidden="true">
         <div className="hero-gradient" />
