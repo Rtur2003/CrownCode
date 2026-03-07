@@ -9,7 +9,9 @@ const ipHits = new Map<string, number[]>()
 function isRateLimited(ip: string): boolean {
   const now = Date.now()
   const hits = (ipHits.get(ip) || []).filter((t) => t > now - RATE_LIMIT_WINDOW_MS)
-  if (hits.length >= RATE_LIMIT_MAX) return true
+  if (hits.length >= RATE_LIMIT_MAX) {
+    return true
+  }
   hits.push(now)
   ipHits.set(ip, hits)
   return false
@@ -27,7 +29,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   res.setHeader('Cache-Control', 'no-store')
 
-  const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.socket.remoteAddress || 'unknown'
+  const clientIp = (req.headers?.['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown'
   if (isRateLimited(clientIp)) {
     return res.status(429).json({ error: 'Too Many Requests' })
   }
