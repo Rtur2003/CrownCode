@@ -212,4 +212,39 @@ Kaynak rapor:
 
 ### Siradaki Analiz
 
-- [ ] Faz E: sayfa bazli performans + bundle + runtime gozlenebilirlik analizi.
+- [x] Faz E: sayfa bazli performans + bundle + runtime gozlenebilirlik analizi.
+
+---
+
+## Tur 5.4 - Faz E Tamamlandi (Performance/Bundle/Observability)
+
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_E_PERFORMANCE_OBSERVABILITY_2026-03-07.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz E Sonuc
+
+- [x] Build, static build ve analyze-build dogrulamalari tekrar kosuldu.
+- [x] Bundle agirlik noktalarina dair satir-bazli tespit cikartildi.
+- [x] Runtime gozlenebilirlik (web vitals + error boundary + console policy) analizi tamamlandi.
+- [x] Netlify deploy hatasi ile repo config/CI zinciri arasindaki yeni uyumsuzluklar raporlandi.
+
+### Faz E Cikisli Claude Gorevleri
+
+- [ ] P0: Deploy zinciri tek modele indirilecek (`.next` server-mode), Netlify UI ile repo config bire bir senkronlanacak.
+- [ ] P0: `ANALYZE=true` build onarilacak (bundle analyzer dependency/plugin standardi netlestirilecek).
+- [ ] P1: `_app` global modal lazy-load davranisi gercek lazy modele alinacak (state-gated mount).
+- [ ] P1: Production telemetry eklenecek (`reportWebVitals` + `ErrorBoundary` error sink).
+- [ ] P1: `sw.js` cache politikasi `crown-fortune` no-cache beklentisiyle uyumlu hale getirilecek.
+- [ ] P1: Crown Dreams 3D arka plani icin cihaz/reduced-motion bazli degrade stratejisi uygulanacak.
+- [ ] P1/P2: Asset ve toolchain temizlikleri (`tarot-original`, `sounds`, `vercel` scripts, orphan netlify function).
+
+### Faz E Dogrulama Notu
+
+- [x] `cmd /c npm --prefix platform run build` -> passed
+- [x] `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"` -> passed (beklenen static/API warning)
+- [x] `cmd /c "set ANALYZE=true&& npm --prefix platform run build"` -> failed (`webpack-bundle-analyzer` missing)
+- [x] Paralel build denemesinde gorulen `ENOTEMPTY` yarismasi not edildi; ardindan komutlar tek tek kosularak dogrulandi.
+
+### Siradaki Analiz
+
+- [ ] Faz F: sayfa bazli UX/IA derin tur (Home -> product pages -> API UX contract), performans fixleri sonrasi yeniden olcum.
