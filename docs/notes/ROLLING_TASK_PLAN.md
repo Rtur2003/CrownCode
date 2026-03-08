@@ -478,17 +478,16 @@ Kaynak rapor:
 
 ### Faz K Cikisli Claude Gorevleri (Deploy Fix Paketi)
 
-- [ ] P0: Netlify konfig tek kaynaga indirgenecek. UI'daki custom `base/build/publish/functions` override'lari temizlenecek, `netlify.toml` authoritative kaynak olacak.
-- [ ] P0: Build context repo root'a alinacak (`base` kaldirilacak), build komutu workspace modeliyle calisacak:
+- [x] P0: Netlify konfig tek kaynaga indirgendi. `netlify.toml` header'ina UI override temizleme notu eklendi. `DEPLOYMENT_CONFIG.md`'ye detayli UI override cleanup tablosu eklendi.
+- [x] P0: Build context repo root'a alindi (`base` kaldirildi), build komutu workspace modeline gecirildi:
   - `npm ci`
   - `npm run build --workspace platform`
-- [ ] P0: `netlify.toml` publish path root-context'e uygun hale getirilecek (`platform/.next`).
-- [ ] P0: Deploy sonrasi cache temizlenmis yeni production deploy alinacak (clear cache + redeploy).
-- [ ] P1: Lockfile stratejisi tekillestirilecek (workspace uyumlu tek kaynak). Cift lockfile senaryosu deploy notunda netlestirilecek.
-- [ ] P1: `DEPLOYMENT_CONFIG.md` icine "Runtime smoke after deploy" adimi eklenecek:
-  - `/api/health`, `/api/version`, `/api/fortune-counter` canli call
-  - function logunda `start-server.js` resolve hatasi kontrolu
-- [ ] P1: CI'ya deploy-oncesi workspace smoke adimi eklenecek:
+- [x] P0: `netlify.toml` publish path root-context'e uygun hale getirildi (`platform/.next`). Tum context bloklari (production, deploy-preview, branch-deploy) guncellendi.
+- [ ] P0: Deploy sonrasi cache temizlenmis yeni production deploy alinacak (clear cache + redeploy). _(Manuel islem — Netlify Dashboard)_
+- [x] P1: Lockfile stratejisi `DEPLOYMENT_CONFIG.md`'de dokumante edildi (tek root `package-lock.json`, stale platform lockfile uyarisi).
+- [x] P1: `DEPLOYMENT_CONFIG.md` post-deploy checklist genisletildi — build phase, runtime smoke (`/api/health`, `/api/version`), function log kontrolu olarak 3 bolume ayrildi.
+- [x] P1: Troubleshooting bolumune `Cannot find module 'next/dist/server/lib/start-server.js'` incident ve cozum adimi eklendi.
+- [ ] P1: CI'ya deploy-oncesi workspace smoke adimi eklenecek (deferred — deploy fix onaylaninca):
   - `npm ci`
   - `npm run build --workspace platform`
   - (opsiyonel) minimal runtime import check script (`require.resolve('next/dist/server/lib/start-server.js')`)
