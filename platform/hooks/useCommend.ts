@@ -4,6 +4,8 @@
  */
 
 import { useState, useCallback, useMemo, useRef } from 'react'
+import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
+import { useLocalHistory, HISTORY_KEYS } from '@/hooks/useLocalHistory'
 
 export type CommentLanguage = 'Turkish' | 'English' | 'Russian' | 'Chinese' | 'Japanese'
 
@@ -111,6 +113,7 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
 
   const apiBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_API_URL?.trim(), [])
   const requestIdRef = useRef(0)
+  const { lastEntry: lastCommend, save: saveCommend } = useLocalHistory<{ comment: string; videoTitle: string }>(HISTORY_KEYS.COMMEND)
   const i18nMessages = useMemo(
     () => ({ ...DEFAULT_MESSAGES, ...messages }),
     [messages]
@@ -150,7 +153,7 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
     setError(null)
 
     try {
-      const response = await fetch(`${apiBaseUrl}/api/commend/generate`, {
+      const response = await fetchWithTimeout(`${apiBaseUrl}/api/commend/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -179,6 +182,7 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
       setProcessingTime(data.processingTime)
       setHasTranscript(data.hasTranscript)
       setState('success')
+      saveCommend(videoUrl, { comment: data.generatedText, videoTitle: data.videoDetails?.title ?? '' })
 
     } catch (err) {
       if (isStale()) return
@@ -203,7 +207,7 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
     setError(null)
 
     try {
-      const response = await fetch(`${apiBaseUrl}/api/commend/post`, {
+      const response = await fetchWithTimeout(`${apiBaseUrl}/api/commend/post`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -252,6 +256,7 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
 
   return {
     // State
+    lastCommend,
     state,
     videoUrl,
     language,
