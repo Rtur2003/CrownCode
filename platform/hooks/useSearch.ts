@@ -64,6 +64,27 @@ export const useSearch = () => {
         href: '/data-manipulation',
         category: 'features' as const,
       },
+      {
+        id: 'creator-studio',
+        title: t.creatorStudio?.title || 'Creator Studio',
+        description: t.creatorStudio?.subtitle || 'Audio creation tools powered by AI',
+        href: '/creator-studio',
+        category: 'pages' as const,
+      },
+      {
+        id: 'analysis-history',
+        title: t.analysisHistory?.title || 'Analysis History',
+        description: t.analysisHistory?.subtitle || 'Your recent analysis results',
+        href: '/analysis-history',
+        category: 'pages' as const,
+      },
+      {
+        id: 'system-status',
+        title: t.systemStatus?.title || 'System Status',
+        description: t.systemStatus?.allOperational || 'Live status of CrownCode services',
+        href: '/system-status',
+        category: 'pages' as const,
+      },
     ]
 
     return [...catalogItems, ...staticItems]

@@ -27,7 +27,8 @@
       "@/context/*": ["./context/*"],
       "@/public/*": ["./public/*"],
       "@/locales/*": ["./locales/*"],
-      "@/data/*": ["./data/*"]
+      "@/data/*": ["./data/*"],
+      "@/config/*": ["./config/*"]
     },
     "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": false,

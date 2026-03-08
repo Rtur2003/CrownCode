@@ -997,5 +997,47 @@
     "website": "Web Sitesi",
     "email": "E-posta",
     "uploadAudioFile": "AI müzik tespiti için ses dosyası yükle"
+  },
+  "creatorStudio": {
+    "meta": {
+      "title": "Creator Studio - CrownCode",
+      "description": "Ses remiks, AI üretimi ve çoklu parça düzenleme araçları.",
+      "keywords": "creator studio, ses remiks, AI üretimi, çoklu parça, müzik araçları"
+    },
+    "title": "Creator Studio",
+    "subtitle": "AI destekli ses oluşturma araçları",
+    "comingSoon": "Yakında",
+    "comingSoonDesc": "Harika bir şey inşa ediyoruz. Ses remiks, AI üretimi ve çoklu parça düzenleme araçları için takipte kalın.",
+    "features": {
+      "remix": { "title": "Ses Remiks", "description": "AI destekli araçlarla ses parçalarını remiksleme ve dönüştürme." },
+      "generate": { "title": "AI Üretimi", "description": "Gelişmiş AI modelleri kullanarak orijinal ses içeriği oluşturma." },
+      "multitrack": { "title": "Çoklu Parça", "description": "Birleşik bir çalışma alanında birden fazla ses parçasını düzenleme ve miksle." }
+    }
+  },
+  "analysisHistory": {
+    "meta": {
+      "title": "Analiz Geçmişi - CrownCode",
+      "description": "Son AI müzik analiz sonuçlarınızı görüntüleyin.",
+      "keywords": "analiz geçmişi, AI müzik tespiti, sonuçlar, geçmiş"
+    },
+    "title": "Analiz Geçmişi",
+    "subtitle": "Son analiz sonuçlarınız",
+    "lastAnalysis": "Son Analiz",
+    "noHistory": "Henüz analiz geçmişi yok.",
+    "noHistoryDesc": "Sonuçlarınızı burada görmek için AI Müzik Tespiti sayfasında bir analiz çalıştırın.",
+    "goToAnalysis": "AI Müzik Tespitine Git",
+    "delete": "Sil",
+    "deleted": "Geçmiş temizlendi."
+  },
+  "systemStatus": {
+    "meta": {
+      "title": "Sistem Durumu - CrownCode",
+      "description": "CrownCode servislerinin canlı durumu.",
+      "keywords": "sistem durumu, sağlık, çalışma süresi, servisler"
+    },
+    "title": "Sistem Durumu",
+    "allOperational": "Tüm sistemler çalışıyor",
+    "someIssues": "Bazı servislerde sorun var",
+    "refresh": "Yenile"
   }
 }

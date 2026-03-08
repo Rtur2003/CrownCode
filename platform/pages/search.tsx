@@ -48,6 +48,27 @@ const SearchPage: NextPage = () => {
         type: 'page' as const,
         icon: <ExternalLink size={20} />,
       },
+      {
+        title: t.creatorStudio?.title || 'Creator Studio',
+        description: t.creatorStudio?.subtitle || 'Audio creation tools powered by AI',
+        url: '/creator-studio',
+        type: 'page' as const,
+        icon: <ExternalLink size={20} />,
+      },
+      {
+        title: t.analysisHistory?.title || 'Analysis History',
+        description: t.analysisHistory?.subtitle || 'Your recent analysis results',
+        url: '/analysis-history',
+        type: 'page' as const,
+        icon: <ExternalLink size={20} />,
+      },
+      {
+        title: t.systemStatus?.title || 'System Status',
+        description: t.systemStatus?.allOperational || 'Live status of CrownCode services',
+        url: '/system-status',
+        type: 'page' as const,
+        icon: <ExternalLink size={20} />,
+      },
     ]
   }, [t])
 

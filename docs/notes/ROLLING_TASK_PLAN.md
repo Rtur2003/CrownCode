@@ -561,16 +561,17 @@ Kaynak rapor:
 
 ### Faz M Cikisli Claude Gorevleri
 
-- [ ] P0: `platform/config/product-catalog.ts` olustur; `ProjectsSection`, `useSearch`, `/search` bu katalogu kullansin.
-- [ ] P0: `useAsyncRequest` (timeout+abort+retry) standardini ekle; `analysisGateway`, `useCommend`, `data-manipulation`, `DownloadSection` entegre et.
-- [ ] P1: `crown-dreams` demo-mode UX netlestir (non-functional actionlar disable + acik etiket).
-- [ ] P1: `crown-commend` mounted gate kaldir (SSR-first render).
-- [ ] P1: Analysis + Commend icin minimal local history persistence (`last input/result`) ekle.
-- [ ] P1: Home/Search/Data-manipulation metadata hardcodedlarini locale key'e tasi.
-- [ ] P2: Yeni MVP sayfalar:
-  - `/creator-studio`
-  - `/analysis-history`
-  - `/system-status`
+- [x] P0: `platform/config/product-catalog.ts` olusturuldu; `ProjectsSection`, `useSearch`, `/search` bu katalogu kullaniyor.
+- [x] P0: `useAsyncRequest` (timeout+abort+retry) standardi eklendi; `analysisGateway`, `useCommend`, `data-manipulation`, `DownloadSection` entegre edildi.
+- [x] P1: `crown-dreams` demo-mode UX netlestirildi (non-functional actionlar disable + "Demo mode" title).
+- [x] P1: `crown-commend` mounted gate kaldirildi (SSR-first render).
+- [x] P1: Analysis + Commend icin minimal local history persistence (`useLocalHistory` hook) eklendi.
+- [x] P1: Home/Search/Data-manipulation metadata hardcodedlari locale key'lere tasindi (`homeMeta`, `searchMeta`, `dataManipulationMeta`).
+- [x] P2: Yeni MVP sayfalar olusturuldu:
+  - `/creator-studio` (Coming Soon + 3 feature card)
+  - `/analysis-history` (localStorage'dan son analiz gosterimi)
+  - `/system-status` (canli servis saglik kontrolu)
+- [x] P2: Yeni MVP sayfalarin locale keyleri eklendi (`creatorStudio`, `analysisHistory`, `systemStatus` — EN + TR parity).
 
 ### Faz M Dogrulama Logu (Analist)
 
@@ -580,4 +581,43 @@ Kaynak rapor:
 
 ### Siradaki Analiz
 
-- [ ] Faz N: Faz M uygulama sonrasi route-level smoke + UX regressions + growth KPI readiness analizi.
+- [x] Faz N: Faz M uygulama sonrasi route-level smoke + UX regressions + growth KPI readiness analizi tamamlandi.
+
+---
+
+## Tur 5.13 - Faz N Tamamlandi (Post-M Route Smoke + UX Regression)
+
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_N_POST_M_ROUTE_SMOKE_UX_2026-03-09.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz N Sonuc
+
+- [x] Faz M sonrasi route-level smoke turu tamamlandi.
+- [x] Frontend kalite kapilarinda regresyon oldugu kanitlandi (lint/type/build red).
+- [x] Yeni sayfa rollout'unda locale-schema drift ve type contract kirigi tespit edildi.
+- [x] Yeni sayfalarin bilgi mimarisi/discoverability bosluklari (search/nav) netlesti.
+
+### Faz N Cikisli Claude Gorevleri
+
+- [x] P0: `platform/tsconfig.json` icine `@/config/*` path alias eklendi; module-resolution kirigi kapatildi.
+- [x] P0: `platform/pages/creator-studio/index.tsx` locale-key drifti duzeltildi (`desc->description`, `layers->multitrack`, `comingSoonNote->comingSoonDesc`, `backHome` -> `errorPage.actions.home`), raw `<a>` yerine `next/link` kullanildi.
+- [x] P0: `platform/pages/analysis-history/index.tsx` locale keyleri canonical hale getirildi (`clearBtn->delete`, `empty->noHistory+noHistoryDesc`).
+- [x] P0: `CyberButton.tsx` icine `title` prop eklendi; Crown Dreams `disabled title="Demo mode"` type-safe hale geldi.
+- [x] P1: Yeni rotalar (`/creator-studio`, `/analysis-history`, `/system-status`) `useSearch` ve `/search` sayfasina eklendi — kesfedilebilir.
+- [ ] P1: `platform/__tests__/pages/smoke.test.tsx` icine 3 yeni route smoke testi ekle.
+- [ ] P1: Kalan commitlerde conventional commit standardina geri don.
+
+### Faz N Dogrulama Logu (Analist)
+
+- [x] `cmd /c npm --prefix platform run lint` -> **failed** (`creator-studio` raw `<a>` / `next/link` kurali)
+- [x] `cmd /c npm --prefix platform run type-check` -> **failed** (`@/config/*` alias eksigi + locale key drift + `CyberButton` prop mismatch)
+- [x] `cmd /c npm --prefix platform test -- --runInBand` -> passed (`4 suites / 32 tests`, known `act(...)` warnings)
+- [x] `cmd /c "set DEPLOYMENT_TARGET=server&& npm --prefix platform run build"` -> **failed** (lint gate)
+- [x] `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"` -> **failed** (lint gate)
+- [x] `cmd /c npm --prefix platform run i18n:check` -> passed
+- [x] `python -m pytest backend/tests -q` -> passed (`20 passed`)
+- [x] `python -m pytest hf-crowncode-backend/tests -q --disable-warnings --maxfail=1` -> passed (all tests green + coverage output)
+
+### Siradaki Analiz
+
+- [ ] Faz O: Faz N fixleri sonrasi full regression + discoverability KPI (search hit, route entry points, smoke parity) analizi.

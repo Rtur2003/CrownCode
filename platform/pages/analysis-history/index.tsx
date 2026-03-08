@@ -45,7 +45,7 @@ const AnalysisHistoryPage: NextPage = () => {
               <button
                 onClick={remove}
                 style={{ background: 'none', border: 'none', color: '#666', cursor: 'pointer', padding: 4 }}
-                title={ah?.clearBtn || 'Clear history'}
+                title={ah?.delete || 'Clear history'}
               >
                 <Trash2 size={16} />
               </button>
@@ -69,7 +69,8 @@ const AnalysisHistoryPage: NextPage = () => {
             style={{ textAlign: 'center', padding: '4rem 0', color: '#666' }}
           >
             <History size={48} style={{ opacity: 0.3, marginBottom: 16 }} />
-            <p>{ah?.empty || 'No analysis history yet. Run an analysis from the AI Music Detection page to see results here.'}</p>
+            <p>{ah?.noHistory || 'No analysis history yet.'}</p>
+            <p style={{ marginTop: 8, fontSize: '0.85rem' }}>{ah?.noHistoryDesc || 'Run an analysis on the AI Music Detection page to see your results here.'}</p>
           </motion.div>
         )}
       </div>

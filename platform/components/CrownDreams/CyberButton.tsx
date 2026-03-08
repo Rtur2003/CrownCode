@@ -15,6 +15,7 @@ interface CyberButtonProps {
   children?: React.ReactNode
   onClick?: React.MouseEventHandler<HTMLButtonElement>
   type?: 'button' | 'submit' | 'reset'
+  title?: string
 }
 
 export const CyberButton = forwardRef<HTMLButtonElement, CyberButtonProps>(
@@ -28,7 +29,8 @@ export const CyberButton = forwardRef<HTMLButtonElement, CyberButtonProps>(
     children,
     disabled,
     onClick,
-    type = 'button'
+    type = 'button',
+    title
   }, ref) => {
     const classes = [
       styles.cyberButton,
@@ -45,6 +47,7 @@ export const CyberButton = forwardRef<HTMLButtonElement, CyberButtonProps>(
         disabled={disabled || isLoading}
         className={classes}
         onClick={onClick}
+        title={title}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >

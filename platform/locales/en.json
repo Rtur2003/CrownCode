@@ -997,5 +997,47 @@
     "website": "Website",
     "email": "Email",
     "uploadAudioFile": "Upload audio file for AI music detection"
+  },
+  "creatorStudio": {
+    "meta": {
+      "title": "Creator Studio - CrownCode",
+      "description": "Audio remix, AI generation, and multi-track editing tools.",
+      "keywords": "creator studio, audio remix, AI generation, multi-track, music tools"
+    },
+    "title": "Creator Studio",
+    "subtitle": "Audio creation tools powered by AI",
+    "comingSoon": "Coming Soon",
+    "comingSoonDesc": "We're building something amazing. Stay tuned for audio remix, AI generation, and multi-track editing tools.",
+    "features": {
+      "remix": { "title": "Audio Remix", "description": "Remix and transform audio tracks with AI-powered tools." },
+      "generate": { "title": "AI Generate", "description": "Generate original audio content using advanced AI models." },
+      "multitrack": { "title": "Multi-Track", "description": "Edit and mix multiple audio tracks in a unified workspace." }
+    }
+  },
+  "analysisHistory": {
+    "meta": {
+      "title": "Analysis History - CrownCode",
+      "description": "View your recent AI music analysis results.",
+      "keywords": "analysis history, AI music detection, results, history"
+    },
+    "title": "Analysis History",
+    "subtitle": "Your recent analysis results",
+    "lastAnalysis": "Last Analysis",
+    "noHistory": "No analysis history yet.",
+    "noHistoryDesc": "Run an analysis on the AI Music Detection page to see your results here.",
+    "goToAnalysis": "Go to AI Music Detection",
+    "delete": "Delete",
+    "deleted": "History cleared."
+  },
+  "systemStatus": {
+    "meta": {
+      "title": "System Status - CrownCode",
+      "description": "Live status of CrownCode services.",
+      "keywords": "system status, health, uptime, services"
+    },
+    "title": "System Status",
+    "allOperational": "All systems operational",
+    "someIssues": "Some services have issues",
+    "refresh": "Refresh"
   }
 }
