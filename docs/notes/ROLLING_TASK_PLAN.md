@@ -7,7 +7,7 @@
 ## Tur Durumu
 
 - Son guncelleme: **8 Mart 2026**
-- Tur: **Tur 5 - Asamali Platform Analizi (Faz J uygulama tamamlandi, dogrulama bekleniyor)**
+- Tur: **Tur 5 - Asamali Platform Analizi (Faz L deploy runtime pivot analizi tamamlandi, uygulama bekleniyor)**
 - Mod: Faz bazli ilerleme (P0 -> P3)
 - Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_J_SECURITY_ATTACK_SURFACE_2026-03-08.md`
 
@@ -500,4 +500,44 @@ Kaynak rapor:
 
 ### Siradaki Analiz
 
-- [ ] Faz L: Deploy config sabitlendikten sonra production smoke + API UX regresyon turu.
+- [x] Faz L: Deploy runtime pivot analizi (root-context -> app-context) tamamlandi.
+
+---
+
+## Tur 5.11 - Faz L Tamamlandi (Deploy Runtime Pivot / Netlify)
+
+- Incident devam: runtime crash (`Cannot find module 'next/dist/server/lib/start-server.js'`) Phase K sonrasi da tekrarlandi.
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_L_DEPLOY_RUNTIME_PIVOT_2026-03-08.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz L Sonuc
+
+- [x] Root-context workspace stratejisinin sahada stabil olmadigi dogrulandi.
+- [x] Runtime module-missing hatasi yeni deploylarda tekrarlandigi icin strateji pivotu gerekli goruldu.
+- [x] App-context (`base=platform`) modelinin bu repo yapisinda daha deterministik oldugu teknik olarak netlestirildi.
+
+### Faz L Cikisli Claude Gorevleri
+
+- [ ] P0: `netlify.toml` app-context mode'a alinacak:
+  - `base = "platform"`
+  - `command = "npm ci && npm run build"`
+  - `publish = ".next"`
+  - tum context komutlari workspace flag olmadan guncellenecek.
+- [ ] P0: Netlify UI override drift temizlenecek (base/package/build/publish/functions). UI degeri ya bos ya da `netlify.toml` ile birebir ayni olacak.
+- [ ] P0: Yeni clear-cache production deploy alinacak ve runtime smoke yapilacak (`/api/health`, `/api/version`, `/` 200).
+- [ ] P1: P0 sonrasi hala crash varsa gecici function bundling guard eklenecek:
+  - `[functions] external_node_modules = ["next","react","react-dom"]`
+  - `NPM_FLAGS=--install-strategy=nested`
+
+### Faz L Dogrulama Logu (Analist)
+
+- [x] Kullanici deploy loglariyla 3 ayri runtime crash id dogrulandi (`01KK5EZ...`, `01KK5FQ...`, `01KK6KK...`).
+- [x] Kotu konfig desenleri logdan kanitlandi:
+  - root current directory + workspace command + runtime 502
+  - base/publish uyumsuzlugunda `platform/platform/.next`
+  - app-contextte workspace command ile `No workspaces found` hatasi
+- [x] Lokal komut: `cmd /c npm --prefix platform run build` -> passed
+
+### Siradaki Analiz
+
+- [ ] Faz M: Deploy stabil hale geldikten sonra production smoke + API UX regresyon + i18n contract turu.
