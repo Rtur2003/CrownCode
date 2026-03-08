@@ -7,7 +7,7 @@
 ## Tur Durumu
 
 - Son guncelleme: **8 Mart 2026**
-- Tur: **Tur 5 - Asamali Platform Analizi (Faz J analiz tamamlandi, uygulama bekleniyor)**
+- Tur: **Tur 5 - Asamali Platform Analizi (Faz J uygulama tamamlandi, dogrulama bekleniyor)**
 - Mod: Faz bazli ilerleme (P0 -> P3)
 - Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_J_SECURITY_ATTACK_SURFACE_2026-03-08.md`
 
@@ -438,16 +438,16 @@ Kaynak rapor:
 
 ### Faz J Cikisli Claude Gorevleri
 
-- [ ] P0: `hf-crowncode-backend/app/routes/commend/router.py` auth fail-open davranisini production icin fail-closed yap; rate-limit kontrolunu auth'tan bagimsiz her istekte calisacak sekilde ayir.
-- [ ] P0: `hf-crowncode-backend/Dockerfile` ve `hf-crowncode-backend/README.md` wildcard CORS defaultunu kaldir; production'da explicit origin allowlist zorunlu hale getir.
-- [ ] P0: `netlify.toml` (ve gerekiyorsa `platform/public/_headers`) icine minimum CSP + HSTS politikasi ekle; mevcut inline script ihtiyaclariyla uyumlu nonce/hash stratejisi belirle.
-- [ ] P0: `platform/package.json`/lock ve ilgili bagimlilik zincirinde `npm audit` high bulgularini kapat (Next.js DoS advisory seti dahil).
-- [ ] P1: `platform/pages/api/vitals.ts` ve `platform/pages/api/errors.ts` IP cikarimini trusted-proxy aware hale getir (`x-forwarded-for` spoof bypass riskini azalt).
-- [ ] P1: Limiter store standardizasyonu yap (`hf-crowncode-backend/app/routes/commend/router.py` ve `platform/pages/api/fortune-counter.ts`) - bounded map + eviction strategy.
-- [ ] P1: Agir endpointler icin abuse korumasi ekle (`hf-crowncode-backend/app/routes/analyze.py`, `hf-crowncode-backend/app/routes/data_processing.py`) - rate-limit ve uygun auth/public gate.
-- [ ] P1: `hf-crowncode-backend/app/routes/data_processing.py` upload boyut korumasini tam okumadan once/stream asamasinda uygulayacak sekilde sertlestir.
-- [ ] P2: `platform/pages/api/health.ts` ve `platform/pages/api/version.ts` operasyonel fingerprint bilgisini production-safe seviyeye indir (gereksiz detaylari kaldir veya gate'le).
-- [ ] P2: Guvenlik test kapsamini genislet (telemetry 429/flag, commend auth+rate-limit matrix, CORS production assertion).
+- [x] P0: Commend auth fail-closed yapildi — `COMMEND_REQUIRE_AUTH=true` (default). Auth yokken 503 donuyor. Rate-limit artik auth'tan bagimsiz her istekte calisiyor (`_check_rate_limit` auth fonksiyonunun basina tasindi).
+- [x] P0: Wildcard CORS default kaldirildi — `Dockerfile`'dan `CROWNCODE_CORS_ORIGINS="*"` silindi. `main.py` bos origin durumunda `localhost` default'una dusuyor. README guncellendi.
+- [x] P0: CSP + HSTS `netlify.toml`'a eklendi — `Strict-Transport-Security` (2 yil, preload), `Content-Security-Policy` (script-src self+unsafe-inline+unsafe-eval, connect-src HF origins, frame-ancestors none).
+- [x] P0: Next.js `^14.2.28`'e yukseltildi (DoS advisory fix). `eslint-config-next` ayni seviyeye cekildi. CI `npm audit` `continue-on-error: true` kaldirildi — artik high/critical bloklar.
+- [x] P1: Trusted-proxy IP cozumleme — `x-nf-client-connection-ip` (Netlify) oncelikli, `x-forwarded-for` fallback. `vitals.ts`, `errors.ts`, `fortune-counter.ts` guncellendi.
+- [x] P1: Limiter store standardizasyonu — Commend router'a `_evict_stale_ips()` + `_MAX_TRACKED_IPS=10000` eklendi. Fortune-counter'a `evictExpiredEntries()` + `MAX_TRACKED_IPS=10000` eklendi.
+- [x] P1: Agir endpointlere rate-limit eklendi — `/api/analyze` (20 req/dk/IP), `/api/process/audio` (10 req/dk/IP). Her ikisi `Depends()` ile bounded + eviction-aware limiter kullaniyor.
+- [x] P1: Upload boyut kontrolu stream'e cekildi — `data_processing.py` artik 1MB chunk'lar halinde okuyor, limit asildigi anda 413 donuyor (tam dosya bellegee yuklenmeden).
+- [x] P2: Operasyonel fingerprint azaltildi — `health.ts`'ten uptime, memory MB detaylari, `version.ts`'ten nodeVersion, nextVersion, environment, buildDate kaldirildi. Sadece status + version + feature flags donuyor.
+- [x] P2: Guvenlik test kapsami genisletildi — Telemetry testlere trusted-IP assertion eklendi (2 yeni test). Commend testlere `test_commend_auth_fail_closed_without_key` ve `test_commend_rate_limit_independent_of_auth` eklendi.
 
 ### Faz J Dogrulama Logu (Analist)
 
@@ -459,4 +459,46 @@ Kaynak rapor:
 
 ### Siradaki Analiz
 
-- [ ] Faz K: guvenlik hardening uygulamasi tamamlandiktan sonra tekrar saldiri-senaryosu regresyon analizi.
+- [x] Faz K: Netlify runtime incident derin analizi (server function module-resolution kirigi) tamamlandi.
+
+---
+
+## Tur 5.10 - Faz K Tamamlandi (Netlify Runtime Incident: Missing Next Server Module)
+
+- Incident: Netlify function crash (`Cannot find module 'next/dist/server/lib/start-server.js'`, id: `01KK5CSJYREQXZZTKWQS9W2G3Z`)
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_K_NETLIFY_RUNTIME_INCIDENT_2026-03-08.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz K Sonuc
+
+- [x] Crash sinyali kod seviyesinden degil deploy paketleme/model uyumsuzlugundan kaynaklaniyor.
+- [x] Monorepo + workspace + Netlify UI override kombinasyonunda dependency context sapmasi dogrulandi.
+- [x] Runtime stack (`/var/task/.netlify/dist/run/next.cjs`) Next server runtime dosyasini resolve edemiyor.
+- [x] Build green olsa bile runtime fail olabildigi (post-build packaging fault) netlestirildi.
+
+### Faz K Cikisli Claude Gorevleri (Deploy Fix Paketi)
+
+- [ ] P0: Netlify konfig tek kaynaga indirgenecek. UI'daki custom `base/build/publish/functions` override'lari temizlenecek, `netlify.toml` authoritative kaynak olacak.
+- [ ] P0: Build context repo root'a alinacak (`base` kaldirilacak), build komutu workspace modeliyle calisacak:
+  - `npm ci`
+  - `npm run build --workspace platform`
+- [ ] P0: `netlify.toml` publish path root-context'e uygun hale getirilecek (`platform/.next`).
+- [ ] P0: Deploy sonrasi cache temizlenmis yeni production deploy alinacak (clear cache + redeploy).
+- [ ] P1: Lockfile stratejisi tekillestirilecek (workspace uyumlu tek kaynak). Cift lockfile senaryosu deploy notunda netlestirilecek.
+- [ ] P1: `DEPLOYMENT_CONFIG.md` icine "Runtime smoke after deploy" adimi eklenecek:
+  - `/api/health`, `/api/version`, `/api/fortune-counter` canli call
+  - function logunda `start-server.js` resolve hatasi kontrolu
+- [ ] P1: CI'ya deploy-oncesi workspace smoke adimi eklenecek:
+  - `npm ci`
+  - `npm run build --workspace platform`
+  - (opsiyonel) minimal runtime import check script (`require.resolve('next/dist/server/lib/start-server.js')`)
+
+### Faz K Dogrulama Logu (Analist)
+
+- [x] `cmd /c npm run build --workspace platform` -> passed (`Next.js 14.2.32`)
+- [x] Lokal dogrulama: root `node_modules` icinde `next/dist/server/lib/start-server.js` mevcut, app-local install context bos (workspace hoisting davranisi).
+- [x] Netlify dokumani capraz kontrol: monorepo'da package-directory ve config source tekillestirme gerekliligi.
+
+### Siradaki Analiz
+
+- [ ] Faz L: Deploy config sabitlendikten sonra production smoke + API UX regresyon turu.
