@@ -24,13 +24,12 @@
 Static export (`DEPLOYMENT_TARGET=static`) is used only for local CI validation;
 it is NOT deployed to Netlify.
 
-### netlify.toml (Actual)
+### netlify.toml (Actual — Root-Context Mode)
 
 ```toml
 [build]
-  base = "platform"
-  command = "npm ci && npm run build"
-  publish = ".next"
+  command = "npm ci && npm run build --workspace platform"
+  publish = "platform/.next"
 
 [build.environment]
   NODE_VERSION = "20.18.1"
@@ -39,10 +38,31 @@ it is NOT deployed to Netlify.
 
 Key points:
 
-- `publish = ".next"` — server-mode output, NOT `out`.
-- `npm ci` — deterministic install, no corepack drift.
+- **No `base` field** — build runs from repo root, NOT from `platform/`.
+- `--workspace platform` — npm workspace command targets the `platform` package.
+- `publish = "platform/.next"` — path is relative to repo root (since there is no `base`).
+- `npm ci` — deterministic install from root lockfile, no corepack drift.
 - `NODE_VERSION = "20.18.1"` — pinned to match local dev.
 - `@netlify/plugin-nextjs` handles SSR, API routes, and ISR automatically.
+
+### Netlify UI Override Cleanup (CRITICAL)
+
+> **`netlify.toml` is the single authoritative source for build configuration.**
+> All UI overrides in Netlify Dashboard must be cleared.
+
+Go to **Netlify Dashboard > Site Settings > Build & Deploy > Build settings** and ensure:
+
+| Field | UI Value | Reason |
+| --- | --- | --- |
+| **Base directory** | _(empty / not set)_ | Root-context; `netlify.toml` has no `base` |
+| **Build command** | _(empty / not set)_ | Defined in `netlify.toml` |
+| **Publish directory** | _(empty / not set)_ | Defined in `netlify.toml` |
+| **Functions directory** | _(empty / not set)_ | Managed by `@netlify/plugin-nextjs` |
+
+If ANY of these fields are set in the UI, they **override** `netlify.toml` values silently.
+This was the root cause of the `Cannot find module 'next/dist/server/lib/start-server.js'` incident —
+the UI `base = "platform"` caused Netlify to resolve `publish` as `platform/.next` relative to `platform/`,
+resulting in dependency context mismatch at runtime.
 
 ### Branch / Context Rules
 
@@ -81,6 +101,20 @@ See [hf-crowncode-backend/README.md](../../hf-crowncode-backend/README.md) for f
 | `COMMEND_GEMINI_API_KEY` | Gemini API key for Crown Commend |
 | `COMMEND_API_KEY` | API key for commend endpoint auth (optional) |
 | `COMMEND_ENABLE_POSTING` | `true`/`false` — enable YouTube posting |
+
+---
+
+## Lockfile Strategy
+
+This monorepo uses a **single root-level `package-lock.json`** as the sole lockfile.
+
+- `npm ci` runs from repo root and installs all workspaces.
+- There is NO separate `platform/package-lock.json`. If one exists, **delete it** — it causes dependency resolution conflicts during Netlify builds.
+- The root lockfile is the single source of truth for all dependency versions.
+- `npm run build --workspace platform` builds only the `platform` package using root-installed `node_modules`.
+
+**Why this matters for deploy:**
+When Netlify runs `npm ci` from root context, it hoists all dependencies (including `next`) to `repo_root/node_modules/`. If a stale `platform/package-lock.json` exists, `npm ci` may install a parallel `platform/node_modules/` with mismatched versions, causing runtime module-resolution failures like `Cannot find module 'next/dist/server/lib/start-server.js'`.
 
 ---
 
@@ -125,12 +159,25 @@ python -m pytest backend/tests -q
 
 After a Netlify deploy, verify:
 
+### Build Phase
+
 - [ ] Build log shows `✓ Compiled successfully` (no `publish directory not found`)
 - [ ] Dynamic routes appear as `ƒ` (server-mode indicator)
 - [ ] `@netlify/plugin-nextjs` step completes without error
-- [ ] Site loads at production URL
-- [ ] API routes (`/api/health`, `/api/version`) respond correctly
+- [ ] No `base` override warning in build log
+
+### Runtime Smoke (within 5 minutes of deploy)
+
+- [ ] `curl https://<site>/api/health` — returns `{"status":"healthy",...}` with HTTP 200
+- [ ] `curl https://<site>/api/version` — returns `{"version":"...","features":{...}}` with HTTP 200
+- [ ] Site loads at production URL, no blank page
 - [ ] No console errors on key pages (home, ai-music-detection, crown-fortune)
+
+### Function Logs (Netlify Dashboard > Functions)
+
+- [ ] No `Cannot find module` errors in function logs
+- [ ] No `start-server.js` resolve failures
+- [ ] SSR functions (`___netlify-server-handler`) show healthy invocations
 
 ---
 
