@@ -58,7 +58,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(204).end()
   }
 
-  const clientIp = (req.headers?.['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown'
+  // Prefer platform-specific trusted headers over spoofable x-forwarded-for
+  const clientIp =
+    (req.headers?.['x-nf-client-connection-ip'] as string)?.trim() ||
+    (req.headers?.['x-forwarded-for'] as string)?.split(',')[0]?.trim() ||
+    req.socket?.remoteAddress || 'unknown'
   if (isRateLimited(clientIp)) {
     return res.status(429).json({ error: 'Too Many Requests' })
   }
