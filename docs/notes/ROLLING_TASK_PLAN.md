@@ -7,9 +7,9 @@
 ## Tur Durumu
 
 - Son guncelleme: **8 Mart 2026**
-- Tur: **Tur 5 - Asamali Platform Analizi (Faz I uygulama tamamlandi, dogrulama bekleniyor)**
+- Tur: **Tur 5 - Asamali Platform Analizi (Faz J analiz tamamlandi, uygulama bekleniyor)**
 - Mod: Faz bazli ilerleme (P0 -> P3)
-- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_I_POST_H_VERIFICATION_2026-03-07.md`
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_J_SECURITY_ATTACK_SURFACE_2026-03-08.md`
 
 ## Isletim Protokolu (Zorunlu)
 
@@ -409,14 +409,54 @@ Kaynak rapor:
 
 ### Faz I Dogrulama Logu (Analist)
 
-- [x] `cmd /c npm --prefix platform run lint` -> **failed** (`curly` kurali: `pages/api/vitals.ts`, `pages/api/errors.ts`)
+- [x] `cmd /c npm --prefix platform run i18n:check` -> passed
+- [x] `cmd /c npm --prefix platform run lint` -> passed
 - [x] `cmd /c npm --prefix platform run type-check` -> passed
-- [x] `cmd /c npm --prefix platform test -- --runInBand` -> **failed** (`a11y invalid hook call`, `telemetry req.headers undefined`)
-- [x] `cmd /c "set DEPLOYMENT_TARGET=server&& npm --prefix platform run build"` -> **failed** (lint blokaji)
-- [x] `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"` -> **failed** (lint blokaji)
+- [x] `cmd /c npm --prefix platform test -- --runInBand` -> passed (`4 suite / 30 test`, known `act(...)` warnings)
+- [x] `cmd /c "set DEPLOYMENT_TARGET=server&& npm --prefix platform run build"` -> passed
+- [x] `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"` -> passed (beklenen static export API warning)
 - [x] `python -m pytest backend/tests -q` -> passed (`20 passed`)
 - [x] `python -m pytest hf-crowncode-backend/tests -q` -> passed (`22 passed`)
 
 ### Siradaki Analiz
 
-- [ ] Faz J: guvenlik/saldiri yuzu derin turu (Faz I P0/P1 yesile dondukten sonra).
+- [x] Faz J: guvenlik/saldiri yuzu derin turu (Faz I P0/P1 yesile dondukten sonra) tamamlandi.
+
+---
+
+## Tur 5.9 - Faz J Tamamlandi (Security / Attack Surface Derin Tur)
+
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_J_SECURITY_ATTACK_SURFACE_2026-03-08.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz J Sonuc
+
+- [x] Frontend + core backend + HF backend saldiri yuzeyi capraz analiz edildi.
+- [x] CORS/auth/rate-limit/policy katmaninda kritik riskler kanitlandi.
+- [x] CI guvenlik kapilarinin (npm audit) gecis kriteri bosluklari dogrulandi.
+- [x] Baseline kalite komutlari tekrar kosuldu; kod sagligi yesil kaldigi teyit edildi.
+
+### Faz J Cikisli Claude Gorevleri
+
+- [ ] P0: `hf-crowncode-backend/app/routes/commend/router.py` auth fail-open davranisini production icin fail-closed yap; rate-limit kontrolunu auth'tan bagimsiz her istekte calisacak sekilde ayir.
+- [ ] P0: `hf-crowncode-backend/Dockerfile` ve `hf-crowncode-backend/README.md` wildcard CORS defaultunu kaldir; production'da explicit origin allowlist zorunlu hale getir.
+- [ ] P0: `netlify.toml` (ve gerekiyorsa `platform/public/_headers`) icine minimum CSP + HSTS politikasi ekle; mevcut inline script ihtiyaclariyla uyumlu nonce/hash stratejisi belirle.
+- [ ] P0: `platform/package.json`/lock ve ilgili bagimlilik zincirinde `npm audit` high bulgularini kapat (Next.js DoS advisory seti dahil).
+- [ ] P1: `platform/pages/api/vitals.ts` ve `platform/pages/api/errors.ts` IP cikarimini trusted-proxy aware hale getir (`x-forwarded-for` spoof bypass riskini azalt).
+- [ ] P1: Limiter store standardizasyonu yap (`hf-crowncode-backend/app/routes/commend/router.py` ve `platform/pages/api/fortune-counter.ts`) - bounded map + eviction strategy.
+- [ ] P1: Agir endpointler icin abuse korumasi ekle (`hf-crowncode-backend/app/routes/analyze.py`, `hf-crowncode-backend/app/routes/data_processing.py`) - rate-limit ve uygun auth/public gate.
+- [ ] P1: `hf-crowncode-backend/app/routes/data_processing.py` upload boyut korumasini tam okumadan once/stream asamasinda uygulayacak sekilde sertlestir.
+- [ ] P2: `platform/pages/api/health.ts` ve `platform/pages/api/version.ts` operasyonel fingerprint bilgisini production-safe seviyeye indir (gereksiz detaylari kaldir veya gate'le).
+- [ ] P2: Guvenlik test kapsamini genislet (telemetry 429/flag, commend auth+rate-limit matrix, CORS production assertion).
+
+### Faz J Dogrulama Logu (Analist)
+
+- [x] `cmd /c "npm --prefix platform run lint && npm --prefix platform run type-check && npm --prefix platform test -- --runInBand"` -> passed (`4 suite / 30 test`, known `act(...)` warnings)
+- [x] `cmd /c npm --prefix platform run build` -> passed
+- [x] `python -m pytest backend/tests -q` -> passed (`20 passed`)
+- [x] `python -m pytest hf-crowncode-backend/tests -q` -> passed (`22 passed`)
+- [x] `cmd /c npm --prefix platform audit --audit-level=high` -> **failed** (`11 vulnerabilities`, `5 high`)
+
+### Siradaki Analiz
+
+- [ ] Faz K: guvenlik hardening uygulamasi tamamlandiktan sonra tekrar saldiri-senaryosu regresyon analizi.
