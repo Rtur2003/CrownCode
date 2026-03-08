@@ -7,6 +7,7 @@
 import { useState, useCallback, useMemo } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useRouter } from 'next/router'
+import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
 
 export interface SearchItem {
   id: string
@@ -23,49 +24,50 @@ export const useSearch = () => {
   const { t } = useLanguage()
   const router = useRouter()
 
-  // Define searchable items
-  const searchItems: SearchItem[] = useMemo(() => [
-    // Pages
-    {
-      id: 'home',
-      title: t.search?.pages?.home || 'Home',
-      href: '/',
-      category: 'pages' as const
-    },
-    {
-      id: 'ai-music',
-      title: t.search?.pages?.aiMusic || 'AI Music Detection',
-      href: '/ai-music-detection',
-      category: 'pages' as const
-    },
-    {
-      id: 'ml-toolkit',
-      title: t.search?.pages?.mlToolkit || 'ML Toolkit',
-      href: '/data-manipulation',
-      category: 'pages' as const
-    },
-    {
-      id: 'projects',
-      title: t.search?.pages?.projects || 'Projects',
-      href: '/#products',
-      category: 'pages' as const
-    },
-    // Features
-    {
-      id: 'url-analysis',
-      title: t.search?.features?.urlAnalysis || 'URL Analysis',
-      description: t.search?.features?.urlAnalysisDesc || 'Analyze a YouTube link',
-      href: '/ai-music-detection#url',
-      category: 'features' as const
-    },
-    {
-      id: 'data-augmentation',
-      title: t.search?.features?.dataAugmentation || 'Data Augmentation',
-      description: t.search?.features?.dataAugmentationDesc || 'Augment your dataset',
-      href: '/data-manipulation',
-      category: 'features' as const
-    }
-  ], [t])
+  // Build searchable items from the product catalog + static pages/features
+  const searchItems: SearchItem[] = useMemo(() => {
+    const catalogItems: SearchItem[] = PRODUCT_CATALOG.map((entry) => {
+      const resolved = resolveProduct(entry, t)
+      return {
+        id: entry.id,
+        title: resolved.title,
+        description: resolved.description,
+        href: entry.href,
+        category: 'pages' as const,
+      }
+    })
+
+    const staticItems: SearchItem[] = [
+      {
+        id: 'home',
+        title: t.search?.pages?.home || 'Home',
+        href: '/',
+        category: 'pages' as const,
+      },
+      {
+        id: 'projects',
+        title: t.search?.pages?.projects || 'Projects',
+        href: '/#products',
+        category: 'pages' as const,
+      },
+      {
+        id: 'url-analysis',
+        title: t.search?.features?.urlAnalysis || 'URL Analysis',
+        description: t.search?.features?.urlAnalysisDesc || 'Analyze a YouTube link',
+        href: '/ai-music-detection#url',
+        category: 'features' as const,
+      },
+      {
+        id: 'data-augmentation',
+        title: t.search?.features?.dataAugmentation || 'Data Augmentation',
+        description: t.search?.features?.dataAugmentationDesc || 'Augment your dataset',
+        href: '/data-manipulation',
+        category: 'features' as const,
+      },
+    ]
+
+    return [...catalogItems, ...staticItems]
+  }, [t])
 
   // Search function
   const search = useCallback((searchQuery: string): SearchItem[] => {
