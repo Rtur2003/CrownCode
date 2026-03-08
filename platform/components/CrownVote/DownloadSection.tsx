@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
 import { motion } from 'framer-motion'
 import { Download, Monitor, CheckCircle, ExternalLink } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
@@ -19,7 +20,7 @@ export const DownloadSection: React.FC = () => {
   useEffect(() => {
     const fetchRelease = async () => {
       try {
-        const res = await fetch('https://api.github.com/repos/Rtur2003/VOTRYX/releases/latest')
+        const res = await fetchWithTimeout('https://api.github.com/repos/Rtur2003/VOTRYX/releases/latest', { timeout: 10_000 })
         if (res.ok) {
           const data = await res.json()
           const exeAsset = data.assets?.find((a: { name: string }) => a.name.endsWith('.exe'))
