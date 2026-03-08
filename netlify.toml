@@ -1,8 +1,8 @@
 # ──────────────────────────────────────────────
-# Netlify Build Config — Server-mode Next.js (Monorepo App-Context)
+# Netlify Build Config — Server-mode Next.js (Monorepo Root-Context)
 # ──────────────────────────────────────────────
 # Deploy model: @netlify/plugin-nextjs ile server-mode runtime.
-# Build context: platform/ (base=platform). No workspace flag in command.
+# Build context: repo root (base yok). Workspace komutu ile platform/ altinda build.
 # Static export (DEPLOYMENT_TARGET=static) kullanilmaz;
 # API routes ve dynamic pages server-side calisir.
 #
@@ -11,9 +11,8 @@
 # ──────────────────────────────────────────────
 
 [build]
-  base = "platform"
-  command = "npm ci && npm run build"
-  publish = ".next"
+  command = "npm ci && npm run build --workspace platform"
+  publish = "platform/.next"
 
 [build.environment]
   NODE_VERSION = "20.18.1"
@@ -24,13 +23,13 @@
 # geliştirme branch'i preview context'e duser.
 
 [context.production]
-  command = "npm ci && npm run build"
+  command = "npm ci && npm run build --workspace platform"
 
 [context.deploy-preview]
-  command = "npm ci && npm run build"
+  command = "npm ci && npm run build --workspace platform"
 
 [context.branch-deploy]
-  command = "npm ci && npm run build"
+  command = "npm ci && npm run build --workspace platform"
 
 # ── Security headers ─────────────────────────
 
