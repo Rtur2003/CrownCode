@@ -34,10 +34,22 @@ let counterStore: CounterStore = {
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
 const RATE_LIMIT = {
   MAX_REQUESTS: 10,
-  WINDOW_MS: 60 * 1000 // 1 minute
+  WINDOW_MS: 60 * 1000, // 1 minute
+  MAX_TRACKED_IPS: 10_000
+}
+
+function evictExpiredEntries(): void {
+  if (rateLimitMap.size <= RATE_LIMIT.MAX_TRACKED_IPS) { return }
+  const now = Date.now()
+  for (const [ip, record] of rateLimitMap) {
+    if (now > record.resetTime) {
+      rateLimitMap.delete(ip)
+    }
+  }
 }
 
 function isRateLimited(ip: string): boolean {
+  evictExpiredEntries()
   const now = Date.now()
   const record = rateLimitMap.get(ip)
 
@@ -55,6 +67,11 @@ function isRateLimited(ip: string): boolean {
 }
 
 function getClientIp(req: NextApiRequest): string {
+  // Prefer Netlify's trusted header over spoofable x-forwarded-for
+  const nfIp = req.headers['x-nf-client-connection-ip']
+  if (typeof nfIp === 'string' && nfIp.trim()) {
+    return nfIp.trim()
+  }
   const forwarded = req.headers['x-forwarded-for']
   if (typeof forwarded === 'string') {
     return forwarded.split(',')[0].trim()
