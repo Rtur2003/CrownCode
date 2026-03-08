@@ -193,6 +193,15 @@ After a Netlify deploy, verify:
 **Cause**: `package.json` engines field requires npm>=10.9.2 but Netlify ships older npm.
 **Fix**: `NODE_VERSION` is pinned in `netlify.toml`. The warnings are cosmetic and do not block deploy.
 
+### "Cannot find module 'next/dist/server/lib/start-server.js'"
+
+**Cause**: Netlify UI has `base` override set to `platform`, which shifts the dependency resolution context. The runtime function looks for `next` under `platform/node_modules/` but `npm ci` hoisted it to root `node_modules/`.
+**Fix**:
+
+1. Clear ALL UI overrides (base/build/publish/functions) in Netlify Dashboard.
+2. Ensure `netlify.toml` uses root-context mode (no `base`, `publish = "platform/.next"`).
+3. Clear build cache and redeploy: **Deploys > Trigger deploy > Clear cache and deploy site**.
+
 ### geliştirme branch deploying to production
 
 **Cause**: Netlify branch-context misconfiguration.
