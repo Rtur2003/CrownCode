@@ -518,16 +518,13 @@ Kaynak rapor:
 
 ### Faz L Cikisli Claude Gorevleri
 
-- [ ] P0: `netlify.toml` app-context mode'a alinacak:
-  - `base = "platform"`
-  - `command = "npm ci && npm run build"`
-  - `publish = ".next"`
-  - tum context komutlari workspace flag olmadan guncellenecek.
-- [ ] P0: Netlify UI override drift temizlenecek (base/package/build/publish/functions). UI degeri ya bos ya da `netlify.toml` ile birebir ayni olacak.
-- [ ] P0: Yeni clear-cache production deploy alinacak ve runtime smoke yapilacak (`/api/health`, `/api/version`, `/` 200).
-- [ ] P1: P0 sonrasi hala crash varsa gecici function bundling guard eklenecek:
-  - `[functions] external_node_modules = ["next","react","react-dom"]`
-  - `NPM_FLAGS=--install-strategy=nested`
+> **NOT**: Faz L app-context pivot onerisi uygulanmadi. Root-context stratejisi + stale `platform/package-lock.json` silme kombinasyonu ile incident cozuldu. Site canli ve stabil. Asagidaki gorevler buna gore guncellendi.
+
+- [x] P0: ~~`netlify.toml` app-context mode'a alinacak~~ — **Uygulanmadi**. Root-context (`base` yok, `--workspace platform`) korundu. Kok neden stale `platform/package-lock.json` idi — silindi.
+- [x] P0: Netlify UI override drift temizlendi — UI'daki base/build/publish/functions degerleri kullanici tarafindan bosaltildi. `netlify.toml` tek authoritative kaynak.
+- [x] P0: Clear-cache production deploy alindi — site canli (`hasanarthuraltuntas.xyz`). Runtime crash cozuldu.
+- [x] P0: Stale `platform/package-lock.json` (10K satir) silindi — cift lockfile kaynakli dependency context cakismasi ortadan kaldirildi.
+- [ ] P1: ~~Gecici function bundling guard~~ — Gerek kalmadi, crash cozuldu. Deferred.
 
 ### Faz L Dogrulama Logu (Analist)
 
@@ -538,6 +535,12 @@ Kaynak rapor:
   - app-contextte workspace command ile `No workspaces found` hatasi
 - [x] Lokal komut: `cmd /c npm --prefix platform run build` -> passed
 
+### Faz L Dogrulama Logu (Production Smoke)
+
+- [x] `https://hasanarthuraltuntas.xyz/api/health` -> `{"status":"healthy","timestamp":"...","version":"1.0.0","checks":{"api":true}}` HTTP 200
+- [x] `https://hasanarthuraltuntas.xyz/api/version` -> `{"version":"1.0.0","features":{"webVitals":true,"pwa":true,...}}` HTTP 200
+- [x] Site canli, runtime crash cozuldu.
+
 ### Siradaki Analiz
 
-- [ ] Faz M: Deploy stabil hale geldikten sonra production smoke + API UX regresyon + i18n contract turu.
+- [ ] Faz M: Production smoke + API UX regresyon + i18n contract turu + data-manipulation backend hatasi incelemesi.
