@@ -7,9 +7,9 @@
 ## Tur Durumu
 
 - Son guncelleme: **8 Mart 2026**
-- Tur: **Tur 5 - Asamali Platform Analizi (Faz L deploy runtime pivot analizi tamamlandi, uygulama bekleniyor)**
+- Tur: **Tur 5 - Asamali Platform Analizi (Faz M moduler guvenilirlik + buyume analizi tamamlandi, uygulama bekleniyor)**
 - Mod: Faz bazli ilerleme (P0 -> P3)
-- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_J_SECURITY_ATTACK_SURFACE_2026-03-08.md`
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_M_MODULE_RELIABILITY_PRODUCT_GROWTH_2026-03-08.md`
 
 ## Isletim Protokolu (Zorunlu)
 
@@ -543,4 +543,41 @@ Kaynak rapor:
 
 ### Siradaki Analiz
 
-- [ ] Faz M: Production smoke + API UX regresyon + i18n contract turu + data-manipulation backend hatasi incelemesi.
+- [x] Faz M: Production smoke + API UX regresyon + i18n contract turu + data-manipulation backend hatasi incelemesi tamamlandi.
+
+---
+
+## Tur 5.12 - Faz M Tamamlandi (Module Reliability + Product Growth)
+
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_M_MODULE_RELIABILITY_PRODUCT_GROWTH_2026-03-08.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz M Sonuc
+
+- [x] Modul-calisma guvencesi icin operasyonel bosluklar netlestirildi.
+- [x] Home + global search + `/search` katalog daginikligi kanitlandi.
+- [x] Kritik fetch akislarinda timeout/abort standardi eksigi satir bazli cikarildi.
+- [x] Yaratici ama uygulanabilir 3 yeni sayfa rotasi belirlendi (`creator-studio`, `analysis-history`, `system-status`).
+
+### Faz M Cikisli Claude Gorevleri
+
+- [ ] P0: `platform/config/product-catalog.ts` olustur; `ProjectsSection`, `useSearch`, `/search` bu katalogu kullansin.
+- [ ] P0: `useAsyncRequest` (timeout+abort+retry) standardini ekle; `analysisGateway`, `useCommend`, `data-manipulation`, `DownloadSection` entegre et.
+- [ ] P1: `crown-dreams` demo-mode UX netlestir (non-functional actionlar disable + acik etiket).
+- [ ] P1: `crown-commend` mounted gate kaldir (SSR-first render).
+- [ ] P1: Analysis + Commend icin minimal local history persistence (`last input/result`) ekle.
+- [ ] P1: Home/Search/Data-manipulation metadata hardcodedlarini locale key'e tasi.
+- [ ] P2: Yeni MVP sayfalar:
+  - `/creator-studio`
+  - `/analysis-history`
+  - `/system-status`
+
+### Faz M Dogrulama Logu (Analist)
+
+- [x] `cmd /c npm --prefix platform run lint` -> passed
+- [x] `cmd /c npm --prefix platform run type-check` -> passed
+- [x] Faz F/H/L bulgulari ile capraz tutarlilik kontrolu tamamlandi.
+
+### Siradaki Analiz
+
+- [ ] Faz N: Faz M uygulama sonrasi route-level smoke + UX regressions + growth KPI readiness analizi.
