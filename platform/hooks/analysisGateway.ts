@@ -1,4 +1,5 @@
 import type { AnalysisResult, AnalysisErrorCode } from '@/hooks/analysisTypes'
+import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
 
 export type SourceType = 'youtube' | 'file' | 'spotify' | 'apple'
 
@@ -47,9 +48,10 @@ export const analyzeSource = async (
   }
 
   try {
-    const response = await fetch(`${apiBaseUrl}/api/analyze`, {
+    const response = await fetchWithTimeout(`${apiBaseUrl}/api/analyze`, {
       method: 'POST',
-      body: formData
+      body: formData,
+      timeout: 30_000,
     })
 
     if (!response.ok) {
