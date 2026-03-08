@@ -1,6 +1,6 @@
 /**
  * Version API Endpoint
- * Returns application version and build information
+ * Returns application version and feature flags
  *
  * @route GET /api/version
  * Note: Active only when running in server deployment mode.
@@ -11,10 +11,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 interface VersionResponse {
   version: string
-  buildDate: string
-  nodeVersion: string
-  nextVersion: string
-  environment: string
   features: {
     aiAnalysis: boolean
     streamingPlatforms: boolean
@@ -24,13 +20,6 @@ interface VersionResponse {
   }
 }
 
-const nextVersion: string = (() => {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    return (require('next/package.json') as { version: string }).version
-  } catch { return '14.x' }
-})()
-
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<VersionResponse>
@@ -38,10 +27,6 @@ export default function handler(
   if (req.method !== 'GET') {
     return res.status(405).json({
       version: '0.0.0',
-      buildDate: new Date().toISOString(),
-      nodeVersion: process.version,
-      nextVersion,
-      environment: process.env.NODE_ENV || 'development',
       features: {
         aiAnalysis: false,
         streamingPlatforms: false,
@@ -54,10 +39,6 @@ export default function handler(
 
   const response: VersionResponse = {
     version: process.env.NEXT_PUBLIC_APP_VERSION || '1.0.0',
-    buildDate: new Date().toISOString(),
-    nodeVersion: process.version,
-    nextVersion,
-    environment: process.env.NODE_ENV || 'development',
     features: {
       aiAnalysis: process.env.FEATURE_AI_ANALYSIS === 'true',
       streamingPlatforms: process.env.FEATURE_STREAMING_PLATFORMS === 'true',
