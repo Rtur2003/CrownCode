@@ -648,8 +648,8 @@ Kaynak rapor:
 
 ### Faz O Cikisli Claude Gorevleri
 
-- [ ] P1: `platform/__tests__/pages/smoke.test.tsx` icine `/creator-studio`, `/analysis-history`, `/system-status` smoke testleri eklenecek.
-- [ ] P1: `platform/components/Layout/Header.tsx` ve `platform/components/Layout/Footer.tsx` icinde yeni sayfalar icin entry path eklenecek (locale parity ile).
+- [x] P1: `platform/__tests__/pages/smoke.test.tsx` icine `/creator-studio`, `/analysis-history`, `/system-status` smoke testleri eklendi (6 yeni test).
+- [x] P1: `Header.tsx` icine `/system-status` ("Status") nav linki eklendi. `Footer.tsx` products section'ina Creator Studio + System Status eklendi. Locale keyleri (`nav.status`, `footer.sections.products.creatorStudio/systemStatus`) EN+TR parity ile eklendi.
 - [ ] P2: a11y testlerinde gorulen `act(...)` warning gürültusu azaltilacak (test setup deterministiklestirme).
 - [ ] P2: Yeni route'lar icin minimal KPI checklist dokumani eklenecek (entry source, first action, revisit marker).
 

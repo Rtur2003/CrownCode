@@ -52,6 +52,7 @@ export const Header: React.FC = () => {
     { label: t.nav.fortune, href: '/crown-fortune' },
     { label: t.nav.commend, href: '/crown-commend' },
     { label: t.nav.vote, href: '/crown-vote' },
+    { label: t.nav.status, href: '/system-status' },
     { label: t.nav.github, href: 'https://github.com/Rtur2003?tab=repositories', external: true },
   ]
 

@@ -41,7 +41,8 @@
     "fortune": "Fortune",
     "dreams": "Dreams",
     "commend": "AI Comment",
-    "vote": "Crown Vote"
+    "vote": "Crown Vote",
+    "status": "Status"
   },
   "hero": {
     "title": {
@@ -210,7 +211,9 @@
         "mlToolkit": "ML Toolkit",
         "allProjects": "All Projects",
         "fortune": "Crown Fortune",
-        "vote": "Crown Vote"
+        "vote": "Crown Vote",
+        "creatorStudio": "Creator Studio",
+        "systemStatus": "System Status"
       },
       "developer": {
         "title": "Developer",

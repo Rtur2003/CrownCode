@@ -28,6 +28,8 @@ export const Footer: React.FC = () => {
         { label: t.footer.sections.products.aiMusic, href: '/ai-music-detection' },
         { label: t.footer.sections.products.dataProcessing, href: '/data-manipulation' },
         { label: t.footer.sections.products.fortune, href: '/crown-fortune' },
+        { label: t.footer.sections.products.creatorStudio, href: '/creator-studio' },
+        { label: t.footer.sections.products.systemStatus, href: '/system-status' },
       ],
     },
     {

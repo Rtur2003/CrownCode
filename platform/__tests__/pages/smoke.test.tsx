@@ -117,4 +117,56 @@ describe('Page Smoke Tests', () => {
       expect(searchInput).toBeInTheDocument()
     })
   })
+
+  describe('Creator Studio Page (/creator-studio)', () => {
+    it('renders without crashing', async () => {
+      const CreatorStudioPage = (await import('@/pages/creator-studio/index')).default
+      const { container } = renderWithProviders(<CreatorStudioPage />)
+      expect(container).toBeTruthy()
+    })
+
+    it('renders the Creator Studio title', async () => {
+      const CreatorStudioPage = (await import('@/pages/creator-studio/index')).default
+      renderWithProviders(<CreatorStudioPage />)
+      expect(screen.getByText('Creator Studio')).toBeInTheDocument()
+    })
+  })
+
+  describe('Analysis History Page (/analysis-history)', () => {
+    it('renders without crashing', async () => {
+      const AnalysisHistoryPage = (await import('@/pages/analysis-history/index')).default
+      const { container } = renderWithProviders(<AnalysisHistoryPage />)
+      expect(container).toBeTruthy()
+    })
+
+    it('renders the Analysis History title', async () => {
+      const AnalysisHistoryPage = (await import('@/pages/analysis-history/index')).default
+      renderWithProviders(<AnalysisHistoryPage />)
+      expect(screen.getByText('Analysis History')).toBeInTheDocument()
+    })
+  })
+
+  describe('System Status Page (/system-status)', () => {
+    beforeEach(() => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({ ok: true } as Response)
+      )
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+    })
+
+    it('renders without crashing', async () => {
+      const SystemStatusPage = (await import('@/pages/system-status/index')).default
+      const { container } = renderWithProviders(<SystemStatusPage />)
+      expect(container).toBeTruthy()
+    })
+
+    it('renders the System Status title', async () => {
+      const SystemStatusPage = (await import('@/pages/system-status/index')).default
+      renderWithProviders(<SystemStatusPage />)
+      expect(screen.getByText('System Status')).toBeInTheDocument()
+    })
+  })
 })
