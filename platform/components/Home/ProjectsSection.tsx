@@ -22,8 +22,9 @@
 import React from 'react'
 import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
-import { Music, Brain, ArrowUpRight, Sparkles, Activity, LucideIcon, Crown, Moon, Youtube, Bot } from 'lucide-react'
+import { ArrowUpRight, Sparkles, Activity, LucideIcon } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
+import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
 
 // =========================================================================
 // ANIMATION VARIANTS
@@ -127,79 +128,20 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
   // DATA CONFIGURATION
   // -----------------------------------------------------------------------
 
-  /**
-   * Product configurations for all research modules
-   * Each product represents a major research area of the platform
-   */
-
-  const products: ProductConfig[] = [
-    {
-      id: 'ai-music-detection',
-      title: t.products.items.aiMusic.title,
-      description: t.products.items.aiMusic.description,
-      href: '/ai-music-detection',
-      icon: Music,
-      gradient: 'from-amber-400 via-yellow-500 to-orange-600',
-      status: t.products.items.aiMusic.status,
-      stats: t.products.items.aiMusic.stats,
-      features: t.products.items.aiMusic.features
-    },
-    {
-      id: 'ml-toolkit',
-      title: t.products.items.mlToolkit.title,
-      description: t.products.items.mlToolkit.description,
-      href: '/data-manipulation',
-      icon: Brain,
-      gradient: 'from-blue-400 via-cyan-500 to-teal-600',
-      status: t.products.items.mlToolkit.status,
-      stats: t.products.items.mlToolkit.stats,
-      features: t.products.items.mlToolkit.features
-    },
-    {
-      id: 'crown-fortune',
-      title: t.products.items.fortune?.title || 'Crown Fortune',
-      description: t.products.items.fortune?.description || 'Daily motivation and inspiration source.',
-      href: '/crown-fortune',
-      icon: Crown,
-      gradient: 'from-amber-400 via-orange-500 to-red-500',
-      status: t.products.items.fortune?.status || 'Active',
-      stats: t.products.items.fortune?.stats || '8 Categories',
-      features: t.products.items.fortune?.features || ['Fortune Wheel', 'Motivation', 'Daily Inspiration']
-    },
-    {
-      id: 'crown-dreams',
-      title: t.products.items.dreams?.title || 'Crown Dreams',
-      description: t.products.items.dreams?.description || 'Neural Dream Journal - Record and analyze your dreams.',
-      href: '/crown-dreams',
-      icon: Moon,
-      gradient: 'from-purple-400 via-violet-500 to-indigo-600',
-      status: t.products.items.dreams?.status || 'Active',
-      stats: t.products.items.dreams?.stats || '72% Lucidity',
-      features: t.products.items.dreams?.features || ['Dream Journal', 'AI Analysis', 'Lucid Tracking']
-    },
-    {
-      id: 'crown-commend',
-      title: t.products.items.commend?.title || 'Crown Commend',
-      description: t.products.items.commend?.description || 'AI-powered YouTube comment generator using Gemini.',
-      href: '/crown-commend',
-      icon: Youtube,
-      gradient: 'from-red-500 via-red-600 to-amber-500',
-      status: t.products.items.commend?.status || 'Active',
-      stats: t.products.items.commend?.stats || '5 Languages',
-      features: t.products.items.commend?.features || ['AI Comments', 'YouTube API', 'Multi-Language']
-    },
-    {
-      id: 'crown-vote',
-      title: t.products.items.vote?.title || 'Crown Vote - VOTRYX',
-      description: t.products.items.vote?.description || 'Selenium-based automated voting desktop application for DistroKid Spotlight.',
-      href: '/crown-vote',
-      icon: Bot,
-      gradient: 'from-emerald-400 via-green-500 to-teal-600',
-      status: t.products.items.vote?.status || 'Active',
-      stats: t.products.items.vote?.stats || 'Desktop App',
-      features: t.products.items.vote?.features || ['Selenium Automation', 'Parallel Processing', 'System Tray']
+  const products: ProductConfig[] = PRODUCT_CATALOG.map((entry) => {
+    const resolved = resolveProduct(entry, t)
+    return {
+      id: entry.id,
+      title: resolved.title,
+      description: resolved.description,
+      href: entry.href,
+      icon: entry.icon,
+      gradient: entry.gradient,
+      status: resolved.status,
+      stats: resolved.stats,
+      features: resolved.features,
     }
-  ]
+  })
 
   // -----------------------------------------------------------------------
   // HELPER FUNCTIONS
