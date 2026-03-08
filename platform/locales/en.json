@@ -19,6 +19,17 @@
     "helpPrefix": "If the problem persists, please contact us via",
     "helpSuffix": "."
   },
+  "homeMeta": {
+    "title": "CrownCode Platform - Open Source Project Showcase & Demo Apps",
+    "description": "Central platform showcasing software projects, research work, and development processes. AI music detection, data manipulation, and other open-source project demos.",
+    "keywords": "CrownCode, open source projects, demo apps, AI music detection, data manipulation, ML toolkit, project showcase, software projects, GitHub, Hasan Arthur Altuntas"
+  },
+  "searchMeta": {
+    "keywords": "search, projects, AI music detection, data manipulation, Crown Fortune, Crown Dreams"
+  },
+  "dataManipulationMeta": {
+    "keywords": "audio dataset, data preparation, audio processing, AI music detection, dataset tools"
+  },
   "nav": {
     "home": "Home",
     "products": "Products",

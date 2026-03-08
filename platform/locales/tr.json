@@ -19,6 +19,17 @@
     "helpPrefix": "Sorun devam ederse, lütfen",
     "helpSuffix": "üzerinden bize ulaşın."
   },
+  "homeMeta": {
+    "title": "CrownCode Platform - Açık Kaynak Proje Sergisi & Demo Uygulamaları",
+    "description": "Yazılım projeleri, araştırma çalışmaları ve geliştirme süreçlerinin sergilendiği merkezi platform. AI müzik tespiti, veri manipülasyonu ve diğer açık kaynak projelerin demo uygulamaları.",
+    "keywords": "CrownCode, açık kaynak projeler, demo uygulamalar, AI müzik tespiti, veri manipülasyonu, ML toolkit, proje sergisi, yazılım projeleri, GitHub, Hasan Arthur Altuntaş"
+  },
+  "searchMeta": {
+    "keywords": "arama, projeler, AI müzik tespiti, veri manipülasyonu, Crown Fortune, Crown Dreams"
+  },
+  "dataManipulationMeta": {
+    "keywords": "ses veri seti, veri hazırlama, ses işleme, AI müzik tespiti, veri seti araçları"
+  },
   "nav": {
     "home": "Ana Sayfa",
     "products": "Ürünler",
