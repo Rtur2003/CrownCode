@@ -618,6 +618,52 @@ Kaynak rapor:
 - [x] `python -m pytest backend/tests -q` -> passed (`20 passed`)
 - [x] `python -m pytest hf-crowncode-backend/tests -q --disable-warnings --maxfail=1` -> passed (all tests green + coverage output)
 
+### Faz N Dogrulama Logu (Analist - Post Fix Recheck)
+
+- [x] `cmd /c npm --prefix platform run lint` -> passed
+- [x] `cmd /c npm --prefix platform run type-check` -> passed
+- [x] `cmd /c npm --prefix platform test -- --runInBand` -> passed (`4 suites / 32 tests`, known `act(...)` warnings)
+- [x] `cmd /c "set DEPLOYMENT_TARGET=server&& npm --prefix platform run build"` -> passed
+- [x] `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"` -> passed (beklenen static export API warning)
+- [x] `cmd /c npm --prefix platform run i18n:check` -> passed
+- [x] `python -m pytest backend/tests -q` -> passed (`20 passed`)
+- [x] `python -m pytest hf-crowncode-backend/tests -q --disable-warnings --maxfail=1` -> passed
+
 ### Siradaki Analiz
 
-- [ ] Faz O: Faz N fixleri sonrasi full regression + discoverability KPI (search hit, route entry points, smoke parity) analizi.
+- [x] Faz O: Faz N fixleri sonrasi full regression + discoverability KPI (search hit, route entry points, smoke parity) analizi tamamlandi.
+
+---
+
+## Tur 5.14 - Faz O Tamamlandi (Post-N Verification + Discoverability)
+
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_O_POST_N_VERIFICATION_DISCOVERABILITY_2026-03-09.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz O Sonuc
+
+- [x] Faz N duzeltmeleri analist tarafinda bagimsiz kalite kapilariyla dogrulandi (hepsi green).
+- [x] Yeni route'larin kesfedilebilirligi search katmaninda dogrulandi.
+- [x] Kalan aciklar netlesti: page smoke kapsami + header/footer entry point eksigi + test warning gürültusu.
+
+### Faz O Cikisli Claude Gorevleri
+
+- [ ] P1: `platform/__tests__/pages/smoke.test.tsx` icine `/creator-studio`, `/analysis-history`, `/system-status` smoke testleri eklenecek.
+- [ ] P1: `platform/components/Layout/Header.tsx` ve `platform/components/Layout/Footer.tsx` icinde yeni sayfalar icin entry path eklenecek (locale parity ile).
+- [ ] P2: a11y testlerinde gorulen `act(...)` warning gürültusu azaltilacak (test setup deterministiklestirme).
+- [ ] P2: Yeni route'lar icin minimal KPI checklist dokumani eklenecek (entry source, first action, revisit marker).
+
+### Faz O Dogrulama Logu (Analist)
+
+- [x] `cmd /c npm --prefix platform run lint` -> passed
+- [x] `cmd /c npm --prefix platform run type-check` -> passed
+- [x] `cmd /c npm --prefix platform test -- --runInBand` -> passed (`4 suites / 32 tests`, known `act(...)` warnings)
+- [x] `cmd /c "set DEPLOYMENT_TARGET=server&& npm --prefix platform run build"` -> passed
+- [x] `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"` -> passed (beklenen static export API warning)
+- [x] `cmd /c npm --prefix platform run i18n:check` -> passed
+- [x] `python -m pytest backend/tests -q` -> passed (`20 passed`)
+- [x] `python -m pytest hf-crowncode-backend/tests -q --disable-warnings --maxfail=1` -> passed
+
+### Siradaki Analiz
+
+- [ ] Faz P: Faz O uygulama sonrasi nav/footer UX etkisi + smoke coverage parity + warning-free test turu.
