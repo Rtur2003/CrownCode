@@ -2,16 +2,18 @@ import React from 'react'
 import type { NextPage } from 'next'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { HeroSection } from '@/components/Home/HeroSection'
-
 import { ProjectsSection } from '@/components/Home/ProjectsSection'
+import { useLanguage } from '@/context/LanguageContext'
 
 const HomePage: NextPage = () => {
+  const { t } = useLanguage()
+
   return (
-<MainLayout
-  title="CrownCode Platform - Açık Kaynak Proje Sergisi & Demo Uygulamaları"
-  description="Yazılım projeleri, araştırma çalışmaları ve geliştirme süreçlerinin sergilendiği merkezi platform. AI müzik tespiti, veri manipülasyonu ve diğer açık kaynak projelerin demo uygulamaları."
-  keywords="CrownCode, açık kaynak projeler, demo uygulamalar, AI music detection, veri manipülasyonu, ML toolkit, proje sergisi, yazılım projeleri, GitHub, Hasan Arthur Altuntaş"
-  url="https://hasanarthuraltuntas.xyz"
+    <MainLayout
+      title={t.homeMeta?.title || 'CrownCode Platform'}
+      description={t.homeMeta?.description || ''}
+      keywords={t.homeMeta?.keywords || ''}
+      url="https://hasanarthuraltuntas.xyz"
     >
       <HeroSection />
       <ProjectsSection />

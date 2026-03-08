@@ -4,8 +4,9 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { MainLayout } from '@/components/Layout/MainLayout'
-import { Search as SearchIcon, ExternalLink, Music, Database, Sparkles, Moon, MessageSquare, Vote } from 'lucide-react'
+import { Search as SearchIcon, ExternalLink } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
+import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import styles from '@/styles/pages/search.module.css'
@@ -25,58 +26,30 @@ const SearchPage: NextPage = () => {
   const [query, setQuery] = useState<string>('')
   const [results, setResults] = useState<SearchResult[]>([])
 
-  const items = t.products.items
-  const searchableContent: SearchResult[] = useMemo(() => [
-    {
-      title: items.aiMusic.title,
-      description: items.aiMusic.description,
-      url: '/ai-music-detection',
-      type: 'project',
-      icon: <Music size={20} />
-    },
-    {
-      title: items.mlToolkit.title,
-      description: items.mlToolkit.description,
-      url: '/data-manipulation',
-      type: 'project',
-      icon: <Database size={20} />
-    },
-    {
-      title: items.fortune.title,
-      description: items.fortune.description,
-      url: '/crown-fortune',
-      type: 'project',
-      icon: <Sparkles size={20} />
-    },
-    {
-      title: items.dreams.title,
-      description: items.dreams.description,
-      url: '/crown-dreams',
-      type: 'project',
-      icon: <Moon size={20} />
-    },
-    {
-      title: items.commend.title,
-      description: items.commend.description,
-      url: '/crown-commend',
-      type: 'project',
-      icon: <MessageSquare size={20} />
-    },
-    {
-      title: items.vote.title,
-      description: items.vote.description,
-      url: '/crown-vote',
-      type: 'project',
-      icon: <Vote size={20} />
-    },
-    {
-      title: 'CrownCode Platform',
-      description: t.hero.subtitle,
-      url: '/',
-      type: 'page',
-      icon: <ExternalLink size={20} />
-    }
-  ], [items, t.hero.subtitle])
+  const searchableContent: SearchResult[] = useMemo(() => {
+    const catalogResults: SearchResult[] = PRODUCT_CATALOG.map((entry) => {
+      const resolved = resolveProduct(entry, t)
+      const Icon = entry.icon
+      return {
+        title: resolved.title,
+        description: resolved.description,
+        url: entry.href,
+        type: 'project' as const,
+        icon: <Icon size={20} />,
+      }
+    })
+
+    return [
+      ...catalogResults,
+      {
+        title: 'CrownCode Platform',
+        description: t.hero.subtitle,
+        url: '/',
+        type: 'page' as const,
+        icon: <ExternalLink size={20} />,
+      },
+    ]
+  }, [t])
 
   const performSearch = useCallback((searchQuery: string) => {
     if (!searchQuery.trim()) {
@@ -113,7 +86,7 @@ const SearchPage: NextPage = () => {
     <MainLayout
       title={`${sp.meta.title}: ${query || ''} - CrownCode`}
       description={sp.meta.description}
-      keywords="search, arama, projeler, AI music detection, data manipulation"
+      keywords={t.searchMeta?.keywords || 'search, projects'}
     >
       <div className={styles['search-page']}>
         {/* Search Header */}

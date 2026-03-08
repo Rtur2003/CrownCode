@@ -141,10 +141,10 @@ const CrownDreamsPage: NextPage = () => {
                 </p>
               </div>
               <div className={styles['header-actions']}>
-                <CyberButton leftIcon={<BookOpen size={14} />}>
+                <CyberButton leftIcon={<BookOpen size={14} />} disabled title="Demo mode">
                   {cd.header.newDream}
                 </CyberButton>
-                <CyberButton variant="ghost" leftIcon={<BarChart3 size={14} />}>
+                <CyberButton variant="ghost" leftIcon={<BarChart3 size={14} />} disabled title="Demo mode">
                   {cd.header.analytics}
                 </CyberButton>
               </div>
@@ -236,7 +236,7 @@ const CrownDreamsPage: NextPage = () => {
                       <Moon size={16} />
                       {cd.sections.recentDreams}
                     </h3>
-                    <button type="button" className={styles['view-all-btn']}>
+                    <button type="button" className={styles['view-all-btn']} disabled title="Demo mode">
                       {cd.sections.viewAll}
                       <ChevronRight size={14} />
                     </button>

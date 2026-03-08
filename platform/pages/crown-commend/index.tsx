@@ -1,6 +1,6 @@
 ﻿'use client'
 
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import type { NextPage } from 'next'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -28,7 +28,6 @@ import styles from '@/styles/pages/crown-commend.module.css'
 
 const CrownCommendPage: NextPage = () => {
   const { t } = useLanguage()
-  const [mounted, setMounted] = useState(false)
   const commendT = t.crownCommend
 
   const {
@@ -51,10 +50,6 @@ const CrownCommendPage: NextPage = () => {
     reset
   } = useCommend(commendT.errors)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
   const isLoading = state === 'generating' || state === 'fetching' || state === 'posting'
 
   const featureItems = [
@@ -75,25 +70,6 @@ const CrownCommendPage: NextPage = () => {
       ...commendT.features.items.transparency
     }
   ]
-
-  if (!mounted) {
-    return (
-      <MainLayout
-        title={commendT.meta.title}
-        description={commendT.meta.description}
-        keywords={commendT.meta.keywords}
-        url="https://hasanarthuraltuntas.xyz/crown-commend"
-      >
-        <div className={styles.commendPage}>
-          <div className={styles.commendContainer}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '50vh' }}>
-              <Loader2 size={32} className={styles.buttonSpinner} style={{ color: '#ff4444' }} />
-            </div>
-          </div>
-        </div>
-      </MainLayout>
-    )
-  }
 
   return (
     <MainLayout

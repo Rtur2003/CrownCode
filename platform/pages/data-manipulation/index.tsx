@@ -15,6 +15,7 @@
 // =========================================================================
 
 import React, { useState } from 'react'
+import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
 import type { NextPage } from 'next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MainLayout } from '@/components/Layout/MainLayout'
@@ -107,9 +108,10 @@ const AudioDatasetPage: NextPage = () => {
       if (!apiUrl) {
         throw new Error('Backend API URL is not configured.')
       }
-      const response = await fetch(`${apiUrl}/api/process/audio`, {
+      const response = await fetchWithTimeout(`${apiUrl}/api/process/audio`, {
         method: 'POST',
         body: formData,
+        timeout: 60_000,
       })
 
       if (!response.ok) {
@@ -223,7 +225,7 @@ const AudioDatasetPage: NextPage = () => {
     <MainLayout
       title={`${t.audioDataset.title} - CrownCode Platform`}
       description={t.audioDataset.subtitle}
-      keywords="audio dataset, data preparation, audio processing, AI music detection, dataset tools"
+      keywords={t.dataManipulationMeta?.keywords || 'audio dataset, data preparation'}
     >
       <div className={styles['page-container']}>
         <div className={styles['content-wrapper']}>
