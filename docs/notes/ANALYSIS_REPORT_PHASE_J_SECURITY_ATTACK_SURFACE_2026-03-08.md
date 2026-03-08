@@ -14,6 +14,12 @@
 
 ## P0 Findings (Critical)
 
+0. Netlify runtime incident: Next server module missing in deployed function bundle.
+- Evidence (runtime): Netlify crash log reports `Cannot find module 'next/dist/server/lib/start-server.js'` from `/var/task/.netlify/dist/run/next.cjs`.
+- Evidence (repo state): workspace hoisting is active and app-local install is empty (`cmd /c npm --prefix platform ls next` -> `(empty)`), while `next` exists only at workspace root.
+- Evidence (config): current config fixes `base = \"platform\"` in `netlify.toml`, while Netlify monorepo docs recommend package-directory based setup with base left at repository root for monorepos.
+- Risk: build may pass but runtime function cannot resolve Next server runtime files.
+
 1. Commend auth is fail-open and rate-limit is tied to auth.
 - Evidence: `hf-crowncode-backend/app/routes/commend/router.py:118`, `hf-crowncode-backend/app/routes/commend/router.py:146`, `hf-crowncode-backend/app/routes/commend/router.py:155`.
 - Current behavior: if `COMMEND_API_KEY` is unset, requests are allowed and `_check_rate_limit` is never executed.
@@ -71,6 +77,10 @@
 ## Recommended Claude Action Pack (Ordered)
 
 1. P0 - Close external abuse paths first.
+- Netlify deploy hotfix first:
+  - align to Netlify monorepo model (base at repo root, package directory set to `platform` in UI).
+  - remove conflicting UI overrides (custom base/publish/command that force subdir-only dependency context).
+  - run a clean deploy with cache clear after config update.
 - Make Commend auth fail-closed in production:
   - require `COMMEND_API_KEY` when `ENV=production` (or explicit `COMMEND_REQUIRE_AUTH=true` default true in prod).
   - decouple rate-limit from auth; always apply rate-limit regardless of auth configuration.
