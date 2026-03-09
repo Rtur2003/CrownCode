@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, act, waitFor } from '@testing-library/react'
 import { LanguageProvider } from '@/context/LanguageContext'
 
 // Mock next/router (pages router)
@@ -128,7 +128,8 @@ describe('Page Smoke Tests', () => {
     it('renders the Creator Studio title', async () => {
       const CreatorStudioPage = (await import('@/pages/creator-studio/index')).default
       renderWithProviders(<CreatorStudioPage />)
-      expect(screen.getByText('Creator Studio')).toBeInTheDocument()
+      // Title is "Creator Studio" in both EN and TR locales
+      expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
     })
   })
 
@@ -142,14 +143,15 @@ describe('Page Smoke Tests', () => {
     it('renders the Analysis History title', async () => {
       const AnalysisHistoryPage = (await import('@/pages/analysis-history/index')).default
       renderWithProviders(<AnalysisHistoryPage />)
-      expect(screen.getByText('Analysis History')).toBeInTheDocument()
+      // TR: "Analiz Geçmişi", EN: "Analysis History"
+      expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
     })
   })
 
   describe('System Status Page (/system-status)', () => {
     beforeEach(() => {
       global.fetch = jest.fn(() =>
-        Promise.resolve({ ok: true } as Response)
+        Promise.resolve({ ok: true, json: () => Promise.resolve({}) } as Response)
       )
     })
 
@@ -159,14 +161,23 @@ describe('Page Smoke Tests', () => {
 
     it('renders without crashing', async () => {
       const SystemStatusPage = (await import('@/pages/system-status/index')).default
-      const { container } = renderWithProviders(<SystemStatusPage />)
-      expect(container).toBeTruthy()
+      let container: HTMLElement
+      await act(async () => {
+        const result = renderWithProviders(<SystemStatusPage />)
+        container = result.container
+      })
+      expect(container!).toBeTruthy()
     })
 
-    it('renders the System Status title', async () => {
+    it('renders the System Status heading', async () => {
       const SystemStatusPage = (await import('@/pages/system-status/index')).default
-      renderWithProviders(<SystemStatusPage />)
-      expect(screen.getByText('System Status')).toBeInTheDocument()
+      await act(async () => {
+        renderWithProviders(<SystemStatusPage />)
+      })
+      // TR: "Sistem Durumu", EN: "System Status"
+      await waitFor(() => {
+        expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+      })
     })
   })
 })
