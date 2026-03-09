@@ -691,9 +691,9 @@ Kaynak rapor:
 
 ### Faz P Cikisli Claude Gorevleri
 
-- [ ] P0: `platform/__tests__/pages/smoke.test.tsx` locale-agnostic ve deterministik hale getirilecek (TR/EN farkinda fail etmeyecek).
-- [ ] P0: `SystemStatusPage` smoke testlerinde async state update kaynakli `act(...)` warningleri azaltilacak (`findBy`/`waitFor` + fetch mock lifecycle).
-- [ ] P1: Header/Footer discoverability degisiklikleri korunacak, rollback yok.
+- [x] P0: `platform/__tests__/pages/smoke.test.tsx` locale-agnostic hale getirildi — text assertion yerine `getByRole('heading', { level: 1 })` kullanildi. TR/EN farkinda fail etmiyor.
+- [x] P0: `SystemStatusPage` smoke testleri `act()` + `waitFor` ile sarmalandi; fetch mock `json()` method'u eklendi. Async state update warning'leri azaltildi.
+- [x] P1: Header/Footer discoverability degisiklikleri korundu, rollback yok.
 - [ ] P2: a11y warning noise azaltma + yeni route KPI checklist dokumani tamamlanacak.
 
 ### Faz P Dogrulama Logu (Analist)
