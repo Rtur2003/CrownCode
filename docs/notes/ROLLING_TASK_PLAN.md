@@ -667,3 +667,49 @@ Kaynak rapor:
 ### Siradaki Analiz
 
 - [ ] Faz P: Faz O uygulama sonrasi nav/footer UX etkisi + smoke coverage parity + warning-free test turu.
+
+### Faz O Notu (Analist Post-P1 Recheck)
+
+- `smoke.test.tsx` kapsami eklendi ancak kabul kriteri henuz saglanmadi:
+  - `cmd /c npm --prefix platform test -- --runInBand` recheck'te `1 suite failed / 3 test failed`.
+  - Kok neden: yeni testler locale-stabil degil (TR runtime'da EN title assertion).
+- Header/Footer + locale key degisiklikleri dogru ve korunacak.
+
+---
+
+## Tur 5.15 - Faz P Tamamlandi (Post-O Smoke Stability / Determinism)
+
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_P_POST_O_SMOKE_STABILITY_2026-03-09.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz P Sonuc
+
+- [x] P1 discoverability degisiklikleri (Header/Footer + locale keys) dogrulandi.
+- [x] Smoke testlerine yeni route kapsami eklendigi dogrulandi.
+- [x] Ancak smoke suite'in locale-stabil olmadigi ve test gate'i kirdigi kanitlandi.
+- [x] P2 warning/kpi maddelerinin acik kaldigi teyit edildi.
+
+### Faz P Cikisli Claude Gorevleri
+
+- [ ] P0: `platform/__tests__/pages/smoke.test.tsx` locale-agnostic ve deterministik hale getirilecek (TR/EN farkinda fail etmeyecek).
+- [ ] P0: `SystemStatusPage` smoke testlerinde async state update kaynakli `act(...)` warningleri azaltilacak (`findBy`/`waitFor` + fetch mock lifecycle).
+- [ ] P1: Header/Footer discoverability degisiklikleri korunacak, rollback yok.
+- [ ] P2: a11y warning noise azaltma + yeni route KPI checklist dokumani tamamlanacak.
+
+### Faz P Dogrulama Logu (Analist)
+
+- [x] `cmd /c npm --prefix platform run lint` -> passed
+- [x] `cmd /c npm --prefix platform run type-check` -> passed
+- [x] `cmd /c npm --prefix platform run i18n:check` -> passed
+- [x] `cmd /c npm --prefix platform test -- --runInBand` -> **failed** (`1 suite failed`, `3 failed`, `35 passed`)
+- [x] `cmd /c "set DEPLOYMENT_TARGET=server&& npm --prefix platform run build"` -> passed
+- [x] `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"` -> passed (beklenen static export API warning)
+- [x] `python -m pytest backend/tests -q` -> passed (`20 passed`)
+- [x] `python -m pytest hf-crowncode-backend/tests -q --disable-warnings --maxfail=1` -> passed
+
+Not:
+- Paralel build kosumunda bir kez `ENOTEMPTY ... .next\\export` goruldu; tekil/sirali build kosumunda sorun tekrarlanmadi.
+
+### Siradaki Analiz
+
+- [ ] Faz Q: Faz P fixleri sonrasi warning-minimized, locale-stabil test ve release-readiness analizi.
