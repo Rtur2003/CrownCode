@@ -710,6 +710,51 @@ Kaynak rapor:
 Not:
 - Paralel build kosumunda bir kez `ENOTEMPTY ... .next\\export` goruldu; tekil/sirali build kosumunda sorun tekrarlanmadi.
 
+### Faz P Dogrulama Logu (Analist - Post Fix Recheck)
+
+- [x] `cmd /c npm --prefix platform run lint` -> passed
+- [x] `cmd /c npm --prefix platform run type-check` -> passed
+- [x] `cmd /c npm --prefix platform run i18n:check` -> passed
+- [x] `cmd /c npm --prefix platform test -- --runInBand` -> passed (`4 suites / 38 tests`)
+- [x] `cmd /c "set DEPLOYMENT_TARGET=server&& npm --prefix platform run build"` -> passed
+- [x] `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"` -> passed (beklenen static export API warning)
+- [x] `python -m pytest backend/tests -q` -> passed (`20 passed`)
+- [x] `python -m pytest hf-crowncode-backend/tests -q --disable-warnings --maxfail=1` -> passed
+
 ### Siradaki Analiz
 
 - [ ] Faz Q: Faz P fixleri sonrasi warning-minimized, locale-stabil test ve release-readiness analizi.
+
+---
+
+## Tur 5.16 - Faz Q Tamamlandi (Post-P Verification + Residual Warning Debt)
+
+- Analiz raporu: `docs/notes/ANALYSIS_REPORT_PHASE_Q_POST_P_VERIFICATION_WARNING_DEBT_2026-03-09.md`
+- Durum: analiz tamamlandi, uygulama Claude'a devredilecek.
+
+### Faz Q Sonuc
+
+- [x] Faz P smoke stabilite duzeltmeleri analist tarafinda dogrulandi.
+- [x] Discoverability degisikliklerinin korundugu teyit edildi.
+- [x] Tum kalite kapilari green.
+- [x] Kalan borc netlesti: test warning noise + KPI checklist dokumani.
+
+### Faz Q Cikisli Claude Gorevleri
+
+- [ ] P2: Next Link/intersection ve Toast timer kaynakli `act(...)` warning gürültusu azaltilacak.
+- [ ] P2: Yeni route'lar icin KPI checklist dokumani eklenecek (`creator-studio`, `analysis-history`, `system-status`).
+
+### Faz Q Dogrulama Logu (Analist)
+
+- [x] `cmd /c npm --prefix platform run lint` -> passed
+- [x] `cmd /c npm --prefix platform run type-check` -> passed
+- [x] `cmd /c npm --prefix platform run i18n:check` -> passed
+- [x] `cmd /c npm --prefix platform test -- --runInBand` -> passed (`4 suites / 38 tests`, warningler mevcut)
+- [x] `cmd /c "set DEPLOYMENT_TARGET=server&& npm --prefix platform run build"` -> passed
+- [x] `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"` -> passed (beklenen static export API warning)
+- [x] `python -m pytest backend/tests -q` -> passed (`20 passed`)
+- [x] `python -m pytest hf-crowncode-backend/tests -q --disable-warnings --maxfail=1` -> passed
+
+### Siradaki Analiz
+
+- [ ] Faz R: Faz Q P2 fixleri sonrasi warning-clean test output + dokuman tamlik analizi.
