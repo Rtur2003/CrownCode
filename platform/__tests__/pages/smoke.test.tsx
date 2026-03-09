@@ -2,6 +2,17 @@ import React from 'react'
 import { render, screen, act, waitFor } from '@testing-library/react'
 import { LanguageProvider } from '@/context/LanguageContext'
 
+// Mock IntersectionObserver (used by next/link prefetching)
+beforeAll(() => {
+  const mockIntersectionObserver = jest.fn()
+  mockIntersectionObserver.mockReturnValue({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  })
+  window.IntersectionObserver = mockIntersectionObserver as unknown as typeof IntersectionObserver
+})
+
 // Mock next/router (pages router)
 jest.mock('next/router', () => ({
   useRouter: () => ({

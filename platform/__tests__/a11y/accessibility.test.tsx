@@ -1,9 +1,20 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, act } from '@testing-library/react'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { LanguageProvider } from '@/context/LanguageContext'
 
 expect.extend(toHaveNoViolations)
+
+// Mock IntersectionObserver (used by next/link prefetching)
+beforeAll(() => {
+  const mockIntersectionObserver = jest.fn()
+  mockIntersectionObserver.mockReturnValue({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  })
+  window.IntersectionObserver = mockIntersectionObserver as unknown as typeof IntersectionObserver
+})
 
 // Mock next/router
 jest.mock('next/router', () => ({
@@ -82,6 +93,14 @@ describe('Accessibility Tests', () => {
   })
 
   describe('Toast', () => {
+    beforeEach(() => {
+      jest.useFakeTimers()
+    })
+
+    afterEach(() => {
+      jest.useRealTimers()
+    })
+
     it('has no axe violations', async () => {
       const { Toast } = await import('@/components/UI/Toast/Toast')
       const mockToast = {
@@ -91,10 +110,18 @@ describe('Accessibility Tests', () => {
         type: 'info' as const,
         duration: 3000,
       }
-      const { container } = renderWithProviders(
-        <Toast toast={mockToast} onClose={jest.fn()} />
-      )
-      const results = await axe(container)
+      let container: HTMLElement
+      act(() => {
+        const result = renderWithProviders(
+          <Toast toast={mockToast} onClose={jest.fn()} />
+        )
+        container = result.container
+      })
+      // Flush any pending timer-driven state updates
+      act(() => {
+        jest.advanceTimersByTime(100)
+      })
+      const results = await axe(container!)
       expect(results).toHaveNoViolations()
     })
   })

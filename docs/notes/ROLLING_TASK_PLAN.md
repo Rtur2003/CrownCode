@@ -694,7 +694,7 @@ Kaynak rapor:
 - [x] P0: `platform/__tests__/pages/smoke.test.tsx` locale-agnostic hale getirildi — text assertion yerine `getByRole('heading', { level: 1 })` kullanildi. TR/EN farkinda fail etmiyor.
 - [x] P0: `SystemStatusPage` smoke testleri `act()` + `waitFor` ile sarmalandi; fetch mock `json()` method'u eklendi. Async state update warning'leri azaltildi.
 - [x] P1: Header/Footer discoverability degisiklikleri korundu, rollback yok.
-- [ ] P2: a11y warning noise azaltma + yeni route KPI checklist dokumani tamamlanacak.
+- [x] P2: a11y warning noise azaltma + yeni route KPI checklist dokumani — Faz Q'da tamamlandi.
 
 ### Faz P Dogrulama Logu (Analist)
 
@@ -741,8 +741,10 @@ Not:
 
 ### Faz Q Cikisli Claude Gorevleri
 
-- [ ] P2: Next Link/intersection ve Toast timer kaynakli `act(...)` warning gürültusu azaltilacak.
-- [ ] P2: Yeni route'lar icin KPI checklist dokumani eklenecek (`creator-studio`, `analysis-history`, `system-status`).
+- [x] P2: `act(...)` warning noise azaltildi:
+  - `IntersectionObserver` mock'u `accessibility.test.tsx` ve `smoke.test.tsx`'e eklendi (Next Link prefetch warning'lerini onluyor).
+  - Toast testi fake timers + `act()` ile sarmalandi (timer-driven state update warning'leri giderildi).
+- [x] P2: `docs/technical/ROUTE_KPI_CHECKLIST.md` eklendi — `creator-studio`, `analysis-history`, `system-status` icin entry source, first action, revisit indicator, raporlama frekansi dokumante edildi.
 
 ### Faz Q Dogrulama Logu (Analist)
 
