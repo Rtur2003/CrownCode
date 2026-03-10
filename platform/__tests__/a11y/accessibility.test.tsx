@@ -93,35 +93,21 @@ describe('Accessibility Tests', () => {
   })
 
   describe('Toast', () => {
-    beforeEach(() => {
-      jest.useFakeTimers()
-    })
-
-    afterEach(() => {
-      jest.useRealTimers()
-    })
-
     it('has no axe violations', async () => {
       const { Toast } = await import('@/components/UI/Toast/Toast')
+      // duration: 0 disables the progress timer entirely,
+      // avoiding setInterval-driven act() warnings during axe scan.
       const mockToast = {
         id: '1',
         title: 'Test notification',
         message: 'Test message',
         type: 'info' as const,
-        duration: 3000,
+        duration: 0,
       }
-      let container: HTMLElement
-      act(() => {
-        const result = renderWithProviders(
-          <Toast toast={mockToast} onClose={jest.fn()} />
-        )
-        container = result.container
-      })
-      // Flush any pending timer-driven state updates
-      act(() => {
-        jest.advanceTimersByTime(100)
-      })
-      const results = await axe(container!)
+      const { container } = renderWithProviders(
+        <Toast toast={mockToast} onClose={jest.fn()} />
+      )
+      const results = await axe(container)
       expect(results).toHaveNoViolations()
     })
   })
