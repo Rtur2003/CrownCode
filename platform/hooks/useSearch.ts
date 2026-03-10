@@ -18,77 +18,83 @@ export interface SearchItem {
   icon?: string
 }
 
+/**
+ * Build the full searchable item list from catalog + static pages.
+ * Exported so /search page can reuse the same data without duplication.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function buildSearchItems(t: Record<string, any>): SearchItem[] {
+  const catalogItems: SearchItem[] = PRODUCT_CATALOG.map((entry) => {
+    const resolved = resolveProduct(entry, t)
+    return {
+      id: entry.id,
+      title: resolved.title,
+      description: resolved.description,
+      href: entry.href,
+      category: 'pages' as const,
+    }
+  })
+
+  const staticItems: SearchItem[] = [
+    {
+      id: 'home',
+      title: t.search?.pages?.home || 'Home',
+      href: '/',
+      category: 'pages' as const,
+    },
+    {
+      id: 'projects',
+      title: t.search?.pages?.projects || 'Projects',
+      href: '/#products',
+      category: 'pages' as const,
+    },
+    {
+      id: 'url-analysis',
+      title: t.search?.features?.urlAnalysis || 'URL Analysis',
+      description: t.search?.features?.urlAnalysisDesc || 'Analyze a YouTube link',
+      href: '/ai-music-detection#url',
+      category: 'features' as const,
+    },
+    {
+      id: 'data-augmentation',
+      title: t.search?.features?.dataAugmentation || 'Data Augmentation',
+      description: t.search?.features?.dataAugmentationDesc || 'Augment your dataset',
+      href: '/data-manipulation',
+      category: 'features' as const,
+    },
+    {
+      id: 'creator-studio',
+      title: t.creatorStudio?.title || 'Creator Studio',
+      description: t.creatorStudio?.subtitle || 'Audio creation tools powered by AI',
+      href: '/creator-studio',
+      category: 'pages' as const,
+    },
+    {
+      id: 'analysis-history',
+      title: t.analysisHistory?.title || 'Analysis History',
+      description: t.analysisHistory?.subtitle || 'Your recent analysis results',
+      href: '/analysis-history',
+      category: 'pages' as const,
+    },
+    {
+      id: 'system-status',
+      title: t.systemStatus?.title || 'System Status',
+      description: t.systemStatus?.allOperational || 'Live status of CrownCode services',
+      href: '/system-status',
+      category: 'pages' as const,
+    },
+  ]
+
+  return [...catalogItems, ...staticItems]
+}
+
 export const useSearch = () => {
   const [query, setQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const { t } = useLanguage()
   const router = useRouter()
 
-  // Build searchable items from the product catalog + static pages/features
-  const searchItems: SearchItem[] = useMemo(() => {
-    const catalogItems: SearchItem[] = PRODUCT_CATALOG.map((entry) => {
-      const resolved = resolveProduct(entry, t)
-      return {
-        id: entry.id,
-        title: resolved.title,
-        description: resolved.description,
-        href: entry.href,
-        category: 'pages' as const,
-      }
-    })
-
-    const staticItems: SearchItem[] = [
-      {
-        id: 'home',
-        title: t.search?.pages?.home || 'Home',
-        href: '/',
-        category: 'pages' as const,
-      },
-      {
-        id: 'projects',
-        title: t.search?.pages?.projects || 'Projects',
-        href: '/#products',
-        category: 'pages' as const,
-      },
-      {
-        id: 'url-analysis',
-        title: t.search?.features?.urlAnalysis || 'URL Analysis',
-        description: t.search?.features?.urlAnalysisDesc || 'Analyze a YouTube link',
-        href: '/ai-music-detection#url',
-        category: 'features' as const,
-      },
-      {
-        id: 'data-augmentation',
-        title: t.search?.features?.dataAugmentation || 'Data Augmentation',
-        description: t.search?.features?.dataAugmentationDesc || 'Augment your dataset',
-        href: '/data-manipulation',
-        category: 'features' as const,
-      },
-      {
-        id: 'creator-studio',
-        title: t.creatorStudio?.title || 'Creator Studio',
-        description: t.creatorStudio?.subtitle || 'Audio creation tools powered by AI',
-        href: '/creator-studio',
-        category: 'pages' as const,
-      },
-      {
-        id: 'analysis-history',
-        title: t.analysisHistory?.title || 'Analysis History',
-        description: t.analysisHistory?.subtitle || 'Your recent analysis results',
-        href: '/analysis-history',
-        category: 'pages' as const,
-      },
-      {
-        id: 'system-status',
-        title: t.systemStatus?.title || 'System Status',
-        description: t.systemStatus?.allOperational || 'Live status of CrownCode services',
-        href: '/system-status',
-        category: 'pages' as const,
-      },
-    ]
-
-    return [...catalogItems, ...staticItems]
-  }, [t])
+  const searchItems: SearchItem[] = useMemo(() => buildSearchItems(t), [t])
 
   // Search function
   const search = useCallback((searchQuery: string): SearchItem[] => {
