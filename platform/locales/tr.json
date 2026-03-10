@@ -953,7 +953,12 @@
     "button": "Ara",
     "resultsFound": "sonuç bulundu",
     "noResults": "Sonuç bulunamadı",
-    "emptyState": "Aramaya başlamak için yukarıdaki alana bir şeyler yazın"
+    "emptyState": "Aramaya başlamak için yukarıdaki alana bir şeyler yazın",
+    "badges": {
+      "product": "Ürün",
+      "feature": "Özellik",
+      "page": "Sayfa"
+    }
   },
   "terms": {
     "meta": {
@@ -999,7 +1004,8 @@
     "github": "GitHub",
     "website": "Web Sitesi",
     "email": "E-posta",
-    "uploadAudioFile": "AI müzik tespiti için ses dosyası yükle"
+    "uploadAudioFile": "AI müzik tespiti için ses dosyası yükle",
+    "removeFile": "{{name}} dosyasını kaldır"
   },
   "creatorStudio": {
     "meta": {
@@ -1030,7 +1036,10 @@
     "noHistoryDesc": "Sonuçlarınızı burada görmek için AI Müzik Tespiti sayfasında bir analiz çalıştırın.",
     "goToAnalysis": "AI Müzik Tespitine Git",
     "delete": "Sil",
-    "deleted": "Geçmiş temizlendi."
+    "deleted": "Geçmiş temizlendi.",
+    "clearAll": "Tümünü Temizle",
+    "clearAllConfirm": "Tüm geçmiş silinsin mi?",
+    "entryCount": "{{count}} analiz"
   },
   "systemStatus": {
     "meta": {
