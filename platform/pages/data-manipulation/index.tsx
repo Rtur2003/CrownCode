@@ -53,6 +53,16 @@ const AudioDatasetPage: NextPage = () => {
   const [isProcessing, setIsProcessing] = useState(false)
   const [processedFileUrl, setProcessedFileUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const prevObjectUrlRef = useRef<string | null>(null)
+
+  // Revoke previous object URL when a new one is created or on unmount
+  useEffect(() => {
+    return () => {
+      if (prevObjectUrlRef.current) {
+        URL.revokeObjectURL(prevObjectUrlRef.current)
+      }
+    }
+  }, [])
 
   const tools = [
     {
