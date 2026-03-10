@@ -769,4 +769,57 @@ Not:
 
 ### Siradaki Analiz
 
-- [ ] Faz R: Faz Q P2 fixleri sonrasi warning-clean test output + dokuman tamlik analizi.
+- [x] Faz R: Faz Q P2 fixleri sonrasi warning-clean test output + dokuman tamlik analizi tamamlandi.
+
+---
+
+## Tur 5.17 - Faz R Tamamlandi (Warning Debt + Contract Hardening + Style Migration)
+
+- Durum: uygulama tamamlandi, analist dogrulamasi bekleniyor.
+
+### Faz R Sonuc
+
+- [x] Toast axe test timeout cozuldu.
+- [x] FileUploader controlled component'e donusturuldu.
+- [x] Object URL memory leak onlendi.
+- [x] Backend options backward-compat saglandi.
+- [x] Search veri kaynagi tekillestirildi.
+- [x] Yeni 3 sayfa CSS module'lerine tasinarak inline style borcu kapatildi.
+
+### Faz R Cikisli Claude Gorevleri
+
+- [x] P0: Toast axe timeout — `duration: 0` ile timer disable, `jest.useFakeTimers()` konflikti giderildi (`accessibility.test.tsx`).
+- [x] P0: FileUploader state contract — uncontrolled → controlled (`files` + `onFilesChange` props, parent single source of truth). `type="button"` + `aria-label` eklendi (`FileUploader.tsx`).
+- [x] P0: Object URL cleanup — `useRef` + `revokeObjectURL` lifecycle: unmount, back nav, new file, new URL (`data-manipulation/index.tsx`).
+- [x] P0: `data_processing.py` options backward-compat — `Json[T] = Form(...)` → `str = Form(default="{}")` + `model_validate_json()`. Missing options `"{}"` defaulta dusuyor (tum augmentations off).
+- [x] P1: Search dedup — `buildSearchItems(t)` `useSearch.ts`'den export edildi. `/search` sayfasi bu fonksiyonu import ediyor, duplicate item listesi kaldirildi.
+- [x] P1: Inline style debt — 3 yeni sayfa (`creator-studio`, `analysis-history`, `system-status`) tamamen CSS module'lerine tasinarak inline `style={{...}}` borcu kapatildi:
+  - `styles/pages/creator-studio.module.css` + `pages/creator-studio/index.tsx`
+  - `styles/pages/analysis-history.module.css` + `pages/analysis-history/index.tsx`
+  - `styles/pages/system-status.module.css` + `pages/system-status/index.tsx`
+
+### Faz R Degisiklik Ozeti
+
+| Dosya | Degisiklik | Risk |
+| --- | --- | --- |
+| `platform/__tests__/a11y/accessibility.test.tsx` | Toast test `duration: 0` | Dusuk — sadece test |
+| `platform/components/MLToolkit/FileUploader.tsx` | Controlled component | Orta — tum tuketiciler (`data-manipulation`) ayni anda guncellendi |
+| `platform/pages/data-manipulation/index.tsx` | URL cleanup + controlled FileUploader | Dusuk — ek fonksiyonellik yok, sadece memory/state fix |
+| `hf-crowncode-backend/app/routes/data_processing.py` | `str = Form(default="{}")` + manual parse | Dusuk — backward-compat: missing options `"{}"` default |
+| `hf-crowncode-backend/tests/test_data_processing.py` | 7 strict contract test | Dusuk — sadece test |
+| `platform/hooks/useSearch.ts` | `buildSearchItems()` export | Dusuk — pure function extraction |
+| `platform/pages/search.tsx` | Import `buildSearchItems`, duplicate kaldirildi | Dusuk — ayni veri, farkli kaynak |
+| `platform/pages/creator-studio/index.tsx` | Inline style → CSS module | Dusuk — gorsel degisiklik yok |
+| `platform/pages/analysis-history/index.tsx` | Inline style → CSS module | Dusuk — gorsel degisiklik yok |
+| `platform/pages/system-status/index.tsx` | Inline style → CSS module | Dusuk — gorsel degisiklik yok |
+| `platform/styles/pages/*.module.css` (3 dosya) | Yeni CSS module dosyalari | Dusuk — mevcut inline stillerin 1:1 karsiligi |
+
+### Backward Compat Notlari
+
+- **FileUploader**: API degisti (`onFilesSelected` → `onFilesChange`, `files` prop eklendi). Tek tuketici (`data-manipulation`) ayni committe guncellendi.
+- **data_processing.py options**: `options` field olmadan gelen istekler `"{}"` default ile calisiyor (tum augmentations off). Mevcut frontend davranisi korunuyor.
+- **CSS modules**: Birebir ayni CSS degerleri, sadece uygulama yontemi degisti. Gorsel regresyon yok.
+
+### Siradaki Analiz
+
+- [ ] Faz S: Faz R degisikliklerinin analist dogrulamasi (lint/type-check/test/build/i18n + gorsel regresyon smoke).

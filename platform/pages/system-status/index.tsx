@@ -6,6 +6,8 @@ import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
 import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
 
+import styles from '@/styles/pages/system-status.module.css'
+
 interface ServiceStatus {
   name: string
   url: string
@@ -73,26 +75,18 @@ const SystemStatusPage: NextPage = () => {
       description={ss?.meta?.description || 'Live status of CrownCode services.'}
       keywords={ss?.meta?.keywords || 'system status, health, uptime'}
     >
-      <div style={{ maxWidth: 700, margin: '0 auto', padding: '4rem 1.5rem' }}>
+      <div className={styles['page-container']}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-            <Activity size={28} style={{ color: '#ff4444' }} />
-            <h1 style={{ fontSize: '2rem', fontWeight: 800 }}>
+          <div className={styles['header-row']}>
+            <Activity size={28} className={styles['header-icon']} />
+            <h1 className={styles['title']}>
               {ss?.title || 'System Status'}
             </h1>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 32 }}>
-            <span
-              style={{
-                display: 'inline-block',
-                width: 10,
-                height: 10,
-                borderRadius: '50%',
-                background: allOk ? '#22c55e' : '#ef4444',
-              }}
-            />
-            <span style={{ color: '#999' }}>
+          <div className={styles['status-bar']}>
+            <span className={`${styles['status-dot']} ${allOk ? styles['status-dot-ok'] : styles['status-dot-error']}`} />
+            <span className={styles['status-text']}>
               {allOk
                 ? (ss?.allOperational || 'All systems operational')
                 : (ss?.someIssues || 'Some services have issues')}
@@ -100,19 +94,7 @@ const SystemStatusPage: NextPage = () => {
             <button
               onClick={checkServices}
               disabled={checking}
-              style={{
-                marginLeft: 'auto',
-                background: 'none',
-                border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: 8,
-                padding: '6px 12px',
-                color: '#ccc',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                fontSize: '0.85rem',
-              }}
+              className={styles['refresh-btn']}
             >
               <RefreshCw size={14} className={checking ? 'animate-spin' : ''} />
               {ss?.refresh || 'Refresh'}
@@ -120,34 +102,26 @@ const SystemStatusPage: NextPage = () => {
           </div>
         </motion.div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div className={styles['services-list']}>
           {services.map((svc, i) => (
             <motion.div
               key={svc.name}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.05 * i }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                borderRadius: 12,
-                padding: '16px 20px',
-              }}
+              className={styles['service-card']}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div className={styles['service-info']}>
                 {svc.status === 'ok' ? (
-                  <CheckCircle size={18} style={{ color: '#22c55e' }} />
+                  <CheckCircle size={18} className={styles['icon-ok']} />
                 ) : svc.status === 'error' ? (
-                  <XCircle size={18} style={{ color: '#ef4444' }} />
+                  <XCircle size={18} className={styles['icon-error']} />
                 ) : (
-                  <RefreshCw size={18} style={{ color: '#888' }} className="animate-spin" />
+                  <RefreshCw size={18} className={`${styles['icon-loading']} animate-spin`} />
                 )}
-                <span style={{ fontWeight: 600, fontSize: '0.95rem' }}>{svc.name}</span>
+                <span className={styles['service-name']}>{svc.name}</span>
               </div>
-              <span style={{ color: '#666', fontSize: '0.85rem' }}>
+              <span className={styles['service-latency']}>
                 {svc.latency !== undefined ? `${svc.latency}ms` : '...'}
               </span>
             </motion.div>

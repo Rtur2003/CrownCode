@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { Search as SearchIcon, ExternalLink } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
-import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
+import { buildSearchItems } from '@/hooks/useSearch'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import styles from '@/styles/pages/search.module.css'
@@ -27,49 +27,13 @@ const SearchPage: NextPage = () => {
   const [results, setResults] = useState<SearchResult[]>([])
 
   const searchableContent: SearchResult[] = useMemo(() => {
-    const catalogResults: SearchResult[] = PRODUCT_CATALOG.map((entry) => {
-      const resolved = resolveProduct(entry, t)
-      const Icon = entry.icon
-      return {
-        title: resolved.title,
-        description: resolved.description,
-        url: entry.href,
-        type: 'project' as const,
-        icon: <Icon size={20} />,
-      }
-    })
-
-    return [
-      ...catalogResults,
-      {
-        title: 'CrownCode Platform',
-        description: t.hero.subtitle,
-        url: '/',
-        type: 'page' as const,
-        icon: <ExternalLink size={20} />,
-      },
-      {
-        title: t.creatorStudio?.title || 'Creator Studio',
-        description: t.creatorStudio?.subtitle || 'Audio creation tools powered by AI',
-        url: '/creator-studio',
-        type: 'page' as const,
-        icon: <ExternalLink size={20} />,
-      },
-      {
-        title: t.analysisHistory?.title || 'Analysis History',
-        description: t.analysisHistory?.subtitle || 'Your recent analysis results',
-        url: '/analysis-history',
-        type: 'page' as const,
-        icon: <ExternalLink size={20} />,
-      },
-      {
-        title: t.systemStatus?.title || 'System Status',
-        description: t.systemStatus?.allOperational || 'Live status of CrownCode services',
-        url: '/system-status',
-        type: 'page' as const,
-        icon: <ExternalLink size={20} />,
-      },
-    ]
+    return buildSearchItems(t).map((item) => ({
+      title: item.title,
+      description: item.description || '',
+      url: item.href,
+      type: (item.category === 'pages' ? 'page' : 'project') as 'project' | 'page',
+      icon: <ExternalLink size={20} />,
+    }))
   }, [t])
 
   const performSearch = useCallback((searchQuery: string) => {

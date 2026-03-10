@@ -1,0 +1,105 @@
+.page-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.header-icon {
+  color: #ff4444;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.status-dot-ok {
+  background: #22c55e;
+}
+
+.status-dot-error {
+  background: #ef4444;
+}
+
+.status-text {
+  color: #999;
+}
+
+.refresh-btn {
+  margin-left: auto;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 6px 12px;
+  color: #ccc;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.service-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.service-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.service-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.service-latency {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.icon-ok {
+  color: #22c55e;
+}
+
+.icon-error {
+  color: #ef4444;
+}
+
+.icon-loading {
+  color: #888;
+}
