@@ -953,7 +953,12 @@
     "button": "Search",
     "resultsFound": "result(s) found",
     "noResults": "No results found",
-    "emptyState": "Start typing in the search box above to find projects and content"
+    "emptyState": "Start typing in the search box above to find projects and content",
+    "badges": {
+      "product": "Product",
+      "feature": "Feature",
+      "page": "Page"
+    }
   },
   "terms": {
     "meta": {
@@ -999,7 +1004,8 @@
     "github": "GitHub",
     "website": "Website",
     "email": "Email",
-    "uploadAudioFile": "Upload audio file for AI music detection"
+    "uploadAudioFile": "Upload audio file for AI music detection",
+    "removeFile": "Remove {{name}}"
   },
   "creatorStudio": {
     "meta": {
@@ -1030,7 +1036,10 @@
     "noHistoryDesc": "Run an analysis on the AI Music Detection page to see your results here.",
     "goToAnalysis": "Go to AI Music Detection",
     "delete": "Delete",
-    "deleted": "History cleared."
+    "deleted": "History cleared.",
+    "clearAll": "Clear All",
+    "clearAllConfirm": "Clear all history?",
+    "entryCount": "{{count}} analyses"
   },
   "systemStatus": {
     "meta": {
