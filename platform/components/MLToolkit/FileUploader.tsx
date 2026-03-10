@@ -122,8 +122,10 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ dataType, files, onF
                   {(file.size / 1024 / 1024).toFixed(2)} MB
                 </span>
                 <button
+                  type="button"
                   onClick={() => removeFile(index)}
                   className="file-remove"
+                  aria-label={`Remove ${file.name}`}
                 >
                   <X size={16} />
                 </button>
