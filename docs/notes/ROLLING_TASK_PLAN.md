@@ -775,7 +775,7 @@ Not:
 
 ## Tur 5.17 - Faz R Tamamlandi (Warning Debt + Contract Hardening + Style Migration)
 
-- Durum: uygulama tamamlandi, analist dogrulamasi bekleniyor.
+- Durum: analist dogrulamasi tamamlandi, tum kapılar green.
 
 ### Faz R Sonuc
 
@@ -820,6 +820,25 @@ Not:
 - **data_processing.py options**: `options` field olmadan gelen istekler `"{}"` default ile calisiyor (tum augmentations off). Mevcut frontend davranisi korunuyor.
 - **CSS modules**: Birebir ayni CSS degerleri, sadece uygulama yontemi degisti. Gorsel regresyon yok.
 
+### Faz R Dogrulama Logu (Analist)
+
+- [x] `cmd /c npm --prefix platform run lint` -> passed
+- [x] `cmd /c npm --prefix platform run type-check` -> passed
+- [x] `cmd /c npm --prefix platform test -- --runInBand` -> passed (`4 suites / 38 tests`)
+- [x] `cmd /c "set DEPLOYMENT_TARGET=server&& npm --prefix platform run build"` -> passed
+- [x] `cmd /c "set DEPLOYMENT_TARGET=static&& npm --prefix platform run build"` -> passed (beklenen static export API warning)
+- [x] `python -m pytest backend/tests -q` -> passed (`20 passed`)
+- [x] `python -m pytest hf-crowncode-backend/tests -q` -> passed (`28 passed`, coverage ~%49)
+
+### Faz R Sonrasi Analist Bulgulari
+
+- [ ] P1: i18n fallback borcu — hardcoded EN metinler: `creator-studio/index.tsx:16`, `analysis-history/index.tsx:74`, `system-status/index.tsx:91`
+- [ ] P1: FileUploader remove `aria-label` hardcoded EN: `FileUploader.tsx:128`
+- [ ] P1: `/search` kategori eslesmesi semantik hatali (`features -> project`): `search.tsx:34`
+- [ ] P1: Analysis History uzun input tasma riski (`word-break` yok): `analysis-history.module.css:49`
+- [ ] P2: History tek kayit tutuyor, coklu kayit destegi yok: `useLocalHistory.ts:4`
+- [ ] P2: Node 24 hedefi yok; runtime 20.18.1'e sabit: `netlify.toml:18`, `ci.yml:22`
+
 ### Siradaki Analiz
 
-- [ ] Faz S: Faz R degisikliklerinin analist dogrulamasi (lint/type-check/test/build/i18n + gorsel regresyon smoke).
+- [ ] Faz S: Analist bulgulari (i18n hardcoded, search kategori, history v2, Node 24) + urun buyume adimi.
