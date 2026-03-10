@@ -7,13 +7,13 @@ import { useLanguage } from '@/context/LanguageContext'
 
 interface FileUploaderProps {
   dataType: 'image' | 'audio'
-  onFilesSelected: (files: File[]) => void
+  files: File[]
+  onFilesChange: (files: File[]) => void
 }
 
-export const FileUploader: React.FC<FileUploaderProps> = ({ dataType, onFilesSelected }) => {
+export const FileUploader: React.FC<FileUploaderProps> = ({ dataType, files, onFilesChange }) => {
   const { t } = useLanguage()
   const [isDragging, setIsDragging] = useState(false)
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
 
   const acceptedTypes = dataType === 'image'
     ? 'image/jpeg,image/png,image/jpg,image/webp'
@@ -29,8 +29,8 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ dataType, onFilesSel
     }
   }, [])
 
-  const handleFiles = useCallback((files: File[]) => {
-    const validFiles = files.filter(file => {
+  const handleFiles = useCallback((newFiles: File[]) => {
+    const validFiles = newFiles.filter(file => {
       if (dataType === 'image') {
         return file.type.startsWith('image/')
       } else {
@@ -38,28 +38,27 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ dataType, onFilesSel
       }
     })
 
-    setSelectedFiles(prev => [...prev, ...validFiles])
-    onFilesSelected(validFiles)
-  }, [dataType, onFilesSelected])
+    onFilesChange([...files, ...validFiles])
+  }, [dataType, files, onFilesChange])
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault()
     e.stopPropagation()
     setIsDragging(false)
 
-    const files = Array.from(e.dataTransfer.files)
-    handleFiles(files)
+    const dropped = Array.from(e.dataTransfer.files)
+    handleFiles(dropped)
   }, [handleFiles])
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const files = Array.from(e.target.files)
-      handleFiles(files)
+      const selected = Array.from(e.target.files)
+      handleFiles(selected)
     }
   }
 
   const removeFile = (index: number) => {
-    setSelectedFiles(prev => prev.filter((_, i) => i !== index))
+    onFilesChange(files.filter((_, i) => i !== index))
   }
 
   const Icon = dataType === 'image' ? FileImage : FileAudio
@@ -99,17 +98,17 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ dataType, onFilesSel
         </label>
       </div>
 
-      {selectedFiles.length > 0 && (
+      {files.length > 0 && (
         <div className="selected-files">
           <div className="files-header">
             <h4 className="files-title">
-              {t.mlToolkit.fileUploader.filesUploaded} ({selectedFiles.length})
+              {t.mlToolkit.fileUploader.filesUploaded} ({files.length})
             </h4>
             <CheckCircle className="text-green-500" size={20} />
           </div>
 
           <div className="files-list">
-            {selectedFiles.map((file, index) => (
+            {files.map((file, index) => (
               <motion.div
                 key={`${file.name}-${index}`}
                 className="file-item"
