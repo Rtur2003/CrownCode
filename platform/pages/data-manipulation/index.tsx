@@ -91,10 +91,14 @@ const AudioDatasetPage: NextPage = () => {
     }
   ]
 
-  const handleFilesSelected = (selectedFiles: File[]) => {
-    setFiles(selectedFiles)
+  const handleFilesChange = (newFiles: File[]) => {
+    setFiles(newFiles)
     setError(null)
-    setProcessedFileUrl(null)
+    if (processedFileUrl) {
+      URL.revokeObjectURL(processedFileUrl)
+      prevObjectUrlRef.current = null
+      setProcessedFileUrl(null)
+    }
   }
 
   const handleProcess = async () => {
@@ -132,7 +136,11 @@ const AudioDatasetPage: NextPage = () => {
       }
 
       const blob = await response.blob()
-      const url = window.URL.createObjectURL(blob)
+      if (prevObjectUrlRef.current) {
+        URL.revokeObjectURL(prevObjectUrlRef.current)
+      }
+      const url = URL.createObjectURL(blob)
+      prevObjectUrlRef.current = url
       setProcessedFileUrl(url)
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : t.audioDataset.interface.errors.unexpected
@@ -154,6 +162,10 @@ const AudioDatasetPage: NextPage = () => {
           onClick={() => {
             setActiveTool(null)
             setFiles([])
+            if (processedFileUrl) {
+              URL.revokeObjectURL(processedFileUrl)
+              prevObjectUrlRef.current = null
+            }
             setProcessedFileUrl(null)
             setError(null)
           }}
@@ -166,9 +178,10 @@ const AudioDatasetPage: NextPage = () => {
         <div className={styles['interface-grid']}>
           <div className="left-panel">
             <h2 className={styles['section-title']}>{t.audioDataset.interface.step1}</h2>
-            <FileUploader 
-              dataType="audio" 
-              onFilesSelected={handleFilesSelected} 
+            <FileUploader
+              dataType="audio"
+              files={files}
+              onFilesChange={handleFilesChange}
             />
             
             {files.length > 0 && (
