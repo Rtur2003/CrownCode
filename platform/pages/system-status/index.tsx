@@ -71,25 +71,23 @@ const SystemStatusPage: NextPage = () => {
 
   return (
     <MainLayout
-      title={ss?.meta?.title || 'System Status - CrownCode'}
-      description={ss?.meta?.description || 'Live status of CrownCode services.'}
-      keywords={ss?.meta?.keywords || 'system status, health, uptime'}
+      title={ss.meta.title}
+      description={ss.meta.description}
+      keywords={ss.meta.keywords}
     >
       <div className={styles['page-container']}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className={styles['header-row']}>
             <Activity size={28} className={styles['header-icon']} />
             <h1 className={styles['title']}>
-              {ss?.title || 'System Status'}
+              {ss.title}
             </h1>
           </div>
 
           <div className={styles['status-bar']}>
             <span className={`${styles['status-dot']} ${allOk ? styles['status-dot-ok'] : styles['status-dot-error']}`} />
             <span className={styles['status-text']}>
-              {allOk
-                ? (ss?.allOperational || 'All systems operational')
-                : (ss?.someIssues || 'Some services have issues')}
+              {allOk ? ss.allOperational : ss.someIssues}
             </span>
             <button
               onClick={checkServices}
@@ -97,7 +95,7 @@ const SystemStatusPage: NextPage = () => {
               className={styles['refresh-btn']}
             >
               <RefreshCw size={14} className={checking ? 'animate-spin' : ''} />
-              {ss?.refresh || 'Refresh'}
+              {ss.refresh}
             </button>
           </div>
         </motion.div>
