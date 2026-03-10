@@ -16,20 +16,20 @@ const AnalysisHistoryPage: NextPage = () => {
 
   return (
     <MainLayout
-      title={ah?.meta?.title || 'Analysis History - CrownCode'}
-      description={ah?.meta?.description || 'View your recent analysis results.'}
-      keywords={ah?.meta?.keywords || 'analysis history, AI music detection, results'}
+      title={ah.meta.title}
+      description={ah.meta.description}
+      keywords={ah.meta.keywords}
     >
       <div className={styles['page-container']}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className={styles['header-row']}>
             <History size={28} className={styles['header-icon']} />
             <h1 className={styles['title']}>
-              {ah?.title || 'Analysis History'}
+              {ah.title}
             </h1>
           </div>
           <p className={styles['subtitle']}>
-            {ah?.subtitle || 'Your most recent analysis result is shown below. History is stored locally in your browser.'}
+            {ah.subtitle}
           </p>
         </motion.div>
 
@@ -47,7 +47,7 @@ const AnalysisHistoryPage: NextPage = () => {
               <button
                 onClick={remove}
                 className={styles['delete-btn']}
-                title={ah?.delete || 'Clear history'}
+                title={ah.delete}
               >
                 <Trash2 size={16} />
               </button>
@@ -71,8 +71,8 @@ const AnalysisHistoryPage: NextPage = () => {
             className={styles['empty-state']}
           >
             <History size={48} className={styles['empty-icon']} />
-            <p>{ah?.noHistory || 'No analysis history yet.'}</p>
-            <p className={styles['empty-sub']}>{ah?.noHistoryDesc || 'Run an analysis on the AI Music Detection page to see your results here.'}</p>
+            <p>{ah.noHistory}</p>
+            <p className={styles['empty-sub']}>{ah.noHistoryDesc}</p>
           </motion.div>
         )}
       </div>
