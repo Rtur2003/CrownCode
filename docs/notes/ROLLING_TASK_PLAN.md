@@ -746,6 +746,16 @@ Not:
   - Toast testi fake timers + `act()` ile sarmalandi (timer-driven state update warning'leri giderildi).
 - [x] P2: `docs/technical/ROUTE_KPI_CHECKLIST.md` eklendi — `creator-studio`, `analysis-history`, `system-status` icin entry source, first action, revisit indicator, raporlama frekansi dokumante edildi.
 
+### Data-Manipulation 422 Bug Fix (P0 Hotfix)
+
+- [x] P0: `hf-crowncode-backend/app/routes/data_processing.py` — `options: Json[AudioAugmentationOptions] = Form(...)` → `options: str = Form(...)` + `AudioAugmentationOptions.model_validate_json(options)` ile manual parse. Frontend'in `JSON.stringify()` ile gonderdig JSON string artik dogru parse ediliyor. Hatali JSON icin kontrollü `422 invalid_options` donuyor.
+- [x] P0: `hf-crowncode-backend/tests/test_data_processing.py` tamamen yeniden yazildi:
+  - Gevşek `assert status_code in (400, 422)` kaldırıldı — her test kesin status code bekliyor.
+  - Valid multipart request testi eklendi (422 olmadigi dogrulaniyor).
+  - Invalid JSON options testi eklendi (`invalid_options` error code assertion).
+  - camelCase options kabul testi eklendi (frontend uyumu).
+  - Helper fonksiyonlari (`_valid_options`, `_fake_audio`) ile test DRY hale getirildi.
+
 ### Faz Q Dogrulama Logu (Analist)
 
 - [x] `cmd /c npm --prefix platform run lint` -> passed
