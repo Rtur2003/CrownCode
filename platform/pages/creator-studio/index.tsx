@@ -13,27 +13,27 @@ const CreatorStudioPage: NextPage = () => {
   const cs = t.creatorStudio
 
   const features = [
-    { icon: Palette, title: cs?.features?.remix?.title || 'Audio Remix', description: cs?.features?.remix?.description || 'Remix and transform audio tracks with AI-powered tools.' },
-    { icon: Wand2, title: cs?.features?.generate?.title || 'AI Generate', description: cs?.features?.generate?.description || 'Generate original audio content using advanced AI models.' },
-    { icon: Layers, title: cs?.features?.multitrack?.title || 'Multi-Track', description: cs?.features?.multitrack?.description || 'Edit and mix multiple audio tracks in a unified workspace.' },
+    { icon: Palette, title: cs.features.remix.title, description: cs.features.remix.description },
+    { icon: Wand2, title: cs.features.generate.title, description: cs.features.generate.description },
+    { icon: Layers, title: cs.features.multitrack.title, description: cs.features.multitrack.description },
   ]
 
   return (
     <MainLayout
-      title={cs?.meta?.title || 'Creator Studio - CrownCode'}
-      description={cs?.meta?.description || 'Audio remix, AI generation, and multi-track editing tools.'}
-      keywords={cs?.meta?.keywords || 'creator studio, audio, AI, remix'}
+      title={cs.meta.title}
+      description={cs.meta.description}
+      keywords={cs.meta.keywords}
     >
       <div className={styles['page-container']}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <span className={styles['coming-soon-badge']}>
-            {cs?.comingSoon || 'Coming Soon'}
+            {cs.comingSoon}
           </span>
           <h1 className={styles['title']}>
-            {cs?.title || 'Creator Studio'}
+            {cs.title}
           </h1>
           <p className={styles['subtitle']}>
-            {cs?.subtitle || 'Audio creation tools powered by AI'}
+            {cs.subtitle}
           </p>
         </motion.div>
 
@@ -58,10 +58,10 @@ const CreatorStudioPage: NextPage = () => {
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className={styles['footer-section']}>
           <p className={styles['footer-note']}>
-            {cs?.comingSoonDesc || 'We\'re building something amazing. Stay tuned for audio remix, AI generation, and multi-track editing tools.'}
+            {cs.comingSoonDesc}
           </p>
           <Link href="/" className={styles['back-link']}>
-            {t.errorPage?.actions?.home || 'Back to Home'} <ArrowRight size={14} />
+            {t.errorPage?.actions?.home} <ArrowRight size={14} />
           </Link>
         </motion.div>
       </div>
