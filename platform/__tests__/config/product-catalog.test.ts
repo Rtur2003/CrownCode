@@ -53,12 +53,12 @@ describe('product-catalog helpers', () => {
       expect(resolveKey(t, 'flat')).toBe('top level')
     })
 
-    it('returns empty string for missing keys', () => {
-      expect(resolveKey(t, 'a.b.missing')).toBe('')
+    it('throws for missing keys in dev/test', () => {
+      expect(() => resolveKey(t, 'a.b.missing')).toThrow('[resolveKey] Missing locale key: "a.b.missing"')
     })
 
-    it('returns empty string for non-string values', () => {
-      expect(resolveKey(t, 'a.b')).toBe('')
+    it('throws for non-string values in dev/test', () => {
+      expect(() => resolveKey(t, 'a.b')).toThrow('[resolveKey] Missing locale key: "a.b"')
     })
   })
 

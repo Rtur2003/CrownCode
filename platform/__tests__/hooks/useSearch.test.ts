@@ -83,10 +83,8 @@ describe('buildSearchItems – registry resolution', () => {
     expect(home?.description).toBeUndefined()
   })
 
-  it('returns empty string for unresolvable locale keys', () => {
+  it('throws for unresolvable locale keys in dev/test', () => {
     const badT = { search: { pages: {} } }
-    const badItems = buildSearchItems(badT)
-    const home = badItems.find((i) => i.id === 'home')
-    expect(home?.title).toBe('')
+    expect(() => buildSearchItems(badT)).toThrow('[resolveKey] Missing locale key')
   })
 })
