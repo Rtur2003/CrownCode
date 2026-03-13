@@ -7,7 +7,7 @@
 import { useState, useCallback, useMemo } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useRouter } from 'next/router'
-import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
+import { PRODUCT_CATALOG, SEARCH_REGISTRY, resolveProduct, resolveKey } from '@/config/product-catalog'
 
 export interface SearchItem {
   id: string
@@ -19,7 +19,8 @@ export interface SearchItem {
 }
 
 /**
- * Build the full searchable item list from catalog + static pages.
+ * Build the full searchable item list from catalog + registry.
+ * No hardcoded EN fallbacks — all strings resolved from locale keys.
  * Exported so /search page can reuse the same data without duplication.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,57 +36,20 @@ export function buildSearchItems(t: Record<string, any>): SearchItem[] {
     }
   })
 
-  const staticItems: SearchItem[] = [
-    {
-      id: 'home',
-      title: t.search?.pages?.home || 'Home',
-      href: '/',
-      category: 'page' as const,
-    },
-    {
-      id: 'projects',
-      title: t.search?.pages?.projects || 'Projects',
-      href: '/#products',
-      category: 'page' as const,
-    },
-    {
-      id: 'url-analysis',
-      title: t.search?.features?.urlAnalysis || 'URL Analysis',
-      description: t.search?.features?.urlAnalysisDesc || 'Analyze a YouTube link',
-      href: '/ai-music-detection#url',
-      category: 'feature' as const,
-    },
-    {
-      id: 'data-augmentation',
-      title: t.search?.features?.dataAugmentation || 'Data Augmentation',
-      description: t.search?.features?.dataAugmentationDesc || 'Augment your dataset',
-      href: '/data-manipulation',
-      category: 'feature' as const,
-    },
-    {
-      id: 'creator-studio',
-      title: t.creatorStudio?.title || 'Creator Studio',
-      description: t.creatorStudio?.subtitle || 'Audio creation tools powered by AI',
-      href: '/creator-studio',
-      category: 'page' as const,
-    },
-    {
-      id: 'analysis-history',
-      title: t.analysisHistory?.title || 'Analysis History',
-      description: t.analysisHistory?.subtitle || 'Your recent analysis results',
-      href: '/analysis-history',
-      category: 'page' as const,
-    },
-    {
-      id: 'system-status',
-      title: t.systemStatus?.title || 'System Status',
-      description: t.systemStatus?.allOperational || 'Live status of CrownCode services',
-      href: '/system-status',
-      category: 'page' as const,
-    },
-  ]
+  const registryItems: SearchItem[] = SEARCH_REGISTRY.map((entry) => {
+    const item: SearchItem = {
+      id: entry.id,
+      title: resolveKey(t, entry.titleKey),
+      href: entry.href,
+      category: entry.category,
+    }
+    if (entry.descriptionKey) {
+      item.description = resolveKey(t, entry.descriptionKey)
+    }
+    return item
+  })
 
-  return [...catalogItems, ...staticItems]
+  return [...catalogItems, ...registryItems]
 }
 
 export const useSearch = () => {
