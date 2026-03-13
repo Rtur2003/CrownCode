@@ -1050,6 +1050,9 @@
     "title": "Sistem Durumu",
     "allOperational": "Tüm sistemler çalışıyor",
     "someIssues": "Bazı servislerde sorun var",
-    "refresh": "Yenile"
+    "degraded": "Kısmi bozulma tespit edildi",
+    "refresh": "Yenile",
+    "lastChecked": "Son kontrol",
+    "demoMode": "Demo modu — canlı backend yapılandırılmadı"
   }
 }
