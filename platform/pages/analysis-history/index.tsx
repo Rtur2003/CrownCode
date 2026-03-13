@@ -12,7 +12,7 @@ import styles from '@/styles/pages/analysis-history.module.css'
 const AnalysisHistoryPage: NextPage = () => {
   const { t } = useLanguage()
   const ah = t.analysisHistory
-  const { lastEntry, remove } = useLocalHistory<AnalysisResult>(HISTORY_KEYS.ANALYSIS)
+  const { entries, removeById, clear } = useLocalHistory<AnalysisResult>(HISTORY_KEYS.ANALYSIS)
 
   return (
     <MainLayout
@@ -33,37 +33,63 @@ const AnalysisHistoryPage: NextPage = () => {
           </p>
         </motion.div>
 
-        {lastEntry ? (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={styles['entry-card']}
-          >
-            <div className={styles['entry-header']}>
-              <div className={styles['entry-input']}>
-                {lastEntry.input.includes('http') ? <Music size={18} className={styles['entry-icon']} /> : <FileAudio size={18} className={styles['entry-icon']} />}
-                <span className={styles['entry-input-text']}>{lastEntry.input}</span>
-              </div>
+        {entries.length > 0 ? (
+          <>
+            <div className={styles['list-header']}>
+              <span className={styles['entry-count']}>
+                {(ah.entryCount || '{{count}} analyses').replace('{{count}}', String(entries.length))}
+              </span>
               <button
-                onClick={remove}
-                className={styles['delete-btn']}
-                title={ah.delete}
+                type="button"
+                onClick={() => {
+                  if (window.confirm(ah.clearAllConfirm || 'Clear all history?')) {
+                    clear()
+                  }
+                }}
+                className={styles['clear-all-btn']}
               >
-                <Trash2 size={16} />
+                <Trash2 size={14} />
+                {ah.clearAll || 'Clear All'}
               </button>
             </div>
-            <div className={styles['entry-date']}>
-              {new Date(lastEntry.timestamp).toLocaleString()}
+
+            <div className={styles['entries-list']}>
+              {entries.map((entry, index) => (
+                <motion.div
+                  key={entry.timestamp}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  className={styles['entry-card']}
+                >
+                  <div className={styles['entry-header']}>
+                    <div className={styles['entry-input']}>
+                      {entry.input.includes('http') ? <Music size={18} className={styles['entry-icon']} /> : <FileAudio size={18} className={styles['entry-icon']} />}
+                      <span className={styles['entry-input-text']}>{entry.input}</span>
+                    </div>
+                    <button
+                      onClick={() => removeById(entry.timestamp)}
+                      className={styles['delete-btn']}
+                      title={ah.delete}
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                  <div className={styles['entry-date']}>
+                    {new Date(entry.timestamp).toLocaleString()}
+                  </div>
+                  {entry.result && (
+                    <div className={styles['entry-result']}>
+                      <pre>
+                        {JSON.stringify(entry.result, null, 2).slice(0, 500)}
+                        {JSON.stringify(entry.result).length > 500 ? '...' : ''}
+                      </pre>
+                    </div>
+                  )}
+                </motion.div>
+              ))}
             </div>
-            {lastEntry.result && (
-              <div className={styles['entry-result']}>
-                <pre>
-                  {JSON.stringify(lastEntry.result, null, 2).slice(0, 500)}
-                  {JSON.stringify(lastEntry.result).length > 500 ? '...' : ''}
-                </pre>
-              </div>
-            )}
-          </motion.div>
+          </>
         ) : (
           <motion.div
             initial={{ opacity: 0 }}
