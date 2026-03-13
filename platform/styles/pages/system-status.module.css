@@ -42,6 +42,10 @@
   background: #ef4444;
 }
 
+.status-dot-degraded {
+  background: #f59e0b;
+}
+
 .status-text {
   color: #999;
 }
@@ -102,4 +106,21 @@
 
 .icon-loading {
   color: #888;
+}
+
+.last-checked {
+  color: #666;
+  font-size: 0.8rem;
+  margin-top: -24px;
+  margin-bottom: 24px;
+}
+
+.demo-label {
+  color: #f59e0b;
+  font-size: 0.85rem;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-bottom: 24px;
 }
