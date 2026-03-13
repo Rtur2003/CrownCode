@@ -160,7 +160,7 @@ describe('Page Smoke Tests', () => {
 
     it('renders long input text without layout break', async () => {
       const longInput = 'https://www.youtube.com/watch?v=' + 'a'.repeat(300)
-      const entry = { input: longInput, result: { score: 0.9 }, timestamp: Date.now() }
+      const entry = { id: 'test-long-input', input: longInput, result: { score: 0.9 }, timestamp: Date.now() }
       localStorage.setItem('crowncode:last-analysis', JSON.stringify([entry]))
 
       const AnalysisHistoryPage = (await import('@/pages/analysis-history/index')).default
