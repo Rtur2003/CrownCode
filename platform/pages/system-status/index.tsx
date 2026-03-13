@@ -25,7 +25,7 @@ const SystemStatusPage: NextPage = () => {
   const [checking, setChecking] = useState(false)
   const [lastChecked, setLastChecked] = useState<Date | null>(null)
 
-  const isDemoMode = !process.env.NEXT_PUBLIC_API_URL
+  const noExternalBackend = !process.env.NEXT_PUBLIC_API_URL
 
   const checkServices = async () => {
     setChecking(true)
@@ -112,9 +112,9 @@ const SystemStatusPage: NextPage = () => {
             </p>
           )}
 
-          {isDemoMode && (
+          {noExternalBackend && (
             <p className={styles['demo-label']}>
-              {ss.demoMode}
+              {ss.noExternalBackend}
             </p>
           )}
         </motion.div>
