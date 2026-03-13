@@ -16,13 +16,17 @@ const mockT = {
   systemStatus: { title: 'Sistem Durumu', allOperational: 'Tüm sistemler çalışıyor' },
 }
 
-// Mock product catalog to isolate test from catalog data
-jest.mock('@/config/product-catalog', () => ({
-  PRODUCT_CATALOG: [
-    { id: 'mock-product', href: '/mock', localeKey: 'mock' },
-  ],
-  resolveProduct: () => ({ title: 'Mock Product', description: 'A mock' }),
-}))
+// Mock product catalog — keep real SEARCH_REGISTRY and resolveKey, mock only PRODUCT_CATALOG
+jest.mock('@/config/product-catalog', () => {
+  const actual = jest.requireActual('@/config/product-catalog')
+  return {
+    ...actual,
+    PRODUCT_CATALOG: [
+      { id: 'mock-product', href: '/mock', localeKey: 'mock' },
+    ],
+    resolveProduct: () => ({ title: 'Mock Product', description: 'A mock' }),
+  }
+})
 
 describe('buildSearchItems – category semantics', () => {
   const items = buildSearchItems(mockT)
@@ -51,5 +55,38 @@ describe('buildSearchItems – category semantics', () => {
     for (const item of items) {
       expect(validCategories.has(item.category)).toBe(true)
     }
+  })
+})
+
+describe('buildSearchItems – registry resolution', () => {
+  const items = buildSearchItems(mockT)
+
+  it('resolves page titles from locale dot-path keys', () => {
+    const home = items.find((i) => i.id === 'home')
+    expect(home?.title).toBe('Ana Sayfa')
+  })
+
+  it('resolves feature titles and descriptions', () => {
+    const urlAnalysis = items.find((i) => i.id === 'url-analysis')
+    expect(urlAnalysis?.title).toBe('URL Analizi')
+    expect(urlAnalysis?.description).toBe('YouTube link analizi')
+  })
+
+  it('resolves cross-section locale keys (creatorStudio.title)', () => {
+    const cs = items.find((i) => i.id === 'creator-studio')
+    expect(cs?.title).toBe('Creator Studio')
+    expect(cs?.description).toBe('AI audio tools')
+  })
+
+  it('omits description when descriptionKey is absent', () => {
+    const home = items.find((i) => i.id === 'home')
+    expect(home?.description).toBeUndefined()
+  })
+
+  it('returns empty string for unresolvable locale keys', () => {
+    const badT = { search: { pages: {} } }
+    const badItems = buildSearchItems(badT)
+    const home = badItems.find((i) => i.id === 'home')
+    expect(home?.title).toBe('')
   })
 })
