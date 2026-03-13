@@ -113,6 +113,11 @@ export const SEARCH_REGISTRY: readonly SearchRegistryEntry[] = [
 /**
  * Resolve a dot-path key from the locale object.
  * e.g. resolveKey(t, "search.pages.home") → t.search.pages.home
+ *
+ * Contract:
+ * - In development/test: throws if key is missing (fail-fast).
+ * - In production: returns the dot-path itself as a visible signal
+ *   so missing translations are obvious in the UI, not silently blank.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function resolveKey(t: Record<string, any>, path: string): string {
@@ -122,7 +127,13 @@ export function resolveKey(t: Record<string, any>, path: string): string {
   for (const part of parts) {
     current = current?.[part]
   }
-  return typeof current === 'string' ? current : ''
+  if (typeof current === 'string') {
+    return current
+  }
+  if (process.env.NODE_ENV !== 'production') {
+    throw new Error(`[resolveKey] Missing locale key: "${path}"`)
+  }
+  return `[${path}]`
 }
 
 /**
