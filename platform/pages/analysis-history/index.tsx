@@ -37,26 +37,26 @@ const AnalysisHistoryPage: NextPage = () => {
           <>
             <div className={styles['list-header']}>
               <span className={styles['entry-count']}>
-                {(ah.entryCount || '{{count}} analyses').replace('{{count}}', String(entries.length))}
+                {ah.entryCount.replace('{{count}}', String(entries.length))}
               </span>
               <button
                 type="button"
                 onClick={() => {
-                  if (window.confirm(ah.clearAllConfirm || 'Clear all history?')) {
+                  if (window.confirm(ah.clearAllConfirm)) {
                     clear()
                   }
                 }}
                 className={styles['clear-all-btn']}
               >
                 <Trash2 size={14} />
-                {ah.clearAll || 'Clear All'}
+                {ah.clearAll}
               </button>
             </div>
 
             <div className={styles['entries-list']}>
               {entries.map((entry, index) => (
                 <motion.div
-                  key={entry.timestamp}
+                  key={entry.id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
@@ -68,7 +68,7 @@ const AnalysisHistoryPage: NextPage = () => {
                       <span className={styles['entry-input-text']}>{entry.input}</span>
                     </div>
                     <button
-                      onClick={() => removeById(entry.timestamp)}
+                      onClick={() => removeById(entry.id)}
                       className={styles['delete-btn']}
                       title={ah.delete}
                     >
