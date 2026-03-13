@@ -215,15 +215,15 @@ describe('Page Smoke Tests', () => {
       })
     })
 
-    it('shows demo label when NEXT_PUBLIC_API_URL is not set', async () => {
+    it('shows no-external-backend label when NEXT_PUBLIC_API_URL is not set', async () => {
       delete process.env.NEXT_PUBLIC_API_URL
       const SystemStatusPage = (await import('@/pages/system-status/index')).default
       await act(async () => {
         renderWithProviders(<SystemStatusPage />)
       })
-      // TR: "Demo modu"
+      // TR: "Harici backend yapılandırılmadı"
       await waitFor(() => {
-        expect(screen.getByText(/Demo modu/)).toBeInTheDocument()
+        expect(screen.getByText(/Harici backend/)).toBeInTheDocument()
       })
     })
 
