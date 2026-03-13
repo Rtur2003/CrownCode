@@ -11,9 +11,15 @@ import { useState, useCallback } from 'react'
 const MAX_ENTRIES = 20
 
 export interface HistoryEntry<T> {
+  id: string
   input: string
   result: T
   timestamp: number
+}
+
+let _counter = 0
+function generateId(): string {
+  return `${Date.now()}-${++_counter}-${Math.random().toString(36).slice(2, 8)}`
 }
 
 function readAll<T>(key: string): HistoryEntry<T>[] {
@@ -23,9 +29,12 @@ function readAll<T>(key: string): HistoryEntry<T>[] {
     const parsed = JSON.parse(raw)
     // Migrate from V1 single-entry format
     if (parsed && !Array.isArray(parsed) && typeof parsed.timestamp === 'number') {
-      return [parsed as HistoryEntry<T>]
+      const migrated = { ...parsed, id: parsed.id || generateId() } as HistoryEntry<T>
+      return [migrated]
     }
-    return Array.isArray(parsed) ? parsed : []
+    if (!Array.isArray(parsed)) return []
+    // Backfill id for entries missing it
+    return parsed.map((e: HistoryEntry<T>) => (e.id ? e : { ...e, id: generateId() }))
   } catch {
     return []
   }
@@ -59,7 +68,7 @@ export function useLocalHistory<T>(storageKey: string) {
   /** Add a new entry (newest first, capped at MAX_ENTRIES) */
   const save = useCallback(
     (input: string, result: T) => {
-      const entry: HistoryEntry<T> = { input, result, timestamp: Date.now() }
+      const entry: HistoryEntry<T> = { id: generateId(), input, result, timestamp: Date.now() }
       setEntries((prev) => {
         const next = [entry, ...prev].slice(0, MAX_ENTRIES)
         writeAll(storageKey, next)
@@ -82,11 +91,11 @@ export function useLocalHistory<T>(storageKey: string) {
     })
   }, [storageKey])
 
-  /** Remove a specific entry by timestamp */
+  /** Remove a specific entry by id */
   const removeById = useCallback(
-    (timestamp: number) => {
+    (id: string) => {
       setEntries((prev) => {
-        const next = prev.filter((e) => e.timestamp !== timestamp)
+        const next = prev.filter((e) => e.id !== id)
         if (next.length === 0) {
           clearKey(storageKey)
         } else {
