@@ -845,9 +845,9 @@ Not:
 
 ---
 
-## Tur 5.18 - Faz S Tamamlandi (i18n Hardening + Search Category + History V2 + Node 24 Canary)
+## Tur 5.18 - Faz S (i18n Hardening + Search Category + History V2 + Node 24 Canary)
 
-- Durum: uygulama tamamlandi, analist dogrulamasina hazir.
+- Durum: ilk uygulama tamamlandi, Faz S.1 acceptance hotfix ile duzeltildi.
 
 ### Faz S Sonuc
 
@@ -901,3 +901,39 @@ Not:
 - **useLocalHistory**: V1 tek-obje format auto-migrate ediliyor. `lastEntry`, `save`, `remove` ayni API ile calisiyor. `useCommend` degisiklik gerektirmiyor.
 - **SearchItem.category**: `'pages'` -> `'page'`, `'features'` -> `'feature'`. Tek tuketici `search.tsx` ayni committe guncellendi.
 - **Node 24 canary**: `continue-on-error: true` — deploy/merge gate'i etkilemiyor.
+
+---
+
+## Tur 5.18.1 - Faz S.1 Acceptance Hotfix
+
+- Durum: uygulama tamamlandi, analist dogrulamasina hazir.
+- Kok neden:
+  - `removeById(timestamp)` timestamp tabanli id modelinin tekil olmamasi — ayni milisaniyede olusan kayitlar toplu siliniyordu.
+  - Fallback temizliginin kismen tamamlanmis olmasi — `analysis-history`, `FileUploader`, `search` badge'de hardcoded EN fallbacklar kalmisti.
+
+### Faz S.1 Cikisli Gorevler
+
+- [x] P0: `useLocalHistory.ts` — `HistoryEntry<T>` icine `id: string` alani eklendi. Yeni kayitlar `generateId()` ile benzersiz id aliyor (timestamp + counter + random suffix). `removeById` artik `id: string` parametresi aliyor, sadece tek kaydi siliyor.
+- [x] P0: V1/V2 migration — eski kayitlarda `id` yoksa `readAll()` sirasinda otomatik id enjekte ediliyor.
+- [x] P0: `analysis-history/index.tsx` — liste key'i `entry.id`, delete action `removeById(entry.id)` kullaniyor.
+- [x] P0: `useLocalHistory.test.ts` — `removeById` testi id-bazli hale getirildi. Collision-safe test eklendi (ayni `Date.now()` degerine sahip iki kayit, sadece hedeflenen silinir).
+- [x] P1: `analysis-history/index.tsx` — `ah.entryCount || ...`, `ah.clearAllConfirm || ...`, `ah.clearAll || ...` fallbacklari kaldirildi. Locale key zorunlu contract.
+- [x] P1: `FileUploader.tsx` — `t.aria?.removeFile || 'Remove {{name}}'` fallback kaldirildi. `t.aria.removeFile` zorunlu contract.
+- [x] P1: `search.tsx` — `sp.badges?.[result.type] || result.type` fallback kaldirildi. `sp.badges[result.type]` zorunlu contract.
+- [x] P2: `smoke.test.tsx` — long-input test entry'sine `id` alani eklendi.
+
+### Faz S.1 Degisiklik Ozeti
+
+| Dosya | Degisiklik | Risk |
+| --- | --- | --- |
+| `platform/hooks/useLocalHistory.ts` | `id` alani + `generateId()` + id-bazli removal | Orta — backward-compat korundu |
+| `platform/pages/analysis-history/index.tsx` | `entry.id` key/remove + fallback temizligi | Dusuk |
+| `platform/components/MLToolkit/FileUploader.tsx` | aria-label fallback kaldirildi | Dusuk |
+| `platform/pages/search.tsx` | badge fallback kaldirildi | Dusuk |
+| `platform/__tests__/hooks/useLocalHistory.test.ts` | id-bazli testler + collision-safe test | Dusuk — sadece test |
+| `platform/__tests__/pages/smoke.test.tsx` | long-input entry'ye id eklendi | Dusuk — sadece test |
+
+### Backward Compat Notlari
+
+- **useLocalHistory**: V1 tek-obje ve V2 id-siz array kayitlari read sirasinda otomatik id alarak migrate ediliyor. `lastEntry`, `save`, `remove`, `clear` API'si degismedi. `removeById` parametre tipi `number` (timestamp) -> `string` (id) olarak degisti — tek tuketici `analysis-history` ayni committe guncellendi.
+- **Locale contract**: `ah.entryCount`, `ah.clearAllConfirm`, `ah.clearAll`, `t.aria.removeFile`, `sp.badges[type]` artik zorunlu — key yoksa runtime error. Keyler Faz S'de her iki locale'a eklenmisti, sorun yok.
