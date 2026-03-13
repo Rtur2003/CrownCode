@@ -11,16 +11,27 @@ import {
 import { useLanguage } from '@/context/LanguageContext'
 import { FOOTER_PRODUCT_IDS, FOOTER_PRODUCT_LOCALE_MAP, getProductHref } from '@/config/product-catalog'
 
+interface FooterLink {
+  label: string
+  href: string
+  external?: boolean
+}
+
+interface FooterSection {
+  title: string
+  links: FooterLink[]
+}
+
 export const Footer: React.FC = () => {
   const { t } = useLanguage()
   const currentYear = new Date().getFullYear()
 
-  const productLinks = FOOTER_PRODUCT_IDS.map((id) => ({
+  const productLinks: FooterLink[] = FOOTER_PRODUCT_IDS.map((id) => ({
     label: t.footer.sections.products[FOOTER_PRODUCT_LOCALE_MAP[id]],
     href: getProductHref(id),
   }))
 
-  const footerSections = [
+  const footerSections: FooterSection[] = [
     {
       title: t.footer.sections.platform.title,
       links: [
