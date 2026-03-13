@@ -125,7 +125,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ dataType, files, onF
                   type="button"
                   onClick={() => removeFile(index)}
                   className="file-remove"
-                  aria-label={(t.aria?.removeFile || 'Remove {{name}}').replace('{{name}}', file.name)}
+                  aria-label={t.aria.removeFile.replace('{{name}}', file.name)}
                 >
                   <X size={16} />
                 </button>
