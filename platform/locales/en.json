@@ -1050,6 +1050,9 @@
     "title": "System Status",
     "allOperational": "All systems operational",
     "someIssues": "Some services have issues",
-    "refresh": "Refresh"
+    "degraded": "Partial degradation detected",
+    "refresh": "Refresh",
+    "lastChecked": "Last checked",
+    "demoMode": "Demo mode — no live backend configured"
   }
 }
