@@ -9,10 +9,16 @@ import {
   Code2
 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
+import { FOOTER_PRODUCT_IDS, FOOTER_PRODUCT_LOCALE_MAP, getProductHref } from '@/config/product-catalog'
 
 export const Footer: React.FC = () => {
   const { t } = useLanguage()
   const currentYear = new Date().getFullYear()
+
+  const productLinks = FOOTER_PRODUCT_IDS.map((id) => ({
+    label: t.footer.sections.products[FOOTER_PRODUCT_LOCALE_MAP[id]],
+    href: getProductHref(id),
+  }))
 
   const footerSections = [
     {
@@ -24,13 +30,7 @@ export const Footer: React.FC = () => {
     },
     {
       title: t.footer.sections.products.title,
-      links: [
-        { label: t.footer.sections.products.aiMusic, href: '/ai-music-detection' },
-        { label: t.footer.sections.products.dataProcessing, href: '/data-manipulation' },
-        { label: t.footer.sections.products.fortune, href: '/crown-fortune' },
-        { label: t.footer.sections.products.creatorStudio, href: '/creator-studio' },
-        { label: t.footer.sections.products.systemStatus, href: '/system-status' },
-      ],
+      links: productLinks,
     },
     {
       title: t.footer.sections.developer.title,
@@ -71,7 +71,7 @@ export const Footer: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"
-                aria-label={t.aria?.github || 'GitHub'}
+                aria-label={t.aria.github}
               >
                 <Github size={20} />
               </a>
@@ -80,14 +80,14 @@ export const Footer: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"
-                aria-label={t.aria?.website || 'Website'}
+                aria-label={t.aria.website}
               >
                 <Globe size={20} />
               </a>
               <a
                 href="mailto:contact@hasanarthuraltuntas.xyz"
                 className="social-link"
-                aria-label={t.aria?.email || 'Email'}
+                aria-label={t.aria.email}
               >
                 <Mail size={20} />
               </a>
