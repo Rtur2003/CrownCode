@@ -1053,6 +1053,6 @@
     "degraded": "Kısmi bozulma tespit edildi",
     "refresh": "Yenile",
     "lastChecked": "Son kontrol",
-    "demoMode": "Demo modu — canlı backend yapılandırılmadı"
+    "noExternalBackend": "Harici backend yapılandırılmadı — yalnızca yerel API uç noktaları izleniyor"
   }
 }

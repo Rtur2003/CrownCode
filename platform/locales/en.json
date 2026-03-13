@@ -1053,6 +1053,6 @@
     "degraded": "Partial degradation detected",
     "refresh": "Refresh",
     "lastChecked": "Last checked",
-    "demoMode": "Demo mode — no live backend configured"
+    "noExternalBackend": "External backend not configured — only local API endpoints are monitored"
   }
 }
