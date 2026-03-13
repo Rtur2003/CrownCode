@@ -141,7 +141,7 @@ const SearchPage: NextPage = () => {
                           {result.title}
                         </h3>
                         <span className={styles['result-badge']}>
-                          {sp.badges?.[result.type] || result.type}
+                          {sp.badges[result.type]}
                         </span>
                       </div>
                       <p className={styles['result-description']}>
