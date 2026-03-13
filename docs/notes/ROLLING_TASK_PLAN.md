@@ -990,4 +990,48 @@ Not:
 
 - **useSearch.ts**: `buildSearchItems(t)` ayni API, ayni return tipi. Dahili veri kaynagi hardcoded array'den registry'ye degisti — tuketiciler etkilenmiyor.
 - **Footer.tsx**: Ayni product listesi, ayni siralama. Href'ler artik catalog'dan geliyor — yeni urun eklendiginde FOOTER_PRODUCT_IDS + FOOTER_PRODUCT_LOCALE_MAP guncellenmeli.
-- **System Status**: Mevcut fonksiyonellik korundu. lastChecked/degraded/demoMode ek bilgi olarak gosteriliyor.
+- **System Status**: Mevcut fonksiyonellik korundu. lastChecked/degraded/noExternalBackend ek bilgi olarak gosteriliyor.
+
+---
+
+## Tur 5.19.1 - Faz T.1 Acceptance Hotfix
+
+- Durum: uygulama tamamlandi, analist dogrulamasina hazir.
+- Kok nedenler:
+  - Footer'da `productLinks` ile diger section linkleri arasinda tip uyumsuzlugu — `external` property'si olmayan product links, `external: true` iceren linklerle ayni array'de TS hatasina yol aciyordu.
+  - `FOOTER_PRODUCT_LOCALE_MAP` `Record<string, string>` ile genis tipliydi — `FooterProductId` ile daraltilmamisti.
+  - `resolveKey()` sessizce bos string donuyordu — eksik locale keyleri runtime'da gorulmez UI bosluguna yol aciyordu.
+  - `demoMode` label semantik olarak yanlis — NEXT_PUBLIC_API_URL olmamasi "demo" degil, "harici backend yapilandirilmamis" anlamina geliyor.
+
+### Faz T.1 Cikisli Gorevler
+
+- [x] P0: `Footer.tsx` — `FooterLink` interface (`label: string; href: string; external?: boolean`) ve `FooterSection` interface eklendi. `productLinks` ve `footerSections` explicit tip ile modellendi. `link.external` kontrolu TS-safe.
+- [x] P0: `product-catalog.ts` — `FooterProductId = typeof FOOTER_PRODUCT_IDS[number]` type eklendi. `FOOTER_PRODUCT_LOCALE_MAP` tipi `Record<string, string>` -> `Record<FooterProductId, string>` daraltildi.
+- [x] P1: `product-catalog.ts` — `resolveKey()` contract sertlestirildi:
+  - `NODE_ENV !== 'production'` (dev/test): eksik key icin `throw new Error('[resolveKey] Missing locale key: "path"')`.
+  - Production: bos string yerine `[path]` gorsel sinyal donuyor.
+- [x] P1: `useSearch.ts` — degisiklik gerekmedi. `resolveKey` sadece registered keys icin cagriliyor, `descriptionKey` guard mevcut.
+- [x] P1: `__tests__/config/product-catalog.test.ts` — "missing key => empty string" beklentileri "missing key => throw" ile degistirildi.
+- [x] P1: `__tests__/hooks/useSearch.test.ts` — "unresolvable => empty string" beklentisi "unresolvable => throw" ile degistirildi.
+- [x] P2: `system-status/index.tsx` — `isDemoMode` -> `noExternalBackend` degisken adi. `ss.demoMode` -> `ss.noExternalBackend` locale key.
+- [x] P2: Locale keyleri guncellendi (EN+TR parity): `systemStatus.demoMode` -> `systemStatus.noExternalBackend`. EN: "External backend not configured — only local API endpoints are monitored". TR: "Harici backend yapilandirilmadi — yalnizca yerel API uc noktalari izleniyor".
+- [x] P2: `smoke.test.tsx` — "Demo modu" text assertion "Harici backend" ile degistirildi.
+
+### Faz T.1 Degisiklik Ozeti
+
+| Dosya | Degisiklik | Risk |
+| --- | --- | --- |
+| `platform/components/Layout/Footer.tsx` | FooterLink/FooterSection type + explicit typing | Dusuk — davranis degismedi |
+| `platform/config/product-catalog.ts` | FooterProductId type + resolveKey fail-fast | Orta — dev'de eksik key artik crash |
+| `platform/pages/system-status/index.tsx` | isDemoMode -> noExternalBackend | Dusuk — sadece label |
+| `platform/locales/en.json` | demoMode -> noExternalBackend | Dusuk — key rename |
+| `platform/locales/tr.json` | demoMode -> noExternalBackend | Dusuk — key rename |
+| `platform/__tests__/config/product-catalog.test.ts` | empty string -> throw assertion | Dusuk — sadece test |
+| `platform/__tests__/hooks/useSearch.test.ts` | empty string -> throw assertion | Dusuk — sadece test |
+| `platform/__tests__/pages/smoke.test.tsx` | Demo modu -> Harici backend text | Dusuk — sadece test |
+
+### Backward Compat Notlari
+
+- **resolveKey**: Production davranisi bos string'den `[path]` sinyaline degisti — UI'da bozmasi olmayan ama eksik ceviriyi gorunur kilan bir degisiklik. Dev/test ortaminda artik hard fail.
+- **Footer**: Ayni render ciktisi, sadece TypeScript seviyesinde tip guvenligi eklendi.
+- **System Status**: `demoMode` locale key `noExternalBackend` ile degistirildi — hem EN hem TR parity korundu.
