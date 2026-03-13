@@ -137,8 +137,10 @@ export const FOOTER_PRODUCT_IDS = [
   'system-status',
 ] as const
 
+export type FooterProductId = (typeof FOOTER_PRODUCT_IDS)[number]
+
 /** Maps each footer product ID → locale key under `t.footer.sections.products` */
-export const FOOTER_PRODUCT_LOCALE_MAP: Record<string, string> = {
+export const FOOTER_PRODUCT_LOCALE_MAP: Record<FooterProductId, string> = {
   'ai-music-detection': 'aiMusic',
   'ml-toolkit': 'dataProcessing',
   'crown-fortune': 'fortune',
