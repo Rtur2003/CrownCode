@@ -937,3 +937,57 @@ Not:
 
 - **useLocalHistory**: V1 tek-obje ve V2 id-siz array kayitlari read sirasinda otomatik id alarak migrate ediliyor. `lastEntry`, `save`, `remove`, `clear` API'si degismedi. `removeById` parametre tipi `number` (timestamp) -> `string` (id) olarak degisti — tek tuketici `analysis-history` ayni committe guncellendi.
 - **Locale contract**: `ah.entryCount`, `ah.clearAllConfirm`, `ah.clearAll`, `t.aria.removeFile`, `sp.badges[type]` artik zorunlu — key yoksa runtime error. Keyler Faz S'de her iki locale'a eklenmisti, sorun yok.
+
+---
+
+## Tur 5.19 - Faz T (Search Registry Single Source + Product Unification + System Status Realism)
+
+- Durum: uygulama tamamlandi, analist dogrulamasina hazir.
+
+### Faz T Sonuc
+
+- [x] Search registry single source: hardcoded EN fallbacklar useSearch.ts'den tamamen kaldirildi, SEARCH_REGISTRY + dot-path locale resolution ile degistirildi.
+- [x] search.tsx fallbacklari temizlendi (description empty-string fallback, searchMeta keywords EN fallback).
+- [x] Footer product links PRODUCT_CATALOG + FOOTER_PRODUCT_IDS'den turetiliyor — href'ler tek kaynaktan.
+- [x] Footer aria-label EN fallbacklari temizlendi (github, website, email).
+- [x] System Status realism: last-checked timestamp, degraded state (kismi bozulma), demo mode label.
+- [x] product-catalog.ts'e FOOTER_PRODUCT_LOCALE_MAP, getProductHref helper'lari eklendi.
+- [x] Yeni test dosyasi: product-catalog.test.ts (getProductHref, FOOTER_PRODUCT_IDS integrity, resolveKey, catalog uniqueness).
+- [x] useSearch.test.ts genisletildi: registry resolution testleri (dot-path title, description, cross-section keys, missing keys).
+- [x] smoke.test.tsx genisletildi: system-status last-checked, demo label, degraded state testleri.
+
+### Faz T Cikisli Claude Gorevleri
+
+- [x] P0: `useSearch.ts` — hardcoded static items kaldirildi, SEARCH_REGISTRY + resolveKey ile registry-driven resolution. Catalog items resolveProduct ile, registry items resolveKey ile cozumleniyor.
+- [x] P0: `search.tsx` — `item.description || ''` -> `item.description ?? ''`, `t.searchMeta?.keywords || 'search, projects'` -> `t.searchMeta?.keywords`.
+- [x] P1: `Footer.tsx` — product links FOOTER_PRODUCT_IDS + FOOTER_PRODUCT_LOCALE_MAP + getProductHref ile turetiliyor. Hardcoded href array kaldirildi.
+- [x] P1: `Footer.tsx` — `t.aria?.github || 'GitHub'`, `t.aria?.website || 'Website'`, `t.aria?.email || 'Email'` fallbacklari kaldirildi. Direct access: `t.aria.github`.
+- [x] P1: `product-catalog.ts` — `FOOTER_PRODUCT_LOCALE_MAP` (id -> footer locale key), `getProductHref(id)` helper eklendi.
+- [x] P1: `system-status/index.tsx` — `lastChecked` state + gosterimi, `isDegraded` hesaplamasi (some ok + some error), `isDemoMode` label (NEXT_PUBLIC_API_URL yoksa).
+- [x] P1: `system-status.module.css` — `.status-dot-degraded` (amber), `.last-checked`, `.demo-label` stilleri.
+- [x] P1: Locale keyleri eklendi (EN+TR parity): `systemStatus.degraded`, `systemStatus.lastChecked`, `systemStatus.demoMode`.
+- [x] P2: `__tests__/config/product-catalog.test.ts` — 10 test (getProductHref catalog/registry/unknown, FOOTER_PRODUCT_IDS href+locale integrity, resolveKey nested/top/missing/non-string, catalog+registry unique IDs, no ID collision).
+- [x] P2: `__tests__/hooks/useSearch.test.ts` — 5 yeni test (registry resolution: dot-path title, feature title+desc, cross-section keys, omit desc when no key, empty for unresolvable). Mock jest.requireActual ile SEARCH_REGISTRY + resolveKey gercek degerler.
+- [x] P2: `__tests__/pages/smoke.test.tsx` — 3 yeni test (last-checked timestamp, demo label, degraded state with partial fetch failure).
+
+### Faz T Degisiklik Ozeti
+
+| Dosya | Degisiklik | Risk |
+| --- | --- | --- |
+| `platform/config/product-catalog.ts` | FOOTER_PRODUCT_LOCALE_MAP + getProductHref | Dusuk — additive |
+| `platform/hooks/useSearch.ts` | Registry-driven resolution | Orta — search data kaynagi degisti |
+| `platform/pages/search.tsx` | Fallback temizligi | Dusuk — key var |
+| `platform/components/Layout/Footer.tsx` | Catalog-driven product links + aria fallback temizligi | Orta — footer render degisti |
+| `platform/pages/system-status/index.tsx` | lastChecked + degraded + demoMode | Dusuk — additive UI |
+| `platform/styles/pages/system-status.module.css` | 3 yeni CSS class | Dusuk — additive |
+| `platform/locales/en.json` | systemStatus.degraded/lastChecked/demoMode | Dusuk — additive |
+| `platform/locales/tr.json` | Ayni keyler TR karsiligi | Dusuk — additive |
+| `platform/__tests__/config/product-catalog.test.ts` | 10 yeni test | Dusuk — sadece test |
+| `platform/__tests__/hooks/useSearch.test.ts` | 5 yeni + mock guncelleme | Dusuk — sadece test |
+| `platform/__tests__/pages/smoke.test.tsx` | 3 yeni test | Dusuk — sadece test |
+
+### Backward Compat Notlari
+
+- **useSearch.ts**: `buildSearchItems(t)` ayni API, ayni return tipi. Dahili veri kaynagi hardcoded array'den registry'ye degisti — tuketiciler etkilenmiyor.
+- **Footer.tsx**: Ayni product listesi, ayni siralama. Href'ler artik catalog'dan geliyor — yeni urun eklendiginde FOOTER_PRODUCT_IDS + FOOTER_PRODUCT_LOCALE_MAP guncellenmeli.
+- **System Status**: Mevcut fonksiyonellik korundu. lastChecked/degraded/demoMode ek bilgi olarak gosteriliyor.
