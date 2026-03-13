@@ -157,6 +157,19 @@ describe('Page Smoke Tests', () => {
       // TR: "Analiz Geçmişi", EN: "Analysis History"
       expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
     })
+
+    it('renders long input text without layout break', async () => {
+      const longInput = 'https://www.youtube.com/watch?v=' + 'a'.repeat(300)
+      const entry = { input: longInput, result: { score: 0.9 }, timestamp: Date.now() }
+      localStorage.setItem('crowncode:last-analysis', JSON.stringify([entry]))
+
+      const AnalysisHistoryPage = (await import('@/pages/analysis-history/index')).default
+      const { container } = renderWithProviders(<AnalysisHistoryPage />)
+
+      const inputText = container.querySelector('[class*="entry-input-text"]')
+      expect(inputText).toBeInTheDocument()
+      expect(inputText?.textContent).toBe(longInput)
+    })
   })
 
   describe('System Status Page (/system-status)', () => {
