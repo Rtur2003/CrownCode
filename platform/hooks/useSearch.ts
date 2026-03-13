@@ -14,7 +14,7 @@ export interface SearchItem {
   title: string
   description?: string
   href: string
-  category: 'pages' | 'features'
+  category: 'product' | 'feature' | 'page'
   icon?: string
 }
 
@@ -31,7 +31,7 @@ export function buildSearchItems(t: Record<string, any>): SearchItem[] {
       title: resolved.title,
       description: resolved.description,
       href: entry.href,
-      category: 'pages' as const,
+      category: 'product' as const,
     }
   })
 
@@ -40,48 +40,48 @@ export function buildSearchItems(t: Record<string, any>): SearchItem[] {
       id: 'home',
       title: t.search?.pages?.home || 'Home',
       href: '/',
-      category: 'pages' as const,
+      category: 'page' as const,
     },
     {
       id: 'projects',
       title: t.search?.pages?.projects || 'Projects',
       href: '/#products',
-      category: 'pages' as const,
+      category: 'page' as const,
     },
     {
       id: 'url-analysis',
       title: t.search?.features?.urlAnalysis || 'URL Analysis',
       description: t.search?.features?.urlAnalysisDesc || 'Analyze a YouTube link',
       href: '/ai-music-detection#url',
-      category: 'features' as const,
+      category: 'feature' as const,
     },
     {
       id: 'data-augmentation',
       title: t.search?.features?.dataAugmentation || 'Data Augmentation',
       description: t.search?.features?.dataAugmentationDesc || 'Augment your dataset',
       href: '/data-manipulation',
-      category: 'features' as const,
+      category: 'feature' as const,
     },
     {
       id: 'creator-studio',
       title: t.creatorStudio?.title || 'Creator Studio',
       description: t.creatorStudio?.subtitle || 'Audio creation tools powered by AI',
       href: '/creator-studio',
-      category: 'pages' as const,
+      category: 'page' as const,
     },
     {
       id: 'analysis-history',
       title: t.analysisHistory?.title || 'Analysis History',
       description: t.analysisHistory?.subtitle || 'Your recent analysis results',
       href: '/analysis-history',
-      category: 'pages' as const,
+      category: 'page' as const,
     },
     {
       id: 'system-status',
       title: t.systemStatus?.title || 'System Status',
       description: t.systemStatus?.allOperational || 'Live status of CrownCode services',
       href: '/system-status',
-      category: 'pages' as const,
+      category: 'page' as const,
     },
   ]
 
