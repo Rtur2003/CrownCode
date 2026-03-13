@@ -15,7 +15,7 @@ interface SearchResult {
   title: string
   description: string
   url: string
-  type: 'project' | 'page'
+  type: 'product' | 'feature' | 'page'
   icon: React.ReactNode
 }
 
@@ -31,7 +31,7 @@ const SearchPage: NextPage = () => {
       title: item.title,
       description: item.description || '',
       url: item.href,
-      type: (item.category === 'pages' ? 'page' : 'project') as 'project' | 'page',
+      type: item.category,
       icon: <ExternalLink size={20} />,
     }))
   }, [t])
@@ -141,7 +141,7 @@ const SearchPage: NextPage = () => {
                           {result.title}
                         </h3>
                         <span className={styles['result-badge']}>
-                          {result.type}
+                          {sp.badges?.[result.type] || result.type}
                         </span>
                       </div>
                       <p className={styles['result-description']}>
