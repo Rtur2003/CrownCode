@@ -841,4 +841,63 @@ Not:
 
 ### Siradaki Analiz
 
-- [ ] Faz S: Analist bulgulari (i18n hardcoded, search kategori, history v2, Node 24) + urun buyume adimi.
+- [x] Faz S: Analist bulgulari (i18n hardcoded, search kategori, history v2, Node 24) + urun buyume adimi.
+
+---
+
+## Tur 5.18 - Faz S Tamamlandi (i18n Hardening + Search Category + History V2 + Node 24 Canary)
+
+- Durum: uygulama tamamlandi, analist dogrulamasina hazir.
+
+### Faz S Sonuc
+
+- [x] Hardcoded EN fallback borcu 3 sayfada tamamen kapatildi.
+- [x] FileUploader aria-label locale-aware hale getirildi.
+- [x] Search kategori semantigi `product|feature|page` olarak netlestirildi.
+- [x] History V2: useLocalHistory multi-entry (max 20, V1 migration, backward-compat API).
+- [x] Analysis-history sayfasi multi-entry gosteriminE + clearAll + entryCount UI eklendi.
+- [x] `.entry-input-text` overflow/text-overflow/word-break CSS fix.
+- [x] Node 24 canary CI job (non-blocking, `continue-on-error: true`).
+- [x] `cache-dependency-path` drift duzeltildi (`platform/package-lock.json` -> `package-lock.json`).
+- [x] 3 yeni test dosyasi: `useLocalHistory.test.ts` (7 test), `useSearch.test.ts` (4 test), smoke long-input testi.
+
+### Faz S Cikisli Claude Gorevleri
+
+- [x] P0-1: Hardcoded EN fallback (`|| 'English text'`) kaldirildi — `creator-studio/index.tsx`, `analysis-history/index.tsx`, `system-status/index.tsx`. Optional chaining (`?.`) yerine direct access kullanildi.
+- [x] P0-1: `FileUploader.tsx` remove button `aria-label` locale-aware: `(t.aria?.removeFile || 'Remove {{name}}').replace('{{name}}', file.name)`.
+- [x] P0-1: Locale keyleri eklendi (EN+TR parity): `aria.removeFile`, `analysisHistory.clearAll/clearAllConfirm/entryCount`, `searchPage.badges`.
+- [x] P0-2: `SearchItem.category` tipi `'pages' | 'features'` -> `'product' | 'feature' | 'page'`. `buildSearchItems()` semantik esleme duzeltildi (catalog -> product, feature items -> feature, page items -> page).
+- [x] P0-2: `/search` sayfasi `SearchResult.type` ayni 3-way union'a hizalandi. Badge gosterimi `sp.badges[result.type]` ile locale-aware.
+- [x] P1-3: `useLocalHistory` V1->V2 rewrite — multi-entry (max 20, newest first), `entries` array, `removeById(timestamp)`, `clear()`, backward-compat `lastEntry`/`save`/`remove`. V1 single-entry format auto-migration.
+- [x] P1-3: `analysis-history/index.tsx` multi-entry UI — entry listesi, entry count, clearAll butonu (confirm dialog), per-entry removeById.
+- [x] P1-3: `analysis-history.module.css` overflow fix — `.entry-input-text` overflow/text-overflow/ellipsis + `max-width: 480px`. Yeni stiller: `.list-header`, `.entry-count`, `.clear-all-btn`, `.entries-list`.
+- [x] P2-4: `.github/workflows/ci.yml` — `cache-dependency-path: platform/package-lock.json` -> `package-lock.json` (4 job duzeltildi).
+- [x] P2-4: Node 24 canary job eklendi — `node-version: '24'`, `continue-on-error: true`, lint+type-check+test+build.
+- [x] Test: `__tests__/hooks/useLocalHistory.test.ts` — 7 test (empty init, newest-first, cap at 20, removeById, clear, V1 migration, backward-compat remove).
+- [x] Test: `__tests__/hooks/useSearch.test.ts` — 4 test (catalog->product, page->page, feature->feature, only valid categories).
+- [x] Test: `__tests__/pages/smoke.test.tsx` — long input render testi (300 char URL, CSS overflow dogrulamasi).
+
+### Faz S Degisiklik Ozeti
+
+| Dosya | Degisiklik | Risk |
+| --- | --- | --- |
+| `platform/locales/en.json` | aria.removeFile, analysisHistory.*, searchPage.badges | Dusuk — additive |
+| `platform/locales/tr.json` | Ayni keyler TR karsiligi | Dusuk — additive |
+| `platform/pages/creator-studio/index.tsx` | EN fallback kaldirildi | Dusuk — key var |
+| `platform/pages/analysis-history/index.tsx` | Multi-entry UI + fallback kaldirildi | Orta — UI degisikligi |
+| `platform/pages/system-status/index.tsx` | EN fallback kaldirildi | Dusuk — key var |
+| `platform/components/MLToolkit/FileUploader.tsx` | aria-label locale-aware | Dusuk |
+| `platform/hooks/useSearch.ts` | category type + esleme | Orta — tum tuketiciler etkileniyor |
+| `platform/pages/search.tsx` | type union + badge locale | Dusuk — UI iyilestirme |
+| `platform/hooks/useLocalHistory.ts` | V2 rewrite (multi-entry) | Orta — backward-compat API korundu |
+| `platform/styles/pages/analysis-history.module.css` | overflow fix + yeni stiller | Dusuk |
+| `.github/workflows/ci.yml` | cache path fix + Node 24 canary | Dusuk — canary non-blocking |
+| `platform/__tests__/hooks/useLocalHistory.test.ts` | 7 yeni test | Dusuk — sadece test |
+| `platform/__tests__/hooks/useSearch.test.ts` | 4 yeni test | Dusuk — sadece test |
+| `platform/__tests__/pages/smoke.test.tsx` | 1 yeni test (long input) | Dusuk — sadece test |
+
+### Backward Compat Notlari
+
+- **useLocalHistory**: V1 tek-obje format auto-migrate ediliyor. `lastEntry`, `save`, `remove` ayni API ile calisiyor. `useCommend` degisiklik gerektirmiyor.
+- **SearchItem.category**: `'pages'` -> `'page'`, `'features'` -> `'feature'`. Tek tuketici `search.tsx` ayni committe guncellendi.
+- **Node 24 canary**: `continue-on-error: true` — deploy/merge gate'i etkilemiyor.
