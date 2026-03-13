@@ -1,11 +1,14 @@
 /**
- * useLocalHistory — Minimal localStorage persistence for last input/result.
+ * useLocalHistory — localStorage persistence for analysis history.
  *
- * Stores at most ONE entry per key (the most recent).
- * Gracefully degrades if localStorage is unavailable (SSR, private mode).
+ * V2: Stores up to MAX_ENTRIES per key (newest first).
+ * Backward-compatible: `lastEntry` still returns the most recent entry,
+ * `save` and `remove` work as before.
  */
 
 import { useState, useCallback } from 'react'
+
+const MAX_ENTRIES = 20
 
 export interface HistoryEntry<T> {
   input: string
@@ -13,25 +16,30 @@ export interface HistoryEntry<T> {
   timestamp: number
 }
 
-function read<T>(key: string): HistoryEntry<T> | null {
+function readAll<T>(key: string): HistoryEntry<T>[] {
   try {
     const raw = localStorage.getItem(key)
-    if (!raw) return null
-    return JSON.parse(raw) as HistoryEntry<T>
+    if (!raw) return []
+    const parsed = JSON.parse(raw)
+    // Migrate from V1 single-entry format
+    if (parsed && !Array.isArray(parsed) && typeof parsed.timestamp === 'number') {
+      return [parsed as HistoryEntry<T>]
+    }
+    return Array.isArray(parsed) ? parsed : []
   } catch {
-    return null
+    return []
   }
 }
 
-function write<T>(key: string, entry: HistoryEntry<T>): void {
+function writeAll<T>(key: string, entries: HistoryEntry<T>[]): void {
   try {
-    localStorage.setItem(key, JSON.stringify(entry))
+    localStorage.setItem(key, JSON.stringify(entries))
   } catch {
     // quota or unavailable — silently ignore
   }
 }
 
-function clear(key: string): void {
+function clearKey(key: string): void {
   try {
     localStorage.removeItem(key)
   } catch {
@@ -40,26 +48,63 @@ function clear(key: string): void {
 }
 
 export function useLocalHistory<T>(storageKey: string) {
-  const [lastEntry, setLastEntry] = useState<HistoryEntry<T> | null>(() => {
-    if (typeof window === 'undefined') return null
-    return read<T>(storageKey)
+  const [entries, setEntries] = useState<HistoryEntry<T>[]>(() => {
+    if (typeof window === 'undefined') return []
+    return readAll<T>(storageKey)
   })
 
+  /** Most recent entry (backward compat) */
+  const lastEntry = entries.length > 0 ? entries[0] : null
+
+  /** Add a new entry (newest first, capped at MAX_ENTRIES) */
   const save = useCallback(
     (input: string, result: T) => {
       const entry: HistoryEntry<T> = { input, result, timestamp: Date.now() }
-      write(storageKey, entry)
-      setLastEntry(entry)
+      setEntries((prev) => {
+        const next = [entry, ...prev].slice(0, MAX_ENTRIES)
+        writeAll(storageKey, next)
+        return next
+      })
     },
     [storageKey],
   )
 
+  /** Remove most recent entry (backward compat) */
   const remove = useCallback(() => {
-    clear(storageKey)
-    setLastEntry(null)
+    setEntries((prev) => {
+      const next = prev.slice(1)
+      if (next.length === 0) {
+        clearKey(storageKey)
+      } else {
+        writeAll(storageKey, next)
+      }
+      return next
+    })
   }, [storageKey])
 
-  return { lastEntry, save, remove }
+  /** Remove a specific entry by timestamp */
+  const removeById = useCallback(
+    (timestamp: number) => {
+      setEntries((prev) => {
+        const next = prev.filter((e) => e.timestamp !== timestamp)
+        if (next.length === 0) {
+          clearKey(storageKey)
+        } else {
+          writeAll(storageKey, next)
+        }
+        return next
+      })
+    },
+    [storageKey],
+  )
+
+  /** Clear all entries for this key */
+  const clear = useCallback(() => {
+    clearKey(storageKey)
+    setEntries([])
+  }, [storageKey])
+
+  return { entries, lastEntry, save, remove, removeById, clear }
 }
 
 // Storage keys used across the platform
