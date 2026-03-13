@@ -23,6 +23,9 @@ const SystemStatusPage: NextPage = () => {
     { name: 'Version', url: '/api/version', status: 'loading' },
   ])
   const [checking, setChecking] = useState(false)
+  const [lastChecked, setLastChecked] = useState<Date | null>(null)
+
+  const isDemoMode = !process.env.NEXT_PUBLIC_API_URL
 
   const checkServices = async () => {
     setChecking(true)
@@ -59,6 +62,7 @@ const SystemStatusPage: NextPage = () => {
     )
 
     setServices(results)
+    setLastChecked(new Date())
     setChecking(false)
   }
 
@@ -68,6 +72,8 @@ const SystemStatusPage: NextPage = () => {
   }, [])
 
   const allOk = services.every((s) => s.status === 'ok')
+  const someOk = services.some((s) => s.status === 'ok')
+  const isDegraded = !allOk && someOk && services.every((s) => s.status !== 'loading')
 
   return (
     <MainLayout
@@ -85,11 +91,12 @@ const SystemStatusPage: NextPage = () => {
           </div>
 
           <div className={styles['status-bar']}>
-            <span className={`${styles['status-dot']} ${allOk ? styles['status-dot-ok'] : styles['status-dot-error']}`} />
+            <span className={`${styles['status-dot']} ${allOk ? styles['status-dot-ok'] : isDegraded ? styles['status-dot-degraded'] : styles['status-dot-error']}`} />
             <span className={styles['status-text']}>
-              {allOk ? ss.allOperational : ss.someIssues}
+              {allOk ? ss.allOperational : isDegraded ? ss.degraded : ss.someIssues}
             </span>
             <button
+              type="button"
               onClick={checkServices}
               disabled={checking}
               className={styles['refresh-btn']}
@@ -98,6 +105,18 @@ const SystemStatusPage: NextPage = () => {
               {ss.refresh}
             </button>
           </div>
+
+          {lastChecked && (
+            <p className={styles['last-checked']}>
+              {ss.lastChecked}: {lastChecked.toLocaleTimeString()}
+            </p>
+          )}
+
+          {isDemoMode && (
+            <p className={styles['demo-label']}>
+              {ss.demoMode}
+            </p>
+          )}
         </motion.div>
 
         <div className={styles['services-list']}>
