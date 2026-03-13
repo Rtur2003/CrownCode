@@ -203,5 +203,49 @@ describe('Page Smoke Tests', () => {
         expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
       })
     })
+
+    it('shows last-checked timestamp after health check completes', async () => {
+      const SystemStatusPage = (await import('@/pages/system-status/index')).default
+      await act(async () => {
+        renderWithProviders(<SystemStatusPage />)
+      })
+      // TR default: "Son kontrol"
+      await waitFor(() => {
+        expect(screen.getByText(/Son kontrol/)).toBeInTheDocument()
+      })
+    })
+
+    it('shows demo label when NEXT_PUBLIC_API_URL is not set', async () => {
+      delete process.env.NEXT_PUBLIC_API_URL
+      const SystemStatusPage = (await import('@/pages/system-status/index')).default
+      await act(async () => {
+        renderWithProviders(<SystemStatusPage />)
+      })
+      // TR: "Demo modu"
+      await waitFor(() => {
+        expect(screen.getByText(/Demo modu/)).toBeInTheDocument()
+      })
+    })
+
+    it('shows degraded state when some services fail', async () => {
+      let callCount = 0
+      global.fetch = jest.fn(() => {
+        callCount++
+        // First call succeeds, second fails
+        if (callCount <= 1) {
+          return Promise.resolve({ ok: true, json: () => Promise.resolve({}) } as Response)
+        }
+        return Promise.reject(new Error('timeout'))
+      })
+
+      const SystemStatusPage = (await import('@/pages/system-status/index')).default
+      await act(async () => {
+        renderWithProviders(<SystemStatusPage />)
+      })
+      // TR: "Kısmi bozulma tespit edildi"
+      await waitFor(() => {
+        expect(screen.getByText(/Kısmi bozulma/)).toBeInTheDocument()
+      })
+    })
   })
 })
