@@ -49,6 +49,11 @@
 .entry-input-text {
   font-weight: 600;
   font-size: 0.95rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-all;
+  max-width: 480px;
 }
 
 .entry-icon {
@@ -81,6 +86,42 @@
   white-space: pre-wrap;
   word-break: break-word;
   margin: 0;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.entry-count {
+  color: #999;
+  font-size: 0.85rem;
+}
+
+.clear-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid rgba(255, 68, 68, 0.3);
+  color: #ff4444;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  transition: background 0.2s;
+}
+
+.clear-all-btn:hover {
+  background: rgba(255, 68, 68, 0.1);
+}
+
+.entries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .empty-state {
