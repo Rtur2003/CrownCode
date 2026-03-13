@@ -29,7 +29,7 @@ const SearchPage: NextPage = () => {
   const searchableContent: SearchResult[] = useMemo(() => {
     return buildSearchItems(t).map((item) => ({
       title: item.title,
-      description: item.description || '',
+      description: item.description ?? '',
       url: item.href,
       type: item.category,
       icon: <ExternalLink size={20} />,
@@ -71,7 +71,7 @@ const SearchPage: NextPage = () => {
     <MainLayout
       title={`${sp.meta.title}: ${query || ''} - CrownCode`}
       description={sp.meta.description}
-      keywords={t.searchMeta?.keywords || 'search, projects'}
+      keywords={t.searchMeta?.keywords}
     >
       <div className={styles['search-page']}>
         {/* Search Header */}
