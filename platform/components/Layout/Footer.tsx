@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear()
 
   const productLinks: FooterLink[] = FOOTER_PRODUCT_IDS.map((id) => ({
-    label: t.footer.sections.products[FOOTER_PRODUCT_LOCALE_MAP[id]],
+    label: (t.footer.sections.products as Record<string, string>)[FOOTER_PRODUCT_LOCALE_MAP[id]],
     href: getProductHref(id),
   }))
 
