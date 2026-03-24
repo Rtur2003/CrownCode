@@ -31,39 +31,39 @@ const cardVariants: Variants = {
 
 interface Step {
   icon: React.ReactNode
-  titleKey: string
-  descKey: string
-  tagKey?: string
+  title: string
+  desc: string
+  tag?: string
 }
 
 export const HowItWorks: React.FC = () => {
   const { t } = useLanguage()
 
+  const hw = t.aiDetection.howItWorks
+
   const steps: Step[] = [
     {
       icon: <Youtube size={24} aria-hidden="true" />,
-      titleKey: 'step1Title',
-      descKey: 'step1Desc'
+      title: hw?.step1Title || 'Paste Link',
+      desc: hw?.step1Desc || 'Drop a YouTube URL and AURIS fetches the audio automatically.'
     },
     {
       icon: <Upload size={24} aria-hidden="true" />,
-      titleKey: 'step2Title',
-      descKey: 'step2Desc'
+      title: hw?.step2Title || 'Upload File',
+      desc: hw?.step2Desc || 'Or upload MP3, WAV, FLAC directly from your device.'
     },
     {
       icon: <Cpu size={24} aria-hidden="true" />,
-      titleKey: 'step3Title',
-      descKey: 'step3Desc',
-      tagKey: 'wav2vec2'
+      title: hw?.step3Title || 'AI Analysis',
+      desc: hw?.step3Desc || 'Deep neural analysis via wav2vec2 model inference.',
+      tag: 'wav2vec2'
     },
     {
       icon: <BarChart3 size={24} aria-hidden="true" />,
-      titleKey: 'step4Title',
-      descKey: 'step4Desc'
+      title: hw?.step4Title || 'Get Results',
+      desc: hw?.step4Desc || 'Confidence score, audio features, and a detailed verdict.'
     }
   ]
-
-  const howItWorks = t.aiDetection.howItWorks
 
   return (
     <section className={styles.section} aria-label="How AURIS works">
