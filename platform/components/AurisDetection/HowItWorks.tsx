@@ -119,13 +119,13 @@ export const HowItWorks: React.FC = () => {
                 {step.icon}
               </div>
               <h3 className={styles.cardTitle}>
-                {howItWorks?.[step.titleKey] || step.titleKey}
+                {step.title}
               </h3>
               <p className={styles.cardDesc}>
-                {howItWorks?.[step.descKey] || step.descKey}
+                {step.desc}
               </p>
-              {step.tagKey && (
-                <span className={styles.cardTag}>{step.tagKey}</span>
+              {step.tag && (
+                <span className={styles.cardTag}>{step.tag}</span>
               )}
             </motion.div>
           ))}
