@@ -19,7 +19,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: url('/images/auris/sound-orb.png') right 5% top 6% / 280px auto no-repeat;
+  background: url('/images/auris/sound-orb.webp') right 5% top 6% / 280px auto no-repeat;
   opacity: 0.06;
   mix-blend-mode: screen;
   filter: blur(1px);
@@ -31,7 +31,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: url('/images/auris/hero-wave.png') left 5% bottom 8% / 360px auto no-repeat;
+  background: url('/images/auris/hero-wave.webp') left 5% bottom 8% / 360px auto no-repeat;
   opacity: 0.04;
   mix-blend-mode: screen;
   pointer-events: none;
@@ -51,7 +51,7 @@
 
 .detection-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 2.5rem;
   position: relative;
 }
 
@@ -218,22 +218,33 @@
    ========================================================================= */
 
 .upload-dropzone {
-  border: 2px dashed rgba(201, 147, 71, 0.4);
-  border-radius: 1rem;
+  border: 2px dashed var(--glass-border);
+  border-radius: var(--radius-xl);
   padding: 3rem 2rem;
   text-align: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  background: rgba(21, 17, 14, 0.65);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  transition: all var(--animation-normal) var(--ease-out-cubic);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+}
+
+.upload-dropzone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(234, 192, 111, 0.06) 0%, transparent 60%);
+  pointer-events: none;
 }
 
 .upload-dropzone:hover,
 .upload-dropzone.drag-over {
-  border-color: var(--color-primary);
-  background: rgba(231, 199, 122, 0.12);
+  border-color: var(--color-gold-400);
+  background: rgba(234, 192, 111, 0.08);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
 }
 
 .upload-dropzone svg {
@@ -290,16 +301,19 @@
 .url-input-wrapper {
   display: flex;
   align-items: center;
-  background: rgba(21, 17, 14, 0.85);
-  border: 1px solid rgba(201, 147, 71, 0.4);
-  border-radius: 0.75rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
   padding: 0 1rem;
   margin-bottom: 1rem;
-  transition: border-color 0.3s ease;
+  transition: all var(--animation-normal) var(--ease-out-cubic);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .url-input-wrapper:focus-within {
-  border-color: var(--color-primary);
+  border-color: var(--color-gold-400);
+  box-shadow: 0 0 20px rgba(234, 192, 111, 0.12);
 }
 
 .url-input-wrapper svg {
@@ -326,12 +340,17 @@
    ========================================================================= */
 
 .pipeline-section {
-  background: rgba(21, 17, 14, 0.75);
-  border: 1px solid rgba(231, 199, 122, 0.2);
-  border-radius: 1rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
   padding: 2rem;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  transition: border-color var(--animation-normal) var(--ease-out-cubic);
+}
+
+.pipeline-section:hover {
+  border-color: rgba(234, 192, 111, 0.35);
 }
 
 .pipeline-list {
@@ -548,13 +567,14 @@
    ========================================================================= */
 
 .analysis-result-card {
-  background: rgba(21, 17, 14, 0.85);
-  border: 1px solid rgba(201, 147, 71, 0.4);
-  border-radius: 1rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
   padding: 2rem;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   margin-top: 2rem;
+  box-shadow: var(--shadow-lg);
 }
 
 .result-header {

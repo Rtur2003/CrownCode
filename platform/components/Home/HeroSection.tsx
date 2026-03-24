@@ -67,7 +67,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
         {/* Sound wave background image */}
         <div className="hero-bg-wave">
           <Image
-            src="/images/auris/hero-wave.png"
+            src="/images/auris/hero-wave.webp"
             alt=""
             fill
             priority
@@ -177,7 +177,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
             transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
           >
             <Image
-              src="/images/auris/sound-rings.png"
+              src="/images/auris/sound-rings.webp"
               alt=""
               width={520}
               height={520}
@@ -196,7 +196,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
             transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
           >
             <Image
-              src="/images/auris/sound-orb.png"
+              src="/images/auris/sound-orb.webp"
               alt="AURIS Sound Analysis Orb"
               width={380}
               height={380}
@@ -215,7 +215,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
             transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
           >
             <Image
-              src="/images/auris/speaker.png"
+              src="/images/auris/speaker.webp"
               alt=""
               width={140}
               height={140}

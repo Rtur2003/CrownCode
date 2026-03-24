@@ -62,7 +62,7 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
         {/* Ambient gradient background image */}
         <div className={styles.bgAmbient}>
           <Image
-            src="/images/auris/gradient-bg.png"
+            src="/images/auris/gradient-bg.webp"
             alt=""
             fill
             priority
@@ -74,7 +74,7 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
         {/* Sound wave overlay */}
         <div className={styles.bgWave}>
           <Image
-            src="/images/auris/hero-wave.png"
+            src="/images/auris/hero-wave.webp"
             alt=""
             fill
             priority
@@ -170,7 +170,7 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
             transition={{ repeat: Infinity, duration: 35, ease: 'linear' }}
           >
             <Image
-              src="/images/auris/sound-rings.png"
+              src="/images/auris/sound-rings.webp"
               alt=""
               width={480}
               height={480}
@@ -186,7 +186,7 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
             transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
           >
             <Image
-              src="/images/auris/speaker.png"
+              src="/images/auris/speaker.webp"
               alt=""
               width={420}
               height={420}
@@ -213,7 +213,7 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
             transition={{ repeat: Infinity, duration: 7, ease: 'easeInOut' }}
           >
             <Image
-              src="/images/auris/sound-orb.png"
+              src="/images/auris/sound-orb.webp"
               alt=""
               width={120}
               height={120}

@@ -70,7 +70,7 @@ export const HowItWorks: React.FC = () => {
       {/* Decorative background wave */}
       <div className={styles.bgDecor} aria-hidden="true">
         <Image
-          src="/images/auris/sound-rings.png"
+          src="/images/auris/sound-rings.webp"
           alt=""
           width={300}
           height={300}
