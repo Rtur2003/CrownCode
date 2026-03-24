@@ -271,7 +271,8 @@
   width: 100%;
   max-width: 520px;
   height: auto;
-  opacity: 0.5;
+  opacity: 0.55;
+  mix-blend-mode: screen;
   filter: drop-shadow(0 0 30px rgba(201, 147, 71, 0.2));
 }
 
