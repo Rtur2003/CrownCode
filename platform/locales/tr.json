@@ -249,6 +249,15 @@
       "title": "AURIS ile AI Müzik Tespiti",
       "subtitle": "AURIS - YouTube odaklı analiz arayüzü; backend entegrasyonları opsiyonel, önizleme güvenli yedektir."
     },
+    "hero": {
+      "accent": "AI Müzik Tespiti",
+      "description": "Yapay zeka ile üretilmiş müzikleri derin ses analizi ile tespit edin. Dosya yükleyin veya YouTube linki yapıştırın — gerisini AURIS halletsin.",
+      "featureDeep": "Derin Analiz",
+      "featureMulti": "Çoklu Kaynak",
+      "cta": "Analize Başla",
+      "scroll": "Keşfet",
+      "scrollLabel": "Tespit aracına ilerle"
+    },
     "warning": {
       "title": "AURIS Önizleme Modu",
       "currentStatus": "Mevcut Durum:",

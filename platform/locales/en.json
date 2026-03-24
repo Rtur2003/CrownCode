@@ -249,6 +249,15 @@
       "title": "AURIS - AI Music Detection",
       "subtitle": "AURIS - YouTube-first analysis interface with optional backend integrations and a safe preview fallback."
     },
+    "hero": {
+      "accent": "AI Music Detection",
+      "description": "Detect AI-generated music with deep audio analysis. Upload files or paste YouTube links — AURIS handles the rest.",
+      "featureDeep": "Deep Analysis",
+      "featureMulti": "Multi-Source",
+      "cta": "Start Analysis",
+      "scroll": "Explore",
+      "scrollLabel": "Scroll to detection tool"
+    },
     "warning": {
       "title": "AURIS Preview Mode",
       "currentStatus": "Current Status:",

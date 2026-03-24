@@ -39,7 +39,7 @@
 .detection-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 7rem 2rem 2rem; /* 112px top padding (80px header + 32px spacing) */
+  padding: 3rem 2rem 2rem;
   position: relative;
   z-index: 1;
 }
@@ -711,7 +711,7 @@
 
 @media (max-width: 640px) {
   .detection-container {
-    padding: 6rem 1rem 1rem; /* Keep header clearance on mobile */
+    padding: 2rem 1rem 1rem;
   }
 
   .detection-title {
@@ -750,7 +750,7 @@
 /* Extra small devices */
 @media (max-width: 480px) {
   .detection-container {
-    padding: 5.5rem 0.75rem 0.75rem; /* 88px top (56px header on mobile + 32px spacing) */
+    padding: 1.5rem 0.75rem 0.75rem;
   }
 
   .detection-title {

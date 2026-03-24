@@ -26,6 +26,7 @@ import {
   Zap
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
+import { AurisHeroSection } from '@/components/AurisDetection/HeroSection'
 import { useLanguage } from '@/context/LanguageContext'
 import { useFileAnalysis } from '@/hooks/useFileAnalysis'
 import { useYouTubeAnalysis } from '@/hooks/useYouTubeAnalysis'
@@ -55,6 +56,11 @@ const AIMusicDetectionPage: NextPage = () => {
   const [activeSource, setActiveSource] = useState<'youtube' | 'file'>('youtube')
   const [isDragOver, setIsDragOver] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const detectionRef = useRef<HTMLDivElement>(null)
+
+  const scrollToDetection = useCallback(() => {
+    detectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [])
 
   const processingState = activeSource === 'youtube' ? youtubeProcessingState : fileProcessingState
   const analysisResult = activeSource === 'youtube' ? youtubeResult : fileResult
@@ -296,24 +302,18 @@ const AIMusicDetectionPage: NextPage = () => {
       description={t.aiDetection.meta.description}
       keywords={t.aiDetection.meta.keywords}
     >
-      <div className={styles['ai-detection-page']}>
+      {/* ===== CINEMATIC HERO ===== */}
+      <AurisHeroSection onScrollToDetection={scrollToDetection} />
+
+      {/* ===== DETECTION TOOL ===== */}
+      <div className={styles['ai-detection-page']} ref={detectionRef}>
         <div className={styles['detection-container']}>
+          {/* Warning card */}
           <motion.div
             className={styles['detection-header']}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className={styles['header-badge']}>
-              <Shield size={16} />
-              <span>{t.aiDetection.header.badge}</span>
-            </div>
-            <h1 className={styles['detection-title']}>
-              {t.aiDetection.header.title}
-            </h1>
-            <p className={styles['detection-subtitle']}>
-              {t.aiDetection.header.subtitle}
-            </p>
-
             <div className={styles['demo-warning-container']}>
               <div className={styles['demo-warning-card']}>
                 <div className={styles['warning-header']}>
