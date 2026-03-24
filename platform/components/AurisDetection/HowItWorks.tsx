@@ -88,13 +88,13 @@ export const HowItWorks: React.FC = () => {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
           <span className={styles.label}>
-            {howItWorks?.label || 'How It Works'}
+            {hw?.label || 'How It Works'}
           </span>
           <h2 className={styles.title}>
-            {howItWorks?.title || 'Detection Pipeline'}
+            {hw?.title || 'Detection Pipeline'}
           </h2>
           <p className={styles.subtitle}>
-            {howItWorks?.subtitle || 'From audio source to AI verdict — four streamlined steps.'}
+            {hw?.subtitle || 'From audio source to AI verdict — four streamlined steps.'}
           </p>
         </motion.div>
 
