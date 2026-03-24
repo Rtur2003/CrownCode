@@ -5,34 +5,35 @@
 .ai-detection-page {
   min-height: 100vh;
   background:
-    radial-gradient(120% 120% at 18% 10%, rgba(231, 199, 122, 0.18) 0%, transparent 45%),
-    radial-gradient(110% 90% at 85% 0%, rgba(138, 95, 43, 0.25) 0%, transparent 55%),
-    linear-gradient(180deg, #0b0a08 0%, #15110e 50%, #0b0a08 100%);
+    radial-gradient(120% 120% at 18% 10%, rgba(234, 192, 111, 0.10) 0%, transparent 45%),
+    radial-gradient(110% 90% at 85% 0%, rgba(138, 95, 43, 0.14) 0%, transparent 55%),
+    linear-gradient(180deg, var(--color-background) 0%, var(--color-surface) 50%, var(--color-background) 100%);
   color: var(--color-text-primary);
   overflow-x: hidden;
   position: relative;
   isolation: isolate;
 }
 
+/* Subtle AURIS orb glow — top right */
 .ai-detection-page::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: url('/images/panel/discord.png') right 6% top 8% / 320px auto no-repeat;
-  opacity: 0.12;
+  background: url('/images/auris/sound-orb.png') right 5% top 6% / 280px auto no-repeat;
+  opacity: 0.06;
   mix-blend-mode: screen;
-  filter: saturate(0.9) contrast(1.05);
+  filter: blur(1px);
   pointer-events: none;
 }
 
+/* Subtle wave texture — bottom left */
 .ai-detection-page::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: url('/images/panel/about-me.png') left 6% bottom 12% / 260px auto no-repeat;
-  opacity: 0.08;
+  background: url('/images/auris/hero-wave.png') left 5% bottom 8% / 360px auto no-repeat;
+  opacity: 0.04;
   mix-blend-mode: screen;
-  filter: saturate(0.9) contrast(1.05);
   pointer-events: none;
 }
 

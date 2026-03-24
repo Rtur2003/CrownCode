@@ -27,6 +27,7 @@ import {
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { AurisHeroSection } from '@/components/AurisDetection/HeroSection'
+import { HowItWorks } from '@/components/AurisDetection/HowItWorks'
 import { useLanguage } from '@/context/LanguageContext'
 import { useFileAnalysis } from '@/hooks/useFileAnalysis'
 import { useYouTubeAnalysis } from '@/hooks/useYouTubeAnalysis'
@@ -304,6 +305,9 @@ const AIMusicDetectionPage: NextPage = () => {
     >
       {/* ===== CINEMATIC HERO ===== */}
       <AurisHeroSection onScrollToDetection={scrollToDetection} />
+
+      {/* ===== HOW IT WORKS ===== */}
+      <HowItWorks />
 
       {/* ===== DETECTION TOOL ===== */}
       <div className={styles['ai-detection-page']} ref={detectionRef}>

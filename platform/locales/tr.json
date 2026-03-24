@@ -258,6 +258,19 @@
       "scroll": "Keşfet",
       "scrollLabel": "Tespit aracına ilerle"
     },
+    "howItWorks": {
+      "label": "Nasıl Çalışır",
+      "title": "Tespit Hattı",
+      "subtitle": "Ses kaynağından AI kararına — dört adımda.",
+      "step1Title": "Link Yapıştır",
+      "step1Desc": "YouTube linkini yapıştırın, AURIS sesi otomatik çeker.",
+      "step2Title": "Dosya Yükle",
+      "step2Desc": "Veya MP3, WAV, FLAC dosyasını cihazınızdan yükleyin.",
+      "step3Title": "AI Analizi",
+      "step3Desc": "wav2vec2 modeli ile derin sinir ağı analizi.",
+      "step4Title": "Sonuçları Al",
+      "step4Desc": "Güven skoru, ses özellikleri ve detaylı değerlendirme."
+    },
     "warning": {
       "title": "AURIS Önizleme Modu",
       "currentStatus": "Mevcut Durum:",

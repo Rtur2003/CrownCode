@@ -258,6 +258,19 @@
       "scroll": "Explore",
       "scrollLabel": "Scroll to detection tool"
     },
+    "howItWorks": {
+      "label": "How It Works",
+      "title": "Detection Pipeline",
+      "subtitle": "From audio source to AI verdict — four streamlined steps.",
+      "step1Title": "Paste Link",
+      "step1Desc": "Drop a YouTube URL and AURIS fetches the audio automatically.",
+      "step2Title": "Upload File",
+      "step2Desc": "Or upload MP3, WAV, FLAC directly from your device.",
+      "step3Title": "AI Analysis",
+      "step3Desc": "Deep neural analysis via wav2vec2 model inference.",
+      "step4Title": "Get Results",
+      "step4Desc": "Confidence score, audio features, and a detailed verdict."
+    },
     "warning": {
       "title": "AURIS Preview Mode",
       "currentStatus": "Current Status:",
