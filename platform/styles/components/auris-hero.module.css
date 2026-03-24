@@ -275,7 +275,8 @@
   width: 100%;
   max-width: 480px;
   height: auto;
-  opacity: 0.45;
+  opacity: 0.55;
+  mix-blend-mode: screen;
   filter: drop-shadow(0 0 30px rgba(201, 147, 71, 0.2));
 }
 
@@ -293,8 +294,8 @@
   width: 75%;
   max-width: 400px;
   height: auto;
+  mix-blend-mode: screen;
   filter: drop-shadow(0 0 50px rgba(201, 147, 71, 0.3));
-  border-radius: var(--radius-xl);
 }
 
 /* AURIS label overlay */
@@ -339,8 +340,8 @@
   width: 100%;
   max-width: 110px;
   height: auto;
-  border-radius: 50%;
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 8px 24px rgba(201, 147, 71, 0.15));
 }
 
 /* ===== SCROLL INDICATOR ===== */
