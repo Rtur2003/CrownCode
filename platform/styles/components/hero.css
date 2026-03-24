@@ -290,8 +290,8 @@
   width: 72%;
   max-width: 380px;
   height: auto;
+  mix-blend-mode: screen;
   filter: drop-shadow(0 0 50px rgba(201, 147, 71, 0.35));
-  border-radius: 50%;
 }
 
 /* Floating speaker */
