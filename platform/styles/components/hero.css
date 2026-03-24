@@ -307,8 +307,8 @@
   width: 100%;
   max-width: 120px;
   height: auto;
-  border-radius: var(--radius-xl);
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 8px 24px rgba(201, 147, 71, 0.15));
 }
 
 /* AURIS label on the orb */
