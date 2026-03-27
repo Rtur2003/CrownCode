@@ -271,9 +271,11 @@
   width: 100%;
   max-width: 520px;
   height: auto;
-  opacity: 0.55;
+  opacity: 0.6;
   mix-blend-mode: screen;
-  filter: drop-shadow(0 0 30px rgba(201, 147, 71, 0.2));
+  filter: drop-shadow(0 0 30px rgba(201, 147, 71, 0.25));
+  -webkit-mask-image: radial-gradient(circle, white 35%, transparent 72%);
+  mask-image: radial-gradient(circle, white 35%, transparent 72%);
 }
 
 /* Central orb */
@@ -292,6 +294,8 @@
   height: auto;
   mix-blend-mode: screen;
   filter: drop-shadow(0 0 50px rgba(201, 147, 71, 0.35));
+  -webkit-mask-image: radial-gradient(circle, white 40%, transparent 75%);
+  mask-image: radial-gradient(circle, white 40%, transparent 75%);
 }
 
 /* Floating speaker */
@@ -308,7 +312,9 @@
   max-width: 120px;
   height: auto;
   mix-blend-mode: screen;
-  filter: drop-shadow(0 8px 24px rgba(201, 147, 71, 0.15));
+  filter: drop-shadow(0 8px 24px rgba(201, 147, 71, 0.2));
+  -webkit-mask-image: radial-gradient(circle, white 30%, transparent 70%);
+  mask-image: radial-gradient(circle, white 30%, transparent 70%);
 }
 
 /* AURIS label on the orb */
