@@ -719,6 +719,528 @@
 }
 
 /* =========================================================================
+   ENHANCED RESULT — Verdict + Gauge
+   ========================================================================= */
+
+.result-verdict {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(231, 199, 122, 0.1);
+}
+
+.gauge-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+}
+
+.gauge-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.gauge-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gauge-percent {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.gauge-sublabel {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+
+.verdict-text {
+  flex: 1;
+}
+
+.verdict-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-lg, 0.75rem);
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.verdict-ai {
+  background: rgba(166, 75, 60, 0.15);
+  border: 1px solid rgba(166, 75, 60, 0.4);
+  color: var(--color-error, #a64b3c);
+}
+
+.verdict-human {
+  background: rgba(127, 176, 105, 0.15);
+  border: 1px solid rgba(127, 176, 105, 0.4);
+  color: var(--color-success, #7fb069);
+}
+
+.verdict-model {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 0.25rem;
+}
+
+/* =========================================================================
+   ENHANCED RESULT — Feature Bars
+   ========================================================================= */
+
+.features-section,
+.towers-section,
+.indicators-section {
+  margin-bottom: 1.75rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+}
+
+.section-title svg {
+  color: var(--color-primary, #c99347);
+}
+
+.feature-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.feature-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.feature-bar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.feature-bar-icon {
+  color: var(--color-primary, #c99347);
+  display: flex;
+  align-items: center;
+}
+
+.feature-bar-label {
+  flex: 1;
+  color: var(--color-text-secondary);
+}
+
+.feature-bar-value {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.feature-bar-track {
+  height: 6px;
+  background: rgba(231, 199, 122, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.feature-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1s ease-out;
+}
+
+/* =========================================================================
+   ENHANCED RESULT — Tower Scores (Multi-Signal)
+   ========================================================================= */
+
+.tower-scores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
+}
+
+.tower-score-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(11, 10, 8, 0.5);
+  border: 1px solid rgba(231, 199, 122, 0.08);
+  border-radius: var(--radius-md, 0.5rem);
+}
+
+.tower-score-dot-container {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tower-score-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.tower-ai {
+  background: var(--color-error, #a64b3c);
+  box-shadow: 0 0 8px rgba(166, 75, 60, 0.5);
+}
+
+.tower-human {
+  background: var(--color-success, #7fb069);
+  box-shadow: 0 0 8px rgba(127, 176, 105, 0.5);
+}
+
+.tower-score-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.tower-score-name {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.tower-score-value {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================================================================
+   ENHANCED RESULT — Vocal Analysis
+   ========================================================================= */
+
+.vocal-section {
+  margin-bottom: 1.75rem;
+  padding: 1.25rem;
+  background: rgba(11, 10, 8, 0.4);
+  border: 1px solid rgba(231, 199, 122, 0.1);
+  border-radius: var(--radius-lg, 0.75rem);
+}
+
+.vocal-section-empty {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  background: rgba(11, 10, 8, 0.3);
+  border-radius: var(--radius-md, 0.5rem);
+  margin-bottom: 1.75rem;
+}
+
+.vocal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.vocal-header h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  flex: 1;
+}
+
+.vocal-header svg {
+  color: var(--color-primary, #c99347);
+}
+
+.vocal-confidence {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  background: rgba(231, 199, 122, 0.08);
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+}
+
+.vocal-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.5rem;
+}
+
+.vocal-metric {
+  display: grid;
+  grid-template-columns: 1fr 4fr auto;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vocal-metric-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.vocal-metric-bar-track {
+  height: 4px;
+  background: rgba(231, 199, 122, 0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.vocal-metric-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.vocal-metric-value {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+  min-width: 2rem;
+  text-align: right;
+}
+
+.vocal-raw-stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.75rem;
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
+.vocal-indicators {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.75rem;
+}
+
+.vocal-indicators li {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  padding: 0.25rem 0;
+}
+
+/* =========================================================================
+   ENHANCED RESULT — Indicators List
+   ========================================================================= */
+
+.indicators-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.indicator-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.6rem 0.75rem;
+  background: rgba(11, 10, 8, 0.3);
+  border-radius: var(--radius-md, 0.5rem);
+  border-left: 3px solid var(--color-primary, #c99347);
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.indicator-item svg {
+  color: var(--color-primary, #c99347);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+/* =========================================================================
+   ENHANCED RESULT — Expandable Details
+   ========================================================================= */
+
+.details-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1.25rem;
+  background: transparent;
+  border: 1px solid rgba(231, 199, 122, 0.12);
+  border-radius: var(--radius-md, 0.5rem);
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.details-toggle:hover {
+  border-color: rgba(231, 199, 122, 0.25);
+  color: var(--color-text-secondary);
+}
+
+.details-panel {
+  margin-bottom: 1.5rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(11, 10, 8, 0.4);
+  border-radius: var(--radius-sm, 0.375rem);
+  font-size: 0.8rem;
+}
+
+.detail-item svg {
+  color: var(--color-primary, #c99347);
+  flex-shrink: 0;
+}
+
+.detail-label {
+  color: var(--color-text-muted);
+  flex: 1;
+}
+
+.detail-value {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Top Features (SHAP) ───────────── */
+
+.top-features {
+  margin-top: 1rem;
+}
+
+.top-features h5 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.top-feature-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 40px;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.top-feature-name {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.top-feature-bar-track {
+  height: 4px;
+  background: rgba(231, 199, 122, 0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.top-feature-bar-fill {
+  height: 100%;
+  background: var(--color-primary, #c99347);
+  border-radius: 2px;
+}
+
+.top-feature-imp {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================================================================
+   ENHANCED RESULT — Responsive
+   ========================================================================= */
+
+@media (max-width: 768px) {
+  .result-verdict {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .gauge-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .gauge-percent {
+    font-size: 1.4rem;
+  }
+
+  .tower-scores-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .vocal-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vocal-raw-stats {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .details-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .top-feature-row {
+    grid-template-columns: 100px 1fr 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tower-scores-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================================
    UTILITY CLASSES
    ========================================================================= */
 
