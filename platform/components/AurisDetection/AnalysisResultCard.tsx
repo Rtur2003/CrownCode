@@ -16,14 +16,14 @@ import {
   ChevronUp,
 } from 'lucide-react'
 import { useState } from 'react'
-import type { AnalysisResult, TowerScores, VocalAnalysis, FeatureImportance } from '../../hooks/analysisTypes'
+import type { AnalysisResult, VocalAnalysis } from '../../hooks/analysisTypes'
 import styles from '../../styles/pages/ai-detection.module.css'
 
 interface AnalysisResultCardProps {
   result: AnalysisResult
   onReset: () => void
   onExport?: () => void
-  t: Record<string, any>
+  t: Record<string, Record<string, Record<string, string>>>
 }
 
 /* ── Confidence Gauge ─────────────────────────────────── */
@@ -112,8 +112,7 @@ function FeatureBar({ label, value, icon, delay = 0 }: {
 
 /* ── Tower Score Dot ──────────────────────────────────── */
 
-function TowerScore({ name, score, label }: {
-  name: string
+function TowerScore({ score, label }: {
   score: number
   label: string
 }) {
@@ -236,8 +235,12 @@ export default function AnalysisResultCard({
   }
 
   const formatFileSize = (bytes: number) => {
-    if (bytes < 1024) return `${bytes} B`
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
+    if (bytes < 1024) {
+      return `${bytes} B`
+    }
+    if (bytes < 1024 * 1024) {
+      return `${(bytes / 1024).toFixed(1)} KB`
+    }
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
   }
 
@@ -305,7 +308,6 @@ export default function AnalysisResultCard({
               score !== undefined && (
                 <TowerScore
                   key={key}
-                  name={key}
                   score={score}
                   label={towerLabels[key] || key}
                 />
