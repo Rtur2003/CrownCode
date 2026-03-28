@@ -1,3 +1,17 @@
+/**
+ * =========================================================================
+ * ANALYSIS RESULT CARD - AI DETECTION RESULTS DISPLAY
+ * =========================================================================
+ * Comprehensive result display for AURIS AI music detection analysis.
+ * Shows confidence gauge, feature bars, multi-tower scores, vocal analysis,
+ * indicators, and expandable technical details with SHAP-based explanations.
+ *
+ * @component AnalysisResultCard
+ * @author CrownCode
+ * @version 1.0.0
+ * =========================================================================
+ */
+
 import { motion } from 'framer-motion'
 import {
   AlertTriangle,
@@ -19,16 +33,57 @@ import { useState } from 'react'
 import type { AnalysisResult, VocalAnalysis } from '../../hooks/analysisTypes'
 import styles from '../../styles/pages/ai-detection.module.css'
 
+interface ResultLabels {
+  aiDetected?: string
+  humanDetected?: string
+  confidenceLabel?: string
+  exportReport?: string
+  analyzeAnother?: string
+  analysisDetails?: string
+  audioFeatureAnalysis?: string
+  multiSignalAnalysis?: string
+  vocalAnalysis?: string
+  noVocalsDetected?: string
+  vocalConfidence?: string
+  showDetails?: string
+  hideDetails?: string
+  keyDecisionFactors?: string
+  processingTime?: string
+  sampleRate?: string
+  duration?: string
+  format?: string
+  previewMode?: string
+  spectralRegularity?: string
+  temporalPatterns?: string
+  harmonicStructure?: string
+  vocalAiScore?: string
+  pitchStability?: string
+  vibratoRegularity?: string
+  formantConsistency?: string
+  breathPattern?: string
+  vocalTexture?: string
+  towers?: Record<string, string>
+  [key: string]: string | Record<string, string> | undefined
+}
+
 interface AnalysisResultCardProps {
   result: AnalysisResult
   onReset: () => void
   onExport?: () => void
-  t: Record<string, Record<string, Record<string, string>>>
+  labels: ResultLabels
 }
 
-/* ── Confidence Gauge ─────────────────────────────────── */
+/* -- Confidence Gauge --------------------------------------------------- */
 
-function ConfidenceGauge({ confidence, isAI }: { confidence: number; isAI: boolean }) {
+function ConfidenceGauge({
+  confidence,
+  isAI,
+  sublabel,
+}: {
+  confidence: number
+  isAI: boolean
+  sublabel: string
+}) {
   const percent = Math.round(confidence * 100)
   const circumference = 2 * Math.PI * 54
   const offset = circumference - (confidence * circumference)
@@ -67,13 +122,13 @@ function ConfidenceGauge({ confidence, isAI }: { confidence: number; isAI: boole
         >
           {percent}%
         </motion.span>
-        <span className={styles['gauge-sublabel']}>confidence</span>
+        <span className={styles['gauge-sublabel']}>{sublabel}</span>
       </div>
     </div>
   )
 }
 
-/* ── Feature Bar ──────────────────────────────────────── */
+/* -- Feature Bar -------------------------------------------------------- */
 
 function FeatureBar({ label, value, icon, delay = 0 }: {
   label: string
@@ -110,7 +165,7 @@ function FeatureBar({ label, value, icon, delay = 0 }: {
   )
 }
 
-/* ── Tower Score Dot ──────────────────────────────────── */
+/* -- Tower Score Dot ---------------------------------------------------- */
 
 function TowerScore({ score, label }: {
   score: number
@@ -137,34 +192,34 @@ function TowerScore({ score, label }: {
   )
 }
 
-/* ── Vocal Analysis Section ───────────────────────────── */
+/* -- Vocal Analysis Section --------------------------------------------- */
 
-function VocalSection({ vocal }: { vocal: VocalAnalysis }) {
+function VocalSection({ vocal, labels }: { vocal: VocalAnalysis; labels: ResultLabels }) {
   if (!vocal.hasVocals) {
     return (
       <div className={styles['vocal-section-empty']}>
         <Mic size={16} />
-        <span>No vocals detected in this track</span>
+        <span>{labels.noVocalsDetected || 'No vocals detected'}</span>
       </div>
     )
   }
 
   const metrics = [
-    { label: 'Vocal AI Score', value: vocal.vocalAiScore },
-    { label: 'Pitch Stability', value: vocal.pitchStabilityScore },
-    { label: 'Vibrato Regularity', value: vocal.vibratoRegularityScore },
-    { label: 'Formant Consistency', value: vocal.formantConsistencyScore },
-    { label: 'Breath Pattern', value: vocal.breathPatternScore },
-    { label: 'Vocal Texture', value: vocal.vocalTextureScore },
+    { label: labels.vocalAiScore || 'Vocal AI Score', value: vocal.vocalAiScore },
+    { label: labels.pitchStability || 'Pitch Stability', value: vocal.pitchStabilityScore },
+    { label: labels.vibratoRegularity || 'Vibrato Regularity', value: vocal.vibratoRegularityScore },
+    { label: labels.formantConsistency || 'Formant Consistency', value: vocal.formantConsistencyScore },
+    { label: labels.breathPattern || 'Breath Pattern', value: vocal.breathPatternScore },
+    { label: labels.vocalTexture || 'Vocal Texture', value: vocal.vocalTextureScore },
   ]
 
   return (
     <div className={styles['vocal-section']}>
       <div className={styles['vocal-header']}>
         <Mic size={18} />
-        <h4>Vocal Analysis</h4>
+        <h4>{labels.vocalAnalysis || 'Vocal Analysis'}</h4>
         <span className={styles['vocal-confidence']}>
-          {Math.round(vocal.vocalConfidence * 100)}% vocal confidence
+          {Math.round(vocal.vocalConfidence * 100)}% {labels.vocalConfidence || 'vocal confidence'}
         </span>
       </div>
 
@@ -196,7 +251,7 @@ function VocalSection({ vocal }: { vocal: VocalAnalysis }) {
 
       {vocal.pitchMeanHz > 0 && (
         <div className={styles['vocal-raw-stats']}>
-          <span>Pitch: {vocal.pitchMeanHz.toFixed(0)} Hz (±{vocal.pitchStdCents.toFixed(1)} cents)</span>
+          <span>Pitch: {vocal.pitchMeanHz.toFixed(0)} Hz ({'\u00B1'}{vocal.pitchStdCents.toFixed(1)} cents)</span>
           <span>Vibrato: {vocal.vibratoRateHz.toFixed(1)} Hz, {vocal.vibratoExtentCents.toFixed(0)} cents</span>
         </div>
       )}
@@ -212,26 +267,25 @@ function VocalSection({ vocal }: { vocal: VocalAnalysis }) {
   )
 }
 
-/* ── Main Component ───────────────────────────────────── */
+/* -- Main Component ----------------------------------------------------- */
 
-export default function AnalysisResultCard({
+export function AnalysisResultCard({
   result,
   onReset,
   onExport,
-  t,
+  labels,
 }: AnalysisResultCardProps) {
   const [showDetails, setShowDetails] = useState(false)
   const confidence = result.confidence
   const isAI = result.isAIGenerated
   const source = result.source
-  const labels = t?.aiDetection?.result || {}
 
-  const towerLabels: Record<string, string> = {
-    wav2vec2: 'wav2vec2 Deep Learning',
-    local_features: 'Spectral Analysis',
-    vocals: 'Vocal Analysis',
-    clap: 'CLAP Embeddings',
-    fst: 'FST Transformer',
+  const towerLabelMap: Record<string, string> = {
+    wav2vec2: labels.towers?.wav2vec2 || 'wav2vec2 Deep Learning',
+    local_features: labels.towers?.localFeatures || 'Spectral Analysis',
+    vocals: labels.towers?.vocals || 'Vocal Analysis',
+    clap: labels.towers?.clap || 'CLAP Embeddings',
+    fst: labels.towers?.fst || 'FST Transformer',
   }
 
   const formatFileSize = (bytes: number) => {
@@ -251,9 +305,13 @@ export default function AnalysisResultCard({
       transition={{ duration: 0.6 }}
       className={styles['analysis-result-card']}
     >
-      {/* ── Verdict Header ────────────────── */}
+      {/* -- Verdict Header -- */}
       <div className={styles['result-verdict']}>
-        <ConfidenceGauge confidence={confidence} isAI={isAI} />
+        <ConfidenceGauge
+          confidence={confidence}
+          isAI={isAI}
+          sublabel={labels.confidenceLabel || 'confidence'}
+        />
         <div className={styles['verdict-text']}>
           <div className={`${styles['verdict-badge']} ${isAI ? styles['verdict-ai'] : styles['verdict-human']}`}>
             {isAI ? <AlertTriangle size={18} /> : <CheckCircle size={18} />}
@@ -263,32 +321,32 @@ export default function AnalysisResultCard({
             {result.modelVersion} &middot; {result.decisionSource}
           </p>
           {result.analysisMode === 'preview' && (
-            <span className={styles['preview-badge']}>Preview Mode</span>
+            <span className={styles['preview-badge']}>{labels.previewMode || 'Preview Mode'}</span>
           )}
         </div>
       </div>
 
-      {/* ── Feature Scores ────────────────── */}
+      {/* -- Feature Scores -- */}
       <div className={styles['features-section']}>
         <h4 className={styles['section-title']}>
           <Activity size={18} />
-          Audio Feature Analysis
+          {labels.audioFeatureAnalysis || 'Audio Feature Analysis'}
         </h4>
         <div className={styles['feature-bars']}>
           <FeatureBar
-            label="Spectral Regularity"
+            label={labels.spectralRegularity || 'Spectral Regularity'}
             value={result.features.spectralRegularity}
             icon={<Radio size={14} />}
             delay={0.2}
           />
           <FeatureBar
-            label="Temporal Patterns"
+            label={labels.temporalPatterns || 'Temporal Patterns'}
             value={result.features.temporalPatterns}
             icon={<Clock size={14} />}
             delay={0.4}
           />
           <FeatureBar
-            label="Harmonic Structure"
+            label={labels.harmonicStructure || 'Harmonic Structure'}
             value={result.features.harmonicStructure}
             icon={<Zap size={14} />}
             delay={0.6}
@@ -296,12 +354,12 @@ export default function AnalysisResultCard({
         </div>
       </div>
 
-      {/* ── Tower Scores (multi-signal) ───── */}
+      {/* -- Tower Scores (multi-signal) -- */}
       {result.towerScores && Object.keys(result.towerScores).length > 0 && (
         <div className={styles['towers-section']}>
           <h4 className={styles['section-title']}>
             <Layers size={18} />
-            Multi-Signal Analysis
+            {labels.multiSignalAnalysis || 'Multi-Signal Analysis'}
           </h4>
           <div className={styles['tower-scores-grid']}>
             {Object.entries(result.towerScores).map(([key, score]) => (
@@ -309,7 +367,7 @@ export default function AnalysisResultCard({
                 <TowerScore
                   key={key}
                   score={score}
-                  label={towerLabels[key] || key}
+                  label={towerLabelMap[key] || key}
                 />
               )
             ))}
@@ -317,21 +375,21 @@ export default function AnalysisResultCard({
         </div>
       )}
 
-      {/* ── Vocal Analysis ────────────────── */}
+      {/* -- Vocal Analysis -- */}
       {result.vocalAnalysis && (
-        <VocalSection vocal={result.vocalAnalysis} />
+        <VocalSection vocal={result.vocalAnalysis} labels={labels} />
       )}
 
-      {/* ── Indicators ────────────────────── */}
+      {/* -- Indicators -- */}
       {result.features.artificialIndicators.length > 0 && (
         <div className={styles['indicators-section']}>
           <h4 className={styles['section-title']}>
             <Brain size={18} />
             {labels.analysisDetails || 'Analysis Details'}
           </h4>
-          <ul className={styles['indicators-list']}>
+          <div className={styles['indicators-list']}>
             {result.features.artificialIndicators.map((indicator, index) => (
-              <motion.li
+              <motion.div
                 key={index}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -340,19 +398,20 @@ export default function AnalysisResultCard({
               >
                 <Info size={14} />
                 <span>{indicator}</span>
-              </motion.li>
+              </motion.div>
             ))}
-          </ul>
+          </div>
         </div>
       )}
 
-      {/* ── Detailed Metrics (expandable) ─── */}
+      {/* -- Detailed Metrics (expandable) -- */}
       <button
+        type="button"
         className={styles['details-toggle']}
         onClick={() => setShowDetails(!showDetails)}
       >
         {showDetails ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-        <span>{showDetails ? 'Hide Details' : 'Show Technical Details'}</span>
+        <span>{showDetails ? (labels.hideDetails || 'Hide Details') : (labels.showDetails || 'Show Technical Details')}</span>
       </button>
 
       {showDetails && (
@@ -365,22 +424,22 @@ export default function AnalysisResultCard({
           <div className={styles['details-grid']}>
             <div className={styles['detail-item']}>
               <Clock size={14} />
-              <span className={styles['detail-label']}>Processing Time</span>
+              <span className={styles['detail-label']}>{labels.processingTime || 'Processing Time'}</span>
               <span className={styles['detail-value']}>{result.processingTime.toFixed(2)}s</span>
             </div>
             <div className={styles['detail-item']}>
               <Zap size={14} />
-              <span className={styles['detail-label']}>Sample Rate</span>
+              <span className={styles['detail-label']}>{labels.sampleRate || 'Sample Rate'}</span>
               <span className={styles['detail-value']}>{result.audioInfo.sampleRate.toLocaleString()} Hz</span>
             </div>
             <div className={styles['detail-item']}>
               <BarChart3 size={14} />
-              <span className={styles['detail-label']}>Duration</span>
+              <span className={styles['detail-label']}>{labels.duration || 'Duration'}</span>
               <span className={styles['detail-value']}>{result.audioInfo.duration.toFixed(1)}s</span>
             </div>
             <div className={styles['detail-item']}>
               <Radio size={14} />
-              <span className={styles['detail-label']}>Format</span>
+              <span className={styles['detail-label']}>{labels.format || 'Format'}</span>
               <span className={styles['detail-value']}>{result.audioInfo.format.toUpperCase()}</span>
             </div>
           </div>
@@ -402,11 +461,11 @@ export default function AnalysisResultCard({
             {source.kind === 'file' && (
               <>
                 <div className={styles['result-source-item']}>
-                  <span>File</span>
+                  <span>{labels.fileName || 'File'}</span>
                   <span>{source.fileName}</span>
                 </div>
                 <div className={styles['result-source-item']}>
-                  <span>Size</span>
+                  <span>{labels.fileSize || 'Size'}</span>
                   <span>{formatFileSize(source.fileSizeBytes)}</span>
                 </div>
               </>
@@ -416,7 +475,7 @@ export default function AnalysisResultCard({
           {/* Top features */}
           {result.topFeatures && result.topFeatures.length > 0 && (
             <div className={styles['top-features']}>
-              <h5>Key Decision Factors</h5>
+              <h5>{labels.keyDecisionFactors || 'Key Decision Factors'}</h5>
               {result.topFeatures.map((feat, i) => (
                 <div key={i} className={styles['top-feature-row']}>
                   <span className={styles['top-feature-name']}>{feat.feature}</span>
@@ -436,15 +495,15 @@ export default function AnalysisResultCard({
         </motion.div>
       )}
 
-      {/* ── Actions ───────────────────────── */}
+      {/* -- Actions -- */}
       <div className={styles['result-actions']}>
         {onExport && (
-          <button className={styles['btn-secondary']} onClick={onExport}>
+          <button type="button" className={styles['btn-secondary']} onClick={onExport}>
             <Download size={16} />
             {labels.exportReport || 'Export Report'}
           </button>
         )}
-        <button className={styles['btn-primary']} onClick={onReset}>
+        <button type="button" className={styles['btn-primary']} onClick={onReset}>
           {labels.analyzeAnother || 'Analyze Another'}
         </button>
       </div>
