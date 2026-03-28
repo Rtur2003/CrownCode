@@ -33,6 +33,14 @@ import { useState } from 'react'
 import type { AnalysisResult, VocalAnalysis } from '../../hooks/analysisTypes'
 import styles from '../../styles/pages/ai-detection.module.css'
 
+interface TowerLabels {
+  wav2vec2?: string
+  localFeatures?: string
+  vocals?: string
+  clap?: string
+  fst?: string
+}
+
 interface ResultLabels {
   aiDetected?: string
   humanDetected?: string
@@ -62,8 +70,9 @@ interface ResultLabels {
   formantConsistency?: string
   breathPattern?: string
   vocalTexture?: string
-  towers?: Record<string, string>
-  [key: string]: string | Record<string, string> | undefined
+  fileName?: string
+  fileSize?: string
+  towers?: TowerLabels
 }
 
 interface AnalysisResultCardProps {
