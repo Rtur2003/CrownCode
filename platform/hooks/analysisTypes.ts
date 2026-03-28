@@ -1,3 +1,16 @@
+/**
+ * =========================================================================
+ * ANALYSIS TYPES - AI MUSIC DETECTION DATA STRUCTURES
+ * =========================================================================
+ * TypeScript type definitions and interfaces for AURIS analysis pipeline.
+ * Defines data structures for analysis results, features, and error codes.
+ *
+ * @module analysisTypes
+ * @author CrownCode
+ * @version 1.1.0
+ * =========================================================================
+ */
+
 export type ProcessingState = 'idle' | 'validating' | 'downloading' | 'analyzing' | 'complete' | 'error'
 
 export type DecisionSource = 'music_ai' | 'ses_analizi' | 'preview' | 'auris_meta' | 'auris_fallback' | 'auris_local' | 'auris_fusion' | string
