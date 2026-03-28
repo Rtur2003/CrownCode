@@ -82,6 +82,9 @@ export interface AnalysisResult {
   source: AnalysisSource
   features: AnalysisFeatures
   audioInfo: AudioInfo
+  vocalAnalysis?: VocalAnalysis
+  towerScores?: TowerScores
+  topFeatures?: FeatureImportance[]
 }
 
 export type AnalysisErrorCode =
