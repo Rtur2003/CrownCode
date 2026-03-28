@@ -1,6 +1,6 @@
 export type ProcessingState = 'idle' | 'validating' | 'downloading' | 'analyzing' | 'complete' | 'error'
 
-export type DecisionSource = 'music_ai' | 'ses_analizi' | 'preview'
+export type DecisionSource = 'music_ai' | 'ses_analizi' | 'preview' | 'auris_meta' | 'auris_fallback' | 'auris_local' | 'auris_fusion' | string
 export type AnalysisMode = 'production' | 'preview'
 
 export interface AnalysisFeatures {
@@ -8,6 +8,37 @@ export interface AnalysisFeatures {
   temporalPatterns: number
   harmonicStructure: number
   artificialIndicators: string[]
+}
+
+export interface VocalAnalysis {
+  hasVocals: boolean
+  vocalConfidence: number
+  vocalAiScore: number
+  pitchStabilityScore: number
+  vibratoRegularityScore: number
+  formantConsistencyScore: number
+  breathPatternScore: number
+  vocalTextureScore: number
+  pitchMeanHz: number
+  pitchStdCents: number
+  vibratoRateHz: number
+  vibratoExtentCents: number
+  indicators: string[]
+}
+
+export interface TowerScores {
+  wav2vec2?: number
+  local_features?: number
+  vocals?: number
+  clap?: number
+  fst?: number
+  [key: string]: number | undefined
+}
+
+export interface FeatureImportance {
+  feature: string
+  importance: number
+  value: number
 }
 
 export interface AudioInfo {
