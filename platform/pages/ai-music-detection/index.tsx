@@ -14,20 +14,15 @@ import type { NextPage } from 'next'
 import { motion } from 'framer-motion'
 import {
   AlertTriangle,
-  BarChart3,
-  CheckCircle,
-  Clock,
-  Download,
   Link as LinkIcon,
   Music,
-  Shield,
   Upload,
   Youtube,
-  Zap
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { AurisHeroSection } from '@/components/AurisDetection/HeroSection'
 import { HowItWorks } from '@/components/AurisDetection/HowItWorks'
+import { AnalysisResultCard } from '@/components/AurisDetection/AnalysisResultCard'
 import { useLanguage } from '@/context/LanguageContext'
 import { useFileAnalysis } from '@/hooks/useFileAnalysis'
 import { useYouTubeAnalysis } from '@/hooks/useYouTubeAnalysis'
@@ -117,8 +112,6 @@ const AIMusicDetectionPage: NextPage = () => {
     setActiveSource('youtube')
   }, [resetFile, resetYouTube])
 
-  const formatFileSize = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(2)} MB`
-
   const resolveErrorMessage = (errorKey: AnalysisErrorCode | null) => {
     if (!errorKey) {
       return null
@@ -163,139 +156,7 @@ const AIMusicDetectionPage: NextPage = () => {
     processingState === 'idle' || processingState === 'error' ? 'validating' : (processingState as 'validating' | 'downloading' | 'analyzing' | 'complete')
   )
 
-  const getDecisionLabel = (source: string) => {
-    const labels = t.aiDetection.result.sources
-    if (!labels) {
-      return source
-    }
-    if (source === 'music_ai') {
-      return labels.musicAi
-    }
-    if (source === 'ses_analizi') {
-      return labels.sesAnalizi
-    }
-    return labels.preview
-  }
-
-  const renderAnalysisResult = () => {
-    if (!analysisResult) {
-      return null
-    }
-
-    const confidence = Math.round(analysisResult.confidence * 100)
-    const decisionLabel = getDecisionLabel(analysisResult.decisionSource)
-    const isAI = analysisResult.isAIGenerated
-    const source = analysisResult.source
-
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className={styles['analysis-result-card']}
-      >
-        <div className={styles['result-header']}>
-          <div className={`${styles['result-icon']} ${isAI ? styles['ai-detected'] : styles['human-detected']}`}>
-            {isAI ? <AlertTriangle size={24} /> : <CheckCircle size={24} />}
-          </div>
-          <div className={styles['result-content']}>
-            <h3 className={styles['result-title']}>
-              {isAI ? t.aiDetection.result.aiDetected : t.aiDetection.result.humanDetected}
-            </h3>
-            <p className={styles['result-subtitle']}>
-              {t.aiDetection.result.confidence}: {confidence}% | {t.aiDetection.result.model}: {analysisResult.modelVersion} | {t.aiDetection.result.decisionSource}: {decisionLabel}
-            </p>
-            {analysisResult.analysisMode === 'preview' && (
-              <span className={styles['preview-badge']}>
-                {t.aiDetection.result.sources?.preview || 'Preview'}
-              </span>
-            )}
-          </div>
-        </div>
-
-        <div className={styles['result-metrics']}>
-          <div className={styles['metric-grid']}>
-            <div className={styles['metric-item']}>
-              <Clock size={16} />
-              <span>{t.aiDetection.result.processingTime}: {analysisResult.processingTime.toFixed(1)}s</span>
-            </div>
-            <div className={styles['metric-item']}>
-              <Zap size={16} />
-              <span>{t.aiDetection.result.sampleRate}: {analysisResult.audioInfo.sampleRate.toLocaleString()} Hz</span>
-            </div>
-            <div className={styles['metric-item']}>
-              <BarChart3 size={16} />
-              <span>{t.aiDetection.result.duration}: {Math.round(analysisResult.audioInfo.duration)}s</span>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles['result-source']}>
-          {source.kind === 'youtube' && (
-            <>
-              <div className={styles['result-source-item']}>
-                <span>{t.aiDetection.result.videoId}</span>
-                <span>{source.videoId}</span>
-              </div>
-              <div className={styles['result-source-item']}>
-                <span>{t.aiDetection.result.normalizedUrl}</span>
-                <span>{source.normalizedUrl}</span>
-              </div>
-            </>
-          )}
-          {source.kind === 'spotify' && (
-            <>
-              <div className={styles['result-source-item']}>
-                <span>{t.aiDetection.result.spotifyTrack}</span>
-                <span>{source.trackId}</span>
-              </div>
-              <div className={styles['result-source-item']}>
-                <span>{t.aiDetection.result.normalizedUrl}</span>
-                <span>{source.normalizedUrl}</span>
-              </div>
-            </>
-          )}
-          {source.kind === 'file' && (
-            <>
-              <div className={styles['result-source-item']}>
-                <span>{t.aiDetection.result.fileName}</span>
-                <span>{source.fileName}</span>
-              </div>
-              <div className={styles['result-source-item']}>
-                <span>{t.aiDetection.result.fileSize}</span>
-                <span>{formatFileSize(source.fileSizeBytes)}</span>
-              </div>
-              <div className={styles['result-source-item']}>
-                <span>{t.aiDetection.result.fileFormat}</span>
-                <span>{analysisResult.audioInfo.format}</span>
-              </div>
-            </>
-          )}
-        </div>
-
-        <div className={styles['artificial-indicators']}>
-          <h4>{t.aiDetection.result.analysisDetails}</h4>
-          <ul>
-            {analysisResult.features.artificialIndicators.map((indicator, index) => (
-              <li key={index}>{indicator}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div className={styles['result-actions']}>
-          <button className={styles['btn-secondary']}>
-            <Download size={16} />
-            {t.aiDetection.result.exportReport}
-          </button>
-          <button
-            className={styles['btn-primary']}
-            onClick={resetAll}
-          >
-            {t.aiDetection.result.analyzeAnother}
-          </button>
-        </div>
-      </motion.div>
-    )
-  }
+  const resultLabels = t.aiDetection?.result || {}
 
   return (
     <MainLayout
@@ -495,7 +356,13 @@ const AIMusicDetectionPage: NextPage = () => {
             </motion.div>
           )}
 
-          {analysisResult && renderAnalysisResult()}
+          {analysisResult && (
+            <AnalysisResultCard
+              result={analysisResult}
+              onReset={resetAll}
+              labels={resultLabels}
+            />
+          )}
         </div>
       </div>
     </MainLayout>
