@@ -103,6 +103,7 @@ export interface AnalysisResult {
 export type AnalysisErrorCode =
   | 'enterUrl'
   | 'invalidYouTubeUrl'
+  | 'youtubeAuthenticationRequired'
   | 'unsupportedSource'
   | 'missingFile'
   | 'missingUrl'
