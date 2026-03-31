@@ -395,6 +395,7 @@
       "backend_unreachable": "Backend is unreachable right now. Showing preview-only result.",
       "backend_unexpected_response": "Backend returned an unexpected response. Showing preview-only result.",
       "youtubeAnalysisFailed": "YouTube analysis failed. Showing preview-only result.",
+      "internalError": "An internal error occurred. Please try again later.",
       "limitedBackendNote": "Note: Analysis completed with limited backend availability."
     }
   },

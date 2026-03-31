@@ -135,6 +135,10 @@ const AIMusicDetectionPage: NextPage = () => {
       return t.aiDetection.errors?.fileTooSmall || t.aiDetection.error.title
     case 'invalidFileName':
       return t.aiDetection.errors?.invalidFileName || t.aiDetection.error.title
+    case 'youtubeAnalysisFailed':
+      return t.aiDetection.errors?.youtubeAnalysisFailed || t.aiDetection.error.title
+    case 'internalError':
+      return t.aiDetection.errors?.internalError || t.aiDetection.error.title
     case 'backend_not_configured':
       return t.aiDetection.errors?.backend_not_configured || t.aiDetection.error.title
     case 'backend_unreachable':
