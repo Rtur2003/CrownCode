@@ -384,6 +384,7 @@
     "errors": {
       "enterUrl": "Lütfen bir YouTube URL'si girin.",
       "invalidYouTubeUrl": "Geçersiz YouTube URL'si. https://www.youtube.com/watch?v=... veya https://youtu.be/... kullanın.",
+      "youtubeAuthenticationRequired": "YouTube oturum doğrulaması istedi. Tarayıcı çerezleri veya cookies.txt dosyası ayarlayıp tekrar deneyin.",
       "unsupportedSource": "Bu kaynak türü henüz desteklenmiyor. YouTube deneyin veya bir ses dosyası yükleyin.",
       "missingFile": "Lütfen analiz için bir ses dosyası seçin.",
       "unsupportedFileType": "Desteklenmeyen dosya formatı. MP3, WAV, FLAC, M4A kullanın.",
