@@ -73,6 +73,19 @@ describe('analysisGateway – analyzeSource', () => {
     expect(error).toBe('missingFile')
   })
 
+  it('maps backend youtube_authentication_required error to youtubeAuthenticationRequired', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ errors: ['youtube_authentication_required', 'youtube_analysis_failed'] }),
+    })
+    const { result, error } = await analyzeSource(API_BASE, {
+      sourceType: 'youtube',
+      url: 'https://youtube.com/watch?v=abc',
+    })
+    expect(result).toBeNull()
+    expect(error).toBe('youtubeAuthenticationRequired')
+  })
+
   it('returns backend_unreachable on non-ok response', async () => {
     mockFetch.mockResolvedValueOnce({ ok: false, status: 500 })
     const { result, error } = await analyzeSource(API_BASE, {
