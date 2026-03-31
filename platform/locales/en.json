@@ -384,6 +384,7 @@
     "errors": {
       "enterUrl": "Please enter a YouTube URL.",
       "invalidYouTubeUrl": "Invalid YouTube URL. Use https://www.youtube.com/watch?v=... or https://youtu.be/...",
+      "youtubeAuthenticationRequired": "YouTube requested sign-in verification. Configure browser cookies or a cookies.txt file, then try again.",
       "unsupportedSource": "This source type is not yet supported. Try YouTube or upload an audio file.",
       "missingFile": "Please choose an audio file to analyze.",
       "unsupportedFileType": "Unsupported file format. Allowed: MP3, WAV, FLAC, M4A.",
