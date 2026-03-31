@@ -1,472 +1,271 @@
-# 🤖 AI Müzik Detektörü - Otomasyon Stratejisi
+# AURIS - AI Muzik Tespit Sistemi: Model ve Veri Stratejisi
 
-## 🎯 **SIFIR MANUEL ETIKETLEME STRATEJİSİ**
+> Son guncelleme: 2026-03-31
+> Durum: Feature extraction + multi-model pipeline tamamlandi, dataset genisletme devam ediyor
 
-### **Temel Yaklaşım: Kaynak Tabanlı Otomatik Etiketleme**
-AI müzikleri **nereden geldiğini bildiğimiz** kaynaklardan toplayacağız, bu şekilde manuel etiketleme gerekmeyecek!
+---
 
-## 📊 **DATASET TOPLAMA STRATEJİSİ**
+## 1. Sistem Mimarisi: 4-Tower + Meta-Classifier
 
-### **AI Müzik Kaynakları (Label: 1 - AI Generated)**
-```python
-# Otomatik AI müzik toplama kaynakları
-AI_MUSIC_SOURCES = {
-    "suno": {
-        "url": "https://suno.com",
-        "method": "web_scraping",
-        "format": "mp3",
-        "daily_limit": 100,
-        "quality": "high"
-    },
-    "udio": {
-        "url": "https://udio.com",
-        "method": "api_access",
-        "format": "wav",
-        "daily_limit": 50,
-        "quality": "high"
-    },
-    "musicgen_huggingface": {
-        "url": "https://huggingface.co/facebook/musicgen-large",
-        "method": "model_generation",
-        "format": "wav",
-        "daily_limit": 200,
-        "quality": "medium"
-    },
-    "jukebox_openai": {
-        "url": "https://github.com/openai/jukebox",
-        "method": "local_generation",
-        "format": "wav",
-        "daily_limit": 50,
-        "quality": "high"
-    },
-    "mubert": {
-        "url": "https://mubert.com",
-        "method": "api_access",
-        "format": "mp3",
-        "daily_limit": 75,
-        "quality": "medium"
-    }
-}
+AURIS, tek bir modele bagimli kalmak yerine 4 bagimsiz sinyal kaynagini
+birlestiren bir ensemble yaklasimi kullanir:
+
+```
+Audio Input
+    |
+    +---> Tower 1: wav2vec2-base (self-supervised audio embeddings)
+    |         facebook/wav2vec2-base, 363 MB
+    |
+    +---> Tower 2: Librosa Feature Extraction + Vocal Analysis
+    |         49 handcrafted feature (spektral, temporal, harmonik, vokal)
+    |
+    +---> Tower 3: CLAP Embeddings
+    |         laion-clap, HTSAT-base, 512-dim embeddings
+    |
+    +---> Tower 4: FST External API (Fusion Segment Transformer)
+    |         Stage-1 MERT-AudioCAT (1.2 GB) + Stage-2 FST (46 MB)
+    |
+    v
+  Meta-Classifier (en iyi model secilir: RF, XGBoost, LightGBM, SVM, MLP...)
+    |
+    v
+  Final Prediction: AI-Generated vs Human-Composed
 ```
 
-### **İnsan Müzik Kaynakları (Label: 0 - Human Generated)**
-```python
-# Otomatik insan müzik toplama kaynakları
-HUMAN_MUSIC_SOURCES = {
-    "freemusicarchive": {
-        "url": "https://freemusicarchive.org",
-        "method": "api_download",
-        "format": "mp3",
-        "daily_limit": 100,
-        "quality": "high",
-        "license": "creative_commons"
-    },
-    "jamendo": {
-        "url": "https://jamendo.com",
-        "method": "api_access",
-        "format": "mp3",
-        "daily_limit": 150,
-        "quality": "high",
-        "license": "royalty_free"
-    },
-    "musopen": {
-        "url": "https://musopen.org",
-        "method": "direct_download",
-        "format": "flac",
-        "daily_limit": 50,
-        "quality": "very_high",
-        "genre": "classical"
-    },
-    "ccmixter": {
-        "url": "https://ccmixter.org",
-        "method": "rss_scraping",
-        "format": "mp3",
-        "daily_limit": 75,
-        "quality": "medium"
-    },
-    "gtzan_dataset": {
-        "url": "https://huggingface.co/datasets/marsyas/gtzan",
-        "method": "direct_download",
-        "format": "wav",
-        "total_files": 1000,
-        "quality": "research_grade"
-    }
-}
+---
+
+## 2. Feature Extraction Pipeline (Tower 2) - 49 Ozellik
+
+### 2.1 Spektral Ozellikler (18 adet)
+
+| Ozellik | Aciklama |
+| --- | --- |
+| rms_energy | Root Mean Square enerji (ortalama genligi) |
+| rms_std | RMS standart sapmasi (dinamik degisim) |
+| spectral_centroid_mean | Spektral agirlik merkezi (parlaklik) |
+| spectral_centroid_std | Centroid degiskenligi |
+| spectral_flatness_mean | Spektral duzluk (gomultu vs tonal) |
+| spectral_flatness_std | Flatness degiskenligi |
+| spectral_bandwidth_mean | Spektral bant genisligi |
+| spectral_bandwidth_std | Bandwidth degiskenligi |
+| spectral_rolloff_mean | %85 enerji altindaki frekans siniri |
+| spectral_rolloff_std | Rolloff degiskenligi |
+| spectral_contrast_mean | Vadi-tepe frekans kontarsti |
+| spectral_contrast_std | Contrast degiskenligi |
+| mfcc_variance | MFCC bantlari arasi ortalama varyans (tini parmak izi) |
+| mfcc_delta_var | MFCC birinci turev varyansi (tini degisim hizi) |
+| mfcc_delta2_var | MFCC ikinci turev varyansi (tini ivmelenmesi) |
+| mel_flatness | Mel spektrogram temporal varyansi |
+| spectral_regularity | Kompozit skor: AI-benzeri spektral duzenlilk (0-1) |
+| harmonic_structure | Kompozit skor: AI-benzeri harmonik yapilanma (0-1) |
+
+### 2.2 Temporal / Ritim Ozellikleri (9 adet)
+
+| Ozellik | Aciklama |
+| --- | --- |
+| tempo_bpm | Tahmin edilen tempo (BPM) |
+| tempo_stability | Inter-beat interval standart sapmasi |
+| tempo_cv | Tempo degiskenlik katsayisi (std/mean) |
+| zero_crossing_rate | Sifir gecis orani (doku gostergesi) |
+| zero_crossing_std | ZCR degiskenligi |
+| onset_strength_mean | Ritimik enerji ortalamasi |
+| onset_strength_std | Onset guc degiskenligi |
+| rms_dynamic_range | Ses yuksekligi dinamik araligi |
+| beat_count | Toplam vurus sayisi |
+
+### 2.3 Harmonik / Tonal Ozellikler (8 adet)
+
+| Ozellik | Aciklama |
+| --- | --- |
+| chroma_entropy | Perde sinifi dagilim entropisi |
+| chroma_std | Temporal chroma degiskenligi |
+| chroma_transition_rate | Perde sinifi degisim hizi |
+| harmonic_ratio | Harmonik / (harmonik + perkusif) enerji orani |
+| tonnetz_std | Tonal centroid degiskenligi (ton iliskileri) |
+| temporal_patterns | Kompozit skor: AI-benzeri zamansal duzenlilik (0-1) |
+
+### 2.4 Vokal Analiz Ozellikleri (14 adet)
+
+| Ozellik | Aciklama |
+| --- | --- |
+| has_vocals | Vokal tespit edildi mi (0/1) |
+| vocal_confidence | Vokal tespit guven skoru |
+| vocal_ai_score | Vokalin AI-uretilmis olma olasiligi |
+| pitch_stability_score | Perde karaliligi (AI sesleri asiri kararli) |
+| vibrato_regularity_score | Vibrato duzenliligi (AI vibratosu mekanik) |
+| formant_consistency_score | Formant tutarliligi (AI formantlari sabit) |
+| breath_pattern_score | Nefes oruntuleri (AI nefes almaz) |
+| vocal_texture_score | Vokal doku kalitesi |
+| pitch_mean_hz | Ortalama perde frekansi (Hz) |
+| pitch_std_cents | Perde standart sapmasi (cent) |
+| vibrato_rate_hz | Vibrato hizi (Hz) |
+| vibrato_extent_cents | Vibrato genisligi (cent) |
+| vocal_harmonic_ratio | Vokal harmonik orani |
+| vocal_energy_ratio | Vokal enerji orani |
+
+**Neden vokal ozellikleri kritik?**
+AI muzik uretecleri (Suno, Udio) vokal sentezinde karakteristik artefaktlar birakir:
+- Asiri kararli perde (insan sesi dogal olarak sallanir)
+- Mekanik vibrato (insan vibratosu duzenli degildir)
+- Nefes oruntuleri eksikligi (AI nefes almaz)
+- Formant gecislerinde donukluk
+
+---
+
+## 3. Multi-Model Karsilastirma Pipeline'i
+
+7 farkli siniflandirici 5-fold stratified cross-validation ile karsilastirilir:
+
+| Model | Avantaj | Parametre Ozeti |
+| --- | --- | --- |
+| Logistic Regression | Baseline, yorumlanabilir | C=1.0, balanced |
+| Random Forest | Robust, feature importance | 300 agac, depth=20 |
+| Gradient Boosting | Yuksek dogruluk | 200 agac, lr=0.1 |
+| SVM (RBF) | Non-linear sinirlar | C=10, gamma=scale |
+| MLP Neural Network | Derin ozellik etkilesimleri | 128-64-32, relu, adam |
+| XGBoost | Hiz + dogruluk | 300 agac, lr=0.05 |
+| LightGBM | En hizli, leaf-wise | 300 agac, 31 yaprak |
+
+### Ciktlar
+
+Her model icin:
+- Accuracy, Precision, Recall, F1, ROC-AUC
+- Cross-validation fold sonuclari
+- Egitim suresi
+
+En iyi model secilir ve tum veri uzerinde final egitim yapilir.
+
+---
+
+## 4. Dataset Stratejisi
+
+### 4.1 Kaynak Tabanli Otomatik Etiketleme
+
+Manuel etiketleme SIFIR. Verinin kaynagina gore etiket atanir:
+
+**AI Kaynaklari (Label: 1):**
+- HuggingFace: SleepyJesse/ai_music_large, disco-eth/AIME, zuhri025/suno-audio
+- AI modelleri: Suno v3/v3.5/v4/v5, Udio, MusicGen, Stable Audio, Riffusion,
+  AudioLDM2, Mustango, JEN-1, MusicLDM, Tango, Mousai
+
+**Insan Kaynaklari (Label: 0):**
+- HuggingFace: marsyas/gtzan, ccmusic-database/music_genre
+- Yerel: DataSet/pop/human (Adele koleksiyonu)
+- MTG-Jamendo (disco-eth/AIME icinde 500 track)
+
+**Vokal Deepfake (Ek Dogrulama):**
+- UniDataPro/real-vs-fake-human-voice-deepfake-audio (5000 ornek)
+- Hemg/Deepfake-Audio-Dataset
+
+### 4.2 Hedef Veri Boyutu
+
+| Faz | AI | Insan | Toplam |
+| --- | --- | --- | --- |
+| Faz 1 (temel) | 3,000 | 3,500 | 6,500 |
+| Faz 2 (genisletilmis) | 5,500 | 4,000 | 9,500 |
+| Vokal ozel set | 2,500 fake | 2,500 real | 5,000 |
+
+### 4.3 Dizin Yapisi
+
+```
+DataSet/
+  {genre}/
+    ai/        # AI-uretilmis parcalar
+    human/     # Insan parcalari
+  mixed/
+    ai/
+    human/
+  vocal_deepfake/
+    fake/
+    real/
+  metadata.csv
 ```
 
-## 🔄 **OTOMATIK DATASET TOPLAMA PİPELİNE**
+---
 
-### **1. Web Scraping Bots**
-```python
-# scripts/collect_ai_music.py
-import asyncio
-import aiohttp
-from selenium import webdriver
-import yt_dlp
+## 5. Degerlendirme ve Gorsellestirme
 
-class AIMusic Collector:
-    def __init__(self):
-        self.drivers = self.setup_browsers()
-        self.session = aiohttp.ClientSession()
+### 5.1 Metrikler
+- ROC-AUC (birincil metrik)
+- Precision, Recall, F1 Score
+- Confusion Matrix
+- Classification Report (per-class)
+- Feature Importance (top-20)
 
-    async def collect_from_suno(self, count=100):
-        """Suno.com'dan AI müzikleri topla"""
-        for i in range(count):
-            # Suno'da yeni müzik generate et
-            prompt = self.get_random_prompt()
-            music_url = await self.generate_suno_music(prompt)
+### 5.2 Publication-Quality Figurler (8 adet)
+1. ROC Curves — tum modeller tek grafikte
+2. Precision-Recall Curves — tum modeller
+3. Confusion Matrices — model basina heatmap
+4. Model Comparison Bar Chart — 5 metrik yan yana
+5. Feature Importance — yatay cubuk grafik (top-20)
+6. Correlation Heatmap — ozellik korelasyon matrisi
+7. Feature Distributions — AI vs Human violin plot
+8. LaTeX / Markdown tablo — makale icin hazir
 
-            # İndir ve label'la
-            filename = f"ai_suno_{i:04d}.mp3"
-            await self.download_audio(music_url, filename)
+### 5.3 Cikti Formatlari
+- PNG (300 DPI) — sunum ve web
+- PDF — LaTeX makale icin vektorel
+- .tex dosyasi — direkt LaTeX tablo kodu
 
-            # Metadata kaydet
-            self.save_metadata(filename, {
-                "source": "suno",
-                "label": 1,  # AI generated
-                "prompt": prompt,
-                "timestamp": datetime.now()
-            })
+---
 
-    async def collect_from_musicgen(self, count=200):
-        """Hugging Face MusicGen ile müzik üret"""
-        from transformers import pipeline
+## 6. Akademik Referanslar
 
-        generator = pipeline("text-to-audio",
-                           model="facebook/musicgen-large")
+1. "Benchmarking Music Generation Models and Metrics" (2025) — arxiv:2506.19085
+2. "Data-Driven Analysis of AI-Generated Music: Suno & Udio" (2025) — arxiv:2509.11824
+3. "The AI Music Arms Race: On Detection of AI-Generated Music" (2025) — ISMIR
+4. "WavLM model ensemble for audio deepfake detection" (2024) — arxiv:2408.07414
+5. IRCAM Amplify AI Music Detector — %98.59 AI, %98.5 dogal muzik dogrulugu
 
-        for i in range(count):
-            prompt = self.get_random_prompt()
-            audio = generator(prompt, max_new_tokens=1024)
+---
 
-            filename = f"ai_musicgen_{i:04d}.wav"
-            self.save_audio(audio, filename)
+## 7. Hedef Performans Metrikleri
 
-            self.save_metadata(filename, {
-                "source": "musicgen",
-                "label": 1,
-                "prompt": prompt
-            })
-
-    def get_random_prompt(self):
-        """Rastgele müzik promptları üret"""
-        genres = ["pop", "rock", "jazz", "classical", "electronic"]
-        moods = ["happy", "sad", "energetic", "calm", "mysterious"]
-        instruments = ["piano", "guitar", "violin", "drums", "synthesizer"]
-
-        genre = random.choice(genres)
-        mood = random.choice(moods)
-        instrument = random.choice(instruments)
-
-        return f"A {mood} {genre} song with {instrument}"
-```
-
-### **2. İnsan Müzik Toplama**
-```python
-# scripts/collect_human_music.py
-import requests
-from pytube import YouTube
-
-class HumanMusicCollector:
-    def __init__(self):
-        self.fma_api_key = os.getenv('FMA_API_KEY')
-        self.jamendo_client_id = os.getenv('JAMENDO_CLIENT_ID')
-
-    async def collect_from_fma(self, count=100):
-        """Free Music Archive'den müzik topla"""
-        url = f"https://freemusicarchive.org/api/get/tracks.json"
-        params = {
-            "api_key": self.fma_api_key,
-            "limit": count,
-            "format": "json"
-        }
-
-        response = requests.get(url, params=params)
-        tracks = response.json()['dataset']
-
-        for i, track in enumerate(tracks):
-            download_url = track['track_url']
-            filename = f"human_fma_{i:04d}.mp3"
-
-            await self.download_audio(download_url, filename)
-
-            self.save_metadata(filename, {
-                "source": "fma",
-                "label": 0,  # Human generated
-                "artist": track['artist_name'],
-                "title": track['track_title'],
-                "genre": track['track_genres'][0] if track['track_genres'] else "unknown"
-            })
-
-    async def collect_gtzan_dataset(self):
-        """GTZAN dataset'ini indir"""
-        from datasets import load_dataset
-
-        dataset = load_dataset("marsyas/gtzan", "all")
-
-        for i, sample in enumerate(dataset['train']):
-            audio_data = sample['audio']['array']
-            sample_rate = sample['audio']['sampling_rate']
-            genre = sample['genre']
-
-            filename = f"human_gtzan_{i:04d}.wav"
-            self.save_audio_array(audio_data, sample_rate, filename)
-
-            self.save_metadata(filename, {
-                "source": "gtzan",
-                "label": 0,
-                "genre": genre,
-                "quality": "research_grade"
-            })
-```
-
-## 🧠 **PRE-TRAINED MODEL STRATEJİSİ**
-
-### **1. Hazır Modeller (Hemen Kullanılabilir)**
-```python
-# Araştırma sonucunda bulunan en iyi modeller:
-
-AVAILABLE_MODELS = {
-    "wav2vec2_audioset": {
-        "model_id": "ALM/wav2vec2-base-audioset",
-        "platform": "huggingface",
-        "accuracy": "85%",
-        "size": "95MB",
-        "speed": "fast",
-        "license": "MIT"
-    },
-
-    "ircam_detector": {
-        "model_id": "ircam/ai-music-detector",
-        "platform": "ircam_amplify",
-        "accuracy": "99.8%",
-        "size": "unknown",
-        "speed": "medium",
-        "license": "commercial"  # Ücretsiz tier var
-    },
-
-    "facebook_wav2vec2": {
-        "model_id": "facebook/wav2vec2-base",
-        "platform": "huggingface",
-        "accuracy": "fine-tuning_needed",
-        "size": "95MB",
-        "speed": "fast",
-        "license": "MIT"
-    }
-}
-
-# Model kullanım örneği:
-from transformers import pipeline
-
-# Direkt kullanım (transfer learning için)
-classifier = pipeline("audio-classification",
-                     model="ALM/wav2vec2-base-audioset")
-
-# Fine-tuning için base model
-base_model = pipeline("feature-extraction",
-                     model="facebook/wav2vec2-base")
-```
-
-### **2. Kendi Modelini Train Et (Plan B)**
-```python
-# Model architecture (eğer hazır model yeterli değilse)
-import tensorflow as tf
-from tensorflow.keras import layers
-
-def create_ai_music_detector():
-    model = tf.keras.Sequential([
-        # Audio preprocessing
-        layers.Input(shape=(None,)),  # Variable length audio
-
-        # Feature extraction (MFCC benzeri)
-        layers.Lambda(lambda x: tf.signal.mfcc(
-            x, sample_rate=22050, mfcc_count=13
-        )),
-
-        # CNN layers
-        layers.Conv2D(32, (3, 3), activation='relu'),
-        layers.MaxPooling2D(2, 2),
-        layers.Conv2D(64, (3, 3), activation='relu'),
-        layers.MaxPooling2D(2, 2),
-        layers.Conv2D(128, (3, 3), activation='relu'),
-        layers.GlobalAveragePooling2D(),
-
-        # Classification head
-        layers.Dense(64, activation='relu'),
-        layers.Dropout(0.5),
-        layers.Dense(1, activation='sigmoid')  # Binary: AI vs Human
-    ])
-
-    model.compile(
-        optimizer='adam',
-        loss='binary_crossentropy',
-        metrics=['accuracy', 'precision', 'recall']
-    )
-
-    return model
-```
-
-## ⚡ **HIZLI PROTOTIP STRATEJİSİ (3 AY İÇİN)**
-
-### **Hafta 1-2: Hazır Model Test**
-```python
-# scripts/quick_prototype.py
-# İlk 2 haftada çalışan bir prototype yap
-
-def quick_prototype():
-    # 1. Hugging Face'den hazır model al
-    model = pipeline("audio-classification",
-                    model="ALM/wav2vec2-base-audioset")
-
-    # 2. Basit web interface yap
-    # React'te file upload + result display
-
-    # 3. API endpoint yap
-    @app.post("/analyze")
-    async def analyze_audio(file: UploadFile):
-        # Audio'yu model'e gönder
-        result = model(file.content)
-        return {"is_ai_generated": result['score'] > 0.5}
-
-    # 4. Test et ve baseline accuracy'i ölç
-```
-
-### **Hafta 3-8: Dataset Toplama + Fine-tuning**
-```python
-# Otomatik dataset toplama (paralel çalışsın)
-async def collect_datasets():
-    tasks = [
-        collect_ai_music(500),    # 500 AI müzik
-        collect_human_music(500), # 500 İnsan müzik
-        download_gtzan(1000)      # 1000 GTZAN sample
-    ]
-
-    await asyncio.gather(*tasks)
-
-# Model fine-tuning
-def fine_tune_model():
-    # Base model'i al
-    base_model = get_pretrained_model()
-
-    # Son layer'ı değiştir (binary classification için)
-    model = modify_for_binary_classification(base_model)
-
-    # Collected dataset ile train et
-    model.fit(train_data, validation_data=val_data, epochs=20)
-
-    return model
-```
-
-### **Hafta 9-12: Optimizasyon + Production**
-```python
-# Model optimizasyonu
-def optimize_for_production():
-    # Model quantization (boyut küçültme)
-    quantized_model = tf.lite.TFLiteConverter.from_keras_model(model)
-    quantized_model.optimizations = [tf.lite.Optimize.DEFAULT]
-
-    # TensorFlow.js'e convert et
-    tfjs_model = tensorflowjs.converters.save_keras_model(
-        model, './models/tfjs'
-    )
-
-    # Batch inference için optimize et
-    batch_model = optimize_for_batch_processing(model)
-
-    return {
-        "web": tfjs_model,
-        "api": quantized_model,
-        "batch": batch_model
-    }
-```
-
-## 🚀 **AUTOMATION SCRIPTS**
-
-### **Daily Data Collection (Günlük Çalışsın)**
-```bash
-#!/bin/bash
-# scripts/daily_collection.sh
-
-# Her gün yeni AI müzikler topla
-python scripts/collect_ai_music.py --count 20
-python scripts/collect_human_music.py --count 20
-
-# Dataset'i temizle ve preprocess et
-python scripts/preprocess_audio.py
-
-# Model'i güncel dataset ile retrain et (haftalık)
-if [ $(date +%u) -eq 7 ]; then  # Pazar günü
-    python scripts/retrain_model.py
-fi
-
-# Model accuracy'sini test et
-python scripts/test_accuracy.py
-
-# Sonuçları GitHub'a commit et
-git add data/ models/
-git commit -m "Daily dataset update: $(date)"
-git push origin main
-```
-
-### **Automated Model Training**
-```python
-# scripts/auto_training.py
-import schedule
-import time
-
-def weekly_training():
-    """Her hafta model'i yeniden train et"""
-    print("Starting weekly model training...")
-
-    # 1. Dataset'i kontrol et
-    validate_dataset()
-
-    # 2. Model'i train et
-    new_model = train_improved_model()
-
-    # 3. Accuracy'i test et
-    accuracy = test_model_accuracy(new_model)
-
-    # 4. Eğer daha iyi ise deploy et
-    if accuracy > current_model_accuracy:
-        deploy_new_model(new_model)
-        send_notification(f"New model deployed! Accuracy: {accuracy:.2%}")
-
-    print("Weekly training completed!")
-
-# Her hafta çalıştır
-schedule.every().sunday.at("02:00").do(weekly_training)
-
-while True:
-    schedule.run_pending()
-    time.sleep(3600)  # 1 saat bekle
-```
-
-## 🎯 **SUCCESS METRICS**
-
-### **Model Performance Hedefleri**
 ```python
 TARGET_METRICS = {
-    "accuracy": 0.95,      # %95 doğruluk
-    "precision": 0.93,     # False positive düşük
-    "recall": 0.97,        # False negative düşük
-    "f1_score": 0.95,      # Genel performans
-    "inference_time": 0.5, # 0.5 saniye altında
-    "model_size": 50       # 50MB altında
+    "accuracy": 0.95,       # %95 dogruluk
+    "precision": 0.93,      # Dusuk false positive
+    "recall": 0.97,         # Dusuk false negative
+    "f1_score": 0.95,       # Dengeli performans
+    "roc_auc": 0.98,        # Yuksek ayirt edicilik
+    "inference_time": 2.0,  # 2 saniye altinda (web)
+    "model_size_mb": 50,    # Production model boyutu
 }
-
-# Haftalık performans tracking
-def track_weekly_performance():
-    metrics = evaluate_model_on_test_set()
-
-    # Progress tracking dosyasına kaydet
-    save_metrics_to_file(metrics)
-
-    # Eğer hedeften düşükse alarm ver
-    if metrics['accuracy'] < TARGET_METRICS['accuracy']:
-        send_alert("Model performance dropped!")
-
-    return metrics
 ```
 
-Bu strateji ile **hiç manuel etiketleme yapmadan** güçlü bir AI müzik detektörü geliştirebilirsin! 🚀
+---
+
+## 8. Dosya Yapisi (Implementasyon)
+
+```
+hf-crowncode-backend/
+  app/
+    services/
+      feature_extractor.py      # 49 ozellik cikarimi
+      vocal_analyzer.py         # 14 vokal ozelligi
+      wav2vec2_detector.py      # Tower 1
+      clap_detector.py          # Tower 3
+      fst_client.py             # Tower 4
+      meta_classifier.py        # Final karar
+      score_fusion.py           # Tower skorlarini birlestirme
+    training/
+      extract_features_batch.py # Toplu ozellik cikarimi
+      train_classifier.py       # 7-model egitim pipeline'i
+      evaluate.py               # Baseline + model degerlendirme
+      visualize_results.py      # 8 publication-quality figur
+      run_full_pipeline.py      # Tek komutla tum pipeline
+      dataset_loader.py         # HuggingFace veri seti yukleme
+      wav2vec2_classifier.py    # Tower 1 fine-tuning
+  models/
+    wav2vec2-base-cache/        # facebook/wav2vec2-base (363 MB)
+    fst/                        # FST checkpoints (1.2 GB + 46 MB)
+    auris_classifier_v1.pkl     # Egitilmis meta-classifier
+    feature_scaler_v1.pkl       # StandardScaler
+    feature_columns_v1.json     # Ozellik sira listesi
+    training_results.json       # Tum model sonuclari
+  figures/                      # Uretilen figurler (PNG + PDF)
+  data/training/
+    audio/                      # Egitim audio dosyalari
+    manifest.csv                # Dosya yolu + etiket
+    features.csv                # 49 ozellik + etiket
+```
