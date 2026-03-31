@@ -65,6 +65,9 @@ export const analyzeSource = async (
       if (errs.includes('missing_url')) return { result: null, error: 'missingUrl' }
       if (errs.includes('unsupported_source')) return { result: null, error: 'unsupportedSource' }
       if (errs.includes('invalid_youtube_url')) return { result: null, error: 'invalidYouTubeUrl' }
+      if (errs.includes('youtube_authentication_required')) {
+        return { result: null, error: 'youtubeAuthenticationRequired' }
+      }
       if (errs.includes('invalid_source_type')) return { result: null, error: 'invalidSourceType' }
       if (errs.includes('file_too_large')) return { result: null, error: 'fileTooLarge' }
       if (errs.includes('file_too_small')) return { result: null, error: 'fileTooSmall' }
