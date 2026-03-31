@@ -121,6 +121,8 @@ const AIMusicDetectionPage: NextPage = () => {
         return t.aiDetection.errors?.enterUrl || t.aiDetection.error.title
       case 'invalidYouTubeUrl':
         return t.aiDetection.errors?.invalidYouTubeUrl || t.aiDetection.error.title
+      case 'youtubeAuthenticationRequired':
+        return t.aiDetection.errors?.youtubeAuthenticationRequired || t.aiDetection.error.title
       case 'unsupportedSource':
         return t.aiDetection.errors?.unsupportedSource || t.aiDetection.error.title
       case 'missingFile':
