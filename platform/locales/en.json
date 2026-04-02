@@ -424,6 +424,21 @@
       "youtubeAnalysisFailed": "YouTube analysis failed. Showing preview-only result.",
       "internalError": "An internal error occurred. Please try again later.",
       "limitedBackendNote": "Note: Analysis completed with limited backend availability."
+    },
+    "techStack": {
+      "badge": "Architecture",
+      "title": "Multi-Tower Detection Engine",
+      "subtitle": "Each tower analyzes a different dimension of the audio signal, then a meta-classifier fuses all signals",
+      "tower1": "Deep audio embeddings via transfer learning",
+      "tower2Name": "49 Features",
+      "tower2": "Spectral, temporal, harmonic & vocal fingerprint",
+      "tower3": "Cross-modal audio-text similarity analysis",
+      "tower4": "External spectral fakeprint detection API",
+      "meta": "Meta-Classifier \u2192 AI / Human",
+      "statFeatures": "Acoustic Features",
+      "statModels": "ML Models",
+      "statVocal": "Vocal Markers",
+      "statCV": "Cross Validation"
     }
   },
   "mlToolkit": {
