@@ -14,9 +14,17 @@ import type { NextPage } from 'next'
 import { motion } from 'framer-motion'
 import {
   AlertTriangle,
+  BarChart3,
+  Brain,
+  Fingerprint,
+  Layers,
   Link as LinkIcon,
+  Mic2,
   Music,
+  Network,
+  Radio,
   Upload,
+  Waves,
   Youtube,
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
@@ -369,6 +377,90 @@ const AIMusicDetectionPage: NextPage = () => {
               labels={resultLabels}
             />
           )}
+        </div>
+      </div>
+
+      {/* ===== TECH STACK SHOWCASE ===== */}
+      <div className={styles['tech-showcase']}>
+        <div className={styles['tech-container']}>
+          <motion.div
+            className={styles['tech-header']}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className={styles['tech-badge']}>
+              <Layers size={14} />
+              <span>{t.aiDetection.techStack?.badge || 'Architecture'}</span>
+            </div>
+            <h2 className={styles['tech-title']}>
+              {t.aiDetection.techStack?.title || 'Multi-Tower Detection'}
+            </h2>
+            <p className={styles['tech-subtitle']}>
+              {t.aiDetection.techStack?.subtitle || 'Each tower analyzes a different dimension of the audio signal'}
+            </p>
+          </motion.div>
+
+          <div className={styles['tech-towers']}>
+            {[
+              { icon: Waves, name: 'wav2vec2', desc: t.aiDetection.techStack?.tower1 || 'Deep audio embeddings via transfer learning', color: '#6b8fbf' },
+              { icon: Fingerprint, name: t.aiDetection.techStack?.tower2Name || '49 Features', desc: t.aiDetection.techStack?.tower2 || 'Spectral, temporal, harmonic & vocal fingerprint', color: '#c99347' },
+              { icon: Radio, name: 'CLAP', desc: t.aiDetection.techStack?.tower3 || 'Cross-modal audio-text similarity', color: '#7fb069' },
+              { icon: Network, name: 'FST API', desc: t.aiDetection.techStack?.tower4 || 'External spectral fakeprint detection', color: '#a64b8f' },
+            ].map((tower, i) => (
+              <motion.div
+                key={i}
+                className={styles['tech-tower-card']}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 + 0.2 }}
+                whileHover={{ y: -4 }}
+              >
+                <div className={styles['tech-tower-top']} style={{ borderTopColor: tower.color }}>
+                  <tower.icon size={24} style={{ color: tower.color }} />
+                  <span className={styles['tech-tower-name']}>{tower.name}</span>
+                </div>
+                <p className={styles['tech-tower-desc']}>{tower.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            className={styles['tech-meta-row']}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6 }}
+          >
+            <div className={styles['tech-meta-line']} />
+            <div className={styles['tech-meta-badge']}>
+              <Brain size={16} />
+              <span>{t.aiDetection.techStack?.meta || 'Meta-Classifier → AI / Human'}</span>
+            </div>
+            <div className={styles['tech-meta-line']} />
+          </motion.div>
+
+          <div className={styles['tech-stats-row']}>
+            {[
+              { value: '49', label: t.aiDetection.techStack?.statFeatures || 'Acoustic Features' },
+              { value: '7', label: t.aiDetection.techStack?.statModels || 'ML Models' },
+              { value: '14', label: t.aiDetection.techStack?.statVocal || 'Vocal Markers' },
+              { value: '5-fold', label: t.aiDetection.techStack?.statCV || 'Cross Validation' },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                className={styles['tech-stat']}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 + 0.3 }}
+              >
+                <div className={styles['tech-stat-value']}>{stat.value}</div>
+                <div className={styles['tech-stat-label']}>{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </MainLayout>

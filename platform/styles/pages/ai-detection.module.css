@@ -1237,3 +1237,211 @@
     gap: 2rem;
   }
 }
+
+/* =========================================================================
+   TECH STACK SHOWCASE
+   ========================================================================= */
+
+.tech-showcase {
+  position: relative;
+  padding: 5rem 0 4rem;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(201, 147, 71, 0.05) 0%, transparent 70%),
+    var(--color-background);
+}
+
+.tech-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.tech-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
+  color: var(--color-gold-400);
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.tech-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.tech-subtitle {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Tower Cards */
+
+.tech-towers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tech-tower-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tech-tower-card:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.tech-tower-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 3px solid var(--color-gold-400);
+}
+
+.tech-tower-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.tech-tower-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Meta-Classifier Row */
+
+.tech-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.tech-meta-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--color-border-light) 50%, transparent 100%);
+}
+
+.tech-meta-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.5rem;
+  background: linear-gradient(135deg, rgba(201, 147, 71, 0.12), rgba(138, 95, 43, 0.08));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
+  color: var(--color-gold-400);
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* Stats Row */
+
+.tech-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.tech-stat {
+  text-align: center;
+  padding: 1.25rem 0.75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.tech-stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-mono);
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.tech-stat-label {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+/* Tech Showcase Responsive */
+
+@media (max-width: 900px) {
+  .tech-towers {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .tech-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .tech-showcase {
+    padding: 3rem 0 2.5rem;
+  }
+  .tech-towers {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .tech-tower-card {
+    padding: 1rem 0.75rem;
+  }
+  .tech-tower-name {
+    font-size: 0.85rem;
+  }
+  .tech-tower-desc {
+    font-size: 0.72rem;
+  }
+  .tech-stats-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .tech-stat {
+    padding: 1rem 0.5rem;
+  }
+  .tech-stat-value {
+    font-size: 1.35rem;
+  }
+  .tech-meta-badge {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+  }
+}
