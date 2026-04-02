@@ -45,18 +45,24 @@
     "status": "Durum"
   },
   "hero": {
+    "badge": "Açık Kaynak",
     "title": {
       "main": "CrownCode",
       "accent": "Platform"
     },
-    "subtitle": "Yazılım projeleri, araştırma çalışmaları ve geliştirme süreçlerinin sergilendiği merkezi platform. Açık kaynak projeler, demo uygulamalar ve teknik dokümantasyon.",
+    "subtitle": "Yapay zeka destekli araçlar, yaratıcı uygulamalar ve araştırma projeleri. Modern teknolojilerle inşa edilmiş, gerçek dünya etkisi için tasarlanmış.",
     "cta": {
       "explore": "Projeleri Keşfet",
       "github": "GitHub'da Görüntüle"
     },
     "features": {
-      "modern": "Açık Kaynak Projeler",
-      "accuracy": "Demo ve Dokümantasyon"
+      "modern": "Açık Kaynak",
+      "accuracy": "Yapay Zeka",
+      "github": "Canlı Demolar"
+    },
+    "orb": {
+      "title": "CrownCode",
+      "sub": "Platform"
     },
     "scroll": "Daha Fazlasını Keşfet"
   },

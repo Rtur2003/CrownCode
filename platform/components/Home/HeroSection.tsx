@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
-import { ChevronDown, Code, Shield, Waves, Cpu } from 'lucide-react'
+import { ChevronDown, Code, Shield, Waves, Github, Zap } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
 // =========================================================================
@@ -90,10 +90,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
           animate="visible"
           className="hero-content"
         >
-          {/* AURIS Badge */}
+          {/* Platform Badge */}
           <motion.div className="hero-badge" variants={itemVariants}>
-            <Waves size={14} />
-            <span>AURIS AI</span>
+            <Zap size={14} />
+            <span>{t.hero.badge || 'Open Source'}</span>
           </motion.div>
 
           {/* Main Title */}
@@ -130,8 +130,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
               whileHover={{ scale: 1.05, backgroundColor: 'rgba(201, 147, 71, 0.15)' }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <Cpu size={16} aria-hidden="true" />
-              <span>wav2vec2</span>
+              <Github size={16} aria-hidden="true" />
+              <span>{t.hero.features?.github || 'GitHub'}</span>
             </motion.div>
           </motion.div>
 
@@ -223,15 +223,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
             />
           </motion.div>
 
-          {/* AURIS label overlay on orb */}
+          {/* Platform label overlay on orb */}
           <motion.div
             className="hero-orb-label"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
           >
-            <span className="orb-label-text">AURIS</span>
-            <span className="orb-label-sub">AI Detection Engine</span>
+            <span className="orb-label-text">{t.hero.orb?.title || 'CrownCode'}</span>
+            <span className="orb-label-sub">{t.hero.orb?.sub || 'Platform'}</span>
           </motion.div>
 
           {/* Glow pulse behind orb */}

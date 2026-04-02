@@ -45,18 +45,24 @@
     "status": "Status"
   },
   "hero": {
+    "badge": "Open Source",
     "title": {
       "main": "CrownCode",
       "accent": "Platform"
     },
-    "subtitle": "Central platform showcasing software projects, research work, and development processes. Open-source projects, demo applications, and technical documentation.",
+    "subtitle": "AI-powered tools, creative applications, and research projects. Built with modern technologies, designed for real-world impact.",
     "cta": {
       "explore": "Explore Projects",
       "github": "View on GitHub"
     },
     "features": {
-      "modern": "Open Source Projects",
-      "accuracy": "Demos & Documentation"
+      "modern": "Open Source",
+      "accuracy": "AI Powered",
+      "github": "Live Demos"
+    },
+    "orb": {
+      "title": "CrownCode",
+      "sub": "Platform"
     },
     "scroll": "Discover More"
   },
