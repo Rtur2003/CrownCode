@@ -33,12 +33,49 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   const metaLanguage = language === 'tr' ? 'Turkish' : 'English'
   const ogLocale = language === 'tr' ? 'tr_TR' : 'en_US'
 
-  const structuredData = {
+  const isHomePage = router.pathname === '/'
+  const isAurisPage = router.pathname.startsWith('/ai-music-detection')
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "CrownCode",
+    "url": baseUrl,
+    "logo": `${baseUrl}/favicon.svg`,
+    "founder": {
+      "@type": "Person",
+      "name": "Hasan Arthur Altuntas",
+      "jobTitle": "Computer Engineering Student",
+      "affiliation": {
+        "@type": "EducationalOrganization",
+        "name": "Duzce University"
+      }
+    },
+    "sameAs": [
+      "https://github.com/Rtur2003"
+    ]
+  }
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "CrownCode Platform",
+    "url": baseUrl,
+    "description": description,
+    "inLanguage": [language === 'tr' ? 'tr-TR' : 'en-US'],
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": `${baseUrl}/search?q={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
+  }
+
+  const softwareSchema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "CrownCode",
+    "name": isAurisPage ? "AURIS - AI Music Detection Engine" : "CrownCode",
     "description": description,
-    "applicationCategory": "DeveloperApplication",
+    "applicationCategory": isAurisPage ? "MultimediaApplication" : "DeveloperApplication",
     "operatingSystem": "Web",
     "offers": {
       "@type": "Offer",
@@ -47,16 +84,48 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     },
     "author": {
       "@type": "Person",
-      "name": "Hasan Arthur Altuntaş (Rthur)",
-      "url": "https://hasanarthuraltuntas.xyz"
+      "name": "Hasan Arthur Altuntas",
+      "url": baseUrl
     },
     "image": imageUrl,
-    "url": baseUrl,
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "ratingCount": "50"
-    }
+    "url": canonicalUrl
+  }
+
+  const researchSchema = isAurisPage ? {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "name": "AURIS: AI Music Detection Using Multi-Tower Deep Learning Architecture",
+    "author": {
+      "@type": "Person",
+      "name": "Hasan Arthur Altuntas",
+      "affiliation": {
+        "@type": "EducationalOrganization",
+        "name": "Duzce University, Computer Engineering"
+      }
+    },
+    "description": "Bachelor's thesis research on detecting AI-generated music using a 4-tower ensemble architecture with 49 acoustic features and vocal analysis.",
+    "keywords": "AI music detection, deep learning, wav2vec2, audio fingerprinting, vocal analysis",
+    "inLanguage": language === 'tr' ? 'tr-TR' : 'en-US',
+    "url": canonicalUrl
+  } : null
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": baseUrl
+      },
+      ...(isAurisPage ? [{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "AURIS AI Music Detection",
+        "item": `${baseUrl}/ai-music-detection`
+      }] : [])
+    ]
   }
 
   return (
