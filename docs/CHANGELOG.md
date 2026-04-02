@@ -8,11 +8,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Data Manipulation Suite implementation
-- Machine Learning Toolkit development
-- Mobile application development
-- Advanced analytics dashboard
-- Real-time collaboration features
+- Backend model deployment (multi-tower inference API)
+- Real-time audio analysis via WebSocket
+- Spotify/SoundCloud source support
+- Data augmentation backend pipeline
+
+## [1.3.0] - 2026-04-02
+
+### Added
+- **Featured Project Card:** AURIS card in ProjectsSection now has gold gradient border-top, glow effect, and "Featured" label
+- **Tech Stack Showcase:** Multi-tower architecture visualization on AURIS page with tower cards, meta-classifier connector, and stat counters
+- **Pipeline Visual Upgrade:** Numbered pipeline steps with gold accent line and hover effects
+- **Gold Gradient Stats:** Tech stat values now use gradient text on AURIS page
+- **SEO Structured Data:** Added Organization, WebSite, SoftwareApplication, ScholarlyArticle, and BreadcrumbList schemas to MainLayout
+- **Hreflang Tags:** TR/EN/x-default alternate links
+- **Dataset Downloader:** `download_datasets.py` with streaming mode, resume support, OOM-safe audio processing
+
+### Changed
+- **Home Hero:** Genericized from AURIS-specific to CrownCode platform branding
+- **Home Badge:** Changed from "AURIS AI" to "Open Source"
+- **Products Section:** Renamed badge from "AURIS AI" to "Projects", title to "Research & Products"
+- **Orb Label:** Changed from "AURIS" to "CrownCode / Platform"
+- **Dataset Source:** Replaced ccmusic-database (no raw audio) with benjamin-paine/free-music-archive-small
+- **Card Hover Effects:** Improved icon scale, gold color transition, gradient overlay on all project cards
+
+### Fixed
+- **OOM in Dataset Download:** Reordered pipeline to trim audio BEFORE resampling to prevent numpy memory errors
+- **AIME Segfault:** Added cast_column with sampling_rate=16000 and safe audio reader
+- **ESLint Curly Brace:** Added braces to single-line if statements in AnimatedCounter
+- **Framer Motion Type:** Changed CSSProperties to Record<string, string> for motion style
+- **TypeScript Index:** Added keyof typeof cast for tower labels
+
+## [1.2.0] - 2026-03-24
+
+### Added
+- **AURIS Detection Page:** Complete AI music detection interface with YouTube URL and file upload support
+- **HowItWorks Section:** 4-step pipeline visualization with animated cards and connector line
+- **AURIS Hero Section:** Cinematic hero with layered backgrounds, animated orb, and rotating rings
+- **Analysis Result Card:** Detailed result display with confidence scoring
+- **Product Catalog:** Centralized `product-catalog.ts` for all project management
+- **Search System:** Global search with product and page indexing
+
+### Changed
+- **Design System:** Migrated from Tailwind CSS to CSS Modules + custom design token system (variables.css)
+- **MainLayout:** Enhanced with Apple meta tags, extended robots meta, og:image:alt
+
+## [1.1.0] - 2025-01-22
+
+### Added
+- **New Projects:** Crown Fortune, Crown Dreams, Crown Commend, Crown Vote pages
+- **Creator Studio:** Creator tools page
+- **Analysis History:** Past analysis results page
+- **System Status:** Health dashboard page
+- **Performance Optimizations:** Dynamic imports, code splitting, Web Vitals monitoring
+- **PWA Support:** manifest.json, app shortcuts
+
+### Fixed
+- Header overlap on all pages (proper top padding)
+- Data-manipulation page header clearance
+- LoadingScreen responsive behavior
+- Toast notification z-index layering
 
 ## [1.0.0] - 2024-12-22
 
@@ -51,8 +106,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Self-improving**: Automated model updates and improvements
 
 ### Technical Implementation
-- **Frontend**: Next.js 14.2.18 with TypeScript
-- **Styling**: Tailwind CSS with custom design system
+- **Frontend**: Next.js 14 with TypeScript
+- **Styling**: CSS Modules + custom design token system
 - **Backend**: FastAPI (Python) on HuggingFace Spaces
 - **AI/ML**: PyTorch with wav2vec2 model
 - **Deployment**: Netlify (frontend) + HuggingFace Spaces (backend)
