@@ -39,7 +39,9 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ end, suffix = '', dur
   const [hasAnimated, setHasAnimated] = useState(false)
 
   useEffect(() => {
-    if (hasAnimated) return
+    if (hasAnimated) {
+      return
+    }
     setHasAnimated(true)
     const startTime = Date.now()
     const timer = setInterval(() => {
@@ -47,7 +49,9 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ end, suffix = '', dur
       const progress = Math.min(elapsed / duration, 1)
       const eased = 1 - Math.pow(1 - progress, 3)
       setCount(Math.floor(eased * end))
-      if (progress >= 1) clearInterval(timer)
+      if (progress >= 1) {
+        clearInterval(timer)
+      }
     }, 16)
     return () => clearInterval(timer)
   }, [end, duration, hasAnimated])
@@ -134,7 +138,7 @@ export const AurisShowcase: React.FC = () => {
               <motion.div
                 key={tower.id}
                 className={styles.towerCard}
-                style={{ '--tower-color': tower.color } as React.CSSProperties}
+                style={{ '--tower-color': tower.color } as Record<string, string>}
                 whileHover={{ y: -6, scale: 1.02 }}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
