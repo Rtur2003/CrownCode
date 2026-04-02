@@ -150,7 +150,7 @@ export const AurisShowcase: React.FC = () => {
                 </div>
                 <div className={styles.towerLabel}>{tower.label}</div>
                 <div className={styles.towerDesc}>
-                  {aurisT?.towers?.[tower.id] || `Tower ${i + 1}`}
+                  {aurisT?.towers?.[tower.id as keyof typeof aurisT.towers] || `Tower ${i + 1}`}
                 </div>
                 {/* Pulse animation */}
                 <motion.div
