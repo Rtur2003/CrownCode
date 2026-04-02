@@ -424,6 +424,21 @@
       "youtubeAnalysisFailed": "YouTube analizi başarısız oldu. Yalnızca önizleme sonucu gösteriliyor.",
       "internalError": "Bir dahili hata oluştu. Lütfen daha sonra tekrar deneyin.",
       "limitedBackendNote": "Not: Analiz, sınırlı backend erişimiyle tamamlandı."
+    },
+    "techStack": {
+      "badge": "Mimari",
+      "title": "Cok Kuleli Tespit Motoru",
+      "subtitle": "Her kule ses sinyalinin farkli bir boyutunu analiz eder, ardic meta-siniflandirici tum sinyalleri birlestirir",
+      "tower1": "Transfer ogrenme ile derin ses temsilleri",
+      "tower2Name": "49 Ozellik",
+      "tower2": "Spektral, zamansal, harmonik ve vokal parmak izi",
+      "tower3": "Capraz-modal ses-metin benzerlik analizi",
+      "tower4": "Harici spektral sahtelik tespit API'si",
+      "meta": "Meta-Siniflandirici \u2192 YZ / Insan",
+      "statFeatures": "Akustik Ozellik",
+      "statModels": "ML Model",
+      "statVocal": "Vokal Isaretci",
+      "statCV": "Capraz Dogrulama"
     }
   },
   "mlToolkit": {
