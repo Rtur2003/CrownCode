@@ -61,10 +61,10 @@
     "scroll": "Daha Fazlasını Keşfet"
   },
   "products": {
-    "badge": "AURIS AI",
-    "title": "AURIS ile",
-    "titleAccent": "Müzik Analizi",
-    "subtitle": "AURIS - wav2vec2 mimarisini kullanan derin öğrenme platformu ile AI tarafından üretilmiş müzikleri insan bestelerinden ayırt eden profesyonel analiz motoru.",
+    "badge": "Projeler",
+    "title": "Araştırma ve",
+    "titleAccent": "Ürünlerimiz",
+    "subtitle": "Yapay zeka destekli ses analizinden yaratıcı araçlara kadar açık kaynaklı projeler. Modern teknolojilerle inşa edilmiş, gerçek dünya kullanımı için tasarlanmış.",
     "cta": {
       "title": "Daha Fazla Proje Yolda",
       "description": "GitHub'da tüm projelerimizi inceleyebilir, katkıda bulunabilirsiniz",
@@ -140,31 +140,31 @@
     }
   },
   "aurisShowcase": {
-    "badge": "Bitirme Tezi Projesi",
+    "badge": "Araştırma Projesi",
     "title": "AURIS",
-    "titleAccent": "Yapay Zeka Muzik Tespit Motoru",
-    "subtitle": "Yapay zeka ile uretilmis muzigi yuksek hassasiyetle tespit etmek icin 49 akustik ozellik ve vokal analizi kullanan 4-Kule derin ogrenme mimarisi.",
+    "titleAccent": "Yapay Zeka Müzik Tespit Motoru",
+    "subtitle": "Yapay zeka ile üretilmiş müziği yüksek hassasiyetle tespit etmek için 49 akustik özellik ve vokal analizi kullanan 4-Kule derin öğrenme mimarisi.",
     "stats": {
       "towers": "Analiz Kulesi",
-      "features": "Akustik Ozellik",
+      "features": "Akustik Özellik",
       "models": "ML Model",
-      "vocal": "Vokal Ozellik"
+      "vocal": "Vokal Özellik"
     },
     "archTitle": "4-Kule Mimari",
     "towers": {
-      "tower1": "Transfer ogrenme ile derin ses temsilleri",
+      "tower1": "Transfer öğrenme ile derin ses temsilleri",
       "tower2": "Spektral, zamansal, harmonik ve vokal analiz",
-      "tower3": "Capraz-modal ses-metin temsilleri",
+      "tower3": "Çapraz-modal ses-metin temsilleri",
       "tower4": "Harici spektral sahtelik tespiti"
     },
-    "meta": "Meta-Siniflandirici",
+    "meta": "Meta-Sınıflandırıcı",
     "featureCats": {
-      "spectral": "Spektral Ozellikler",
-      "temporal": "Zamansal Ozellikler",
-      "harmonic": "Harmonik Ozellikler",
-      "vocal": "Vokal Ozellikler"
+      "spectral": "Spektral Özellikler",
+      "temporal": "Zamansal Özellikler",
+      "harmonic": "Harmonik Özellikler",
+      "vocal": "Vokal Özellikler"
     },
-    "cta": "AURIS Tespiti Dene"
+    "cta": "AURIS Tespitini Dene"
   },
   "audioDataset": {
     "title": "Ses Veri Seti Araçları",
@@ -427,18 +427,18 @@
     },
     "techStack": {
       "badge": "Mimari",
-      "title": "Cok Kuleli Tespit Motoru",
-      "subtitle": "Her kule ses sinyalinin farkli bir boyutunu analiz eder, ardic meta-siniflandirici tum sinyalleri birlestirir",
-      "tower1": "Transfer ogrenme ile derin ses temsilleri",
-      "tower2Name": "49 Ozellik",
+      "title": "Çok Kuleli Tespit Motoru",
+      "subtitle": "Her kule ses sinyalinin farklı bir boyutunu analiz eder, ardından meta-sınıflandırıcı tüm sinyalleri birleştirir",
+      "tower1": "Transfer öğrenme ile derin ses temsilleri",
+      "tower2Name": "49 Özellik",
       "tower2": "Spektral, zamansal, harmonik ve vokal parmak izi",
-      "tower3": "Capraz-modal ses-metin benzerlik analizi",
+      "tower3": "Çapraz-modal ses-metin benzerlik analizi",
       "tower4": "Harici spektral sahtelik tespit API'si",
-      "meta": "Meta-Siniflandirici \u2192 YZ / Insan",
-      "statFeatures": "Akustik Ozellik",
+      "meta": "Meta-Sınıflandırıcı \u2192 YZ / İnsan",
+      "statFeatures": "Akustik Özellik",
       "statModels": "ML Model",
-      "statVocal": "Vokal Isaretci",
-      "statCV": "Capraz Dogrulama"
+      "statVocal": "Vokal İşaretçi",
+      "statCV": "Çapraz Doğrulama"
     }
   },
   "mlToolkit": {

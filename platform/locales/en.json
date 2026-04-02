@@ -61,10 +61,10 @@
     "scroll": "Discover More"
   },
   "products": {
-    "badge": "AURIS AI",
-    "title": "AURIS -",
-    "titleAccent": "Music Analysis",
-    "subtitle": "AURIS - Deep learning platform using wav2vec2 architecture to distinguish AI-generated music from human compositions. Professional implementation with cutting-edge neural networks.",
+    "badge": "Projects",
+    "title": "Our",
+    "titleAccent": "Research & Products",
+    "subtitle": "Open-source projects ranging from AI-powered audio analysis to creative tools. Each built with modern technologies and designed for real-world use.",
     "cta": {
       "title": "More Projects Coming Soon",
       "description": "Explore all our projects on GitHub and contribute",
@@ -140,7 +140,7 @@
     }
   },
   "aurisShowcase": {
-    "badge": "Bachelor's Thesis Project",
+    "badge": "Research Project",
     "title": "AURIS",
     "titleAccent": "AI Music Detection Engine",
     "subtitle": "4-Tower deep learning architecture that analyzes 49 acoustic features including vocal patterns to detect AI-generated music with high precision.",
