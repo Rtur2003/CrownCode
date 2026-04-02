@@ -139,6 +139,33 @@
       }
     }
   },
+  "aurisShowcase": {
+    "badge": "Bachelor's Thesis Project",
+    "title": "AURIS",
+    "titleAccent": "AI Music Detection Engine",
+    "subtitle": "4-Tower deep learning architecture that analyzes 49 acoustic features including vocal patterns to detect AI-generated music with high precision.",
+    "stats": {
+      "towers": "Analysis Towers",
+      "features": "Acoustic Features",
+      "models": "ML Models",
+      "vocal": "Vocal Features"
+    },
+    "archTitle": "4-Tower Architecture",
+    "towers": {
+      "tower1": "Deep audio embeddings via transfer learning",
+      "tower2": "Spectral, temporal, harmonic & vocal analysis",
+      "tower3": "Cross-modal audio-text embeddings",
+      "tower4": "External spectral fakeprint detection"
+    },
+    "meta": "Meta-Classifier",
+    "featureCats": {
+      "spectral": "Spectral Features",
+      "temporal": "Temporal Features",
+      "harmonic": "Harmonic Features",
+      "vocal": "Vocal Features"
+    },
+    "cta": "Try AURIS Detection"
+  },
   "audioDataset": {
     "title": "Audio Dataset Tools",
     "subtitle": "Tools for preparing and processing audio datasets for AI music detection",

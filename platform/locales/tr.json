@@ -139,6 +139,33 @@
       }
     }
   },
+  "aurisShowcase": {
+    "badge": "Bitirme Tezi Projesi",
+    "title": "AURIS",
+    "titleAccent": "Yapay Zeka Muzik Tespit Motoru",
+    "subtitle": "Yapay zeka ile uretilmis muzigi yuksek hassasiyetle tespit etmek icin 49 akustik ozellik ve vokal analizi kullanan 4-Kule derin ogrenme mimarisi.",
+    "stats": {
+      "towers": "Analiz Kulesi",
+      "features": "Akustik Ozellik",
+      "models": "ML Model",
+      "vocal": "Vokal Ozellik"
+    },
+    "archTitle": "4-Kule Mimari",
+    "towers": {
+      "tower1": "Transfer ogrenme ile derin ses temsilleri",
+      "tower2": "Spektral, zamansal, harmonik ve vokal analiz",
+      "tower3": "Capraz-modal ses-metin temsilleri",
+      "tower4": "Harici spektral sahtelik tespiti"
+    },
+    "meta": "Meta-Siniflandirici",
+    "featureCats": {
+      "spectral": "Spektral Ozellikler",
+      "temporal": "Zamansal Ozellikler",
+      "harmonic": "Harmonik Ozellikler",
+      "vocal": "Vokal Ozellikler"
+    },
+    "cta": "AURIS Tespiti Dene"
+  },
   "audioDataset": {
     "title": "Ses Veri Seti Araçları",
     "subtitle": "AI müzik tespiti için ses veri setlerini hazırlama ve işleme araçları",
