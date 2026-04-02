@@ -14,12 +14,10 @@ import type { NextPage } from 'next'
 import { motion } from 'framer-motion'
 import {
   AlertTriangle,
-  BarChart3,
   Brain,
   Fingerprint,
   Layers,
   Link as LinkIcon,
-  Mic2,
   Music,
   Network,
   Radio,

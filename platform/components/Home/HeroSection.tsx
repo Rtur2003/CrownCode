@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
-import { ChevronDown, Code, Shield, Waves, Github, Zap } from 'lucide-react'
+import { ChevronDown, Code, Shield, Github, Zap } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
 // =========================================================================

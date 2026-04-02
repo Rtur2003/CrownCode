@@ -22,7 +22,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
-import { ArrowUpRight, Sparkles, Activity, LucideIcon } from 'lucide-react'
+import { ArrowUpRight, Sparkles, Activity, Star, LucideIcon } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
 
@@ -204,8 +204,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
           role="list"
           aria-label="Research projects"
         >
-          {products.map((product) => {
+          {products.map((product, index) => {
             const Icon = product.icon
+            const isFeatured = index === 0
 
             return (
               <motion.div
@@ -219,7 +220,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
               >
                 <Link
                   href={product.href}
-                  className="product-card"
+                  className={`product-card ${isFeatured ? 'product-card-featured' : ''}`}
                   aria-label={`Explore ${product.title} - ${product.description}`}
                 >
                   <div className="product-card-inner">
@@ -231,6 +232,14 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
                       />
                       <span>{product.status}</span>
                     </div>
+
+                    {/* ===== FEATURED LABEL ===== */}
+                    {isFeatured && (
+                      <div className="featured-label">
+                        <Star size={10} aria-hidden="true" />
+                        <span>{t.products.featuredLabel || 'Featured'}</span>
+                      </div>
+                    )}
 
                     {/* ===== PROJECT ICON ===== */}
                     <div className="product-icon-container">

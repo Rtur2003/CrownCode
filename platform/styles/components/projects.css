@@ -104,9 +104,76 @@
 }
 
 .product-card:hover .product-card-inner {
-  transform: translateY(-8px);
   border-color: var(--color-border-hover);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(201, 147, 71, 0.08);
+}
+
+/* ===== Featured Card ===== */
+.product-card-featured .product-card-inner {
+  border-top: 2px solid transparent;
+  border-image: linear-gradient(90deg, rgba(201, 147, 71, 0.6), rgba(231, 199, 122, 0.8), rgba(201, 147, 71, 0.6)) 1;
+  border-image-slice: 1;
+  background:
+    linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+    linear-gradient(180deg, rgba(201, 147, 71, 0.12), transparent 40%) border-box;
+}
+
+.product-card-featured .product-card-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(231, 199, 122, 0.5), transparent);
+}
+
+.product-card-featured .product-card-inner::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(180deg, rgba(201, 147, 71, 0.06), transparent);
+  pointer-events: none;
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+}
+
+.product-card-featured:hover .product-card-inner {
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(201, 147, 71, 0.08),
+    0 0 0 1px rgba(201, 147, 71, 0.15);
+}
+
+.product-card-featured .product-icon-bg {
+  opacity: 0.15;
+}
+
+.product-card-featured:hover .product-icon-bg {
+  opacity: 0.25;
+}
+
+.featured-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  background: linear-gradient(135deg, rgba(201, 147, 71, 0.12), rgba(231, 199, 122, 0.08));
+  border: 1px solid rgba(201, 147, 71, 0.2);
+  border-radius: var(--radius-3xl);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--color-gold-400);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 /* Status Badge */
@@ -168,6 +235,11 @@
   width: 4rem;
   height: 4rem;
   margin-bottom: 1.5rem;
+  transition: transform var(--animation-normal) var(--ease-out-cubic);
+}
+
+.product-card:hover .product-icon-container {
+  transform: scale(1.08);
 }
 
 .product-icon-bg {
@@ -189,6 +261,11 @@
   height: 100%;
   color: var(--color-text-primary);
   padding: 0.75rem;
+  transition: color var(--animation-normal) var(--ease-out-cubic);
+}
+
+.product-card:hover .product-icon {
+  color: var(--color-gold-400);
 }
 
 /* Content */
@@ -289,7 +366,7 @@
 .product-hover-effect {
   position: absolute;
   inset: 0;
-  background: var(--gradient-primary);
+  background: linear-gradient(135deg, rgba(201, 147, 71, 0.04), transparent 60%);
   opacity: 0;
   border-radius: var(--radius-2xl);
   transition: opacity var(--animation-slow) var(--ease-out-cubic);
@@ -297,7 +374,7 @@
 }
 
 .product-card:hover .product-hover-effect {
-  opacity: 0.02;
+  opacity: 1;
 }
 
 /* Bottom CTA */
