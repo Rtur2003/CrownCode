@@ -137,11 +137,24 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#e7c77a" />
         <meta name="author" content="Hasan Arthur Altuntaş (Rthur)" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <meta name="language" content={metaLanguage} />
+        <meta name="googlebot" content="index, follow" />
         <link rel="canonical" href={canonicalUrl} />
 
-        {/* Cache Control - Dinamik içerik için */}
+        {/* Hreflang for multilingual SEO */}
+        <link rel="alternate" hrefLang="tr" href={`${siteOrigin}${router.asPath.split('?')[0]}`} />
+        <link rel="alternate" hrefLang="en" href={`${siteOrigin}${router.asPath.split('?')[0]}`} />
+        <link rel="alternate" hrefLang="x-default" href={`${siteOrigin}${router.asPath.split('?')[0]}`} />
+
+        {/* Mobile optimization */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="CrownCode" />
+        <meta name="format-detection" content="telephone=no" />
+
+        {/* Cache Control */}
         {noCache && (
           <>
             <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -151,15 +164,17 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         )}
 
         {/* Open Graph */}
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content={isAurisPage ? 'article' : 'website'} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:site_name" content="CrownCode" />
+        <meta property="og:site_name" content="CrownCode Platform" />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:image" content={imageUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={title} />
         <meta property="og:locale" content={ogLocale} />
+        <meta property="og:locale:alternate" content={ogLocale === 'tr_TR' ? 'en_US' : 'tr_TR'} />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -168,18 +183,47 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         <meta name="twitter:image" content={imageUrl} />
         <meta name="twitter:creator" content="@rthur" />
         <meta name="twitter:site" content="@crowncode" />
-        
-        {/* Structured Data */}
+
+        {/* Structured Data — Organization */}
+        {isHomePage && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          />
+        )}
+
+        {/* Structured Data — WebSite with SearchAction */}
+        {isHomePage && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+          />
+        )}
+
+        {/* Structured Data — Software */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData)
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
         />
-        
+
+        {/* Structured Data — Research / Scholarly Article */}
+        {researchSchema && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(researchSchema) }}
+          />
+        )}
+
+        {/* Structured Data — Breadcrumb */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+
         {/* Favicon */}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </Head>
 
       <div className="app-container">
