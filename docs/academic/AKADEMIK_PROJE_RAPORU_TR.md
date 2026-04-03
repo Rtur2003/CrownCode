@@ -107,7 +107,7 @@ Platform, modüler mimari yaklaşımı benimser ve üç ana katmandan oluşur:
 | Next.js | 14.2.18 | React framework (Static Export) |
 | React | 18.3.1 | UI library |
 | TypeScript | 5.7.2 | Type-safe JavaScript |
-| Tailwind CSS | 3.4.17 | Utility-first CSS framework |
+| CSS Modules | - | Scoped styling + design token system (variables.css) |
 | Framer Motion | 11.18.2 | Animasyon kütüphanesi |
 | Lucide React | 0.454.0 | İkon kütüphanesi |
 | next-themes | 0.3.0 | Tema yönetimi (dark/light) |
@@ -942,9 +942,9 @@ class AudioRepositoryImpl @Inject constructor(
 name: CI/CD Pipeline
 on:
   push:
-    branches: [master, geliştirme]
+    branches: [geliştirme]
   pull_request:
-    branches: [master]
+    branches: [geliştirme]
 
 jobs:
   quality-check:
@@ -1002,13 +1002,13 @@ jobs:
   deploy-production:
     needs: [build, security-scan]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/geliştirme'
     steps:
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2.0
         with:
-          publish-dir: './platform/out'
-          production-branch: master
+          publish-dir: './platform/.next'
+          production-branch: geliştirme
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
@@ -2264,7 +2264,7 @@ create_pipeline_diagram()
 │  │  ───────────────    │  │    │  │  ─────────────────────────  │  │
 │  │  • Static HTML      │  │    │  │  • FastAPI Application      │  │
 │  │  • React Components │  │    │  │  • PyTorch + wav2vec2       │  │
-│  │  • Tailwind CSS     │  │    │  │  • LightGBM Models          │  │
+│  │  • CSS Modules      │  │    │  │  • LightGBM Models          │  │
 │  │  • API Routes       │  │    │  │  • Persistent Cache         │  │
 │  └─────────────────────┘  │    │  └─────────────────────────────┘  │
 │                           │    │                                   │

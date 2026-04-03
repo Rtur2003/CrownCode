@@ -100,16 +100,16 @@ The wav2vec2 model was developed by Facebook AI Research and aimed to learn from
 The platform adopts a modular architecture approach and consists of three main layers:
 
 #### 3.1.1. Presentation Layer (Frontend)
-- **Framework:** Next.js 14.2.18 (App Router)
-- **UI Framework:** Tailwind CSS 3.4.17 + Radix UI
-- **State Management:** Zustand 4.5.5
-- **Audio Processing:** Web Audio API + WaveSurfer.js 7.8.6
+- **Framework:** Next.js 14 (Pages Router) + React 18
+- **Language:** TypeScript (strict mode)
+- **Styling:** CSS Modules + custom design token system (variables.css)
+- **Animation:** Framer Motion 11
+- **i18n:** Custom LanguageContext (Turkish / English)
 
 #### 3.1.2. Business Logic Layer (Backend)
-- **Runtime:** Node.js 20.18.1 LTS
-- **Framework:** Express.js 4.21.2
-- **Database:** PostgreSQL 16.6 + Prisma ORM 5.23.0
-- **Authentication:** NextAuth.js 4.24.10
+- **Runtime:** Python 3.11+
+- **Framework:** FastAPI (deployed on HuggingFace Spaces)
+- **AI/ML:** PyTorch, wav2vec2, CLAP, librosa, scikit-learn, XGBoost, LightGBM
 
 #### 3.1.3. Data Layer
 - **Primary Storage:** Vercel Postgres

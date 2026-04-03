@@ -74,7 +74,7 @@ Logistic Regression, Random Forest, Gradient Boosting, SVM (RBF), MLP Neural Net
 Zero manual labeling by leveraging source provenance:
 
 - AI: Suno v3/v3.5/v4/v5, Udio, MusicGen, Stable Audio, Riffusion, AudioLDM2, Mustango, JEN-1 (12 models)
-- Human: GTZAN, Free Music Archive, CCMusic, MTG-Jamendo, curated artist collections
+- Human: GTZAN, Free Music Archive (FMA), curated artist collections
 
 #### 6. Multi-Platform Architecture
 
@@ -230,7 +230,7 @@ Audio Input (File / YouTube URL)
 | --- | --- | --- | --- |
 | SleepyJesse/ai_music_large | Mixed human | 2,000 | WAV |
 | marsyas/gtzan | 10 genres | 1,000 | WAV |
-| ccmusic-database/music_genre | NetEase/Chinese | 500 | MP3 |
+| benjamin-paine/free-music-archive-small | Free Music Archive | 1,000 | WAV |
 | Curated collection | Pop (Adele) | 18 | MP3 |
 
 **Vocal Deepfake Validation Set:**
