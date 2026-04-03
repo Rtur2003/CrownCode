@@ -145,127 +145,114 @@ frontend/
 │           └── common.types.ts
 ```
 
-### **2. BUSINESS LOGIC LAYER (Backend Modules)**
+### **2. BUSINESS LOGIC LAYER (Backend Modules — FastAPI on HuggingFace Spaces)**
 ```
-backend/
+hf-crowncode-backend/
 ├── modules/
 │   ├── auth/                       # 🔐 Kimlik doğrulama API modülü
-│   │   ├── controllers/
-│   │   │   ├── authController.ts           # ⚡ Sadece auth endpoints
-│   │   │   └── index.ts
+│   │   ├── routers/
+│   │   │   └── auth_router.py             # ⚡ Sadece auth endpoints
 │   │   ├── services/
-│   │   │   ├── authService.ts
-│   │   │   ├── tokenService.ts
-│   │   │   └── passwordService.ts
+│   │   │   ├── auth_service.py
+│   │   │   ├── token_service.py
+│   │   │   └── password_service.py
 │   │   ├── models/
-│   │   │   ├── User.ts                     # ⚡ User model izole
-│   │   │   └── Session.ts
-│   │   ├── middleware/
-│   │   │   ├── authMiddleware.ts
-│   │   │   └── rateLimitMiddleware.ts
-│   │   ├── routes/
-│   │   │   └── authRoutes.ts               # ⚡ Auth-only routes
-│   │   ├── validators/
-│   │   │   └── authValidators.ts
-│   │   ├── types/
-│   │   │   └── auth.types.ts
-│   │   └── index.ts
+│   │   │   ├── user.py                     # ⚡ User model izole
+│   │   │   └── session.py
+│   │   ├── dependencies/
+│   │   │   ├── auth_deps.py
+│   │   │   └── rate_limit.py
+│   │   ├── schemas/
+│   │   │   └── auth_schemas.py             # ⚡ Pydantic schemas
+│   │   └── __init__.py
 │   │
 │   ├── data-processing/            # 📊 Veri işleme API modülü
-│   │   ├── controllers/
-│   │   │   ├── uploadController.ts
-│   │   │   ├── processingController.ts
-│   │   │   └── downloadController.ts
+│   │   ├── routers/
+│   │   │   ├── upload_router.py
+│   │   │   ├── processing_router.py
+│   │   │   └── download_router.py
 │   │   ├── services/
-│   │   │   ├── fileProcessingService.ts    # ⚡ File ops izole
-│   │   │   ├── dataTransformService.ts
-│   │   │   └── queueService.ts
+│   │   │   ├── file_processing_service.py  # ⚡ File ops izole
+│   │   │   ├── data_transform_service.py
+│   │   │   └── queue_service.py
 │   │   ├── processors/                     # ⚡ İşleme algoritmları izole
-│   │   │   ├── csvProcessor.ts
-│   │   │   ├── jsonProcessor.ts
-│   │   │   ├── excelProcessor.ts
-│   │   │   └── dataMultiplier.ts
+│   │   │   ├── csv_processor.py
+│   │   │   ├── json_processor.py
+│   │   │   ├── excel_processor.py
+│   │   │   └── data_multiplier.py
 │   │   ├── models/
-│   │   │   ├── DataUpload.ts
-│   │   │   ├── ProcessingJob.ts
-│   │   │   └── ProcessedFile.ts
-│   │   ├── middleware/
-│   │   │   ├── fileUploadMiddleware.ts
-│   │   │   └── processingMiddleware.ts
-│   │   ├── routes/
-│   │   │   └── dataRoutes.ts
-│   │   ├── validators/
-│   │   │   └── dataValidators.ts
-│   │   ├── types/
-│   │   │   └── dataProcessing.types.ts
-│   │   └── index.ts
+│   │   │   ├── data_upload.py
+│   │   │   ├── processing_job.py
+│   │   │   └── processed_file.py
+│   │   ├── dependencies/
+│   │   │   ├── file_upload_deps.py
+│   │   │   └── processing_deps.py
+│   │   ├── schemas/
+│   │   │   └── data_schemas.py
+│   │   └── __init__.py
 │   │
 │   ├── ai-detection/               # 🎵 AI müzik detektörü API modülü
-│   │   ├── controllers/
-│   │   │   ├── audioUploadController.ts
-│   │   │   ├── detectionController.ts
-│   │   │   └── analysisController.ts
+│   │   ├── routers/
+│   │   │   ├── audio_upload_router.py
+│   │   │   ├── detection_router.py
+│   │   │   └── analysis_router.py
 │   │   ├── services/
-│   │   │   ├── audioProcessingService.ts   # ⚡ Audio ops izole
-│   │   │   ├── aiModelService.ts
-│   │   │   └── featureExtractionService.ts
+│   │   │   ├── audio_processing_service.py # ⚡ Audio ops izole
+│   │   │   ├── ai_model_service.py
+│   │   │   └── feature_extraction_service.py
 │   │   ├── models/
-│   │   │   ├── AudioAnalysis.ts
-│   │   │   ├── DetectionResult.ts
-│   │   │   └── AudioFile.ts
-│   │   ├── ai-engine/                      # ⚡ AI engine tamamen izole
-│   │   │   ├── modelLoader.ts
-│   │   │   ├── featureExtractor.ts
-│   │   │   ├── predictor.ts
-│   │   │   └── modelTrainer.ts
-│   │   ├── middleware/
-│   │   │   ├── audioUploadMiddleware.ts
-│   │   │   └── audioValidationMiddleware.ts
-│   │   ├── routes/
-│   │   │   └── aiRoutes.ts
-│   │   ├── validators/
-│   │   │   └── audioValidators.ts
-│   │   ├── types/
-│   │   │   └── aiDetection.types.ts
-│   │   └── index.ts
+│   │   │   ├── audio_analysis.py
+│   │   │   ├── detection_result.py
+│   │   │   └── audio_file.py
+│   │   ├── ai_engine/                      # ⚡ AI engine tamamen izole
+│   │   │   ├── model_loader.py
+│   │   │   ├── feature_extractor.py
+│   │   │   ├── predictor.py
+│   │   │   └── model_trainer.py
+│   │   ├── dependencies/
+│   │   │   ├── audio_upload_deps.py
+│   │   │   └── audio_validation_deps.py
+│   │   ├── schemas/
+│   │   │   └── ai_detection_schemas.py
+│   │   └── __init__.py
 │   │
 │   ├── automation/                 # 🤖 Otomasyon modülü
 │   │   ├── services/
-│   │   │   ├── dataCollectionService.ts    # ⚡ Dataset toplama izole
-│   │   │   ├── modelTrainingService.ts
-│   │   │   └── deploymentService.ts
+│   │   │   ├── data_collection_service.py  # ⚡ Dataset toplama izole
+│   │   │   ├── model_training_service.py
+│   │   │   └── deployment_service.py
 │   │   ├── schedulers/
-│   │   │   ├── dailyScheduler.ts
-│   │   │   └── weeklyScheduler.ts
+│   │   │   ├── daily_scheduler.py
+│   │   │   └── weekly_scheduler.py
 │   │   ├── collectors/                     # ⚡ Data collectors izole
-│   │   │   ├── aiMusicCollector.ts
-│   │   │   ├── humanMusicCollector.ts
-│   │   │   └── qualityController.ts
+│   │   │   ├── ai_music_collector.py
+│   │   │   ├── human_music_collector.py
+│   │   │   └── quality_controller.py
 │   │   ├── models/
-│   │   │   └── AutomationJob.ts
-│   │   ├── types/
-│   │   │   └── automation.types.ts
-│   │   └── index.ts
+│   │   │   └── automation_job.py
+│   │   ├── schemas/
+│   │   │   └── automation_schemas.py
+│   │   └── __init__.py
 │   │
 │   └── shared/                     # 🔄 Paylaşılan backend modüller
 │       ├── database/
-│       │   ├── connection.ts               # ⚡ DB connection izole
+│       │   ├── connection.py               # ⚡ DB connection izole
 │       │   ├── migrations/
 │       │   └── seeds/
-│       ├── middleware/
-│       │   ├── errorHandler.ts
-│       │   ├── logger.ts
-│       │   └── corsMiddleware.ts
+│       ├── dependencies/
+│       │   ├── error_handler.py
+│       │   ├── logger.py
+│       │   └── cors_config.py
 │       ├── services/
-│       │   ├── storageService.ts           # ⚡ File storage izole
-│       │   ├── emailService.ts
-│       │   └── notificationService.ts
+│       │   ├── storage_service.py          # ⚡ File storage izole
+│       │   ├── email_service.py
+│       │   └── notification_service.py
 │       ├── utils/
-│       │   ├── logger.ts
-│       │   ├── encryption.ts
-│       │   └── validators.ts
-│       └── types/
-│           └── common.types.ts
+│       │   ├── logger.py
+│       │   ├── encryption.py
+│       │   └── validators.py
+│       └── schemas/
+│           └── common_schemas.py
 ```
 
 ### **3. DATA LAYER (Database Modules)**

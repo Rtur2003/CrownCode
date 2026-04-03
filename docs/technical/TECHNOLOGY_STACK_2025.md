@@ -1,10 +1,10 @@
-# 🔧 Teknoloji Stack'i - 2025 Versiyonları ve Gerekçeleri
+# 🔧 Teknoloji Stack'i - 2026 Versiyonları ve Gerekçeleri
 
 ## 🎯 **TEKNOLOJİ SEÇİM KRİTERLERİ**
 
 ### **Seçim Prensipleri:**
 ```
-1. 📈 2024-2025 aktif geliştirme ve güncel versions
+1. 📈 2025-2026 aktif geliştirme ve güncel versions
 2. 🏢 Endüstri standardı ve yaygın kullanım
 3. 📚 Güçlü dokümantasyon ve community support
 4. 🔄 Modüler yapıya uyumluluk
@@ -19,13 +19,13 @@
 ```json
 {
   "framework": "Next.js",
-  "version": "14.2.18",
+  "version": "14.2.x",
   "release_date": "2024-12-19",
   "justification": [
     "App Router stable (13.4+)",
     "React Server Components native support",
     "Built-in SEO optimization",
-    "Vercel deployment optimization",
+    "Netlify/static deployment optimization",
     "TypeScript out-of-the-box"
   ],
   "alternatives_considered": [
@@ -45,34 +45,21 @@
 ```json
 {
   "primary_ui": {
-    "name": "Tailwind CSS",
-    "version": "3.4.17",
-    "release_date": "2024-12-16",
+    "name": "CSS Modules + design token system (variables.css)",
     "justification": [
-      "CSS Modules compatible",
-      "Design system consistency",
+      "Component-scoped styles",
+      "Design system consistency via CSS custom properties",
       "Portfolio design language match",
-      "Rapid prototyping capability"
-    ]
-  },
-  "component_system": {
-    "name": "Radix UI Primitives",
-    "version": "1.1.2",
-    "release_date": "2024-11-28",
-    "justification": [
-      "Unstyled, accessible components",
-      "Tailwind CSS integration",
-      "TypeScript native",
-      "WAI-ARIA compliant"
+      "No CSS cascade conflicts"
     ]
   },
   "styling_approach": {
-    "method": "CSS Modules + Tailwind",
+    "method": "CSS Modules + design token system (variables.css)",
     "justification": [
       "Module isolation (as required)",
       "No CSS cascade conflicts",
       "Component-scoped styles",
-      "Utility-first rapid development"
+      "Design tokens for consistent theming"
     ]
   }
 }
@@ -82,25 +69,13 @@
 ```json
 {
   "global_state": {
-    "name": "Zustand",
-    "version": "4.5.5",
-    "release_date": "2024-11-20",
+    "name": "React Context API (LanguageContext, ToastContext)",
+    "version": "Built-in (React 18)",
     "justification": [
-      "Lightweight (2.9kb gzipped)",
-      "TypeScript excellent support",
-      "No providers/boilerplate",
-      "Module-based stores support"
-    ]
-  },
-  "server_state": {
-    "name": "TanStack Query (React Query)",
-    "version": "5.62.2",
-    "release_date": "2024-12-18",
-    "justification": [
-      "Caching and synchronization",
-      "Background updates",
-      "Optimistic updates",
-      "Error handling"
+      "Zero additional dependencies",
+      "Native React integration",
+      "Simple provider pattern",
+      "Sufficient for app-level state (language, notifications)"
     ]
   },
   "form_state": {
@@ -256,7 +231,7 @@
     "justification": [
       "Industry standard",
       "No native dependencies",
-      "Vercel serverless compatible",
+      "FastAPI compatible",
       "Adjustable cost factor"
     ]
   },
@@ -278,24 +253,23 @@
 ```json
 {
   "file_upload": {
-    "name": "Multer",
-    "version": "1.4.5-lts.1",
-    "release_date": "2024-01-01",
+    "name": "python-multipart",
+    "version": "Latest",
     "justification": [
-      "Express middleware",
+      "FastAPI file upload support",
       "Memory/disk storage options",
       "File filtering",
       "Size limiting"
     ]
   },
   "file_storage": {
-    "name": "Vercel Blob",
+    "name": "HuggingFace Spaces persistent storage",
     "version": "Latest",
     "justification": [
-      "Vercel native integration",
-      "CDN distribution",
-      "Automatic optimization",
-      "Pay-per-use pricing"
+      "HuggingFace native integration",
+      "Persistent volume for uploads",
+      "Git LFS for large files",
+      "Free tier available"
     ]
   },
   "data_processing": {
@@ -362,25 +336,14 @@
     ]
   },
   "backend_hosting": {
-    "name": "Vercel",
+    "name": "HuggingFace Spaces",
     "version": "Latest",
-    "plan": "Pro ($20/month)",
+    "plan": "Free / Pro",
     "justification": [
-      "Serverless functions",
-      "Edge runtime support",
-      "Automatic scaling",
-      "Built-in monitoring"
-    ]
-  },
-  "database_hosting": {
-    "name": "Vercel Postgres",
-    "version": "Latest",
-    "plan": "Pro ($20/month)",
-    "justification": [
-      "Zero-config setup",
-      "Connection pooling",
-      "Backup automation",
-      "Vercel integration"
+      "Free GPU/CPU hosting for ML models",
+      "Docker-based deployment",
+      "Secrets management",
+      "Git-based CI/CD"
     ]
   }
 }
@@ -493,12 +456,12 @@
     ]
   },
   "analytics": {
-    "name": "Vercel Analytics",
+    "name": "Netlify Analytics",
     "version": "Latest",
     "justification": [
       "Privacy-focused",
       "Real user metrics",
-      "Vercel integration",
+      "Netlify integration",
       "GDPR compliant"
     ]
   },
@@ -594,16 +557,16 @@ compatibility_matrix:
   typescript: "5.7.2"
 
   frontend:
-    next_js: "14.2.18"
+    next_js: "14.2.x"
     react: "18.3.1"  # Next.js dependency
-    tailwind: "3.4.17"
+    styling: "CSS Modules + design token system (variables.css)"
 
   backend:
-    express: "4.21.2"
-    prisma: "5.23.0"
+    fastapi: "0.110+"
+    python: "3.10+"
 
   deployment:
-    vercel_cli: "37.15.1"
+    huggingface_spaces: "Latest"
     netlify_cli: "17.37.4"
 
   testing:
@@ -654,4 +617,4 @@ high_risk:
   - runtime_versions
 ```
 
-Bu teknoloji stack'i 2025 yılının en güncel ve stabil versiyonlarını kullanarak, proje gereksinimlerine optimum uyum sağlar.
+Bu teknoloji stack'i 2026 yılının en güncel ve stabil versiyonlarını kullanarak, proje gereksinimlerine optimum uyum sağlar.
