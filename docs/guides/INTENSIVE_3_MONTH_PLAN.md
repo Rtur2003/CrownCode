@@ -159,6 +159,7 @@ curl -I https://hasanarthuraltuntas.xyz
 ```
 
 ### **Backend Deployment (HuggingFace Spaces)**
+
 ```bash
 # Automatic deployment:
 git push origin geliştirme  # Otomatik deploy olur
