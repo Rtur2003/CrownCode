@@ -5,7 +5,7 @@
 ### **1. İlk 30 Dakika - Hatırlama**
 ```bash
 # Terminal'de çalıştır:
-cd "C:\Users\MONSTER\Desktop\datasetçoğaltıcı"
+cd .
 
 # Dokümantasyonları oku:
 cat PROJECT_RULES.md           # Proje kuralları
@@ -17,12 +17,12 @@ cat TECHNICAL_SPECIFICATIONS.md # Teknik detaylar
 ```bash
 # Gerekli tools:
 npm install -g next@latest
-npm install -g vercel@latest
+# vercel kaldırıldı - backend HuggingFace Spaces üzerinden deploy edilir
 npm install -g netlify-cli@latest
 
 # Proje dependencies:
-cd frontend && npm install
-cd ../backend && pip install -r requirements.txt
+cd platform && npm install
+cd ../hf-crowncode-backend && pip install -r requirements.txt
 
 # Environment variables:
 cp .env.example .env.local
@@ -32,11 +32,11 @@ cp .env.example .env.local
 ### **3. Hızlı Test - Çalışıyor mu?**
 ```bash
 # Frontend test:
-cd frontend && npm run dev
+cd platform && npm run dev
 # http://localhost:3000 kontrol et
 
 # Backend test:
-cd backend && uvicorn app.main:app --reload --port 8000
+cd hf-crowncode-backend && uvicorn app.main:app --reload --port 8000
 # http://localhost:8000/api/health kontrol et
 ```
 
@@ -57,7 +57,7 @@ cd backend && uvicorn app.main:app --reload --port 8000
   ],
   "today_focus": "Authentication system implementation",
   "blockers": [
-    "Vercel environment variables setup"
+    "HuggingFace Spaces environment variables setup"
   ],
   "next_steps": [
     "Complete JWT implementation",
@@ -147,10 +147,10 @@ npm list @tensorflow/tfjs
 ### **Frontend Deployment (Netlify)**
 ```bash
 # Automatic deployment:
-git push origin main  # Otomatik deploy olur
+git push origin geliştirme  # Otomatik deploy olur
 
 # Manual deployment:
-cd frontend
+cd platform
 npm run build
 netlify deploy --prod --dir=dist
 
@@ -158,14 +158,14 @@ netlify deploy --prod --dir=dist
 curl -I https://hasanarthuraltuntas.xyz
 ```
 
-### **Backend Deployment (Vercel)**
+### **Backend Deployment (HuggingFace Spaces)**
 ```bash
 # Automatic deployment:
-git push origin main  # Otomatik deploy olur
+git push origin geliştirme  # Otomatik deploy olur
 
 # Manual deployment:
-cd backend
-vercel --prod
+cd hf-crowncode-backend
+# HuggingFace Spaces üzerinden deploy edilir (git push to HF remote)
 
 # API health check:
 curl https://api.hasanarthuraltuntas.xyz/health
