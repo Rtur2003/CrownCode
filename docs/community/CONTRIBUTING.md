@@ -43,7 +43,7 @@ git remote add upstream https://github.com/hasanarthuraltuntas/ai-music-platform
 cd frontend && npm install
 
 # Backend dependencies
-cd ../backend && pip install -r requirements.txt
+cd ../hf-crowncode-backend && pip install -r requirements.txt
 ```
 
 2. Environment dosyalarını oluşturun:
@@ -56,19 +56,16 @@ cp .env.example .env.local
 # Frontend (http://localhost:3000)
 cd frontend && npm run dev
 
-# Backend (http://localhost:3001)
-cd backend && npm run dev
+# Backend (http://localhost:8000)
+cd hf-crowncode-backend && uvicorn app.main:app --reload
 ```
 
 ## 🔧 Geliştirme Süreci
 
 ### Branch Strategy
 
-- `main`: Production branch
-- `develop`: Development branch
-- `feature/feature-name`: Yeni özellikler için
-- `bugfix/issue-description`: Bug düzeltmeleri için
-- `hotfix/critical-fix`: Kritik düzeltmeler için
+- `geliştirme`: Ana geliştirme branch'i
+- `feature/feature-name`: Yeni özellikler için (`geliştirme` branch'inden oluşturulur ve tekrar `geliştirme`'ye merge edilir)
 
 ### Kod Yazma Kuralları
 
@@ -126,10 +123,11 @@ npm run test:coverage
 ## 📝 Pull Request Süreci
 
 ### PR Oluşturmadan Önce
-1. Latest develop branch'ini pull edin:
+
+1. Latest geliştirme branch'ini pull edin:
 ```bash
-git checkout develop
-git pull upstream develop
+git checkout geliştirme
+git pull upstream geliştirme
 ```
 
 2. Feature branch'inizi oluşturun:

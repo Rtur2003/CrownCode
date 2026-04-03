@@ -3,7 +3,7 @@
 ## Branch Information
 
 **Branch Name:** `<category>/<topic-description>`
-**Target Branch:** `main` | `geliştirme`
+**Target Branch:** `geliştirme`
 
 ## Scope Definition
 
@@ -148,7 +148,7 @@
 - [ ] Commits are atomic
 - [ ] Python-first approach followed
 - [ ] Issue classification documented
-- [ ] No direct commits to main
+- [ ] No direct commits to geliştirme
 
 ## Additional Context
 

@@ -288,7 +288,7 @@ Before submitting:
 - [ ] Added/updated tests
 - [ ] All tests pass locally
 - [ ] Updated documentation
-- [ ] No direct commits to main
+- [ ] No direct commits to geliştirme
 - [ ] Python-first approach (if backend)
 - [ ] Security considerations addressed
 

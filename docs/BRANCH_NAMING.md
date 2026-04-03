@@ -137,11 +137,7 @@ python scripts/validate_branch_name.py feature/my-new-feature
 ## Protected Branches
 
 These branches have special status and don't follow the convention:
-- `main` - Production branch
-- `master` - Alternative production branch
 - `geliştirme` - Development branch
-- `arayüz` - UI/UX development branch
-- `develop` - Alternative development branch
 
 **Direct commits to protected branches are FORBIDDEN.**
 

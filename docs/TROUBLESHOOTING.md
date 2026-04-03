@@ -69,12 +69,12 @@ git commit --amend
 
 **Symptom:**
 ```
-! [remote rejected] main -> main (protected branch hook declined)
+! [remote rejected] geliştirme -> geliştirme (protected branch hook declined)
 ```
 
 **Solution:**
 ```bash
-# Never push directly to main/geliştirme
+# Never push directly to geliştirme
 # Create a topic branch instead
 
 git checkout -b feature/my-feature
@@ -231,9 +231,9 @@ npm run type-check
 
 **Solution:**
 ```bash
-# Update from main
+# Update from geliştirme
 git fetch origin
-git merge origin/main
+git merge origin/geliştirme
 
 # Resolve conflicts manually in files
 # Look for markers: <<<<<<<, =======, >>>>>>>
@@ -252,10 +252,10 @@ git remote add upstream https://github.com/Rtur2003/CrownCode.git
 
 # Fetch and merge
 git fetch upstream
-git merge upstream/main
+git merge upstream/geliştirme
 
 # Or rebase
-git rebase upstream/main
+git rebase upstream/geliştirme
 
 # Push updates
 git push origin <your-branch>
@@ -435,9 +435,9 @@ git branch --show-current           # Current branch
 ### Before Starting Work
 
 ```bash
-# 1. Update from main
+# 1. Update from geliştirme
 git fetch origin
-git merge origin/main
+git merge origin/geliştirme
 
 # 2. Create proper branch
 git checkout -b <category>/<topic>
@@ -482,9 +482,9 @@ git log --oneline
 # 2. Run full validation
 make validate
 
-# 3. Update from main
+# 3. Update from geliştirme
 git fetch origin
-git merge origin/main
+git merge origin/geliştirme
 
 # 4. Create PR using template
 ```

@@ -59,7 +59,7 @@ Brief description of the vulnerability
 
 ### Affected Components
 - [ ] Frontend (Next.js)
-- [ ] Backend (Express.js)
+- [ ] Backend (FastAPI)
 - [ ] Database (PostgreSQL)
 - [ ] API endpoints
 - [ ] Authentication system
@@ -259,7 +259,7 @@ We follow responsible disclosure practices:
 
 ## 📅 Last Updated
 
-This security policy was last updated on: **December 2024**
+This security policy was last updated on: **April 2026**
 
 ---
 
