@@ -107,12 +107,21 @@ Zero manual labeling by leveraging source provenance:
 | Retrofit + OkHttp | Latest | Network Layer |
 | Clean Architecture | MVVM | Design Pattern |
 
-### Backend (`hf-crowncode-backend/`)
+### Backend API Proxy (`hf-crowncode-backend/`)
 
 | Technology | Version | Purpose |
 | --- | --- | --- |
 | FastAPI | Latest | API Framework |
-| Python | 3.9+ | Runtime |
+| Python | 3.11+ | Runtime |
+| httpx | Latest | Async HTTP client (proxy to ML API) |
+| yt-dlp | Latest | YouTube audio extraction |
+| pydantic | Latest | Data validation |
+| uvicorn | Latest | ASGI server |
+
+### ML Training Pipeline (`DataSet/`)
+
+| Technology | Version | Purpose |
+| --- | --- | --- |
 | PyTorch | CPU | ML Inference |
 | librosa | 0.10+ | Audio Feature Extraction |
 | scikit-learn | Latest | Classical ML Models |
@@ -241,7 +250,7 @@ Audio Input (File / YouTube URL)
 
 ### Dataset Statistics (Target)
 
-- **Total samples:** 6,500+ (Phase 1), 9,500+ (Phase 2)
+- **Total samples:** ~3,750 downloaded (target: 6,500+ Phase 1, 9,500+ Phase 2) — collection in progress
 - **AI generators represented:** 12+ distinct models
 - **Human genres covered:** 10+ genres (pop, rock, blues, jazz, classical, metal, hiphop, country, reggae, electronic)
 - **Audio format:** WAV/MP3, 16-22kHz, mono
@@ -271,9 +280,9 @@ Audio Input (File / YouTube URL)
 | garystafford/wav2vec2-deepfake | wav2vec2 binary | Open-source |
 | AURIS (ours) | TBD | Multi-tower ensemble |
 
-### Publication-Quality Outputs
+### Publication-Quality Outputs (TBD — will be generated after full training)
 
-8 figures generated automatically:
+8 figures planned for automatic generation:
 
 1. ROC Curves (all models overlaid)
 2. Precision-Recall Curves (all models overlaid)
@@ -343,17 +352,20 @@ com.crowncode/
 
 ### Completed
 
-- [x] Web platform with real-time analysis
-- [x] Native Android application
-- [x] Backend API with ML inference on HuggingFace Spaces
-- [x] 49-feature extraction pipeline with vocal analysis
-- [x] 7-model comparison pipeline with 5-fold CV
-- [x] Publication-quality visualization pipeline (8 figures)
+- [x] Web platform with real-time analysis (Next.js 14 + FastAPI)
+- [x] Native Android application (Kotlin + Jetpack Compose)
+- [x] Backend API proxy on HuggingFace Spaces
+- [x] 49-feature extraction pipeline code with vocal analysis
+- [x] 7-model comparison pipeline code with 5-fold CV
+- [x] Publication-quality visualization pipeline code (8 figures)
 - [x] YouTube bot detection handling with cookie support
+- [x] Automated dataset download pipeline (download_datasets.py)
+- [x] Product catalog system for 6 projects
+- [x] SEO with JSON-LD structured data
 
 ### In Progress
 
-- [ ] Dataset expansion to 6,500+ samples from 10+ sources
+- [ ] Dataset collection (~3,750/6,500+ samples downloaded)
 - [ ] Full training and evaluation on expanded dataset
 - [ ] wav2vec2 fine-tuning (Tower 1)
 - [ ] CLAP embedding integration (Tower 3)

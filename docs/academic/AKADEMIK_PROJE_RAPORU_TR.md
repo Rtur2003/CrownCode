@@ -14,7 +14,7 @@
 
 Bu çalışma, yapay zeka tarafından üretilen müziklerin insan tarafından üretilen müziklerden ayırt edilmesi problemi üzerine odaklanmaktadır. Gelişen yapay zeka teknolojileri ile birlikte, ses üretim araçlarının yaygınlaşması müzik endüstrisinde yeni güvenlik ve telif hakkı sorunları yaratmıştır. Bu projede, wav2vec2 tabanlı derin öğrenme modelleri kullanılarak AURIS adlı otomatik müzik deteksiyon sistemi geliştirilmiş ve web ile mobil platformlarda kullanıma sunulmuştur.
 
-AURIS, %97.2 doğruluk oranı (AUROC: 0.985) ile AI üretimi müzikleri tespit eden ve %91.3 accuracy ile müzik türü sınıflandırması yapabilen çok platformlu bir yapay zeka müzik analiz sistemidir. Sistem şunları içermektedir: (1) Next.js 14 ve TypeScript ile geliştirilen responsive web platformu, (2) Kotlin ve Jetpack Compose ile geliştirilen native Android uygulaması, (3) wav2vec2 + LightGBM hibrit modeli kullanan FastAPI backend. Proje, modüler mimari yaklaşımı benimser ve fail-safe tasarım ilkeleri ile geliştirilmiştir.
+AURIS, AI üretimi müzikleri tespit etmeyi ve müzik türü sınıflandırması yapmayı hedefleyen çok platformlu bir yapay zeka müzik analiz sistemidir. Model performans metrikleri, tam eğitim ve değerlendirme sonrası belirlenecektir (TBD). Sistem sunları içermektedir: (1) Next.js 14 ve TypeScript ile geliştirilen responsive web platformu, (2) Kotlin ve Jetpack Compose ile geliştirilen native Android uygulaması, (3) wav2vec2 tabanlı hibrit model kullanan FastAPI backend. Proje, modüler mimari yaklaşımı benimser ve fail-safe tasarım ilkeleri ile geliştirilmiştir.
 
 **Anahtar Kelimeler:** Yapay zeka müzik deteksiyonu, wav2vec2, LightGBM, derin öğrenme, müzik türü sınıflandırması, web platformu, mobil uygulama, Android, Jetpack Compose, audio analizi, transfer learning, gradient boosting
 
@@ -32,11 +32,10 @@ Araştırmalar göstermektedir ki, 2024 yılında streaming platformlarında bul
 
 Bu çalışmanın temel amacı, yapay zeka tarafından üretilen müziklerin otomatik olarak tespit edilebilmesi için güvenilir ve ölçeklenebilir bir sistem geliştirmektir. Spesifik olarak:
 
-1. **Yüksek Doğruluk:** %95'in üzerinde doğruluk oranı ile AI müzik tespiti
-2. **Gerçek Zamanlı İşlem:** 2 saniye altında analiz süresi
+1. **Yüksek Doğruluk:** Yüksek doğruluk oranı ile AI müzik tespiti
+2. **Gerçek Zamanlı İşlem:** Hızlı analiz süresi
 3. **Web Tabanlı Erişim:** Kullanıcı dostu arayüz ile kolay erişim
-4. **Ölçeklenebilir Mimari:** Günde 10,000+ analiz kapasitesi
-5. **Otomatik İyileştirme:** Kendini geliştiren model yapısı
+4. **Ölçeklenebilir Mimari:** Modüler ve genişletilebilir sistem tasarımı
 
 ### 1.3. Araştırmanın Kapsamı
 
@@ -47,7 +46,6 @@ Bu çalışmanın temel amacı, yapay zeka tarafından üretilen müziklerin oto
 - **Web Platformu:** React/Next.js tabanlı kullanıcı arayüzü
 - **Mobil Uygulama:** Kotlin ve Jetpack Compose ile geliştirilen native Android uygulaması
 - **API Sistemi:** RESTful servisler ile sistem entegrasyonu
-- **Otomasyon Motoru:** Sürekli öğrenme ve gelişim sistemi
 
 ---
 
@@ -89,7 +87,7 @@ wav2vec2 modeli, Facebook AI Research tarafından geliştirilmiş ve self-superv
 | Ircam AI Detector | %99.8 | 3-5 saniye | Ücretli | API |
 | Believe AI Radar | %98 | 2-3 saniye | Ticari | Kapalı |
 | YouTube Detection | %93 | Real-time | Ücretsiz | Platform-specific |
-| **AURIS (Bu Çalışma)** | **%97.2** | **<2 saniye** | **Ücretsiz** | **Web/Android/API** |
+| **AURIS (Bu Çalışma)** | **TBD** | **TBD** | **Ücretsiz** | **Web/Android/API** |
 
 ---
 
@@ -99,7 +97,6 @@ wav2vec2 modeli, Facebook AI Research tarafından geliştirilmiş ve self-superv
 
 Platform, modüler mimari yaklaşımı benimser ve üç ana katmandan oluşur:
 
-#### 3.1.1. Presentation Layer (Frontend)
 #### 3.1.1. Sunum Katmanı (Frontend)
 
 | Teknoloji | Versiyon | Amaç |
@@ -111,7 +108,7 @@ Platform, modüler mimari yaklaşımı benimser ve üç ana katmandan oluşur:
 | Framer Motion | 11.18.2 | Animasyon kütüphanesi |
 | Lucide React | 0.454.0 | İkon kütüphanesi |
 | next-themes | 0.3.0 | Tema yönetimi (dark/light) |
-| clsx + tailwind-merge | 2.1.1 / 2.5.4 | Conditional class utilities |
+| clsx | 2.1.1 | Conditional class utilities |
 
 **Build Konfigürasyonu:**
 - **Node.js:** 20.18.1 LTS
@@ -119,7 +116,6 @@ Platform, modüler mimari yaklaşımı benimser ve üç ana katmandan oluşur:
 - **Output:** Static export (`out/` directory)
 - **Memory:** 4GB max heap size
 
-#### 3.1.2. Business Logic Layer (Backend)
 #### 3.1.2. İş Mantığı Katmanı (Backend)
 
 | Teknoloji | Versiyon | Amaç |
@@ -178,14 +174,12 @@ Platform, modüler mimari yaklaşımı benimser ve üç ana katmandan oluşur:
 | 413 | Payload Too Large | Dosya boyutu limiti aşıldı (>50MB) |
 | 500 | Internal Error | Model veya özellik çıkarım hatası |
 
-#### 3.1.3. Data Layer
 #### 3.1.3. Veri Katmanı
 - **Audio Processing:** librosa + soundfile + scipy
 - **ML Models:** HuggingFace Hub (wav2vec2)
 - **Caching:** In-memory + HuggingFace cache
 - **File Storage:** Temporary file system
 
-#### 3.1.4. Deployment Platformları
 #### 3.1.4. Dağıtım (Deployment) Platformları
 
 AURIS, production ortamında aşağıdaki cloud platformlarını kullanmaktadır:
@@ -292,7 +286,6 @@ services:
 
 ### 3.2. AI Model Geliştirme Metodolojisi
 
-#### 3.2.1. Dataset Toplama Stratejisi
 #### 3.2.1. Veri Seti Toplama Stratejisi
 
 Geleneksel yaklaşımların aksine, bu çalışmada manuel etiketleme gerektirmeyen otomatik dataset toplama yöntemi kullanılmıştır:
@@ -427,9 +420,11 @@ class GenreClassifier:
 
 | Model | Accuracy | Inference Time | Kullanım |
 |-------|----------|----------------|----------|
-| wav2vec2 + MLP | %96.8 | 1.4s | Baseline |
-| wav2vec2 + LightGBM | %97.2 | 0.8s | **Production** |
-| wav2vec2 + LogReg | %94.5 | 0.3s | Fallback |
+| wav2vec2 + MLP | TBD | TBD | Baseline |
+| wav2vec2 + LightGBM | TBD | TBD | **Production (planlanan)** |
+| wav2vec2 + LogReg | TBD | TBD | Fallback |
+
+> **Not:** Doğruluk ve inference süreleri, tam eğitim ve değerlendirme sonrası belirlenecektir.
 
 **Training Configuration:**
 - **Embedding Model:** wav2vec2_base (frozen, pre-trained)
@@ -664,89 +659,28 @@ frontend/modules/
     └── utils/validation.ts
 ```
 
-**Backend Modül Yapısı:**
+**Backend Modül Yapısı (FastAPI/Python):**
 ```
-backend/modules/
-├── ai-detection/
-│   ├── controllers/detectionController.ts
-│   ├── services/aiModelService.ts
-│   ├── models/AudioAnalysis.ts
-│   └── routes/aiRoutes.ts
-├── data-processing/
-│   ├── controllers/processingController.ts
-│   ├── services/fileProcessingService.ts
-│   └── models/DataUpload.ts
-└── shared/
-    ├── middleware/errorHandler.ts
-    ├── services/storageService.ts
-    └── utils/validation.ts
+hf-crowncode-backend/
+├── app/
+│   ├── main.py              # FastAPI application entry point
+│   ├── routes/              # API endpoint definitions
+│   ├── services/            # Business logic (audio analysis, ML inference)
+│   └── schemas.py           # Pydantic request/response models
+├── requirements.txt         # Python dependencies
+└── Dockerfile               # HuggingFace Spaces deployment
 ```
 
 #### 3.3.2. Fail-Safe Tasarım
 
-**Circuit Breaker Pattern Implementation:**
-```typescript
-class CircuitBreaker {
-  private failureCount = 0
-  private state: 'CLOSED' | 'OPEN' | 'HALF_OPEN' = 'CLOSED'
+AURIS web platformu, hata yönetimi için temel fail-safe prensiplerini uygulamaktadır:
 
-  async execute<T>(operation: () => Promise<T>): Promise<T> {
-    if (this.state === 'OPEN') {
-      if (this.shouldAttemptReset()) {
-        this.state = 'HALF_OPEN'
-      } else {
-        throw new Error('Circuit breaker is OPEN')
-      }
-    }
+- **Graceful Degradation:** Backend erişilemez olduğunda kullanıcıya anlamlı hata mesajları gösterilir
+- **Health Check:** Backend `/healthz` endpoint'i ile servis durumu izlenir
+- **Error Boundaries:** React error boundary'leri ile beklenmeyen hataların yakalanması
+- **Timeout Handling:** API isteklerinde zaman aşımı yönetimi
 
-    try {
-      const result = await operation()
-      this.onSuccess()
-      return result
-    } catch (error) {
-      this.onFailure()
-      throw error
-    }
-  }
-}
-```
-
-**Health Monitoring System:**
-```typescript
-interface ModuleHealth {
-  name: string
-  status: 'healthy' | 'degraded' | 'unhealthy'
-  responseTime: number
-  errorRate: number
-  lastCheck: Date
-}
-
-class HealthMonitor {
-  async checkModuleHealth(moduleName: string): Promise<ModuleHealth> {
-    const startTime = Date.now()
-
-    try {
-      await this.performHealthCheck(moduleName)
-
-      return {
-        name: moduleName,
-        status: 'healthy',
-        responseTime: Date.now() - startTime,
-        errorRate: this.calculateErrorRate(moduleName),
-        lastCheck: new Date()
-      }
-    } catch (error) {
-      return {
-        name: moduleName,
-        status: 'unhealthy',
-        responseTime: Date.now() - startTime,
-        errorRate: 1.0,
-        lastCheck: new Date()
-      }
-    }
-  }
-}
-```
+> **Not:** CircuitBreaker ve HealthMonitor gibi ileri düzey pattern'ler gelecek iterasyonlarda planlanmaktadır.
 
 ### 3.4. Mobil Uygulama Geliştirme
 
@@ -1226,27 +1160,9 @@ updates:
       - "ci"
 ```
 
-#### 3.5.5. Otomatik Model Training
+#### 3.5.5. Veri Toplama Pipeline'ı
 
-**Haftalık Training Pipeline:**
-```python
-class AutoMLPipeline:
-    def weekly_training_cycle(self):
-        # 1. Dataset validation
-        new_samples = self.collect_weekly_samples()
-        validated_samples = self.quality_control(new_samples)
-
-        # 2. Model training
-        model = self.train_improved_model(validated_samples)
-
-        # 3. Performance evaluation
-        accuracy = self.evaluate_model(model)
-
-        # 4. Deployment decision
-        if accuracy > self.current_accuracy:
-            self.deploy_model(model)
-            self.notify_stakeholders(accuracy)
-```
+Veri seti toplama süreci `download_datasets.py` scripti ile yönetilmektedir. Script, çeşitli kaynaklardan (Free Music Archive, GTZAN, vb.) ses dosyalarını otomatik olarak indirip, ön işleme tabi tutmaktadır. Otomatik model eğitimi pipeline'ı gelecek iterasyonlarda planlanmaktadır.
 
 #### 3.5.6. Kod İstatistikleri
 
@@ -1302,14 +1218,17 @@ CrownCode/
 
 #### 4.1.1. Dataset Karakteristikleri
 
-**Toplanan Dataset:**
-- **Toplam Sample Sayısı:** 10,000
-- **AI Üretimi Müzik:** 5,000 (50%)
-- **İnsan Üretimi Müzik:** 5,000 (50%)
+**Toplanan Dataset (devam ediyor):**
+- **Mevcut Sample Sayısı:** ~3,749 (toplama devam ediyor)
+- **AI Üretimi Müzik:** ~1,875 (tahmini %50)
+- **İnsan Üretimi Müzik:** ~1,874 (tahmini %50)
 - **Ortalama Süre:** 45 saniye
 
 **Şekil 4.1: Dataset Dağılımı**
 
+> **TBD** -- Dataset dağılım grafikleri, veri toplama süreci tamamlandıktan sonra üretilecektir. Mevcut ~3,749 sample ile toplama devam etmektedir.
+
+<!--
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
@@ -1317,6 +1236,7 @@ import numpy as np
 def plot_dataset_distribution():
     """
     AURIS dataset dağılım görselleştirmesi.
+    TBD: Veri toplama tamamlandıktan sonra güncellenecek.
     """
     fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
@@ -1372,7 +1292,7 @@ def plot_dataset_distribution():
 plot_dataset_distribution()
 ```
 
-**Şekil 4.2: Genre Dağılımı**
+Şekil 4.2: Genre Dağılımı
 
 ```python
 def plot_genre_distribution():
@@ -1417,53 +1337,51 @@ def plot_genre_distribution():
 
 plot_genre_distribution()
 ```
+-->
 - **Format:** WAV, 16kHz, mono
 
-**Kaynak Dağılımı:**
+**Kaynak Dağılımı (hedeflenen, toplama devam ediyor):**
 ```
 AI Müzik Kaynakları:
-├── Suno.ai: 2,000 samples (40%)
-├── MusicGen: 1,500 samples (30%)
-├── Udio.com: 1,000 samples (20%)
-└── Mubert: 500 samples (10%)
+├── Suno.ai
+├── MusicGen
+├── Udio.com
+└── Mubert
 
 İnsan Müzik Kaynakları:
-├── GTZAN Dataset: 1,000 samples (20%)
-├── Free Music Archive: 2,500 samples (50%)
-├── Jamendo: 1,000 samples (20%)
-└── Musopen: 500 samples (10%)
+├── GTZAN Dataset
+├── Free Music Archive
+├── Jamendo
+└── Musopen
 ```
+
+> **Not:** Kesin kaynak bazında dağılım, veri toplama süreci tamamlandıktan sonra raporlanacaktır. Mevcut toplam: ~3,749 sample.
 
 #### 4.1.2. Model Eğitim Sonuçları
 
 **AI Authenticity Classifier Metrics:**
+
+> **TBD** -- Model henuz tam egitim surecinden gecmemistir. Asagidaki metrikler, egitim ve degerlendirme tamamlandiktan sonra doldurulacaktir.
+
 | Metrik | Değer | Açıklama |
 |--------|-------|----------|
-| Accuracy | %97.2 | Test set üzerinde doğruluk |
-| AUROC | 0.985 | ROC Area Under Curve |
-| PR-AUC | 0.983 | Precision-Recall AUC |
-| Precision | %97.4 | True Positive / Predicted Positive |
-| Recall | %96.9 | True Positive / Actual Positive |
-| F1-Score | %97.1 | Harmonic mean of P & R |
+| Accuracy | TBD | Test set üzerinde doğruluk |
+| AUROC | TBD | ROC Area Under Curve |
+| PR-AUC | TBD | Precision-Recall AUC |
+| Precision | TBD | True Positive / Predicted Positive |
+| Recall | TBD | True Positive / Actual Positive |
+| F1-Score | TBD | Harmonic mean of P & R |
 
 **Genre Classification Metrics:**
 | Metrik | Değer | Açıklama |
 |--------|-------|----------|
-| Accuracy | %91.3 | Multi-class accuracy |
-| Macro F1 | 0.894 | Class-averaged F1 score |
-| Top-3 Accuracy | %98.2 | Correct genre in top 3 |
+| Accuracy | TBD | Multi-class accuracy |
+| Macro F1 | TBD | Class-averaged F1 score |
+| Top-3 Accuracy | TBD | Correct genre in top 3 |
 
 **Confusion Matrix (AI Detection):**
-```
-                Predicted
-Actual          AI    Human    Total
-AI            2,423    77     2,500
-Human           63   2,437    2,500
-Total         2,486  2,514    5,000
 
-Accuracy: 97.2%
-Threshold: 0.5
-```
+> **TBD** -- Confusion matrix, tam eğitim ve değerlendirme sonrası üretilecektir.
 
 **Training Configuration:**
 ```yaml
@@ -1484,174 +1402,64 @@ Genre Model:
   Scaler: StandardScaler (z-score)
 ```
 
-**Training Performance:**
+**Planlanan Training Konfigürasyonu:**
 - **Cross-Validation:** 5-fold stratified
 - **Train/Test Split:** 80/20
-- **Training Time:** 12 dakika (CPU, 8-core)
+- **Training Time:** TBD
 - **Feature Dimension:** 768 (wav2vec2 embeddings)
 
-#### 4.1.3. Ablation Studies
+#### 4.1.3. Planlanan Ablation Studies
 
-**LightGBM Feature Importance (Top 20):**
-```python
-# LightGBM gain-based feature importance
-feature_importance = {
-    'embed_256': 0.089,    # wav2vec2 embedding dimension 256
-    'embed_512': 0.076,    # wav2vec2 embedding dimension 512
-    'embed_384': 0.068,    # wav2vec2 embedding dimension 384
-    'embed_128': 0.054,    # wav2vec2 embedding dimension 128
-    'spectral_centroid': 0.042,
-    'mfcc_mean_0': 0.038,
-    'flatness': 0.035,
-    'chroma_mean_4': 0.032,
-    'harmonic_percussive_ratio': 0.028,
-    'rms': 0.024,
-    'lufs': 0.021,
-    'mfcc_mean_1': 0.019,
-    'spectral_bandwidth': 0.017,
-    'zcr': 0.015,
-    'crest_factor': 0.013,
-}
-# Top 20 features account for ~57% of total importance
-# wav2vec2 embeddings dominate (768 dim total)
-```
+> **TBD** -- Feature importance analizi ve model karşılaştırması, tam eğitim sonrası gerçekleştirilecektir.
 
-**Feature Category Contribution:**
-| Kategori | Önem Oranı | Açıklama |
-|----------|------------|----------|
-| wav2vec2 Embeddings | %67.3 | Deep learning representations |
-| Spectral Features | %14.2 | Frequency domain analysis |
-| MFCC Features | %9.8 | Cepstral coefficients |
-| Temporal Features | %5.4 | RMS, ZCR, envelope |
-| Harmonic Features | %3.3 | H/P ratio, chroma |
+**Planlanan Deneyler:**
 
-**Model Architecture Comparison:**
-| Model Variant | Accuracy | AUROC | Inference Time | Kullanım |
-|---|---|---|---|---|
-| wav2vec2 + LogisticRegression | %94.5 | 0.962 | 0.3s | Fallback |
-| wav2vec2 + RandomForest | %95.8 | 0.971 | 0.6s | Alternative |
-| wav2vec2 + MLP (2-layer) | %96.1 | 0.978 | 1.4s | Neural baseline |
-| **wav2vec2 + LightGBM** | **%97.2** | **0.985** | **0.8s** | **Production** |
-| wav2vec2-large + LightGBM | %97.8 | 0.989 | 2.1s | High accuracy |
+| Model Variant | Durum |
+|---|---|
+| wav2vec2 + LogisticRegression | Planlanıyor |
+| wav2vec2 + RandomForest | Planlanıyor |
+| wav2vec2 + MLP (2-layer) | Planlanıyor |
+| wav2vec2 + LightGBM | Planlanıyor (hedef: Production) |
+| wav2vec2 + XGBoost | Planlanıyor |
 
-**Seçim Kriterleri:**
-- LightGBM seçildi çünkü: Yüksek accuracy + hızlı inference + CPU-friendly
-- wav2vec2-base seçildi çünkü: Model boyutu (95M) vs accuracy tradeoff optimal
-- Large model %0.6 daha iyi ama 2.6x daha yavaş
+**Planlanan Analiz:**
+- LightGBM feature importance (gain-based)
+- Feature category contribution analizi
+- wav2vec2-base vs wav2vec2-large karşılaştırması
+- 5-fold cross-validation sonuçları
+
+**Seçim Kriterleri (beklenen):**
+- LightGBM: Hızlı inference + CPU-friendly
+- wav2vec2-base: Model boyutu (95M) vs accuracy tradeoff
 
 ### 4.2. Sistem Performans Analizi
 
 #### 4.2.1. Web Platform Metrikleri
 
 **Performance Metrics:**
-- **Page Load Time:** 1.8 saniye (ortalama)
-- **API Response Time:** 450ms (ortalama)
-- **Model Inference Time:** 0.8 saniye (LightGBM + wav2vec2)
-- **Audio Feature Extraction:** 1.2 saniye (30s audio)
-- **Total Analysis Time:** ~2.5 saniye (end-to-end)
-- **Concurrent Users:** 500+ (tested)
-- **Uptime:** %99.7 (3 aylık period)
 
-**Core Web Vitals:**
-- **Largest Contentful Paint (LCP):** 2.1 saniye
-- **First Input Delay (FID):** 85ms
-- **Cumulative Layout Shift (CLS):** 0.09
+> **Not:** Aşağıdaki metrikler hedeflenen değerlerdir. Gerçek ölçümler, production ortamında kapsamlı test sonrası raporlanacaktır.
 
-#### 4.2.2. Ölçeklenebilirlik Testleri
+- **Model Inference Time:** TBD (hedef: <2 saniye)
+- **Total Analysis Time:** TBD (hedef: <5 saniye end-to-end)
 
-**Load Testing Results:**
-```yaml
-Concurrent Users: 1000
-Test Duration: 30 minutes
-Results:
-  - Average Response Time: 850ms
-  - 95th Percentile: 1.2s
-  - 99th Percentile: 2.1s
-  - Error Rate: 0.3%
-  - Throughput: 1,200 requests/minute
-```
+#### 4.2.2. Ölçeklenebilirlik
 
-**Database Performance:**
-- **Query Response Time:** 12ms (average)
-- **Connection Pool:** 20 connections
-- **Cache Hit Rate:** %89.3
-- **Storage Usage:** 2.3GB (10,000 audio samples)
+AURIS, HuggingFace Spaces (CPU Basic, free tier) üzerinde deploy edilmektedir. Mevcut altyapı küçük ölçekli kullanım için uygundur. Kapsamlı yük testleri, production kullanım arttıkça planlanmaktadır.
 
-### 4.3. Otomasyon Sistemi Sonuçları
+### 4.3. Geliştirme Süreci Durumu
 
-#### 4.3.1. Dataset Toplama Otomasyonu
+Veri toplama süreci `download_datasets.py` pipeline'ı aracılığıyla devam etmektedir. Mevcut durumda ~3,749 ses dosyası toplanmıştır. Model eğitimi ve otomatik iyileştirme pipeline'ı, veri toplama tamamlandıktan sonra hayata geçirilecektir.
 
-**Günlük Toplama Statistikleri:**
-```python
-daily_collection_stats = {
-    'target_samples': 100,
-    'collected_samples': 97,
-    'success_rate': '97%',
-    'quality_passed': 89,
-    'quality_rate': '91.7%',
-    'processing_time': '2.3 hours'
-}
-```
+### 4.4. Kullanıcı Deneyimi
 
-**Haftalık Model İyileştirme:**
-```
-Week 1: Baseline accuracy %94.2
-Week 2: Improved to %95.1 (+0.9%)
-Week 3: Improved to %95.8 (+0.7%)
-Week 4: Improved to %96.8 (+1.0%)
-Week 8: Current accuracy %97.2 (+0.4%)
-```
+Kullanıcı testi henüz gerçekleştirilmemiştir. Beta test süreci, model eğitimi ve platform entegrasyonu tamamlandıktan sonra planlanmaktadır. Hedeflenen test profili:
 
-#### 4.3.2. Sistem İzleme ve Alerting
+- Müzik profesyonelleri
+- Akademik araştırmacılar
+- Genel kullanıcılar
 
-**Monitoring Dashboard Metrics:**
-- **System Health:** %98.7 (average)
-- **Module Availability:**
-  - AI Detection: %99.2
-  - Data Processing: %98.9
-  - Authentication: %99.8
-- **Alert Frequency:** 2.3 per week (average)
-- **Resolution Time:** 15 minutes (median)
-
-### 4.4. Kullanıcı Deneyimi Analizi
-
-#### 4.4.1. Beta Testing Sonuçları
-
-**Test Participant Profile:**
-- **Toplam Kullanıcı:** 150
-- **Müzik Profesyonelleri:** 45 (30%)
-- **Araştırmacılar:** 30 (20%)
-- **Genel Kullanıcılar:** 75 (50%)
-
-**Kullanılabilirlik Metrikleri:**
-```yaml
-User Experience Scores:
-  Ease of Use: 4.3/5.0
-  Interface Design: 4.1/5.0
-  Performance: 4.4/5.0
-  Accuracy Trust: 4.2/5.0
-  Overall Satisfaction: 4.2/5.0
-
-Task Completion Rates:
-  Audio Upload: 97.3%
-  Analysis Request: 94.7%
-  Result Interpretation: 89.3%
-  Report Download: 92.0%
-```
-
-#### 4.4.2. Kullanıcı Geri Bildirimleri
-
-**Pozitif Geri Bildirimler:**
-1. "Hızlı ve doğru sonuçlar alıyorum" (%73)
-2. "Arayüz çok kullanıcı dostu" (%68)
-3. "Ücretsiz erişim harika" (%82)
-4. "Sonuçlar güvenilir görünüyor" (%71)
-
-**İyileştirme Önerileri:**
-1. "Batch upload özelliği eklensin" (%45)
-2. "Daha detaylı analiz raporları" (%38)
-3. ~~"Mobil uygulama geliştirilsin" (%52)~~ ✅ Tamamlandı (Android)
-4. "API erişimi verilsin" (%29)
+Kullanılabilirlik metrikleri ve geri bildirimler, beta test sonrası raporlanacaktır.
 
 ---
 
@@ -1663,30 +1471,19 @@ Task Completion Rates:
 
 **Soru 1: wav2vec2 tabanlı model AI müzik tespitinde etkili midir?**
 
-Elde edilen %96.8 test accuracy sonucu, wav2vec2 modelinin AI müzik tespitinde oldukça etkili olduğunu göstermektedir. Bu sonuç, literatürdeki diğer çalışmalarla karşılaştırıldığında rekabetçi bir performans sergilemektedir:
+Literatür taraması, wav2vec2'nin ses analizi görevlerinde güçlü transfer learning kabiliyetine sahip olduğunu göstermektedir. Model performansı, eğitim tamamlandıktan sonra değerlendirilecektir. Karşılaştırma için referans çalışmalar:
 
 - Kumar et al. (2025): %99.8 (özel dataset)
 - Chen et al. (2024): %94.3 (genel purpose)
-- Bu çalışma: %96.8 (çeşitli AI kaynaklı)
-
-Wav2vec2'nin transfer learning kabiliyeti, müzik domain'ine adaptasyonda başarılı olmuştur. Özellikle spectral contrast ve MFCC feature'larının yüksek importance skoru (%28.4 ve %23.7), modelin doğru audio karakteristiklerini öğrendiğini göstermektedir.
+- Bu çalışma: TBD (eğitim sonrası belirlenecek)
 
 **Soru 2: Otomatik dataset toplama manuel labeling'i elimine edebilir mi?**
 
-Geliştirilen otomatik pipeline %91.7 quality pass oranı ile başarılı olmuştur. Kaynak tabanlı labeling yaklaşımı (AI kaynaklarından=1, İnsan kaynaklarından=0) %97 güvenilirlik göstermiştir. Bu sonuç, manuel labeling ihtiyacını büyük ölçüde azaltmaktadır.
-
-Quality control mekanizması sayesinde:
-- False positive rate: %3.2
-- False negative rate: %3.5
-- Contamination rate: %2.1 (cross-contamination)
+Kaynak tabanlı labeling yaklaşımı (AI kaynaklarından=1, İnsan kaynaklarından=0) uygulanmaktadır. `download_datasets.py` pipeline'ı ile ~3,749 sample toplanmıştır. Quality control metrikleri, veri toplama süreci tamamlandıktan sonra raporlanacaktır.
 
 **Soru 3: Web tabanlı platform production-ready ölçeklenebilirlik sağlar mı?**
 
-Load testing sonuçları, platformun production kullanım için hazır olduğunu göstermektedir:
-- 1000 concurrent user desteği
-- %99.7 uptime (3 aylık)
-- <2s response time (%95 percentile)
-- Auto-scaling capability
+Platform, Netlify (frontend) ve HuggingFace Spaces (backend) üzerinde deploy edilmiştir. Kapsamlı yük testleri henüz gerçekleştirilmemiştir; production kullanım arttıkça planlanmaktadır.
 
 ### 5.2. Literatürle Karşılaştırma
 
@@ -1696,23 +1493,22 @@ Load testing sonuçları, platformun production kullanım için hazır olduğunu
 
 | Aspect | Kumar et al. (2025) | Chen et al. (2024) | AURIS (Bu Çalışma) |
 |---|---|---|---|
-| Dataset Size | 50,000 | 25,000 | 10,000 |
+| Dataset Size | 50,000 | 25,000 | ~3,749 (devam ediyor) |
 | Labeling Method | Manuel | Semi-otomatik | Tam otomatik |
-| Model Architecture | Custom CNN | ResNet-based | wav2vec2 + MLP |
+| Model Architecture | Custom CNN | ResNet-based | wav2vec2 + LightGBM (planlanan) |
 | Deployment | Research only | API only | Web + Android + API |
-| Real-time | No | Partial | Yes |
+| Real-time | No | Partial | Hedefleniyor |
 | Mobile Support | No | No | Native Android |
 
 **Performans Karşılaştırması:**
 
-Bu çalışmanın %96.8 accuracy oranı, literatürdeki %94-99 bandında yer almaktadır. Daha küçük dataset size'ına rağmen rekabetçi performans, kullanılan metodolojinin etkinliğini göstermektedir.
+Model performansı eğitim tamamlandıktan sonra değerlendirilecektir. AURIS'un ayırt edici özellikleri, tam otomatik labeling yaklaşımı ve çok platformlu (web + mobil) deployment mimarisidir.
 
 **İnovatif Yaklaşımlar:**
 
-1. **Modüler Mimari:** Fail-safe design ile cascade failure prevention
+1. **Modüler Mimari:** Fail-safe design prensipleri
 2. **Otomatik Pipeline:** Manuel müdahale gerektirmeyen dataset toplama
-3. **Production Deployment:** Academic research'ten çıkıp real-world usage
-4. **Sürekli Öğrenme:** Haftalık model improvement automation
+3. **Production Deployment:** Akademik araştırmadan gerçek dünya kullanımına
 
 #### 5.2.2. Ticari Sistemlerle Karşılaştırma
 
@@ -1720,13 +1516,13 @@ Bu çalışmanın %96.8 accuracy oranı, literatürdeki %94-99 bandında yer alm
 
 | Metric | Ircam AI Detector | AURIS (Bu Çalışma) |
 |---|---|---|
-| Accuracy | %99.8 | %96.8 |
-| Response Time | 3-5s | 1.4s |
+| Accuracy | %99.8 | TBD |
+| Response Time | 3-5s | TBD |
 | Cost | Ücretli | Ücretsiz |
-| API Access | Limited | Full REST API |
+| API Access | Limited | REST API |
 | Web Interface | No | Yes |
 | Mobile App | No | Native Android |
-| Open Source | No | Planned |
+| Open Source | No | Planlanıyor |
 
 AURIS'un avantajları:
 - Daha hızlı inference time
@@ -1742,14 +1538,13 @@ AURIS'un avantajları:
 **Model Sınırlamaları:**
 1. **Context Length:** 30 saniye maksimum analiz süresi
 2. **Language Bias:** İngilizce müziklerde daha yüksek performans
-3. **Genre Dependency:** Klasik müzikte %94.2, EDM'de %98.1 accuracy
+3. **Genre Dependency:** Farklı müzik türlerinde performans farklılıkları beklenmektedir
 4. **Novelty Detection:** Yeni AI araçlarına adaptasyon süresi
 
 **Sistem Sınırlamaları:**
-1. **Concurrent Processing:** 500 simultaneous analysis limit
-2. **Storage Capacity:** 50GB monthly upload limit
-3. **Geographic Latency:** Non-EU regions'da yavaş response
-4. ~~**Mobile Optimization:** Limited mobile browser support~~ → Native Android uygulaması ile çözüldü
+1. **İşlem Kapasitesi:** HuggingFace Spaces free tier ile sınırlı
+2. **Depolama:** Geçici dosya sistemi ile sınırlı
+3. ~~**Mobile Optimization:** Limited mobile browser support~~ → Native Android uygulaması ile çözüldü
 
 #### 5.3.2. Gelişim Potansiyeli
 
@@ -1803,35 +1598,20 @@ AURIS'un avantajları:
 
 Bu çalışmada geliştirilen AURIS çok platformlu yapay zeka müzik detektörü sistemi, belirlenen hedefleri büyük ölçüde karşılamıştır:
 
-**AI Tespit Performansı:**
-- ✅ %97.2 test accuracy (hedef: >%95)
-- ✅ AUROC: 0.985 (yüksek discriminative power)
-- ✅ PR-AUC: 0.983 (imbalanced data handling)
-- ✅ 0.8 saniye inference time (hedef: <2s, LightGBM ile)
-
-**Genre Sınıflandırma Performansı:**
-- ✅ %91.3 accuracy (multi-class classification)
-- ✅ Top-3 accuracy: %98.2
-- ✅ Macro F1: 0.894
-
-**Sistem Başarıları:**
-- ✅ 500+ concurrent user support (hedef: >100)
-- ✅ %99.7 uptime (hedef: >%99)
-- ✅ Otomatik dataset toplama (%91.7 quality rate)
+**AI Tespit Modeli:**
+- Mimari tasarım tamamlandı: wav2vec2 + LightGBM hibrit yaklaşım
+- Veri toplama devam ediyor (~3,749 sample)
+- Model eğitimi ve performans değerlendirmesi: TBD
 
 **Platform Başarıları:**
-- ✅ Production-ready web deployment
-- ✅ Native Android mobil uygulama
-- ✅ Modüler ve fail-safe architecture
-- ✅ Comprehensive API ecosystem
-- ✅ Automated CI/CD pipeline
-- ✅ Real-time monitoring ve alerting
-
-**Kullanıcı Deneyimi:**
-- ✅ 4.2/5.0 overall satisfaction
-- ✅ %94.7 task completion rate
-- ✅ Intuitive web interface
-- ✅ Fast ve reliable service
+- ✅ Production-ready web deployment (Netlify + HuggingFace Spaces)
+- ✅ Native Android mobil uygulama (Kotlin + Jetpack Compose)
+- ✅ Modüler mimari tasarımı
+- ✅ FastAPI backend ile analiz proxy mimarisi
+- ✅ CSS Modules + design token sistemi
+- ✅ Çok dilli destek (EN/TR) - Custom LanguageContext
+- ✅ SEO ile JSON-LD structured data
+- ✅ product-catalog.ts ile 6 proje vitrinleme
 
 ### 6.2. Bilimsel Katkılar
 
@@ -1839,29 +1619,27 @@ Bu çalışmada geliştirilen AURIS çok platformlu yapay zeka müzik detektör�
 
 **1. Source-Based Automatic Labeling:**
 Geleneksel manuel labeling'in yerine kaynak tabanlı otomatik etiketleme yöntemi geliştirilmiştir. Bu yaklaşım:
-- %97 labeling accuracy sağlamıştır
-- Manuel iş gücü ihtiyacını %95 azaltmıştır
-- Scalable dataset creation imkanı sunmuştur
+- AI kaynaklarından indirilen dosyalar otomatik olarak label=1
+- İnsan müzik arşivlerinden indirilen dosyalar otomatik olarak label=0
+- `download_datasets.py` pipeline'ı ile ölçeklenebilir veri toplama
 
-**2. Fail-Safe Modular Architecture:**
-Cascade failure'ları önleyen modüler sistem tasarımı:
-- Circuit breaker patterns ile fault tolerance
-- Health monitoring ile proactive maintenance
-- Independent module deployment capability
+**2. Modüler Platform Mimarisi:**
+Genişletilebilir ve bakımı kolay sistem tasarımı:
+- Frontend/Backend/ML ayrımı ile bağımsız geliştirme
+- External analysis proxy mimarisi (thin backend)
+- CSS Modules + design token sistemi ile tutarlı UI
 
-**3. Continuous Learning Pipeline:**
-Otomatik model iyileştirme sistemi:
-- Haftalık %0.5-1.0 accuracy improvement
-- Zero-downtime model updates
-- Performance regression detection
+**3. Veri Toplama Pipeline'ı:**
+Otomatik veri toplama sistemi:
+- `download_datasets.py` ile kaynak bazlı otomatik indirme
+- Kalite kontrol mekanizması (süre, SNR, sessizlik tespiti)
 
 #### 6.2.2. Teknik Katkılar
 
-**wav2vec2 + LightGBM Hibrit Yaklaşım:**
+**wav2vec2 + LightGBM Hibrit Yaklaşım (planlanan):**
 - Derin öğrenme embeddings ile gradient boosting kombinasyonu
-- Müzik domain'ine successful adaptation
-- %97.2 accuracy, 0.8s inference time tradeoff
-- Feature importance analysis: wav2vec2 embeddings %67.3 contribution
+- Müzik domain'ine adaptasyon hedeflenmektedir
+- Performans metrikleri eğitim sonrası belirlenecektir
 
 **Multi-Task Learning Architecture:**
 - AI authenticity detection + genre classification
@@ -1963,11 +1741,11 @@ Kullanım Alanları:
 Bu çalışma, yapay zeka müzik deteksiyonu alanında akademik araştırma ile pratik uygulama arasında köprü görevi görmektedir. Geliştirilen AURIS platformu, hem teknik olarak başarılı sonuçlar elde etmiş hem de web ve mobil platformlarda gerçek dünya kullanımı için hazır hale getirilmiştir.
 
 **Ana Başarılar:**
-- **Yüksek Performans:** %96.8 accuracy ile competitive results
 - **Çok Platform Desteği:** Web platformu ve native Android uygulaması
-- **Production Readiness:** 500+ concurrent user support
-- **Automation:** Manuel müdahale gerektirmeyen pipeline
-- **Open Access:** Araştırmacılar ve geliştiriciler için erişilebilir platform
+- **Modüler Mimari:** Frontend, backend ve ML pipeline'ı bağımsız geliştirme
+- **Otomatik Veri Toplama:** `download_datasets.py` ile kaynak bazlı labeling
+- **Production Deployment:** Netlify + HuggingFace Spaces üzerinde canlı sistem
+- **Açık Erişim:** Araştırmacılar ve geliştiriciler için erişilebilir platform
 
 **Gelecek Potansiyeli:**
 Elde edilen sonuçlar, AI müzik deteksiyonunun practical deployment'ının mümkün olduğunu göstermektedir. AURIS'un modüler mimarisi ve sürekli öğrenme kabiliyeti, gelecekteki AI müzik teknolojilerindeki gelişmelere adaptasyonu kolaylaştıracaktır. Mevcut Android uygulaması, iOS platformuna genişletme için temel oluşturmaktadır.
@@ -2289,7 +2067,9 @@ create_pipeline_diagram()
 
 ### Ek B: Model Training Logs ve Görselleştirmeler
 
-#### Şekil B.1: Training Loss ve Accuracy Curves
+> **TBD** -- Bu ekteki tüm görselleştirmeler (training curves, confusion matrix, ROC curve, feature importance), model eğitimi tamamlandıktan sonra gerçek verilerle üretilecektir. Aşağıdaki Python kodları, görselleştirme şablonları olarak saklanmaktadır.
+
+#### Şekil B.1: Training Loss ve Accuracy Curves (eğitim sonrası üretilecek)
 
 ```python
 import matplotlib.pyplot as plt
@@ -2360,10 +2140,10 @@ def plot_training_curves():
 plot_training_curves()
 ```
 
-**Beklenen Çıktı Açıklaması:**
-- Sol grafik: Loss değerlerinin 0.8'den başlayıp ~0.08'e düşmesi
-- Sağ grafik: Accuracy'nin %50'den %97.2'ye yükselmesi
-- Epoch 32'de best model checkpoint işareti
+**Beklenen Çıktı Açıklaması (TBD -- gerçek değerler eğitim sonrası güncellenecek):**
+- Sol grafik: Loss değerlerinin düşmesi
+- Sağ grafik: Accuracy'nin yükselmesi
+- Best model checkpoint işareti
 - Gold ve dark renk şeması ile tutarlı görsel
 
 #### Şekil B.2: Confusion Matrix Visualization
@@ -2706,7 +2486,7 @@ plot_feature_importance()
       AI Müzik <span style="color: #D4AF37;">Tespit</span> Sistemi
     </h1>
     <p style="color: #888; font-size: 18px; margin-bottom: 40px;">
-      Müziğin yapay zeka ile üretilip üretilmediğini %97.2 doğrulukla analiz edin
+      Müziğin yapay zeka ile üretilip üretilmediğini analiz edin
     </p>
 
     <!-- Upload Zone -->
@@ -2958,7 +2738,7 @@ fun AurisHomeScreen() {
             )
 
             Text(
-                "%97.2 doğruluk oranı",
+                "AI Müzik Tespit Sistemi",
                 fontSize = 16.sp,
                 color = Color(0xFF888888)
             )
@@ -2991,6 +2771,9 @@ fun AurisHomeScreen() {
 
 ### Ek E: Performance Benchmark Sonuçları
 
+> **TBD** -- Yük testleri ve performans benchmark'ları henüz gerçekleştirilmemiştir. Aşağıdaki Python kodları, testler yapıldıktan sonra görselleştirme için şablon olarak saklanmaktadır.
+
+<!--
 #### Şekil E.1: Load Test Results
 
 ```python
@@ -3167,6 +2950,7 @@ def plot_inference_distribution():
 
 plot_inference_distribution()
 ```
+-->
 
 ---
 
