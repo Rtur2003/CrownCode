@@ -212,8 +212,8 @@ tail -f logs/app.log
 tail -f logs/error.log
 
 # Production logs:
-vercel logs
-netlify logs
+netlify logs          # Frontend logs
+# Backend logs: HuggingFace Spaces dashboard üzerinden kontrol et
 
 # Database logs:
 heroku logs --app your-db-app  # Eğer Heroku kullanıyorsan
