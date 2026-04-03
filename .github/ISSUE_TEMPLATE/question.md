@@ -15,7 +15,7 @@ assignees: ''
 ## 📚 Documentation Checked
 <!-- Have you checked the documentation? -->
 - [ ] README.md
-- [ ] TECHNICAL_SPECIFICATIONS.md
+- [ ] docs/technical/AI_MODEL_STRATEGY.md
 - [ ] API documentation
 - [ ] GitHub Discussions
 - [ ] Existing issues
