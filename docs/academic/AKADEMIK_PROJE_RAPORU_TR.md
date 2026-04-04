@@ -1525,10 +1525,9 @@ Model performansı eğitim tamamlandıktan sonra değerlendirilecektir. AURIS'un
 | Open Source | No | Planlanıyor |
 
 AURIS'un avantajları:
-- Daha hızlı inference time
-- Tam web platform entegrasyonu
+- Tam web platform entegrasyonu (analiz arayüzü)
 - Native Android mobil uygulama
-- Açık kaynak yaklaşımı
+- Ücretsiz ve açık kaynak yaklaşımı
 - Eğitim amaçlı kullanım uygunluğu
 
 ### 5.3. Sistem Sınırlamaları ve Gelişim Alanları
@@ -1567,8 +1566,8 @@ AURIS'un avantajları:
 **Metodolojik Katkılar:**
 1. **Otomatik Labeling:** Source-based automatic labeling methodology
 2. **Modüler Mimari:** Fail-safe design patterns for ML systems
-3. **Continuous Learning:** Automated model improvement pipeline
-4. **Evaluation Framework:** Comprehensive testing methodology
+3. **Çok Platformlu Dağıtım:** Web + Android + API entegrasyon mimarisi
+4. **Otomatik Dataset Toplama:** HuggingFace streaming ile veri pipeline'ı
 
 **Açık Kaynak Katkıları:**
 - Model weights ve training scripts
@@ -2083,7 +2082,7 @@ def plot_training_curves():
     np.random.seed(42)
     epochs = np.arange(1, 51)
 
-    # Simulated training metrics (based on actual AURIS training)
+    # Placeholder values — will be replaced with actual training metrics
     train_loss = 0.8 * np.exp(-0.08 * epochs) + 0.05 + np.random.normal(0, 0.01, 50)
     val_loss = 0.85 * np.exp(-0.07 * epochs) + 0.08 + np.random.normal(0, 0.015, 50)
 
@@ -2866,18 +2865,20 @@ def plot_load_test_results():
 plot_load_test_results()
 ```
 
-#### Tablo E.1: Performance Benchmark Özeti
+#### Tablo E.1: Performance Benchmark Özeti (TBD)
 
-| Metrik | Değer | Hedef | Durum |
-|--------|-------|-------|-------|
-| Avg Response Time (100 users) | 280ms | <500ms | ✅ |
-| P95 Response Time (100 users) | 380ms | <1000ms | ✅ |
-| Throughput (peak) | 1,200 req/min | >1,000 | ✅ |
-| Error Rate (500 users) | 0.3% | <0.5% | ✅ |
-| CPU Usage (500 users) | 85% | <90% | ✅ |
-| Memory Usage (500 users) | 78% | <85% | ✅ |
-| Model Inference Time | 0.8s | <2s | ✅ |
-| Cold Start Time | 12s | <30s | ✅ |
+> **TBD** — Aşağıdaki tablo hedeflenen değerleri göstermektedir. Gerçek ölçümler yük testleri sonrası doldurulacaktır.
+
+| Metrik | Gerçek Değer | Hedef | Durum |
+|--------|-------------|-------|-------|
+| Avg Response Time (100 users) | TBD | <500ms | Beklemede |
+| P95 Response Time (100 users) | TBD | <1000ms | Beklemede |
+| Throughput (peak) | TBD | >1,000 req/min | Beklemede |
+| Error Rate (500 users) | TBD | <0.5% | Beklemede |
+| CPU Usage (500 users) | TBD | <90% | Beklemede |
+| Memory Usage (500 users) | TBD | <85% | Beklemede |
+| Model Inference Time | TBD | <2s | Beklemede |
+| Cold Start Time | TBD | <30s | Beklemede |
 
 #### Şekil E.2: Inference Time Distribution
 
