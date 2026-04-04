@@ -26,7 +26,7 @@ AURIS, AI üretimi müzikleri tespit etmeyi ve müzik türü sınıflandırması
 
 Günümüzde yapay zeka teknolojilerinin hızlı gelişimi ile birlikte, müzik üretim araçları da büyük ölçüde dönüşüm geçirmektedir. Suno, Udio, MusicGen gibi araçlar sayesinde herhangi bir müzik bilgisi olmayan kullanıcılar bile profesyonel kalitede müzik üretebilmektedir (Zhang et al., 2025). Bu durum müzik endüstrisinde telif hakkı ihlalleri, sahte içerik üretimi ve adil olmayan rekabet ortamı yaratmaktadır.
 
-Araştırmalar göstermektedir ki, 2024 yılında streaming platformlarında bulunan içeriğin %12'sinin yapay zeka tarafından üretildiği tahmin edilmektedir (AI Music Detection Research, 2025). Bu oran her geçen gün artmakta ve müzik endüstrisi için ciddi bir tehdit oluşturmaktadır.
+Yapay zeka tarafından üretilen müzik içeriklerinin streaming platformlarında hızla arttığı gözlemlenmektedir. Bu durum müzik endüstrisi için ciddi bir tehdit oluşturmaktadır.
 
 ### 1.2. Araştırmanın Amacı
 
@@ -1747,7 +1747,7 @@ Bu çalışma, yapay zeka müzik deteksiyonu alanında akademik araştırma ile 
 - **Açık Erişim:** Araştırmacılar ve geliştiriciler için erişilebilir platform
 
 **Gelecek Potansiyeli:**
-Elde edilen sonuçlar, AI müzik deteksiyonunun practical deployment'ının mümkün olduğunu göstermektedir. AURIS'un modüler mimarisi ve sürekli öğrenme kabiliyeti, gelecekteki AI müzik teknolojilerindeki gelişmelere adaptasyonu kolaylaştıracaktır. Mevcut Android uygulaması, iOS platformuna genişletme için temel oluşturmaktadır.
+AURIS'un modüler mimarisi, gelecekteki AI müzik teknolojilerindeki gelişmelere adaptasyonu kolaylaştıracaktır. Mevcut Android uygulaması, iOS platformuna genişletme için temel oluşturmaktadır.
 
 **Toplumsal Katkı:**
 Bu çalışma, AI teknolojilerinin sorumlu kullanımı ve insan yaratıcılığının korunması konularında önemli bir araç sunmaktadır. Web ve mobil platformlarda yaygın erişilebilirlik, açık kaynak yaklaşımı ile bilimsel şeffaflığı desteklerken, pratik uygulamaları ile de endüstriyel ihtiyaçları karşılamaktadır.
