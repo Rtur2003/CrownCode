@@ -1327,7 +1327,7 @@ def plot_genre_distribution():
     ax.grid(True, axis='y', alpha=0.3)
 
     # Add total annotation
-    ax.text(0.98, 0.95, f'Toplam: 10,000 sample\n(20 genre × 500)',
+    ax.text(0.98, 0.95, f'Hedef Toplam: ~8,000 sample',
             transform=ax.transAxes, fontsize=11, ha='right', va='top',
             bbox=dict(boxstyle='round', facecolor='#F5E6C8', alpha=0.9))
 
@@ -1737,7 +1737,7 @@ Kullanım Alanları:
 
 ### 6.5. Sonuç
 
-Bu çalışma, yapay zeka müzik deteksiyonu alanında akademik araştırma ile pratik uygulama arasında köprü görevi görmektedir. Geliştirilen AURIS platformu, hem teknik olarak başarılı sonuçlar elde etmiş hem de web ve mobil platformlarda gerçek dünya kullanımı için hazır hale getirilmiştir.
+Bu çalışma, yapay zeka müzik deteksiyonu alanında akademik araştırma ile pratik uygulama arasında köprü görevi görmektedir. Geliştirilen AURIS platformu, web ve mobil platformlarda gerçek dünya kullanımı için hazır hale getirilmiş olup, model eğitimi ve performans değerlendirmesi devam etmektedir.
 
 **Ana Başarılar:**
 - **Çok Platform Desteği:** Web platformu ve native Android uygulaması
