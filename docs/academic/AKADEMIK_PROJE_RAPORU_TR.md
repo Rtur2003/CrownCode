@@ -291,16 +291,16 @@ services:
 Geleneksel yaklaşımların aksine, bu çalışmada manuel etiketleme gerektirmeyen otomatik dataset toplama yöntemi kullanılmıştır:
 
 **AI Müzik Kaynakları (Label: 1)**
-- Suno.ai platform scraping
-- Udio.com API integration
-- MusicGen model ile lokal üretim
-- Mubert.com otomatik download
+- Suno AI (zuhri025/suno-audio, HuggingFace) — 500 sample
+- SleepyJesse AI (SleepyJesse/ai_music_large, HuggingFace) — hedef: 2000 sample
+- AIME (disco-eth/AIME, HuggingFace) — 12 farklı AI model, hedef: 1000 sample
+- Vocal Deepfake (Hemg/Deepfake-Audio-Dataset) — 250 fake sample
 
 **İnsan Müzik Kaynakları (Label: 0)**
-- Free Music Archive API
-- Jamendo platform integration
-- GTZAN dataset (1000 samples)
-- Musopen classical music collection
+- GTZAN dataset (marsyas/gtzan, HuggingFace) — 999 sample, 10 genre
+- Free Music Archive (benjamin-paine/free-music-archive-small, HuggingFace) — hedef: 1000 sample
+- SleepyJesse Human (SleepyJesse/ai_music_large, HuggingFace) — hedef: 2000 sample
+- Vocal Deepfake Real (Hemg/Deepfake-Audio-Dataset) — 250 real sample
 
 **Otomatik Kalite Kontrol Pipeline:**
 ```python
@@ -1259,8 +1259,8 @@ def plot_dataset_distribution():
 
     # 2. AI Source Distribution
     ax2 = axes[1]
-    ai_sources = ['Suno.ai', 'MusicGen', 'Udio.com', 'Mubert']
-    ai_counts = [2000, 1500, 1000, 500]
+    ai_sources = ['Suno AI', 'SleepyJesse AI', 'AIME (12 model)', 'Vocal Deepfake']
+    ai_counts = [500, 2000, 1000, 250]
 
     bars = ax2.barh(ai_sources, ai_counts, color=colors_ai, edgecolor=dark)
     ax2.set_xlabel('Sample Sayısı', fontsize=12)
@@ -1273,8 +1273,8 @@ def plot_dataset_distribution():
 
     # 3. Human Source Distribution
     ax3 = axes[2]
-    human_sources = ['Free Music Archive', 'GTZAN', 'Jamendo', 'Musopen']
-    human_counts = [2500, 1000, 1000, 500]
+    human_sources = ['SleepyJesse Human', 'FMA', 'GTZAN', 'Vocal Deepfake Real']
+    human_counts = [2000, 1000, 999, 250]
 
     bars = ax3.barh(human_sources, human_counts, color=colors_human, edgecolor=dark)
     ax3.set_xlabel('Sample Sayısı', fontsize=12)
@@ -1340,19 +1340,19 @@ plot_genre_distribution()
 -->
 - **Format:** WAV, 16kHz, mono
 
-**Kaynak Dağılımı (hedeflenen, toplama devam ediyor):**
+**Kaynak Dağılımı (toplama devam ediyor):**
 ```
 AI Müzik Kaynakları:
-├── Suno.ai
-├── MusicGen
-├── Udio.com
-└── Mubert
+├── Suno AI (500 sample) ✅
+├── SleepyJesse AI (hedef: 2000)
+├── AIME - 12 model (hedef: 1000)
+└── Vocal Deepfake (250 sample) ✅
 
 İnsan Müzik Kaynakları:
-├── GTZAN Dataset
-├── Free Music Archive
-├── Jamendo
-└── Musopen
+├── GTZAN (999 sample) ✅
+├── Free Music Archive (hedef: 1000)
+├── SleepyJesse Human (hedef: 2000)
+└── Vocal Deepfake Real (250 sample) ✅
 ```
 
 > **Not:** Kesin kaynak bazında dağılım, veri toplama süreci tamamlandıktan sonra raporlanacaktır. Mevcut toplam: ~3,749 sample.
@@ -2156,10 +2156,10 @@ def plot_confusion_matrix():
     """
     AURIS AI detection modelinin confusion matrix görselleştirmesi.
     """
-    # Confusion matrix values (from actual model evaluation)
+    # Placeholder values — will be replaced with actual evaluation results
     cm = np.array([
-        [2423, 77],   # AI: [True Positive, False Negative]
-        [63, 2437]    # Human: [False Positive, True Negative]
+        [0, 0],   # AI: [True Positive, False Negative] — TBD
+        [0, 0]    # Human: [False Positive, True Negative] — TBD
     ])
 
     # Calculate metrics
@@ -2227,7 +2227,7 @@ def plot_roc_curve():
     # True labels
     y_true = np.array([1] * 2500 + [0] * 2500)
 
-    # Predicted probabilities (simulating 97.2% accuracy model)
+    # Placeholder ROC data — will be replaced with actual model predictions
     y_scores = np.zeros(n_samples)
 
     # AI samples (label=1): mostly high scores
@@ -2893,7 +2893,7 @@ def plot_inference_distribution():
     """
     np.random.seed(42)
 
-    # Simulated inference times (based on actual measurements)
+    # Placeholder inference times — will be replaced with actual measurements
     inference_times = np.concatenate([
         np.random.normal(0.8, 0.1, 900),  # Normal cases
         np.random.normal(1.2, 0.2, 80),    # Slower cases
