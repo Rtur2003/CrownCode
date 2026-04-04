@@ -101,7 +101,7 @@ Platform, modüler mimari yaklaşımı benimser ve üç ana katmandan oluşur:
 
 | Teknoloji | Versiyon | Amaç |
 |-----------|----------|------|
-| Next.js | 14.2.18 | React framework (Static Export) |
+| Next.js | 14 | React framework (Pages Router) |
 | React | 18.3.1 | UI library |
 | TypeScript | 5.7.2 | Type-safe JavaScript |
 | CSS Modules | - | Scoped styling + design token system (variables.css) |
@@ -302,25 +302,21 @@ Geleneksel yaklaşımların aksine, bu çalışmada manuel etiketleme gerektirme
 - SleepyJesse Human (SleepyJesse/ai_music_large, HuggingFace) — hedef: 2000 sample
 - Vocal Deepfake Real (Hemg/Deepfake-Audio-Dataset) — 250 real sample
 
-**Otomatik Kalite Kontrol Pipeline:**
+**Audio İşleme Pipeline (download_datasets.py):**
 ```python
-def quality_control_pipeline(audio_file):
-    # 1. Technical validation
-    duration = get_audio_duration(audio_file)
-    if duration < 10 or duration > 300:  # 10 saniye - 5 dakika
-        return False
-
-    # 2. Audio quality analysis
-    snr_ratio = calculate_snr(audio_file)
-    if snr_ratio < 20:  # 20dB altı düşük kalite
-        return False
-
-    # 3. Silence detection
-    silence_percentage = detect_silence(audio_file)
-    if silence_percentage > 0.1:  # %10'dan fazla sessizlik
-        return False
-
-    return True
+def save_audio(audio_array, sr, out_path):
+    """Process and save audio file.
+    IMPORTANT: Trim FIRST at original SR to avoid OOM on long tracks.
+    """
+    # 1) Trim at original SR FIRST (prevents OOM on 30+ min tracks)
+    audio = trim_audio(audio_array, sr, max_sec=30)
+    # 2) Ensure mono
+    audio = ensure_mono(audio)
+    # 3) Cast to float32
+    audio = audio.astype(np.float32)
+    # 4) Resample to 16kHz
+    audio = resample_audio(audio, sr, TARGET_SR)
+    sf.write(str(out_path), audio, TARGET_SR)
 ```
 
 #### 3.2.2. Model Mimarisi
@@ -1177,37 +1173,36 @@ Veri seti toplama süreci `download_datasets.py` scripti ile yönetilmektedir. S
 **Repository Yapısı:**
 ```
 CrownCode/
-├── platform/                 # Next.js frontend (64 files)
+├── platform/                 # Next.js frontend
 │   ├── pages/               # Sayfa komponentleri
 │   ├── components/          # UI komponentleri
-│   ├── styles/              # CSS modülleri
+│   ├── styles/              # CSS Modules + design tokens
 │   ├── hooks/               # React hooks
-│   ├── context/             # React context
-│   └── locales/             # i18n dosyaları
-├── backend/                  # FastAPI backend (16 files)
+│   ├── context/             # React context (Language, Theme)
+│   ├── locales/             # i18n dosyaları (en.json, tr.json)
+│   └── lib/                 # product-catalog.ts, analysisTypes.ts
+├── hf-crowncode-backend/     # FastAPI backend (HF Spaces)
 │   ├── app/
-│   │   ├── routes/          # API endpoints
-│   │   ├── services/        # Business logic
+│   │   ├── routers/         # API endpoints
 │   │   └── schemas.py       # Pydantic models
 │   ├── requirements.txt
 │   └── Dockerfile
-├── mobile/                   # Android Native (27 files)
-│   ├── app/
-│   │   ├── src/main/java/   # Kotlin source
-│   │   └── src/main/res/    # Resources
-│   └── build.gradle.kts     # Build config
-├── tools/                    # Ses Analizi & Veri İşleme
-│   ├── audio_processor/     # Python scripts
-│   └── dataset_tools/       # Data augmentation
+├── DataSet/                  # Veri toplama pipeline
+│   ├── download_datasets.py # Otomatik dataset downloader
+│   └── metadata.csv         # Sample metadata
 ├── docs/                     # Dokümantasyon
 │   └── academic/            # Akademik dökümanlar
 ├── .github/                  # GitHub konfigürasyonu
-│   ├── workflows/           # CI/CD pipelines
+│   ├── workflows/           # CI/CD pipelines (ci.yml)
 │   └── dependabot.yml       # Dependency updates
 ├── netlify.toml             # Netlify konfigürasyonu
 ├── docker-compose.yml       # Local development
 ├── Makefile                 # Build komutları
 └── .pre-commit-config.yaml  # Pre-commit hooks
+
+Android-App-CrownCode/        # Ayrı repository — Native Android
+├── app/src/main/java/       # Kotlin source
+└── build.gradle.kts         # Build config
 ```
 
 ---
