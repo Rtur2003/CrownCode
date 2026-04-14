@@ -81,6 +81,8 @@ Akademik rapor için en iyi sonuç.
 - Echoes cache: D:/CrownCode/DataSet/_hf_cache/echoes/ (silebilir, 6GB)
 
 ## Günlük
+- 16:06 - features.csv 50 satır, 13 Python process aktif. Rate düşük görünüyor (~8/dk), belki sustained daha hızlanır
+- 16:03 - Pipeline feat=26, monitor (bdlehxenv) 3 dk aralıklı rapor veriyor
 - 16:00 - Multiprocessing eklendi, 11 worker ile pipeline restart
 - 15:52 - Echoes tamamlandı, manifest yenilendi
 - 15:50 - Echoes script (bgl40jqcw) failed ama 1128 örnek işlendi
