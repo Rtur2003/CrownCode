@@ -1,6 +1,18 @@
 # AURIS Proje Progress Notları
 
-Son Güncelleme: 2026-04-14 16:05
+Son Güncelleme: 2026-04-14 16:14 (CHECKPOINT — kaldığımız yer)
+
+## ⏸ Resume Point (sonra buradan devam)
+1. **ML pipeline task bzn8slu74 hâlâ çalışıyor** (background, 11 worker). features.csv = 175 satır / 5197. Rate ~10/dk → tahmini ~8 saat. Makine açık kalırsa kendi başına ilerler. Kill gerekirse: `taskkill //F //IM python.exe` ama önce PIDleri kontrol et.
+2. **Monitor task bdlehxenv** 3 dk aralıklı event üretiyor (session kapanırsa yeniden başlatılabilir).
+3. **CI durumu**:
+   - [x] backend/requirements.txt'e pytest + pytest-asyncio eklendi
+   - [x] platform/ içinde `npm audit fix` çalıştırıldı — 16 → 8 vuln (4 low, 4 high)
+   - [ ] Kalan 4 HIGH hepsi Next.js — `npm audit fix --force` gerekli ama Next 16 breaking change. Kullanıcı kararı bekliyor.
+   - [ ] smoke.test.tsx:99 `getByText('CrownCode')` multiple element bulduğu için fail ediyor. Node 24 Canary continue-on-error=true olduğu için blocker değil ama düzeltilebilir (getAllByText veya getByRole('heading')).
+4. **Commit edilmesi gereken değişiklikler**: backend/requirements.txt, platform/package-lock.json (npm audit fix sonrası).
+
+## Seçilen Yaklaşım
 
 ## Seçilen Yaklaşım
 **A: Tam Dataset (5,197 örnek)** — 11 worker paralel feature extraction ile ~1.5-2 saat.
