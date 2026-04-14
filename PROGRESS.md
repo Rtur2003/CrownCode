@@ -58,7 +58,7 @@ Akademik rapor için en iyi sonuç.
 7. LightGBM
 + 2 Heuristic baseline (no vocals, with vocals)
 
-## Görseller Üretilecek (visualize_results.py)
+## Görseller Üretilecek (visualize_results.py) — 13 Figure + Tablo + Rapor
 1. fig1: ROC Curves (overlay tüm modeller)
 2. fig2: Precision-Recall Curves
 3. fig3: Confusion Matrices
@@ -67,6 +67,12 @@ Akademik rapor için en iyi sonuç.
 6. fig6: Correlation Heatmap
 7. fig7: Feature Distributions (violin, AI vs Human)
 8. table1: LaTeX + Markdown comparison tablosu
+9. **fig9: Dataset Statistics** (class dist + source dist + duration histogram)
+10. **fig10: Per-Source Class Balance** (AI vs Human her kaynak için)
+11. **fig11: Feature Space Embedding** (PCA + t-SNE)
+12. **fig12: Calibration Curves** (reliability diagram)
+13. **fig13: Prediction Score Distribution** (best model)
+14. **REPORT_SUMMARY.md** (dataset + results kapsamlı özet)
 
 ## Notlar
 - PYTHONUNBUFFERED=1 ile stdout anlık akıyor
