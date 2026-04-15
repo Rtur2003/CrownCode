@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { motion, Variants } from 'framer-motion'
+import { motion, useReducedMotion, Variants } from 'framer-motion'
 import {
   Waves, Brain, Mic2, Radio, Network,
   BarChart3, Target, Layers, ArrowRight,
@@ -69,6 +69,7 @@ const towers = [
 export const AurisShowcase: React.FC = () => {
   const { t } = useLanguage()
   const aurisT = t.aurisShowcase
+  const prefersReducedMotion = useReducedMotion()
 
   return (
     <section className={styles.section} aria-label="AURIS Showcase">
@@ -152,12 +153,13 @@ export const AurisShowcase: React.FC = () => {
                 <div className={styles.towerDesc}>
                   {aurisT?.towers?.[tower.id as keyof typeof aurisT.towers] || `Tower ${i + 1}`}
                 </div>
-                {/* Pulse animation */}
-                <motion.div
-                  className={styles.towerPulse}
-                  animate={{ scale: [1, 1.5, 1], opacity: [0.4, 0, 0.4] }}
-                  transition={{ repeat: Infinity, duration: 3, delay: i * 0.5 }}
-                />
+                {!prefersReducedMotion && (
+                  <motion.div
+                    className={styles.towerPulse}
+                    animate={{ scale: [1, 1.5, 1], opacity: [0.4, 0, 0.4] }}
+                    transition={{ repeat: Infinity, duration: 3, delay: i * 0.5 }}
+                  />
+                )}
               </motion.div>
             ))}
           </div>
