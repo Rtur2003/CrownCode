@@ -490,6 +490,7 @@ const AIMusicDetectionPage: NextPage = () => {
               result={analysisResult}
               onReset={resetAll}
               labels={resultLabels}
+              locale={language === 'en' ? 'en' : 'tr'}
             />
           )}
         </div>
