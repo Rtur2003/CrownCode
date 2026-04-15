@@ -400,9 +400,11 @@ The ML pipeline uses a 4-tower ensemble approach with systematic comparison acro
 - **Tower 3:** CLAP embeddings
 - **Tower 4:** MERT-AudioCAT (FST)
 
-**Classifier families under evaluation:** scikit-learn classifiers, XGBoost, LightGBM, and others — results TBD pending full training.
+**Classifier families evaluated (Tower 2):** 7 classical classifiers (Logistic Regression, Random Forest, Gradient Boosting, SVM-RBF, MLP, XGBoost, LightGBM) under 5-fold stratified cross-validation on 5,195 samples × 49 features. XGBoost selected as best with 0.900 accuracy / 0.9657 ROC-AUC.
 
-**Dataset collection** is handled by `download_datasets.py`, which downloads audio from HuggingFace datasets. Approximately 3,749 WAV files have been collected so far; collection is ongoing.
+**Deep-learning towers (1, 3, 4)** — wav2vec2 fine-tune, CLAP classifier head, FST — are **not yet trained**; they currently run in fallback mode. The reported accuracy reflects Tower 2 alone.
+
+**Dataset collection** is handled by the scripts in `DataSet/scripts/` (`download_datasets.py`, `extract_echoes.py`, `fill_from_archive.py`, `fill_empty_genres.py`). Approximately 5,195 processed samples have been collected so far across 20 genre folders + mixed + vocal-deepfake; collection continues via archive.org and FMA.
 
 ---
 
@@ -425,36 +427,53 @@ The ML pipeline uses a 4-tower ensemble approach with systematic comparison acro
 
 *Note: Final dataset size and distribution will be reported after collection is complete.*
 
-#### 4.1.2. Model Training Results
+#### 4.1.2. Model Training Results (Tower 2 — measured)
 
-*TBD — pending full training and evaluation.*
+7 classifier families were trained on 5,195 samples (49 handcrafted features) with 5-fold
+stratified cross-validation. **XGBoost** was selected as the best-performing model.
 
-The model has not yet been trained. Once training is complete, the following metrics will be reported:
+| Classifier | Accuracy | ROC-AUC |
+| --- | --- | --- |
+| **XGBoost (selected)** | **0.900** | **0.9657** |
+| Gradient Boosting | 0.897 | 0.963 |
+| LightGBM | 0.895 | 0.962 |
+| SVM (RBF) | 0.866 | 0.937 |
+| Random Forest | 0.863 | 0.939 |
+| MLP (shallow) | 0.854 | 0.928 |
+| Logistic Regression | 0.797 | 0.880 |
 
-- Training / Validation / Test Accuracy
-- Precision, Recall, F1-Score
-- Confusion matrix
-- Training curves (loss and accuracy over epochs)
-- ROC-AUC
+Selected XGBoost metrics (5-fold CV):
 
-**Target Metrics (goals, not actual results):**
+| Metric | Measured | Original Target |
+| --- | --- | --- |
+| Test Accuracy | 0.900 | >95% (not yet met) |
+| Precision | ~0.91 | >95% (not yet met) |
+| Recall | ~0.89 | >95% (not yet met) |
+| F1-Score | ~0.90 | >95% (not yet met) |
+| ROC-AUC | 0.9657 | >0.98 (not yet met) |
+| Inference Time (CPU) | <1 s | <2 s (met) |
 
-| Metric | Target |
-| --- | --- |
-| Test Accuracy | >95% |
-| Precision | >95% |
-| Recall | >95% |
-| F1-Score | >95% |
-| Inference Time | <2 seconds |
+Deep-learning towers (wav2vec2 fine-tune, CLAP, FST) remain untrained. The gap between
+measured accuracy (0.900) and the 0.95+ literature benchmarks is expected to close once
+Tower 1 (wav2vec2) is fine-tuned and its embedding classifier is added to the ensemble.
 
-#### 4.1.3. Planned Ablation Studies
+Full training diagnostics are available as 15 auto-generated figures in `DataSet/figures/`
+(ROC, PR, confusion matrix, calibration/Brier, learning curve, threshold sweep, per-source
+accuracy, classification report, training history, per-class metrics, score distribution,
+feature importance, feature correlation, feature distributions, model comparison bar chart).
 
-The following comparisons are planned once training begins:
+#### 4.1.3. Ablation Studies (executed)
 
-- 4-tower ensemble vs. individual towers
-- 7 classifier families (scikit-learn, XGBoost, LightGBM, etc.) via 5-fold CV
-- Feature importance analysis across the 49 handcrafted features
-- Impact of dataset size on accuracy
+- **7 classical classifiers** compared via 5-fold CV (table above).
+- **Feature importance** ranked via XGBoost gain (top-20 figure).
+- **Learning curve** plotted over training-set fractions to diagnose bias/variance.
+- **Per-source accuracy** broken down by generator (suno, udio, musicgen, ...) to expose
+  generator-specific blind spots.
+
+Pending ablations (after deep-learning towers train):
+
+- 4-tower ensemble vs. Tower 2 alone.
+- MERT-Large / AST / PaSST / BEATs baselines vs. our ensemble.
 
 ### 4.2. System Performance Analysis
 

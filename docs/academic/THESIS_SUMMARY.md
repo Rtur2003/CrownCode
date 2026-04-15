@@ -260,16 +260,36 @@ Audio Input (File / YouTube URL)
 
 ## Research Results
 
-### Model Performance (TBD - Pending Full Training)
+### Model Performance (Measured — 5195 samples, 5-fold CV, 49 features)
 
-| Metric | Target | Industry Benchmark |
+Current trained classifier: **XGBoost** (best of 7 classical models).
+
+| Metric | Target | AURIS (measured) | Industry Benchmark |
+| --- | --- | --- | --- |
+| **ROC-AUC** | >0.98 | **0.9657** | 0.95-0.99 |
+| **Accuracy** | >95% | **0.900** | 94-99% |
+| **Precision** | >93% | ~0.91 | 95-98% |
+| **Recall** | >97% | ~0.89 | 94-97% |
+| **F1 Score** | >95% | ~0.90 | 95-98% |
+| **Inference Time** | <2s | <1s (CPU) | 2-5s |
+
+Per-classifier 5-fold CV accuracy:
+
+| Classifier | Accuracy | ROC-AUC |
 | --- | --- | --- |
-| **ROC-AUC** | >0.98 | 0.95-0.99 |
-| **Accuracy** | >95% | 94-99% |
-| **Precision** | >93% | 95-98% |
-| **Recall** | >97% | 94-97% |
-| **F1 Score** | >95% | 95-98% |
-| **Inference Time** | <2s | 2-5s |
+| **XGBoost (selected)** | **0.900** | **0.9657** |
+| Gradient Boosting | 0.897 | 0.963 |
+| LightGBM | 0.895 | 0.962 |
+| SVM (RBF) | 0.866 | 0.937 |
+| Random Forest | 0.863 | 0.939 |
+| MLP (shallow) | 0.854 | 0.928 |
+| Logistic Regression | 0.797 | 0.880 |
+
+> **Note on "best model" claim:** XGBoost is the best-performing of the 7 classical
+> classifiers tested on handcrafted features (Tower 2). The proposed deep-learning
+> towers (wav2vec2 fine-tune, CLAP classifier head, FST) are not yet trained — they
+> currently run in fallback mode. The ensemble's published accuracy will be re-measured
+> once Tower 1/3/4 are trained. See *Limitations* below.
 
 ### Comparison Baselines
 
@@ -278,20 +298,41 @@ Audio Input (File / YouTube URL)
 | IRCAM Amplify | 98.59% AI / 98.5% human | Commercial |
 | lofcz/ai-music-detector | Spectral fakeprint | Open-source |
 | garystafford/wav2vec2-deepfake | wav2vec2 binary | Open-source |
-| AURIS (ours) | TBD | Multi-tower ensemble |
+| **AURIS (ours, Tower 2 only)** | **0.900 acc / 0.9657 ROC-AUC** | Multi-tower ensemble (Tower 2 trained) |
 
-### Publication-Quality Outputs (TBD — will be generated after full training)
+### Publication-Quality Outputs (generated)
 
-8 figures planned for automatic generation:
+15 figures auto-generated into `DataSet/figures/`:
 
-1. ROC Curves (all models overlaid)
-2. Precision-Recall Curves (all models overlaid)
-3. Confusion Matrices (per-model heatmaps)
-4. Model Comparison Bar Chart (5 metrics side-by-side)
-5. Feature Importance (top-20 horizontal bars)
-6. Feature Correlation Heatmap
-7. Feature Distributions (AI vs Human violin plots)
-8. LaTeX/Markdown comparison table
+Core 8 (classical-ML comparison):
+
+1. ROC curves (all 7 models overlaid)
+2. Precision-Recall curves (all 7 models)
+3. Confusion matrix (best model)
+4. Model comparison bar chart (5 metrics)
+5. Feature importance (top-20 horizontal bars, XGBoost gain)
+6. Feature correlation heatmap (49×49)
+7. Feature distributions (AI vs Human violin plots)
+8. Calibration curve + Brier score (5-fold CV)
+
+Deep-learning-style 7 (training diagnostics):
+
+1. Training history (logloss / error / AUC over boosting rounds)
+2. Per-class precision / recall / F1
+3. Learning curve (ROC-AUC vs training size)
+4. Threshold sweep (precision/recall/F1 over thresholds)
+5. Score distribution (AI vs Human predicted probabilities)
+6. Per-source performance (accuracy per generator/source)
+7. Classification report heatmap
+
+### Limitations (honest disclosure)
+
+- Deep-learning towers (wav2vec2 fine-tune, CLAP classifier head, FST) are **not yet
+  trained**. Current ensemble is effectively Tower 2 (classical ML on handcrafted features).
+- No modern audio-transformer baseline (MERT-Large, AST, PaSST, BEATs, HTS-AT) has been
+  trained for comparison. These are on the roadmap.
+- "Best model" claim applies only within the 7-classical-classifier comparison, not
+  against the broader audio-DL literature.
 
 ---
 
