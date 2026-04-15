@@ -241,89 +241,155 @@ const AIMusicDetectionPage: NextPage = () => {
               transition={{ delay: 0.2 }}
             >
               <div className={styles['input-stack']}>
-                <div className={styles['input-sources']}>
-                  <span>{t.aiDetection.url.supportedPlatforms}</span>
-                  <div className={styles['source-chips']}>
-                    <span className={`${styles['source-chip']} ${styles['source-chip-active']}`}>
-                      <Youtube size={16} className={styles['source-chip-icon']} />
-                      {t.aiDetection.url.sources.youtube}
-                    </span>
-                    <span className={`${styles['source-chip']} ${styles['source-chip-active']}`}>
-                      <Upload size={16} className={styles['source-chip-icon']} />
-                      {t.aiDetection.url.sources.upload}
-                    </span>
-                    <span className={`${styles['source-chip']} ${styles['source-chip-soon']}`}>
-                      {t.aiDetection.url.sources.spotify}
-                    </span>
-                    <span className={`${styles['source-chip']} ${styles['source-chip-soon']}`}>
-                      {t.aiDetection.url.sources.appleMusic}
-                    </span>
-                  </div>
-                </div>
-
-                <div className={styles['upload-section']}>
-                  <h2>{t.aiDetection.upload.title}</h2>
-                  <div
-                    className={`${styles['upload-dropzone']} ${isDragOver ? styles['drag-over'] : ''}`}
-                    onDrop={handleDrop}
-                    onDragOver={handleDragOver}
-                    onDragLeave={handleDragLeave}
-                    onClick={() => fileInputRef.current?.click()}
+                {/* ===== TAB BAR ===== */}
+                <div
+                  className={styles['source-tabs']}
+                  role="tablist"
+                  aria-label={t.aiDetection.tabs?.ariaLabel || 'Analysis source'}
+                >
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={activeSource === 'file' ? 'true' : 'false'}
+                    className={`${styles['source-tab']} ${activeSource === 'file' ? styles['source-tab-active'] : ''}`}
+                    onClick={() => handleTabChange('file')}
                   >
-                    <Upload size={48} />
-                    <h3>{t.aiDetection.upload.dropHere}</h3>
-                    <p>{t.aiDetection.upload.orClick}</p>
-                    <div className={styles['supported-formats']}>
-                      <span>{t.aiDetection.upload.supported}</span>
-                    </div>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="audio/*,.mp3,.wav,.flac,.m4a,.mp4,.aac"
-                      onChange={handleFileSelect}
-                      className={styles['hidden']}
-                      aria-label={t.aria?.uploadAudioFile || 'Upload audio file for AI music detection'}
-                      title={t.aria?.uploadAudioFile || 'Upload audio file for AI music detection'}
-                    />
-                  </div>
-
-                  {selectedFile && (
-                    <div className={styles['selected-file']}>
-                      <Music size={20} />
-                      <span>{selectedFile.name}</span>
-                      <button
-                        onClick={handleFileAnalyze}
-                        disabled={isProcessing}
-                        className={`${styles['btn-primary']} ${isProcessing ? styles['loading'] : ''}`}
-                      >
-                        {isProcessing ? t.aiDetection.upload.analyzing : t.aiDetection.upload.analyzeButton}
-                      </button>
-                    </div>
-                  )}
+                    <FileAudio size={18} />
+                    <span className={styles['source-tab-label']}>
+                      {t.aiDetection.tabs?.file || 'Dosya'}
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={activeSource === 'youtube' ? 'true' : 'false'}
+                    className={`${styles['source-tab']} ${activeSource === 'youtube' ? styles['source-tab-active'] : ''}`}
+                    onClick={() => handleTabChange('youtube')}
+                  >
+                    <LinkIcon size={18} />
+                    <span className={styles['source-tab-label']}>
+                      {t.aiDetection.tabs?.url || 'URL'}
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={activeSource === 'mic' ? 'true' : 'false'}
+                    className={`${styles['source-tab']} ${activeSource === 'mic' ? styles['source-tab-active'] : ''}`}
+                    onClick={() => handleTabChange('mic')}
+                  >
+                    <Mic size={18} />
+                    <span className={styles['source-tab-label']}>
+                      {t.aiDetection.tabs?.mic || 'Mikrofon'}
+                    </span>
+                  </button>
                 </div>
 
-                <div className={styles['url-section']} id="url">
-                  <h2>{t.aiDetection.url.title}</h2>
-                  <div className={styles['url-input-container']}>
-                    <div className={styles['url-input-wrapper']}>
-                      <LinkIcon size={20} />
+                {/* ===== FILE TAB ===== */}
+                {activeSource === 'file' && (
+                  <div className={styles['upload-section']}>
+                    <h2>{t.aiDetection.upload.title}</h2>
+                    <div
+                      className={`${styles['upload-dropzone']} ${isDragOver ? styles['drag-over'] : ''}`}
+                      onDrop={handleDrop}
+                      onDragOver={handleDragOver}
+                      onDragLeave={handleDragLeave}
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      <Upload size={48} />
+                      <h3>{t.aiDetection.upload.dropHere}</h3>
+                      <p>{t.aiDetection.upload.orClick}</p>
+                      <div className={styles['supported-formats']}>
+                        <span>{t.aiDetection.upload.supported}</span>
+                      </div>
                       <input
-                        type="url"
-                        placeholder={t.aiDetection.url.placeholder}
-                        value={url}
-                        onChange={(event) => setUrl(event.target.value)}
-                        className={styles['url-input']}
+                        ref={fileInputRef}
+                        type="file"
+                        accept="audio/*,.mp3,.wav,.flac,.m4a,.mp4,.aac"
+                        onChange={handleFileSelect}
+                        className={styles['hidden']}
+                        aria-label={t.aria?.uploadAudioFile || 'Upload audio file for AI music detection'}
+                        title={t.aria?.uploadAudioFile || 'Upload audio file for AI music detection'}
                       />
                     </div>
-                    <button
-                      onClick={handleUrlAnalyze}
-                      disabled={!url.trim() || isProcessing}
-                      className={`${styles['btn-primary']} ${isProcessing ? styles['loading'] : ''}`}
-                    >
-                      {isProcessing ? t.aiDetection.url.analyzing : t.aiDetection.url.analyzeButton}
-                    </button>
+
+                    {selectedFile && (
+                      <div className={styles['selected-file']}>
+                        <Music size={20} />
+                        <span>{selectedFile.name}</span>
+                        <button
+                          onClick={handleFileAnalyze}
+                          disabled={isProcessing}
+                          className={`${styles['btn-primary']} ${isProcessing ? styles['loading'] : ''}`}
+                        >
+                          {isProcessing ? t.aiDetection.upload.analyzing : t.aiDetection.upload.analyzeButton}
+                        </button>
+                      </div>
+                    )}
                   </div>
-                </div>
+                )}
+
+                {/* ===== URL TAB ===== */}
+                {activeSource === 'youtube' && (
+                  <div className={styles['url-section']} id="url">
+                    <h2>{t.aiDetection.url.title}</h2>
+                    <div className={styles['url-input-container']}>
+                      <div className={styles['url-input-wrapper']}>
+                        <LinkIcon size={20} />
+                        <input
+                          type="url"
+                          placeholder={t.aiDetection.url.placeholder}
+                          value={url}
+                          onChange={(event) => setUrl(event.target.value)}
+                          className={styles['url-input']}
+                        />
+                      </div>
+                      <button
+                        onClick={handleUrlAnalyze}
+                        disabled={!url.trim() || isProcessing}
+                        className={`${styles['btn-primary']} ${isProcessing ? styles['loading'] : ''}`}
+                      >
+                        {isProcessing ? t.aiDetection.url.analyzing : t.aiDetection.url.analyzeButton}
+                      </button>
+                    </div>
+                    <div className={styles['platform-row']}>
+                      <span className={`${styles['platform-chip']} ${styles['platform-chip-active']} ${styles['platform-chip-yt']}`}>
+                        <Youtube size={14} />
+                        YouTube
+                      </span>
+                      <span className={`${styles['platform-chip']} ${styles['platform-chip-sp']}`}>
+                        Spotify
+                      </span>
+                      <span className={`${styles['platform-chip']} ${styles['platform-chip-tiktok']}`}>
+                        TikTok
+                      </span>
+                      <span className={`${styles['platform-chip']} ${styles['platform-chip-ig']}`}>
+                        <Instagram size={14} />
+                        Instagram
+                      </span>
+                      <span className={`${styles['platform-chip']} ${styles['platform-chip-sc']}`}>
+                        SoundCloud
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {/* ===== MIC TAB ===== */}
+                {activeSource === 'mic' && (
+                  <MicrophoneTab
+                    mic={mic}
+                    labels={{
+                      title: t.aiDetection.mic?.title || 'Mikrofon Kaydı',
+                      hint: t.aiDetection.mic?.hint || 'Bir ses çal ve mikrofona tut. Maks. 30 sn kaydedilir.',
+                      start: t.aiDetection.mic?.start || 'Kaydı başlat',
+                      stop: t.aiDetection.mic?.stop || 'Durdur ve analiz et',
+                      recording: t.aiDetection.mic?.recording || 'Kaydediliyor…',
+                      permissionDenied:
+                        t.aiDetection.mic?.permissionDenied ||
+                        'Mikrofon izni reddedildi. Tarayıcı ayarlarından izin verip tekrar dene.',
+                    }}
+                  />
+                )}
               </div>
 
               <div className={styles['pipeline-section']}>
