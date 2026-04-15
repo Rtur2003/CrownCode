@@ -275,17 +275,17 @@
   "aiDetection": {
     "meta": {
       "title": "AURIS - AI Müzik Tespiti",
-      "description": "AURIS ile YouTube odaklı AI müzik analizi. Backend entegrasyonları varsa kullanır, model yoksa deterministik önizleme kullanır.",
-      "keywords": "AURIS, AI müzik tespiti, YouTube analizi, ses analizi, CrownCode"
+      "description": "AURIS ile çok kaynaklı AI müzik analizi: dosya, URL veya canlı mikrofon. Backend entegrasyonları varsa kullanır, model yoksa deterministik önizleme kullanır.",
+      "keywords": "AURIS, AI müzik tespiti, ses analizi, mikrofon, YouTube, CrownCode"
     },
     "header": {
       "badge": "AURIS",
       "title": "AURIS ile AI Müzik Tespiti",
-      "subtitle": "AURIS - YouTube odaklı analiz arayüzü; backend entegrasyonları opsiyonel, önizleme güvenli yedektir."
+      "subtitle": "AURIS - dosya, URL ve canlı mikrofon desteği; backend entegrasyonları opsiyonel, önizleme güvenli yedektir."
     },
     "hero": {
       "accent": "AI Müzik Tespiti",
-      "description": "Yapay zeka ile üretilmiş müzikleri derin ses analizi ile tespit edin. Dosya yükleyin veya YouTube linki yapıştırın — gerisini AURIS halletsin.",
+      "description": "Yapay zeka ile üretilmiş müzikleri derin ses analizi ile tespit edin. Dosya yükleyin, URL yapıştırın veya canlı mikrofondan kaydedin — gerisini AURIS halletsin.",
       "featureDeep": "Derin Analiz",
       "featureMulti": "Çoklu Kaynak",
       "cta": "Analize Başla",
