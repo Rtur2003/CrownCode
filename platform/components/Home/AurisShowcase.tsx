@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { motion, useReducedMotion, Variants } from 'framer-motion'
+import { motion, useReducedMotion, Variants } from 'motion/react'
 import {
   Waves, Brain, Mic2, Radio, Network,
   BarChart3, Target, Layers, ArrowRight,

@@ -5,7 +5,7 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { Play, Eye, ThumbsUp, MessageCircle, Clock, Users } from 'lucide-react'
 import type { VideoDetails } from '@/hooks/useCommend'
 import styles from './VideoPreview.module.css'

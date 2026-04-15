@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import type { NextPage } from 'next'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { Download, Settings } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'

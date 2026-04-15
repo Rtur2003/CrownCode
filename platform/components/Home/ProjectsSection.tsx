@@ -21,7 +21,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { motion, Variants } from 'framer-motion'
+import { motion, Variants } from 'motion/react'
 import { ArrowUpRight, Sparkles, Activity, Star, LucideIcon } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'

@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
 import { useLanguage } from '@/context/LanguageContext'
 

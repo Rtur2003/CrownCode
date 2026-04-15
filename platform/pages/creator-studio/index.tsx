@@ -1,6 +1,6 @@
 import React from 'react'
 import type { NextPage } from 'next'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { Palette, Wand2, Layers, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { MainLayout } from '@/components/Layout/MainLayout'

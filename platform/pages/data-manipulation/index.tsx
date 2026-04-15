@@ -17,7 +17,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
 import type { NextPage } from 'next'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import {
   RefreshCw,

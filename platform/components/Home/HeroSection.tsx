@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, useReducedMotion, Variants } from 'framer-motion'
+import { motion, useReducedMotion, Variants } from 'motion/react'
 import { ChevronDown, Code, Shield, Github, Zap } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 

@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'motion/react'
 import { useToast } from '@/context/ToastContext'
 import { Toast } from './Toast'
 

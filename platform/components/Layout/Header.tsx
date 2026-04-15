@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { Github, ExternalLink, Menu, X, Code2 } from 'lucide-react'
 import { LanguageSelector } from '@/components/Navigation/LanguageSelector'
 import { useLanguage } from '@/context/LanguageContext'

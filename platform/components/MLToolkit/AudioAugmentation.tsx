@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { Volume2, Waves, Scissors, Combine, Music2, Mic } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 

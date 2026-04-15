@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import { CheckCircle, Loader, AlertCircle } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 

@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import { X, Keyboard } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'

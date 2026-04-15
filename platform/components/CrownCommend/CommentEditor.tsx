@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import { Copy, Check, Sparkles, RefreshCw, Send, AlertCircle } from 'lucide-react'
 import styles from './CommentEditor.module.css'
 

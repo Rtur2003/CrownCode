@@ -1,7 +1,7 @@
 'use client'
 
 import React, { forwardRef } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import styles from './CyberButton.module.css'
 
 interface CyberButtonProps {

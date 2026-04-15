@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion'
+import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'motion/react'
 import confetti from 'canvas-confetti'
 import useSound from 'use-sound'
 import {

@@ -71,7 +71,7 @@ const motionHandler: ProxyHandler<object> = {
   },
 }
 
-jest.mock('framer-motion', () => ({
+jest.mock('motion/react', () => ({
   motion: new Proxy({}, motionHandler),
   AnimatePresence: ({ children }: React.PropsWithChildren) => <>{children}</>,
   useAnimation: () => ({ start: jest.fn() }),

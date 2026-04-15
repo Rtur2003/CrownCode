@@ -3,7 +3,7 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { ArrowLeft, FileText, CheckCircle, AlertTriangle, Scale, Users, Mail } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'

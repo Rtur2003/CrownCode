@@ -7,7 +7,7 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { motion, Variants } from 'framer-motion'
+import { motion, Variants } from 'motion/react'
 import { Upload, Youtube, Cpu, BarChart3 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import styles from '@/styles/components/auris-pipeline.module.css'

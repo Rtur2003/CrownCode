@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import { AlertTriangle, ExternalLink, X, ShieldAlert } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 

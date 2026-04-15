@@ -8,7 +8,7 @@ import { Search as SearchIcon, ExternalLink } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { buildSearchItems } from '@/hooks/useSearch'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import styles from '@/styles/pages/search.module.css'
 
 interface SearchResult {

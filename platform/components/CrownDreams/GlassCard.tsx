@@ -1,7 +1,7 @@
 'use client'
 
 import React, { ReactNode } from 'react'
-import { motion, HTMLMotionProps } from 'framer-motion'
+import { motion, HTMLMotionProps } from 'motion/react'
 import styles from './GlassCard.module.css'
 
 interface GlassCardProps extends Omit<HTMLMotionProps<'div'>, 'children'> {

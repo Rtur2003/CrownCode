@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { Palette, RotateCw, ZoomIn, ZoomOut, Maximize2, Blend } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 

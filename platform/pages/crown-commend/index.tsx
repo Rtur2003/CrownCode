@@ -2,7 +2,7 @@
 
 import React from 'react'
 import type { NextPage } from 'next'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import {
   Youtube,
   Wand2,

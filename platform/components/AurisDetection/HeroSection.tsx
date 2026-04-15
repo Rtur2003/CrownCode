@@ -9,7 +9,7 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { motion, useReducedMotion, Variants } from 'framer-motion'
+import { motion, useReducedMotion, Variants } from 'motion/react'
 import { ChevronDown, Shield, Waves, Cpu, Music } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import styles from '@/styles/components/auris-hero.module.css'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { useLanguage } from '@/context/LanguageContext'
 import styles from '@/styles/pages/crown-vote.module.css'
 

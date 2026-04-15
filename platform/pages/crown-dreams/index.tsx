@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react'
 import type { NextPage } from 'next'
 import dynamic from 'next/dynamic'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import {
   Moon,
   Sparkles,

@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import { Search as SearchIcon, X } from 'lucide-react'
 import { useSearch } from '@/hooks/useSearch'
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'

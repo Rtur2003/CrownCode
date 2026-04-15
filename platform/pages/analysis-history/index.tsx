@@ -1,6 +1,6 @@
 import React from 'react'
 import type { NextPage } from 'next'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { History, Music, FileAudio, Trash2 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
