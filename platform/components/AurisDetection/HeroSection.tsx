@@ -9,7 +9,7 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { motion, Variants } from 'framer-motion'
+import { motion, useReducedMotion, Variants } from 'framer-motion'
 import { ChevronDown, Shield, Waves, Cpu, Music } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import styles from '@/styles/components/auris-hero.module.css'
@@ -54,6 +54,7 @@ interface AurisHeroProps {
 
 export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection }) => {
   const { t } = useLanguage()
+  const prefersReducedMotion = useReducedMotion()
 
   return (
     <section className={styles.hero} aria-label="AURIS Hero">

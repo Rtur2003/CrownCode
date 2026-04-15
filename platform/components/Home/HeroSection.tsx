@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, Variants } from 'framer-motion'
+import { motion, useReducedMotion, Variants } from 'framer-motion'
 import { ChevronDown, Code, Shield, Github, Zap } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
@@ -50,6 +50,7 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
   const { t } = useLanguage()
+  const prefersReducedMotion = useReducedMotion()
 
   const scrollToProducts = (): void => {
     const productsSection = document.getElementById('products')
@@ -143,12 +144,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
               aria-label="Try AI music detection system"
             >
               {t.hero.cta.explore}
-              <motion.div
-                className="btn-shine"
-                animate={{ x: [-100, 300] }}
-                transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-                aria-hidden="true"
-              />
+              {!prefersReducedMotion && (
+                <motion.div
+                  className="btn-shine"
+                  animate={{ x: [-100, 300] }}
+                  transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+                  aria-hidden="true"
+                />
+              )}
             </Link>
             <a
               href="https://github.com/Rtur2003/CrownCode"
@@ -173,8 +176,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
           {/* Outer rotating rings */}
           <motion.div
             className="hero-orb-rings"
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+            animate={prefersReducedMotion ? undefined : { rotate: 360 }}
+            transition={prefersReducedMotion ? undefined : { repeat: Infinity, duration: 30, ease: "linear" }}
           >
             <Image
               src="/images/auris/sound-rings.webp"
@@ -189,11 +192,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
           {/* Central glowing orb */}
           <motion.div
             className="hero-orb-center"
-            animate={{
+            animate={prefersReducedMotion ? undefined : {
               scale: [1, 1.04, 1],
               opacity: [0.9, 1, 0.9]
             }}
-            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            transition={prefersReducedMotion ? undefined : { repeat: Infinity, duration: 4, ease: "easeInOut" }}
           >
             <Image
               src="/images/auris/sound-orb.webp"
@@ -208,11 +211,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
           {/* Floating speaker element */}
           <motion.div
             className="hero-speaker-float"
-            animate={{
+            animate={prefersReducedMotion ? undefined : {
               y: [0, -12, 0],
               rotate: [0, 3, -3, 0]
             }}
-            transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+            transition={prefersReducedMotion ? undefined : { repeat: Infinity, duration: 6, ease: "easeInOut" }}
           >
             <Image
               src="/images/auris/speaker.webp"
@@ -255,8 +258,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
       >
         <motion.div
           className="scroll-indicator"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          animate={prefersReducedMotion ? undefined : { y: [0, 8, 0] }}
+          transition={prefersReducedMotion ? undefined : { repeat: Infinity, duration: 2, ease: "easeInOut" }}
         >
           <ChevronDown size={20} aria-hidden="true" />
         </motion.div>
