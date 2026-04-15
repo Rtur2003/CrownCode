@@ -42,7 +42,7 @@ import type { AnalysisErrorCode } from '@/hooks/analysisTypes'
 import styles from '@/styles/pages/ai-detection.module.css'
 
 const AIMusicDetectionPage: NextPage = () => {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const {
     url,
     setUrl,
