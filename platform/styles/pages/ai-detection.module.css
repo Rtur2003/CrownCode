@@ -1503,3 +1503,202 @@
     padding: 0.5rem 1rem;
   }
 }
+
+/* =========================================================================
+   SOURCE TABS (File / URL / Microphone)
+   ========================================================================= */
+
+.source-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+  padding: 0.375rem;
+  background: rgba(20, 22, 28, 0.6);
+  border: 1px solid rgba(201, 147, 71, 0.18);
+  border-radius: 1rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.source-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1rem;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.source-tab:hover:not(.source-tab-active) {
+  color: var(--color-text-primary);
+  background: rgba(201, 147, 71, 0.06);
+}
+
+.source-tab-active {
+  color: var(--color-background);
+  background: linear-gradient(135deg, #e7c77a 0%, #c99347 100%);
+  box-shadow: 0 4px 20px rgba(201, 147, 71, 0.35);
+}
+
+.source-tab-label {
+  white-space: nowrap;
+}
+
+/* =========================================================================
+   PLATFORM CHIPS
+   ========================================================================= */
+
+.platform-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.platform-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  background: rgba(201, 147, 71, 0.08);
+  border: 1px solid rgba(201, 147, 71, 0.22);
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.platform-chip:hover {
+  background: rgba(201, 147, 71, 0.14);
+  color: var(--color-text-primary);
+}
+
+.platform-chip-active {
+  background: rgba(201, 147, 71, 0.22);
+  border-color: rgba(231, 199, 122, 0.45);
+  color: var(--color-primary);
+}
+
+.platform-chip-yt { color: #ff4a4a; }
+.platform-chip-tiktok { color: #25f4ee; }
+.platform-chip-ig { color: #e1306c; }
+.platform-chip-sc { color: #ff7700; }
+.platform-chip-sp { color: #1db954; }
+.platform-chip-tw { color: #1da1f2; }
+
+/* =========================================================================
+   MIC RECORDING UI
+   ========================================================================= */
+
+.mic-section {
+  padding: 2rem 1.5rem;
+  background: rgba(20, 22, 28, 0.4);
+  border: 1px solid rgba(201, 147, 71, 0.15);
+  border-radius: 1.25rem;
+  text-align: center;
+}
+
+.mic-section h2 {
+  margin-bottom: 0.75rem;
+  color: var(--color-text-primary);
+}
+
+.mic-hint {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.mic-visual {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mic-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(201, 147, 71, 0.25);
+  pointer-events: none;
+  transition: transform 0.12s ease-out, border-color 0.2s ease, opacity 0.3s ease;
+}
+
+.mic-ring-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 147, 71, 0.35) 0%, transparent 65%);
+  pointer-events: none;
+  transition: transform 0.08s linear, opacity 0.2s ease;
+}
+
+.mic-button {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #e7c77a 0%, #c99347 100%);
+  color: var(--color-background);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 28px rgba(201, 147, 71, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
+  z-index: 2;
+}
+
+.mic-button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 36px rgba(201, 147, 71, 0.55);
+}
+
+.mic-button-recording {
+  background: linear-gradient(135deg, #ff6b6b 0%, #c94747 100%);
+  box-shadow: 0 8px 32px rgba(201, 71, 71, 0.5);
+  animation: micPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes micPulse {
+  0%, 100% { box-shadow: 0 8px 32px rgba(201, 71, 71, 0.5); }
+  50%      { box-shadow: 0 8px 48px rgba(201, 71, 71, 0.75); }
+}
+
+.mic-timer {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.5rem;
+}
+
+.mic-error {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(201, 71, 71, 0.14);
+  border: 1px solid rgba(201, 71, 71, 0.35);
+  border-radius: 0.75rem;
+  color: #ffb2b2;
+  font-size: 0.875rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mic-button-recording { animation: none; }
+  .mic-ring, .mic-ring-pulse { transition: none; }
+}
