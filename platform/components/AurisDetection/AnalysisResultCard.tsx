@@ -459,6 +459,20 @@ export function AnalysisResultCard({
               <span className={styles['detail-label']}>{labels.format || 'Format'}</span>
               <span className={styles['detail-value']}>{result.audioInfo.format.toUpperCase()}</span>
             </div>
+            <div className={styles['detail-item']}>
+              <Activity size={14} />
+              <span className={styles['detail-label']}>Bitrate</span>
+              <span className={styles['detail-value']}>{result.audioInfo.bitrate} kbps</span>
+            </div>
+            {result.audioInfo.channels !== undefined && (
+              <div className={styles['detail-item']}>
+                <Layers size={14} />
+                <span className={styles['detail-label']}>Channels</span>
+                <span className={styles['detail-value']}>
+                  {result.audioInfo.channels === 1 ? 'Mono' : result.audioInfo.channels === 2 ? 'Stereo' : String(result.audioInfo.channels)}
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Source info */}
