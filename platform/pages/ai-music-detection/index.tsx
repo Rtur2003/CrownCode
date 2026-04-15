@@ -354,11 +354,7 @@ const AIMusicDetectionPage: NextPage = () => {
                       }}
                     >
                       <AlertTriangle size={18} style={{ flexShrink: 0, color: '#f59e0b', marginTop: 2 }} />
-                      <span>
-                        {t.aiDetection.url.botProtectionNotice ||
-                          t.aiDetection.url.warning ||
-                          'YouTube bot korumasi aktif olabilir — URL calismazsa dosya yukleme veya mikrofon sekmesini deneyin.'}
-                      </span>
+                      <span>{t.aiDetection.url.botProtectionNotice}</span>
                     </div>
                     <div className={styles['url-input-container']}>
                       <div className={styles['url-input-wrapper']}>
