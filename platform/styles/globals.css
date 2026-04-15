@@ -1,3 +1,29 @@
+/* @import rules MUST come first (CSS spec / Turbopack strict) */
+/* Base Styles - Order matters! */
+@import './base/variables.css';
+@import './base/reset.css';
+@import './base/typography.css';
+@import './base/animations.css';
+
+/* Component Styles */
+@import './components/header.css';
+@import './components/hero.css';
+@import './components/projects.css';
+@import './components/footer.css';
+@import './components/ml-toolkit.css';
+@import './components/language-selector.css';
+@import './components/toast.css';
+@import './components/error.css';
+@import './components/copy-button.css';
+@import './components/skeleton.css';
+@import './components/shortcuts-modal.css';
+@import './components/search-modal.css';
+@import './components/loading-screen.css';
+@import './components/external-link.css';
+
+/* Utilities */
+@import './utilities/helpers.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -26,31 +52,6 @@
   font-style: normal;
   font-display: swap;
 }
-
-/* Base Styles - Order matters! */
-@import './base/variables.css';
-@import './base/reset.css';
-@import './base/typography.css';
-@import './base/animations.css';
-
-/* Component Styles */
-@import './components/header.css';
-@import './components/hero.css';
-@import './components/projects.css';
-@import './components/footer.css';
-@import './components/ml-toolkit.css';
-@import './components/language-selector.css';
-@import './components/toast.css';
-@import './components/error.css';
-@import './components/copy-button.css';
-@import './components/skeleton.css';
-@import './components/shortcuts-modal.css';
-@import './components/search-modal.css';
-@import './components/loading-screen.css';
-@import './components/external-link.css';
-
-/* Utilities */
-@import './utilities/helpers.css';
 
 /* App-Specific Styles */
 html {
