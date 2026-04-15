@@ -130,8 +130,20 @@ const AIMusicDetectionPage: NextPage = () => {
   const resetAll = useCallback(() => {
     resetYouTube()
     resetFile()
+    mic.reset()
     setActiveSource('youtube')
-  }, [resetFile, resetYouTube])
+  }, [resetFile, resetYouTube, mic])
+
+  const handleTabChange = useCallback(
+    (tab: 'file' | 'youtube' | 'mic') => {
+      if (tab === activeSource) return
+      resetYouTube()
+      resetFile()
+      mic.reset()
+      setActiveSource(tab)
+    },
+    [activeSource, mic, resetFile, resetYouTube]
+  )
 
   const resolveErrorMessage = (errorKey: AnalysisErrorCode | null) => {
     if (!errorKey) {
