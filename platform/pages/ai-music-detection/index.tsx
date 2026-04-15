@@ -12,6 +12,7 @@
 import React, { useCallback, useRef, useState } from 'react'
 import type { NextPage } from 'next'
 import { motion } from 'motion/react'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import {
   AlertTriangle,
   Brain,
@@ -65,6 +66,7 @@ const AIMusicDetectionPage: NextPage = () => {
   const [isDragOver, setIsDragOver] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const detectionRef = useRef<HTMLDivElement>(null)
+  const [tabPanelRef] = useAutoAnimate<HTMLDivElement>({ duration: 220, easing: 'ease-in-out' })
 
   const scrollToDetection = useCallback(() => {
     detectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -285,6 +287,7 @@ const AIMusicDetectionPage: NextPage = () => {
                   </button>
                 </div>
 
+                <div ref={tabPanelRef}>
                 {/* ===== FILE TAB ===== */}
                 {activeSource === 'file' && (
                   <div className={styles['upload-section']}>
@@ -390,6 +393,7 @@ const AIMusicDetectionPage: NextPage = () => {
                     }}
                   />
                 )}
+                </div>
               </div>
 
               <div className={styles['pipeline-section']}>

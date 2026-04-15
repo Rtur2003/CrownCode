@@ -25,6 +25,7 @@
     "i18n:check": "node scripts/check-locale-parity.mjs"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.9.0",
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.18.0",
     "canvas-confetti": "^1.9.4",

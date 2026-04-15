@@ -90,7 +90,7 @@ CrownCode/
 ### Frontend
 - **Framework:** Next.js 14 (Pages Router) + React 18 + TypeScript
 - **Styling:** CSS Modules + custom design token system (variables.css)
-- **Animation:** Framer Motion 11
+- **Animation:** Motion 12 (formerly Framer Motion) with `useReducedMotion` support
 - **Icons:** Lucide React
 - **i18n:** Custom LanguageContext (Turkish / English)
 - **Deployment:** Netlify

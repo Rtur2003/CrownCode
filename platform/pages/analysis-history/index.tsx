@@ -1,6 +1,7 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import { motion } from 'motion/react'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { History, Music, FileAudio, Trash2 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
@@ -13,6 +14,7 @@ const AnalysisHistoryPage: NextPage = () => {
   const { t } = useLanguage()
   const ah = t.analysisHistory
   const { entries, removeById, clear } = useLocalHistory<AnalysisResult>(HISTORY_KEYS.ANALYSIS)
+  const [listRef] = useAutoAnimate<HTMLDivElement>({ duration: 200, easing: 'ease-in-out' })
 
   return (
     <MainLayout
@@ -53,7 +55,7 @@ const AnalysisHistoryPage: NextPage = () => {
               </button>
             </div>
 
-            <div className={styles['entries-list']}>
+            <div ref={listRef} className={styles['entries-list']}>
               {entries.map((entry, index) => (
                 <motion.div
                   key={entry.id}

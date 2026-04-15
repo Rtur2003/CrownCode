@@ -24,7 +24,7 @@ CrownCode, yapay zeka destekli ses analizi ve yaratici araclar icin gelistirilmi
 
 - **Mimari:** wav2vec2 + 49 Akustik Ozellik + CLAP + FST API + Meta-Classifier
 - **Amac:** AI ile uretilen muzigi insan yapimi muzikten ayirt etme
-- **Kaynak:** YouTube link veya dosya yukleme destegi
+- **Kaynak:** Dosya yukleme, URL tabanli analiz ve canli mikrofon kaydi (cok kaynakli)
 - **Sayfa:** [`/ai-music-detection`](https://hasanarthuraltuntas.xyz/ai-music-detection)
 
 ### 2. ML Toolkit
@@ -60,7 +60,7 @@ CrownCode, yapay zeka destekli ses analizi ve yaratici araclar icin gelistirilmi
 
 - **Framework:** Next.js 14 (Pages Router) + React 18 + TypeScript
 - **Stil:** CSS Modules + ozel tasarim token sistemi (variables.css)
-- **Animasyon:** Framer Motion 11
+- **Animasyon:** Motion 12 (eski adiyla Framer Motion), `useReducedMotion` destegi
 - **Ikon:** Lucide React
 - **i18n:** Ozel LanguageContext (Turkce / Ingilizce)
 - **Deployment:** Netlify
