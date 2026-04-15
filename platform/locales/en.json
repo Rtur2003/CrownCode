@@ -314,6 +314,20 @@
       "plannedImplementation": "Planned Implementation:",
       "plannedImplementationText": "AURIS - Backend AI integration with PyTorch + wav2vec2 model (Q2 2025)."
     },
+    "tabs": {
+      "ariaLabel": "Analysis source",
+      "file": "File",
+      "url": "URL",
+      "mic": "Microphone"
+    },
+    "mic": {
+      "title": "Microphone Recording",
+      "hint": "Play audio and hold it near your microphone. Recording stops automatically after 30 seconds.",
+      "start": "Start recording",
+      "stop": "Stop and analyze",
+      "recording": "Recording…",
+      "permissionDenied": "Microphone permission denied. Allow access from browser settings and try again."
+    },
     "upload": {
       "title": "Upload Audio File",
       "dropHere": "Drop your audio file here",
