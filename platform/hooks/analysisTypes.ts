@@ -54,11 +54,64 @@ export interface FeatureImportance {
   value: number
 }
 
+export type FeatureDirection = 'towards_ai' | 'towards_human' | 'neutral'
+export type FeatureCategory =
+  | 'spectral'
+  | 'temporal'
+  | 'harmonic'
+  | 'rhythm'
+  | 'timbre'
+  | 'vocal'
+  | 'meta'
+  | 'composite'
+  | 'other'
+
+export interface FeatureContribution {
+  name: string
+  label: string
+  labelEn: string
+  category: FeatureCategory
+  value: number
+  zScore: number
+  shapValue: number
+  direction: FeatureDirection
+  description: string
+}
+
+export type ConfidenceTier = 'uncertain' | 'likely' | 'strong' | 'very_strong'
+
+export interface ConfidenceBand {
+  tier: ConfidenceTier
+  labelTr: string
+  labelEn: string
+  lowerBound: number
+  upperBound: number
+}
+
+export interface ModelVote {
+  name: string
+  probability: number
+  vote: 'ai' | 'human'
+}
+
+export interface XAIExplanation {
+  probability: number
+  threshold: number
+  baseProbability: number
+  confidenceBand: ConfidenceBand
+  modelVotes: ModelVote[]
+  bestModel: string
+  topContributions: FeatureContribution[]
+  allFeatures: Record<string, FeatureContribution>
+  featureCount: number
+}
+
 export interface AudioInfo {
   duration: number
   sampleRate: number
   bitrate: number
   format: string
+  channels?: number
 }
 
 export interface YouTubeSourceInfo {
@@ -98,6 +151,7 @@ export interface AnalysisResult {
   vocalAnalysis?: VocalAnalysis
   towerScores?: TowerScores
   topFeatures?: FeatureImportance[]
+  xai?: XAIExplanation
 }
 
 export type AnalysisErrorCode =
