@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import styles from './BackgroundFloatingCards.module.css'
 
@@ -63,6 +63,7 @@ interface FloatingCardData {
 const BackgroundFloatingCards = () => {
   const [cards, setCards] = useState<FloatingCardData[]>([])
   const [isMobile, setIsMobile] = useState(false)
+  const prefersReducedMotion = useReducedMotion()
 
   // Generate card data on mount
   useEffect(() => {
@@ -99,6 +100,10 @@ const BackgroundFloatingCards = () => {
 
     return () => window.removeEventListener('resize', checkMobile)
   }, [isMobile])
+
+  if (prefersReducedMotion) {
+    return null
+  }
 
   return (
     <div className={styles.container}>
