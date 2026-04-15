@@ -15,9 +15,12 @@ import { motion } from 'framer-motion'
 import {
   AlertTriangle,
   Brain,
+  FileAudio,
   Fingerprint,
+  Instagram,
   Layers,
   Link as LinkIcon,
+  Mic,
   Music,
   Network,
   Radio,
@@ -29,9 +32,11 @@ import { MainLayout } from '@/components/Layout/MainLayout'
 import { AurisHeroSection } from '@/components/AurisDetection/HeroSection'
 import { HowItWorks } from '@/components/AurisDetection/HowItWorks'
 import { AnalysisResultCard } from '@/components/AurisDetection/AnalysisResultCard'
+import { MicrophoneTab } from '@/components/AurisDetection/MicrophoneTab'
 import { useLanguage } from '@/context/LanguageContext'
 import { useFileAnalysis } from '@/hooks/useFileAnalysis'
 import { useYouTubeAnalysis } from '@/hooks/useYouTubeAnalysis'
+import { useMicrophoneAnalysis } from '@/hooks/useMicrophoneAnalysis'
 import type { AnalysisErrorCode } from '@/hooks/analysisTypes'
 import styles from '@/styles/pages/ai-detection.module.css'
 
@@ -55,7 +60,8 @@ const AIMusicDetectionPage: NextPage = () => {
     runAnalysis: runFileAnalysis,
     reset: resetFile
   } = useFileAnalysis()
-  const [activeSource, setActiveSource] = useState<'youtube' | 'file'>('youtube')
+  const mic = useMicrophoneAnalysis()
+  const [activeSource, setActiveSource] = useState<'file' | 'youtube' | 'mic'>('youtube')
   const [isDragOver, setIsDragOver] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const detectionRef = useRef<HTMLDivElement>(null)
@@ -64,9 +70,18 @@ const AIMusicDetectionPage: NextPage = () => {
     detectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [])
 
-  const processingState = activeSource === 'youtube' ? youtubeProcessingState : fileProcessingState
-  const analysisResult = activeSource === 'youtube' ? youtubeResult : fileResult
-  const error = activeSource === 'youtube' ? youtubeError : fileError
+  const processingState =
+    activeSource === 'youtube' ? youtubeProcessingState :
+    activeSource === 'file' ? fileProcessingState :
+    mic.processingState
+  const analysisResult =
+    activeSource === 'youtube' ? youtubeResult :
+    activeSource === 'file' ? fileResult :
+    mic.analysisResult
+  const error =
+    activeSource === 'youtube' ? youtubeError :
+    activeSource === 'file' ? fileError :
+    mic.error
 
   const isProcessing = ['validating', 'downloading', 'analyzing'].includes(processingState)
 
