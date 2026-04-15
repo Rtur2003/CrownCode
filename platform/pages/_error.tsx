@@ -17,7 +17,7 @@ interface ErrorProps {
   title?: string
 }
 
-const ErrorPage: NextPage<ErrorProps> = ({ statusCode, title }) => {
+const ErrorPage: NextPage<ErrorProps> = ({ statusCode, title }: ErrorProps) => {
   const { t } = useLanguage()
   const isServerError = statusCode && statusCode >= 500
   const isClientError = statusCode && statusCode >= 400 && statusCode < 500
