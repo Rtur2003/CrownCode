@@ -31,6 +31,7 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import type { AnalysisResult, VocalAnalysis } from '../../hooks/analysisTypes'
+import { XAIPanel } from './XAIPanel'
 import styles from '../../styles/pages/ai-detection.module.css'
 
 interface TowerLabels {
@@ -80,6 +81,7 @@ interface AnalysisResultCardProps {
   onReset: () => void
   onExport?: () => void
   labels: ResultLabels
+  locale?: 'tr' | 'en'
 }
 
 /* -- Confidence Gauge --------------------------------------------------- */
@@ -283,6 +285,7 @@ export function AnalysisResultCard({
   onReset,
   onExport,
   labels,
+  locale = 'tr',
 }: AnalysisResultCardProps) {
   const [showDetails, setShowDetails] = useState(false)
   const confidence = result.confidence
@@ -382,6 +385,11 @@ export function AnalysisResultCard({
             ))}
           </div>
         </div>
+      )}
+
+      {/* -- XAI Panel (academic explainable analysis) -- */}
+      {result.xai && (
+        <XAIPanel xai={result.xai} locale={locale} />
       )}
 
       {/* -- Vocal Analysis -- */}

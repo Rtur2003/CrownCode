@@ -1,0 +1,612 @@
+/* =========================================================================
+   XAI PANEL — Academic Explainable AI UI
+   ========================================================================= */
+
+.root {
+  background: linear-gradient(135deg,
+    rgba(201, 147, 71, 0.05) 0%,
+    rgba(201, 147, 71, 0.02) 100%);
+  border: 1px solid rgba(201, 147, 71, 0.25);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(201, 147, 71, 0.15);
+}
+
+.headerTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-primary, #c99347);
+}
+
+.headerTitle h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text, #e7c77a);
+}
+
+.headerMeta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.65));
+}
+
+.headerMeta strong {
+  color: var(--color-primary, #c99347);
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ── Confidence Band Indicator ─────────────────────────────────────────── */
+
+.bandRoot {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+
+.bandHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.bandLabel {
+  flex: 1;
+  font-weight: 500;
+  color: var(--color-text, #e7c77a);
+}
+
+.bandProb {
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.bandTrack {
+  position: relative;
+  height: 16px;
+  background: rgba(231, 199, 122, 0.06);
+  border-radius: 8px;
+  overflow: visible;
+}
+
+.bandThresholdLine {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  background: rgba(231, 199, 122, 0.5);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.bandThresholdLine::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 8px;
+  height: 3px;
+  background: rgba(231, 199, 122, 0.8);
+  border-radius: 1px;
+}
+
+.bandCI {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.bandPoint {
+  position: absolute;
+  top: -3px;
+  width: 12px;
+  height: 22px;
+  border-radius: 3px;
+  transform: translateX(-50%);
+  box-shadow: 0 0 8px currentColor;
+}
+
+.bandFooter {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.65));
+}
+
+.bandCIText {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── SHAP Waterfall ────────────────────────────────────────────────────── */
+
+.shapRoot {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.shapHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.shapHeader h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.shapBaseline {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.6));
+  font-variant-numeric: tabular-nums;
+}
+
+.shapList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.shapRow {
+  display: grid;
+  grid-template-columns: 2fr 3fr 1.1fr;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.shapLabelCol {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.shapFeatureLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shapCat {
+  font-size: 0.65rem;
+  padding: 0.1rem 0.35rem;
+  background: rgba(231, 199, 122, 0.1);
+  border-radius: 3px;
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.7));
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.shapBarWrapper {
+  position: relative;
+  height: 18px;
+  background: rgba(231, 199, 122, 0.04);
+  border-radius: 3px;
+}
+
+.shapBarCenter {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(231, 199, 122, 0.2);
+}
+
+.shapBar {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  border-radius: 2px;
+}
+
+.shapValueCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-variant-numeric: tabular-nums;
+}
+
+.shapShap {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.shapZ {
+  font-size: 0.65rem;
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.55));
+}
+
+.shapFooter {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.6));
+  line-height: 1.4;
+}
+
+/* ── Model Ensemble ────────────────────────────────────────────────────── */
+
+.ensembleRoot {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.ensembleHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.ensembleHeader h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.ensembleSummary {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(231, 199, 122, 0.08);
+  border-radius: 3px;
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.75));
+}
+
+.ensembleList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ensembleRow {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+  font-size: 0.85rem;
+}
+
+.ensembleBest {
+  background: rgba(201, 147, 71, 0.08);
+  border: 1px solid rgba(201, 147, 71, 0.25);
+}
+
+.ensembleName {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+}
+
+.ensembleBestBadge {
+  color: var(--color-primary, #c99347);
+  font-size: 0.9rem;
+}
+
+.ensembleBarTrack {
+  height: 10px;
+  background: rgba(231, 199, 122, 0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.ensembleBarFill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+.ensembleValue {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.ensembleVote {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.6));
+  text-transform: uppercase;
+}
+
+/* ── Category Radar ────────────────────────────────────────────────────── */
+
+.radarRoot {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.radarHeader {
+  margin-bottom: 0.75rem;
+}
+
+.radarHeader h4 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.radarList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.radarRow {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+}
+
+.radarLabel {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  justify-content: space-between;
+}
+
+.radarCount {
+  font-size: 0.65rem;
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.5));
+}
+
+.radarBars {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  height: 14px;
+  background: rgba(231, 199, 122, 0.04);
+  border-radius: 3px;
+}
+
+.radarSide {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.radarSide:first-child {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.radarSide:last-child {
+  display: flex;
+}
+
+.radarCenter {
+  background: rgba(231, 199, 122, 0.2);
+}
+
+.radarBarHuman {
+  height: 100%;
+  background: var(--color-success, #7fb069);
+  border-radius: 2px 0 0 2px;
+}
+
+.radarBarAi {
+  height: 100%;
+  background: var(--color-error, #a64b3c);
+  border-radius: 0 2px 2px 0;
+}
+
+.radarLegend {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  font-size: 0.7rem;
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.65));
+}
+
+.radarLegend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.radarLegendHuman,
+.radarLegendAi {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.radarLegendHuman {
+  background: var(--color-success, #7fb069);
+}
+
+.radarLegendAi {
+  background: var(--color-error, #a64b3c);
+}
+
+/* ── Full Feature Inspector ────────────────────────────────────────────── */
+
+.inspectorToggle {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: 1px solid rgba(201, 147, 71, 0.3);
+  color: var(--color-primary, #c99347);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.inspectorToggle:hover {
+  background: rgba(201, 147, 71, 0.08);
+  border-color: rgba(201, 147, 71, 0.5);
+}
+
+.inspectorRoot {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
+
+.inspectorHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.inspectorHeader h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.inspectorCount {
+  font-size: 0.7rem;
+  background: rgba(231, 199, 122, 0.1);
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+
+.inspectorFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.inspectorFilterBtn {
+  background: transparent;
+  border: 1px solid rgba(231, 199, 122, 0.15);
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.7));
+  padding: 0.25rem 0.55rem;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-transform: capitalize;
+}
+
+.inspectorFilterBtn:hover {
+  border-color: rgba(201, 147, 71, 0.3);
+  color: var(--color-primary, #c99347);
+}
+
+.inspectorFilterActive {
+  background: rgba(201, 147, 71, 0.15);
+  border-color: rgba(201, 147, 71, 0.45);
+  color: var(--color-primary, #c99347);
+}
+
+.inspectorTable {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 0.8rem;
+  max-height: 400px;
+  overflow-y: auto;
+  background: rgba(231, 199, 122, 0.05);
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.inspectorTableHead,
+.inspectorRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 0.8fr 1fr 0.6fr;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  align-items: center;
+}
+
+.inspectorTableHead {
+  background: rgba(231, 199, 122, 0.08);
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.7));
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 3px;
+  position: sticky;
+  top: 0;
+}
+
+.inspectorRow {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+  cursor: help;
+  transition: background 0.15s;
+}
+
+.inspectorRow:hover {
+  background: rgba(201, 147, 71, 0.06);
+}
+
+.inspectorName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inspectorVal,
+.inspectorZ,
+.inspectorShap {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.inspectorZHigh {
+  color: var(--color-primary, #c99347);
+  font-weight: 600;
+}
