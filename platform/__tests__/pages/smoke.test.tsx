@@ -76,6 +76,7 @@ jest.mock('framer-motion', () => ({
   AnimatePresence: ({ children }: React.PropsWithChildren) => <>{children}</>,
   useAnimation: () => ({ start: jest.fn() }),
   useInView: () => true,
+  useReducedMotion: () => false,
 }))
 
 // Shared variable for motion handler
