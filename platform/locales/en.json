@@ -347,7 +347,8 @@
         "appleMusic": "Apple Music (coming soon)"
       },
       "analyzeButton": "Process Link",
-      "analyzing": "Processing..."
+      "analyzing": "Processing...",
+      "botProtectionNotice": "YouTube bot protection may be active. If URL analysis fails, please use the File Upload or Microphone tab — same result."
     },
     "pipeline": {
       "title": "AURIS Pipeline",
