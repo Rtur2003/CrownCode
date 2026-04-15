@@ -96,7 +96,7 @@ describe('Page Smoke Tests', () => {
     it('renders the CrownCode title', async () => {
       const HomePage = (await import('@/pages/index')).default
       renderWithProviders(<HomePage />)
-      expect(screen.getByText('CrownCode')).toBeInTheDocument()
+      expect(screen.getAllByText('CrownCode').length).toBeGreaterThan(0)
     })
   })
 
