@@ -275,17 +275,17 @@
   "aiDetection": {
     "meta": {
       "title": "AURIS - AI Music Detection",
-      "description": "AURIS - YouTube-first analysis flow for AI music detection. Uses backend integrations when available and a deterministic preview when models are offline.",
+      "description": "AURIS - multi-source AI music analysis: file, URL, or live microphone. Uses backend integrations when available and a deterministic preview when models are offline.",
       "keywords": "AURIS, AI music detection, YouTube analysis, audio analysis, CrownCode"
     },
     "header": {
       "badge": "AURIS",
       "title": "AURIS - AI Music Detection",
-      "subtitle": "AURIS - YouTube-first analysis interface with optional backend integrations and a safe preview fallback."
+      "subtitle": "AURIS - file, URL, and live-microphone support with optional backend integrations and a safe preview fallback."
     },
     "hero": {
       "accent": "AI Music Detection",
-      "description": "Detect AI-generated music with deep audio analysis. Upload files or paste YouTube links — AURIS handles the rest.",
+      "description": "Detect AI-generated music with deep audio analysis. Upload files, paste a URL, or record live from your microphone — AURIS handles the rest.",
       "featureDeep": "Deep Analysis",
       "featureMulti": "Multi-Source",
       "cta": "Start Analysis",
