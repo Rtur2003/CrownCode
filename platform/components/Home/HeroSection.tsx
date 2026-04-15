@@ -252,7 +252,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
         role="button"
         tabIndex={0}
         aria-label="Scroll to products section"
-        onKeyDown={(e) => {
+        onKeyDown={(e: React.KeyboardEvent) => {
           if (e.key === 'Enter' || e.key === ' ') { scrollToProducts() }
         }}
       >
