@@ -98,7 +98,7 @@ export function StatCard({
 interface FeatureCardProps {
   title: string
   description: string
-  icon?: React.ElementType
+  icon?: React.ComponentType<{ size?: number | string }>
   delay?: number
   onClick?: () => void
   className?: string
