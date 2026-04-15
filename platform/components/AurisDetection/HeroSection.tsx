@@ -143,12 +143,14 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
               aria-label={t.aiDetection.hero?.cta || 'Start Analysis'}
             >
               <span>{t.aiDetection.hero?.cta || 'Start Analysis'}</span>
-              <motion.div
-                className={styles.btnShine}
-                animate={{ x: [-120, 320] }}
-                transition={{ repeat: Infinity, duration: 3.5, ease: 'linear' }}
-                aria-hidden="true"
-              />
+              {!prefersReducedMotion && (
+                <motion.div
+                  className={styles.btnShine}
+                  animate={{ x: [-120, 320] }}
+                  transition={{ repeat: Infinity, duration: 3.5, ease: 'linear' }}
+                  aria-hidden="true"
+                />
+              )}
             </button>
           </motion.div>
         </motion.div>
@@ -167,8 +169,8 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
           {/* Outer rings — slow rotation */}
           <motion.div
             className={styles.ringsWrap}
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 35, ease: 'linear' }}
+            animate={prefersReducedMotion ? undefined : { rotate: 360 }}
+            transition={prefersReducedMotion ? undefined : { repeat: Infinity, duration: 35, ease: 'linear' }}
           >
             <Image
               src="/images/auris/sound-rings.webp"
@@ -183,8 +185,8 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
           {/* Central speaker visual — breathing */}
           <motion.div
             className={styles.centerWrap}
-            animate={{ scale: [1, 1.03, 1], opacity: [0.95, 1, 0.95] }}
-            transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
+            animate={prefersReducedMotion ? undefined : { scale: [1, 1.03, 1], opacity: [0.95, 1, 0.95] }}
+            transition={prefersReducedMotion ? undefined : { repeat: Infinity, duration: 4, ease: 'easeInOut' }}
           >
             <Image
               src="/images/auris/speaker.webp"
@@ -210,8 +212,8 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
           {/* Floating orb accent — bottom-right */}
           <motion.div
             className={styles.floatingOrb}
-            animate={{ y: [0, -10, 0], rotate: [0, 5, -5, 0] }}
-            transition={{ repeat: Infinity, duration: 7, ease: 'easeInOut' }}
+            animate={prefersReducedMotion ? undefined : { y: [0, -10, 0], rotate: [0, 5, -5, 0] }}
+            transition={prefersReducedMotion ? undefined : { repeat: Infinity, duration: 7, ease: 'easeInOut' }}
           >
             <Image
               src="/images/auris/sound-orb.webp"
@@ -235,8 +237,8 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
       >
         <motion.div
           className={styles.scrollIcon}
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+          animate={prefersReducedMotion ? undefined : { y: [0, 6, 0] }}
+          transition={prefersReducedMotion ? undefined : { repeat: Infinity, duration: 2, ease: 'easeInOut' }}
         >
           <ChevronDown size={20} aria-hidden="true" />
         </motion.div>
