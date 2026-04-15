@@ -347,7 +347,8 @@
         "appleMusic": "Apple Music (yakında)"
       },
       "analyzeButton": "Bağlantıyı İşle",
-      "analyzing": "İşleniyor..."
+      "analyzing": "İşleniyor...",
+      "botProtectionNotice": "YouTube bot koruması aktif olabilir. URL analizi başarısız olursa lütfen Dosya Yükleme veya Mikrofon sekmesini kullanın — aynı sonucu verir."
     },
     "pipeline": {
       "title": "AURIS Pipeline",

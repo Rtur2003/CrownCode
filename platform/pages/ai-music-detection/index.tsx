@@ -62,7 +62,7 @@ const AIMusicDetectionPage: NextPage = () => {
     reset: resetFile
   } = useFileAnalysis()
   const mic = useMicrophoneAnalysis()
-  const [activeSource, setActiveSource] = useState<'file' | 'youtube' | 'mic'>('youtube')
+  const [activeSource, setActiveSource] = useState<'file' | 'youtube' | 'mic'>('file')
   const [isDragOver, setIsDragOver] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const detectionRef = useRef<HTMLDivElement>(null)
@@ -336,6 +336,30 @@ const AIMusicDetectionPage: NextPage = () => {
                 {activeSource === 'youtube' && (
                   <div className={styles['url-section']} id="url">
                     <h2>{t.aiDetection.url.title}</h2>
+                    <div
+                      role="alert"
+                      className={styles['url-warning'] || ''}
+                      style={{
+                        display: 'flex',
+                        gap: '0.75rem',
+                        alignItems: 'flex-start',
+                        padding: '0.9rem 1rem',
+                        marginBottom: '1rem',
+                        border: '1px solid rgba(245, 158, 11, 0.35)',
+                        background: 'rgba(245, 158, 11, 0.08)',
+                        borderRadius: '0.5rem',
+                        color: 'var(--color-text)',
+                        fontSize: '0.9rem',
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      <AlertTriangle size={18} style={{ flexShrink: 0, color: '#f59e0b', marginTop: 2 }} />
+                      <span>
+                        {t.aiDetection.url.botProtectionNotice ||
+                          t.aiDetection.url.warning ||
+                          'YouTube bot korumasi aktif olabilir — URL calismazsa dosya yukleme veya mikrofon sekmesini deneyin.'}
+                      </span>
+                    </div>
                     <div className={styles['url-input-container']}>
                       <div className={styles['url-input-wrapper']}>
                         <LinkIcon size={20} />
