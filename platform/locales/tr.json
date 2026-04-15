@@ -314,6 +314,20 @@
       "plannedImplementation": "Planlanan Uygulama:",
       "plannedImplementationText": "AURIS - PyTorch + wav2vec2 modeli ile backend AI entegrasyonu (2025 Q2)."
     },
+    "tabs": {
+      "ariaLabel": "Analiz kaynağı",
+      "file": "Dosya",
+      "url": "URL",
+      "mic": "Mikrofon"
+    },
+    "mic": {
+      "title": "Mikrofon Kaydı",
+      "hint": "Bir ses çal ve mikrofona tut. Kayıt otomatik 30 saniyede durur.",
+      "start": "Kaydı başlat",
+      "stop": "Durdur ve analiz et",
+      "recording": "Kaydediliyor…",
+      "permissionDenied": "Mikrofon izni reddedildi. Tarayıcı ayarlarından izin verip tekrar dene."
+    },
     "upload": {
       "title": "Ses Dosyası Yükle",
       "dropHere": "Ses dosyanızı buraya bırakın",
