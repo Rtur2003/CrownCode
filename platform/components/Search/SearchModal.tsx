@@ -68,7 +68,7 @@ export const SearchModal: React.FC = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -20 }}
             transition={{ duration: 0.2 }}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
           >
             <span id="search-modal-title" className="sr-only">{t.search?.placeholder || 'Search'}</span>
             {/* Search Input */}

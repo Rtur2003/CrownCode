@@ -1028,7 +1028,7 @@ const CrownFortunePage: NextPage = () => {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 1.5 }}
-                          onClick={(e) => {
+                          onClick={(e: React.MouseEvent) => {
                             e.stopPropagation()
                             handleReverseDestiny()
                           }}
