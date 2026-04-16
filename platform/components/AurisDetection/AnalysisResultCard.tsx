@@ -330,7 +330,9 @@ export function AnalysisResultCard({
             <span>{isAI ? (labels.aiDetected || 'AI Detected') : (labels.humanDetected || 'Human Detected')}</span>
           </div>
           <p className={styles['verdict-model']}>
-            {result.modelVersion} &middot; {result.decisionSource}
+            {result.analysisMode === 'production'
+              ? `AURIS ${result.modelVersion} · ${result.decisionSource}`
+              : 'AURIS Preview · Limited Analysis'}
           </p>
           {result.analysisMode === 'preview' && (
             <span className={styles['preview-badge']}>{labels.previewMode || 'Preview Mode'}</span>
