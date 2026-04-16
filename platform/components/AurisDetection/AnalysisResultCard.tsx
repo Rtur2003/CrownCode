@@ -468,7 +468,9 @@ export function AnalysisResultCard({
             <div className={styles['detail-item']}>
               <Activity size={14} />
               <span className={styles['detail-label']}>Bitrate</span>
-              <span className={styles['detail-value']}>{result.audioInfo.bitrate} kbps</span>
+              <span className={styles['detail-value']}>
+                {result.audioInfo.bitrate > 0 ? `${result.audioInfo.bitrate} kbps` : '—'}
+              </span>
             </div>
             {result.audioInfo.channels !== undefined && (
               <div className={styles['detail-item']}>
