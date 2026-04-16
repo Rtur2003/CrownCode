@@ -51,7 +51,7 @@ export const analyzeSource = async (
     const response = await fetchWithTimeout(`${apiBaseUrl}/api/analyze`, {
       method: 'POST',
       body: formData,
-      timeout: 30_000,
+      timeout: 600_000,
     })
 
     if (!response.ok) {
