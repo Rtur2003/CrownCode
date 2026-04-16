@@ -137,17 +137,20 @@ export const useMicrophoneAnalysis = () => {
     rafRef.current = requestAnimationFrame(pollAmplitude)
   }, [])
 
+  const sampleRateRef = useRef<number>(0)
+
   const analyzeBlob = useCallback(
     async (blob: Blob, elapsedMs: number) => {
       const elapsedSec = Math.max(elapsedMs / 1000, 0.5)
       const file = new File([blob], `microphone-${Date.now()}.webm`, {
         type: blob.type || 'audio/webm'
       })
+      const sr = sampleRateRef.current || undefined
 
       setProcessingState('analyzing')
 
       if (!apiBaseUrl) {
-        const preview = await buildPreviewResult(blob, elapsedSec)
+        const preview = await buildPreviewResult(blob, elapsedSec, sr)
         setAnalysisResult(preview)
         setProcessingState('complete')
         return
@@ -166,7 +169,7 @@ export const useMicrophoneAnalysis = () => {
         }
 
         if (gatewayError === 'backend_not_configured' || gatewayError === 'backend_unreachable') {
-          const preview = await buildPreviewResult(blob, elapsedSec)
+          const preview = await buildPreviewResult(blob, elapsedSec, sr)
           setAnalysisResult(preview)
           setProcessingState('complete')
           return
@@ -175,7 +178,7 @@ export const useMicrophoneAnalysis = () => {
         setError(gatewayError || 'internalError')
         setProcessingState('error')
       } catch {
-        const preview = await buildPreviewResult(blob, elapsedSec)
+        const preview = await buildPreviewResult(blob, elapsedSec, sr)
         setAnalysisResult(preview)
         setProcessingState('complete')
       }
