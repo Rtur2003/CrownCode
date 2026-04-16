@@ -58,6 +58,28 @@ const isSupportedAudioFile = (file: File) => {
   return hasAllowedExtension
 }
 
+const decodeAudioMetadata = async (
+  file: File
+): Promise<{ duration: number; sampleRate: number; channels: number }> => {
+  try {
+    const arrayBuffer = await file.arrayBuffer()
+    const AudioCtx =
+      window.AudioContext ||
+      (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+    const ctx = new AudioCtx()
+    const buffer = await ctx.decodeAudioData(arrayBuffer)
+    const meta = {
+      duration: buffer.duration,
+      sampleRate: buffer.sampleRate,
+      channels: buffer.numberOfChannels
+    }
+    ctx.close().catch(() => {})
+    return meta
+  } catch {
+    return { duration: 0, sampleRate: 0, channels: 0 }
+  }
+}
+
 const buildPreviewResult = async (file: File, elapsedSec: number): Promise<AnalysisResult> => {
   const seed = await buildSeed(`${file.name}:${file.size}:${file.lastModified}`)
   const confidence = buildConfidence(seed)
@@ -65,7 +87,13 @@ const buildPreviewResult = async (file: File, elapsedSec: number): Promise<Analy
   const featureScores = buildFeatureScores(seed)
   const extension = getFileExtension(file.name)
   const format = extension ? extension.slice(1).toUpperCase() : 'AUDIO'
-  
+
+  const audioMeta = await decodeAudioMetadata(file)
+  const duration = Math.round(audioMeta.duration * 100) / 100
+  const sampleRate = audioMeta.sampleRate || 44100
+  const channels = audioMeta.channels || 2
+  const bitrate = duration > 0 ? Math.round((file.size * 8) / (duration * 1000)) : 0
+
   const indicators = buildIndicators(isAIGenerated, confidence, [])
 
   return {
@@ -86,10 +114,11 @@ const buildPreviewResult = async (file: File, elapsedSec: number): Promise<Analy
       artificialIndicators: indicators
     },
     audioInfo: {
-      duration: 0,
-      sampleRate: 44100,
-      bitrate: 192,
-      format
+      duration,
+      sampleRate,
+      bitrate,
+      format,
+      channels
     }
   }
 }

@@ -26,13 +26,16 @@ const pickMimeType = (): string => {
 
 const buildPreviewResult = async (
   blob: Blob,
-  elapsedSec: number
+  elapsedSec: number,
+  actualSampleRate?: number
 ): Promise<AnalysisResult> => {
   const seed = await buildSeed(`mic:${blob.size}:${Date.now()}`)
   const confidence = buildConfidence(seed)
   const isAIGenerated = confidence > 0.5
   const featureScores = buildFeatureScores(seed)
   const indicators = buildIndicators(isAIGenerated, confidence, ['microphone_preview'])
+  const sampleRate = actualSampleRate || 48000
+  const bitrate = elapsedSec > 0 ? Math.round((blob.size * 8) / (elapsedSec * 1000)) : 128
 
   return {
     isAIGenerated,
@@ -52,10 +55,11 @@ const buildPreviewResult = async (
       artificialIndicators: indicators
     },
     audioInfo: {
-      duration: elapsedSec,
-      sampleRate: 48000,
-      bitrate: 128,
-      format: 'WEBM'
+      duration: Math.round(elapsedSec * 100) / 100,
+      sampleRate,
+      bitrate,
+      format: 'WEBM',
+      channels: 1
     }
   }
 }
