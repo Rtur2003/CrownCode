@@ -210,6 +210,7 @@ export const useMicrophoneAnalysis = () => {
       source.connect(analyser)
       audioCtxRef.current = audioCtx
       analyserRef.current = analyser
+      sampleRateRef.current = audioCtx.sampleRate
 
       const mimeType = pickMimeType()
       const recorder = mimeType
