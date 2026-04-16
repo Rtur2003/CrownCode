@@ -454,7 +454,11 @@ export function AnalysisResultCard({
             <div className={styles['detail-item']}>
               <BarChart3 size={14} />
               <span className={styles['detail-label']}>{labels.duration || 'Duration'}</span>
-              <span className={styles['detail-value']}>{result.audioInfo.duration.toFixed(1)}s</span>
+              <span className={styles['detail-value']}>
+                {result.audioInfo.duration > 0
+                  ? `${result.audioInfo.duration.toFixed(1)}s`
+                  : '—'}
+              </span>
             </div>
             <div className={styles['detail-item']}>
               <Radio size={14} />
