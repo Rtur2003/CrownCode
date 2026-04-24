@@ -6,18 +6,7 @@
   overflow: hidden;
 }
 
-.footer::after {
-  content: '';
-  position: absolute;
-  right: 6%;
-  bottom: 15%;
-  width: 140px;
-  height: 140px;
-  background: url('/icons/x.png') center / contain no-repeat;
-  opacity: 0.08;
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
+/* X watermark removed — was visually inconsistent with premium design */
 
 .footer::before {
   content: '';
