@@ -212,10 +212,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
               <motion.div
                 key={product.id}
                 variants={cardVariants}
-                whileHover={{
-                  y: -8,
-                  transition: { duration: 0.3, ease: "easeOut" }
-                }}
                 role="listitem"
               >
                 <Link
