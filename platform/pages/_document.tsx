@@ -4,6 +4,14 @@ export default function Document() {
   return (
     <Html lang="tr">
       <Head>
+        {/* Google Fonts — Cinzel supports full Latin Extended (Turkish Ş, İ, Ğ, etc.) */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=IM+Fell+Double+Pica:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
+          rel="stylesheet"
+        />
+
         {/* Favicon & Icons - Multiple sizes */}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/favicon.ico" />
