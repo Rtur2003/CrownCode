@@ -22,7 +22,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { motion, Variants } from 'motion/react'
-import { ArrowUpRight, Sparkles, Activity, Star, LucideIcon } from 'lucide-react'
+import { ArrowUpRight, Sparkles, Star, LucideIcon } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
 
@@ -220,19 +220,21 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
                   aria-label={`Explore ${product.title} - ${product.description}`}
                 >
                   <div className="product-card-inner">
-                    {/* ===== STATUS INDICATOR ===== */}
-                    <div className="product-status" role="status">
-                      <div
-                        className={`status-dot ${getStatusClass(product.status)}`}
-                        aria-hidden="true"
-                      />
-                      <span>{product.status}</span>
+                    {/* ===== HEAD ROW: STATUS + ARROW ===== */}
+                    <div className="product-card-head">
+                      <div className={`product-status ${getStatusClass(product.status)}`} role="status">
+                        <div className={`status-dot ${getStatusClass(product.status)}`} aria-hidden="true" />
+                        <span>{product.status}</span>
+                      </div>
+                      <div className="product-arrow" aria-hidden="true">
+                        <ArrowUpRight size={14} />
+                      </div>
                     </div>
 
                     {/* ===== FEATURED LABEL ===== */}
                     {isFeatured && (
                       <div className="featured-label">
-                        <Star size={10} aria-hidden="true" />
+                        <Star size={9} aria-hidden="true" />
                         <span>{t.products.featuredLabel || 'Featured'}</span>
                       </div>
                     )}
@@ -243,46 +245,32 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
                         className={`product-icon-bg bg-gradient-to-r ${product.gradient}`}
                         aria-hidden="true"
                       />
-                      <Icon className="product-icon" size={32} aria-hidden="true" />
+                      <Icon className="product-icon" size={28} aria-hidden="true" />
                     </div>
 
                     {/* ===== PROJECT CONTENT ===== */}
                     <div className="product-content">
-                      {/* Project Title */}
                       <h3 className="product-title">{product.title}</h3>
-
-                      {/* Project Description */}
                       <p className="product-description">{product.description}</p>
-
-                      {/* Performance Stats */}
-                      <div className="product-stats" role="group" aria-label="Performance metrics">
-                        <div className="stat-item">
-                          <Activity size={14} aria-hidden="true" />
-                          <span>{product.stats}</span>
-                        </div>
-                      </div>
-
-                      {/* Feature Tags */}
-                      <div
-                        className="product-features"
-                        role="group"
-                        aria-label={`${product.title} key features`}
-                      >
-                        {product.features.map((feature, idx) => (
-                          <span key={idx} className="feature-tag">
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
                     </div>
 
-                    {/* ===== NAVIGATION ARROW ===== */}
-                    <div className="product-arrow" aria-hidden="true">
-                      <ArrowUpRight size={20} />
+                    {/* ===== FEATURE TAGS ===== */}
+                    <div
+                      className="product-features"
+                      role="group"
+                      aria-label={`${product.title} key features`}
+                    >
+                      {product.features.map((feature, idx) => (
+                        <span key={idx} className="feature-tag">{feature}</span>
+                      ))}
                     </div>
 
-                    {/* ===== HOVER EFFECT OVERLAY ===== */}
-                    <div className="product-hover-effect" aria-hidden="true" />
+                    {/* ===== STAT FOOTER ===== */}
+                    <div className="product-stats" role="group" aria-label="Performance metrics">
+                      <div className="stat-item">
+                        <span className="stat-number">{product.stats}</span>
+                      </div>
+                    </div>
                   </div>
                 </Link>
               </motion.div>
