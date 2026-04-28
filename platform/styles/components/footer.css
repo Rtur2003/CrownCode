@@ -247,20 +247,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  background: var(--color-background);
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  width: 2.375rem;
+  height: 2.375rem;
+  background: rgba(201, 147, 71, 0.08);
+  color: var(--color-gold-400);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
   text-decoration: none;
   transition: all var(--animation-normal) var(--ease-out-cubic);
 }
 
 .social-link:hover {
-  color: var(--color-text-primary);
-  border-color: var(--color-gold-400);
-  background: rgba(201, 147, 71, 0.12);
+  background: var(--color-gold-500);
+  color: var(--color-text-inverse);
+  border-color: transparent;
   transform: translateY(-2px);
 }
 
