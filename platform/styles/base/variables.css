@@ -8,6 +8,7 @@
   --color-gold-400: #eac06f;
   --color-gold-500: #c99347;
   --color-gold-600: #9a6b2b;
+  --color-gold-700: #8a5f2b;
 
   /* Status Colors */
   --color-success: #7fb069;
@@ -34,7 +35,7 @@
 
   /* Fonts */
   --font-family-base: 'IM Fell Double Pica', 'Times New Roman', serif;
-  --font-family-heading: 'Cinzel', 'Georgia', serif;
+  --font-family-heading: 'Portmanteau', 'IM Fell Double Pica', serif;
   --font-family-mono: 'JetBrains Mono', 'Courier New', monospace;
 
   /* Glass Effects */
@@ -58,6 +59,7 @@
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Z-Index Layers */
   --z-dropdown: 1000;

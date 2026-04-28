@@ -117,12 +117,22 @@
               box-shadow 0.4s var(--ease-out-cubic);
 }
 
-/* Top gold wash on hover */
+/* Permanent top shine line */
+.product-card-inner::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 1.5rem; right: 1.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 147, 71, 0.3), transparent);
+  pointer-events: none;
+}
+
+/* Top gold wash — hidden until hover */
 .product-card-inner::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 3.75rem;
+  height: 5rem;
   background: radial-gradient(ellipse at 50% 0%, rgba(201, 147, 71, 0.12), transparent 70%);
   opacity: 0;
   transition: opacity 0.4s var(--ease-out-cubic);
@@ -213,7 +223,7 @@
 
 @keyframes statusPulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
+  50%       { opacity: 0.35; }
 }
 
 /* Arrow button */

@@ -20,11 +20,9 @@ h1, h2, h3, h4, h5, h6 {
     min-width: 44px;
   }
 
-  /* Disable hover effects on touch devices */
+  /* Touch devices: only disable transforms to prevent layout shift */
   @media (hover: none) and (pointer: coarse) {
     *:hover {
-      background-color: initial !important;
-      color: initial !important;
       transform: initial !important;
     }
   }
