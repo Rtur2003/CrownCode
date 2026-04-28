@@ -108,15 +108,11 @@
 
 .stat-value {
   font-size: 2.2rem;
-  font-weight: 900;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  color: var(--color-text-primary);
   line-height: 1;
   margin-bottom: 0.35rem;
-  font-family: var(--font-family-heading);
-  letter-spacing: -0.02em;
+  font-family: var(--font-family-mono);
 }
 
 .stat-label {
