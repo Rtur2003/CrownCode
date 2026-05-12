@@ -217,7 +217,7 @@ The model shows slightly higher sensitivity to AI samples (90.3%) than specifici
 
 ### 4.5 Calibration
 
-The LightGBM model's calibration curve (Figure 9) shows near-perfect calibration across the probability range, with a Brier score of 0.087. This indicates that the reported P(AI) scores are reliable probability estimates rather than merely ranked scores, enabling threshold-based decision making with predictable precision-recall tradeoffs.
+The LightGBM model's calibration curve (Figure 9) shows near-perfect calibration across the probability range, with a Brier score of 0.083. This indicates that the reported P(AI) scores are reliable probability estimates rather than merely ranked scores, enabling threshold-based decision making with predictable precision-recall tradeoffs.
 
 ---
 
