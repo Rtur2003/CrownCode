@@ -753,9 +753,13 @@ def build():
     ))
 
     figure(doc, "training_history.png",
-           "Figure 3. Training curves for the four deep learning architectures across five "
-           "folds. Convergence is reached within roughly thirty epochs; early stopping prevents "
-           "overfitting on the smaller validation splits.")
+           "Figure 3. Per-epoch training curves for the four deep learning architectures, "
+           "averaged across the five cross-validation folds with one-σ bands. Each panel "
+           "annotates the best mean validation AUC and the epoch at which it occurred. Three "
+           "of the four architectures (Deep MLP, Residual MLP, Attention MLP) plateau in the "
+           "0.94–0.96 region while their training curves approach 1.00, indicating mild "
+           "overfit that early stopping mitigates but does not eliminate. The 1D-CNN never "
+           "closes the same gap on either curve.")
 
     # ╔════════════════════════════════════════════════════════════════════╗
     # ║  4. RESULTS                                                          ║
@@ -1079,7 +1083,70 @@ def build():
         "in Figure 15."
     ))
 
-    subheading(doc, "5.5. Limitations")
+    subheading(doc, "5.5. Overfit Diagnosis")
+    body(doc, (
+        "A direct way to ask whether the ensemble memorises rather than generalises is to "
+        "compare the training-set accuracy of each model against its 5-fold cross-validation "
+        "accuracy. Figure 18 reports the result. Random Forest reaches 100.0% training "
+        "accuracy versus 86.1% under CV, a gap of 13.9 percentage points; LightGBM and SVM are "
+        "close behind at 12.0 and 13.4 points respectively. Even XGBoost and Gradient Boosting, "
+        "with their stronger built-in regularisation, retain an 8–9 point gap. The only model "
+        "in the ensemble whose training and CV accuracies essentially agree is Logistic "
+        "Regression, with a 0.6 point gap. The pattern is informative: the tree ensembles are "
+        "carrying real overfitting that 5-fold CV catches but a single train/test split would "
+        "not, and the final CV accuracy of 88.0% (LightGBM) should be read as a meaningful "
+        "ceiling rather than as a comfortable margin. The implication for deployment is that "
+        "the system is sensitive to distribution shift, which is consistent with the per-source "
+        "result of 50.0% recall on the deepfake subset reported in §4.7."
+    ))
+    figure(doc, "train_val_gap.png",
+           "Figure 18. Train vs. 5-fold cross-validation accuracy for the seven feature-based "
+           "models. The gap quantifies how much of each model's nominal accuracy comes from "
+           "memorising the training set rather than generalising. Only Logistic Regression "
+           "shows no overfit.")
+
+    subheading(doc, "5.6. Feature Redundancy")
+    body(doc, (
+        "The 47 features are by design redundant — they cover overlapping aspects of spectrum, "
+        "rhythm and voice — but the redundancy is heavier than one might expect. Twenty "
+        "feature pairs have |Pearson r| above 0.85 on the full dataset. Four pairs exceed "
+        "0.97: has_vocals with vocal_harmonic_ratio (r = 0.994), pitch_std_cents with "
+        "vibrato_extent_cents (0.983), vocal_texture_score with vocal_harmonic_ratio (0.975), "
+        "and has_vocals with vocal_texture_score (0.974). Among non-vocal features the "
+        "spectral centroid, bandwidth and rolloff means form a tight cluster (pairwise r > "
+        "0.94) and the rolling MFCC delta and delta-delta variances are nearly inseparable "
+        "(r = 0.924). Figure 19 plots the full |r| matrix; the dark off-diagonal blocks in "
+        "the lower-right correspond to the vocal feature family, which is the densest "
+        "redundancy region. The implication is that the effective feature dimensionality is "
+        "substantially below 47, which is consistent with the ablation curve presented next."
+    ))
+    figure(doc, "feature_correlation_heatmap.png",
+           "Figure 19. Absolute Pearson correlation between the 47 features across all 5,195 "
+           "tracks. Dark cells mark redundant pairs. The vocal feature family in the "
+           "lower-right corner is the most internally correlated block.",
+           width_cm=14.0)
+
+    subheading(doc, "5.7. How Many Features Are Actually Needed?")
+    body(doc, (
+        "Figure 20 reports a feature ablation experiment. Features are ranked by LightGBM "
+        "importance and the top-N for N ∈ {1, 3, 5, 10, 15, 20, 30, 47} are passed back through "
+        "the same 5-fold cross-validation pipeline. The curve is steep up to N = 10 — accuracy "
+        "rises from 59.8% (N = 1) through 78.1% (N = 5) to 84.7% (N = 10) — and then plateaus. "
+        "By N = 20 the accuracy is 88.0%, by N = 30 it is 88.7%, and using all 47 features "
+        "gives 88.5%, essentially the same as N = 30 within one standard deviation. In other "
+        "words, the bottom seventeen features as ranked by importance contribute no measurable "
+        "additional accuracy. They do, however, increase the parameter count of the trained "
+        "model and the feature-extraction time at inference. A practical deployment could drop "
+        "the long tail without sacrificing detection quality; the present paper retains the "
+        "full 47-feature vector for reproducibility but flags this redundancy as a clear "
+        "optimisation target."
+    ))
+    figure(doc, "feature_ablation_curve.png",
+           "Figure 20. 5-fold CV accuracy of LightGBM as a function of the number of features "
+           "retained, ranked by importance. The plateau begins at roughly 20 features; the "
+           "last 17 features do not change measured accuracy.")
+
+    subheading(doc, "5.8. Limitations")
     body(doc, (
         "Four limitations are worth recording explicitly. First, features are extracted from the "
         "full clip, which is typically between fifteen and thirty seconds long; shorter clips "
