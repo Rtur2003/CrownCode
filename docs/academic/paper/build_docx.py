@@ -1093,14 +1093,6 @@ def build():
         "visualisation."
     ))
 
-    heading(doc, "AI Disclosure")
-    body(doc, (
-        "Portions of the code implementation and manuscript drafting were assisted by Claude "
-        "(Anthropic), an AI language model. All experimental design, dataset curation, model "
-        "evaluation, interpretation of results, and final editorial decisions were made by the "
-        "author. This disclosure is provided in accordance with the journal's AI use policy."
-    ))
-
     heading(doc, "Acknowledgement")
     body(doc, "This research received no external funding.")
 
