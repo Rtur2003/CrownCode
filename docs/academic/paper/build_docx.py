@@ -993,17 +993,26 @@ def build():
     subheading(doc, "4.7. Per-Generator Performance")
     body(doc, (
         "Because the AI portion of the dataset spans more than a dozen generation systems, "
-        "per-generator performance is informative beyond the aggregate metrics. Figure 16 reports "
-        "recall on the AI class broken down by source repository. The system achieves uniformly "
-        "high recall on the Suno-family and AIME tracks but performs less well on the "
-        "MusicGen-only subset, where the model occasionally classifies tracks as human. This is "
-        "consistent with the observation of Bhatt et al. (2025) that cross-generator generalisation "
-        "is the field's main open challenge."
+        "per-source performance is informative beyond the aggregate metrics. Figure 16 reports "
+        "the per-source breakdown of LightGBM predictions, measured on the same 5-fold "
+        "out-of-fold probabilities used elsewhere. The result is highly uneven. Suno tracks are "
+        "recovered with 93.0% recall (465 of 500) and Echoes with 88.6% (999 of 1,128). The "
+        "Mustango/JEN-1 family represented by the AIME subset (n=204) drops to 79.9%. The "
+        "deepfake set, however, sits at exactly 50.0% — half of these tracks are missed by the "
+        "classifier despite their explicit AI label. On the human side, GTZAN (93.2%) and FMA "
+        "(88.9%) are recognised reliably, while the SleepyJesse cover set (n=854) falls to "
+        "76.3%. The two failure points — the deepfake subset and the SleepyJesse covers — point "
+        "in the same direction: tracks whose acoustic profile differs systematically from the "
+        "rest of their class label are the ones the model struggles with, consistent with the "
+        "cross-generator generalisation challenge highlighted by Bhatt et al. (2025)."
     ))
 
     figure(doc, "per_source_performance.png",
-           "Figure 16. Per-source recall on the AI class. The model generalises well across the "
-           "Suno-family and AIME subsets, while MusicGen-only tracks remain harder to detect.")
+           "Figure 16. Per-source LightGBM performance on the 5-fold cross-validation "
+           "predictions at θ* = 0.4316. AI sources (red bars) are evaluated by recall on the AI "
+           "class; human sources (green bars) by specificity. The 50.0% recall on the deepfake "
+           "subset and the 76.3% specificity on SleepyJesse covers are the two clearest "
+           "weaknesses of the current detector.")
 
     figure(doc, "per_class_metrics.png",
            "Figure 17. Per-class precision, recall and F1 for LightGBM. The two classes are "
