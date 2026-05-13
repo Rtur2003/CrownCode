@@ -71,6 +71,10 @@ MFCC-based representations remain foundational to audio classification pipelines
 
 MusicGen (Copet et al., 2023) introduced a single-stage transformer-based autoregressive music generation model conditioned on text and melody, achieving state-of-the-art performance while remaining computationally efficient. Alongside commercial systems Suno and Udio — which deploy proprietary diffusion and autoregressive architectures — MusicGen constitutes one of the primary generation systems whose output AURIS is trained to detect.
 
+### 2.6 Recent Advances in AI Music Detection (2025–2026)
+
+Liu et al. (2024) provide a comprehensive pathway and overview connecting audio deepfake detection methodologies to the emerging AI-generated music detection domain, cataloguing transferable features and identifying key domain gaps. Afchar et al. (2025) demonstrated that detectors trained on auto-encoder artifacts can achieve 99.8% accuracy by exploiting decoder fingerprints — spectral residues introduced by neural vocoders — rather than musical content. Their analysis at IEEE ICASSP 2025 also identified robustness limitations: simple audio manipulations such as MP3 compression or pitch shifting substantially degrade detection rates, a finding directly relevant to AURIS's deployment context. Kosta et al. (2025) proposed the Segment Transformer, which processes sequences of music segments and integrates self-supervised pre-trained representations within a transformer-based framework to capture structural patterns across the full composition. Bhatt et al. (2025) further characterize the challenge landscape, emphasizing that cross-generator generalization — the ability to detect music from unseen generation systems — remains the primary open problem in the field.
+
 ---
 
 ## 3. Method
@@ -314,7 +318,9 @@ The author declares no conflicts of interest.
 
 Baevski, A., Zhou, Y., Mohamed, A., & Auli, M. (2020). wav2vec 2.0: A framework for self-supervised learning of speech representations. *Advances in Neural Information Processing Systems, 33*, 12449–12460. https://doi.org/10.5555/3495724.3496768
 
-Bhatt, A., Rajan, A., et al. (2025). AI-generated music detection and its challenges. *arXiv preprint*. https://doi.org/10.48550/arXiv.2501.10111
+Afchar, D., Meseguer Brocal, G., & Hennequin, R. (2025). AI-generated music detection and its challenges. In *Proceedings of IEEE ICASSP 2025*. IEEE. https://doi.org/10.48550/arXiv.2501.10111
+
+Bhatt, A., Rajan, A., et al. (2025). AI-generated music detection: A survey of methods and datasets. *arXiv preprint*. https://doi.org/10.48550/arXiv.2501.10111
 
 Copet, J., Kreuk, F., Gat, I., Remez, T., Kant, D., Synnaeve, G., Adi, Y., & Défossez, A. (2023). Simple and controllable music generation. *Advances in Neural Information Processing Systems, 36*. https://doi.org/10.48550/arXiv.2306.05284
 
@@ -325,6 +331,8 @@ Frank, J., & Schönherr, L. (2021). WaveFake: A data set to facilitate audio dee
 Gan, R., Huang, T., Shao, J., & Wang, F. (2024). Music genre classification based on VMD-IWOA-XGBoost. *Mathematics, 12*(10), 1549. https://doi.org/10.3390/math12101549
 
 Gourisaria, M. K., Agrawal, R., & Sahni, M. (2024). Comparative analysis of audio classification with MFCC and STFT features using machine learning techniques. *Discover Internet of Things, 4*, Article 1. https://doi.org/10.1007/s43926-023-00049-y
+
+Kosta, K., Meseguer Brocal, G., Afchar, D., & Hennequin, R. (2025). Segment Transformer: AI-generated music detection via music structural analysis. *arXiv preprint arXiv:2509.08283*. https://doi.org/10.48550/arXiv.2509.08283
 
 Kostrzewa, D., Mazur, W., & Brzeski, R. (2022). Wide ensembles of neural networks in music genre classification. In *Proceedings of MISSI 2022, Lecture Notes in Networks and Systems* (pp. 91–102). Springer. https://doi.org/10.1007/978-3-031-08754-7_9
 
