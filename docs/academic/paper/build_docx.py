@@ -44,6 +44,27 @@ def _set_spacing(para, before_pt=8, after_pt=12, line_rule="single"):
     pPr.append(spacing)
 
 
+def _keep_with_next(para):
+    """Prevent Word from separating this paragraph from the next one (figure→caption)."""
+    pPr = para._p.get_or_add_pPr()
+    keep = OxmlElement("w:keepNext")
+    pPr.append(keep)
+
+
+def _keep_lines_together(para):
+    """Prevent splitting a paragraph across pages (good for captions)."""
+    pPr = para._p.get_or_add_pPr()
+    keep = OxmlElement("w:keepLines")
+    pPr.append(keep)
+
+
+def _page_break_before(para):
+    """Force this paragraph to start on a new page."""
+    pPr = para._p.get_or_add_pPr()
+    pbb = OxmlElement("w:pageBreakBefore")
+    pPr.append(pbb)
+
+
 def _font(run, size=BODY_SIZE, bold=False, italic=False, color=None, name=TNR):
     run.font.name   = name
     run.font.size   = size
@@ -89,6 +110,8 @@ def heading(doc, text, level=1):
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
     _set_spacing(p, before_pt=14, after_pt=6)
+    _keep_with_next(p)
+    _keep_lines_together(p)
     r = p.add_run(text.upper())
     _font(r, size=BODY_SIZE, bold=True)
     return p
@@ -98,6 +121,8 @@ def subheading(doc, text):
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
     _set_spacing(p, before_pt=10, after_pt=4)
+    _keep_with_next(p)
+    _keep_lines_together(p)
     r = p.add_run(text)
     _font(r, size=BODY_SIZE, bold=True, italic=True)
     return p
@@ -144,10 +169,12 @@ def table_row(table, row_idx, values, bold=False, bg=None, color=None):
             tcPr.append(shd)
 
 
-def caption(doc, text, before=4, after=12):
+def caption(doc, text, before=4, after=12, keep_together=True):
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     _set_spacing(p, before_pt=before, after_pt=after)
+    if keep_together:
+        _keep_lines_together(p)
     r = p.add_run(text)
     _font(r, size=Pt(10), italic=True)
     return p
@@ -159,6 +186,8 @@ def figure(doc, filename, caption_text, width_cm=14.0):
         p = doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         _set_spacing(p, before_pt=8, after_pt=2)
+        _keep_with_next(p)
+        _keep_lines_together(p)
         run = p.add_run()
         run.add_picture(str(fig_path), width=Cm(width_cm))
     else:
@@ -209,6 +238,7 @@ def equation(doc, text, eqno=None):
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     _set_spacing(p, before_pt=6, after_pt=6)
+    _keep_lines_together(p)
     r = p.add_run(text)
     _font(r, size=BODY_SIZE, italic=True)
     if eqno:
@@ -779,7 +809,8 @@ def build():
     figure(doc, "paper_roc_curves.png",
            "Figure 5. ROC curves of all eleven models under 5-fold cross-validation. The dashed "
            "diagonal corresponds to random guessing (AUC = 0.500). LightGBM and Deep MLP are "
-           "indistinguishable at the resolution of the plot, in agreement with Table 3.")
+           "indistinguishable at the resolution of the plot, in agreement with Table 3.",
+           width_cm=11.5)
 
     figure(doc, "all_models_heatmap.png",
            "Figure 6. Confusion heatmap aggregating the predictions of all eleven models on a "
@@ -882,12 +913,14 @@ def build():
 
     figure(doc, "paper_feature_importance.png",
            "Figure 9. Top-twenty feature importances in LightGBM (normalised gain). Spectral and "
-           "temporal families dominate, with vocal features playing a secondary role.")
+           "temporal families dominate, with vocal features playing a secondary role.",
+           width_cm=12.5)
 
     figure(doc, "shap_summary.png",
            "Figure 10. SHAP summary plot for LightGBM. Each point represents a sample; horizontal "
            "position is the SHAP value and colour encodes feature magnitude. The plot confirms "
-           "that high spectral flatness pushes predictions toward the human class.")
+           "that high spectral flatness pushes predictions toward the human class.",
+           width_cm=12.0)
 
     subheading(doc, "4.5. Confusion, Score Distribution and Calibration")
     body(doc, (
@@ -903,7 +936,8 @@ def build():
 
     figure(doc, "paper_confusion_matrix_lightgbm.png",
            "Figure 11. Confusion matrix for LightGBM at the Youden-optimal threshold θ* = 0.4316. "
-           "Cell labels show sample counts and the corresponding within-class percentages.")
+           "Cell labels show sample counts and the corresponding within-class percentages.",
+           width_cm=11.0)
 
     body(doc, (
         "Figure 12 plots the predicted-probability distributions P(AI) for the human and AI "
@@ -932,12 +966,14 @@ def build():
     figure(doc, "paper_calibration.png",
            "Figure 13. Calibration curve for LightGBM. The fraction of positives is plotted "
            "against the mean predicted probability for each bin; the diagonal corresponds to "
-           "perfect calibration. Brier score = 0.083.")
+           "perfect calibration. Brier score = 0.083.",
+           width_cm=10.5)
 
     figure(doc, "paper_precision_recall.png",
-           "Figure 14. Precision–recall curve for LightGBM, with average precision (AP) reported "
+           "Figure 14. Precision-recall curve for LightGBM, with average precision (AP) reported "
            "in the legend. The dashed horizontal line shows the no-skill baseline for the 1:1.5 "
-           "class ratio.")
+           "class ratio.",
+           width_cm=10.5)
 
     subheading(doc, "4.6. Threshold Sweep and Decision Operating Points")
     body(doc, (
@@ -1103,7 +1139,8 @@ def build():
     # ║  REFERENCES                                                          ║
     # ╚════════════════════════════════════════════════════════════════════╝
 
-    heading(doc, "References")
+    ref_heading = heading(doc, "References")
+    _page_break_before(ref_heading)
 
     refs = [
         "Afchar, D., Meseguer Brocal, G., & Hennequin, R. (2025). AI-generated music detection "
@@ -1180,8 +1217,14 @@ def build():
     for ref in refs:
         reference_entry(doc, ref)
 
-    doc.save(str(OUT))
-    print(f"Saved: {OUT} ({OUT.stat().st_size // 1024} KB)")
+    try:
+        doc.save(str(OUT))
+        target = OUT
+    except PermissionError:
+        target = OUT.parent / "AURIS_paper_GUJSA_v2.docx"
+        doc.save(str(target))
+        print(f"NOTE: {OUT.name} was locked (probably open in Word). Saved as {target.name} instead.")
+    print(f"Saved: {target} ({target.stat().st_size // 1024} KB)")
     print(f"Figures embedded from: {FIGURES}")
 
 
