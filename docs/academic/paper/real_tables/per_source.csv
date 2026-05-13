@@ -1,0 +1,8 @@
+source,n,metric,value
+Suno (AI),500,AI recall,0.93
+Echoes (AI),1128,AI recall,0.8856382978723404
+AImE (AI),204,AI recall,0.7990196078431373
+Deepfake set (AI),492,AI recall,0.5
+GTZAN (human),999,Human accuracy,0.9319319319319319
+FMA (human),1000,Human accuracy,0.889
+SleepyJesse (human),854,Human accuracy,0.7634660421545667
