@@ -926,12 +926,12 @@ def build():
     body(doc, (
         "Figure 11 shows the confusion matrix obtained when the LightGBM predictions on the "
         "aggregated 5-fold validation sets are thresholded at the Youden-optimal value "
-        "θ* = 0.4316. The matrix reports 2,701 true negatives (87.1% of the human samples), "
-        "1,880 true positives (90.3% of the AI samples), 412 false positives (12.9% of human "
-        "samples assigned to AI), and 202 false negatives (9.7% of AI samples assigned to human). "
-        "Sensitivity to the AI class (90.3%) slightly exceeds specificity for human samples "
-        "(87.1%) — a desirable property for a detection system where missed AI samples are the "
-        "more consequential error."
+        "θ* = 0.4316. The matrix reports 2,721 true negatives (87.4% of the human samples), "
+        "1,862 true positives (89.4% of the AI samples), 392 false positives (12.6% of human "
+        "samples assigned to AI), and 220 false negatives (10.6% of AI samples assigned to human). "
+        "Sensitivity to the AI class (89.4%) is essentially balanced with specificity for human "
+        "samples (87.4%) — the small asymmetry follows from the Youden criterion, which weights "
+        "the two error types symmetrically."
     ))
 
     figure(doc, "paper_confusion_matrix_lightgbm.png",
