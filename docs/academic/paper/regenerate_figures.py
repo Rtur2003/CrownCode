@@ -111,23 +111,49 @@ def regen_feature_distribution() -> None:
         ax.set_facecolor(BG)
         h_vals = human[feat].dropna()
         a_vals = ai[feat].dropna()
-
-        # Clip the x-range to the 1st-99th percentile of the combined data so
-        # that a handful of extreme outliers cannot crush the whole histogram
-        # into a single bar (this happened on the spectral_flatness panels).
         combined = pd.concat([h_vals, a_vals])
-        lo = float(combined.quantile(0.01))
-        hi = float(combined.quantile(0.99))
-        if hi <= lo:                       # degenerate feature, fall back
-            lo, hi = float(combined.min()), float(combined.max())
-        bins = np.linspace(lo, hi, 40)
 
-        ax.hist(h_vals.clip(lo, hi), bins=bins, alpha=0.6, color=HUMAN_COLOR,
-                label=f"Human (n={len(h_vals)})", density=True)
-        ax.hist(a_vals.clip(lo, hi), bins=bins, alpha=0.6, color=AI_COLOR,
-                label=f"AI (n={len(a_vals)})", density=True)
-        ax.set_xlim(lo, hi)
-        ax.set_title(feat, fontsize=11)
+        # Some features (notably the spectral-flatness pair) are extremely
+        # right-skewed: ~98% of the mass sits near zero with a thin tail. A
+        # linear histogram collapses them into a single bar. Detect that case
+        # by the skew of the data and switch the panel to a log-scaled x-axis,
+        # which keeps every real data point but makes the shape readable.
+        positive = combined[combined > 0]
+        use_log = (
+            len(positive) > 0
+            and combined.skew() > 4.0
+            and positive.min() > 0
+        )
+
+        if use_log:
+            lo = float(positive.quantile(0.005))
+            hi = float(combined.quantile(0.995))
+            lo = max(lo, 1e-6)
+            bins = np.logspace(np.log10(lo), np.log10(hi), 40)
+            ax.hist(h_vals[h_vals > 0].clip(lo, hi), bins=bins, alpha=0.6,
+                    color=HUMAN_COLOR, label=f"Human (n={len(h_vals)})",
+                    density=True)
+            ax.hist(a_vals[a_vals > 0].clip(lo, hi), bins=bins, alpha=0.6,
+                    color=AI_COLOR, label=f"AI (n={len(a_vals)})",
+                    density=True)
+            ax.set_xscale("log")
+            ax.set_xlim(lo, hi)
+            ax.set_title(f"{feat}  (log x-axis)", fontsize=11)
+        else:
+            lo = float(combined.quantile(0.01))
+            hi = float(combined.quantile(0.99))
+            if hi <= lo:
+                lo, hi = float(combined.min()), float(combined.max())
+            bins = np.linspace(lo, hi, 40)
+            ax.hist(h_vals.clip(lo, hi), bins=bins, alpha=0.6,
+                    color=HUMAN_COLOR, label=f"Human (n={len(h_vals)})",
+                    density=True)
+            ax.hist(a_vals.clip(lo, hi), bins=bins, alpha=0.6,
+                    color=AI_COLOR, label=f"AI (n={len(a_vals)})",
+                    density=True)
+            ax.set_xlim(lo, hi)
+            ax.set_title(feat, fontsize=11)
+
         ax.set_ylabel("Density")
         ax.legend(fontsize=8, loc="upper right")
 
