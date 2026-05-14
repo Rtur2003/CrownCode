@@ -349,7 +349,7 @@ def build():
     for h in [
         "• A 47-dimensional handcrafted acoustic feature vector is constructed for music authenticity classification.",
         "• Eleven classifiers, including seven machine learning algorithms and four deep learning architectures, are compared under a unified 5-fold cross-validation protocol.",
-        "• LightGBM reaches a mean ROC-AUC of 0.9549; Deep MLP follows closely at 0.9537.",
+        "• LightGBM reaches a mean ROC-AUC of 0.9548; Deep MLP follows closely at 0.9542.",
         "• Per-fold Youden's J threshold optimization replaces the default 0.5 cutoff and improves balanced accuracy.",
         "• Spectral flatness emerges as the single most informative feature for distinguishing AI-generated from human-composed music.",
     ]:
@@ -375,8 +375,8 @@ def build():
         "derin öğrenme (Derin ÇKA, 1B-CNN, Artık ÇKA, Dikkat ÇKA) ailelerinden seçilmiştir. Eğitim "
         "süreci, sınıf dengesizliğini hesaba katmak için her katmanda Youden's J istatistiğine dayalı "
         "eşik optimizasyonu uygulanan 5-katlı tabakalı çapraz doğrulama protokolünü kullanmaktadır. "
-        "Deneysel sonuçlar, LightGBM modelinin 0,9549'luk ROC-AUC değeri ile en yüksek performansı "
-        "sergilediğini, Derin ÇKA modelinin ise 0,9537 ile çok yakın bir ikinci sıra elde ettiğini "
+        "Deneysel sonuçlar, LightGBM modelinin 0,9548'luk ROC-AUC değeri ile en yüksek performansı "
+        "sergilediğini, Derin ÇKA modelinin ise 0,9542 ile çok yakın bir ikinci sıra elde ettiğini "
         "göstermektedir. LightGBM için Brier skoru 0,083 olarak ölçülmüş, modelin iyi kalibre edilmiş "
         "olasılık tahminleri ürettiği teyit edilmiştir. Spektral düzlük (spectral flatness) yapay zeka "
         "ile insan müziğini ayırt etmede en belirleyici tekil özellik olarak belirlenmiştir. Sistem, "
@@ -402,8 +402,8 @@ def build():
         "architectures (Deep MLP, 1D-CNN, Residual MLP, Attention MLP). Model training follows a "
         "5-fold stratified cross-validation protocol in which the decision threshold is re-estimated "
         "per fold via Youden's J statistic in order to handle the 1:1.5 class imbalance. "
-        "Experimental results show that LightGBM reaches the highest mean ROC-AUC at 0.9549, "
-        "with Deep MLP a very narrow second at 0.9537. The Brier score of 0.083 indicates that "
+        "Experimental results show that LightGBM reaches the highest mean ROC-AUC at 0.9548, "
+        "with Deep MLP a very narrow second at 0.9542. The Brier score of 0.083 indicates that "
         "the model produces well-calibrated probability estimates rather than merely useful ranking "
         "scores. Spectral flatness is identified as the single most discriminative feature for the "
         "AI-versus-human distinction. The full system is released as a public web application on "
@@ -771,8 +771,8 @@ def build():
     subheading(doc, "3.1. Overall Model Performance")
     body(doc, (
         "Table 3 reports the 5-fold cross-validation results for the eleven models, sorted by "
-        "ROC-AUC. LightGBM obtained the highest mean ROC-AUC of 0.9549, with Deep MLP a very "
-        "close second at 0.9537 — a difference of only 0.0012 in AUC. Deep MLP, however, achieved "
+        "ROC-AUC. LightGBM obtained the highest mean ROC-AUC of 0.9548, with Deep MLP a very "
+        "close second at 0.9542 — a difference of only 0.0006 in AUC. Deep MLP, however, achieved "
         "the highest accuracy (0.8849) and F1-score (0.8596) of the entire pool, narrowly ahead "
         "of LightGBM at 0.8839 accuracy and 0.8575 F1. The remaining ensemble methods (XGBoost, "
         "Random Forest, Gradient Boosting) and the SVM with RBF kernel all cluster in the "
@@ -789,8 +789,8 @@ def build():
         ["Rank", "Model", "Type", "Accuracy", "F1", "ROC-AUC", "Threshold θ*"],
         bold=True, bg="C99347")
     data = [
-        (1,  "LightGBM",                  "ML", "0.8839", "0.8575", "0.9549", "0.4316"),
-        (2,  "Deep MLP (512-256-128-64)",  "DL", "0.8849", "0.8596", "0.9537", "—"),
+        (1,  "LightGBM",                  "ML", "0.8839", "0.8575", "0.9548", "0.4316"),
+        (2,  "Deep MLP (512-256-128-64)",  "DL", "0.8849", "0.8596", "0.9542", "—"),
         (3,  "XGBoost",                    "ML", "0.8735", "0.8402", "0.9463", "0.5000"),
         (4,  "Residual MLP (3 blocks)",    "DL", "0.8756", "0.8476", "0.9453", "—"),
         (5,  "Gradient Boosting",          "ML", "0.8685", "0.8337", "0.9406", "0.5000"),
