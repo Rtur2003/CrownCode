@@ -112,15 +112,21 @@ def regen_feature_distribution() -> None:
         h_vals = human[feat].dropna()
         a_vals = ai[feat].dropna()
 
-        # Determine bin edges from combined range for visual consistency
-        lo = float(min(h_vals.min(), a_vals.min()))
-        hi = float(max(h_vals.max(), a_vals.max()))
+        # Clip the x-range to the 1st-99th percentile of the combined data so
+        # that a handful of extreme outliers cannot crush the whole histogram
+        # into a single bar (this happened on the spectral_flatness panels).
+        combined = pd.concat([h_vals, a_vals])
+        lo = float(combined.quantile(0.01))
+        hi = float(combined.quantile(0.99))
+        if hi <= lo:                       # degenerate feature, fall back
+            lo, hi = float(combined.min()), float(combined.max())
         bins = np.linspace(lo, hi, 40)
 
-        ax.hist(h_vals, bins=bins, alpha=0.6, color=HUMAN_COLOR,
+        ax.hist(h_vals.clip(lo, hi), bins=bins, alpha=0.6, color=HUMAN_COLOR,
                 label=f"Human (n={len(h_vals)})", density=True)
-        ax.hist(a_vals, bins=bins, alpha=0.6, color=AI_COLOR,
+        ax.hist(a_vals.clip(lo, hi), bins=bins, alpha=0.6, color=AI_COLOR,
                 label=f"AI (n={len(a_vals)})", density=True)
+        ax.set_xlim(lo, hi)
         ax.set_title(feat, fontsize=11)
         ax.set_ylabel("Density")
         ax.legend(fontsize=8, loc="upper right")

@@ -438,7 +438,7 @@ def build():
         "speaker identity to verify, and prosody plays a very different role. Instead, music "
         "presents harmonic complexity, polyphony, percussion, and recording artefacts that vary "
         "widely between human studios and synthetic pipelines. Recent surveys frame the field as "
-        "nascent (Liu et al., 2024; Yi et al., 2023), and Bhatt et al. (2025) argue that "
+        "nascent (Li et al., 2024; Yi et al., 2023), and Li et al. (2024) argue that "
         "cross-generator generalisation — the ability to detect tracks produced by systems unseen "
         "during training — is the central open challenge."
     ))
@@ -447,8 +447,8 @@ def build():
         "Two contrasting lines of recent work make this trade-off explicit. Afchar et al. (2025) "
         "showed at IEEE ICASSP 2025 that a detector trained to recognise auto-encoder artefacts "
         "can reach 99.8% accuracy by exploiting spectral residues introduced by neural vocoders, "
-        "but the same detector degrades sharply under MP3 compression or pitch shifting. Kosta et "
-        "al. (2025), in turn, proposed the Segment Transformer, which embeds short music segments "
+        "but the same detector degrades sharply under MP3 compression or pitch shifting. Kim and "
+        "Go (2025), in turn, proposed the Segment Transformer, which embeds short music segments "
         "with a pre-trained encoder and aggregates them through a transformer head to capture "
         "structural patterns across an entire composition. Both directions accept the same premise: "
         "no single feature family is robust enough on its own."
@@ -562,19 +562,19 @@ def build():
 
     subheading(doc, "2.5. Recent Advances in AI Music Detection (2025–2026)")
     body(doc, (
-        "The most directly relevant work appeared during 2024–2025. Liu et al. (2024) provide a "
+        "The most directly relevant work appeared during 2024–2025. Li et al. (2024) provide a "
         "pathway and overview connecting audio deepfake detection methodology to the emerging "
-        "domain of AI music detection, cataloguing transferable features and identifying domain "
-        "gaps. Afchar et al. (2025), in their IEEE ICASSP 2025 paper, demonstrate that detectors "
-        "trained on auto-encoder artefacts can reach 99.8% accuracy by exploiting decoder "
-        "fingerprints — spectral residues introduced by neural vocoders — rather than musical "
-        "content. The same study also identifies a critical robustness limitation: simple audio "
-        "manipulations such as MP3 compression or pitch shifting substantially degrade detection "
-        "rates. Kosta et al. (2025) propose the Segment Transformer, which processes sequences "
-        "of short music segments through a transformer head and integrates self-supervised "
-        "pre-trained representations to capture structural patterns at the song level. Bhatt et "
-        "al. (2025) survey the dataset landscape and emphasise that cross-generator generalisation "
-        "remains the primary open problem in the field."
+        "domain of AI music detection, cataloguing transferable features, identifying domain "
+        "gaps, and emphasising that cross-generator generalisation remains the primary open "
+        "problem in the field. Afchar et al. (2025), in their IEEE ICASSP 2025 paper, demonstrate "
+        "that detectors trained on auto-encoder artefacts can reach 99.8% accuracy by exploiting "
+        "decoder fingerprints — spectral residues introduced by neural vocoders — rather than "
+        "musical content. The same study also identifies a critical robustness limitation: simple "
+        "audio manipulations such as MP3 compression or pitch shifting substantially degrade "
+        "detection rates. Kim and Go (2025) propose the Segment Transformer, which processes "
+        "sequences of short music segments through a transformer head and integrates "
+        "self-supervised pre-trained representations to capture structural patterns at the song "
+        "level."
     ))
 
     # ╔════════════════════════════════════════════════════════════════════╗
@@ -1011,7 +1011,7 @@ def build():
         "76.3%. The two failure points — the deepfake subset and the SleepyJesse covers — point "
         "in the same direction: tracks whose acoustic profile differs systematically from the "
         "rest of their class label are the ones the model struggles with, consistent with the "
-        "cross-generator generalisation challenge highlighted by Bhatt et al. (2025)."
+        "cross-generator generalisation challenge highlighted by Li et al. (2024)."
     ))
 
     figure(doc, "per_source_performance.png",
@@ -1194,7 +1194,7 @@ def build():
         "compression, pitch shifting and time-stretching. Fourth, the dataset will be expanded "
         "toward ten thousand samples and updated to include emerging generation systems as they "
         "appear, with particular attention to the cross-generator generalisation challenge "
-        "identified by Bhatt et al. (2025)."
+        "identified by Li et al. (2024)."
     ))
 
     # ╔════════════════════════════════════════════════════════════════════╗
@@ -1230,10 +1230,6 @@ def build():
         "self-supervised learning of speech representations. Advances in Neural Information "
         "Processing Systems, 33, 12449–12460. https://doi.org/10.5555/3495724.3496768",
 
-        "Bhatt, A., Rajan, A., et al. (2025). AI-generated music detection: A survey of methods "
-        "and datasets. arXiv preprint arXiv:2501.10111. "
-        "https://doi.org/10.48550/arXiv.2501.10111",
-
         "Copet, J., Kreuk, F., Gat, I., Remez, T., Kant, D., Synnaeve, G., Adi, Y., & Défossez, "
         "A. (2023). Simple and controllable music generation. Advances in Neural Information "
         "Processing Systems, 36. https://doi.org/10.48550/arXiv.2306.05284",
@@ -1254,21 +1250,22 @@ def build():
         "Discover Internet of Things, 4, Article 1. "
         "https://doi.org/10.1007/s43926-023-00049-y",
 
-        "Kosta, K., Meseguer Brocal, G., Afchar, D., & Hennequin, R. (2025). Segment Transformer: "
-        "AI-generated music detection via music structural analysis. arXiv preprint "
-        "arXiv:2509.08283. https://doi.org/10.48550/arXiv.2509.08283",
+        "Kim, Y., & Go, S. (2025). Segment Transformer: AI-generated music detection via music "
+        "structural analysis. arXiv preprint arXiv:2509.08283. "
+        "https://doi.org/10.48550/arXiv.2509.08283",
 
         "Kostrzewa, D., Mazur, W., & Brzeski, R. (2022). Wide ensembles of neural networks in "
-        "music genre classification. In Proceedings of MISSI 2022, Lecture Notes in Networks "
-        "and Systems (pp. 91–102). Springer. https://doi.org/10.1007/978-3-031-08754-7_9",
+        "music genre classification. In Computational Science — ICCS 2022, Lecture Notes in "
+        "Computer Science (Vol. 13351, pp. 91–102). Springer. "
+        "https://doi.org/10.1007/978-3-031-08754-7_9",
+
+        "Li, Y., Milling, M., Specia, L., & Schuller, B. W. (2024). From audio deepfake detection "
+        "to AI-generated music detection: A pathway and overview. arXiv preprint "
+        "arXiv:2412.00571. https://doi.org/10.48550/arXiv.2412.00571",
 
         "Liu, H., Chen, Z., Yuan, Y., Mei, X., Liu, X., Mandic, D., Wang, W., & Plumbley, M. D. "
         "(2023). AudioLDM: Text-to-audio generation with latent diffusion models. In "
         "Proceedings of ICML 2023. https://doi.org/10.48550/arXiv.2301.12503",
-
-        "Liu, Y., et al. (2024). From audio deepfake detection to AI-generated music detection: "
-        "A pathway and overview. arXiv preprint arXiv:2412.00571. "
-        "https://doi.org/10.48550/arXiv.2412.00571",
 
         "Liu, Y., Yin, Y., Zhu, Q., & Cui, W. (2022). Musical instrument recognition by XGBoost "
         "combining feature fusion. arXiv preprint arXiv:2206.00901. "

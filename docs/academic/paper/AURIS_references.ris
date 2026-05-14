@@ -24,11 +24,14 @@ DO  - 10.48550/arXiv.2501.10111
 ER  - 
 
 TY  - JOUR
-AU  - Bhatt, Aditya
-AU  - Rajan, Anju
-TI  - AI-Generated Music Detection: A Survey of Methods and Datasets
-JO  - arXiv preprint
-PY  - 2025
+AU  - Li, Yupei
+AU  - Milling, Manuel
+AU  - Specia, Lucia
+AU  - Schuller, Bj\"orn W.
+TI  - From Audio Deepfake Detection to AI-Generated Music Detection: A Pathway and Overview
+JO  - arXiv preprint arXiv:2412.00571
+PY  - 2024
+DO  - 10.48550/arXiv.2412.00571
 ER  - 
 
 TY  - CONF
@@ -98,10 +101,8 @@ DO  - 10.1007/s43926-023-00049-y
 ER  - 
 
 TY  - JOUR
-AU  - Kosta, Kleanthis
-AU  - Meseguer Brocal, Gabriel
-AU  - Afchar, Darius
-AU  - Hennequin, Romain
+AU  - Kim, Yumin
+AU  - Go, Seonghyeon
 TI  - Segment Transformer: AI-Generated Music Detection via Music Structural Analysis
 JO  - arXiv preprint arXiv:2509.08283
 PY  - 2025
@@ -113,8 +114,9 @@ AU  - Kostrzewa, Daniel
 AU  - Mazur, Wojciech
 AU  - Brzeski, Robert
 TI  - Wide Ensembles of Neural Networks in Music Genre Classification
-BT  - Proceedings of MISSI 2022, Lecture Notes in Networks and Systems
+BT  - Computational Science -- ICCS 2022, Lecture Notes in Computer Science
 PY  - 2022
+VL  - 13351
 SP  - 91
 EP  - 102
 PB  - Springer
@@ -137,18 +139,10 @@ DO  - 10.48550/arXiv.2301.12503
 ER  - 
 
 TY  - JOUR
-AU  - Liu, Yi
-TI  - From Audio Deepfake Detection to AI-Generated Music Detection: A Pathway and Overview
-JO  - arXiv preprint arXiv:2412.00571
-PY  - 2024
-DO  - 10.48550/arXiv.2412.00571
-ER  - 
-
-TY  - JOUR
-AU  - Liu, Yi
-AU  - Yin, Ye
-AU  - Zhu, Qian
-AU  - Cui, Wei
+AU  - Liu, Yijie
+AU  - Yin, Yanfang
+AU  - Zhu, Qigang
+AU  - Cui, Wenzhuo
 TI  - Musical Instrument Recognition by XGBoost Combining Feature Fusion
 JO  - arXiv preprint arXiv:2206.00901
 PY  - 2022

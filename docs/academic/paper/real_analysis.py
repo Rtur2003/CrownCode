@@ -390,20 +390,31 @@ def real_roc_curves(X, y):
     for color, (name, fname) in zip(palette, model_files.items()):
         template = joblib.load(MODELS / fname)
         oof = np.zeros_like(y, dtype=float)
+        fold_aucs = []
         for tr_idx, va_idx in skf.split(Xs, y):
             mdl = clone(template)
             mdl.fit(Xs[tr_idx], y[tr_idx])
             if hasattr(mdl, "predict_proba"):
-                oof[va_idx] = mdl.predict_proba(Xs[va_idx])[:, 1]
+                p = mdl.predict_proba(Xs[va_idx])[:, 1]
             else:
-                oof[va_idx] = mdl.decision_function(Xs[va_idx])
+                p = mdl.decision_function(Xs[va_idx])
+            oof[va_idx] = p
+            f_fpr, f_tpr, _ = roc_curve(y[va_idx], p)
+            fold_aucs.append(float(auc(f_fpr, f_tpr)))
         fpr, tpr, _ = roc_curve(y, oof)
         a = auc(fpr, tpr)
-        auc_log.append({"model": name, "oof_auc": float(a)})
+        auc_log.append({
+            "model": name,
+            "oof_auc": float(a),
+            "fold_mean_auc": float(np.mean(fold_aucs)),
+            "fold_std_auc": float(np.std(fold_aucs)),
+            "fold_aucs": ";".join(f"{v:.4f}" for v in fold_aucs),
+        })
         lw = 2.5 if name == "LightGBM" else 1.4
         ax.plot(fpr, tpr, color=color, lw=lw,
                 label=f"{name} (AUC = {a:.4f})")
-        print(f"  ROC {name:<22} OOF AUC = {a:.4f}")
+        print(f"  ROC {name:<22} OOF AUC = {a:.4f}  "
+              f"fold mean+/-std = {np.mean(fold_aucs):.4f}+/-{np.std(fold_aucs):.4f}")
 
     ax.plot([0, 1], [0, 1], "k--", lw=1, alpha=0.4, label="Random (AUC = 0.500)")
     ax.set_xlabel("False Positive Rate")
