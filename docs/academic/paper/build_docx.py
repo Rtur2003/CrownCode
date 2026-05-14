@@ -811,9 +811,12 @@ def build():
            "classifiers, sorted by AUC in descending order.")
 
     figure(doc, "paper_roc_curves.png",
-           "Figure 5. ROC curves of all eleven models under 5-fold cross-validation. The dashed "
-           "diagonal corresponds to random guessing (AUC = 0.500). LightGBM and Deep MLP are "
-           "indistinguishable at the resolution of the plot, in agreement with Table 3.",
+           "Figure 5. ROC curves of the seven feature-based classifiers, computed from real "
+           "out-of-fold predictions under 5-fold cross-validation. The dashed diagonal "
+           "corresponds to random guessing (AUC = 0.500). LightGBM leads at AUC = 0.9545, with "
+           "XGBoost (0.9463) and the Random Forest / Gradient Boosting pair close behind; "
+           "Logistic Regression trails at 0.8511. ROC-AUC values for the four deep learning "
+           "architectures are reported in Table 3 and Figure 4.",
            width_cm=11.5)
 
     figure(doc, "all_models_heatmap.png",

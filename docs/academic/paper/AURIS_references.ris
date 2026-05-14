@@ -1,0 +1,217 @@
+TY  - JOUR
+AU  - Baevski, Alexei
+AU  - Zhou, Yuhao
+AU  - Mohamed, Abdelrahman
+AU  - Auli, Michael
+TI  - wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations
+JO  - Advances in Neural Information Processing Systems
+PY  - 2020
+VL  - 33
+SP  - 12449
+EP  - 12460
+DO  - 10.5555/3495724.3496768
+ER  - 
+
+TY  - CONF
+AU  - Afchar, Darius
+AU  - Meseguer Brocal, Gabriel
+AU  - Hennequin, Romain
+TI  - AI-Generated Music Detection and Its Challenges
+BT  - Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2025)
+PY  - 2025
+PB  - IEEE
+DO  - 10.48550/arXiv.2501.10111
+ER  - 
+
+TY  - JOUR
+AU  - Bhatt, Aditya
+AU  - Rajan, Anju
+TI  - AI-Generated Music Detection: A Survey of Methods and Datasets
+JO  - arXiv preprint
+PY  - 2025
+ER  - 
+
+TY  - CONF
+AU  - Copet, Jade
+AU  - Kreuk, Felix
+AU  - Gat, Itai
+AU  - Remez, Tal
+AU  - Kant, David
+AU  - Synnaeve, Gabriel
+AU  - Adi, Yossi
+AU  - D\'efossez, Alexandre
+TI  - Simple and Controllable Music Generation
+BT  - Advances in Neural Information Processing Systems
+PY  - 2023
+VL  - 36
+DO  - 10.48550/arXiv.2306.05284
+ER  - 
+
+TY  - CONF
+AU  - Elizalde, Benjamin
+AU  - Deshmukh, Soham
+AU  - Al Ismail, Mahmoud
+AU  - Wang, Huaming
+TI  - CLAP: Learning Audio Concepts from Natural Language Supervision
+BT  - Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2023)
+PY  - 2023
+SP  - 1
+EP  - 5
+PB  - IEEE
+DO  - 10.1109/ICASSP49357.2023.10095889
+ER  - 
+
+TY  - CONF
+AU  - Frank, Joel
+AU  - Sch\"onherr, Lea
+TI  - WaveFake: A Data Set to Facilitate Audio Deepfake Detection
+BT  - Advances in Neural Information Processing Systems 2021 Datasets and Benchmarks Track
+PY  - 2021
+DO  - 10.5281/zenodo.5642694
+ER  - 
+
+TY  - JOUR
+AU  - Gan, Rong
+AU  - Huang, Tao
+AU  - Shao, Jiahao
+AU  - Wang, Fei
+TI  - Music Genre Classification Based on VMD-IWOA-XGBoost
+JO  - Mathematics
+PY  - 2024
+VL  - 12
+IS  - 10
+SP  - 1549
+DO  - 10.3390/math12101549
+ER  - 
+
+TY  - JOUR
+AU  - Gourisaria, Mahendra Kumar
+AU  - Agrawal, Ravi
+AU  - Sahni, Manish
+TI  - Comparative Analysis of Audio Classification with MFCC and STFT Features Using Machine Learning Techniques
+JO  - Discover Internet of Things
+PY  - 2024
+VL  - 4
+IS  - 1
+SP  - 1
+DO  - 10.1007/s43926-023-00049-y
+ER  - 
+
+TY  - JOUR
+AU  - Kosta, Kleanthis
+AU  - Meseguer Brocal, Gabriel
+AU  - Afchar, Darius
+AU  - Hennequin, Romain
+TI  - Segment Transformer: AI-Generated Music Detection via Music Structural Analysis
+JO  - arXiv preprint arXiv:2509.08283
+PY  - 2025
+DO  - 10.48550/arXiv.2509.08283
+ER  - 
+
+TY  - CONF
+AU  - Kostrzewa, Daniel
+AU  - Mazur, Wojciech
+AU  - Brzeski, Robert
+TI  - Wide Ensembles of Neural Networks in Music Genre Classification
+BT  - Proceedings of MISSI 2022, Lecture Notes in Networks and Systems
+PY  - 2022
+SP  - 91
+EP  - 102
+PB  - Springer
+DO  - 10.1007/978-3-031-08754-7_9
+ER  - 
+
+TY  - CONF
+AU  - Liu, Haohe
+AU  - Chen, Zehua
+AU  - Yuan, Yi
+AU  - Mei, Xinhao
+AU  - Liu, Xubo
+AU  - Mandic, Danilo
+AU  - Wang, Wenwu
+AU  - Plumbley, Mark D.
+TI  - AudioLDM: Text-to-Audio Generation with Latent Diffusion Models
+BT  - Proceedings of the International Conference on Machine Learning (ICML 2023)
+PY  - 2023
+DO  - 10.48550/arXiv.2301.12503
+ER  - 
+
+TY  - JOUR
+AU  - Liu, Yi
+TI  - From Audio Deepfake Detection to AI-Generated Music Detection: A Pathway and Overview
+JO  - arXiv preprint arXiv:2412.00571
+PY  - 2024
+DO  - 10.48550/arXiv.2412.00571
+ER  - 
+
+TY  - JOUR
+AU  - Liu, Yi
+AU  - Yin, Ye
+AU  - Zhu, Qian
+AU  - Cui, Wei
+TI  - Musical Instrument Recognition by XGBoost Combining Feature Fusion
+JO  - arXiv preprint arXiv:2206.00901
+PY  - 2022
+DO  - 10.48550/arXiv.2206.00901
+ER  - 
+
+TY  - CONF
+AU  - Mart\'in-Do\~nas, Juan Manuel
+AU  - \'Alvarez, Aitor
+TI  - The Vicomtech Audio Deepfake Detection System Based on Wav2vec2 for the 2022 ADD Challenge
+BT  - Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2022)
+PY  - 2022
+SP  - 9266
+EP  - 9270
+PB  - IEEE
+DO  - 10.1109/ICASSP43922.2022.9747768
+ER  - 
+
+TY  - CONF
+AU  - Wu, Yusong
+AU  - Chen, Ke
+AU  - Zhang, Tianyu
+AU  - Hui, Yuchen
+AU  - Berg-Kirkpatrick, Taylor
+AU  - Dubnov, Shlomo
+TI  - Large-Scale Contrastive Language-Audio Pretraining with Feature Fusion and Keyword-to-Caption Augmentation
+BT  - Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2023)
+PY  - 2023
+SP  - 1
+EP  - 5
+PB  - IEEE
+DO  - 10.1109/ICASSP49357.2023.10095969
+ER  - 
+
+TY  - CONF
+AU  - Yi, Jiangyan
+AU  - Fu, Ruibo
+AU  - Tao, Jianhua
+AU  - Nie, Shuai
+AU  - Ma, Haitao
+AU  - Wang, Chenglong
+AU  - Wang, Tao
+AU  - Tian, Zhengkun
+AU  - Bai, Ye
+AU  - Fan, Cunhang
+TI  - ADD 2022: The First Audio Deep Synthesis Detection Challenge
+BT  - Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2022)
+PY  - 2022
+SP  - 9216
+EP  - 9220
+PB  - IEEE
+DO  - 10.1109/ICASSP43922.2022.9746939
+ER  - 
+
+TY  - JOUR
+AU  - Yi, Jiangyan
+AU  - Wang, Chenglong
+AU  - Tao, Jianhua
+AU  - Zhang, Xiaohui
+AU  - Zhang, Chu Yuan
+AU  - Zhao, Yan
+TI  - Audio Deepfake Detection: A Survey
+JO  - arXiv preprint
+PY  - 2023
+DO  - 10.48550/arXiv.2308.14970
+ER  - 
