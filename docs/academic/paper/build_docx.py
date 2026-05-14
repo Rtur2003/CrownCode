@@ -284,11 +284,14 @@ def algorithm_box(doc, title, lines):
 def build():
     doc = Document()
 
+    # GUJSA template: A4 page, margins top 3.0 / bottom 2.0 / left 2.0 / right 2.0 cm
     for section in doc.sections:
-        section.top_margin    = Cm(2.5)
-        section.bottom_margin = Cm(2.5)
-        section.left_margin   = Cm(2.5)
-        section.right_margin  = Cm(2.5)
+        section.page_width    = Cm(21.0)
+        section.page_height   = Cm(29.7)
+        section.top_margin    = Cm(3.0)
+        section.bottom_margin = Cm(2.0)
+        section.left_margin   = Cm(2.0)
+        section.right_margin  = Cm(2.0)
 
     # ╔════════════════════════════════════════════════════════════════════╗
     # ║  TITLE PAGE                                                          ║
@@ -479,13 +482,13 @@ def build():
 
     body(doc, (
         "Figure 1 provides an end-to-end view of the system. The remainder of the paper is "
-        "organised as follows. Section 2 reviews related work in audio deepfake detection, "
-        "transformer-based audio representations, ensemble methods for audio, and recent "
-        "AI-music detection literature. Section 3 describes the dataset, the feature extraction "
-        "pipeline, the eleven classification models, and the training protocol. Section 4 reports "
-        "experimental results across all models and discusses feature importance and calibration. "
-        "Section 5 interprets the findings and acknowledges the limitations of the present study, "
-        "and Section 6 concludes with directions for future work. The system is publicly available "
+        "organised as follows. The rest of this section reviews related work in audio deepfake "
+        "detection, transformer-based audio representations, ensemble methods for audio, and "
+        "recent AI-music detection literature. Section 2 describes the dataset, the feature "
+        "extraction pipeline, the eleven classification models, and the training protocol. "
+        "Section 3 reports experimental results across all models, interprets feature "
+        "importance and calibration, and acknowledges the limitations of the present study. "
+        "Section 4 concludes with directions for future work. The system is publicly available "
         "at https://huggingface.co/spaces/Rtur2003/AURIS."
     ))
 
@@ -499,9 +502,7 @@ def build():
     # ║  2. RELATED WORK                                                     ║
     # ╚════════════════════════════════════════════════════════════════════╝
 
-    heading(doc, "2. Related Work")
-
-    subheading(doc, "2.1. Audio Deepfake Detection for Speech")
+    subheading(doc, "1.1. Audio Deepfake Detection for Speech")
     body(doc, (
         "Audio deepfake detection became an active research area shortly after the appearance of "
         "high-quality neural text-to-speech systems. The WaveFake dataset (Frank & Schönherr, 2021) "
@@ -516,7 +517,7 @@ def build():
         "(LCNN, ResNet, conformer-based systems)."
     ))
 
-    subheading(doc, "2.2. Transformer-Based Audio Representations")
+    subheading(doc, "1.2. Transformer-Based Audio Representations")
     body(doc, (
         "Self-supervised transformer encoders have reshaped the way audio is represented in "
         "downstream tasks. Baevski et al. (2020) introduced wav2vec 2.0, in which a transformer "
@@ -532,7 +533,7 @@ def build():
         "audio generators (Liu et al., 2023)."
     ))
 
-    subheading(doc, "2.3. Ensemble Methods and Gradient Boosting for Audio")
+    subheading(doc, "1.3. Ensemble Methods and Gradient Boosting for Audio")
     body(doc, (
         "Ensemble approaches have consistently outperformed single-model classifiers in music "
         "analysis. Kostrzewa et al. (2022) report that wide ensembles of neural networks with "
@@ -547,7 +548,7 @@ def build():
         "outperforms either alone — a finding that motivates the hybrid feature set used by AURIS."
     ))
 
-    subheading(doc, "2.4. AI Music Generation Systems")
+    subheading(doc, "1.4. AI Music Generation Systems")
     body(doc, (
         "The detection problem cannot be discussed without the systems that produce the audio. "
         "MusicGen (Copet et al., 2023) introduced a single-stage transformer-based autoregressive "
@@ -560,7 +561,7 @@ def build():
         "of generators that AURIS is trained to detect."
     ))
 
-    subheading(doc, "2.5. Recent Advances in AI Music Detection (2025–2026)")
+    subheading(doc, "1.5. Recent Advances in AI Music Detection (2024–2025)")
     body(doc, (
         "The most directly relevant work appeared during 2024–2025. Li et al. (2024) provide a "
         "pathway and overview connecting audio deepfake detection methodology to the emerging "
@@ -581,9 +582,9 @@ def build():
     # ║  3. MATERIAL AND METHOD                                              ║
     # ╚════════════════════════════════════════════════════════════════════╝
 
-    heading(doc, "3. Material and Method")
+    heading(doc, "2. Material and Method")
 
-    subheading(doc, "3.1. Dataset")
+    subheading(doc, "2.1. Dataset")
     body(doc, (
         "The AURIS training set comprises 5,195 audio samples drawn from public repositories on "
         "HuggingFace Hub. Of these, 2,082 are AI-generated (label = 1) and 3,113 are human-composed "
@@ -624,9 +625,9 @@ def build():
     figure(doc, "feature_distribution_ai_vs_human.png",
            "Figure 2. Distribution of selected acoustic features for AI-generated (red) and "
            "human-composed (green) samples. The separation visible in spectral flatness and "
-           "onset strength previews the importance ranking reported in Section 4.3.")
+           "onset strength previews the importance ranking reported in Section 3.4.")
 
-    subheading(doc, "3.2. Feature Extraction")
+    subheading(doc, "2.2. Feature Extraction")
     body(doc, (
         "Each audio sample is summarised by a 47-dimensional feature vector extracted with the "
         "librosa library (version 0.10.1). The features are organised into four families. The "
@@ -659,7 +660,7 @@ def build():
         "the train/validation boundary."
     ))
 
-    subheading(doc, "3.3. Classification Models")
+    subheading(doc, "2.3. Classification Models")
     body(doc, (
         "AURIS trains eleven models on the 47-dimensional feature vector. Seven of these belong "
         "to the classical machine-learning family: Logistic Regression (C = 2.0, "
@@ -706,7 +707,7 @@ def build():
         table_row(tbl_hp, i + 1, row_data, bg=bg)
     caption(doc, "Table 2. Key hyperparameters for the eleven AURIS classifiers.")
 
-    subheading(doc, "3.4. Training Protocol and Threshold Optimisation")
+    subheading(doc, "2.4. Training Protocol and Threshold Optimisation")
     body(doc, (
         "All models are evaluated under the same 5-fold stratified cross-validation protocol, "
         "which preserves the class ratio in every fold. For each fold, the training procedure "
@@ -765,9 +766,9 @@ def build():
     # ║  4. RESULTS                                                          ║
     # ╚════════════════════════════════════════════════════════════════════╝
 
-    heading(doc, "4. Results")
+    heading(doc, "3. Results and Discussion")
 
-    subheading(doc, "4.1. Overall Model Performance")
+    subheading(doc, "3.1. Overall Model Performance")
     body(doc, (
         "Table 3 reports the 5-fold cross-validation results for the eleven models, sorted by "
         "ROC-AUC. LightGBM obtained the highest mean ROC-AUC of 0.9549, with Deep MLP a very "
@@ -825,7 +826,7 @@ def build():
            "across the pool, while off-diagonal mass concentrates on a small set of ambiguous "
            "tracks.")
 
-    subheading(doc, "4.2. ML versus DL: Where Does the Improvement Come From?")
+    subheading(doc, "3.2. ML versus DL: Where Does the Improvement Come From?")
     body(doc, (
         "Figure 7 contrasts the two families directly. The seven ML classifiers reach a mean "
         "ROC-AUC of 0.9275, while the four DL architectures reach 0.9197 — but only because the "
@@ -845,7 +846,7 @@ def build():
            "accuracy, ROC-AUC and F1. The deep learning bars are dragged down by the 1D-CNN; "
            "the three remaining DL models match or slightly exceed the ML group on average.")
 
-    subheading(doc, "4.3. Cross-Fold Stability")
+    subheading(doc, "3.3. Cross-Fold Stability")
     body(doc, (
         "Table 4 reports fold-level AUC statistics for the four DL architectures. Deep MLP shows "
         "the lowest variance among the DL group (standard deviation 0.0036), indicating that its "
@@ -890,7 +891,7 @@ def build():
            "(±0.0023).",
            width_cm=15.0)
 
-    subheading(doc, "4.4. Feature Importance")
+    subheading(doc, "3.4. Feature Importance")
     body(doc, (
         "Table 5 lists the top twenty features ranked by normalised gain in the trained LightGBM "
         "model. Spectral flatness — measured both as a per-frame standard deviation and as a "
@@ -940,7 +941,7 @@ def build():
            "that high spectral flatness pushes predictions toward the human class.",
            width_cm=12.0)
 
-    subheading(doc, "4.5. Confusion, Score Distribution and Calibration")
+    subheading(doc, "3.5. Confusion, Score Distribution and Calibration")
     body(doc, (
         "Figure 11 shows the confusion matrix obtained when the LightGBM predictions on the "
         "aggregated 5-fold validation sets are thresholded at the Youden-optimal value "
@@ -993,7 +994,7 @@ def build():
            "class ratio.",
            width_cm=10.5)
 
-    subheading(doc, "4.6. Threshold Sweep and Decision Operating Points")
+    subheading(doc, "3.6. Threshold Sweep and Decision Operating Points")
     body(doc, (
         "Figure 15 reports a fine-grained sweep of the decision threshold from 0 to 1 in 0.01 "
         "steps. The accuracy curve peaks broadly around θ ≈ 0.40, while F1 reaches its maximum "
@@ -1008,7 +1009,7 @@ def build():
            "Figure 15. Threshold sweep for LightGBM. Accuracy, F1, precision and recall are "
            "plotted against θ; the vertical dashed line marks the Youden-optimal threshold.")
 
-    subheading(doc, "4.7. Per-Generator Performance")
+    subheading(doc, "3.7. Per-Generator Performance")
     body(doc, (
         "Because the AI portion of the dataset spans more than a dozen generation systems, "
         "per-source performance is informative beyond the aggregate metrics. Figure 16 reports "
@@ -1041,9 +1042,7 @@ def build():
     # ║  5. DISCUSSION                                                       ║
     # ╚════════════════════════════════════════════════════════════════════╝
 
-    heading(doc, "5. Discussion")
-
-    subheading(doc, "5.1. Why Spectral Flatness Dominates")
+    subheading(doc, "3.8. Why Spectral Flatness Dominates")
     body(doc, (
         "The dominance of spectral flatness in the feature-importance ranking is interpretable "
         "and consistent with the broader audio-deepfake literature (Yi et al., 2023). Spectral "
@@ -1057,7 +1056,7 @@ def build():
         "long stretches of audio, and gradient boosting captures it well."
     ))
 
-    subheading(doc, "5.2. Cross-Generator Generalisation")
+    subheading(doc, "3.9. Cross-Generator Generalisation")
     body(doc, (
         "The dataset spans twelve or more AI generation systems, ranging from the autoregressive "
         "transformers used by MusicGen and Suno to the latent diffusion models used by AudioLDM, "
@@ -1072,7 +1071,7 @@ def build():
         "task; the 0.95 AUC is, however, achieved on a much harder multi-generator setting."
     ))
 
-    subheading(doc, "5.3. Why the 1D-CNN Underperforms")
+    subheading(doc, "3.10. Why the 1D-CNN Underperforms")
     body(doc, (
         "The poor performance of the 1D-CNN (AUC 0.8442) is not an artefact of training. It is "
         "an architectural mismatch. A one-dimensional convolution is designed to exploit local "
@@ -1085,7 +1084,7 @@ def build():
         "DL architectures, which operate on the vector as a whole, behave normally."
     ))
 
-    subheading(doc, "5.4. Calibration and Operational Utility")
+    subheading(doc, "3.11. Calibration and Operational Utility")
     body(doc, (
         "Operational deployments of detection systems often need to choose a decision point "
         "based on a target precision or recall. A Brier score of 0.083 makes this possible "
@@ -1097,7 +1096,7 @@ def build():
         "in Figure 15."
     ))
 
-    subheading(doc, "5.5. Overfit Diagnosis")
+    subheading(doc, "3.12. Overfit Diagnosis")
     body(doc, (
         "A direct way to ask whether the ensemble memorises rather than generalises is to "
         "compare the training-set accuracy of each model against its 5-fold cross-validation "
@@ -1119,7 +1118,7 @@ def build():
            "memorising the training set rather than generalising. Only Logistic Regression "
            "shows no overfit.")
 
-    subheading(doc, "5.6. Feature Redundancy")
+    subheading(doc, "3.13. Feature Redundancy")
     body(doc, (
         "The 47 features are by design redundant — they cover overlapping aspects of spectrum, "
         "rhythm and voice — but the redundancy is heavier than one might expect. Twenty "
@@ -1140,7 +1139,7 @@ def build():
            "lower-right corner is the most internally correlated block.",
            width_cm=14.0)
 
-    subheading(doc, "5.7. How Many Features Are Actually Needed?")
+    subheading(doc, "3.14. How Many Features Are Actually Needed?")
     body(doc, (
         "Figure 20 reports a feature ablation experiment. Features are ranked by LightGBM "
         "importance and the top-N for N ∈ {1, 3, 5, 10, 15, 20, 30, 47} are passed back through "
@@ -1160,7 +1159,7 @@ def build():
            "retained, ranked by importance. The plateau begins at roughly 20 features; the "
            "last 17 features do not change measured accuracy.")
 
-    subheading(doc, "5.8. Limitations")
+    subheading(doc, "3.15. Limitations")
     body(doc, (
         "Four limitations are worth recording explicitly. First, features are extracted from the "
         "full clip, which is typically between fifteen and thirty seconds long; shorter clips "
@@ -1183,18 +1182,22 @@ def build():
     # ║  6. CONCLUSION                                                       ║
     # ╚════════════════════════════════════════════════════════════════════╝
 
-    heading(doc, "6. Conclusion")
+    heading(doc, "4. Conclusion")
     body(doc, (
         "This paper has presented AURIS, an end-to-end system for detecting AI-generated music "
         "that combines a 47-dimensional handcrafted acoustic feature vector with an ensemble of "
         "eleven classification models trained on 5,195 samples drawn from twelve or more AI "
         "generation systems. The principal empirical findings are as follows. LightGBM achieves "
-        "the highest mean ROC-AUC at 0.9549, narrowly ahead of Deep MLP at 0.9537. Spectral "
-        "flatness is the single most informative feature for the AI-versus-human distinction, a "
-        "pattern that is interpretable in terms of the difference between synthetic and recorded "
-        "spectra. Per-fold Youden's J threshold optimisation systematically outperforms the "
-        "default 0.5 cutoff under the present 1:1.5 class imbalance, and the resulting model is "
-        "well calibrated, with a Brier score of 0.083 on the aggregated validation predictions."
+        "the highest mean ROC-AUC at 0.9548, narrowly ahead of Deep MLP at 0.9542, and also the "
+        "lowest fold-to-fold variance (±0.0023). Spectral flatness is the single most informative "
+        "feature for the AI-versus-human distinction, a pattern that is interpretable in terms of "
+        "the difference between synthetic and recorded spectra. Per-fold Youden's J threshold "
+        "optimisation systematically outperforms the default 0.5 cutoff under the present 1:1.5 "
+        "class imbalance, and the resulting model is well calibrated, with a Brier score of 0.083 "
+        "on the aggregated validation predictions. Two limitations are made explicit by the "
+        "diagnostic analysis: every tree ensemble shows an 8-14 percentage-point gap between "
+        "training and cross-validation accuracy, and the feature ablation shows that the bottom "
+        "seventeen of the 47 features add no measurable accuracy."
     ))
     body(doc, (
         "Future work will pursue four directions. First, a formal cross-generator held-out "
@@ -1209,8 +1212,21 @@ def build():
     ))
 
     # ╔════════════════════════════════════════════════════════════════════╗
-    # ║  AUTHOR CONTRIBUTIONS, AI DISCLOSURE, ETC.                           ║
+    # ║  AI DISCLOSURE, AUTHOR CONTRIBUTIONS, ETC.                           ║
     # ╚════════════════════════════════════════════════════════════════════╝
+
+    heading(doc, "AI Disclosure")
+    body(doc, (
+        "Generative AI tools were used as an assistive aid during the preparation of this "
+        "manuscript. Specifically, a large language model assisted with code for figure "
+        "generation, with the statistical analysis scripts (cross-validation re-runs, SHAP "
+        "computation, feature ablation and correlation analysis), and with language editing of "
+        "the manuscript text. All experimental results, figures and tables were computed from "
+        "the author's own dataset and trained models; every reported numerical value was "
+        "verified against the underlying data. The author reviewed, validated and takes full "
+        "responsibility for the integrity and accuracy of all content, including any "
+        "AI-assisted results."
+    ))
 
     heading(doc, "Author Contributions")
     body(doc, (
