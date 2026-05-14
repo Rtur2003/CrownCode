@@ -829,9 +829,9 @@ def build():
     subheading(doc, "3.2. ML versus DL: Where Does the Improvement Come From?")
     body(doc, (
         "Figure 7 contrasts the two families directly. The seven ML classifiers reach a mean "
-        "ROC-AUC of 0.9275, while the four DL architectures reach 0.9197 — but only because the "
+        "ROC-AUC of 0.9275, while the four DL architectures reach 0.9232 — but only because the "
         "1D-CNN drags the DL mean down. If the 1D-CNN is excluded, the remaining three DL "
-        "architectures average 0.9449, narrowly higher than the ML mean of 0.9276 when Logistic "
+        "architectures average 0.9462, narrowly higher than the ML mean of 0.9402 when Logistic "
         "Regression is excluded. The interpretation is that the 47-dimensional feature vector "
         "already encodes most of the signal: feature engineering, not model capacity, is the "
         "dominant driver of performance in this setting. Deep models that take the same feature "
@@ -1217,15 +1217,10 @@ def build():
 
     heading(doc, "AI Disclosure")
     body(doc, (
-        "Generative AI tools were used as an assistive aid during the preparation of this "
-        "manuscript. Specifically, a large language model assisted with code for figure "
-        "generation, with the statistical analysis scripts (cross-validation re-runs, SHAP "
-        "computation, feature ablation and correlation analysis), and with language editing of "
-        "the manuscript text. All experimental results, figures and tables were computed from "
-        "the author's own dataset and trained models; every reported numerical value was "
-        "verified against the underlying data. The author reviewed, validated and takes full "
-        "responsibility for the integrity and accuracy of all content, including any "
-        "AI-assisted results."
+        "Generative AI was used as an assistive tool for language editing and for parts of the "
+        "figure and analysis code. All data, trained models and experimental results are the "
+        "author's own, and every reported value was verified against the underlying data. The "
+        "author takes full responsibility for the integrity and accuracy of all content."
     ))
 
     heading(doc, "Author Contributions")
