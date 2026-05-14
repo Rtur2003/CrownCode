@@ -845,16 +845,24 @@ def build():
            "accuracy, ROC-AUC and F1. The deep learning bars are dragged down by the 1D-CNN; "
            "the three remaining DL models match or slightly exceed the ML group on average.")
 
-    subheading(doc, "4.3. Cross-Fold Stability of Deep Models")
+    subheading(doc, "4.3. Cross-Fold Stability")
     body(doc, (
         "Table 4 reports fold-level AUC statistics for the four DL architectures. Deep MLP shows "
-        "the lowest variance (standard deviation 0.0036), indicating that its performance is "
-        "robust across different partitions of the dataset. Residual MLP behaves similarly "
-        "(±0.0044). Attention MLP is more variable (±0.0056), and the 1D-CNN shows both the "
-        "lowest mean AUC and the highest variance (±0.0087), which is consistent with the "
+        "the lowest variance among the DL group (standard deviation 0.0036), indicating that its "
+        "performance is robust across different partitions of the dataset. Residual MLP behaves "
+        "similarly (±0.0044). Attention MLP is more variable (±0.0056), and the 1D-CNN shows both "
+        "the lowest mean AUC and the highest variance (±0.0087), which is consistent with the "
         "architectural mismatch noted above: a one-dimensional convolution over an unordered "
-        "47-dimensional feature vector has no temporal correlations to exploit. Figure 8 visualises "
-        "the fold-by-fold spread."
+        "47-dimensional feature vector has no temporal correlations to exploit. Figure 8 extends "
+        "this view to all eleven models, with the per-fold AUC values obtained from a real 5-fold "
+        "out-of-fold re-run for the seven feature-based classifiers and from the original "
+        "cross-validation logs for the four deep models. The most stable model overall is "
+        "LightGBM, whose fold standard deviation of 0.0023 is the lowest in the entire pool — its "
+        "five fold AUCs span only 0.9515 to 0.9580. XGBoost (±0.0029) and Gradient Boosting "
+        "(±0.0038) follow. The least stable models are the 1D-CNN (±0.0087) and SVM-RBF "
+        "(±0.0075). The ranking by stability tracks the ranking by mean AUC fairly closely: the "
+        "models that score highest also vary least, which is the desirable pattern for a "
+        "deployable detector."
     ))
 
     # Table 4 — DL stability
@@ -876,8 +884,11 @@ def build():
                  "Deep MLP combines the highest mean with the lowest variance.")
 
     figure(doc, "paper_fold_std_table.png",
-           "Figure 8. Cross-validation AUC distribution per model. Box plots show median, "
-           "interquartile range and outliers across folds.")
+           "Figure 8. Per-fold ROC-AUC for all eleven models, sorted by mean AUC. The five "
+           "individual fold values, their mean and their standard deviation are shown for each "
+           "model. LightGBM combines the highest mean with the lowest fold-to-fold variance "
+           "(±0.0023).",
+           width_cm=15.0)
 
     subheading(doc, "4.4. Feature Importance")
     body(doc, (
