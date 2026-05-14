@@ -749,7 +749,7 @@ def build():
         "BCEWithLogitsLoss. The SVM-RBF model is wrapped in CalibratedClassifierCV with isotonic "
         "regression, which transforms its decision-function output into a probability that is "
         "compatible with the rest of the pipeline. The Brier score is reported alongside the ROC "
-        "metrics in Section 4.5 to confirm that the probabilities produced by the best model are "
+        "metrics in Section 3.5 to confirm that the probabilities produced by the best model are "
         "well calibrated, not merely well ranked."
     ))
 
