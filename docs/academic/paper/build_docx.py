@@ -961,8 +961,8 @@ def build():
         "value confirms that the probabilities produced by LightGBM are reliable estimates and "
         "not merely good ranking scores; downstream thresholding can therefore be carried out "
         "with predictable precision–recall trade-offs. Figure 14 finally shows the "
-        "precision–recall curve, with an average precision of approximately 0.95, an order of "
-        "magnitude above the no-skill baseline implied by the 1:1.5 class ratio."
+        "precision–recall curve, with an average precision of 0.934, well above the no-skill "
+        "baseline of 0.401 implied by the 1:1.5 class ratio."
     ))
 
     figure(doc, "paper_score_distribution.png",
