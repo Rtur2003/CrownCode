@@ -92,7 +92,7 @@ def start_one_column_section(doc) -> None:
     _set_cols(new_sec, 1)
 
 
-def _set_font(run, *, size=8.5, bold=False, italic=False,
+def _set_font(run, *, size=9, bold=False, italic=False,
               color=DARK, name="Times New Roman"):
     run.font.name = name
     run.font.size = Pt(size)
@@ -109,7 +109,7 @@ def _set_font(run, *, size=8.5, bold=False, italic=False,
         rFonts.set(qn(attr), name)
 
 
-def body(doc, text: str, *, size=8.5, justify=True, indent_cm=0.5):
+def body(doc, text: str, *, size=9, justify=True, indent_cm=0.5):
     """Gövde metin — Gazi MMF Dergisi: Times New Roman 8.5pt, justify, ilk satır girintisi 0.5 cm"""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY if justify else WD_ALIGN_PARAGRAPH.LEFT
@@ -133,7 +133,7 @@ def heading(doc, text: str, *, all_caps=False):
     pf.space_after = Pt(4)
     pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
     r = p.add_run(text)
-    _set_font(r, size=8.5, bold=True)
+    _set_font(r, size=9, bold=True)
     _set_keep_with_next(p)
     return p
 
@@ -147,7 +147,7 @@ def subheading(doc, text: str):
     pf.space_after = Pt(2)
     pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
     r = p.add_run(text)
-    _set_font(r, size=8.5, bold=True, italic=True)
+    _set_font(r, size=9, bold=True, italic=True)
     _set_keep_with_next(p)
     return p
 
@@ -174,7 +174,7 @@ def figure(doc, filename: str, caption_tr: str, caption_en: str,
     cf.space_before = Pt(2)
     cf.space_after = Pt(0)
     r1 = c1.add_run(caption_tr)
-    _set_font(r1, size=8.5, bold=True)
+    _set_font(r1, size=9, bold=True)
     _set_keep_with_next(c1)
 
     # Italic EN caption parantez içinde — 8.5pt italic
@@ -184,7 +184,7 @@ def figure(doc, filename: str, caption_tr: str, caption_en: str,
     cf.space_before = Pt(0)
     cf.space_after = Pt(8)
     r2 = c2.add_run(f"({caption_en})")
-    _set_font(r2, size=8.5, italic=True)
+    _set_font(r2, size=9, italic=True)
 
 
 def table_caption(doc, caption_tr: str, caption_en: str) -> None:
@@ -195,7 +195,7 @@ def table_caption(doc, caption_tr: str, caption_en: str) -> None:
     pf.space_before = Pt(8)
     pf.space_after = Pt(0)
     r = p.add_run(caption_tr)
-    _set_font(r, size=8.5, bold=True)
+    _set_font(r, size=9, bold=True)
     _set_keep_with_next(p)
 
     p2 = doc.add_paragraph()
@@ -204,7 +204,7 @@ def table_caption(doc, caption_tr: str, caption_en: str) -> None:
     pf2.space_before = Pt(0)
     pf2.space_after = Pt(2)
     r2 = p2.add_run(f"({caption_en})")
-    _set_font(r2, size=8.5, italic=True)
+    _set_font(r2, size=9, italic=True)
     _set_keep_with_next(p2)
 
 
@@ -318,13 +318,13 @@ def build():
         pf.left_indent = Cm(0.5)
         pf.space_after = Pt(3)
         r = p.add_run(h)
-        _set_font(r, size=8.5)
+        _set_font(r, size=9)
 
     subheading(doc, "Makale Bilgileri")
     body(doc, "Araştırma Makalesi  ·  Geliş: 20.05.2026  ·  "
               "Anahtar Kelimeler: Yapay zekâ tarafından üretilen müzik, "
               "derin öğrenme, gradyan artırma, topluluk öğrenmesi, ses sınıflandırması, "
-              "spektral düzlük.", size=8.5)
+              "spektral düzlük.", size=9)
 
     subheading(doc, "ÖZ")
     body(doc, (
@@ -355,11 +355,11 @@ def build():
         "ağaç tabanlı tüm modellerin eğitim ve çapraz doğrulama doğrulukları arasında "
         "8-14 puanlık bir fark sergilediğini ve mevcut 47 özniteliğin yaklaşık 17 "
         "tanesinin ölçülebilir bir ek doğruluk sağlamadığını ortaya koymuştur."
-    ), size=8.5)
+    ), size=9)
 
     subheading(doc, "Anahtar Kelimeler")
     body(doc, "Yapay zekâ tarafından üretilen müzik · Derin öğrenme · Gradyan artırma · "
-              "Topluluk öğrenmesi · Ses sınıflandırması · Spektral düzlük", size=8.5)
+              "Topluluk öğrenmesi · Ses sınıflandırması · Spektral düzlük", size=9)
 
     # ── İngilizce blok ──
     p = doc.add_paragraph()
@@ -386,7 +386,7 @@ def build():
         pf.left_indent = Cm(0.5)
         pf.space_after = Pt(3)
         r = p.add_run(h)
-        _set_font(r, size=8.5, italic=True)
+        _set_font(r, size=9, italic=True)
 
     subheading(doc, "ABSTRACT")
     body(doc, (
@@ -404,11 +404,11 @@ def build():
         "0.083 confirms that the probability outputs are well calibrated. Diagnostic analysis "
         "shows an 8-14 point train-CV accuracy gap for all tree-based models and reveals that "
         "roughly 17 of the 47 features contribute no measurable accuracy."
-    ), size=8.5)
+    ), size=9)
 
     subheading(doc, "Keywords")
     body(doc, "AI-generated music · Deep learning · Gradient boosting · Ensemble learning · "
-              "Audio classification · Spectral flatness", size=8.5)
+              "Audio classification · Spectral flatness", size=9)
 
     # ══════════════════════════════════════════════════════════════════
     # Kapak bitti — buradan itibaren ÇİFT KOLONLU yapı (Gazi MMF Dergisi)
@@ -500,7 +500,7 @@ def build():
         p.paragraph_format.space_after = Pt(6)
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         r = p.add_run(bullet)
-        _set_font(r, size=8.5)
+        _set_font(r, size=9)
 
     body(doc, (
         "Bu makalenin geri kalanı şu şekilde yapılandırılmıştır: 1.1-1.5 alt bölümleri "
