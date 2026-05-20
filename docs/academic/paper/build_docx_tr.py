@@ -150,7 +150,7 @@ def subheading(doc, text: str):
 
 
 def figure(doc, filename: str, caption_tr: str, caption_en: str,
-           *, width_cm: float = 14.0) -> None:
+           *, width_cm: float = 8.0) -> None:
     img = FIGURES / filename
     if not img.exists():
         body(doc, f"[FIGURE MISSING: {filename}]")
