@@ -1269,10 +1269,9 @@ def build():
         "Mining (KDD '16), 785-794, San Francisco, CA, A.B.D., 13-17 Ağustos, 2016. "
         "DOI: 10.1145/2939672.2939785.",
 
-        "Ke G., Meng Q., Finley T., Wang T., Chen W., Ma W., Ye Q., Liu T.Y., LightGBM: "
-        "A Highly Efficient Gradient Boosting Decision Tree, Advances in Neural "
-        "Information Processing Systems 30 (NIPS 2017), 3149-3157, Long Beach, "
-        "California, A.B.D., 4-9 Aralık, 2017.",
+        "Ke G. vd., LightGBM: A Highly Efficient Gradient Boosting Decision Tree, "
+        "Advances in Neural Information Processing Systems 30 (NIPS 2017), 3149-3157, "
+        "Long Beach, California, A.B.D., 4-9 Aralık, 2017.",
 
         "Lundberg S.M., Lee S.I., A Unified Approach to Interpreting Model Predictions, "
         "Advances in Neural Information Processing Systems 30 (NIPS 2017), 4768-4777, "
