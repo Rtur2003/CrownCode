@@ -1,0 +1,1592 @@
+
+========== PAGE 1 ==========
+Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993 
+ 
+ 
+ 
+A novel bidirectional long short-term memory model with multi-head attention for accurate 
+language detection 
+ 
+Sinan Toklu1*,  Abdullah Talha Kabakuş2  
+1Department of Computer Engineering, Faculty of Technology, Gazi University, 06560, Ankara, Türkiye 
+2Department of Computer Engineering, Faculty of Engineering, Düzce University, 81620, Düzce, Türkiye 
+ 
+Highlights:  Graphical/Tabular Abstract 
+ Proposed a novel BiLSTM 
+model with Multi-Head 
+Attention for 17-language 
+detection 
+ Achieved 99.9% accuracy, 
+surpassing state-of-the-art 
+models 
+ Perfect precision (100%) 
+for 15 languages including 
+Arabic, French, and 
+Germa
+n 
+Language detection is a crucial component of natural language p rocessing, enabling applications such as
+machine translation, sentiment analysis, and information retrieval. This study proposes a novel Bidirectional
+Long Short-Term Memory (BiLSTM) model with a Multi-Head Attenti on mechanism to classify text into 
+17 languages accurately. A publicly available dataset containing 10,337 text samples is used for training and
+evaluation. The proposed model achieves an outstanding accuracy, precision, recall, and F1-score of 99.9%, 
+surpassing state-of-the-art models. Notably, it attains perfect  precision (100%) for 15 languages. These
+findings demonstrate the effectiveness of deep learning in lang uage detection and provide a foundation for
+further advancements in multilingual text processing. The architecture of the proposed novel BiLSTM model
+with a Multi-Head Attention mechanism is presented in Figure A. 
+ 
+ 
+ 
+Figure A. An overview of the proposed novel BiLSTM model architecture with a Multi-Head Attention 
+mechanism 
+ 
+Purpose: Language detection is a fundamental task in natural language pr ocessing (NLP), widely applied
+in areas such as machine translation, sentiment analysis, and i nformation retrieval. Effective language
+detection facilitates seamless communication between individual s across different linguistic backgrounds. 
+This study aims to develop a novel deep learning-based approach to accurately classify text into 17 different
+languages. 
+ 
+Theory and Methods: A novel Bidirectional Long Short-Term Memory (BiLSTM) model with Multi-Head 
+Attention is proposed. The model is trained on a dataset of 10, 337 text samples across 17 languages and
+evaluated using accuracy, precision, recall, and F1-score. The proposed model’s effectiveness is compared
+against state-of-the-art baseline models. 
+ 
+Results: The proposed model achieves 99.9% accuracy, surpassing state-of-the-art models. It attains 100% 
+precision for 15 languages, demonstrating its effectiveness in multilingual text classification. 
+ 
+Conclusion: The study highlights the potential of deep learning in language  detection, offering valuable
+insights for multilingual text processing and NLP applications. 
+ 
+ 
+Keywords: 
+ 
+ Language detection 
+ Language classification 
+ Translation 
+ Deep learning 
+ Long short-term memory 
+ 
+ 
+Article Info: 
+ 
+Research Article 
+Received: 04.09.2024 
+Accepted: 08.03.2025 
+ 
+DOI:  
+ 
+10.17341/gazimmfd.1543854  
+ 
+Correspondence: 
+ 
+Author: Abdullah Talha 
+Kabakuş 
+e-mail: 
+talhakabakus@duzce.edu.tr 
+phone: +90 535 378 7341 
+ 
+
+========== PAGE 2 ==========
+Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993
+ 
+1980 
+ 
+Doğru dil tespiti için çok-başlı dikkat mekanizması ile yenilikçi çift yönlü uzun kısa-
+süreli bellek modeli 
+ 
+Sinan Toklu1*,  Abdullah Talha Kabakuş2  
+1Gazi Üniversitesi, Teknoloji Fakültesi, Bilgisayar Mühendisliği Bölümü, 06560, Ankara, Türkiye 
+2Düzce Üniversitesi, Mühendislik Fakültesi, Bilgisayar Mühendisliği Bölümü, 81620, Düzce, Türkiye 
+ 
+Ö  N  E  Ç  I  K  A  N  L  A  R  
+ 17 dil tespiti için Çok-Başlı Dikkat ile birlikte önerilen özgün BiLSTM modeli 
+ %99,9 doğruluk oranı ile mevcut en iyi modellerden daha başarılı model öne sürüldü 
+ Arapça, Fransızca ve Almanca dahil olmak üzere 15 dilde mükemmel kesinlik (%100) sağlandı 
+   
+Makale Bilgileri  ÖZ 
+Araştırma Makalesi 
+Geliş: 04.09.2024 
+Kabul: 08.03.2025 
+ 
+DOI:  
+ Doğal dil işleme alanında kullanılan en önemli unsurlardan biri olan dil tespiti, makine çevirisi, duygu analizi
+ve bilgi erişimi gibi çeşitli uygulamalarda yaygın olarak kullanılmaktadır. Dil tespiti sayesinde, birçok farklı
+ülkedeki insanlar arasındaki iletişim mümkün hale gelmektedir. Ayrıca, insan-hayvan etkileşimi de bu 
+alanda gerçekleştirilebilmektedir. Bu çalışmada, metinleri 17 farklı dile, ismen Arapça, Danca, Felemenkçe,
+İngilizce, Fransızca, Almanca, Yunanca, Hintçe, İtalyanca, Kann ada, Malayalamca, Portekizce, Rusça, 
+İspanyolca, İsveççe, Tamilce ve Türkçe, doğru bir şekilde sınıf landırmak için Çok-Başlı Dikka t 
+mekanizmasına sahip özgün bir Çift Yönlü Uzun Kısa-Süreli Hafız a modeli önerilmektedir. Önerile n
+modelin eğitimi ve değerlendirilmesi için yukarıda belirtilen dillerde yazılmış 10.337 metinden oluşan, halka
+açık bir veriseti kullanılmıştır. Önerilen özgün model, en gelişkin temel referans modelleri geride bırakarak
+%99,9 gibi yüksek bir doğruluk, kesinlik, duyarlılık ve F1-skoru elde etmiştir. Özellikle, önerilen model 15 
+dil, ismen Arapça, Kannada, Tamilce, İsveççe, Rusça, Portekizce, Malayalamca, İtalyanca, Hintçe, Yunanca,
+Almanca, Fransızca, İngilizce, Felemenkçe ve Türkçe için mükemmel bir kesinlik (100%) elde etmiştir. Bu
+araştırma, dil tespitinde derin öğrenme tekniklerinin etkinliğini vurgulayarak, çok dilli metin işleme alanında
+daha fazla ilerleme için umut verici yollar sunmaktadır. 
+10.17341/gazimmfd.1543854
+ 
+Anahtar Kelimeler: 
+ 
+Dil tespiti,  
+dil sınıflandırma,  
+tercüme,  
+derin öğrenme, uzun kısa-
+süreli hafıza 
+ 
+ 
+ 
+A novel bidirectional long short-term memory model with multi-head attention for 
+accurate language detection 
+ 
+H  I  G  H  L  I  G  H  T  S  
+ Proposed a novel BiLSTM model with Multi-Head Attention for 17-language detection 
+ Achieved 99.9% accuracy, surpassing state-of-the-art models 
+ Perfect precision (100%) for 15 languages including Arabic, French, and German 
+ 
+   
+Article Info  ABSTRACT 
+Research Article 
+Received: 05.12.2022 
+Accepted: 24.02.2025 
+ 
+DOI: 
+ Language detection, one of the most important elements used in  natural language processing, is used
+extensively in various applications such as machine translation, sentiment analysis, and information retrieval. 
+Thanks to language detection, communication between people in m any different countries is possible. I
+n
+addition, human-animal interaction can also be carried out in t his area. In this paper, a novel Bidirectional
+Long Short-Term Memory model with Multi-Head Attention mechanis m is proposed to accurately classify
+text into 17 languages, namely Ar abic, Danish, Dutch, English, French, German, Greek, Hindi, Italian,
+Kannada, Malayalam, Portuguese, Russian, Spanish, Swedish, Tami l, and Turkish. A publicly available 
+dataset consisting of 10,337 texts written in the above-mentioned languages is utilized to train and evaluate
+the proposed model. The proposed novel model achieved an extrao rdinary accuracy, precision, recall, an d
+F1-score of 99.9%, outperforming the state-of-the-art baseline models. In particular, the proposed model
+demonstrated perfect precision (100%) for 15 languages, namely Arabic, Dutch, English, French, German,
+Greek, Hindi, Italian, Kannada, Malayalam, Portuguese, Russian,  S w e d i s h ,  T a m i l ,  a n d  T u r k i s h .  T h i s
+research highlights the effectiveness of deep learning techniques in language detection, providing promising
+avenues for further advances in the field of multilingual text processing. 
+10.17341/gazimmfd.1543854
+ 
+Keywords: 
+ 
+Language detection, 
+language classification, 
+translation,  
+deep learning, long short-
+term memory 
+ 
+ 
+ 
+ 
+ 
+*Sorumlu Yazar/Yazarlar / *Corresponding Author/Authors: stoklu@gazi.edu.tr, *talhakabakus@duzce.edu.tr / Tel: +90 546 691 48 89 
+ 
+
+========== PAGE 3 ==========
+Toklu ve Kabakuş / Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993 
+1981 
+ 
+1. Giriş (Introduction) 
+ 
+Sosyal medya platformlarının yükselişiyle birlikte dünya, ileti şim 
+açısından birleşmiş bir hale gel miştir; çünkü bu platformlar, k üresel 
+olarak kullanıcıların erişimine açıktır. Bu durum, çok daha gen iş bir 
+kitleye ulaşma vaadini sunmaktadır. Ancak bu fırsat, aynı zaman da 
+uluslararasılaşmayı da gerektirir; bu da teknolojinin çeşitli d ilsel 
+ortamlarla uyum sağlamasını zorunlu kılmaktadır. Bilgisayar Bil imi 
+ve Bilişim Teknolojileri alanlarındaki algoritmaların gelişimi,  ar tan  
+işlem gücü, büyük veri erişilebili rliği, gelişmiş eğitim teknik leri, 
+Yapay Zeka’nın (Artificial Intelligence - AI) yazılıma entegras yonu 
+ve açık kaynak iş birliği gibi i lerlemeler, yazılımları önemli ölçüde 
+daha güçlü ve zeki hale getirmiştir. Bu ilerlemeler arasında, A I hem 
+bilimde hem de günlük hayatta en popüler konulardan biri olarak öne 
+çıkmıştır. En dikkat çekici örneklerden biri Kasım 2022’deki 
+lansmanından sadece 5 gün sonra 1 milyon kullanıcıya ulaşan 
+OpenAI’nin AI destekli sohbet robotu olan ChatGPT’dir [1]. Mayıs 
+2024 itibarıyla ChatGPT, dünya genelinde 180,5 milyondan fazla 
+kullanıcıya ulaşmıştır [2]. AI, yazılım geliştiricilerine birden fazla dili 
+anlayabilen ve üretebilen programlar oluşturma imkânı sunarak, etkili 
+küresel iletişim ve hizmet sunumu için hayati bir rol oynamakta dır. 
+Bu yetenek, şu gibi birçok avantaj sunar: ( 𝑖) içeriğin kullanıcıların 
+diline ve tercihlerine göre kişiselleştirilmesi, ( 𝑖𝑖) işletmelerin birden 
+fazla dilde müşteri desteği sağlayabilmesi, ( 𝑖𝑖𝑖) çeşitli dillerdeki 
+tartışmaların izlenip analiz edilebildiği sosyal medya takibi, (𝑖𝑣) 
+kullanıcıların kendi ana dillerinde arama yapıp bilgiye ulaşmal arını 
+sağlayan çok dilli arama motorları, (𝑣) çok dilli içeriğin düzenlenmesi 
+ve yayılması için içerik yönetim sistemleri, (vi) farklı dillerde anında 
+ve doğru çeviriler sağlayan çeviri hizmetleri, (𝑣𝑖𝑖) dili temel alarak e-
+postaları sıralayan ve önceliklendiren e-posta filtreleme, ve ( 𝑣𝑖𝑖𝑖) 
+uluslararası gezginlerin deney imlerini çok dilli iletişim araçl arıyla 
+geliştiren seyahat ve konaklama sektörü. Bu avantajlar göz önün de 
+bulundurulduğunda, çeş itli doğal dilleri tes pit edebilen güçlü 
+modellerin geliştirilmesi temel b ir gereksinimdir. Bu tür model ler, 
+sadece kullanıcı deneyimini geliştirmekle kalmaz, aynı zamanda 
+küreselleşmiş dijital dünyada erişilebilirlik ve kapsayıcılığı da sağlar. 
+Doğru dil tespiti, AI destekli uygulamaların etkin liğini artıra rak, 
+kullanıcıların ihtiyaçlarına daha duyarlı ve uyumlu hale gelmel erini 
+sağlar. Bu amaçla bu çalışmada yenilikçi bir dil sınıflandırma modeli 
+önerilmiştir. Bu model, özellikle Çok-Başlı Dikkat (Multi-Head 
+Attention) mekanizmasına sahip Çift Yönlü Uzun Kısa-Süreli Hafıza 
+(Bidirectional Long Short-Term Memory-BiLSTM) modeline 
+dayanan bir Tekrarlayan Sinir Ağı (Recurrent Neural Network-RNN) 
+olarak tasarlanmıştır. Önerilen yenilikçi model, metin verilerini doğru 
+ve verimli bir şekilde sınıflandırmak için Derin Öğrenme’nin (D eep 
+Learning-DL) gücünü kullanarak 17 farklı dili tespit etmeyi 
+hedeflemektedir. Bu yaklaşımımız, çok dilli metin işleme zorluklarını 
+ele alarak, çeşitli uygulamalara entegre edilebilecek sağlam bir çözüm 
+sunmayı amaçlamaktadır. 
+ 
+Bu makalenin geri kalanı şu şekilde yapılandırılmıştır: 2. Bölü m, dil 
+sınıflandırma ve AI destekli çok dilli sistemler alanındaki ilg ili 
+çalışmaların kapsamlı bir incelemesini sunmaktadır. 3. Bölüm, 
+önerilen modelin geliştirilmesinde kullanılan materyal ve yöntemleri, 
+veriseti, ön işleme teknikleri ve önerilen yenilikçi BiLSTM modelinin 
+Çok-Başlı Dikkat mekanizması ile mimarisi dahil olmak üzere 
+detaylandırmaktadır. 4. Bölüm, deneysel sonuçları sunmakta ve 
+modelin performansını tartışmaktadır. Son olarak 5. Bölüm, öner ilen 
+modelin potansiyel uygulamaları ve gelecekteki araştırmalar içi n 
+öngörülen yönler hakkında bilgiler vererek makaleyi 
+sonlandırmaktadır. 
+ 
+2. İlgili Çalışmalar (Related Works) 
+ 
+Bu alanda yapılan çalışmalar iki gruba ayrılarak incelenmiş ve her 
+gruptaki bazı çalışmalar ilgili bölümlerde tablo şeklinde sunulmuştur. 
+2.1. Makine Öğrenmesi ve Derin Öğrenme Temelli Çalışmalar  
+(Studies Based on Machine Learning and Deep Learning) 
+ 
+Kaya ve Ertuğrul tarafından öne sürülen çalışmada [3] doküman d ili 
+tanıma için bir yöntem önerilmiş  ve dört farklı veri kümesi üze rinde 
+test edilmiştir. VK-1, VK-2, VK-3 ve VK-4. VK-1, genel metinlerden 
+oluşurken, VK-2’deki metinler daha fazla varyasyona sahiptir. VK-3, 
+İnsan Hakları Evrensel Beyannamesi’nden alınan metinleri içerirken, 
+VK-4 ise daha geniş bir dil çeşitliliği sunan metinler içermekt edir. 
+Metinler, UTF-8 kodlarına dönüştürülüp bir boyutlu sinyallere 
+dönüştürülerek 1B-YİD (1-Boyutlu Yerel İkili Örüntüler) yöntemiyle 
+öznitelikler çıkarılmış ve çeşitli sınıflandırıcılarla test edi lmiştir. 
+Sonuçlar, VK-3 veri kümesinde %100 başarı oranı elde edilirken, 
+VK-2’de %92,25, VK-4’te %89,77 ve VK-1’de %86,20 başarı 
+sağlanmıştır. En iyi sonuç, İnsan Hakları Evrensel Beyannamesi’nden 
+alınan metinler (VK-3) için elde edilmiştir ve bu sonuç, YSA (Yapay 
+Sinir Ağı) algoritması ile sağlanmıştır.  
+ 
+Işık ve Altuner tarafından öne sürülen çalışmada [4] Türkçenin çeşitli 
+ağızlarını tanıyıp sınıflandırmak için LSTM sinir ağı modelini 
+kullanarak bir dil modeli geliştirmeyi amaçlamaktadır. Çalışmad a, 
+Türkiye’nin farklı bölgelerinden, özellikle Ankara, Kıbrıs, Trabzon ve 
+Alanya gibi yerlerden toplanan konuşma verileri, perde ve enerji gibi 
+akustik özelliklerle etiketlenip, bu özellikler Legendre polinomları ile 
+özniteliklere dönüştürülmüştür. Elde edilen verilerle eğitim ya pılan 
+LSTM modelinin, Türkçe ağızlarını sınıflandırmada %92 doğruluk 
+oranı elde ettiği gör ülmüştür. Bu sonuç, Türkçenin farklı ağızl arını 
+tanımada ve sınıflandırmada LSTM tabanlı dil modellerinin 
+etkinliğini ortaya koymaktadır. Işık ve Artuner tarafından öne sürülen 
+bir başka çalışmada [5] aynı ver iseti üzerinde derin öğrenme 
+yöntemleri kullanılmıştır. Akustik  yaklaşımda, Mel-spektrogram 
+özellikleri, Konvolüs yonel Sinir Ağları (Convolutional Neural 
+Network-CNN) için giriş olarak kullanılmıştır; bu özellikler hem tüm 
+cümle hem de yalnızca cümlenin son kısmı için test edilmiştir. Dil 
+modeli olarak, fonemler üzerinden eğitim yapılan Uzun Kısa Süre li 
+Bellek (Long Short-Term Memory-LS TM) ağları kullanılmış ve bu 
+modeller Paralel Ses Tanıma ardından Dil Modeli (Parallel Phone  
+Recognition followed by Langua ge Model-PPRLM) mimarisiyle 
+sınıflandırma yapılmıştır. Sonuç lar, sadece cümle sonlarına 
+odaklanmanın kısa süreli ses örneklerinde daha iyi sonuçlar verdiğini, 
+ancak daha uzun süreli örneklerde tüm cümlenin daha iyi performans 
+gösterdiğini ortaya koymuştur.  Ayrıca, fonotaktik yöntemlerin 
+akustik yöntemlere göre daha yüksek doğruluk oranları sağladığı  
+belirtilmiştir. Dil tespitiyle ilgili detaylı bir tarama çalışm asında [6] 
+dil tespitinin çok kısa belgeler (arama motoru sorguları gibi),  dil dışı 
+“gürültü” (HTML işaretlemesi gibi), standart dışı dil kullanımı (sosyal 
+medya metinlerinde görüldüğü gibi) ve birden fazla dildeki belg eler 
+(çok dilli forumlarda yapılan pa ylaşımlar gibi) gibi gerçek dün ya 
+verilerinin özgün özellikleri göz önüne alındığında daha zor ha le 
+geldiği vurgulanmıştır. 
+ 
+Habic vd. tarafından öne sürülen çalışmada [7] İngilizce metinl erden 
+anadil tanımlama doğruluğunu artı rmak için çok görevli derin 
+öğrenme yöntemlerini incelemektedir. Yazarlar, TOEFL11 ve ICLE 
+isimli anadili İngilizce olmayan yazarlar tarafından yazılmış 
+denemeleri içeren verisetleri üzerinde bilgi paylaşımını sağlayan yeni 
+bir derin sinir ağı (Deep Neural Network-DNN) mimarisi 
+önermektedir. Çalışma, bir yazarın anadilini İngilizce metinler ine 
+dayanarak belirleme zorluğunu ele almakta ve bu tür bir tanımlamanın 
+yazarlık profili oluşturma ve sosyal medyada yanlış bilgiyle mücadele 
+gibi görevler için önemli olduğunu vurgulamaktadır. Geleneksel 
+yaklaşımlar her veriseti için ay rı sınıflandırıcılar eğitirken,  y az a r l ar  
+çok görevli öğrenmenin sınıflandırıcılar arasında bilgi paylaşa rak 
+doğruluğu artırabileceğini savunmaktadır. Üç farklı çok görevli DNN 
+mimarisi önerilmiş ve paylaşılan katmanlar ile çekişmeli (adversarial) 
+kayıp kullanılarak paylaşılan özelliklerin veriseti bağımsız ol ması 
+========== PAGE 4 ==========
+Toklu ve Kabakuş / Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993 
+1982 
+sağlanmıştır. Deneysel  sonuçlar, önerilen ço k görevli mimariler in 
+mevcut en iyi yöntemleri geride bıraktığını göstermektedir. Öne rilen 
+model, TOEFL11 verisetinde %85,1 v e  ICLE verisetinde %97,3 
+doğruluk oranına ulaşmıştır. 
+ 
+Baştürk ve Şahin tarafından öne sürülen çalışmada [8] dil tanıma için 
+makine öğrenmesi tabanlı bir yaklaşım benimsenmiştir. Kaggle’da n 
+alınan 22 dili içeren veriseti, ön işleme aşamasında temizlenip 
+köklendirilmiş ve eğitim-test se tleri olarak ayr ılmıştır. Altı farklı 
+makine öğrenmesi algoritması d eğerlendirilmiş, en iyi doğruluk 
+%95,15 ile Multinomial Naive Bayes tarafından elde edilirken, k-En 
+Yakın Komşu (k-Nearest Neighbor-kNN) en düşük performansı 
+göstermiştir. Model dış veriyle test edildiğinde kısa cümlelerde düşük 
+doğruluk gözlenirken, paragraflarda başarılı sonuçlar elde edilmiştir. 
+ 
+Fateh vd. tarafından öne sürülen çalışmada [9] 12 farklı dilde el yazısı 
+ile yazılmış rakamları tanımak için kapsamlı bir çözüm olarak transfer 
+öğrenimi kullanılmıştır. Ayrıca, Çoklu Çözünürlük Dikkat (Multi  
+Resolution Attention-MRA) modülü olarak adlandırılan bir dikkat  
+tabanlı modül kullanılmıştır. Rakam görüntüleri ilk olarak CNN 
+ağlarına tanıtılmıştır. Sonrası nda yazarlar tarafından öne sürü len 
+MRA UNet [9] modeli süper çözünürlük için kullanılmıştır. 
+ 
+Mahmud vd. tarafından öne sürülen çalışmada [10] Bangla ve 
+Chittagonian dillerinde siber zorbalık metinlerini tespit etmek  i ç i n  
+Makine Öğrenmesi (Machine Learning-ML), DL ve dönüştürücüler 
+de dahil olmak üzere çeşitli yöntemler kullanılmıştır. Veriseti nin 
+güvenilirliğini ölçmek için Krippendorff’un Alfa ve Cohen’in Kappa 
+ölçütleri kullanılmıştır. Ergin ve İnan [11], Türkçe dil bilgis i 
+kurallarına uygun anlamlı kelime üretimi için kodlayıcı-kod çöz ücü 
+ve dikkat mimarisi kullanılan bir derin öğrenme modeli geliştirmiştir. 
+Önerilen modelin performansı, LSTM ve GRU modelleriyle 
+karşılaştırılmıştır. GRU modeli %88,40 başarı sağlarken, önerilen 
+model %91,90 başarı oranı ile en iyi sonucu vermiştir. Sonuçlar, 
+önerilen modelin diğer modellere göre daha yüksek doğruluk 
+sunduğunu göstermektedir. Karaca ve Aydın [12], internet ortamında 
+kontrolsüz ve yanıltıcı başlıkların yaygınlaşması nedeniyle, ha ber 
+metinleri için içeriğe uygun başlıklar üreten bir derin öğrenme modeli 
+geliştirmiştir. Modelin eğitimi için SuDer isim 700.000 örneklemli 
+bir haber derlemi kullanılmış ve transformatör mimarisiyle soyu t 
+özetleme yöntemi uygulanmıştır. Başarım karşılaştırması için LSTM 
+ve GRU tabanlı modeller de eğitilmiş ve 25 dönem sonunda kayıp 
+değerleri sırasıyla 1,03, 0,55 ve 2,49 olarak ölçülmüştür. ROUG E 
+metrikleri ile yapılan değerlendirmelerde, Transformatör modeli nin 
+başlık üretiminde daha başarılı  olduğu görülmüştür. Ayrıca, üre tilen 
+başlıkların haber içeriğine uygunluğu açısından Transformatör 
+modelinin diğer modellere göre daha insansı sonuçlar verdiği te spit 
+edilmiştir. 
+ 
+Ghoshal vd. tarafından öne sürülen çalışmada [13] bir dil model inin 
+ilk olarak belirli bir dilin fonemlerine karşılık gelen çıkış k atmanını 
+kullanacak şekilde ince ayar yapılması sağlanmıştır. Ardından, bu 
+çıkış katmanı farklı bir dile karşılık gelen bir katman ile değiştirilmiş 
+ve tüm ağ yeni dilde ince ayar yapılmıştır. Bu süreç, Hibrit Derin Sinir 
+Ağı-Gizli Markov Modeli (Deep Neural Network-Hidden Markov 
+Model-DNN-HMM) yapısı kullanılarak birkaç farklı dil için 
+uygulanmıştır. Kullanılan ağlar, standart akustik modellerde 
+kullanılan Mel-Frekans Kepstral Katsayıları (Mel-Frequency Cepstral 
+Coefficients-MFCCs) özellikleri ile eğitilmiştir ve tek dilli h ibrit 
+DNN-HMM sisteminin gelişimini göstermektedir. Fateh vd. öne 
+sürdükleri çalışmada [14] dil ve sayı tanıma içeren çok yazılı 
+betimlerin tanınmasına odaklanılmıştır. Görüntü kalitesini ve t anıma 
+performansını artırmak için transfer öğrenimi kullanılmıştır. A yrıca, 
+yeni bir CNN modeli tanıtılmış v e düşük çözünürlüklü görüntüler in 
+kalitesini artırmak için transfer öğrenimi kullanılmıştır. 
+ 
+Liu vd. öne sürdükleri çalışmada [15] farklı dillerdeki incelemelerden 
+uyumlu ve konuya özgü duyguları birleştiren Çok Dilli İnceleme 
+Farkındalıklı Derin Tavsiye Modeli (Multilingual Review-aware 
+Deep Recommendation Model-MrRec) tanıtılmıştır. MrRec, iki 
+bileşenden oluşmaktadır: Çok Dilli Öznitelik Tabanlı Duygu Anal izi 
+(Multilingual Aspect-Based Sentiment Analysis-MABSA) ve Çok 
+Dilli Tavsiye Modülü (Multilingual Recommendation Module-
+MRM). MABSA, bir gözetimsiz görünüm tabanlı otomatik kodlayıcı 
+kullanmakta ve ardından bir dikkat mekanizmasıyla entegre edilm iş 
+Çoklu Örnekleme Öğrenmesi (Multiple Instance Learning-MIL) 
+uygulanmaktadır. Omran vd. tarafından öne sürülen çalışmada [16 ] 
+İngilizce Amazon ürün bilgileri standart Arapça’ya çevrilmiş ve  
+ardından Bahreyn lehçelerine dönüştürülerek dengeli bir Bahreyn  
+lehçeleri veriseti oluşturulmuştur. Bu sayede paralel veriseti 
+kullanılarak yeniden kullanılabilir çok dilli bir LSTM modeli 
+oluşturulmuştur. Ayrıca bu çalışmada transfer öğrenme süreci 
+uygulanmıştır. ML ve DL tekniklerini kullanan ilgili çalışmalar ın 
+genel bir özeti Tablo 1’de sunulmaktadır. 
+ 
+2.2. Doğal Dil İşleme Temelli Çalışmalar  
+(Studies Based on Natural Language Processing) 
+ 
+Licht öne sürdüğü çalışmada [17] metinleri çevirmek yerine önceden 
+eğitilmiş Çok Dilli Cümle Gömme (Multilingual Sentence 
+Embedding-MSE) modeli kulla nılmıştır. Bu çalışmada 
+Tablo 1. ML ve DL tabanlı ilgili çalışmalara genel bakış 
+(Overview of related works based on ML and DL) 
+ 
+Çalışma Veriseti Kullanılan 
+Metot(lar) 
+Değerlendirme 
+Metrikleri 
+Kapsanılan Diller 
+[9] 12 farklı dil ve 100.000 
+dijital olarak üretilmiş 
+rakam görüntülerinden 
+oluşan veriseti 
+CNN, transfer 
+öğrenme ve Unet 
+modeli (MRA 
+modülü 
+kullanılarak
+) 
+Doğruluk, Kesinlik, 
+Duyarlılık, F1-Skoru 
+Farsça, Bengalce-Lekha, Tibetçe, 
+Urduca, ISI Bengalce, ARDIS 
+(İsveççe), Kannada, İngilizce, 
+Gurmukhi, Arapça, Gujarati ve 
+Çince 
+[10] Çevrimiçi platformlardan 
+alınan 5.120 Bengalce ve 
+5.146 Çittagonca örnek 
+ML, DL, hibrit ve 
+topluluk modeller 
+Doğruluk, Kesinlik, 
+Duyarlılık, F1-Skoru 
+Bengalce ve Çittagonca 
+[13] GlobalPhone dillerinin alt 
+kümesinin istatistikleri 
+DNN ve HMM Kelime Hata Oranı  
+(Word Error Rate-
+WER) 
+GlobalPhone: Almanik, Roman 
+ve Slavik dillerden yedi dil 
+[14] Arapça, Çince, İngilizce el 
+yazısı rakamlar, 
+HAND2020, MNIST-MIX 
+ve MNIST 
+CNN ve transfer 
+öğrenme 
+Doğruluk, Kesinlik, 
+Duyarlılık 
+Çince, Arapça, İngilizce, 
+Kannada, Farsça ve Urduca 
+========== PAGE 5 ==========
+Toklu ve Kabakuş / Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993 
+1983 
+Karşılaştırmalı Manifestolar Projesi (Comparative Manifestos 
+Project-CMP) korpusundan seçim manifestoları veri kümesi 
+kullanılmıştır. MSE kullanan sını flandırıcıların makine çeviris i 
+kullanılarak oluşturulan metinlerin Kelime Çantası (Bag-of-Word s-
+BoW) temsilleri ile eğitilmiş sınıflandırıcılara kıyasla daha b aşarılı 
+sonuçlar elde ettiği gözlemlenmiştir ("MT+BoW" kriteri). Başka bir 
+çalışmada Wadud vd. [18] hem tek dilli hem de çok dilli saldırg an 
+metinleri sınıflandırmak için sabit katmanlı bir CNN ile Bidirectional 
+Encoder Representations from Transformers (BERT) modelini 
+birleştiren yeni bir model olan  Deep-BERT önerilmiştir. Modelin  
+performansını artırmak için, kodlayıcı çıktısının üzerine bir 
+sınıflandırma katmanı yerleştirilmiş ve çıktı dizisi gömme matr isi ile 
+çarpılmıştır.  
+ 
+Alshanqiti vd. tarafından öne sürülen çalışmada [19] noktalama işareti 
+bulunmayan Arapça metinleri bağımsız cümlelere ayırmak için bir ön 
+işleme yöntemi önerilmiştir. Bu yöntem, noktalama işareti tespiti için 
+çok dilli bir BERT tabanlı mode l kullanır. Dil kurallarının 
+uygulanmasını optimize etmek için açgözlü benzeri bir algoritma  
+kullanılmıştır. Önerilen yöntem, PDTS (Punctuation Detector for Text 
+Segmentation), bu segmentasyon zorluğuna etkili bir çözüm 
+sunmaktadır. Saumya vd. öne sürdükleri çalışmada [20] model eğitimi 
+sırasında hem tek dilli hem de çok dilli veri kümeleri için BERT'in ve 
+çeşitli giriş temsillerinin (Word2Vec, GloVe) yerleştirilmesi v e 
+başlatılmasına odaklanılmıştır. Ç alışma, çok dilli bir ortamda 
+eğitilmiş bir modelin, yalnızca İngilizce bir veriseti ile eğit ilmiş bir 
+modelden daha başarılı sonuçlar ürettiğini bulmuştur.  
+ 
+Karayiğit vd. öne sürdükleri çalı şmada [21] çok dilli bir önced en 
+eğitilmiş BERT (Multilingual Bidirectional Encoder Representati ons 
+From Transformers-M-BERT) kullanılarak Türkçe'de homofobik 
+veya ilgili nefret söylemi yorum larını tespit etmeyi amaçlamışl ardır. 
+Li vd. tarafından öne sürülen ç alışmada [22] çok dilli biyomedi kal 
+veriler için iki-yönlü kodlayıcı (bi-encoder) varlık modelleri 
+uygulanmış ve incelenmiştir. Aday oluşturma aşamasında yaklaşık en 
+yakın komşu arama, yüzey tabanlı ve gömme yakınsama teknikleri 
+kullanılmıştır. Alcantara vd. öne sürdükleri çalışmada [23] met in 
+özetleme üzerine odaklanılmıştır. Çalışma, bu görevde BERT çok dilli 
+modelinin Almanca ve BART tek dilli modelinin İngilizce için 
+etkinliğini değerlendirmiş ve performansı ROUGE-1 metriği ile 
+ölçmüştür. 
+ 
+Yang ve Laki öne sürdükleri çalışmada [24] özellikle Macarca iç in 
+önceden eğitilmiş üretken dönüştürücü (generative transformer) 
+modeller geliştirmeyi ve bunları çeşitli NLP görevleri için inc e ayar 
+yapmayı amaçlamışlardır. Çok dilli BART modeli kullanılmış ve 
+performansı artırmak iç in transfer öğrenme teknikleriyle adapte  
+edilmiştir. Nasir ve Din öne sürdükleri çalışmada [25] Hobbs'un  
+sözdizimsel yaklaşımına dayalı bir çerçeve ile Urduca metin 
+belgelerinde anafor çözümü ile ilgili sorunlar ele alınmıştır. Bu, 
+anaforik referansların analizini, aday önceki referansların 
+tanımlanmasını ve uygun olanların seçilmesini içermiştir. Unanue vd. 
+öne sürdükleri çalışmada [26] bir hedef dilden daha yüksek kayn aklı 
+bir kaynak dile çeviri yapmak için bir sinir makine çevirmenini  daha 
+yüksek kaynaklı dilde eğitilmiş bir metin sınıflandırıcı ile bi rleştiren 
+bir yöntem öne rilmiştir. XNLI, MLDoc v e  MultiEURLEX gibi 
+verisetleri kullanılarak çapraz dilde metin sınıflandırması 
+gerçekleştirilmiştir. NLP ilgili çalışmalara genel bir bakış Tablo 2’de 
+verilmiştir. 
+ 
+3. Materyal ve Yöntem (Material and Method) 
+ 
+Bu bölümde, önerilen özgün modelimizi geliştirmek için kullanıl an 
+materyal ve yöntemler özetlenmiştir. Alt bölümlerde sırasıyla ( i) 
+kullanılan yazılım yığını, ( ii) kullanılan veriseti ve uygulanan ön 
+işleme, ( iii) önerilen modelin detayları ve ( iv) kullanılan 
+değerlendirme metrikleri açıklanmaktadır. 
+ 
+3.1. Yazılım Yığını (Software Stack) 
+ 
+Bu çalışmada geliştirilen yazılım, veri bilimi ve ML görevleri için 
+geliştirici dostu bir ortam sunan Python programlama diliyle 
+geliştirilmiştir. Kullanılan geleneksel ML algoritmalarının kodlaması 
+ve veriseti işlemlerinin (örneği n, veriseti bölme, etiket kodla ma ve 
+değerlendirme metriklerinin hesa planması) uygulanması için yayg ın 
+olarak kullanılan açık kaynaklı bir Python paketi olan scikit-learn [27] 
+kullanılmıştır. Önerilen DNN modelleri için (i) Google'ın önde gelen 
+açık kaynaklı ML paketi TensorFlow [ 2 8 ]  v e  (ii) TensorFlow’un 
+yerleşik yüksek seviyeli Uygulama Programlama Arabirimi 
+(Application Programming Interface-API) olan Keras [29] 
+kullanılmıştır. TensorFlow v e  Keras ikilisi, LiteRT (eski adıyla 
+TensorFlow Lite ) projesi ile TensorFlow modellerinin mobil 
+cihazlarda servis edilmesine yönelik optimize edilmiş destek sunması, 
+gelişmiş donanım desteği (GPU/TPU) ve geliştirici-dostu yüksek 
+seviyeli API’leri sayesinde hızlı prototipleme imkânı sunduğund an 
+PyTorch, MxNet, Caffe2 gibi DL uygulama çatıları (framework) 
+yerine tercih edilmiştir. Veri işleme ve manipülasyonu için NumPy 
+[30] ve Pandas [31] kullanılmıştır. Deney sonuçlarının 
+görselleştirilmesi için ise iki yaygın olarak kullanılan açık k aynaklı 
+paket olan ( i) Matplotlib [32] ve ( ii) Matplotlib için yüksek seviyeli 
+bir API olan seaborn [33] kullanılmıştır. Bu çalışmanın yazılım yığını 
+Tablo 3'te listelenmiştir. 
+ 
+Tablo 2. NLP temelli ilgili çalışmalara genel bir bakış 
+(An overview of related studies based on NLP) 
+ 
+Çalışma Veriseti Kullanılan Metotla r D e ğerlendirme Metrikleri 
+[18] 7.000 İngilizce tweet ve 6.500 
+Bengalce yorum 
+Deep-BERT, ML ve DL Modelleri ile 
+Hybrid MBert, ML ve DL Modelleri ile 
+Hybrid Word2Vec, TF-IDF ve ML 
+modelleri 
+Doğruluk, hassasiyet, çağrı, F1-
+skoru ve ROC Eğrisi (AUC) 
+[22] BC5CDR ve Cantemist 
+korpusları 
+BERT-Base, BioBERT, SapBERT, 
+RBB-Es, RBBC-Es ve BB-Es 
+Çağrı, doğruluk ve F1-skoru 
+[23] MLSUMDE, Alman BERT çok 
+dilli modeli ve İngilizce için 
+BART tek dilli modeli 
+Alman BERT ve BART ROUGE-1 ve F1-skorları 
+[20] Çeşitli tek dilli ve iki dilli 
+kaynakların birleştirilmesi 
+CNN BiLSTM, BiLSTM-Attention, 
+BERT-FT, SVM, RF, LR, DT, GB, 
+AdaBoost, BERT Gömme, Word2Vec, 
+fastText ve Uniform başlatma 
+Hassasiyet, F1-skora, çağrı ve 
+ROC 
+ 
+========== PAGE 6 ==========
+Toklu ve Kabakuş / Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993 
+1984 
+Tablo 3. Bu çalışmada kullanılan yazılım yığını 
+(The software stack used in this study) 
+ 
+Yazılım Versiyon 
+Python 3.11.9 
+TensorFlow 2.16.1 
+Keras 3.3.3 
+KerasTuner 1.4.7 
+scikit-learn 1 . 4 . 2  
+NumPy 1.26.4 
+Pandas 2.2.1 
+matplotlib 3.7.3 
+seaborn 0.12.2 
+3.2. Kullanılan Veriseti ve Uygulanan Ön İşleme  
+(Utilized Dataset and Employed Preprocessing) 
+ 
+Güçlü bir ML modelinin inşa edilmesi için en önemli 
+gereksinimlerden biri altın standartta bir verisetine sahip olmaktır. Bu 
+bağlamda, bu çalışmada 17 doğal dilde yazılmış 10.337 metinden 
+oluşan ve kamuya açık olarak erişilebilen bir veriseti [34] kul lanıldı. 
+Verisetindeki diller şunlardır: Arapça, Danca, Felemenkçe, İngilizce, 
+Fransızca, Almanca, Yunanca, Hintçe, İtalyanca, Kannada, 
+Malayalam, Portekizce, Rusça, İ spanyolca, İsveççe, Tamilce ve 
+Türkçe. Bu verisetindeki dillerin dağılımı Şekil 1’de sunulmuştur. Bu 
+şekilden de görülebileceği üzere bu veriseti dengesizdir. Buna 
+rağmen, iki nedenle dengeleme tekniklerini kasıtlı olarak 
+ 
+Şekil 1. Kullanılan verisetindeki mevcut dillerin dağılımı (Distribution of languages in the dataset used) 
+ 
+Tablo 4. Kullanılan verisetinden bazı örnekler ve ilgili dilleri (Some examples from the dataset used and their corresponding languages) 
+ 
+Metin Dil 
+Altın araba onlara doğru geliyordu, mücevherler ve elmaslarla süslenmişti ve son derece çarpıcı görünüyordu. Türkçe 
+Over time, Wikipedia has developed a semi-formal dispute resolution process to assist in such circumstances. İn gilizce 
+vous bercez-vous? Fransızca 
+Geld, aber Sie würden diesen Bankkredit nicht erhalten, wenn Sie der Bank nicht beweisen, dass Sie genug Geld 
+haben, damit Sie sich das nächste Mal in einer schwierigen Situation befinden. 
+Almanca 
+puoi parlare un po 'più lentamente, Per favore? İtal yanca 
+Estoy viendo a mi amigo. İspanyolca 
+База статей, имевшихся на тот момент, была скопирована на отдельный сервер, и их дорабатывали 13 
+оплачиваемых редакторов и около 20 добровольцев. 
+Rusça 
+δεν έχει σημασία αν θέλετε να ευχηθείτε σε κάποιον τύχη Yunanca 
+docka och den mest underhållande delen är att hon älskade sig själv utan syfte narcisa skulle du İsveççe 
+nu later zwaaiden Mellie en Terry hun oude vriend gedag en gingen die avond zowel moeder als dochter lachend 
+naar elkaar weg 
+Hollandaca 
+No final de 2002, tinha alcançado 26 edições em idiomas diferentes, 46 até o final de 2003 e 161 nos últimos dias 
+de 2004 
+Portekizce 
+ﺍﻟﻮﻻﻳﺎﺕ ﺍﻟﻤﺘﺤﺪﺓ، ﻭﻓﻘًﺎ ﻟﺸﺒﻜﺎﺕ ﻛﻮﻡ  ، ﺩﺧﻠﺖ ﻭﻳﻜﻴﺒﻴﺪﻳﺎ ﻷﻭﻝ ﻣﺮﺓ ﻗﺎﺋﻤﺔ ﺍﻟﻌﺸﺮﺓ ﺍﻷﻭﺍﺋﻞ ﻟﻤﻮﺍﻗﻊ ﺍﻟﻮﻳﺐ ﺍﻷﻛﺜﺮ ﺷﻌﺒﻴﺔ ﻓﻲ
+ ﺳﻜﻮﺭ
+Arapça 
+ 
+Kannada 
+ 
+
+========== PAGE 7 ==========
+Toklu ve Kabakuş / Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993 
+1985 
+kullanılmamıştır: (𝑖) önerilen BiLSTM modeli nin, Çok-Başlı Dikkat 
+mekanizması ve Yığın Normalizasyonu (Batch Normalization) ve 
+Seyreltme (Dropout) gibi düzenle me teknikleri birleştirildiğind e 
+dengesiz verileri işlemek için yeterince güçlü olması [35-38] v e (ii) 
+veriseti kapsamında standardizasyonu sağlama. Bu verisetindeki 
+metinlerin ortalama uzunluğu (kelime sayısı) 124 kelime olarak 
+bulunmuştur. Kullanılan verisetinden bazı örnekler ve bu örnekl erin 
+dilleri Tablo 4'te verilmiştir. 
+ 
+Tüm ML/DL modelleri sayısal verilerle çalışır. Bu nedenle, kullanılan 
+verisetindeki metinlerin vektör ler olarak temsil edilmesi 
+gerekmektedir. Kelime gömmesi (word embedding), kelimelerin sabit 
+boyutlu bir uzayda sürekli vektörler olarak temsil edilmesini sağlayan 
+bir kelime temsil türüdür. Bu vektörler yoğun olup genellikle bir sıcak 
+kodlama gibi geleneksel temsillerden çok daha düşük bir boyuta 
+sahiptir. Kelime gömmelerin ar kasındaki temel fikir, benzer 
+anlamlara sahip kelimeleri gömme uzayında yakın konumlandırarak  
+kelimeler arasındaki anlamsal ilişkileri yakalamaktır. Bu amaçl a 
+yaygın olarak kullanılan Word2Vec, GloVe (Global Vectors for Word 
+Representation), fastText [ 3 9 ]  v e  BERT gibi yöntemler 
+bulunmaktadır. Kullanılan verise ti 17 farklı dilden metinler iç erdiği 
+için fastText'in 157 dil için önceden eğitilmiş kelime vektörleri 
+sağlama kapasitesinden yararlanıldı. Bu önceden eğitilmiş kelim e 
+vektörlerinin boyutu 300'dür. Ancak, fastText'in sunduğu olanaklar 
+sayesinde, bu vektörlerin boyutu 100’e düşürülmüştür. Bu da 
+mekânsal boyutu minimize ederek hem eğitim hem de çıkarım 
+süreçlerini hızlandırmıştır. Çalışmada kullanılan metinlere yön elik 
+kelime gömmelerinin elde edilmesi süreci Şekil 2'de gösterilmiştir. 
+ 
+3.3. Önerilen Model
+ (Proposed Model) 
+ 
+Veri kümesi oluşturulduktan sonra, veri kümesini eğitim ve test  
+setlerine ayırmak için yaygın olarak kullanılan 70:30 oranı 
+uygulanmıştır. Önerilen modelin sın ıflandırıcısı olarak, dil te spiti 
+açısından en iyi performansı elde etmek için farklı mimarilere dayalı 
+modeller önerilmiştir. Alt bölümlerde, önerilen özgün RNN modeli ve 
+kullanılan temel referans modeller açıklanmaktadır.  
+ 
+3.3.1. Önerilen Özgün RNN Modeli 
+(Proposed Novel RNN Model) 
+ 
+Önerilen özgün RNN, özellikle BiLSTM modeli, dizilim 
+sınıflandırma görevleri için tas arlandı ve her bir zaman adımın da 1 
+özelliğe sahip 100 uzunluğunda dizileri kabul eder. Model, (100 ,1) 
+şekline sahip Giriş (Input) katmanıyla başlar. Giriş verileri, verilerin 
+sıfır ortalama ve birim varyansla normalize edilmesini sağlayar ak 
+eğitim sürecini dengeleyen ve hız landıran bir Yığın Normalleşti rme 
+katmanı kullanılarak normalize edilir. Model, her iki yönde de 128 
+birime sahip iki BiLSTM katmanı içerir. İlk BiLSTM katmanı, dah a 
+fazla LSTM katmanı için gerekli olan tam çıkış dizisini döndürü r. 
+Bunu takiben, modeli daha fazla düzenlemek ve aşırı öğrenmeyi 
+önlemek için bir Yığın Normalleştirme katmanı ve %30 seyreltme 
+oranına sahip bir Seyreltme katmanı kullanılmıştır. Model, ilki ne 
+benzer şekilde ikinci bir BiLSTM katmanı, ardından başka bir Yı ğın 
+Normalleştirme katmanı ve %30 seyreltme oranına sahip bir 
+Seyreltme katmanı içerir. Bu modelin ana özelliklerinden biri, 
+modelin girdi dizisinin farklı bö lümlerine aynı anda odaklanmas ına 
+olanak tanıyan Çok-Başlı Dikkat katmanıdır [40].  
+ 
+Bu, LSTM katmanlarının kaçırabileceği bağımlılıkları yakalar. 8 -
+başlı (yani 8 paralel dikkat mekanizmasına sahip) ve 128 uzunluğunda 
+bir anahtar (ve sorgu) uzunluğuna sahip bir Çok-Başlı Dikkat katmanı 
+kullanılmıştır. Çok-Başlı Dikkat katmanı, LSTM katmanlarının 
+çıktılarında uygulanmıştır. Sor gular, anahtarlar ve değerler, L STM 
+katmanlarının çıktısı olacak şekilde ayarlanmış, bu da bunu bir  
+kendine dikkat mekanizması yapmış tır. Dikkat katmanının çıktısı , 
+sonraki Dense (veya Tam Bağlantılı) katmanlarla uyumlu hale 
+getirilmek üzere Düzleştirici (Flatten) katmanı kullanılarak 
+vektörelleştirilmiştir. Model, 128 birim ve Rectified Linear Unit  
+(ReLU) aktivasyon fonksiyonuna sahip bir ara Dense katmanına 
+sahiptir, bu da modelin daha karmaşık temsilleri öğrenmesini sa ğlar. 
+Bunu takiben başka bir Yığın Normalleştirme katmanı yer alır. S on 
+çıktı katmanı, 17 birim ve softmax aktivasyon fonksiyonuna sahip tam 
+bağlantılı bir katmandır ve 17 sı nıf üzerinde olasılık dağılımı  sağlar, 
+bu da çok sınıflı sınıflandırma görevleri için uygundur. 
+ 
+Önerilen BiLSTM modelinin matematiksel tanımı, girişten çıkışa 
+kadar olan süreç şu şekildedir: BiLSTM modeli, Χ∈ℝ ௡ൈଵ଴଴ൈଵ 
+şeklindeki giriş dizilerini kabul ederek başlar; burada 𝑛 her biri 100 
+uzunluğunda ve her zaman adımında 1 özelliğe sahip dizilerden 
+oluşan örnek sayısını belir tir. Giriş normalizasyonu, Yığın 
+Normalleştirme kullanılarak gerçekleştirilir ve sıfır ortalama ve birim 
+varyans sağlanır: 
+ 
+𝐵𝑁ሺ𝑋ሻൌ
+எିఓஎ
+ඥఙమಆାఢ burada μΧ  v e  𝜎எsırasıyla Χ’in ortalaması ve 
+standard sapmasıdır ve ɛ sayısal kararlılık için küçük bir sabi ttir. İki 
+BiLSTM katmanı, her iki yönde de  128 birim ile normalleştirilmi ş 
+ 
+ 
+Şekil 2. Çalışmada kullanılan metinlere yönelik kelime gömmelerinin elde edilmesi anlatan diyagram 
+(Diagram illustrating the extraction of word embeddings for the texts used in the study) 
+
+========== PAGE 8 ==========
+Toklu ve Kabakuş / Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993 
+1986 
+dizileri işlemektedir: ℎ௧
+ሺଵሻሬሬሬሬሬሬሬሬሬ⃗ ൌ𝐿 𝑆 𝑇 𝑀൬ℎ௧ିଵ
+ሺଵሻሬሬሬሬሬሬሬሬሬሬሬሬሬሬ⃗,𝑥 ௧൰,ℎ ௧
+ሺଵሻ⃖ሬሬሬሬሬሬሬሬሬൌ
+𝐿𝑆𝑇𝑀 ൬ℎ௧ାଵ
+ሺଵሻ⃖ሬሬሬሬሬሬሬሬሬሬሬሬሬሬ,𝑥 ௧൰.BiLSTM katmanı, birleştirilmiş çıktılar 
+üretmektedir:  
+ 
+𝐻ሺଵሻሾ𝑖, : , :ሿൌ൤ℎଵ
+ሺଵሻሬሬሬሬሬሬሬሬሬ⃗,…,ℎ ଵ଴଴
+ሺଵሻሬሬሬሬሬሬሬሬሬሬሬሬሬ⃗,ℎ ଵ଴଴
+ሺଵሻ⃖ሬሬሬሬሬሬሬሬሬሬሬሬሬ,…,ℎ ଵ
+ሺଵሻ⃖ሬሬሬሬሬሬሬሬሬ൨,∀ 𝑖 ∈ ሼ1, … , 𝑛ሽ. 
+Her BiLSTM katmanının ardından, çıktıları dengelemek için Yığın  
+Normalleştirme uygulanmaktadır: 𝐵𝑁൫𝐻ሺଵሻ൯ൌ𝐻ሺଵሻെ𝜇ுሺభሻ /
+ ඥ𝜎ଶுሺభሻ൅𝜖 
+ 
+Normalizasyonun ardından, 0,3 oranında seyreltme uygulanarak 
+model düzenlenmekte ve biriml erin %30’u rastgele sıfır 
+yapılmaktadır. BiLSTM çıktıları üzerine 8-başlı ve 128 uzunluğu nda 
+anahtar/sorgu uzunluğuna sahip bir Çok-Başlı Dikkat mekanizması  
+uygulanmaktadır. Bu da diziler arasında aynı anda dikkat sağlam ayı 
+mümkün kılmaktadır: dk sorgular ve anahtarların boyutu olmak üzere; 
+𝑀𝐻𝐴൫𝐻ሺଶሻ൯ൌ𝑠 𝑜 𝑓 𝑡 𝑚 𝑎 𝑥 ሺ
+ொ∙௄೅
+ඥௗೖ
+ሻ𝑉 eşitliğinde Q, K v e  V H (2)’den 
+doğrusal dönüşümler yoluyla elde edilmektedir.  
+ 
+Burada, H(2) yığın normalleştirme ve seyreltme katmanlarının çıktısını 
+temsil etmektedir: 𝐻ሺଶሻൌ𝐷 𝑟 𝑜 𝑝 𝑜 𝑢 𝑡 ሺ 𝐵 𝑁൫𝐻ሺଵሻ൯ሻ. Her bir BiLSTM 
+katmanından önce girişler, bir artık (residual) değişkene atana rak 
+saklanmakta ve BiLSTM katman çıktısıyla başlangıçtaki artık 
+bağlantı Ekleme (Add) katmanı ile toplanır. Bu işlem, modelin önceki 
+katmanlardan öğrendiği bilgiyi koruması sayesinde daha etkin 
+öğrenmesine ve daha derin katmanların öğrenmeyi zorlaştıran 
+gradyan sönümlemesi sorununu aşmasına yardımcı olur [40, 41]. Elde 
+edilen dikkat çıktısı düzleşt irilmekte ve 128 birimli ve ReLU 
+aktivasyonlu ara bir Dense katmanına beslenmektedir: 𝐻
+ሺଷሻൌ
+𝑅𝑒𝐿𝑈ሺ𝐵𝑁ሺ𝐷𝑒𝑛𝑠𝑒ሺ𝐹𝑙𝑎𝑡𝑡𝑒𝑛ሺ𝑀𝐻𝐴ሺ𝐻ሺଶሻሻሻሻሻሻ. Son olarak, Dense 
+katmanı softmax aktivasyonu uygulamakta ve her giriş örneği için 17 
+sınıf üzerinde bir olasılık dağılımı üretmektedir: Yൌ
+𝑠𝑜𝑓𝑡𝑚𝑎𝑥ሺ𝐷𝑒𝑛𝑠𝑒ሺ𝐻ሺଷሻሻሻ. Y∈ℝ ௡ൈଵ଻ çıkışı, modelin her bir 𝑛 giriş 
+örneği için 17 sınıf üzerindeki t ahminlerini temsil etmektedir.  
+Önerilen model, giriş dizilerindeki zamansal bağımlılıkları ve 
+karmaşık desenleri etkili bir şekilde yakalamakta, bu da modeli n çok 
+sınıflı dizilim sınıflandırma görevleri için uygun hale gelmesi ni 
+sağlamaktadır. 
+ 
+Model, belirtilen giriş ve çıkış katmanlarıyla tanımlanmış ve Adam 
+(Adaptive Moment Estimation ) [42] optimizasyon yöntemi, 1ൈ𝑒 ିସ 
+öğrenme oranı, tamsayı kodlu etiketler için uygun olan Kategorik 
+Çapraz Entropi  ( Sparse Categorical Cross Entropy ) kayıp 
+fonksiyonu ve performans metriği olarak doğruluk ile derlenmişt ir. 
+Zaman bağımlılıklarını yakalamak için BiLSTM'lerin, dizinin bel irli 
+kısımlarına odaklanmak için Çok- Başlı Dikkat mekanizmasının ve 
+nihai sınıflandırma için Dense katmanlarının bir kombinasyonu 
+önerilen modeli karmaşık dizi sınıflandırma görevleri için uygun hale 
+getirmektedir. Önerilen Çok-Başlı Dikkat mekanizmalı özgün 
+BiLSTM modelinin mimarisine genel bir bakış Şekil 3'te sunulmuştur. 
+ 
+Bir DL modelinin hiperparametreleri, modelin öğrenme yeteneğini  
+önemli ölçüde etkileyen, deneysel olarak belirlenen parametrele rdir. 
+Bu nedenle, optimizasyon hedefi açısından en iyi performans gösteren 
+modeli elde etmek için kapsamlı bir hiperparametre optimizasyon u 
+yapmak kritik öneme sahiptir [43]. Bu amaçla, Keras'ın resmi 
+hiperparametre optimizasyon aracı olan KerasTuner [44] 
+kullanılmıştır. Önerilen modelin hiperparametreleri, 463 deneme den 
+oluşan kapsamlı bir hiperpar ametre optimizasyonu görevi ile 
+sonlandırılmıştır. Bu görevde, ML modelleri için tasarlanmış etkili bir 
+hiperparametre optimi zasyon algoritması olan Hyperband [ 4 5 ] ,  
+kullanılan hiperparametre optimizasyonu görevinin optimizasyon 
+algoritması olarak kullanılmıştır. Hyperband, keşif (farklı 
+hiperparametreleri deneme) ve sömürü (en umut verici 
+hiperparametreler üzerinde yoğunl aşma) ilkelerini dengeleyen ço k 
+kollu haydut (bandit) stratejil erine dayanan bir optimizasyon 
+algoritmasıdır. Optimizasyonun amacı, doğrulama kümesi 
+doğruluğunu (validation accuracy) maksimize etmek olarak 
+belirlenmiştir. Önerilen modelin optimize edilen 
+hiperparametrelerinin ve değerle ndirilen değerlerinin listesi, her bir 
+hiperparametre için en iyi değerin altı çizili olarak vurgulandığı Tablo 
+5'te sunulmuştur. 
+Şekil 3. Önerilen Çok-Başlı Dikkat mekanizmasına sahip özgün BiLSTM modelinin mimarisine genel bir bakış 
+(An overview of the architecture of the proposed original BiLSTM model with multi-head attention mechanism) 
+ 
+
+========== PAGE 9 ==========
+Toklu ve Kabakuş / Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993 
+1987 
+ 
+Tablo 5. Önerilen modelde kullanılan hiperparametreler ve değerlerinin listesi. Her bir hiperparametre için optimizasyon sonucunda 
+elde edilen en iyi değer altı çizili olarak vurgulanmıştır 
+(List of hyperparameters used in the proposed model and their values. The best value obtained for each hyperparameter through optimization is 
+underlined) 
+ 
+Hiperparametre Değerlendirilen Değerle r 
+Her bir BiLSTM katmanındaki birim sayısı 32, 64, 128, 256 
+İlk Dense katmanının aktivasyon fonksiyonu ReLU, eLU, SeLU, Leaky ReLU 
+Optimizasyon algoritması Adam, Nadam, AdamW, SGD, RMSprop, Adadelta, Adamax, Adagrad 
+Öğrenme oranı 1ൈ𝑒 ିଶ, 1ൈe ିଷ, 1ൈe ିସ 
+Seyreltme oranı 0.2, 0.3, 0.4, 0.5 
+Dikkat mekanizması baş sayısı 2, 4, 8, 16 
+Yığın boyutu 8, 16, 32 
+Test seti oranı 20%, 30%, 40% 
+Doğrulama seti oranı 20%, 30%, 40% 
+ 
+Tablo 6. Kullanılan makine öğrenmesi algoritmalarının karşılaştırılması  
+(Comparison of the machine learning algorithms used) 
+ 
+Makine Öğrenmesi 
+Algoritması Anahtar Özellikler Avantajlar Dezavantajlar 
+SVM 
+Doğrusal/doğrusal olmayan 
+sınıflandırma, hiperdüzlem 
+kullanımı, çekirdek hilesi 
+Yüksek boyutlu uzaylarda 
+etkili, yüksek boyutlarda aşırı 
+öğrenmeye karşı dayanıklı 
+Hesaplama açısından 
+pahalı, bellek yoğun, 
+çekirdek seçimine duyarlı 
+Lojistik Regresyon 
+Doğrusal sınıflandırıcı, 
+olasılıksal yorum, sigmoid 
+fonksiyonu kullanır 
+Basit, yorumlanabilir, hızlı, 
+doğrusal olarak ayrılabilir 
+verilerde iyi çalışır 
+Doğrusal olmayan verilerde 
+düşük performans, doğrusal 
+ilişki varsayımı 
+SGD 
+Yinelemeli optimizasyon 
+tekniği, büyük veri kümeleri 
+için kullanılır, çeşitli modeller 
+için uygulanabilir 
+Büyük ölçekli verilerde 
+verimli, çevrim içi öğrenme, 
+esnek 
+Hiperparametrelere duyarlı, 
+yerel minimumlara 
+takılabilir 
+Naïve Bayes 
+Bayes teoremine dayalı 
+olasılıksal sınıflandırıcı, 
+özelliklerin birbirinden 
+bağımsız olduğunu varsayar 
+Basit, hızlı, küçük veri 
+kümelerinde iyi çalışır, 
+kategorik verileri iyi işler 
+Özellik bağımsızlığı 
+varsayımı (genellikle 
+gerçekçi değildir), yüksek 
+oranda ilişkili özelliklerle 
+kötü performans 
+gösterebilir 
+Rastgele Orman 
+Topluluk yöntemi, birden 
+fazla karar ağacı, çanta ve 
+özellik rastgeleliği kullanır 
+Aşırı öğrenmeye karşı 
+dayanıklı, eksik verileri işler, 
+büyük özellik kümeleriyle iyi 
+çalışı
+r 
+Hesaplama açısından pahalı 
+olabilir, tek bir karar 
+ağacından daha az 
+yorumlanabilir 
+Karar Ağacı 
+Ağaç yapısında model, özellik 
+değerlerine göre veri ayrımı, 
+kolay yorumlanabilir 
+Anlaşılması ve yorumlanması 
+basit, az veri ön işleme 
+gerektirir 
+Aşırı öğrenmeye eğilimli, 
+küçük veri varyasyonlarına 
+duyarlı 
+kNN 
+Örnek tabanlı öğrenme, 
+tembel öğrenici, en yakın 
+eğitim örneklerine göre 
+tahmin yapar 
+Basit, sezgisel, eğitim 
+aşaması yok, küçük veri 
+kümelerinde iyi çalışır 
+Tahmin sırasında 
+hesaplama açısından 
+pahalı, alakasız özelliklere 
+ve mesafe metriği seçimine 
+duyarlı 
+LDA 
+Doğrusal sınıflandırıcı, 
+özelliklerin Gaussian 
+dağılımını varsayar, sınıflar 
+arası varyansı maksimize eder 
+Doğrusal olarak ayrılabilir 
+verilerde iyi çalışır, boyut 
+azaltır, yorumlanabilir 
+Özelliklerin normal 
+dağılımını varsayar, 
+doğrusal olmayan verilerde 
+düşük performans 
+GLVQ 
+Prototip tabanlı, sınıf 
+bölgelerini temsil eden 
+prototipleri öğrenir, LVQ’ya 
+göre gelişir 
+Çok sınıflı sınıflandırmayı 
+işleyebilir, yorumlanabilir, 
+gürültülü verilere karşı 
+dayanıklı 
+Başlangıca duyarlı, 
+hesaplama açısından yoğun 
+olabilir 
+LightGBM 
+Hız ve verimlilik için 
+optimize edilmiş, büyük veri 
+kümelerini işler 
+Hızlı eğitim hızı, düşük 
+bellek kullanımı, iyi 
+doğruluk, paralel ve GPU 
+öğrenmeyi destekle
+r 
+Hiperparametrelere duyarlı, 
+küçük veri kümelerinde 
+aşırı öğrenme olabilir 
+XGBoost 
+Düzenleme, ağaç budama, 
+paralel işleme içeren gradyan 
+artırma çerçevesi 
+Yüksek doğruluk, eksik 
+verileri iyi işler, aşırı 
+öğrenmeye karşı dayanıklı, 
+hızlı 
+Hesaplama açısından 
+yoğun, ayarlaması 
+karmaşık olabilir 
+========== PAGE 10 ==========
+Toklu ve Kabakuş / Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993 
+1988 
+3.3.2. Temel Referans Modeller (Baseline Models) 
+ 
+Önerilen özgün Çok-Başlı Dikkat mekanizmalı özgün BiLSTM 
+modeline karşı temel re ferans modeller olarak scikit-learn 
+kullanılarak eğitim seti üzerinde geniş bir yelpazede gelenekse l ML 
+algoritmaları eğitilmiştir. Bu çalışmada kullanılan geleneksel ML 
+algoritmaları arasında Destek Vektör Makineleri (Support Vector  
+Machine-SVM), Lojistik Regresyon, Stokastik Gradyan İnişi 
+(Stochastic Gradient Descent - SGD), Naïve Bayes, Rastgele Orma n 
+(Random Forest), Karar Ağacı (Decision Tree), 𝑘 değeri 1 olan kNN, 
+Doğrusal Ayrımcı Analiz (Linear Discriminant Analysis-LDA), 
+Genelleştirilmiş Öğrenme Vekt ör Kuantizasyonu (Generalized 
+Learning Vector Quantization-GLVQ), LightGBM (Light Gradient-
+Boosting Machine) ve XGBoost (eXt reme Gradient Boosting) yer 
+almaktadır. Bu modellere ek olarak, Rastgele Orman, kNN ve 
+XGBoost’a dayalı, çoğunluk kuralı sınıflandırması için sert oyl ama 
+kullanan bir topluluk modeli de kullanılmıştır. Sonuç olarak, bu on iki 
+geleneksel ML modeli eğitilmiştir. scikit-learn, GLVQ, LightGBM ve 
+XGBoost hariç diğer geleneksel ML modellerinin geliştirilmesind e 
+kullanılmıştır. GLVQ, LightGB M ve XGBoost algoritmaları, scikit-
+learn paketinde mevcut değildir. Bu nedenle, bu üç geleneksel ML 
+modelinin geliştirilmesi için başka açık kaynak Python paketleri [46-
+48] kullanılmıştır. Kullanılan geleneksel ML algoritmalarının 
+karşılaştırılması, temel özellikleri, avantajları ve dezavantajları Tablo 
+6'da verilmiştir. 
+ 
+Geleneksel ML yöntemlerinin yanı sıra RNN tipleri olan Gated 
+Recurrent Unit (GRU), LSTM ve 107 farklı dil üzerinde eğitilmiş bir 
+BERT (Bidirectional Encoder Representations from Transformers) 
+[49] DL modelleri de temel referans modeller kapsamında önerile n 
+özgün modelle karşılaştırılmıştır. GRU ve LSTM temel referans 
+modellerinin eğitiminde önerilen özgün BiLSTM modeli için elde 
+edilen fastText kelime gömmeleri kullanılmıştır. Benzer şekilde adil 
+bir karşılaştırma olabilmesi b u temel referans modeller, özgün 
+BiLSTM modelindeki yığın normalizasyonu, seyreltme, düzleştirme  
+ve Dense katmanlarına sahiptir. BERT modeli ise kelime gömmelerini 
+kendi mimarisiyle elde ettiğind en doğrudan ham metinler üzerind e 
+eğitilmiştir. Tüm DL modelleri adil bir karşılaştırma sunabilme k 
+adına aynı eğitim şartları (aynı hiperparametreler) kullanılara k 
+eğitilmiştir. 
+ 
+3.4. Değerlendirme Metrikleri 
+(Evaluation Metrics) 
+ 
+Geliştirilen sınıflandırıcıların değerlendirilmesinde kullanıla n genel 
+geçer standart değerlendirme metrikleri olan (i) Doğruluk (Accuracy), 
+(ii) Kesinlik (Precision), ( iii) Duyarlık (Recaal) ve ( iv) F1-skorunu 
+kullanılmıştır. Doğruluk, doğru tahmin edilen dil etiketlerinin yapılan 
+toplam tahmin sayısına oranıdır.Kesinlik, tüm pozitif tahminler  
+arasında gerçek pozitif tahminlerin oranını ölçer. Duyarlılık, aynı 
+zamanda Hassasiyet olarak bilinir, gerçek pozitif örnekler aras ındaki 
+doğru pozitif tahminlerin oranını  ölçer. F1-skorunu, Kesinlik v e 
+Duyarlılığın harmonik ortalamasıdır. Sınıf dağılımı dengesiz 
+olduğunda özellikle yararlıdır. P, N, TP, TN, FPve FN sırasıyla hedef 
+özelliğe sahip örnekler, hedef özelliğe sahip olmayan örnekler, doğru 
+tahmin edilen pozitif örnekler, doğru tahmin edilen negatif örn ekler, 
+yanlış tahmin edilen pozitif örnekler ve yanlış tahmin edilen n egatif 
+örnekleri ifade eder. Doğruluk, Kesinlik, Duyarlılık ve F1-skoru için 
+denklemler sırasıyla Eş. 1-4'te verilmiştir. 
+ 
+𝐷𝑜ğ𝑟𝑢𝑙𝑢𝑘 ൌ  𝑇𝑃 ൅ 𝑇𝑁
+𝑇൅𝑃  (1) 
+ 
+𝐾𝑒𝑠𝑖𝑛𝑙𝑖𝑘 ൌ  𝑇𝑃
+𝑇𝑃 ൅ 𝐹𝑃 
+(2) 
+𝐷𝑢𝑦𝑎𝑟𝑙𝚤𝑙𝚤𝑘 ൌ  𝑇𝑃
+𝑇𝑃 ൅ 𝐹𝑁 
+ 
+(3) 
+ 
+𝐹1 െ 𝑠𝑘𝑜𝑟 ൌ 2 ൈ ൬𝐾𝑒𝑠𝑖𝑛𝑙𝑖𝑘 ൈ  𝐷𝑢𝑦𝑎𝑟𝑙𝚤𝑙𝚤𝑘
+𝐾𝑒𝑠𝑖𝑛𝑙𝑖𝑘 ൅ 𝐷𝑢𝑦𝑎𝑟𝑙𝚤𝑙𝚤𝑘 ൰ ( 4 )  
+ 
+4. Sonuçlar ve Tartışmalar (Results and Discussions) 
+ 
+Kullanılan ML/DL modelleri verisetinin %70’i (7.235 örneklem) ile 
+elde edilen eğitim seti üzerinde eğitilmiş ve sınıflandırma 
+performansını değerlendirmek için oluşturulan verisetinin %30'unu 
+(3.102 örneklem) içeren test seti üzerinde test edilmiştir. Eğitim 
+setinin %20’si de doğrulama seti olarak kullanılmıştır. Öne sürülen 
+özgün BiLSTM modelinin eğitimi, kullanılan doğrulama setindeki 
+kaybı izleyen ve sabır (modelin izlediği metrikte iyileşme olma dığı 
+zaman model eğitimine kaç epok devam edeceğini belirten eşik) 
+değeri 5 olan Erken Durdurma (Early Stopping) geri çağrımı ile 
+yönetilerek 31 epok sürmüştür. Erken  Durdurma geri çağrımı, 
+modelin aşırı öğrenmenin (overfitting) önüne geçilmesine yardım cı 
+olmaktadır [50]. Öne sürülen özgün BiLSTM modelinin eğitim 
+esnasında eğitim ve doğrulama seti için el de edilen Doğruluk-Ep ok 
+grafiği Şekil 4’te sunulmuştur. Bu grafikten de görülebileceği üzere 
+ne aşırı öğrenme ne de az öğrenme (underfitting) önerilen model için 
+söz konusu değildir. 
+ 
+Şekil 5'te sunulduğu üzere önerilen Çok-Başlı Dikkat mekanizmal ı 
+özgün BiLSTM modeli, %99,9'luk doğrulukla çalışmada kullanılan 
+tüm ML/DL modelleri arasında en yüksek test doğruluğu elde 
+etmiştir. Önerilen özg ün BiLSTM modelini %99,81 doğrulukla 
+LSTM modeli takip etmiştir. GRU modeli ise %99,74 doğrulukla 
+LSTM modelini takip etmiştir. En yüksek doğruluğun bu modellere  
+nazaran önerilen özgün BiLSTM modeliyle elde edilmesi Çok-Başlı  
+Dikkat mekanizmasının bağlam bilgisini daha iyi öğrenmesi ve 
+BiLSTM’nin çift yönlü bilgi akışıyla uzun süreli bağımlılıkları  daha 
+etkili bir şekilde yakalamasından kaynaklanmaktadır. Deneysel 
+sonuçlar, önerilen modelin dizilim sınıflandırma görevlerindeki üstün 
+performansını, zamansal bağıntıları yakalamaya yönelik gelişmiş  
+mimarisi, otomatik özellik çıkarımı, daha yüksek model karmaşıklığı 
+ve etkili düzenleme teknikleri sayesinde göstermektedir. Bu 
+özellikler, RNN'in genellikle dizilim verileri ve bu tür görevl erdeki 
+karmaşık desenlerle başa çıkma yeteneğinde sınırlı olan geniş b ir 
+geleneksel ML algoritması yelpazesini geçmesini sağladığını 
+göstermektedir. LSTM’nin GRU’dan daha iyi performans göstermesi, 
+LSTM’nin daha karmaşık hücre yapısının uzun süreli bağımlılıkla rı 
+daha iyi öğrenmesiyle açıklanabilir. BERT modeli ise %99,29 
+doğruluk elde etmiştir. BERT modelinin önerilen özgün BiLSTM, 
+LSTM ve GRU modellerinden daha düşük doğruluk elde etmesinin 
+gerekçeleri şunlardır: ( 𝑖) BERT’in büyük ve karmaşık yapısı, bu 
+göreve kıyasla daha fazla genel amaçlı ve bağlama dayalıdır; bu  
+nedenle, dil tespit problemine daha az optimize edilmiştir ve ( 𝑖𝑖) 
+BERT’in ham metinlerden kendi kelime gömmelerini oluşturma 
+sürecinin dil tespit problemine özgü özellikleri yakalamada 
+kelimelerin karakter seviyesinde özelliklerini de dikkate alan fastText 
+tabanlı gömmelere kıyasla daha az etkilidir. Bu modelleri takib en, 
+birden fazla modelin tahminlerini birleştiren Oylama sınıflandı rıcısı, 
+yani (𝑖) Rastgele Orman, (𝑖𝑖) kNN ve (𝑖𝑖𝑖) XGBoost, %99,74'lük bir 
+doğruluk elde etmiştir. Bu deney sel sonuç, topluluk yöntemlerin in 
+birden fazla sınıflandırıcının güçlü yönlerinden yararlanarak 
+öngörücü performansı artırmadaki etkinliğini vurgulamaktadır. 
+Kullanılan kNN algoritması, 𝑘ൌ1  ile %99,64'lük bir doğruluk elde 
+edilmiş ve bu durum yerel desenleri kNN’in etkili bir şekilde 
+yakalama yeteneğinden kaynaklan maktadır. Kullanılan SGD modeli 
+de %99,61'lik doğrulukla rekabetçi bir performans göstermiştir. Bu 
+deneysel sonuç, iteratif optimizasyon yaklaşımıyla SGD'nin büyü k 
+ölçekli veriler için ince ayar yapıldığında son derece etkili 
+========== PAGE 11 ==========
+Toklu ve Kabakuş / Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993 
+1989 
+olabileceğini göstermektedir. Kullanılan Rastgele Orman ve 
+LightGBM modelleri her ikisi de %99,55'lik bir doğruluk elde 
+ederek, yüksek boyutlu özelliklere sahip karmaşık veri setleriyle başa 
+çıkma yeteneklerini ve dayanıklılıklarını vurgulamaktadır. Kullanılan 
+XGBoost, diğer güçlü bir gradyan artırımı yöntemi olarak, %99,52'lik 
+biraz daha düşük ama yine de rekabetçi bir doğruluk elde etmişt ir. 
+Kullanılan SVM ve Lojistik Regresyon ise sırasıyla %99,48 v e  
+%99,26'lık doğruluk elde etmiştir. Bu modeller, güçlü teorik temelleri 
+ve birçok sınıflandırma görevin deki etkinlikleriyle bilinmekted ir ve 
+bu çalışmadaki performansları bu durumla paralellik göstermişti r. 
+Kullanılan GLVQ ve LDA ise sırasıyla %98,97 v e  %98,68'lik 
+doğruluklar elde etmiştir. Bu yöntemler, en yüksek performans 
+gösteren modellerden daha düşük doğruluk elde etmiş olsalar da 
+rekabetçi performans sergiledikleri gözlemlenmiştir. LDA aynı 
+zamanda boyut indirgeme avantajı da sunmaktadır. Kullanılan Naïve 
+Bayes ve Karar Ağaçları sınıflandırıcıları ise sırasıyla %98,03 v e  
+%96,65'lik doğruluklar elde etmiştir. Bu sonuç rekabetçi olsa da 
+değerlendirilen modeller arasında en düşük olanıdır; ancak basitlik ve 
+yorumlanabilirlik gibi avantajla r sunmaktadır. Deneysel sonuçla r, 
+Oylama sınıflandırıcısı gibi topluluk yöntemlerinin yanı sıra k NN, 
+SGD ve gradyan artırımı modelle ri (LightGBM ve XGBoost) gibi 
+gelişmiş tekniklerin kullanılan veriseti üzerinde üstün sınıfla ndırma 
+performansı sağladığını gösterme ktedir. Bu bulgular, bu modelle rin 
+benzer görevlerde öngörücü doğruluğu önemli ölçüde artırabileceğini 
+önermektedir. Çalışmada kullanılan ML/DL modelleri kullanılan tüm 
+değerlendirme metrikleri kapsamında Tablo 7’de karşılaştırmalı 
+olarak sunulmuştur. Bu tablodan görüldüğü üzere, önerilen özgün  
+BiLSTM modeli, tüm sınıflandırma  metrikleri (Doğruluk, Kesinlik , 
+Duyarlılık ve F1-skoru) kapsamında diğer ML/DL modellerinden 
+daha başarılı bir performans sunmuştur. 
+ 
+Şekil 4. Öne sürülen özgün BiLSTM modelinin eğitim esnasında eğitim ve doğrulama seti için elde edilen Doğruluk-Epok grafiği 
+(Accuracy-epoch graph obtained for training and validation sets during the training of the proposed novel BiLSTM Model) 
+ 
+ 
+ 
+Şekil 5. Kullanılan ML/DL modellerinin azalan sırada elde ettikleri test doğrulukları 
+(Test accuracies achieved by the ML/DL models used, sorted in descending order) 
+ 
+
+========== PAGE 12 ==========
+Toklu ve Kabakuş / Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993 
+1990 
+Karışıklık matrisleri, sınıflandı rma sonuçlarını kapsamlı bir ş ekilde 
+analiz etmek için kullanılan sta ndart tekniktir. Bu matrisler, gerçek 
+hedef değerleri ile sınıflandırm a modelinin tahmin ettiği değer leri 
+karşılaştırarak sonuçları sunar. En iyi performans gösteren model olan 
+önerilen özgün modelin test tahminleri için elde edilen karışık lık 
+matrisi Şekil 6'da sunulmuştur. Bu deneysel sonuçlara göre, Ara pça, 
+Kannada, Tamilce, İsveççe, Rusça, Portekizce, Malayalamca, 
+İtalyanca, Hintçe, Yunanca, Almanca, Fransızca, İngilizce, 
+Felemenkçe ve Türkçe metinler tamamen doğru bir şekilde 
+sınıflandırılmıştır. Başka bir deyişle, bu 15 d i l  i ç i n  %100 kesinlik 
+sağlanmış; İspanyolca ve Danca için sadece birer örneklem yanlı ş 
+sınıflandırılmıştır. Her bir dil için elde edilen kesinlik değerleri Şekil 
+7'de sunulmuştur. Genel olarak, önerilen model yalnızca 3.102 
+örneklemden yalnızca 2'sini yanlış sınıflandırmıştır. Önerilen özgün 
+modelin test tahminlerine yönelik doğruluk, kesinlik, duyarlılık ve F1-
+skor değerlerinin tamamı %99,9 olarak elde edilmiştir. Önerilen 
+özgün modelin test setindeki her bir dil için elde edilen kesin lik, 
+duyarlılık ve F1-skor değerleri Tablo 8’de verilmiştir. Çalışma  
+Tablo 7. Bu çalışmada kullanılan ML/DL modelleri ile aynı veri setini kullanan literatürdeki çalışmaların, tüm değerlendirme metrikleri 
+açısından karşılaştırılması  
+(Comparison of the ML/DL models used in this study with existing literature utilizing the same dataset in terms of all evaluation metrics) 
+ 
+Model Doğruluk Kesinlik Duyarlılık F1-skor Eğitim 
+Süresi (ms.) 
+Çıkarsama 
+Süresi (ns.) 
+Karar Ağacı %96,65 %96,7 %96,65 %96,7 604,4 0,16 
+Naive Bayes %98,03 %98,1 %98,03 %98,1 5,4 4,4 
+LDA %98,68 %98,8 %98,68 %98,68 67 0,34 
+GLVQ %98,97 %98,97 %98,97 %98,97 5.378 1,02 
+Lojistik Regresyon %99,26 %99, 26 %99,26 %99,26 170,3 0,22 
+SVM %99,48 %99,48 %99,48 %99,48 221 37 
+XGBoost %99,52 %99,52 %99,52 %99,52 1.654 1,43 
+Li
+ghtGBM %99,55 %99,6 %99, 55 %99,55 2.772 16,5 
+Rastgele Orman %99,55 %99,6 %99,55 %99,6 4.068 5,67 
+SGD %99,61 %99,61 %99,61 %99,61 134,4 0,2 
+kNN %99,64 %99,7 %99,64 %99,64 0,68 89,04 
+Oylama %99,74 %99,74 %99,74 %99,74 6.075 24,33 
+GRU %99,74 %99,74 %99,74 %99,74 487.000 1.090 
+LSTM %99,81 %99,81 %99,81 %99,81 604.000 970 
+BERT %99,29 %99,29 %99,29 %99,29 4.776.000 88.975 
+Önerilen Özgün BiLSTM %99,94 %99,94 %99,94 %99,94 408.000 600 
+ 
+ 
+Şekil 6. Önerilen Çok-Başlı Dikkat mekanizmalı özgün BiLSTM modelinin test sonuçlarını yönelik elde edilen karmaşıklık matrisinin 
+grafiği (Confusion matrix plot of the test results for the proposed original BiLSTM model with multi-head attention mechanism) 
+ 
+
+========== PAGE 13 ==========
+Toklu ve Kabakuş / Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993 
+1991 
+kapsamında geliştirilen tüm ML/DL modellerinin eğitimi ve testi , 
+Apple Silikon M2  çipi ve 16 GB RAM ile donatılmış bir makinede 
+macOS Sonoma 14.5  işletim sistemi üzerinde gerçekleştirilmiştir. 
+Tablo 7’de sunulduğu üzere önerilen özgün modelin eğitimi 408 
+saniye ve çıkarım süresi, yani bir eğitimli modelin tek bir gir iş 
+örneğini işleyip bir çıktı üretmek için gereken süre (çıkarsama süresi) 
+ise 0,6 milisaniye olarak ölçülmüştür. Önerilen özgün modelin hem 
+eğitim hem de çıkarsama süresi diğer DL modellerinden daha kısa  
+olarak elde edilmiştir. Bu da önerilen özgün modelin, diğer DL 
+modellerine göre daha hafifsıkl et (lightweight) bir model olduğ unu 
+göstermektedir. Ayrıca önerilen model, geleneksel ML yöntemlerinde 
+mümkün olmayan transfer öğrenme ile benzer bir başka probleme 
+uyarlanabilme yeteneğine sahiptir. Bu yetenek, hem yeni veriyle  
+sıfırdan model geliştirme maliyetini düşürmekte hem de modelin 
+farklı uygulama alanlarına hızlı  bir şekilde uyarlanabilmesini 
+sağlamaktadır. 
+5. Sonuçlar (Conclusions) 
+ 
+Bu çalışmada, dil tespiti görevinde Çok-Başlı Dikkat mekanizması ile 
+güçlendirilmiş yenilikçi özgün bir BiLSTM modeli öne sürülmüştü r. 
+Öne sürülen model, metinleri 17 farklı dile sınıflandırmak üzere 
+tasarlanmış ve çok dilli NLP görevlerinde gelişmiş DL teknikler inin 
+yetenek ve etkinliğini göstermiştir. Arapça, Danca, Felemenkçe,  
+İngilizce, Fransızca, Almanca, Yunanca, Hintçe, İtalyanca, Kannada, 
+Malayalam, Portekizce, Rusça, İ spanyolca, İsveççe, Tamilce ve 
+Türkçe’yi kapsayan 10.337 metin içeren kapsamlı bir veriseti 
+kullanarak eğitilen önerilen özgün model, test veriseti üzerinde %99,9 
+gibi yüksek bir doğruluk, kesinlik, duyarlılık ve F1-skoru elde  
+etmiştir. Deneysel sonuçlara göre, önerilen özgün model hem 
+geleneksel ML algoritmalarını hem de temel referans DL modellerini 
+(GRU, LSTM ve BERT) tüm sınıflandırma metrikleri kapsamında 
+geride bırakmıştır. Önerilen özgün model, 15 dil, ismen Arapça, 
+ 
+Şekil 7. Test setindeki her bir dil için elde edilen kesinlik oranlarını gösteren grafik 
+(Graph showing the precision rates obtained for each language in the test set) 
+ 
+Tablo 8. Önerilen modelin test setindeki her bir dil için elde edilen kesinlik, duyarlılık ve F1-skor değerleri 
+(Precision, recall, and F1-score values obtained for each language in the test set by the proposed model) 
+ 
+Sınıf Kesinlik Du yarlılık F1-skor 
+Arapça %100 %100 %100 
+Danca %100 %99,2 %99,6 
+Felemenkçe %100 %100 %100 
+İngilizce %100 %100 %100 
+Fransızca %100 %100 %100 
+Almanca %100 %100 %100 
+Yunanca %100 %100 %100 
+Hintçe %100 %100 %100 
+İtalyanca %100 %100 %100 
+Kannada %100 %100 %100 
+Mala
+yalamca %99,4 %100 %99,7 
+Portekizce %100 %100 %100 
+Rusça %100 %100 %100 
+İspanyolca %100 %99,6 %99,8 
+İsveççe %100 %100 %100 
+Tamilce %99,3 %100 %99,6 
+Türkçe %100 %100 %100 
+    
+Doğruluk   %99,9 
+Makro ortalama   %99,9 
+Ağırlıklı ortalama   %99,9 
+ 
+
+========== PAGE 14 ==========
+Toklu ve Kabakuş / Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993 
+1992 
+Kannada, Tamilce, İsveççe, Rusça, Portekizce, Malayalamca, 
+İtalyanca, Hintçe, Yunanca, Almanca, Fransızca, İngilizce, 
+Felemenkçe ve Türkçe için mükemmel kesinlik (%100) elde etmiştir. 
+Bu düzeyde elde edilen sınıflandırma performansı, önerilen özgü n 
+modelin verilen bir metnin dilini doğru bir şekilde tanımlamada  n e 
+kadar sağlam ve güvenilir olduğunu gözler önüne sermektedir. 
+Bulgularımız, BiLSTM ve Çok-Baş lı Dikkat mekanizmasını entegre 
+etmenin dil tespiti görevlerini geliştirme potansiyelini vurgul amakta 
+ve daha sofistike ve doğru çok dilli metin işleme uygulamaların a 
+zemin hazırlamaktadır. Modelimizin bu alandaki başarısı, makine  
+çevirisi, duygu analizi ve bilgi erişimi gibi dil tanımlamanın kritik 
+olduğu çeşitli NLP görevlerinde uygulanması için umut verici 
+sonuçlar önermektedir. 
+ 
+Gelecek çalışmalar, bu modelin daha fazla dili kapsayacak şekil de 
+genişletilmesini ve NLP alanındaki diğer ilgili görevlerdeki 
+uygulamalarını keşfetmeyi içerebilir. Ayrıca, modelin performan sını 
+daha karmaşık dilsel senaryolarda artırmak için bağlamsal ve 
+anlamsal anlayışın entegrasyonunu araştırmak da ilgi çekici ola bilir. 
+Çeşitli optimizasyon teknikleri nihai hedef olan birçok veriset inde 
+benzer veya daha iyi sonuçlar alabilmek için sonraki çalışmalar da 
+eklenebilir. 
+ 
+Kaynaklar 
+(References) 
+ 
+1. Brockman G. Greg Brockman on X: ‘ChatGPT just crossed 1 million 
+users; it’s been 5 days since launch. 
+https://x.com/gdb/status/1599683104142430208. Yayın tarihi Aralık 
+05, 2022. Erişim tarihi Haziran 19, 2025. 
+2. Cook J. 6 Giveaway Signs of ChatGPT-Generated Content. 
+https://www.forbes.com/sites/jodiecook/2023/12/06/6-giveaway-signs-
+of-chatgpt-generated-content/. Yayın tarihi Aralık 06, 2023. Erişim 
+tarihi Haziran 19, 2025. 
+3. Kaya F., Ertuğrul Ö.F., A novel feature extraction approach for text-
+based language identification: Binary patterns, Journal of the Faculty of 
+Engineering and Architecture of Gazi University, 31 (4), 1085-1094, 
+2016. 
+4. Işık G., Artuner H., Turkish dialect recognition in terms of prosodic by 
+long short-term memory neural networks, Journal of the Faculty of 
+Engineering and Architecture of Gazi University, 35 (1), 213-224, 
+2020. 
+5. Işık G., Artuner H., Turkish Dialect Recognition Using Acoustic and 
+Phonotactic Features in Deep Learning Architectures, Journal of 
+Information Technologies, 13 (3), 207-216, 2020. 
+6. Jauhiainen T., Lui M., Zampieri M., Baldwin T., Lindén K., Automatic 
+language identification in texts: A survey, Journal of Artificial 
+Intelligence Research, 65 (1), 675-682, 2019. 
+7. Habic V., Semenov A., ve Pasiliao E.L., Multitask deep learning for 
+native language identification, Knowl Based Syst, 209, 106440, 2020. 
+8. Baştürk F., Şahin H., Comparison of Machine Learning Classification 
+Algorithms: Example of Language Identification from Text, Electronic 
+Letters on Science and Engineering, 18 (2), 68-78, 2022. 
+9. Fateh A., Birgani R.T, Fateh M., Abolghasemi V., Advancing 
+Multilingual Handwritten Numeral Recognition With Attention-Driven 
+Transfer Learning, IEEE Access, 12, 41381-41395, 2024. 
+10. Mahmud T., Ptaszynski M., Masui F., Exhaustive Study into Machine 
+Learning and Deep Learning Methods for Multilingual Cyberbullying 
+Detection in Bangla and Chittagonian Texts, Electronics (Basel), 13 (9), 
+1-36, 2024. 
+11. Ergin İ., İnan T., Encoder character based using decoder and attention 
+algorithms word production, Journal of the Faculty of Engineering and 
+Architecture of Gazi University, 39 (3), 1999-2009, 2024. 
+12. Karaca A., Aydın Ö., Generating headlines for Turkish news texts with 
+transformer architecture based deep learning method, Journal of the 
+Faculty of Engineering and Architecture of Gazi University, 39 (1), 
+485-495, 2024. 
+13. Ghoshal A., Swietojanski P., Renals S., Multilingual training of deep 
+neural networks, Proceedings of the IEEE International Conference on 
+Acoustics, Speech and Signal Processing (ICASSP ’13), Vancouver, 
+BC, Kanada, 7319-7323, 26-31 Mayıs, 2013. 
+14. Fateh A., Fateh M., Abolghasemi V., Multilingual handwritten numeral 
+recognition using a robust deep network joint with transfer learning, Inf 
+Sci (N Y), 581, 479-494, 2021. 
+15. Liu P., Zhang L., Gulla J.A., Multilingual Review-Aware Deep 
+Recommender System via Aspect-based Sentiment Analysis, ACM 
+Trans Inf Syst, 39 (2), 1-33, 2021. 
+16. Omran T.M., Sharef B.T., Grosan C., Li Y., Transfer learning and 
+sentiment analysis of Bahraini dialects sequential text data using 
+multilingual deep learning approach, Data Knowl Eng, 143, 1-19, 2023. 
+17. Licht H., Cross-Lingual Classification of Political Texts Using 
+Multilingual Sentence Embeddings, Political Analysis, 31 (3), 366-379, 
+2023. 
+18. Wadud M.A.H., Mridha M.F., Shin J., Nur K., Saha A.K., Deep-BERT: 
+Transfer Learning for Classifying Multilingual Offensive Texts on 
+Social Media, Computer Systems Science and Engineering, 44 (2), 
+1775-1791, 2023. 
+19. Alshanqiti A.M., Albouq S., Alkhodre A.B., Namoun A., Nabil E., 
+Employing a Multilingual Transformer Model for Segmenting 
+Unpunctuated Arabic Text, Applied Sciences (Switzerland), 12 (20), 1-
+15, 2022. 
+20. Saumya S., Kumar A., Singh J.P., Filtering offensive language from 
+multilingual social media contents: A deep learning approach, Eng Appl 
+Artif Intell, 133, 1-15, 2024. 
+21. Karayigit H., Akdagli A., Aci C.I., Homophobic and Hate Speech 
+Detection Using Multilingual-BERT Model on Turkish Social Media, 
+Information Technology and Control, 51 (2), 356-375, 2022. 
+22. Guven Z.A., Lamurias, A., Multilingual bi-encoder models for 
+biomedical entity linking, Expert Syst, c. 40 (9), 1-14, 2023. 
+23. Alcantara T.H.M., Krütli D., Ravada R., Hanne T., Multilingual Text 
+Summarization for German Texts Using Transformer Models, 
+Information (Switzerland), 14 (6), 1-13, 2023. 
+24. Yang Z.G., Laki L.J., Solving Hungarian natural language processing 
+tasks with multilingual generative models, Annales Mathematicae et 
+Informaticae, 57, 92-106, 2023. 
+25. Nasir J.A. ve Din Z.U., Syntactic Structured Framework for Resolving 
+Reflexive Anaphora in Urdu Discourse Using Multilingual NLP, KSII 
+Transactions on Internet and Information Systems, 15 (4), 1409-1425, 
+2021. 
+26. Unanue I.J., Haffari G., Piccardi M., T3L: Translate-and-Test Transfer 
+Learning for Cross-Lingual Text Classification, Trans Assoc Comput 
+Linguist, 11, 1147-1161, 2023. 
+27. Pedregosa F. vd., Scikit-learn: Machine Learning in Python, Journal of 
+Machine Learning Research, 12, 2825-2830, 2011. 
+28. Abadi M. vd., TensorFlow: A System for Large-Scale Machine 
+Learning, Proceedings of the 12th USENIX Symposium on Operating 
+Systems Design and Implementation (OSDI 2016), Savannah, GA, 
+A.B.D., 265-283, 2-4 Kasım, 2016. 
+29. Chollet F., Deep Learning with Python, Manning Publications, Shelter 
+Island, New York, A.B.D., 2017. 
+30. Harris C.R. vd., Array Programming with NumPy, Nature, 585, 357-
+362, 2020. 
+31. McKinney W., Data Structures for Statistical Computing in Python, 
+Proceedings of the 9th Python in Science Conference (SCIPY 2010), 
+Austin, Texas, 56-61, 28 Haziran-3 Temmuz, 2010. 
+32. Hunter J.D., Matplotlib: A 2D Graphics Environment, Comput Sci Eng, 
+9 (3), 90-95, 2007. 
+33. Waskom M.L., seaborn: statistical data visualization, J Open Source 
+Softw, 6 (60), 1-4, 2021. 
+34. Saji B., Language Detection. 
+https://www.kaggle.com/datasets/basilb2s/language-detection/. Yayın 
+tarihi Şubat 10, 2021. Erişim tarihi Haziran 19, 2025.  
+35. Liu S., Himel G.M.S., Wang J., Breast Cancer Classification With 
+Enhanced Interpretability: DALAResNet50 and DT Grad-CAM, IEEE 
+Access, 12, 196647-196659, 2024. 
+36. Wang L., Zhang L., Qi X., Yi Z., Deep Attention-Based Imbalanced 
+Image Classification, IEEE Trans Neural Netw Learn Syst, 33 (8), 
+3320-3330, 2022. 
+37. Nguyen V.D., Bui N.D., Do H.K., Skin Lesion Classification on 
+Imbalanced Data Using Deep Learning with Soft Attention, Sensors, 
+22, 1-24, 2022. 
+38. Zubair M., Woo S., Lim S., Kim D., Deep Representation Learning 
+With Sample Generation and Augmented Attention Module for 
+Imbalanced ECG Classification, IEEE J Biomed Health Inform, 28 (5), 
+2461-2472, 2024. 
+========== PAGE 15 ==========
+Toklu ve Kabakuş / Journal of the Faculty of Engineering and Architecture of Gazi University 40:3 (2025) 1979-1993 
+1993 
+39. Bojanowski P., Grave E, Joulin A., Mikolov T., Enriching Word 
+Vectors with Subword Information, arXiv preprint, 1607.04606, 1-12, 
+2016. 
+40. Vaswani A. vd., Attention Is All You Need, Proceedings of the 31st 
+Annual Conference on Neural Information Processing Systems (NIPS 
+2017), Long Beach, California, A.B.D., 1-11, 4-9 Aralık, 2017. 
+41. He K., Zhang X., Ren S., Sun J., Deep Residual Learning for Image 
+Recognition, Proceedings of the 2016 IEEE Computer Society 
+Conference on Computer Vision and Pattern Recognition (CVPR), Las 
+Vegas, NV, A.B.D., 770-778, 27-30 Haziran, 2016. 
+42. Kingma D.P., Ba J.L., Adam: A Method for Stochastic Optimization, 
+Proceedings of the 3rd International Conference on Learning 
+Representations (ICLR 2015), San Diego, California, A.B.D., 1-15, 7-9 
+Mayıs, 2015. 
+43. Akalin F., Survival Classification in Heart Failure Patients by Neural 
+Network-Based Crocodile and Egyptian Plover (CEP) Optimization 
+Algorithm, Arab J Sci Eng, 49 (3), 3897-3914, 2024. 
+44. O’Malley T., Bursztein E., Long J., Chollet F. KerasTuner. 
+https://github.com/keras-team/keras-tuner. Yayın tarihi: Mart 4, 2024. 
+Erişim tarihi Haziran 19, 2025. 
+45. Li L., Jamieson K., DeSalvo G., Rostamizadeh A., Talwalkar A., 
+Hyperband: A Novel Bandit-Based Approach to Hyperparameter 
+Optimization, Journal of Machine Learning Research, 18 (1), 6765-
+6816, 2018. 
+46. van Veen R., Biehl M., ve de Vries G.J., sklvq: Scikit Learning Vector 
+Quantization, Journal of Machine Learning Research, 22 (231), 1-6, 
+2021. 
+47. Ke G. vd., LightGBM: A highly efficient gradient boosting decision 
+tree, Adv Neural Inf Process Syst, 30 (NIPS 2017), 3149-3157, 2017. 
+48. Chen T., Guestrin C., XGBoost: A scalable tree boosting system, 
+Proceedings of the ACM SIGKDD International Conference on 
+Knowledge Discovery and Data Mining (KDD ’16), San Francisco, CA, 
+A.B.D., 785-794, 13-17 Ağustos, 2016. 
+49. Devlin J., Chang M.W., Lee K., Toutanova K., BERT: Pre-training of 
+Deep Bidirectional Transformers for Language Understanding, 
+Proceedings of the 2019 Conference of the North American Chapter of 
+the Association for Computational Linguistics: Human Language 
+Technologies (NAACL HLT 2019), Minneapolis, Minnesota, A.B.D., 
+4171-4186, 2-7 Haziran, 2019. 
+50. Caruana R., Lawrence S., Giles L., Overfitting in Neural Nets: 
+Backpropagation, Conjugate Gradient, and Early Stopping, Advanc es in 
+Neural Information Processing Systems 13-Proceedings of the 200 0 
+Conference (NIPS 2000), Denver, CO, A.B.D., 402-408, 27 Kasım-0 2 
+Aralık, 2000.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+========== PAGE 16 ==========
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
