@@ -1294,11 +1294,11 @@ def build():
         "Conference on Acoustics, Speech and Signal Processing (ICASSP 2023), 1-5, "
         "Rhodes, Yunanistan, 4-10 Haziran, 2023. DOI: 10.1109/ICASSP49357.2023.10095889.",
 
-        "Wu Y., Chen K., Zhang T., Hui Y., Berg-Kirkpatrick T., Dubnov S., Large-Scale "
-        "Contrastive Language-Audio Pretraining with Feature Fusion and "
-        "Keyword-to-Caption Augmentation, Proceedings of the IEEE International "
-        "Conference on Acoustics, Speech and Signal Processing (ICASSP 2023), 1-5, "
-        "Rhodes, Yunanistan, 4-10 Haziran, 2023. DOI: 10.1109/ICASSP49357.2023.10095969.",
+        "Wu Y. vd., Large-Scale Contrastive Language-Audio Pretraining with Feature "
+        "Fusion and Keyword-to-Caption Augmentation, Proceedings of the IEEE "
+        "International Conference on Acoustics, Speech and Signal Processing (ICASSP "
+        "2023), 1-5, Rhodes, Yunanistan, 4-10 Haziran, 2023. DOI: "
+        "10.1109/ICASSP49357.2023.10095969.",
 
         "Liu Y., Yin Y., Zhu Q., Cui W., Musical Instrument Recognition by XGBoost "
         "Combining Feature Fusion, arXiv preprint arXiv:2206.00901, 2022. DOI: "
@@ -1348,10 +1348,9 @@ def build():
         "Detection Performance Under Audio Augmentations, arXiv preprint "
         "arXiv:2507.10447, 2025. DOI: 10.48550/arXiv.2507.10447.",
 
-        "McFee B., Raffel C., Liang D., Ellis D.P.W., McVicar M., Battenberg E., Nieto O., "
-        "librosa: Audio and Music Signal Analysis in Python, Proceedings of the 14th "
-        "Python in Science Conference (SciPy 2015), 18-24, Austin, Texas, A.B.D., "
-        "6-12 Temmuz, 2015. DOI: 10.25080/Majora-7b98e3ed-003.",
+        "McFee B. vd., librosa: Audio and Music Signal Analysis in Python, Proceedings "
+        "of the 14th Python in Science Conference (SciPy 2015), 18-24, Austin, Texas, "
+        "A.B.D., 6-12 Temmuz, 2015. DOI: 10.25080/Majora-7b98e3ed-003.",
 
         "Pedregosa F., Varoquaux G., Gramfort A., Michel V., Thirion B., Grisel O., "
         "Blondel M., Prettenhofer P., Weiss R., Dubourg V., Vanderplas J., Passos A., "
