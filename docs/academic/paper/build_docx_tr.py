@@ -12,6 +12,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from docx import Document
+from docx.enum.section import WD_SECTION
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
@@ -51,6 +52,44 @@ def _page_break_before(paragraph) -> None:
     pPr = paragraph._p.get_or_add_pPr()
     pbb = OxmlElement("w:pageBreakBefore")
     pPr.append(pbb)
+
+
+def _set_cols(section, num_cols: int, space_cm: float = 0.5) -> None:
+    """Force a w:cols element on a section to set the column count."""
+    sectPr = section._sectPr
+    # Remove existing cols if any
+    existing = sectPr.find(qn("w:cols"))
+    if existing is not None:
+        sectPr.remove(existing)
+    cols = OxmlElement("w:cols")
+    cols.set(qn("w:num"), str(num_cols))
+    # 567 twips ≈ 1 cm
+    cols.set(qn("w:space"), str(int(space_cm * 567)))
+    cols.set(qn("w:equalWidth"), "1")
+    sectPr.append(cols)
+
+
+def _apply_a4_margins(section) -> None:
+    section.page_width    = Cm(21.0)
+    section.page_height   = Cm(29.7)
+    section.top_margin    = Cm(2.79)
+    section.bottom_margin = Cm(0.49)
+    section.left_margin   = Cm(1.50)
+    section.right_margin  = Cm(1.50)
+
+
+def start_two_column_section(doc) -> None:
+    """Insert a continuous section break and switch to 2 columns."""
+    new_sec = doc.add_section(WD_SECTION.CONTINUOUS)
+    _apply_a4_margins(new_sec)
+    _set_cols(new_sec, 2, space_cm=0.5)
+
+
+def start_one_column_section(doc) -> None:
+    """Insert a continuous section break and switch back to 1 column."""
+    new_sec = doc.add_section(WD_SECTION.CONTINUOUS)
+    _apply_a4_margins(new_sec)
+    _set_cols(new_sec, 1)
 
 
 def _set_font(run, *, size=11, bold=False, italic=False,
@@ -207,13 +246,14 @@ def reference_entry(doc, idx: int, text: str) -> None:
 def build():
     doc = Document()
 
+    # Gazi MMF Dergisi şablonu: A4, kenarlar Üst 2.79 / Alt 0.49 / Sol 1.50 / Sağ 1.50 cm
     for section in doc.sections:
         section.page_width    = Cm(21.0)
         section.page_height   = Cm(29.7)
-        section.top_margin    = Cm(3.0)
-        section.bottom_margin = Cm(2.0)
-        section.left_margin   = Cm(2.0)
-        section.right_margin  = Cm(2.0)
+        section.top_margin    = Cm(2.79)
+        section.bottom_margin = Cm(0.49)
+        section.left_margin   = Cm(1.50)
+        section.right_margin  = Cm(1.50)
 
     # ── Türkçe başlık ──
     p = doc.add_paragraph()
