@@ -92,7 +92,7 @@ def start_one_column_section(doc) -> None:
     _set_cols(new_sec, 1)
 
 
-def _set_font(run, *, size=11, bold=False, italic=False,
+def _set_font(run, *, size=8.5, bold=False, italic=False,
               color=DARK, name="Times New Roman"):
     run.font.name = name
     run.font.size = Pt(size)
@@ -109,13 +109,14 @@ def _set_font(run, *, size=11, bold=False, italic=False,
         rFonts.set(qn(attr), name)
 
 
-def body(doc, text: str, *, size=11, justify=True, indent_cm=0.0):
+def body(doc, text: str, *, size=8.5, justify=True, indent_cm=0.5):
+    """Gövde metin — Gazi MMF Dergisi: Times New Roman 8.5pt, justify, ilk satır girintisi 0.5 cm"""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY if justify else WD_ALIGN_PARAGRAPH.LEFT
     pf = p.paragraph_format
     pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
-    pf.space_before = Pt(8)
-    pf.space_after = Pt(12)
+    pf.space_before = Pt(0)
+    pf.space_after = Pt(6)
     if indent_cm:
         pf.first_line_indent = Cm(indent_cm)
     r = p.add_run(text)
@@ -123,28 +124,30 @@ def body(doc, text: str, *, size=11, justify=True, indent_cm=0.0):
     return p
 
 
-def heading(doc, text: str, *, all_caps=True):
+def heading(doc, text: str, *, all_caps=False):
+    """Ana bölüm başlığı — 1. Giriş (Introduction) — 8.5pt BOLD, no all-caps"""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
     pf = p.paragraph_format
-    pf.space_before = Pt(14)
-    pf.space_after = Pt(8)
+    pf.space_before = Pt(12)
+    pf.space_after = Pt(4)
     pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
-    r = p.add_run(text.upper() if all_caps else text)
-    _set_font(r, size=12, bold=True)
+    r = p.add_run(text)
+    _set_font(r, size=8.5, bold=True)
     _set_keep_with_next(p)
     return p
 
 
 def subheading(doc, text: str):
+    """Alt başlık — 1.1. Konuşma için... — 8.5pt BOLD italic"""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
     pf = p.paragraph_format
-    pf.space_before = Pt(10)
-    pf.space_after = Pt(6)
+    pf.space_before = Pt(8)
+    pf.space_after = Pt(2)
     pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
     r = p.add_run(text)
-    _set_font(r, size=11, bold=True, italic=True)
+    _set_font(r, size=8.5, bold=True, italic=True)
     _set_keep_with_next(p)
     return p
 
@@ -164,45 +167,49 @@ def figure(doc, filename: str, caption_tr: str, caption_en: str,
     r.add_picture(str(img), width=Cm(width_cm))
     _set_keep_with_next(p)
 
+    # Şekil X. ... TR caption — 8.5pt bold (Talha hoca formatı)
     c1 = doc.add_paragraph()
     c1.alignment = WD_ALIGN_PARAGRAPH.CENTER
     cf = c1.paragraph_format
-    cf.space_before = Pt(0)
+    cf.space_before = Pt(2)
     cf.space_after = Pt(0)
     r1 = c1.add_run(caption_tr)
-    _set_font(r1, size=11, italic=True)
+    _set_font(r1, size=8.5, bold=True)
     _set_keep_with_next(c1)
 
+    # Italic EN caption parantez içinde — 8.5pt italic
     c2 = doc.add_paragraph()
     c2.alignment = WD_ALIGN_PARAGRAPH.CENTER
     cf = c2.paragraph_format
     cf.space_before = Pt(0)
-    cf.space_after = Pt(12)
+    cf.space_after = Pt(8)
     r2 = c2.add_run(f"({caption_en})")
-    _set_font(r2, size=11, italic=True, color="666666")
+    _set_font(r2, size=8.5, italic=True)
 
 
 def table_caption(doc, caption_tr: str, caption_en: str) -> None:
+    """Tablo başlığı — 8.5pt BOLD, EN italik altında"""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     pf = p.paragraph_format
-    pf.space_before = Pt(10)
-    pf.space_after = Pt(2)
+    pf.space_before = Pt(8)
+    pf.space_after = Pt(0)
     r = p.add_run(caption_tr)
-    _set_font(r, size=11, italic=True)
+    _set_font(r, size=8.5, bold=True)
     _set_keep_with_next(p)
 
     p2 = doc.add_paragraph()
     p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
     pf2 = p2.paragraph_format
     pf2.space_before = Pt(0)
-    pf2.space_after = Pt(4)
+    pf2.space_after = Pt(2)
     r2 = p2.add_run(f"({caption_en})")
-    _set_font(r2, size=11, italic=True, color="666666")
+    _set_font(r2, size=8.5, italic=True)
     _set_keep_with_next(p2)
 
 
 def add_table(doc, headers, rows):
+    """Tablo — 8pt başlık beyaz/altın, 8pt gövde alternatif satır renkli"""
     tbl = doc.add_table(rows=1 + len(rows), cols=len(headers))
     tbl.style = "Table Grid"
     for j, h in enumerate(headers):
@@ -211,7 +218,7 @@ def add_table(doc, headers, rows):
         p = cell.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         r = p.add_run(h)
-        _set_font(r, size=10, bold=True, color="FFFFFF")
+        _set_font(r, size=8, bold=True, color="FFFFFF")
         _shade(cell, GOLD)
     for i, row in enumerate(rows, start=1):
         bg = "F5F0E8" if i % 2 == 0 else "FFFFFF"
@@ -221,23 +228,24 @@ def add_table(doc, headers, rows):
             p = cell.paragraphs[0]
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
             r = p.add_run(val)
-            _set_font(r, size=10)
+            _set_font(r, size=8)
             _shade(cell, bg)
     p = doc.add_paragraph()
-    p.paragraph_format.space_after = Pt(12)
+    p.paragraph_format.space_after = Pt(8)
 
 
 def reference_entry(doc, idx: int, text: str) -> None:
+    """Kaynak satırı — 8pt, asılı girinti, IEEE numerik"""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     pf = p.paragraph_format
-    pf.left_indent = Cm(0.8)
-    pf.first_line_indent = Cm(-0.8)
+    pf.left_indent = Cm(0.6)
+    pf.first_line_indent = Cm(-0.6)
     pf.space_before = Pt(0)
-    pf.space_after = Pt(4)
+    pf.space_after = Pt(2)
     pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
     r = p.add_run(f"{idx}. {text}")
-    _set_font(r, size=10)
+    _set_font(r, size=8)
 
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -261,20 +269,20 @@ def build():
     p.paragraph_format.space_after = Pt(4)
     r = p.add_run("AURIS: Çoklu-Model Topluluk Yaklaşımı ile Yapay Zekâ "
                   "Tarafından Üretilen Müziklerin Tespiti")
-    _set_font(r, size=14, bold=True)
+    _set_font(r, size=13.5, bold=True)
 
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_after = Pt(2)
     r = p.add_run("Hasan Arthur Altuntaş")
-    _set_font(r, size=11, bold=True)
+    _set_font(r, size=8.5, bold=True)
 
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_after = Pt(16)
     r = p.add_run("Düzce Üniversitesi, Mühendislik Fakültesi, "
                   "Bilgisayar Mühendisliği Bölümü, 81620, Düzce, Türkiye")
-    _set_font(r, size=10, italic=True)
+    _set_font(r, size=7.5)
 
     # Highlights TR
     subheading(doc, "Ö N E   Ç I K A N L A R")
@@ -293,13 +301,13 @@ def build():
         pf.left_indent = Cm(0.5)
         pf.space_after = Pt(3)
         r = p.add_run(h)
-        _set_font(r, size=10)
+        _set_font(r, size=8.5)
 
     subheading(doc, "Makale Bilgileri")
     body(doc, "Araştırma Makalesi  ·  Geliş: 20.05.2026  ·  "
               "Anahtar Kelimeler: Yapay zekâ tarafından üretilen müzik, "
               "derin öğrenme, gradyan artırma, topluluk öğrenmesi, ses sınıflandırması, "
-              "spektral düzlük.", size=10)
+              "spektral düzlük.", size=8.5)
 
     subheading(doc, "ÖZ")
     body(doc, (
@@ -330,11 +338,11 @@ def build():
         "ağaç tabanlı tüm modellerin eğitim ve çapraz doğrulama doğrulukları arasında "
         "8-14 puanlık bir fark sergilediğini ve mevcut 47 özniteliğin yaklaşık 17 "
         "tanesinin ölçülebilir bir ek doğruluk sağlamadığını ortaya koymuştur."
-    ), size=10)
+    ), size=8.5)
 
     subheading(doc, "Anahtar Kelimeler")
     body(doc, "Yapay zekâ tarafından üretilen müzik · Derin öğrenme · Gradyan artırma · "
-              "Topluluk öğrenmesi · Ses sınıflandırması · Spektral düzlük", size=10)
+              "Topluluk öğrenmesi · Ses sınıflandırması · Spektral düzlük", size=8.5)
 
     # ── İngilizce blok ──
     p = doc.add_paragraph()
@@ -343,7 +351,7 @@ def build():
     p.paragraph_format.space_after = Pt(4)
     r = p.add_run("AURIS: A Multi-Model Ensemble Approach for the Detection of "
                   "AI-Generated Music")
-    _set_font(r, size=13, bold=True, italic=True)
+    _set_font(r, size=11, bold=True, italic=True)
 
     subheading(doc, "H I G H L I G H T S")
     for h in [
@@ -361,7 +369,7 @@ def build():
         pf.left_indent = Cm(0.5)
         pf.space_after = Pt(3)
         r = p.add_run(h)
-        _set_font(r, size=10, italic=True)
+        _set_font(r, size=8.5, italic=True)
 
     subheading(doc, "ABSTRACT")
     body(doc, (
@@ -379,11 +387,11 @@ def build():
         "0.083 confirms that the probability outputs are well calibrated. Diagnostic analysis "
         "shows an 8-14 point train-CV accuracy gap for all tree-based models and reveals that "
         "roughly 17 of the 47 features contribute no measurable accuracy."
-    ), size=10)
+    ), size=8.5)
 
     subheading(doc, "Keywords")
     body(doc, "AI-generated music · Deep learning · Gradient boosting · Ensemble learning · "
-              "Audio classification · Spectral flatness", size=10)
+              "Audio classification · Spectral flatness", size=8.5)
 
     # ══════════════════════════════════════════════════════════════════
     # Kapak bitti — buradan itibaren ÇİFT KOLONLU yapı (Gazi MMF Dergisi)
@@ -475,7 +483,7 @@ def build():
         p.paragraph_format.space_after = Pt(6)
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         r = p.add_run(bullet)
-        _set_font(r, size=11)
+        _set_font(r, size=8.5)
 
     body(doc, (
         "Bu makalenin geri kalanı şu şekilde yapılandırılmıştır: 1.1-1.5 alt bölümleri "
