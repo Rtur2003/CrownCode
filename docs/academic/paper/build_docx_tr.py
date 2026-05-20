@@ -1352,10 +1352,8 @@ def build():
         "of the 14th Python in Science Conference (SciPy 2015), 18-24, Austin, Texas, "
         "A.B.D., 6-12 Temmuz, 2015. DOI: 10.25080/Majora-7b98e3ed-003.",
 
-        "Pedregosa F., Varoquaux G., Gramfort A., Michel V., Thirion B., Grisel O., "
-        "Blondel M., Prettenhofer P., Weiss R., Dubourg V., Vanderplas J., Passos A., "
-        "Cournapeau D., Brucher M., Perrot M., Duchesnay E., Scikit-learn: Machine "
-        "Learning in Python, Journal of Machine Learning Research, 12, 2825-2830, 2011.",
+        "Pedregosa F. vd., Scikit-learn: Machine Learning in Python, Journal of "
+        "Machine Learning Research, 12, 2825-2830, 2011.",
 
         "Kingma D.P., Ba J., Adam: A Method for Stochastic Optimization, Proceedings of "
         "the 3rd International Conference on Learning Representations (ICLR 2015), 1-15, "
