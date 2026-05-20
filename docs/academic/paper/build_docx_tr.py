@@ -796,7 +796,7 @@ def build():
     # ══════════════════════════════════════════════════════════════════
     # 3. SONUÇLAR VE TARTIŞMA
     # ══════════════════════════════════════════════════════════════════
-    heading(doc, "3. Sonuçlar ve Tartışma (Results and Discussion)")
+    heading(doc, "3. Sonuçlar ve Tartışmalar (Results and Discussions)")
 
     subheading(doc, "3.1. Genel Model Performansı (Overall Model Performance)")
     body(doc, (
