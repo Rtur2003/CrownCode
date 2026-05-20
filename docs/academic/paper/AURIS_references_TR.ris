@@ -1,12 +1,6 @@
 TY  - CONF
 AU  - Copet, Jade
-AU  - Kreuk, Felix
-AU  - Gat, Itai
-AU  - Remez, Tal
-AU  - Kant, David
-AU  - Synnaeve, Gabriel
-AU  - Adi, Yossi
-AU  - D\efossez, Alexandre
+AU  - othersfossez, Alexandre
 TI  - Simple and Controllable Music Generation
 BT  - Advances in Neural Information Processing Systems
 PY  - 2023
@@ -16,39 +10,25 @@ ER  -
 
 TY  - CONF
 AU  - Liu, Haohe
-AU  - Chen, Zehua
-AU  - Yuan, Yi
-AU  - Mei, Xinhao
-AU  - Liu, Xubo
-AU  - Mandic, Danilo
-AU  - Wang, Wenwu
-AU  - Plumbley, Mark D.
+AU  - others
 TI  - AudioLDM: Text-to-Audio Generation with Latent Diffusion Models
 BT  - Proceedings of the International Conference on Machine Learning (ICML 2023)
 PY  - 2023
+DO  - 10.48550/arXiv.2301.12503
 SP  - 21450
 EP  - 21474
-DO  - 10.48550/arXiv.2301.12503
 ER  - 
 
 TY  - CONF
 AU  - Yi, Jiangyan
-AU  - Fu, Ruibo
-AU  - Tao, Jianhua
-AU  - Nie, Shuai
-AU  - Ma, Haitao
-AU  - Wang, Chenglong
-AU  - Wang, Tao
-AU  - Tian, Zhengkun
-AU  - Bai, Ye
-AU  - Fan, Cunhang
+AU  - others
 TI  - ADD 2022: The First Audio Deep Synthesis Detection Challenge
 BT  - Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2022)
 PY  - 2022
-SP  - 9216
-EP  - 9220
 PB  - IEEE
 DO  - 10.1109/ICASSP43922.2022.9746939
+SP  - 9216
+EP  - 9220
 ER  - 
 
 TY  - CONF
@@ -73,11 +53,7 @@ ER  -
 
 TY  - JOUR
 AU  - Yi, Jiangyan
-AU  - Wang, Chenglong
-AU  - Tao, Jianhua
-AU  - Zhang, Xiaohui
-AU  - Zhang, Chu Yuan
-AU  - Zhao, Yan
+AU  - others
 TI  - Audio Deepfake Detection: A Survey
 JO  - arXiv preprint arXiv:2308.14970
 PY  - 2023
@@ -110,21 +86,15 @@ AU  - Guestrin, Carlos
 TI  - XGBoost: A Scalable Tree Boosting System
 BT  - Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining
 PY  - 2016
-SP  - 785
-EP  - 794
 PB  - ACM
 DO  - 10.1145/2939672.2939785
+SP  - 785
+EP  - 794
 ER  - 
 
 TY  - CONF
 AU  - Ke, Guolin
-AU  - Meng, Qi
-AU  - Finley, Thomas
-AU  - Wang, Taifeng
-AU  - Chen, Wei
-AU  - Ma, Weidong
-AU  - Ye, Qiwei
-AU  - Liu, Tie-Yan
+AU  - others
 TI  - LightGBM: A Highly Efficient Gradient Boosting Decision Tree
 BT  - Advances in Neural Information Processing Systems 30 (NIPS 2017)
 PY  - 2017
@@ -138,21 +108,21 @@ AU  - Lee, Su-In
 TI  - A Unified Approach to Interpreting Model Predictions
 BT  - Advances in Neural Information Processing Systems 30 (NIPS 2017)
 PY  - 2017
+DO  - 10.48550/arXiv.1705.07874
 SP  - 4768
 EP  - 4777
-DO  - 10.48550/arXiv.1705.07874
 ER  - 
 
 TY  - CONF
-AU  - Mart\in-Do\~nas, Juan Manuel
-AU  - \Alvarez, Aitor
+AU  - Martin-Do\~nas, Juan Manuel
+AU  - Alvarez, Aitor
 TI  - The Vicomtech Audio Deepfake Detection System Based on Wav2vec2 for the 2022 ADD Challenge
 BT  - Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2022)
 PY  - 2022
-SP  - 9266
-EP  - 9270
 PB  - IEEE
 DO  - 10.1109/ICASSP43922.2022.9747768
+SP  - 9266
+EP  - 9270
 ER  - 
 
 TY  - JOUR
@@ -164,9 +134,9 @@ TI  - wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representa
 JO  - Advances in Neural Information Processing Systems
 PY  - 2020
 VL  - 33
+DO  - 10.5555/3495724.3496768
 SP  - 12449
 EP  - 12460
-DO  - 10.5555/3495724.3496768
 ER  - 
 
 TY  - CONF
@@ -177,10 +147,10 @@ AU  - Wang, Huaming
 TI  - CLAP: Learning Audio Concepts from Natural Language Supervision
 BT  - Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2023)
 PY  - 2023
-SP  - 1
-EP  - 5
 PB  - IEEE
 DO  - 10.1109/ICASSP49357.2023.10095889
+SP  - 1
+EP  - 5
 ER  - 
 
 TY  - CONF
@@ -193,10 +163,10 @@ AU  - Dubnov, Shlomo
 TI  - Large-Scale Contrastive Language-Audio Pretraining with Feature Fusion and Keyword-to-Caption Augmentation
 BT  - Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2023)
 PY  - 2023
-SP  - 1
-EP  - 5
 PB  - IEEE
 DO  - 10.1109/ICASSP49357.2023.10095969
+SP  - 1
+EP  - 5
 ER  - 
 
 TY  - JOUR
@@ -220,8 +190,8 @@ JO  - Mathematics
 PY  - 2024
 VL  - 12
 IS  - 10
-SP  - 1549
 DO  - 10.3390/math12101549
+SP  - 1549
 ER  - 
 
 TY  - JOUR
@@ -231,9 +201,9 @@ TI  - Derin Öğrenme İle Türkçe Müziklerden Müzik Türü Sınıflandırmas
 JO  - Avrupa Bilim ve Teknoloji Dergisi
 PY  - 2021
 VL  - 24
+DO  - 10.31590/ejosat.898588
 SP  - 176
 EP  - 183
-DO  - 10.31590/ejosat.898588
 ER  - 
 
 TY  - JOUR
@@ -255,9 +225,9 @@ JO  - Gazi Üniversitesi Fen Bilimleri Dergisi Part C: Tasarım ve Teknoloji
 PY  - 2024
 VL  - 12
 IS  - 1
+DO  - 10.29109/gujsc.1352477
 SP  - 92
 EP  - 107
-DO  - 10.29109/gujsc.1352477
 ER  - 
 
 TY  - CONF
@@ -268,10 +238,10 @@ TI  - Wide Ensembles of Neural Networks in Music Genre Classification
 BT  - Computational Science -- ICCS 2022, Lecture Notes in Computer Science
 PY  - 2022
 VL  - 13351
-SP  - 91
-EP  - 102
 PB  - Springer
 DO  - 10.1007/978-3-031-08754-7_9
+SP  - 91
+EP  - 102
 ER  - 
 
 TY  - JOUR
@@ -283,8 +253,8 @@ JO  - Discover Internet of Things
 PY  - 2024
 VL  - 4
 IS  - 1
-SP  - 1
 DO  - 10.1007/s43926-023-00049-y
+SP  - 1
 ER  - 
 
 TY  - CONF
@@ -341,18 +311,13 @@ ER  -
 
 TY  - CONF
 AU  - McFee, Brian
-AU  - Raffel, Colin
-AU  - Liang, Dawen
-AU  - Ellis, Daniel P.W.
-AU  - McVicar, Matt
-AU  - Battenberg, Eric
-AU  - Nieto, Oriol
+AU  - others
 TI  - librosa: Audio and Music Signal Analysis in Python
 BT  - Proceedings of the 14th Python in Science Conference (SciPy 2015)
 PY  - 2015
+DO  - 10.25080/Majora-7b98e3ed-003
 SP  - 18
 EP  - 24
-DO  - 10.25080/Majora-7b98e3ed-003
 ER  - 
 
 TY  - JOUR
@@ -386,7 +351,7 @@ AU  - Ba, Jimmy
 TI  - Adam: A Method for Stochastic Optimization
 BT  - Proceedings of the 3rd International Conference on Learning Representations (ICLR 2015)
 PY  - 2015
+DO  - 10.48550/arXiv.1412.6980
 SP  - 1
 EP  - 15
-DO  - 10.48550/arXiv.1412.6980
 ER  - 
