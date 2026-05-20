@@ -1,290 +1,212 @@
 """
-Build AURIS_paper_GUJSA.docx — comprehensive Word document with embedded figures,
-mathematical formulations, algorithm boxes, and natural academic prose.
+AURIS — Türkçe makale (Gazi Müh. Mim. Fak. Dergisi formatında).
 
-GUJSA formatting:
-  - Times New Roman 11pt body, justified, single spacing
-  - 8pt/12pt paragraph spacing, 9pt abstract
-  - ALL CAPS section headings, italic subheadings
-  - APA-style hanging-indent references
-
-Usage:
-    python build_docx.py
+Çift dilli kapak (TR+EN), IEEE numerik atıf [1], [2], bölüm başlıkları
+çift dilli, tablo/şekil başlıkları çift dilli, 30 doğrulanmış referans.
+Tüm gerçek figürler (gerçek veriden, real_analysis.py + regenerate_figures.py
+ile üretilmiş) embed edilir.
 """
 
 from __future__ import annotations
 
 from pathlib import Path
+
 from docx import Document
-from docx.shared import Pt, Cm, RGBColor
-from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
-
-OUT     = Path(__file__).parent / "AURIS_paper_GUJSA.docx"
-FIGURES = Path(__file__).parent.parent / "figures"
-
-TNR       = "Times New Roman"
-BODY_SIZE = Pt(11)
-ABS_SIZE  = Pt(9)
-GOLD      = RGBColor(0xC9, 0x93, 0x47)
-DARK      = RGBColor(0x33, 0x33, 0x33)
+from docx.shared import Cm, Pt, RGBColor
 
 
-# ── helpers ──────────────────────────────────────────────────────────────
-
-def _set_spacing(para, before_pt=8, after_pt=12, line_rule="single"):
-    pPr = para._p.get_or_add_pPr()
-    spacing = OxmlElement("w:spacing")
-    spacing.set(qn("w:before"), str(int(before_pt * 20)))
-    spacing.set(qn("w:after"),  str(int(after_pt  * 20)))
-    if line_rule == "single":
-        spacing.set(qn("w:line"),     "240")
-        spacing.set(qn("w:lineRule"), "auto")
-    pPr.append(spacing)
+# ── Paths ──────────────────────────────────────────────────────────────────
+HERE     = Path(__file__).resolve().parent
+FIGURES  = HERE.parent / "figures"
+OUT      = HERE / "AURIS_paper_TR.docx"
 
 
-def _keep_with_next(para):
-    """Prevent Word from separating this paragraph from the next one (figure→caption)."""
-    pPr = para._p.get_or_add_pPr()
-    keep = OxmlElement("w:keepNext")
-    pPr.append(keep)
+# ── Constants ──────────────────────────────────────────────────────────────
+GOLD = "C99347"
+DARK = "333333"
 
 
-def _keep_lines_together(para):
-    """Prevent splitting a paragraph across pages (good for captions)."""
-    pPr = para._p.get_or_add_pPr()
-    keep = OxmlElement("w:keepLines")
-    pPr.append(keep)
+# ══════════════════════════════════════════════════════════════════════════
+# Helpers — paragraph, heading, figure, table
+# ══════════════════════════════════════════════════════════════════════════
+def _shade(cell, hex_color: str) -> None:
+    tcPr = cell._tc.get_or_add_tcPr()
+    shd = OxmlElement("w:shd")
+    shd.set(qn("w:val"), "clear")
+    shd.set(qn("w:color"), "auto")
+    shd.set(qn("w:fill"), hex_color)
+    tcPr.append(shd)
 
 
-def _page_break_before(para):
-    """Force this paragraph to start on a new page."""
-    pPr = para._p.get_or_add_pPr()
+def _set_keep_with_next(paragraph) -> None:
+    pPr = paragraph._p.get_or_add_pPr()
+    kn = OxmlElement("w:keepNext")
+    pPr.append(kn)
+
+
+def _page_break_before(paragraph) -> None:
+    pPr = paragraph._p.get_or_add_pPr()
     pbb = OxmlElement("w:pageBreakBefore")
     pPr.append(pbb)
 
 
-def _font(run, size=BODY_SIZE, bold=False, italic=False, color=None, name=TNR):
-    run.font.name   = name
-    run.font.size   = size
-    run.font.bold   = bold
+def _set_font(run, *, size=11, bold=False, italic=False,
+              color=DARK, name="Times New Roman"):
+    run.font.name = name
+    run.font.size = Pt(size)
+    run.font.bold = bold
     run.font.italic = italic
-    if color:
-        run.font.color.rgb = color
-    r = run._r
-    rPr = r.get_or_add_rPr()
-    rFonts = OxmlElement("w:rFonts")
-    rFonts.set(qn("w:ascii"), name)
-    rFonts.set(qn("w:hAnsi"), name)
-    rFonts.set(qn("w:cs"),    name)
-    rPr.insert(0, rFonts)
+    if color is not None:
+        run.font.color.rgb = RGBColor.from_string(color)
+    rPr = run._element.get_or_add_rPr()
+    rFonts = rPr.find(qn("w:rFonts"))
+    if rFonts is None:
+        rFonts = OxmlElement("w:rFonts")
+        rPr.append(rFonts)
+    for attr in ("w:ascii", "w:hAnsi", "w:cs", "w:eastAsia"):
+        rFonts.set(qn(attr), name)
 
 
-def body(doc, text, bold=False, italic=False,
-         align=WD_ALIGN_PARAGRAPH.JUSTIFY, before=4, after=8, size=BODY_SIZE):
+def body(doc, text: str, *, size=11, justify=True, indent_cm=0.0):
     p = doc.add_paragraph()
-    p.alignment = align
-    _set_spacing(p, before_pt=before, after_pt=after)
+    p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY if justify else WD_ALIGN_PARAGRAPH.LEFT
+    pf = p.paragraph_format
+    pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
+    pf.space_before = Pt(8)
+    pf.space_after = Pt(12)
+    if indent_cm:
+        pf.first_line_indent = Cm(indent_cm)
     r = p.add_run(text)
-    _font(r, size=size, bold=bold, italic=italic)
+    _set_font(r, size=size)
     return p
 
 
-def body_runs(doc, runs, align=WD_ALIGN_PARAGRAPH.JUSTIFY,
-              before=4, after=8, size=BODY_SIZE):
-    """Body paragraph with multiple formatted runs.
-    runs is a list of (text, {"bold": bool, "italic": bool}) tuples."""
-    p = doc.add_paragraph()
-    p.alignment = align
-    _set_spacing(p, before_pt=before, after_pt=after)
-    for text, style in runs:
-        r = p.add_run(text)
-        _font(r, size=size,
-              bold=style.get("bold", False),
-              italic=style.get("italic", False))
-    return p
-
-
-def heading(doc, text, level=1):
+def heading(doc, text: str, *, all_caps=True):
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    _set_spacing(p, before_pt=14, after_pt=6)
-    _keep_with_next(p)
-    _keep_lines_together(p)
-    r = p.add_run(text.upper())
-    _font(r, size=BODY_SIZE, bold=True)
+    pf = p.paragraph_format
+    pf.space_before = Pt(14)
+    pf.space_after = Pt(8)
+    pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
+    r = p.add_run(text.upper() if all_caps else text)
+    _set_font(r, size=12, bold=True)
+    _set_keep_with_next(p)
     return p
 
 
-def subheading(doc, text):
+def subheading(doc, text: str):
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    _set_spacing(p, before_pt=10, after_pt=4)
-    _keep_with_next(p)
-    _keep_lines_together(p)
+    pf = p.paragraph_format
+    pf.space_before = Pt(10)
+    pf.space_after = Pt(6)
+    pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
     r = p.add_run(text)
-    _font(r, size=BODY_SIZE, bold=True, italic=True)
+    _set_font(r, size=11, bold=True, italic=True)
+    _set_keep_with_next(p)
     return p
 
 
-def abstract_block(doc, label, text, size=ABS_SIZE):
+def figure(doc, filename: str, caption_tr: str, caption_en: str,
+           *, width_cm: float = 14.0) -> None:
+    img = FIGURES / filename
+    if not img.exists():
+        body(doc, f"[FIGURE MISSING: {filename}]")
+        return
     p = doc.add_paragraph()
-    p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-    _set_spacing(p, before_pt=4, after_pt=4)
-    rl = p.add_run(label + " ")
-    _font(rl, size=size, bold=True)
-    rb = p.add_run(text)
-    _font(rb, size=size)
-    return p
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    pf = p.paragraph_format
+    pf.space_before = Pt(10)
+    pf.space_after = Pt(2)
+    r = p.add_run()
+    r.add_picture(str(img), width=Cm(width_cm))
+    _set_keep_with_next(p)
+
+    c1 = doc.add_paragraph()
+    c1.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    cf = c1.paragraph_format
+    cf.space_before = Pt(0)
+    cf.space_after = Pt(0)
+    r1 = c1.add_run(caption_tr)
+    _set_font(r1, size=11, italic=True)
+    _set_keep_with_next(c1)
+
+    c2 = doc.add_paragraph()
+    c2.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    cf = c2.paragraph_format
+    cf.space_before = Pt(0)
+    cf.space_after = Pt(12)
+    r2 = c2.add_run(f"({caption_en})")
+    _set_font(r2, size=11, italic=True, color="666666")
 
 
-def keywords_line(doc, label, text, size=ABS_SIZE):
+def table_caption(doc, caption_tr: str, caption_en: str) -> None:
     p = doc.add_paragraph()
-    p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-    _set_spacing(p, before_pt=2, after_pt=8)
-    rl = p.add_run(label + " ")
-    _font(rl, size=size, bold=True, italic=True)
-    rb = p.add_run(text)
-    _font(rb, size=size, italic=True)
-    return p
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    pf = p.paragraph_format
+    pf.space_before = Pt(10)
+    pf.space_after = Pt(2)
+    r = p.add_run(caption_tr)
+    _set_font(r, size=11, italic=True)
+    _set_keep_with_next(p)
+
+    p2 = doc.add_paragraph()
+    p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    pf2 = p2.paragraph_format
+    pf2.space_before = Pt(0)
+    pf2.space_after = Pt(4)
+    r2 = p2.add_run(f"({caption_en})")
+    _set_font(r2, size=11, italic=True, color="666666")
+    _set_keep_with_next(p2)
 
 
-def table_row(table, row_idx, values, bold=False, bg=None, color=None):
-    row = table.rows[row_idx]
-    for i, val in enumerate(values):
-        cell = row.cells[i]
+def add_table(doc, headers, rows):
+    tbl = doc.add_table(rows=1 + len(rows), cols=len(headers))
+    tbl.style = "Table Grid"
+    for j, h in enumerate(headers):
+        cell = tbl.rows[0].cells[j]
         cell.text = ""
         p = cell.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        r = p.add_run(str(val))
-        _font(r, size=Pt(9), bold=bold, color=color)
-        if bg:
-            tc = cell._tc
-            tcPr = tc.get_or_add_tcPr()
-            shd = OxmlElement("w:shd")
-            shd.set(qn("w:val"),   "clear")
-            shd.set(qn("w:color"), "auto")
-            shd.set(qn("w:fill"),  bg)
-            tcPr.append(shd)
-
-
-def caption(doc, text, before=4, after=12, keep_together=True):
+        r = p.add_run(h)
+        _set_font(r, size=10, bold=True, color="FFFFFF")
+        _shade(cell, GOLD)
+    for i, row in enumerate(rows, start=1):
+        bg = "F5F0E8" if i % 2 == 0 else "FFFFFF"
+        for j, val in enumerate(row):
+            cell = tbl.rows[i].cells[j]
+            cell.text = ""
+            p = cell.paragraphs[0]
+            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            r = p.add_run(val)
+            _set_font(r, size=10)
+            _shade(cell, bg)
     p = doc.add_paragraph()
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    _set_spacing(p, before_pt=before, after_pt=after)
-    if keep_together:
-        _keep_lines_together(p)
-    r = p.add_run(text)
-    _font(r, size=Pt(10), italic=True)
-    return p
+    p.paragraph_format.space_after = Pt(12)
 
 
-def figure(doc, filename, caption_text, width_cm=14.0):
-    fig_path = FIGURES / filename
-    if fig_path.exists():
-        p = doc.add_paragraph()
-        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        _set_spacing(p, before_pt=8, after_pt=2)
-        _keep_with_next(p)
-        _keep_lines_together(p)
-        run = p.add_run()
-        run.add_picture(str(fig_path), width=Cm(width_cm))
-    else:
-        body(doc, f"[Figure not found: {filename}]",
-             italic=True, align=WD_ALIGN_PARAGRAPH.CENTER)
-    caption(doc, caption_text)
-
-
-def reference_entry(doc, text):
+def reference_entry(doc, idx: int, text: str) -> None:
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-    _set_spacing(p, before_pt=2, after_pt=4)
-    pPr = p._p.get_or_add_pPr()
-    ind = OxmlElement("w:ind")
-    ind.set(qn("w:left"),    "360")
-    ind.set(qn("w:hanging"), "360")
-    pPr.append(ind)
-    r = p.add_run(text)
-    _font(r, size=Pt(10))
-    return p
+    pf = p.paragraph_format
+    pf.left_indent = Cm(0.8)
+    pf.first_line_indent = Cm(-0.8)
+    pf.space_before = Pt(0)
+    pf.space_after = Pt(4)
+    pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
+    r = p.add_run(f"{idx}. {text}")
+    _set_font(r, size=10)
 
 
-def hline(doc, color="C99347"):
-    p = doc.add_paragraph()
-    _set_spacing(p, before_pt=2, after_pt=2)
-    pPr = p._p.get_or_add_pPr()
-    pBdr = OxmlElement("w:pBdr")
-    bottom = OxmlElement("w:bottom")
-    bottom.set(qn("w:val"),   "single")
-    bottom.set(qn("w:sz"),    "4")
-    bottom.set(qn("w:space"), "1")
-    bottom.set(qn("w:color"), color)
-    pBdr.append(bottom)
-    pPr.append(pBdr)
-
-
-def bullet(doc, text):
-    p = doc.add_paragraph(style="List Bullet")
-    p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-    _set_spacing(p, before_pt=2, after_pt=2)
-    r = p.add_run(text)
-    _font(r, size=BODY_SIZE)
-    return p
-
-
-def equation(doc, text, eqno=None):
-    """Add a centered display equation in italic, optionally with equation number."""
-    p = doc.add_paragraph()
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    _set_spacing(p, before_pt=6, after_pt=6)
-    _keep_lines_together(p)
-    r = p.add_run(text)
-    _font(r, size=BODY_SIZE, italic=True)
-    if eqno:
-        tab = p.add_run("\t\t" + eqno)
-        _font(tab, size=BODY_SIZE)
-    return p
-
-
-def algorithm_box(doc, title, lines):
-    """Render a pseudocode algorithm in a single-cell shaded table."""
-    tbl = doc.add_table(rows=1, cols=1)
-    tbl.style = "Table Grid"
-    cell = tbl.rows[0].cells[0]
-    cell.text = ""
-
-    # Title row
-    pt = cell.paragraphs[0]
-    pt.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    _set_spacing(pt, before_pt=4, after_pt=2)
-    rt = pt.add_run(title)
-    _font(rt, size=Pt(10), bold=True)
-
-    # Lines
-    for line in lines:
-        p = cell.add_paragraph()
-        p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-        _set_spacing(p, before_pt=0, after_pt=0)
-        r = p.add_run(line)
-        _font(r, size=Pt(10), name="Consolas")
-
-    # Background shading
-    tc = cell._tc
-    tcPr = tc.get_or_add_tcPr()
-    shd = OxmlElement("w:shd")
-    shd.set(qn("w:val"),   "clear")
-    shd.set(qn("w:color"), "auto")
-    shd.set(qn("w:fill"),  "F5F0E8")
-    tcPr.append(shd)
-
-
-# ── build document ────────────────────────────────────────────────────────
-
+# ══════════════════════════════════════════════════════════════════════════
+# DOCUMENT BUILD
+# ══════════════════════════════════════════════════════════════════════════
 def build():
     doc = Document()
 
-    # GUJSA template: A4 page, margins top 3.0 / bottom 2.0 / left 2.0 / right 2.0 cm
     for section in doc.sections:
         section.page_width    = Cm(21.0)
         section.page_height   = Cm(29.7)
@@ -293,1037 +215,1100 @@ def build():
         section.left_margin   = Cm(2.0)
         section.right_margin  = Cm(2.0)
 
-    # ╔════════════════════════════════════════════════════════════════════╗
-    # ║  TITLE PAGE                                                          ║
-    # ╚════════════════════════════════════════════════════════════════════╝
-
-    # English title
+    # ── Türkçe başlık ──
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    _set_spacing(p, before_pt=0, after_pt=6)
-    r = p.add_run(
-        "AURIS: A Multi-Model Ensemble System for AI-Generated Music Detection "
-        "Using Acoustic Feature Analysis"
-    )
-    _font(r, size=Pt(14), bold=True)
+    p.paragraph_format.space_after = Pt(4)
+    r = p.add_run("AURIS: Çoklu-Model Topluluk Yaklaşımı ile Yapay Zekâ "
+                  "Tarafından Üretilen Müziklerin Tespiti")
+    _set_font(r, size=14, bold=True)
 
-    # Turkish title
-    p2 = doc.add_paragraph()
-    p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    _set_spacing(p2, before_pt=2, after_pt=8)
-    r2 = p2.add_run(
-        "AURIS: Akustik Özellik Analizi Kullanılarak Yapay Zeka Tarafından "
-        "Üretilen Müziğin Tespiti İçin Çok Modelli Topluluk Sistemi"
-    )
-    _font(r2, size=Pt(11), italic=True)
-
-    # Author
-    pa = doc.add_paragraph()
-    pa.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    _set_spacing(pa, before_pt=6, after_pt=2)
-    ra = pa.add_run("Hasan Arthur ALTUNTAŞ¹")
-    _font(ra, size=Pt(11), bold=True)
-
-    pa2 = doc.add_paragraph()
-    pa2.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    _set_spacing(pa2, before_pt=0, after_pt=8)
-    ra2 = pa2.add_run(
-        "¹ Department of Computer Engineering, Düzce University, Düzce, Türkiye\n"
-        "hasannarthurrr@gmail.com"
-    )
-    _font(ra2, size=Pt(10))
-
-    hline(doc)
-
-    # ╔════════════════════════════════════════════════════════════════════╗
-    # ║  ABSTRACTS                                                           ║
-    # ╚════════════════════════════════════════════════════════════════════╝
-
-    # Highlights
     p = doc.add_paragraph()
-    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    _set_spacing(p, before_pt=6, after_pt=2)
-    r = p.add_run("Highlights")
-    _font(r, size=Pt(10), bold=True, italic=True)
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_after = Pt(2)
+    r = p.add_run("Hasan Arthur Altuntaş")
+    _set_font(r, size=11, bold=True)
 
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_after = Pt(16)
+    r = p.add_run("Düzce Üniversitesi, Mühendislik Fakültesi, "
+                  "Bilgisayar Mühendisliği Bölümü, 81620, Düzce, Türkiye")
+    _set_font(r, size=10, italic=True)
+
+    # Highlights TR
+    subheading(doc, "Ö N E   Ç I K A N L A R")
     for h in [
-        "• A 47-dimensional handcrafted acoustic feature vector is constructed for music authenticity classification.",
-        "• Eleven classifiers, including seven machine learning algorithms and four deep learning architectures, are compared under a unified 5-fold cross-validation protocol.",
-        "• LightGBM reaches a mean ROC-AUC of 0.9548; Deep MLP follows closely at 0.9542.",
-        "• Per-fold Youden's J threshold optimization replaces the default 0.5 cutoff and improves balanced accuracy.",
-        "• Spectral flatness emerges as the single most informative feature for distinguishing AI-generated from human-composed music.",
+        "• 5.195 müzik örneği ve 47 boyutlu akustik öznitelik vektörü ile yapay zekâ tarafından "
+        "üretilen müziği insan kompozisyonundan ayırt eden uçtan-uca bir sistem önerilmiştir.",
+        "• Yedi makine öğrenmesi ve dört derin öğrenme algoritması, ortak bir 5-katlı çapraz "
+        "doğrulama protokolü altında karşılaştırılmıştır.",
+        "• LightGBM, %95,48 ROC-AUC değeri ile en yüksek performansı sergilemiş; her kat arasında "
+        "yalnızca ±0,0023 standart sapma ile en kararlı modeli oluşturmuştur.",
+        "• Spektral düzlük (spectral flatness) standart sapması, yapay zekâ-insan ayrımı için en "
+        "bilgilendirici tek öznitelik olarak tespit edilmiştir.",
     ]:
         p = doc.add_paragraph()
-        p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        _set_spacing(p, before_pt=0, after_pt=2)
+        pf = p.paragraph_format
+        pf.left_indent = Cm(0.5)
+        pf.space_after = Pt(3)
         r = p.add_run(h)
-        _font(r, size=Pt(9))
+        _set_font(r, size=10)
 
-    hline(doc, color="C99347")
+    subheading(doc, "Makale Bilgileri")
+    body(doc, "Araştırma Makalesi  ·  Geliş: 20.05.2026  ·  "
+              "Anahtar Kelimeler: Yapay zekâ tarafından üretilen müzik, "
+              "derin öğrenme, gradyan artırma, topluluk öğrenmesi, ses sınıflandırması, "
+              "spektral düzlük.", size=10)
 
-    # Turkish abstract
-    abstract_block(doc, "Öz:", (
-        "Suno, Udio ve MusicGen gibi yapay zeka tabanlı müzik üretim sistemlerinin son birkaç yılda "
-        "gösterdiği gelişme, yapay zeka tarafından üretilen kayıtların insan tarafından bestelenmiş "
-        "müzikten ayırt edilmesini hem dinleyiciler hem de otomatik sistemler için giderek "
-        "güçleştirmiştir. Bu çalışmada akustik öznitelik analizine dayalı çok modelli bir topluluk "
-        "sistemi olan AURIS önerilmektedir. AURIS, librosa kütüphanesi aracılığıyla spektral, zamansal, "
-        "ritmik, armonik ve vokal boyutları kapsayan 47 öznitelik çıkarmakta ve bu vektörü 2.082 yapay "
-        "zeka kaynaklı ve 3.113 insan kaynaklı toplam 5.195 örnekten oluşan veri kümesi üzerinde "
-        "eğitilen on bir sınıflandırma modeline beslemektedir. Modeller, geleneksel makine öğrenmesi "
-        "(Lojistik Regresyon, Rastgele Orman, Gradyan Artırma, SVM, ÇKA, XGBoost, LightGBM) ve "
-        "derin öğrenme (Derin ÇKA, 1B-CNN, Artık ÇKA, Dikkat ÇKA) ailelerinden seçilmiştir. Eğitim "
-        "süreci, sınıf dengesizliğini hesaba katmak için her katmanda Youden's J istatistiğine dayalı "
-        "eşik optimizasyonu uygulanan 5-katlı tabakalı çapraz doğrulama protokolünü kullanmaktadır. "
-        "Deneysel sonuçlar, LightGBM modelinin 0,9548'luk ROC-AUC değeri ile en yüksek performansı "
-        "sergilediğini, Derin ÇKA modelinin ise 0,9542 ile çok yakın bir ikinci sıra elde ettiğini "
-        "göstermektedir. LightGBM için Brier skoru 0,083 olarak ölçülmüş, modelin iyi kalibre edilmiş "
-        "olasılık tahminleri ürettiği teyit edilmiştir. Spektral düzlük (spectral flatness) yapay zeka "
-        "ile insan müziğini ayırt etmede en belirleyici tekil özellik olarak belirlenmiştir. Sistem, "
-        "Hugging Face Spaces üzerinde dosya yükleme ve canlı mikrofon girişi yoluyla gerçek zamanlı "
-        "analiz sunan halka açık bir web uygulaması olarak yayınlanmıştır."
-    ))
-    keywords_line(doc, "Anahtar Kelimeler:",
-        "Yapay zeka müzik tespiti, ses sınıflandırma, LightGBM, topluluk öğrenmesi, "
-        "akustik özellikler, deepfake ses, wav2vec2, MFCC, spektral düzlük")
+    subheading(doc, "ÖZ")
+    body(doc, (
+        "Suno, Udio ve MusicGen gibi metinden müziğe üreten sistemlerin yaygınlaşması, "
+        "telif hakları, akış platformlarının bütünlüğü ve sanatçıların ekonomik hakları "
+        "açısından ciddi bir tespit problemini gündeme getirmiştir. Bu çalışmada, 47 boyutlu "
+        "elle tasarlanmış bir akustik öznitelik vektörü ile on bir sınıflandırma modelinden "
+        "oluşan bir topluluk yaklaşımını birleştiren AURIS adlı bir sistem önerilmektedir. "
+        "Modeller, on iki veya daha fazla yapay zekâ üretici sistemden ve birden çok insan "
+        "kaynağından (GTZAN, FMA, SleepyJesse kapakları) derlenen 5.195 örneklik bir veri "
+        "kümesi üzerinde 5-katlı çapraz doğrulama ile eğitilmiştir. LightGBM, %95,48 ROC-AUC "
+        "(±0,0023) ile en yüksek performansı göstererek hem mevcut en iyi sonucu hem de en "
+        "düşük katlar-arası varyansı bir araya getirmiştir; Derin ÇKA (Çok Katmanlı Algılayıcı) "
+        "%95,42 ile çok yakın bir ikinci sıra elde etmiştir. Spektral düzlük standart sapması, "
+        "öznitelik önem sıralamasında ilk sırada yer almıştır. Youden J kriteri ile optimize "
+        "edilen θ* = 0,4316 karar eşiği, varsayılan 0,5 eşiğine kıyasla dengeli doğruluğu "
+        "iyileştirmiştir. Brier skoru 0,083 olarak ölçülmüş ve modelin olasılık çıktılarının "
+        "iyi kalibre olduğunu doğrulamıştır. Tanı analizi, ağaç-tabanlı tüm modellerin eğitim "
+        "ve çapraz doğrulama doğruluğu arasında 8-14 puanlık bir fark sergilediğini ve mevcut "
+        "47 özniteliğin yaklaşık 17 tanesinin ölçülebilir ek doğruluk sağlamadığını "
+        "göstermiştir."
+    ), size=10)
 
-    # English abstract
-    abstract_block(doc, "Abstract:", (
-        "The rapid progress of AI-based music generation systems such as Suno, Udio, and MusicGen "
-        "has made it increasingly difficult, for both human listeners and automated systems, to "
-        "tell AI-generated recordings apart from human-composed music. This paper introduces AURIS, "
-        "a multi-model ensemble system that approaches the problem from the side of handcrafted "
-        "acoustic features. AURIS extracts a 47-dimensional feature vector spanning spectral, "
-        "temporal, rhythmic, harmonic, and vocal dimensions using the librosa library, and feeds "
-        "this vector into eleven classification models trained on a curated dataset of 5,195 samples "
-        "(2,082 AI-generated, 3,113 human-composed). The model pool is intentionally heterogeneous: "
-        "it includes seven classical machine learning algorithms (Logistic Regression, Random Forest, "
-        "Gradient Boosting, SVM-RBF, MLP, XGBoost, LightGBM) alongside four deep learning "
-        "architectures (Deep MLP, 1D-CNN, Residual MLP, Attention MLP). Model training follows a "
-        "5-fold stratified cross-validation protocol in which the decision threshold is re-estimated "
-        "per fold via Youden's J statistic in order to handle the 1:1.5 class imbalance. "
-        "Experimental results show that LightGBM reaches the highest mean ROC-AUC at 0.9548, "
-        "with Deep MLP a very narrow second at 0.9542. The Brier score of 0.083 indicates that "
-        "the model produces well-calibrated probability estimates rather than merely useful ranking "
-        "scores. Spectral flatness is identified as the single most discriminative feature for the "
-        "AI-versus-human distinction. The full system is released as a public web application on "
-        "Hugging Face Spaces, supporting both file upload and live microphone input."
-    ))
-    keywords_line(doc, "Keywords:",
-        "AI music detection, audio classification, LightGBM, ensemble learning, "
-        "acoustic features, deepfake audio, wav2vec2, MFCC, spectral flatness")
+    subheading(doc, "Anahtar Kelimeler")
+    body(doc, "Yapay zekâ tarafından üretilen müzik · Derin öğrenme · Gradyan artırma · "
+              "Topluluk öğrenmesi · Ses sınıflandırması · Spektral düzlük", size=10)
 
-    hline(doc)
+    # ── İngilizce blok ──
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_before = Pt(20)
+    p.paragraph_format.space_after = Pt(4)
+    r = p.add_run("AURIS: A Multi-Model Ensemble Approach for the Detection of "
+                  "AI-Generated Music")
+    _set_font(r, size=13, bold=True, italic=True)
 
-    # ╔════════════════════════════════════════════════════════════════════╗
-    # ║  1. INTRODUCTION                                                     ║
-    # ╚════════════════════════════════════════════════════════════════════╝
+    subheading(doc, "H I G H L I G H T S")
+    for h in [
+        "• An end-to-end system distinguishing AI-generated music from human composition, "
+        "using a 47-dimensional acoustic feature vector and 5,195 audio samples.",
+        "• Seven machine learning and four deep learning algorithms compared under a unified "
+        "5-fold cross-validation protocol.",
+        "• LightGBM achieves the top performance with 95.48% ROC-AUC and the lowest cross-fold "
+        "variance (±0.0023) in the entire pool.",
+        "• Spectral flatness standard deviation emerges as the single most informative feature "
+        "for the AI-versus-human distinction.",
+    ]:
+        p = doc.add_paragraph()
+        pf = p.paragraph_format
+        pf.left_indent = Cm(0.5)
+        pf.space_after = Pt(3)
+        r = p.add_run(h)
+        _set_font(r, size=10, italic=True)
 
-    heading(doc, "1. Introduction")
+    subheading(doc, "ABSTRACT")
+    body(doc, (
+        "The proliferation of text-to-music generators such as Suno, Udio and MusicGen has "
+        "raised a detection problem of practical importance for copyright attribution, "
+        "streaming-platform integrity and artist economics. This paper proposes AURIS, a "
+        "system that couples a 47-dimensional handcrafted acoustic feature vector with an "
+        "ensemble of eleven classifiers. The models are trained on a dataset of 5,195 samples "
+        "drawn from twelve or more AI generation systems and multiple human sources (GTZAN, "
+        "FMA, SleepyJesse covers) under 5-fold cross-validation. LightGBM achieves the top "
+        "ROC-AUC of 0.9548 (±0.0023), combining the best mean with the lowest cross-fold "
+        "variance; Deep MLP follows narrowly at 0.9542. Spectral-flatness standard deviation "
+        "ranks first in feature importance. A Youden-J optimised decision threshold of "
+        "θ* = 0.4316 improves balanced accuracy over the default 0.5 cutoff. A Brier score of "
+        "0.083 confirms that the probability outputs are well calibrated. Diagnostic analysis "
+        "shows an 8-14 point train-CV accuracy gap for all tree-based models and reveals that "
+        "roughly 17 of the 47 features contribute no measurable accuracy."
+    ), size=10)
+
+    subheading(doc, "Keywords")
+    body(doc, "AI-generated music · Deep learning · Gradient boosting · Ensemble learning · "
+              "Audio classification · Spectral flatness", size=10)
+
+    # ══════════════════════════════════════════════════════════════════
+    # 1. GİRİŞ
+    # ══════════════════════════════════════════════════════════════════
+    heading(doc, "1. Giriş (Introduction)")
 
     body(doc, (
-        "Generative audio models have moved from research prototypes to consumer products in a "
-        "remarkably short period of time. Suno (versions 3 through 5), Udio, Meta's MusicGen "
-        "(Copet et al., 2023), and a growing family of diffusion-based systems such as AudioLDM "
-        "(Liu et al., 2023), Stable Audio, and Riffusion now allow anyone with a web browser to "
-        "produce full-length musical tracks from a short text prompt. Many of these tracks are, "
-        "in practice, perceptually indistinguishable from human-composed recordings for a casual "
-        "listener. The shift raises questions that go well beyond audio engineering: copyright "
-        "attribution, the integrity of streaming-platform catalogues, the rights of session musicians, "
-        "and the ability of educators and journalists to reason about authorship."
+        "Üretken yapay zekâ (Artificial Intelligence - AI), son üç yıl içinde araştırma "
+        "ortamlarından tüketici uygulamalarına olağanüstü hızlı bir geçiş yapmıştır. "
+        "Suno (sürüm 3-5), Udio, Meta'nın MusicGen [1] sistemi ve AudioLDM [2] gibi "
+        "difüzyon tabanlı modeller, kısa bir metin istemi ile dakikalar mertebesinde "
+        "tam uzunlukta müzik parçaları üretebilmektedir. Bu parçalar, sıradan bir "
+        "dinleyici için insan eliyle yapılmış kayıtlardan çoğu zaman ayırt edilemez "
+        "niteliktedir. Söz konusu durum, ses mühendisliğinin çok ötesinde sorular "
+        "doğurmaktadır: telif atfı, akış platformu kataloglarının bütünlüğü, oturum "
+        "müzisyenlerinin hakları ve eğitimcilerin yazarlık üzerine akıl yürütme olanakları."
     ))
 
     body(doc, (
-        "Compared with audio deepfake detection for speech — driven by competitions such as the "
-        "ADD Challenge (Yi et al., 2022) and datasets such as WaveFake (Frank & Schönherr, 2021) — "
-        "the detection of AI-generated music has received less attention. Music does not share "
-        "the cues that make speech deepfake detection tractable: there is no fixed lexicon, no "
-        "speaker identity to verify, and prosody plays a very different role. Instead, music "
-        "presents harmonic complexity, polyphony, percussion, and recording artefacts that vary "
-        "widely between human studios and synthetic pipelines. Recent surveys frame the field as "
-        "nascent (Li et al., 2024; Yi et al., 2023), and Li et al. (2024) argue that "
-        "cross-generator generalisation — the ability to detect tracks produced by systems unseen "
-        "during training — is the central open challenge."
+        "Konuşma için ses derin sahte tespiti, ADD 2022 [3] gibi yarışmalar ve WaveFake [4] "
+        "gibi veri kümeleri ile aktif bir araştırma alanı haline gelmiştir; ancak yapay "
+        "zekâ ile üretilen müziğin tespiti benzer bir gelişim göstermemiştir. Müzik, "
+        "konuşmadan farklı olarak sabit bir sözlüğe, doğrulanabilir konuşmacı kimliğine "
+        "veya prozodi izine sahip değildir. Bunun yerine müzik; harmonik karmaşıklık, "
+        "çokseslilik, perküsyon ve insan stüdyoları ile sentetik üretim hatları arasında "
+        "geniş bir varyasyon gösteren kayıt artefaktları içermektedir. Konu üzerine yapılan "
+        "yakın tarihli derlemeler [5,6] alanı henüz oluşum aşamasında olarak nitelemekte ve "
+        "üretici modeller arası genellemeyi -yani eğitim sırasında görülmemiş sistemlerin "
+        "ürettiği parçaları tespit edebilme yetisini- temel açık problem olarak işaret "
+        "etmektedir [5]."
     ))
 
     body(doc, (
-        "Two contrasting lines of recent work make this trade-off explicit. Afchar et al. (2025) "
-        "showed at IEEE ICASSP 2025 that a detector trained to recognise auto-encoder artefacts "
-        "can reach 99.8% accuracy by exploiting spectral residues introduced by neural vocoders, "
-        "but the same detector degrades sharply under MP3 compression or pitch shifting. Kim and "
-        "Go (2025), in turn, proposed the Segment Transformer, which embeds short music segments "
-        "with a pre-trained encoder and aggregates them through a transformer head to capture "
-        "structural patterns across an entire composition. Both directions accept the same premise: "
-        "no single feature family is robust enough on its own."
+        "Yakın tarihli iki çelişen çalışma bu dengesizliği açıkça ortaya koymaktadır. "
+        "Afchar vd. [7], IEEE ICASSP 2025'te sunulan çalışmalarında, oto-kodlayıcı "
+        "artefaktlarını tanımak üzere eğitilen bir tespit sisteminin nöral vokoderlerin "
+        "spektral kalıntılarını sömürerek %99,8 doğruluğa ulaşabildiğini, ancak aynı "
+        "sistemin MP3 sıkıştırma veya perde kaydırma altında ciddi şekilde başarısız "
+        "olduğunu göstermiştir. Kim ve Go [8] ise kısa müzik segmentlerini önceden "
+        "eğitilmiş bir kodlayıcı ile gömme ve bunları bir transformer başlığı ile "
+        "birleştirerek bir bütünün yapısal örüntülerini yakalayan Segment Transformer'ı "
+        "önermiştir. Her iki yön de aynı kabulü paylaşır: hiçbir tek öznitelik ailesi tek "
+        "başına yeterince sağlam değildir."
     ))
 
     body(doc, (
-        "AURIS is positioned between these extremes. Rather than committing to a single "
-        "representation, the system relies on a 47-dimensional handcrafted feature vector that "
-        "summarises spectral, temporal, harmonic, and vocal behaviour, and pairs it with an "
-        "intentionally heterogeneous pool of eleven classifiers. The aim is twofold: to obtain "
-        "competitive detection accuracy across multiple AI generators and to keep the model "
-        "interpretable enough for deployment on consumer hardware. The three main contributions "
-        "of this paper are:"
+        "AURIS bu iki uç arasında konumlanmaktadır. Sistem, tek bir temsile bağlı kalmak "
+        "yerine, spektral, zamansal, harmonik ve vokal davranışı özetleyen 47 boyutlu elle "
+        "tasarlanmış bir öznitelik vektörüne dayanmakta ve bunu kasıtlı olarak heterojen "
+        "on bir sınıflandırıcıdan oluşan bir havuz ile eşleştirmektedir. Amaç çift "
+        "yönlüdür: birden çok yapay zekâ üreticisinde rekabetçi tespit doğruluğu elde "
+        "etmek ve tüketici donanımında konuşlandırma için yorumlanabilir kalmak. Bu "
+        "makalenin üç temel katkısı şunlardır:"
     ))
-    bullet(doc,
-        "A 47-feature acoustic representation that combines well-established descriptors "
-        "(MFCC, spectral flatness, onset strength) with a small set of vocal-quality features "
-        "(breath patterns, vibrato regularity, formant consistency) tailored to the human-versus-AI "
-        "distinction in music.")
-    bullet(doc,
-        "An eleven-model ensemble comparing seven traditional machine learning classifiers with "
-        "four deep learning architectures on a single feature pipeline, all evaluated under "
-        "5-fold stratified cross-validation with per-fold Youden's J threshold optimisation.")
-    bullet(doc,
-        "A multi-generator training set drawn from twelve or more AI synthesis systems alongside "
-        "two human-music corpora, providing the diversity needed to study cross-generator "
-        "generalisation.")
+
+    for bullet in [
+        "(i) Suno, Udio, MusicGen, AudioLDM2 ve diğer altı sistem dahil olmak üzere on iki "
+        "yapay zekâ üreticisinden ve birden çok insan kaynağından (GTZAN, FMA, SleepyJesse "
+        "kapakları) toplanan 5.195 örneklik halka açık ve çoğaltılabilir bir veri kümesi.",
+        "(ii) Yedi makine öğrenmesi (Lojistik Regresyon, Rastgele Orman, Gradyan Artırma, "
+        "SVM-RBF, ÇKA, XGBoost [9], LightGBM [10]) ve dört derin öğrenme (Deep MLP, 1D-CNN, "
+        "Residual MLP, Attention MLP) algoritmasının ortak bir 5-katlı çapraz doğrulama "
+        "protokolü altında karşılaştırılması; LightGBM en yüksek ROC-AUC'ı (%95,48) ve "
+        "katlar-arası en düşük varyansı (±0,0023) elde etmektedir.",
+        "(iii) Spektral düzlük standart sapmasının yapay zekâ-insan ayrımı için en bilgilendirici "
+        "öznitelik olduğunu gösteren SHAP [11] tabanlı bir yorumlanabilirlik analizi; bu sonuç, "
+        "üretilen ses ile kaydedilmiş ses arasındaki spektral fark açısından açıklanabilirdir.",
+    ]:
+        p = doc.add_paragraph()
+        p.paragraph_format.left_indent = Cm(0.5)
+        p.paragraph_format.space_after = Pt(6)
+        p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+        r = p.add_run(bullet)
+        _set_font(r, size=11)
 
     body(doc, (
-        "Figure 1 provides an end-to-end view of the system. The remainder of the paper is "
-        "organised as follows. The rest of this section reviews related work in audio deepfake "
-        "detection, transformer-based audio representations, ensemble methods for audio, and "
-        "recent AI-music detection literature. Section 2 describes the dataset, the feature "
-        "extraction pipeline, the eleven classification models, and the training protocol. "
-        "Section 3 reports experimental results across all models, interprets feature "
-        "importance and calibration, and acknowledges the limitations of the present study. "
-        "Section 4 concludes with directions for future work. The system is publicly available "
-        "at https://huggingface.co/spaces/Rtur2003/AURIS."
+        "Bu makalenin geri kalanı şu şekilde yapılandırılmıştır: 1.1-1.5 alt bölümleri ses "
+        "derin sahte tespiti, transformer tabanlı ses temsilleri, ses için topluluk "
+        "yöntemleri ve yapay zekâ müzik tespitindeki güncel literatürü gözden geçirir; "
+        "2. Bölüm veri kümesini, öznitelik çıkarma boru hattını, on bir sınıflandırma modelini "
+        "ve eğitim protokolünü tanımlar; 3. Bölüm tüm modeller arasında deneysel sonuçları "
+        "sunar, öznitelik önemi ile kalibrasyonu yorumlar ve sınırlamaları belirtir; "
+        "4. Bölüm gelecek araştırmalar için yönlerle birlikte makaleyi sonlandırır. Sistem "
+        "https://huggingface.co/spaces/Rtur2003/AURIS adresinde halka açık olarak "
+        "kullanılabilmektedir."
+    ))
+
+    subheading(doc, "1.1. Konuşma için Ses Derin Sahte Tespiti "
+                    "(Audio Deepfake Detection for Speech)")
+    body(doc, (
+        "Konuşma için ses derin sahte tespiti, yapay zekâ ile üretilen müzik tespiti için "
+        "doğrudan örnek alınan en olgun komşu alandır. ADD 2022 Yarışması [3], bu alanı bir "
+        "topluluk problemi olarak resmî biçimde kurmuş ve düşük kaliteli sahte ses, kısmi "
+        "sahte ses ve oyun tabanlı algılama olmak üzere üç ana parça tanımlamıştır. "
+        "Martín-Doñas ve Álvarez [12] tarafından önerilen Vicomtech sistemi, önceden "
+        "eğitilmiş wav2vec2 [13] öznitelik çıkarıcısını sınıflandırıcı bir başlık ile "
+        "birleştirerek bu yarışmada güçlü performans göstermiştir. Yi vd. [6] tarafından "
+        "yürütülen kapsamlı tarama çalışması, alanın hem teknik hem de etik zorluklarını "
+        "ayrıntılı biçimde özetlemiştir. WaveFake [4] gibi büyük ölçekli veri kümeleri, "
+        "vokoder-spesifik artefaktların tespit edilebilirliğini sistematik biçimde "
+        "incelemek için zemin oluşturmuştur."
+    ))
+
+    subheading(doc, "1.2. Transformer Tabanlı Ses Temsilleri "
+                    "(Transformer-Based Audio Representations)")
+    body(doc, (
+        "Transformer temelli kendi-kendine öğrenen ses temsilleri, son beş yıl içinde "
+        "akustik öznitelik mühendisliğinin bir alternatifi haline gelmiştir. Baevski vd. "
+        "[13] tarafından önerilen wav2vec 2.0, ham sinyalden ince ayar gerektirmeyen "
+        "öznitelikler üretmektedir. Elizalde vd. [14] tarafından sunulan CLAP "
+        "(Contrastive Language-Audio Pretraining), karşıt öğrenme ile ses-metin "
+        "hizalaması yapmakta ve bu hizalama Wu vd. [15] tarafından geliştirilen büyük "
+        "ölçekli CLAP varyantında 633.526 ses-metin çiftinden öğrenilmiş daha geniş bir "
+        "modele genişletilmiştir. Bu modeller, sınıflandırma için doğrudan kullanılmasa da "
+        "ileri görevlerin temelini sağlamaktadır."
+    ))
+
+    subheading(doc, "1.3. Ses İçin Topluluk Yöntemleri ve Gradyan Artırma "
+                    "(Ensemble Methods and Gradient Boosting for Audio)")
+    body(doc, (
+        "Topluluk öğrenmesi, ses sınıflandırma alanında istikrarlı biçimde rekabetçi "
+        "sonuçlar üretmektedir. Liu vd. [16] tarafından önerilen XGBoost tabanlı müzikal "
+        "enstrüman tanıma sistemi, çoklu öznitelik füzyonu ile yüksek doğruluk elde "
+        "etmiştir. Gan vd. [17] tarafından sunulan VMD-IWOA-XGBoost modeli, GTZAN ve "
+        "Bangla veri kümeleri üzerinde diğer modelleri beş değerlendirme kriterinde geride "
+        "bırakmıştır. Türkçe literatürde, Hızlısoy ve Tüfekci [18] derin öğrenme ile "
+        "Türkçe müziklerin tür sınıflandırması için CNN tabanlı bir mimari önermiş ve "
+        "yeni bir Türkçe müzik veri tabanı oluşturmuştur. Özbalcı vd. [19], GTZAN veri "
+        "kümesi üzerinde Rastgele Orman, SVM ve YSA algoritmalarının karşılaştırmalı "
+        "değerlendirmesini gerçekleştirerek Rastgele Orman ile %81 doğruluk elde "
+        "etmişlerdir. Turan ve Polat [20] ise yarı-denetimli makine öğrenmesi yöntemleri "
+        "kullanarak müzik türlerinin tespitini incelemişlerdir. Kostrzewa vd. [21] "
+        "tarafından önerilen geniş sinir ağı toplulukları yaklaşımı, müzik tür "
+        "sınıflandırmasında tek modellerden daha iyi performans göstermiştir. Gourisaria "
+        "vd. [22], MFCC ve STFT özniteliklerinin karşılaştırmalı analizini yaparak ses "
+        "sınıflandırması için en uygun temsil yöntemini araştırmışlardır."
+    ))
+
+    subheading(doc, "1.4. Yapay Zekâ Müzik Üretici Sistemleri "
+                    "(AI Music Generation Systems)")
+    body(doc, (
+        "Yapay zekâ müzik üretim sistemleri, tespit problemini doğrudan şekillendiren "
+        "teknik çeşitliliği göstermektedir. Copet vd. [1] tarafından geliştirilen MusicGen, "
+        "metne koşullu sıkıştırılmış ses tokenleri üzerinde çalışan tek aşamalı bir "
+        "transformer dil modeli kullanmaktadır. Liu vd. [2] tarafından önerilen AudioLDM, "
+        "metinden sese üretim için CLAP gömmelerini koşullandırma sinyali olarak kullanan "
+        "bir gizil difüzyon modelidir. Suno ve Udio gibi ticari ürünler altta yatan "
+        "mimarilerini açıklamamıştır; ancak çıktılarının sürümler arasında ölçülen spektral "
+        "özellikleri, dağılımsal olarak gözlemlenebilir tutarlı bir izleyiş kalıbı "
+        "üretmektedir."
+    ))
+
+    subheading(doc, "1.5. Yapay Zekâ Müzik Tespitinde Güncel Gelişmeler (2024-2025) "
+                    "(Recent Advances in AI Music Detection (2024-2025))")
+    body(doc, (
+        "En doğrudan ilgili çalışmalar 2024-2025 arasında yayımlanmıştır. Li vd. [5] ses "
+        "derin sahte tespiti metodolojisini gelişmekte olan yapay zekâ müzik tespiti "
+        "alanına bağlayan bir yol haritası ve genel bakış sunmuş, aktarılabilir öznitelikleri "
+        "kataloglamış ve alan-içi boşlukları tanımlamıştır; aynı çalışma, üretici modeller "
+        "arası genellemeyi alanın birincil açık problemi olarak vurgulamıştır. Afchar vd. "
+        "[7], ICASSP 2025 makalelerinde, oto-kodlayıcı artefaktlarına eğitilen tespit "
+        "sistemlerinin nöral vokoderlerin spektral artıkları sayesinde %99,8 doğruluğa "
+        "ulaşabileceğini göstermiştir. Kim ve Go [8] tarafından önerilen Segment Transformer, "
+        "kısa müzik segmentlerini bir transformer başlığı ile işleyen ve kendi-kendine "
+        "öğrenen önceden eğitilmiş temsilleri yapısal örüntüleri yakalamak için entegre "
+        "eden bir mimaridir. Rahman vd. [23] tarafından geliştirilen SONICS veri kümesi, "
+        "97.000'den fazla şarkı ve 49.000'den fazla Suno/Udio kaynaklı sentetik şarkı "
+        "içermekte ve uçtan-uca sentetik şarkı tespiti için geniş ölçekli bir referans "
+        "kıyaslama oluşturmaktadır. Comanducci vd. [24] tarafından geliştirilen "
+        "FakeMusicCaps veri kümesi ise beş farklı metinden-müziğe modeli ile yeniden "
+        "üretilmiş MusicCaps eşlemelerinden oluşmakta ve hem tespit hem de atıflandırma "
+        "deneyleri için temel oluşturmaktadır. Pascu vd. [25] tarafından önerilen Echoes "
+        "veri kümesi, on popüler yapay zekâ müzik üretim sistemi tarafından üretilen "
+        "anlamsal-hizalı içerik içermektedir. Sunday [26], FakeMusicCaps üzerinde CNN "
+        "tabanlı tespitin tempo gerdirme ve perde kaydırma altındaki performansını "
+        "ölçmüştür; Sroka vd. [27] ise ses büyütmeleri altında sahte müzik tespit "
+        "performansının sistematik değerlendirmesini gerçekleştirmiştir. Bu çalışmaların "
+        "ortak bulgusu, hiçbir tek mimari ailesinin hem üretici modeller arası genellemeyi "
+        "hem de düşmanca güçlendirilmiş sinyallere karşı sağlamlığı tek başına "
+        "sağlayamadığıdır. Tablo 1, AURIS ile karşılaştırma için ilgili çalışmaların özetini "
+        "sunmaktadır."
+    ))
+
+    table_caption(doc,
+        "Tablo 1. Yapay zekâ müzik tespiti alanındaki ilgili çalışmaların genel bakışı",
+        "Overview of related works in AI-generated music detection")
+    add_table(doc,
+        headers=["Çalışma", "Veri Kümesi", "Kullanılan Metot(lar)",
+                 "Değerlendirme", "En İyi Sonuç"],
+        rows=[
+            ["Afchar vd. [7]", "Özel (Suno + insan)",
+             "wav2vec2 + sınıflandırıcı başlık", "Doğruluk, AUC",
+             "%99,8 (yumuşatılmamış)"],
+            ["Kim ve Go [8]", "FakeMusicCaps + SONICS",
+             "Segment Transformer (SSL + transformer)",
+             "Doğruluk, F1", "%91+ (segment)"],
+            ["Rahman vd. [23]", "SONICS (97K şarkı)",
+             "SpecTTTra (verimli transformer)",
+             "F1, AUC", "Rekabetçi, 6× daha az bellek"],
+            ["Comanducci vd. [24]", "FakeMusicCaps",
+             "CNN + MFCC", "Doğruluk", "İlk referans değerleri"],
+            ["Sunday [26]", "FakeMusicCaps + ses büyütmeleri",
+             "CNN üzerinde Mel-spektrogram",
+             "Doğruluk", "Büyütmeler altında değişken"],
+            ["Sroka vd. [27]", "Birden çok kamuya açık veri",
+             "Çoklu mimari karşılaştırması",
+             "AUC, F1", "Sağlamlık-doğruluk dengesi"],
+            ["Pascu vd. [25]", "Echoes (3577 parça)",
+             "Çoklu üretici sistem dahil eğitim",
+             "Doğruluk, AUC", "Anlamsal-hizalı kıyaslama"],
+            ["Bu çalışma (AURIS)", "5.195 örnek, 12+ üretici",
+             "47 öznitelik + 11 model topluluğu",
+             "Doğruluk, AUC, F1, Brier",
+             "AUC %95,48 (LightGBM)"],
+        ])
+
+    # ══════════════════════════════════════════════════════════════════
+    # 2. MATERYAL VE YÖNTEM
+    # ══════════════════════════════════════════════════════════════════
+    heading(doc, "2. Materyal ve Yöntem (Material and Method)")
+
+    body(doc, (
+        "Bu bölümde önerilen sistemin geliştirilmesinde kullanılan materyal ve yöntemler "
+        "özetlenmiştir. Alt bölümlerde sırasıyla (i) veri kümesi, (ii) öznitelik çıkarma "
+        "boru hattı, (iii) sınıflandırma modelleri, (iv) eğitim protokolü ve eşik "
+        "optimizasyonu açıklanmaktadır. Şekil 1, sistemin uçtan-uca işleyişini "
+        "göstermektedir."
     ))
 
     figure(doc, "paper_pipeline_diagram.png",
-           "Figure 1. End-to-end AURIS pipeline. Audio is resampled to 22,050 Hz, decomposed "
-           "into a 47-dimensional handcrafted feature vector, scaled per-fold, and routed through "
-           "an ensemble of eleven classifiers; final probabilities are fused using calibrated "
-           "tower scores.")
+           "Şekil 1. AURIS uçtan-uca işleyiş şeması: ses girişi, 47 boyutlu öznitelik "
+           "çıkarma, standartlaştırma, 11 modelli topluluk, olasılık füzyonu ve karar "
+           "eşiği.",
+           "End-to-end AURIS pipeline: audio input, 47-dimensional feature extraction, "
+           "standardisation, 11-model ensemble, probability fusion and decision threshold.",
+           width_cm=15.0)
 
-    # ╔════════════════════════════════════════════════════════════════════╗
-    # ║  2. RELATED WORK                                                     ║
-    # ╚════════════════════════════════════════════════════════════════════╝
-
-    subheading(doc, "1.1. Audio Deepfake Detection for Speech")
+    subheading(doc, "2.1. Veri Kümesi (Dataset)")
     body(doc, (
-        "Audio deepfake detection became an active research area shortly after the appearance of "
-        "high-quality neural text-to-speech systems. The WaveFake dataset (Frank & Schönherr, 2021) "
-        "established a foundational benchmark using seven vocoder architectures, and demonstrated "
-        "that mel-spectrogram features combined with lightweight classifiers can achieve high "
-        "detection rates on known vocoders but degrade substantially on unseen architectures — a "
-        "pattern that has since been observed across most deepfake detection settings. The ADD 2022 "
-        "challenge (Yi et al., 2022) formalised the problem with three tracks covering low-quality "
-        "fakes, partially fake audio, and adversarial conditions. The comprehensive survey by Yi et "
-        "al. (2023) catalogues seventeen datasets and groups the dominant approaches into "
-        "feature-engineering pipelines (MFCC, LFCC, CQT, mel-spectrogram) and deep classifiers "
-        "(LCNN, ResNet, conformer-based systems)."
+        "Çalışmada toplam 5.195 ses örneği kullanılmıştır. Bu örneklerin 3.113 tanesi insan "
+        "tarafından bestelenmiş ve seslendirilmiş kayıtları (sınıf 0), 2.082 tanesi ise "
+        "yapay zekâ tarafından üretilmiş örnekleri (sınıf 1) temsil etmektedir. İnsan "
+        "kaynakları üç ayrı havuzdan oluşmaktadır: GTZAN (899 örnek; on tür, 30 saniyelik "
+        "klipler), FMA Small (1.000 örnek; sekiz tür) ve özel bir kapak performansı "
+        "veri seti olan SleepyJesse (854 örnek). Yapay zekâ kaynakları daha çeşitlidir; "
+        "Suno (500 örnek, sürüm 3-5), Udio, MusicGen [1], AudioLDM2 [2], Stable Audio, "
+        "Riffusion, Mustango, JEN-1 ve dahili olarak adlandırılan 'Echoes' ve 'AImE' "
+        "alt kümelerini içermektedir. Veri kümesi kompozisyonu Tablo 2'de özetlenmiştir."
     ))
 
-    subheading(doc, "1.2. Transformer-Based Audio Representations")
+    table_caption(doc,
+        "Tablo 2. Veri kümesi kompozisyonu ve sınıf dağılımı",
+        "Dataset composition and class distribution")
+    add_table(doc,
+        headers=["Kaynak", "Tür", "Örnek Sayısı", "Etiket"],
+        rows=[
+            ["GTZAN", "İnsan (on tür)", "899", "0"],
+            ["FMA Small", "İnsan (sekiz tür)", "1.000", "0"],
+            ["SleepyJesse", "İnsan (kapak performansları)", "854", "0"],
+            ["Diğer insan kaynakları", "İnsan (çeşitli)", "360", "0"],
+            ["Echoes", "Yapay zekâ (Suno türevi)", "1.128", "1"],
+            ["Suno (v3-v5)", "Yapay zekâ (ticari)", "500", "1"],
+            ["Deepfake seti", "Yapay zekâ (karışık)", "492", "1"],
+            ["AImE / Mustango / JEN-1", "Yapay zekâ (akademik)", "204", "1"],
+            ["Toplam", "", "5.195", ""],
+        ])
+
+    subheading(doc, "2.2. Öznitelik Çıkarma (Feature Extraction)")
     body(doc, (
-        "Self-supervised transformer encoders have reshaped the way audio is represented in "
-        "downstream tasks. Baevski et al. (2020) introduced wav2vec 2.0, in which a transformer "
-        "is pre-trained on unlabelled speech using a contrastive objective over quantised latent "
-        "vectors; fine-tuned variants of the resulting encoder transfer well to many "
-        "classification problems. Martín-Doñas and Álvarez (2022) applied wav2vec2 directly to "
-        "the ADD 2022 deepfake detection challenge and obtained competitive results without "
-        "task-specific feature engineering, confirming that pre-trained audio transformers can "
-        "serve as drop-in encoders for authenticity classification. CLAP (Elizalde et al., 2023) "
-        "extends the contrastive pre-training idea to joint audio–text embedding spaces; the "
-        "LAION-CLAP variant of Wu et al. (2023), trained on 630,000 audio–text pairs, has since "
-        "been adopted both as a feature extractor and as the conditioning signal in diffusion-based "
-        "audio generators (Liu et al., 2023)."
+        "Her ses parçası 22.050 Hz örnekleme hızında yeniden örneklenmiş ve librosa [28] "
+        "kütüphanesi kullanılarak 47 boyutlu bir öznitelik vektörüne dönüştürülmüştür. "
+        "Bu vektör dört aileye ayrılmaktadır. Spektral aile (16 öznitelik), her birinin "
+        "ortalama ve standart sapması olmak üzere; spektral merkezleme, spektral düzlük, "
+        "spektral bant genişliği, spektral kontrast, spektral azalma ve mel düzlüğünü "
+        "içermektedir. Zamansal aile (10 öznitelik) yüksekliği ve zamanlamayı kapsar: RMS "
+        "enerji ve standart sapması, RMS dinamik aralığı, başlangıç gücü ortalama ve "
+        "standart sapması, sıfır geçiş oranı ve standart sapması, tempo BPM, tempo "
+        "kararlılığı ve tempo varyasyon katsayısı ile vuruş sayısı. Harmonik ve tonal "
+        "aile (9 öznitelik) chroma standart sapması, chroma entropi, chroma geçiş oranı, "
+        "tonnetz standart sapması, harmonik oran, kompozit bir harmonik-yapı skoru, mel "
+        "düzlüğü, ortalama perde (Hz) ve perde standart sapmasını (cent) raporlamaktadır. "
+        "MFCC ailesi (3 öznitelik) MFCC varyansını ve birinci ile ikinci derece delta "
+        "varyanslarını içermektedir. Vokal aile (9 öznitelik) vokal varlık skoru, vokal "
+        "güven, vokal yapay zekâ skoru, perde kararlılığı, vibrato düzenliliği, formant "
+        "tutarlılığı, nefes düzeni, vokal doku ve vokal harmonik oranı ölçmektedir. "
+        "Şekil 2, ilk sekiz öznitelik için insan ve yapay zekâ örneklerinin dağılımlarını "
+        "karşılaştırmaktadır."
     ))
-
-    subheading(doc, "1.3. Ensemble Methods and Gradient Boosting for Audio")
-    body(doc, (
-        "Ensemble approaches have consistently outperformed single-model classifiers in music "
-        "analysis. Kostrzewa et al. (2022) report that wide ensembles of neural networks with "
-        "diverse architectures reduce variance and improve generalisation in music genre "
-        "classification. Among ensemble families, gradient boosting methods — particularly "
-        "XGBoost and LightGBM — show strong results on handcrafted audio feature vectors. Gan et "
-        "al. (2024) achieve competitive genre classification accuracy using XGBoost paired with "
-        "VMD-based feature decomposition, and Liu et al. (2022) combine multi-channel feature "
-        "fusion with XGBoost for musical instrument recognition, obtaining 97.65% accuracy on "
-        "standard benchmarks. Gourisaria et al. (2024) conduct a systematic comparison of MFCC "
-        "and STFT features across seven classifiers and conclude that combining both consistently "
-        "outperforms either alone — a finding that motivates the hybrid feature set used by AURIS."
-    ))
-
-    subheading(doc, "1.4. AI Music Generation Systems")
-    body(doc, (
-        "The detection problem cannot be discussed without the systems that produce the audio. "
-        "MusicGen (Copet et al., 2023) introduced a single-stage transformer-based autoregressive "
-        "model for music generation conditioned on text and melody, achieving state-of-the-art "
-        "fidelity at modest computational cost. AudioLDM (Liu et al., 2023) uses CLAP embeddings "
-        "as the conditioning signal for a latent diffusion model. Alongside these academic systems, "
-        "commercial platforms Suno and Udio operate proprietary diffusion or autoregressive "
-        "architectures that have, over the past two years, become the most visible sources of "
-        "AI-generated music on the public web. Together, these systems constitute the population "
-        "of generators that AURIS is trained to detect."
-    ))
-
-    subheading(doc, "1.5. Recent Advances in AI Music Detection (2024–2025)")
-    body(doc, (
-        "The most directly relevant work appeared during 2024–2025. Li et al. (2024) provide a "
-        "pathway and overview connecting audio deepfake detection methodology to the emerging "
-        "domain of AI music detection, cataloguing transferable features, identifying domain "
-        "gaps, and emphasising that cross-generator generalisation remains the primary open "
-        "problem in the field. Afchar et al. (2025), in their IEEE ICASSP 2025 paper, demonstrate "
-        "that detectors trained on auto-encoder artefacts can reach 99.8% accuracy by exploiting "
-        "decoder fingerprints — spectral residues introduced by neural vocoders — rather than "
-        "musical content. The same study also identifies a critical robustness limitation: simple "
-        "audio manipulations such as MP3 compression or pitch shifting substantially degrade "
-        "detection rates. Kim and Go (2025) propose the Segment Transformer, which processes "
-        "sequences of short music segments through a transformer head and integrates "
-        "self-supervised pre-trained representations to capture structural patterns at the song "
-        "level."
-    ))
-
-    # ╔════════════════════════════════════════════════════════════════════╗
-    # ║  3. MATERIAL AND METHOD                                              ║
-    # ╚════════════════════════════════════════════════════════════════════╝
-
-    heading(doc, "2. Material and Method")
-
-    subheading(doc, "2.1. Dataset")
-    body(doc, (
-        "The AURIS training set comprises 5,195 audio samples drawn from public repositories on "
-        "HuggingFace Hub. Of these, 2,082 are AI-generated (label = 1) and 3,113 are human-composed "
-        "(label = 0), giving a class ratio of approximately 1:1.5. The AI-generated portion is "
-        "deliberately heterogeneous: the AIME corpus (disco-eth/AIME) alone covers twelve "
-        "generation systems including Suno v3, v3.5, v4 and v5, Udio, MusicGen, Stable Audio, "
-        "Riffusion, AudioLDM2, Mustango, JEN-1, MusicLDM and Tango. The human-composed portion "
-        "combines the human split of SleepyJesse/ai_music_large with the GTZAN corpus (Marsyas, "
-        "10 genres × 100 clips of 30 seconds) and the small subset of the Free Music Archive. "
-        "Together, the samples span approximately twenty musical genres including pop, rock, "
-        "classical, jazz, electronic, hip-hop, folk, metal and Latin styles. All audio was "
-        "resampled to 22,050 Hz before feature extraction. Two metadata fields — duration in "
-        "seconds and sampling rate — were excluded from the feature vector, since they correlate "
-        "with source repository rather than musical content and would otherwise act as data leaks. "
-        "Table 1 summarises the dataset composition."
-    ))
-
-    # Table 1 — Dataset composition
-    tbl0 = doc.add_table(rows=8, cols=4)
-    tbl0.style = "Table Grid"
-    table_row(tbl0, 0, ["Source", "Type", "Samples", "Notes"],
-              bold=True, bg="C99347")
-    src_data = [
-        ("SleepyJesse/ai_music_large (AI)",     "AI",    "≈ 2,000", "Mixed generators"),
-        ("disco-eth/AIME",                       "AI",    "≈ 1,000", "12 systems incl. Suno, Udio, MusicGen"),
-        ("zuhri025/suno-audio",                  "AI",    "≈ 500",   "Suno-specific samples"),
-        ("SleepyJesse/ai_music_large (human)",   "Human", "≈ 2,000", "Human split"),
-        ("marsyas/gtzan",                        "Human", "1,000",   "10 genres × 100 × 30 s clips"),
-        ("free-music-archive-small",             "Human", "≈ 1,000", "FMA small split"),
-        ("Total",                                "—",     "5,195",   "1:1.5 class ratio"),
-    ]
-    for i, row_data in enumerate(src_data):
-        bg = "F5F0E8" if i % 2 == 0 else "FFFFFF"
-        bold_row = (i == len(src_data) - 1)
-        table_row(tbl0, i + 1, row_data, bold=bold_row, bg=bg)
-    caption(doc, "Table 1. Composition of the AURIS training dataset (5,195 samples in total).")
 
     figure(doc, "feature_distribution_ai_vs_human.png",
-           "Figure 2. Distribution of selected acoustic features for AI-generated (red) and "
-           "human-composed (green) samples. The separation visible in spectral flatness and "
-           "onset strength previews the importance ranking reported in Section 3.4.")
+           "Şekil 2. LightGBM önemine göre sıralanmış ilk sekiz özniteliğin insan (yeşil) "
+           "ile yapay zekâ (kırmızı) örnekleri için dağılımı. Spektral düzlük panelleri "
+           "log-eksen ile gösterilmiştir.",
+           "Distribution of the top eight features by LightGBM importance, human (green) "
+           "versus AI (red). The spectral flatness panels use a log x-axis.",
+           width_cm=15.0)
 
-    subheading(doc, "2.2. Feature Extraction")
+    subheading(doc, "2.3. Sınıflandırma Modelleri (Classification Models)")
     body(doc, (
-        "Each audio sample is summarised by a 47-dimensional feature vector extracted with the "
-        "librosa library (version 0.10.1). The features are organised into four families. The "
-        "spectral family (16 features) captures the frequency-domain behaviour of the signal: "
-        "mean and variance of the first thirteen MFCC coefficients, variance of their first "
-        "and second time derivatives, spectral centroid and bandwidth (mean and standard "
-        "deviation), spectral rolloff, spectral flatness, spectral contrast (mean and standard "
-        "deviation), and a composite spectral-regularity score. The temporal and rhythmic "
-        "family (10 features) covers loudness and timing: RMS energy and its standard deviation "
-        "and dynamic range, zero-crossing rate statistics, tempo in beats per minute together "
-        "with stability and coefficient of variation, onset strength statistics, and beat count. "
-        "The harmonic and tonal family (9 features) reports chroma standard deviation, chroma "
-        "entropy, chroma transition rate, tonnetz standard deviation, harmonic ratio, a composite "
-        "harmonic-structure score, mel-flatness, mean pitch in Hz, and pitch standard deviation "
-        "in cents. Finally, the vocal and expressive family (12 features) summarises voice-related "
-        "behaviour: a binary has-vocals flag, vocal energy and harmonic ratios, a vocal-confidence "
-        "estimate, three composite scores for vocal AI-likeness, texture and breath patterns, a "
-        "formant-consistency score, vibrato rate (Hz), vibrato extent (cents), vibrato regularity, "
-        "and an overall pitch-stability score."
+        "On bir sınıflandırma modeli, ortak bir 5-katlı çapraz doğrulama protokolü altında "
+        "karşılaştırılmıştır. Yedi makine öğrenmesi modeli scikit-learn [29] kütüphanesi "
+        "kullanılarak uygulanmıştır: dengeli sınıf ağırlığı ile Lojistik Regresyon (C=2,0), "
+        "balanced_subsample örnekleme ile Rastgele Orman (n_estimators=500), Gradyan "
+        "Artırma (n_estimators=180, max_depth=4, learning_rate=0,07), RBF çekirdeği ile "
+        "destek vektör makinesi SVM (C=10,0, gamma=0,05), ÇKA Sinir Ağı, XGBoost [9] ve "
+        "LightGBM [10]. SVM, izotonik kalibrasyon ile CalibratedClassifierCV içinde "
+        "sarılarak diğer modellerle uyumlu olasılık çıktısı sağlanmıştır. Dört derin "
+        "öğrenme mimarisi PyTorch ile uygulanmıştır: Deep MLP (512-256-128-64 boyutlu "
+        "katmanlar, BatchNorm ve Dropout), 1D-CNN (öznitelik vektörü üzerinde tek boyutlu "
+        "konvolüsyon), Residual MLP (üç bloklu artık bağlantılar) ve Attention MLP (öznitelik "
+        "grupları üzerinde öz-dikkat mekanizması). Tüm derin modeller pos_weight ile "
+        "ağırlıklandırılmış BCEWithLogitsLoss kullanmakta ve Adam [30] optimizasyonu ile "
+        "eğitilmektedir. Tablo 3 her modelin hiperparametrelerini özetlemektedir."
+    ))
+
+    table_caption(doc,
+        "Tablo 3. On bir modelin temel hiperparametreleri",
+        "Key hyperparameters of the eleven models")
+    add_table(doc,
+        headers=["Model", "Tip", "Temel Hiperparametreler"],
+        rows=[
+            ["Lojistik Regresyon", "ML", "C=2,0; max_iter=2500; class_weight=balanced"],
+            ["Rastgele Orman", "ML", "n_estimators=500; max_features=log2"],
+            ["Gradyan Artırma", "ML", "n_estimators=180; max_depth=4; lr=0,07"],
+            ["SVM (RBF)", "ML", "C=10,0; gamma=0,05; izotonik kalibrasyon"],
+            ["ÇKA Sinir Ağı", "ML", "Gizli katmanlar: 128-64; relu; adam"],
+            ["XGBoost", "ML", "n_estimators=400; lr=0,05; max_depth=6"],
+            ["LightGBM", "ML", "n_estimators=400; lr=0,05; num_leaves=31"],
+            ["Deep MLP", "DL", "512-256-128-64; BatchNorm; Dropout"],
+            ["1D-CNN", "DL", "Conv1D katmanları; max_pool; global avg"],
+            ["Residual MLP", "DL", "3 artık blok; her blok: 256-256"],
+            ["Attention MLP", "DL", "Öz-dikkat; 4 baş; gizli 128"],
+        ])
+
+    subheading(doc, "2.4. Eğitim Protokolü ve Eşik Optimizasyonu "
+                    "(Training Protocol and Threshold Optimisation)")
+    body(doc, (
+        "Tüm modeller stratifiye edilmiş 5-katlı çapraz doğrulama (random_state=42) ile "
+        "değerlendirilmiştir. Her kat içinde StandardScaler eğitim alt kümesi üzerinde "
+        "fit edilmiş, ardından doğrulama alt kümesi üzerinde transform uygulanmıştır; "
+        "bu sayede veri sızıntısı önlenmiştir. Karar eşiği θ, varsayılan 0,5 yerine "
+        "Youden'in J istatistiği ile optimize edilmiştir: J(θ) = TPR(θ) - FPR(θ), "
+        "Denklem (1). Bu maksimizasyon, duyarlılık ile özgüllüğün toplamını maksimize "
+        "eden eşiği seçer. LightGBM için Youden-optimal eşik θ* = 0,4316 olarak "
+        "ölçülmüştür ve aşağıdaki tüm sonuçlar bu eşik altında raporlanmıştır. "
+        "Olasılıkların kalibrasyon kalitesi Brier skoru ile değerlendirilmiştir, "
+        "Denklem (2): BS = (1/N) Σᵢ (pᵢ - yᵢ)²."
     ))
 
     body(doc, (
-        "Three composite scores — spectral regularity, temporal patterns, and harmonic structure — "
-        "are computed as normalised weighted sums of their constituent measurements. They map the "
-        "underlying raw quantities onto the interval [0, 1], which is convenient for the real-time "
-        "user interface but does not alter the information content available to the classifiers. "
-        "Feature extraction is implemented in feature_extractor.py. Standardisation is applied per "
-        "cross-validation fold: a StandardScaler is fitted on the training split only and then "
-        "applied to the validation split, which prevents feature statistics from leaking across "
-        "the train/validation boundary."
+        "Modellerin yorumlanabilirliği, LightGBM üzerinde TreeSHAP [11] algoritması "
+        "kullanılarak analiz edilmiştir. SHAP değerleri, her özniteliğin tahmine katkısını "
+        "Shapley değerleri çerçevesinde tutarlı biçimde nicelleştirmektedir."
     ))
 
-    subheading(doc, "2.3. Classification Models")
+    # ══════════════════════════════════════════════════════════════════
+    # 3. SONUÇLAR VE TARTIŞMA
+    # ══════════════════════════════════════════════════════════════════
+    heading(doc, "3. Sonuçlar ve Tartışma (Results and Discussion)")
+
+    subheading(doc, "3.1. Genel Model Performansı (Overall Model Performance)")
     body(doc, (
-        "AURIS trains eleven models on the 47-dimensional feature vector. Seven of these belong "
-        "to the classical machine-learning family: Logistic Regression (C = 2.0, "
-        "class_weight = balanced), Random Forest (500 trees, max_features = log2, "
-        "balanced subsampling), Gradient Boosting (180 trees of depth 4, learning rate 0.07, "
-        "subsample 0.75), SVM with an RBF kernel (C = 10, γ = 0.05, wrapped in "
-        "CalibratedClassifierCV with isotonic regression and a 3-fold inner loop), an MLP neural "
-        "network with hidden sizes (192, 96, 32), XGBoost (240 trees of depth 5, learning rate "
-        "0.06, scale_pos_weight = n_neg / n_pos), and LightGBM (300 trees, learning rate 0.05, "
-        "31 leaves, subsample 0.8). The remaining four are deep learning architectures trained "
-        "in PyTorch: a Deep MLP with the topology 47 → 512 → 256 → 128 → 64 → 1 using BatchNorm "
-        "and 30% dropout; a 1D-CNN with three Conv1D blocks (32, 64, 128 channels) followed by "
-        "global average pooling and a fully connected head; a Residual MLP with three residual "
-        "blocks of 64 units; and an Attention MLP that applies self-attention over the feature "
-        "sequence before a final classification layer. All deep learning models are optimised "
-        "with Adam at learning rate 1×10⁻³, using BCEWithLogitsLoss with "
-        "pos_weight = n_neg / n_pos to address the class imbalance, and early stopping with a "
-        "patience of 10 epochs on validation loss. In addition, the wav2vec2-base transformer of "
-        "Baevski et al. (2020) is fine-tuned on raw 16 kHz waveforms and provides a fully "
-        "end-to-end audio embedding classifier that is independent of the handcrafted features."
+        "Tablo 4, on bir modelin 5-katlı çapraz doğrulama sonuçlarını ROC-AUC'a göre "
+        "sıralanmış biçimde sunmaktadır. LightGBM, %95,48 ortalama ROC-AUC değeri ile "
+        "ilk sırada yer almakta ve Deep MLP %95,42 ile çok yakın bir ikinci sıra elde "
+        "etmektedir; iki model arasındaki fark yalnızca 0,0006 AUC mertebesindedir. "
+        "Üçüncü sıradaki XGBoost (%94,65) ve dördüncü sıradaki Residual MLP (%94,85) ile "
+        "birlikte ilk dört modelin tamamı %94 üzerindeki ROC-AUC değerleriyle birbirine "
+        "yakın performans göstermektedir. 1D-CNN, %85,43 ile en düşük performansı "
+        "sergilemiştir; bu sonuç §3.10'da tartışılmaktadır. Şekil 3, dört derin öğrenme "
+        "mimarisi için epok bazlı eğitim eğrilerini göstermektedir."
     ))
 
-    # Table 2 — Hyperparameters
-    body(doc, "Table 2 lists the key hyperparameters used in each model.")
-    tbl_hp = doc.add_table(rows=12, cols=3)
-    tbl_hp.style = "Table Grid"
-    table_row(tbl_hp, 0, ["Model", "Family", "Key Hyperparameters"],
-              bold=True, bg="C99347")
-    hp_data = [
-        ("Logistic Regression",          "ML", "C=2.0, max_iter=2500, class_weight=balanced"),
-        ("Random Forest",                "ML", "n_estimators=500, max_features=log2, balanced_subsample"),
-        ("Gradient Boosting",            "ML", "n_estimators=180, max_depth=4, lr=0.07, subsample=0.75"),
-        ("SVM (RBF)",                    "ML", "C=10, γ=0.05, isotonic calibration (cv=3)"),
-        ("MLP Neural Network",           "ML", "hidden=(192, 96, 32), α=0.001, max_iter=600"),
-        ("XGBoost",                      "ML", "n=240, depth=5, lr=0.06, scale_pos_weight, reg_α=0.4, reg_λ=1.5"),
-        ("LightGBM",                     "ML", "n=300, lr=0.05, num_leaves=31, subsample=0.8, reg_λ=1.0"),
-        ("Deep MLP (512-256-128-64)",    "DL", "BatchNorm, Dropout 0.3, BCEWithLogitsLoss + pos_weight"),
-        ("1D-CNN",                       "DL", "Conv1D(32-64-128) + GlobalAvgPool"),
-        ("Residual MLP",                 "DL", "3 residual blocks × 64 units"),
-        ("Attention MLP",                "DL", "Self-attention over feature sequence + FC"),
-    ]
-    for i, row_data in enumerate(hp_data):
-        bg = "F5F0E8" if i % 2 == 0 else "FFFFFF"
-        table_row(tbl_hp, i + 1, row_data, bg=bg)
-    caption(doc, "Table 2. Key hyperparameters for the eleven AURIS classifiers.")
-
-    subheading(doc, "2.4. Training Protocol and Threshold Optimisation")
-    body(doc, (
-        "All models are evaluated under the same 5-fold stratified cross-validation protocol, "
-        "which preserves the class ratio in every fold. For each fold, the training procedure "
-        "follows three steps. First, a StandardScaler is fitted on the training split and applied "
-        "to the validation split, ensuring that no feature statistics leak across the partition. "
-        "Second, the model is trained and the validation predictions are converted into "
-        "probabilities. Third, the optimal decision threshold for that fold is selected using "
-        "Youden's J statistic, defined as"
-    ))
-    equation(doc, "J(θ) = TPR(θ) − FPR(θ),", "(1)")
-    body(doc, (
-        "where TPR(θ) and FPR(θ) are the true-positive and false-positive rates obtained at "
-        "threshold θ on the fold's ROC curve. The threshold that maximises J(θ) replaces the "
-        "default 0.5 cutoff. Accuracy, F1-score, precision, recall and ROC-AUC are then computed "
-        "on the validation split at the optimal threshold. Final results are macro-averaged over "
-        "the five folds. Algorithm 1 summarises the procedure."
-    ))
-
-    algorithm_box(doc, "Algorithm 1 — AURIS training and threshold-optimisation procedure", [
-        "Input:  dataset D = {(x_i, y_i)}_{i=1..N};  model family M;  number of folds K = 5",
-        "Output: fold metrics {(acc_k, f1_k, auc_k, θ*_k)}_{k=1..K}",
-        "1:  Generate K stratified folds (D_train^k, D_val^k) preserving class ratio",
-        "2:  for k = 1 .. K do",
-        "3:      Fit scaler S_k on D_train^k; transform both splits",
-        "4:      Train classifier M_k on the scaled D_train^k",
-        "5:      Obtain probabilities p_i for x_i in D_val^k",
-        "6:      Compute ROC curve {(FPR(θ), TPR(θ))}",
-        "7:      θ*_k ← argmax_θ ( TPR(θ) − FPR(θ) )            // Youden's J",
-        "8:      Predict y_hat_i ← 1 if p_i ≥ θ*_k else 0",
-        "9:      Record acc_k, f1_k, auc_k, θ*_k",
-        "10: end for",
-        "11: Return macro-averaged metrics over k = 1..K",
-    ])
-
-    body(doc, (
-        "Class imbalance is handled redundantly across the three families of models. Gradient "
-        "boosting receives scale_pos_weight = n_neg / n_pos in XGBoost and class-balanced sample "
-        "weights in Random Forest. Deep learning models use pos_weight = n_neg / n_pos inside "
-        "BCEWithLogitsLoss. The SVM-RBF model is wrapped in CalibratedClassifierCV with isotonic "
-        "regression, which transforms its decision-function output into a probability that is "
-        "compatible with the rest of the pipeline. The Brier score is reported alongside the ROC "
-        "metrics in Section 3.5 to confirm that the probabilities produced by the best model are "
-        "well calibrated, not merely well ranked."
-    ))
-
-    figure(doc, "training_history.png",
-           "Figure 3. Per-epoch training curves for the four deep learning architectures, "
-           "averaged across the five cross-validation folds with one-σ bands. Each panel "
-           "annotates the best mean validation AUC and the epoch at which it occurred. Three "
-           "of the four architectures (Deep MLP, Residual MLP, Attention MLP) plateau in the "
-           "0.94–0.96 region while their training curves approach 1.00, indicating mild "
-           "overfit that early stopping mitigates but does not eliminate. The 1D-CNN never "
-           "closes the same gap on either curve.")
-
-    # ╔════════════════════════════════════════════════════════════════════╗
-    # ║  4. RESULTS                                                          ║
-    # ╚════════════════════════════════════════════════════════════════════╝
-
-    heading(doc, "3. Results and Discussion")
-
-    subheading(doc, "3.1. Overall Model Performance")
-    body(doc, (
-        "Table 3 reports the 5-fold cross-validation results for the eleven models, sorted by "
-        "ROC-AUC. LightGBM obtained the highest mean ROC-AUC of 0.9548, with Deep MLP a very "
-        "close second at 0.9542 — a difference of only 0.0006 in AUC. Deep MLP, however, achieved "
-        "the highest accuracy (0.8849) and F1-score (0.8596) of the entire pool, narrowly ahead "
-        "of LightGBM at 0.8839 accuracy and 0.8575 F1. The remaining ensemble methods (XGBoost, "
-        "Random Forest, Gradient Boosting) and the SVM with RBF kernel all cluster in the "
-        "0.93–0.95 AUC range. Logistic Regression and the 1D-CNN are the weakest performers in "
-        "the pool, which suggests that linear decision boundaries are too restrictive for the "
-        "underlying feature distribution and that convolutional inductive biases do not transfer "
-        "well to a flat 47-dimensional input."
-    ))
-
-    # Table 3 — Main results
-    tbl1 = doc.add_table(rows=12, cols=7)
-    tbl1.style = "Table Grid"
-    table_row(tbl1, 0,
-        ["Rank", "Model", "Type", "Accuracy", "F1", "ROC-AUC", "Threshold θ*"],
-        bold=True, bg="C99347")
-    data = [
-        (1,  "LightGBM",                  "ML", "0.8839", "0.8575", "0.9548", "0.4316"),
-        (2,  "Deep MLP (512-256-128-64)",  "DL", "0.8849", "0.8596", "0.9542", "—"),
-        (3,  "XGBoost",                    "ML", "0.8735", "0.8402", "0.9463", "0.5000"),
-        (4,  "Residual MLP (3 blocks)",    "DL", "0.8756", "0.8476", "0.9453", "—"),
-        (5,  "Gradient Boosting",          "ML", "0.8685", "0.8337", "0.9406", "0.5000"),
-        (6,  "Random Forest",              "ML", "0.8604", "0.8183", "0.9393", "0.5000"),
-        (7,  "Attention MLP",              "DL", "0.8628", "0.8293", "0.9356", "—"),
-        (8,  "SVM (RBF)",                  "ML", "0.8612", "0.8252", "0.9347", "0.5000"),
-        (9,  "MLP Neural Network",         "ML", "0.8545", "0.8189", "0.9258", "0.5000"),
-        (10, "Logistic Regression",        "ML", "0.7779", "0.7390", "0.8511", "0.5000"),
-        (11, "1D-CNN",                     "DL", "0.7665", "0.7159", "0.8442", "—"),
-    ]
-    for i, row_data in enumerate(data):
-        bg = "F5F0E8" if i % 2 == 0 else "FFFFFF"
-        table_row(tbl1, i + 1, row_data, bg=bg)
-    caption(doc, "Table 3. 5-fold cross-validation results for all eleven AURIS classifiers, "
-                 "sorted by ROC-AUC. The optimised threshold θ* is reported for the best model.")
+    table_caption(doc,
+        "Tablo 4. On bir sınıflandırıcının 5-katlı çapraz doğrulama sonuçları "
+        "(ROC-AUC'a göre sıralı)",
+        "5-fold cross-validation results of the eleven classifiers, sorted by ROC-AUC")
+    add_table(doc,
+        headers=["Sıra", "Model", "Tip", "Doğruluk", "F1", "ROC-AUC", "θ*"],
+        rows=[
+            ["1",  "LightGBM",                 "ML", "0,8839", "0,8575", "0,9548", "0,4316"],
+            ["2",  "Deep MLP (512-256-128-64)", "DL", "0,8849", "0,8596", "0,9542", "—"],
+            ["3",  "Residual MLP (3 blok)",     "DL", "0,8756", "0,8476", "0,9485", "—"],
+            ["4",  "XGBoost",                   "ML", "0,8751", "0,8408", "0,9465", "—"],
+            ["5",  "Gradyan Artırma",           "ML", "0,8685", "0,8337", "0,9397", "—"],
+            ["6",  "Rastgele Orman",            "ML", "0,8606", "0,8183", "0,9394", "—"],
+            ["7",  "Attention MLP",             "DL", "0,8628", "0,8293", "0,9359", "—"],
+            ["8",  "SVM (RBF)",                 "ML", "0,8612", "0,8252", "0,9346", "—"],
+            ["9",  "ÇKA Sinir Ağı",             "ML", "0,8566", "0,8189", "0,9276", "—"],
+            ["10", "1D-CNN",                    "DL", "0,7665", "0,7159", "0,8543", "—"],
+            ["11", "Lojistik Regresyon",        "ML", "0,7779", "0,7390", "0,8515", "—"],
+        ])
 
     figure(doc, "paper_model_comparison.png",
-           "Figure 4. Side-by-side comparison of accuracy, F1-score and ROC-AUC across the eleven "
-           "classifiers, sorted by AUC in descending order.")
+           "Şekil 3. On bir sınıflandırıcının doğruluk, F1 ve ROC-AUC değerlerinin "
+           "AUC'a göre azalan sırayla karşılaştırılması.",
+           "Comparison of accuracy, F1 and ROC-AUC across the eleven classifiers, "
+           "sorted by AUC in descending order.")
 
     figure(doc, "paper_roc_curves.png",
-           "Figure 5. ROC curves of the seven feature-based classifiers, computed from real "
-           "out-of-fold predictions under 5-fold cross-validation. The dashed diagonal "
-           "corresponds to random guessing (AUC = 0.500). LightGBM leads at AUC = 0.9545, with "
-           "XGBoost (0.9463) and the Random Forest / Gradient Boosting pair close behind; "
-           "Logistic Regression trails at 0.8511. ROC-AUC values for the four deep learning "
-           "architectures are reported in Table 3 and Figure 4.",
+           "Şekil 4. Yedi öznitelik tabanlı sınıflandırıcının 5-katlı çapraz doğrulama "
+           "ROC eğrileri. LightGBM AUC=0,9545 ile başı çekmekte; rastgele tahmin "
+           "(AUC=0,500) referans olarak verilmiştir.",
+           "ROC curves of the seven feature-based classifiers under 5-fold "
+           "cross-validation. LightGBM leads with AUC=0.9545; random guessing "
+           "(AUC=0.500) is shown as reference.",
            width_cm=11.5)
 
     figure(doc, "all_models_heatmap.png",
-           "Figure 6. Confusion heatmap aggregating the predictions of all eleven models on a "
-           "common held-out set. Diagonal dominance indicates broadly consistent decisions "
-           "across the pool, while off-diagonal mass concentrates on a small set of ambiguous "
-           "tracks.")
+           "Şekil 5. On bir modelin doğruluk, kesinlik, duyarlılık, F1 ve ROC-AUC "
+           "değerlerinin ısı haritası; her sütundaki en iyi değer kalın gösterilmiştir.",
+           "Heatmap of accuracy, precision, recall, F1 and ROC-AUC across the eleven "
+           "models; the best per column is shown in bold.")
 
-    subheading(doc, "3.2. ML versus DL: Where Does the Improvement Come From?")
+    subheading(doc, "3.2. Makine Öğrenmesi ve Derin Öğrenme Karşılaştırması "
+                    "(ML versus DL Comparison)")
     body(doc, (
-        "Figure 7 contrasts the two families directly. The seven ML classifiers reach a mean "
-        "ROC-AUC of 0.9275, while the four DL architectures reach 0.9232 — but only because the "
-        "1D-CNN drags the DL mean down. If the 1D-CNN is excluded, the remaining three DL "
-        "architectures average 0.9462, narrowly higher than the ML mean of 0.9402 when Logistic "
-        "Regression is excluded. The interpretation is that the 47-dimensional feature vector "
-        "already encodes most of the signal: feature engineering, not model capacity, is the "
-        "dominant driver of performance in this setting. Deep models that take the same feature "
-        "vector as input cannot reach beyond the discriminative information that is already there. "
-        "This conclusion is consistent with the broader audio-deepfake literature (Yi et al., 2023), "
-        "where well-tuned gradient boosters on engineered features remain competitive with deep "
-        "models that operate on the same features."
+        "Şekil 6, iki aileyi doğrudan karşılaştırmaktadır. Yedi makine öğrenmesi "
+        "sınıflandırıcısı %92,75 ortalama ROC-AUC değerine ulaşırken, dört derin "
+        "öğrenme mimarisi %92,32'de kalmaktadır; ancak bu fark esas olarak 1D-CNN'nin "
+        "DL ortalamasını aşağı çekmesinden kaynaklanmaktadır. 1D-CNN dışlandığında, "
+        "kalan üç DL mimarisi %94,62 ortalama elde etmekte ve Lojistik Regresyon "
+        "dışlandığında ML ortalaması %94,02'ye yükselmektedir. Bu sonuç, 47 boyutlu "
+        "öznitelik vektörünün ayırt edici bilginin büyük kısmını zaten kodladığını; "
+        "öznitelik mühendisliğinin model kapasitesinden daha belirleyici bir etken "
+        "olduğunu göstermektedir. Aynı öznitelik vektörünü giriş olarak alan derin "
+        "modeller, bu öznitelikler içinde mevcut olmayan ayırt edici bilgiye erişememekte; "
+        "bu bulgu Yi vd. [6] tarafından özetlenen ses derin sahte literatürüyle de "
+        "tutarlıdır."
     ))
 
     figure(doc, "paper_ml_vs_dl.png",
-           "Figure 7. Aggregate comparison of machine learning and deep learning families across "
-           "accuracy, ROC-AUC and F1. The deep learning bars are dragged down by the 1D-CNN; "
-           "the three remaining DL models match or slightly exceed the ML group on average.")
+           "Şekil 6. Makine öğrenmesi (altın) ve derin öğrenme (koyu) mimarilerinin "
+           "doğruluk, ROC-AUC ve F1 değerleri açısından toplam karşılaştırması.",
+           "Aggregate comparison of machine learning (gold) and deep learning (dark) "
+           "architectures across accuracy, ROC-AUC and F1.")
 
-    subheading(doc, "3.3. Cross-Fold Stability")
-    body(doc, (
-        "Table 4 reports fold-level AUC statistics for the four DL architectures. Deep MLP shows "
-        "the lowest variance among the DL group (standard deviation 0.0036), indicating that its "
-        "performance is robust across different partitions of the dataset. Residual MLP behaves "
-        "similarly (±0.0044). Attention MLP is more variable (±0.0056), and the 1D-CNN shows both "
-        "the lowest mean AUC and the highest variance (±0.0087), which is consistent with the "
-        "architectural mismatch noted above: a one-dimensional convolution over an unordered "
-        "47-dimensional feature vector has no temporal correlations to exploit. Figure 8 extends "
-        "this view to all eleven models, with the per-fold AUC values obtained from a real 5-fold "
-        "out-of-fold re-run for the seven feature-based classifiers and from the original "
-        "cross-validation logs for the four deep models. The most stable model overall is "
-        "LightGBM, whose fold standard deviation of 0.0023 is the lowest in the entire pool — its "
-        "five fold AUCs span only 0.9515 to 0.9580. XGBoost (±0.0029) and Gradient Boosting "
-        "(±0.0038) follow. The least stable models are the 1D-CNN (±0.0087) and SVM-RBF "
-        "(±0.0075). The ranking by stability tracks the ranking by mean AUC fairly closely: the "
-        "models that score highest also vary least, which is the desirable pattern for a "
-        "deployable detector."
-    ))
-
-    # Table 4 — DL stability
-    tbl2 = doc.add_table(rows=5, cols=8)
-    tbl2.style = "Table Grid"
-    table_row(tbl2, 0,
-        ["Model", "F1", "F2", "F3", "F4", "F5", "Mean", "Std"],
-        bold=True, bg="C99347")
-    dl_data = [
-        ("Deep MLP",      "0.9582", "0.9557", "0.9508", "0.9492", "0.9571", "0.9542", "±0.0036"),
-        ("Residual MLP",  "0.9523", "0.9491", "0.9473", "0.9407", "0.9531", "0.9485", "±0.0044"),
-        ("Attention MLP", "0.9318", "0.9461", "0.9379", "0.9320", "0.9316", "0.9359", "±0.0056"),
-        ("1D-CNN",        "0.8583", "0.8645", "0.8589", "0.8394", "0.8502", "0.8543", "±0.0087"),
-    ]
-    for i, row_data in enumerate(dl_data):
-        bg = "F5F0E8" if i % 2 == 0 else "FFFFFF"
-        table_row(tbl2, i + 1, row_data, bg=bg)
-    caption(doc, "Table 4. Per-fold ROC-AUC values for the four deep-learning architectures. "
-                 "Deep MLP combines the highest mean with the lowest variance.")
-
-    figure(doc, "paper_fold_std_table.png",
-           "Figure 8. Per-fold ROC-AUC for all eleven models, sorted by mean AUC. The five "
-           "individual fold values, their mean and their standard deviation are shown for each "
-           "model. LightGBM combines the highest mean with the lowest fold-to-fold variance "
-           "(±0.0023).",
+    figure(doc, "training_history.png",
+           "Şekil 7. Dört derin öğrenme mimarisi için epok bazlı eğitim eğrileri; "
+           "her panel beş katın ortalaması ve ±σ bant ile birlikte gösterilmektedir.",
+           "Per-epoch training curves for the four deep learning architectures, mean "
+           "across five folds with ±σ band.",
            width_cm=15.0)
 
-    subheading(doc, "3.4. Feature Importance")
+    subheading(doc, "3.3. Katlar-Arası Kararlılık (Cross-Fold Stability)")
     body(doc, (
-        "Table 5 lists the top twenty features ranked by normalised gain in the trained LightGBM "
-        "model. Spectral flatness — measured both as a per-frame standard deviation and as a "
-        "mean — appears twice in the top five, with the standard deviation occupying the first "
-        "position by a sizeable margin. Spectral contrast mean (rank 2), RMS energy (rank 3), "
-        "and onset-strength standard deviation (rank 4) complete the top group. The vocal "
-        "and expressive family is present but secondary: the highest-ranked vocal feature, "
-        "breath-pattern score, sits at rank 18, with formant consistency at rank 21. The "
-        "interpretation is that AI generation systems differ from human recordings most "
-        "consistently in their broadband spectral structure and onset dynamics — both of which "
-        "are by-products of the synthesis pipeline rather than musical content. Figure 9 visualises "
-        "the top-twenty ranking, and Figure 10 reports SHAP values for the same model, which "
-        "broadly confirms the LightGBM gain ranking."
+        "Şekil 8, on bir modelin her bir kat için ROC-AUC değerlerini, ortalamasını ve "
+        "standart sapmasını sunmaktadır. LightGBM, ±0,0023 standart sapmasıyla havuzdaki "
+        "en kararlı modeldir; beş katı 0,9515 ile 0,9580 arasında dar bir aralıkta "
+        "değişmektedir. XGBoost (±0,0029) ve Gradyan Artırma (±0,0038) onu izlemektedir. "
+        "En değişken modeller 1D-CNN (±0,0087) ve SVM-RBF (±0,0075) olmuştur. "
+        "Kararlılığa göre sıralama, ortalama AUC sıralamasını yakından izlemekte; en "
+        "yüksek skoru veren modeller aynı zamanda en az değişken olanlar olmaktadır. "
+        "Bu örüntü, konuşlandırılabilir bir tespit sistemi için arzu edilen "
+        "karakteristiği yansıtmaktadır."
     ))
 
-    # Table 5 — Top 20 features
-    tbl_fi = doc.add_table(rows=11, cols=4)
-    tbl_fi.style = "Table Grid"
-    table_row(tbl_fi, 0,
-        ["Rank", "Feature", "Family", "Importance (gain)"],
-        bold=True, bg="C99347")
-    fi_data = [
-        (1,  "spectral_flatness_std",      "Spectral",  "0.0619"),
-        (2,  "spectral_contrast_mean",     "Spectral",  "0.0467"),
-        (3,  "rms_energy",                  "Temporal",  "0.0456"),
-        (4,  "onset_strength_std",          "Temporal",  "0.0388"),
-        (5,  "spectral_flatness_mean",      "Spectral",  "0.0370"),
-        (6,  "rms_dynamic_range",           "Temporal",  "0.0346"),
-        (7,  "onset_strength_mean",         "Temporal",  "0.0332"),
-        (8,  "rms_std",                     "Temporal",  "0.0298"),
-        (9,  "beat_count",                  "Temporal",  "0.0298"),
-        (10, "mfcc_delta_var",              "Spectral",  "0.0289"),
-    ]
-    for i, row_data in enumerate(fi_data):
-        bg = "F5F0E8" if i % 2 == 0 else "FFFFFF"
-        table_row(tbl_fi, i + 1, row_data, bg=bg)
-    caption(doc, "Table 5. Top ten features by normalised gain in the trained LightGBM model.")
+    figure(doc, "paper_fold_std_table.png",
+           "Şekil 8. On bir modelin her bir katı için ROC-AUC değerleri, ortalama AUC "
+           "(azalan sırada) ve standart sapma. LightGBM hem en yüksek ortalamaya hem de "
+           "en düşük katlar-arası varyansa sahiptir (±0,0023).",
+           "Per-fold ROC-AUC for all eleven models, mean AUC (descending) and standard "
+           "deviation. LightGBM combines the highest mean with the lowest fold-to-fold "
+           "variance (±0.0023).",
+           width_cm=15.0)
+
+    subheading(doc, "3.4. Öznitelik Önemi (Feature Importance)")
+    body(doc, (
+        "Tablo 5, LightGBM modelinde normalleştirilmiş kazanca göre sıralanan ilk yirmi "
+        "özniteliği listelemektedir. Spektral düzlük -hem kare başına standart sapma "
+        "hem de ortalama olarak ölçülen- ilk beş içinde iki kez yer almakta, standart "
+        "sapması belirgin bir farkla ilk sırayı oluşturmaktadır. Spektral kontrast "
+        "ortalaması (sıra 2), RMS enerji (sıra 3) ve başlangıç gücü standart sapması "
+        "(sıra 4) ilk grubu tamamlamaktadır. Vokal aile özniteliklerinin ilk yirmi "
+        "içinde yalnızca breath_pattern_score (sıra 18) yer almaktadır; bu durum, vokal "
+        "özniteliklerinin enstrümantal parçalarda anlamlı sinyal üretmemesi ile "
+        "tutarlıdır. Şekil 9, ilk yirmi özniteliğin önem skorlarını çubuk grafik olarak; "
+        "Şekil 10 ise TreeSHAP [11] tabanlı global etki dağılımını görselleştirmektedir."
+    ))
+
+    table_caption(doc,
+        "Tablo 5. LightGBM'in normalleştirilmiş kazanç önemine göre ilk on özniteliği",
+        "Top ten features ranked by LightGBM's normalised gain importance")
+    add_table(doc,
+        headers=["Sıra", "Öznitelik", "Önem"],
+        rows=[
+            ["1",  "spectral_flatness_std",   "0,0619"],
+            ["2",  "spectral_contrast_mean",  "0,0467"],
+            ["3",  "rms_energy",              "0,0456"],
+            ["4",  "onset_strength_std",      "0,0388"],
+            ["5",  "spectral_flatness_mean",  "0,0370"],
+            ["6",  "rms_dynamic_range",       "0,0346"],
+            ["7",  "onset_strength_mean",     "0,0332"],
+            ["8",  "rms_std",                 "0,0298"],
+            ["9",  "beat_count",              "0,0298"],
+            ["10", "mfcc_delta_var",          "0,0289"],
+        ])
 
     figure(doc, "paper_feature_importance.png",
-           "Figure 9. Top-twenty feature importances in LightGBM (normalised gain). Spectral and "
-           "temporal families dominate, with vocal features playing a secondary role.",
-           width_cm=12.5)
+           "Şekil 9. LightGBM modelinde ilk yirmi özniteliğin normalleştirilmiş önem "
+           "skorları. Spektral düzlük standart sapması açık bir farkla ilk sırada.",
+           "Top-twenty feature importances in LightGBM (normalised). "
+           "spectral_flatness_std leads by a clear margin.")
 
     figure(doc, "shap_summary.png",
-           "Figure 10. SHAP summary plot for LightGBM. Each point represents a sample; horizontal "
-           "position is the SHAP value and colour encodes feature magnitude. The plot confirms "
-           "that high spectral flatness pushes predictions toward the human class.",
+           "Şekil 10. 2.000 örneklik bir CV diliminde LightGBM için TreeSHAP global "
+           "etki diyagramı; her nokta tek bir örneği, yatay konum SHAP değerini, renk "
+           "ise öznitelik büyüklüğünü kodlamaktadır.",
+           "TreeSHAP global effect plot for LightGBM on a 2,000-sample CV slice; each "
+           "point is one sample, horizontal position is the SHAP value, colour encodes "
+           "feature magnitude.",
            width_cm=12.0)
 
-    subheading(doc, "3.5. Confusion, Score Distribution and Calibration")
+    subheading(doc, "3.5. Karmaşıklık Matrisi, Skor Dağılımı ve Kalibrasyon "
+                    "(Confusion Matrix, Score Distribution and Calibration)")
     body(doc, (
-        "Figure 11 shows the confusion matrix obtained when the LightGBM predictions on the "
-        "aggregated 5-fold validation sets are thresholded at the Youden-optimal value "
-        "θ* = 0.4316. The matrix reports 2,721 true negatives (87.4% of the human samples), "
-        "1,862 true positives (89.4% of the AI samples), 392 false positives (12.6% of human "
-        "samples assigned to AI), and 220 false negatives (10.6% of AI samples assigned to human). "
-        "Sensitivity to the AI class (89.4%) is essentially balanced with specificity for human "
-        "samples (87.4%) — the small asymmetry follows from the Youden criterion, which weights "
-        "the two error types symmetrically."
+        "Şekil 11, LightGBM'in 5-katlı doğrulama tahminlerinin Youden-optimal eşik "
+        "θ* = 0,4316 ile eşiklendiği durumda elde edilen karmaşıklık matrisini "
+        "göstermektedir. Matris şu değerleri raporlamaktadır: 2.721 doğru negatif "
+        "(insan örneklerinin %87,4'ü), 1.862 doğru pozitif (yapay zekâ örneklerinin "
+        "%89,4'ü), 392 yanlış pozitif (insan örneklerinin %12,6'sı yapay zekâ olarak "
+        "atanmış) ve 220 yanlış negatif (yapay zekâ örneklerinin %10,6'sı insan olarak "
+        "atanmış). Yapay zekâ sınıfı için duyarlılık (%89,4) insan örnekleri için "
+        "özgüllük (%87,4) ile esasen dengelidir; küçük asimetri Youden ölçütünden "
+        "kaynaklanmaktadır."
     ))
 
     figure(doc, "paper_confusion_matrix_lightgbm.png",
-           "Figure 11. Confusion matrix for LightGBM at the Youden-optimal threshold θ* = 0.4316. "
-           "Cell labels show sample counts and the corresponding within-class percentages.",
+           "Şekil 11. LightGBM için Youden-optimal eşik θ* = 0,4316 altında karmaşıklık "
+           "matrisi. Hücreler örnek sayıları ve ilgili sınıf-içi yüzdeleri "
+           "göstermektedir.",
+           "Confusion matrix for LightGBM at the Youden-optimal threshold θ* = 0.4316. "
+           "Cells show sample counts and corresponding within-class percentages.",
            width_cm=11.0)
 
     body(doc, (
-        "Figure 12 plots the predicted-probability distributions P(AI) for the human and AI "
-        "classes separately. The two distributions are well separated, with substantial overlap "
-        "only in the central region around 0.4–0.6. The dashed vertical line marks θ* = 0.4316; "
-        "the position of the threshold to the left of the symmetric 0.5 cutoff reflects the "
-        "class imbalance and is precisely the value that maximises J(θ). Figure 13 reports the "
-        "calibration curve. The curve closely follows the diagonal across the full probability "
-        "range, with a Brier score of 0.083:"
-    ))
-    equation(doc, "BS = (1 / N) Σᵢ ( p_i − y_i )²", "(2)")
-    body(doc, (
-        "where p_i is the predicted probability for sample i and y_i its true label. The low "
-        "value confirms that the probabilities produced by LightGBM are reliable estimates and "
-        "not merely good ranking scores; downstream thresholding can therefore be carried out "
-        "with predictable precision–recall trade-offs. Figure 14 finally shows the "
-        "precision–recall curve, with an average precision of 0.934, well above the no-skill "
-        "baseline of 0.401 implied by the 1:1.5 class ratio."
+        "Şekil 12, insan ve yapay zekâ sınıfları için P(AI) tahmini olasılık dağılımlarını "
+        "ayrı ayrı çizmektedir. İki dağılım iyi ayrılmıştır; örtüşme yalnızca 0,4-0,6 "
+        "merkezi bölgede önemli ölçüde mevcuttur. Kesik çizgi Youden-optimal eşiği "
+        "işaretlemektedir; eşiğin simetrik 0,5 değerinin solunda konumlanması sınıf "
+        "dengesizliği (yapay zekâ : insan ≈ 1 : 1,5) ile J(θ) maksimizasyonunun "
+        "birleşik etkisini yansıtmaktadır. Şekil 13, kalibrasyon eğrisini sunmaktadır. "
+        "Eğri olasılık aralığı boyunca köşegene yakın seyretmekte ve Brier skoru 0,083 "
+        "olarak ölçülmektedir; bu değer, üretilen olasılıkların gerçek arka olasılığın "
+        "güvenilir tahminleri olduğunu doğrulamaktadır."
     ))
 
     figure(doc, "paper_score_distribution.png",
-           "Figure 12. Distribution of predicted probabilities P(AI) for human (green) and AI "
-           "(red) samples. The dashed line marks the Youden-optimal decision threshold "
+           "Şekil 12. İnsan (yeşil) ve yapay zekâ (kırmızı) örnekleri için P(AI) tahmin "
+           "olasılık dağılımları. Kesik çizgi Youden-optimal karar eşiği θ* = 0,4316.",
+           "Predicted-probability distributions of P(AI) for human (green) and AI (red) "
+           "samples. Dashed line marks the Youden-optimal decision threshold "
            "θ* = 0.4316.")
 
     figure(doc, "paper_calibration.png",
-           "Figure 13. Calibration curve for LightGBM. The fraction of positives is plotted "
-           "against the mean predicted probability for each bin; the diagonal corresponds to "
-           "perfect calibration. Brier score = 0.083.",
+           "Şekil 13. LightGBM için kalibrasyon eğrisi. Köşegen ideal kalibrasyona "
+           "karşılık gelir; Brier skoru = 0,083.",
+           "Calibration curve for LightGBM. Diagonal corresponds to perfect calibration; "
+           "Brier score = 0.083.",
            width_cm=10.5)
 
     figure(doc, "paper_precision_recall.png",
-           "Figure 14. Precision-recall curve for LightGBM, with average precision (AP) reported "
-           "in the legend. The dashed horizontal line shows the no-skill baseline for the 1:1.5 "
-           "class ratio.",
+           "Şekil 14. LightGBM için kesinlik-duyarlılık eğrisi; ortalama kesinlik "
+           "0,934 olarak ölçülmüştür ve sınıf oranı 1:1,5 için ima edilen 0,401 "
+           "baz çizgisinin çok üstündedir.",
+           "Precision-recall curve for LightGBM; average precision is 0.934, well above "
+           "the no-skill baseline of 0.401 implied by the 1:1.5 class ratio.",
            width_cm=10.5)
 
-    subheading(doc, "3.6. Threshold Sweep and Decision Operating Points")
+    subheading(doc, "3.6. Eşik Taraması ve Karar Çalışma Noktaları "
+                    "(Threshold Sweep and Decision Operating Points)")
     body(doc, (
-        "Figure 15 reports a fine-grained sweep of the decision threshold from 0 to 1 in 0.01 "
-        "steps. The accuracy curve peaks broadly around θ ≈ 0.40, while F1 reaches its maximum "
-        "around θ ≈ 0.43. The Youden-optimal threshold θ* = 0.4316, which is identified "
-        "automatically from the ROC curve, falls comfortably within this region — confirming "
-        "that the J-based selection is consistent with metric-specific optima rather than an "
-        "arbitrary choice. Practical deployments may shift the operating point along this curve "
-        "to favour recall (lower θ) or precision (higher θ) depending on the application."
+        "Şekil 15, kesinlik, duyarlılık, F1 ve doğruluğun karar eşiğine göre nasıl "
+        "değiştiğini göstermektedir. F1 skoru 0,40-0,50 aralığında bir plato "
+        "oluşturmakta; Youden-optimal eşik bu platonun sol kenarında konumlanmaktadır. "
+        "Bu örüntü, farklı çalıştırma maliyetlerine sahip kullanıcıların eğri üzerinde "
+        "güvenle hareket edebileceğini göstermektedir."
     ))
 
     figure(doc, "threshold_sweep.png",
-           "Figure 15. Threshold sweep for LightGBM. Accuracy, F1, precision and recall are "
-           "plotted against θ; the vertical dashed line marks the Youden-optimal threshold.")
+           "Şekil 15. LightGBM için karar eşiğine karşı kesinlik, duyarlılık ve F1 "
+           "taraması. Youden-J optimumu θ* = 0,4316 kesik çizgi ile işaretlenmiştir.",
+           "Threshold sweep of precision, recall and F1 versus decision threshold for "
+           "LightGBM. Youden-J optimum θ* = 0.4316 is marked with the dashed line.")
 
-    subheading(doc, "3.7. Per-Generator Performance")
+    subheading(doc, "3.7. Üretici Bazlı Performans (Per-Generator Performance)")
     body(doc, (
-        "Because the AI portion of the dataset spans more than a dozen generation systems, "
-        "per-source performance is informative beyond the aggregate metrics. Figure 16 reports "
-        "the per-source breakdown of LightGBM predictions, measured on the same 5-fold "
-        "out-of-fold probabilities used elsewhere. The result is highly uneven. Suno tracks are "
-        "recovered with 93.0% recall (465 of 500) and Echoes with 88.6% (999 of 1,128). The "
-        "Mustango/JEN-1 family represented by the AIME subset (n=204) drops to 79.9%. The "
-        "deepfake set, however, sits at exactly 50.0% — half of these tracks are missed by the "
-        "classifier despite their explicit AI label. On the human side, GTZAN (93.2%) and FMA "
-        "(88.9%) are recognised reliably, while the SleepyJesse cover set (n=854) falls to "
-        "76.3%. The two failure points — the deepfake subset and the SleepyJesse covers — point "
-        "in the same direction: tracks whose acoustic profile differs systematically from the "
-        "rest of their class label are the ones the model struggles with, consistent with the "
-        "cross-generator generalisation challenge highlighted by Li et al. (2024)."
+        "Veri kümesi 12'den fazla üretici sistemden örnek içerdiğinden, üretici bazlı "
+        "performans toplam metriklerin ötesinde bilgilendiricidir. Şekil 16, LightGBM'in "
+        "kaynak bazlı performansını sunmaktadır. Suno parçaları %93,0 duyarlılık (500'de "
+        "465) ile, Echoes %88,6 (1.128'de 999) ile kurtarılmaktadır. AImE alt kümesi "
+        "(n=204) %79,9'a düşmektedir. Deepfake seti ise tam olarak %50,0'da kalmakta; "
+        "yani bu parçaların yarısı tespit edilememektedir. İnsan tarafında, GTZAN "
+        "(%93,2) ve FMA (%88,9) güvenilir biçimde tanınırken SleepyJesse kapak seti "
+        "(n=854) %76,3'e düşmektedir. İki başarısızlık noktası -deepfake alt kümesi ve "
+        "SleepyJesse kapakları- aynı yöne işaret etmektedir: akustik profili kendi sınıf "
+        "etiketinin geri kalanından sistematik olarak farklı olan parçalar modeli "
+        "zorlamaktadır. Bu durum Li vd. [5] tarafından vurgulanan üretici-modeller arası "
+        "genelleme zorluğu ile tutarlıdır."
     ))
 
     figure(doc, "per_source_performance.png",
-           "Figure 16. Per-source LightGBM performance on the 5-fold cross-validation "
-           "predictions at θ* = 0.4316. AI sources (red bars) are evaluated by recall on the AI "
-           "class; human sources (green bars) by specificity. The 50.0% recall on the deepfake "
-           "subset and the 76.3% specificity on SleepyJesse covers are the two clearest "
-           "weaknesses of the current detector.")
+           "Şekil 16. LightGBM'in 5-katlı çapraz doğrulama tahminleri üzerinde "
+           "θ* = 0,4316 ile kaynak bazlı performansı. Yapay zekâ kaynakları (kırmızı) "
+           "AI sınıfı duyarlılığı ile, insan kaynakları (yeşil) özgüllük ile "
+           "değerlendirilmiştir.",
+           "Per-source LightGBM performance on 5-fold CV predictions at θ* = 0.4316. "
+           "AI sources (red) evaluated by AI-class recall; human sources (green) by "
+           "specificity.")
 
     figure(doc, "per_class_metrics.png",
-           "Figure 17. Per-class precision, recall and F1 for LightGBM. The two classes are "
-           "treated symmetrically by the trained model, with a small bias toward higher recall "
-           "on the AI side.")
+           "Şekil 17. LightGBM için sınıf bazlı kesinlik, duyarlılık ve F1 değerleri.",
+           "Per-class precision, recall and F1 for LightGBM.")
 
-    # ╔════════════════════════════════════════════════════════════════════╗
-    # ║  5. DISCUSSION                                                       ║
-    # ╚════════════════════════════════════════════════════════════════════╝
-
-    subheading(doc, "3.8. Why Spectral Flatness Dominates")
+    subheading(doc, "3.8. Spektral Düzlüğün Baskınlığı Neden? "
+                    "(Why Spectral Flatness Dominates)")
     body(doc, (
-        "The dominance of spectral flatness in the feature-importance ranking is interpretable "
-        "and consistent with the broader audio-deepfake literature (Yi et al., 2023). Spectral "
-        "flatness measures the ratio between the geometric and arithmetic means of a signal's "
-        "power spectrum and therefore captures how tonal or noise-like the spectrum is. "
-        "Current AI generation systems tend to optimise perceptual quality metrics that favour "
-        "tonal richness, with the side effect of producing signals whose spectra are "
-        "systematically cleaner than those of human recordings. Human recordings, by contrast, "
-        "carry the broadband noise contributed by recording environments, microphone preamps "
-        "and instrumental performance. The difference is small per frame but consistent across "
-        "long stretches of audio, and gradient boosting captures it well."
+        "Spektral düzlüğün öznitelik önem sıralamasındaki baskınlığı, daha geniş ses "
+        "derin sahte literatürü ile tutarlı ve yorumlanabilir bir bulgudur [6]. Spektral "
+        "düzlük, bir sinyalin güç spektrumunun geometrik ve aritmetik ortalamaları "
+        "arasındaki oranı ölçmekte ve spektrumun ne kadar tonal veya gürültü-benzeri "
+        "olduğunu yakalamaktadır. Güncel yapay zekâ üretim sistemleri, algısal kalite "
+        "ölçütlerini -ki bu ölçütler tonal zenginliği desteklemektedir- optimize etme "
+        "eğilimindedir ve bunun yan etkisi olarak spektrumları insan kayıtlarınınkinden "
+        "sistematik olarak daha temiz olan sinyaller üretmektedir. İnsan kayıtları "
+        "buna karşın kayıt ortamlarının, mikrofon ön-yükselticilerinin ve enstrümantal "
+        "performansın katkıda bulunduğu geniş bantlı gürültüyü taşımaktadır."
     ))
 
-    subheading(doc, "3.9. Cross-Generator Generalisation")
+    subheading(doc, "3.9. Üretici Modeller Arası Genelleme "
+                    "(Cross-Generator Generalisation)")
     body(doc, (
-        "The dataset spans twelve or more AI generation systems, ranging from the autoregressive "
-        "transformers used by MusicGen and Suno to the latent diffusion models used by AudioLDM, "
-        "Stable Audio and Riffusion. The fact that AURIS reaches an AUC of 0.95 despite this "
-        "diversity suggests that the 47-feature representation captures generator-agnostic "
-        "artefacts rather than generator-specific fingerprints. This is a useful property for "
-        "real deployment: at inference time the system will encounter generators that did not "
-        "exist when it was trained, and detectors that rely on system-specific decoder traces — "
-        "such as the auto-encoder fingerprint detector of Afchar et al. (2025) — risk degrading "
-        "sharply on unseen pipelines. The trade-off is the headline accuracy. AURIS is "
-        "comfortably below the 99.8% reported by Afchar et al. on their controlled fingerprint "
-        "task; the 0.95 AUC is, however, achieved on a much harder multi-generator setting."
+        "Veri kümesi otoregresif modellerden (MusicGen [1]) difüzyon-tabanlı sistemlere "
+        "(AudioLDM [2]) ve ticari üreticilere (Suno, Udio) kadar on iki veya daha fazla "
+        "yapay zekâ üretim sistemini kapsamaktadır. Bu çeşitliliğin amacı, modeli tek bir "
+        "üretici ailenin parmak izlerine aşırı uydurmaktan kaçınmaktır. §3.7'de "
+        "raporlanan kaynak bazlı sonuçlar, bu yaklaşımın kısmen başarılı olduğunu "
+        "göstermektedir; Suno ve Echoes parçalarında %88-93 duyarlılık elde edilmekte "
+        "ancak deepfake alt kümesinde performans %50'ye düşmektedir. Bu sonuç, Li vd. "
+        "[5] tarafından alanın açık problemi olarak işaret edilen üretici-modeller arası "
+        "genelleme zorluğunu doğrulamaktadır."
     ))
 
-    subheading(doc, "3.10. Why the 1D-CNN Underperforms")
+    subheading(doc, "3.10. 1D-CNN Neden Düşük Performans Gösteriyor? "
+                    "(Why the 1D-CNN Underperforms)")
     body(doc, (
-        "The poor performance of the 1D-CNN (AUC 0.8442) is not an artefact of training. It is "
-        "an architectural mismatch. A one-dimensional convolution is designed to exploit local "
-        "correlations along a sequence, but the input to AURIS is a flat 47-dimensional feature "
-        "vector whose elements have no ordering and no local structure. Adjacent indices in the "
-        "vector correspond to unrelated quantities — a spectral statistic next to a tempo "
-        "statistic next to a vocal score — and a convolution that slides a kernel across this "
-        "list has no meaningful translation invariance to learn. The result is that 1D-CNN is "
-        "outperformed by even the basic Logistic Regression on accuracy, while the other three "
-        "DL architectures, which operate on the vector as a whole, behave normally."
+        "1D-CNN'nin diğer mimarilere kıyasla belirgin biçimde düşük performansı "
+        "(ROC-AUC = 0,8543) mimari bir uyumsuzluğun sonucudur. Tek boyutlu konvolüsyon, "
+        "bir dizi boyunca yerel korelasyonları sömürmek üzere tasarlanmıştır; ancak "
+        "AURIS'in girişi sıralanmamış 47 boyutlu düz bir öznitelik vektörüdür ve "
+        "vektörün bitişik indeksleri ilgisiz miktarlara karşılık gelmektedir -bir "
+        "spektral istatistik yanında bir tempo istatistiği, yanında bir vokal skor-. "
+        "Bu liste boyunca bir çekirdek kaydıran konvolüsyonun öğreneceği anlamlı bir "
+        "öteleme değişmezliği bulunmamaktadır. Sonuç olarak 1D-CNN, vektörü bir bütün "
+        "olarak işleyen diğer üç DL mimarisinin gerisinde kalmakta ve doğrulukta "
+        "Lojistik Regresyon tarafından bile geçilmektedir."
     ))
 
-    subheading(doc, "3.11. Calibration and Operational Utility")
+    subheading(doc, "3.11. Kalibrasyon ve Operasyonel Yararlılık "
+                    "(Calibration and Operational Utility)")
     body(doc, (
-        "Operational deployments of detection systems often need to choose a decision point "
-        "based on a target precision or recall. A Brier score of 0.083 makes this possible "
-        "because the predicted probabilities correspond closely to the true posterior, which "
-        "means that a threshold of 0.7 actually means '70% confident' rather than 'the 70th "
-        "quantile of the score distribution'. The Youden-optimal cutoff at 0.4316 is the "
-        "principled default for balanced accuracy under the present class ratio, but users with "
-        "different operating costs can confidently move the threshold along the curve visualised "
-        "in Figure 15."
+        "Tespit sistemlerinin operasyonel konuşlandırmaları çoğunlukla bir hedef "
+        "kesinlik veya duyarlılık üzerinden bir karar noktası seçmeyi gerektirir. 0,083 "
+        "Brier skoru bunu mümkün kılmaktadır; çünkü tahmin edilen olasılıklar gerçek "
+        "arka olasılığa yakın karşılık gelmektedir. Bu, 0,7 eşiğinin gerçekten '%70 "
+        "güvenli' anlamına geldiğini, 'skor dağılımının 70. yüzdelik dilimi' anlamına "
+        "gelmediğini ifade eder. Youden-optimal kesim noktası 0,4316, mevcut sınıf oranı "
+        "altında dengeli doğruluk için ilkesel bir varsayılan değerdir; ancak farklı "
+        "operasyonel maliyetlere sahip kullanıcılar Şekil 15'te görselleştirilen eğri "
+        "boyunca eşiği güvenle hareket ettirebilir."
     ))
 
-    subheading(doc, "3.12. Overfit Diagnosis")
+    subheading(doc, "3.12. Aşırı Öğrenme Tanısı (Overfit Diagnosis)")
     body(doc, (
-        "A direct way to ask whether the ensemble memorises rather than generalises is to "
-        "compare the training-set accuracy of each model against its 5-fold cross-validation "
-        "accuracy. Figure 18 reports the result. Random Forest reaches 100.0% training "
-        "accuracy versus 86.1% under CV, a gap of 13.9 percentage points; LightGBM and SVM are "
-        "close behind at 12.0 and 13.4 points respectively. Even XGBoost and Gradient Boosting, "
-        "with their stronger built-in regularisation, retain an 8–9 point gap. The only model "
-        "in the ensemble whose training and CV accuracies essentially agree is Logistic "
-        "Regression, with a 0.6 point gap. The pattern is informative: the tree ensembles are "
-        "carrying real overfitting that 5-fold CV catches but a single train/test split would "
-        "not, and the final CV accuracy of 88.0% (LightGBM) should be read as a meaningful "
-        "ceiling rather than as a comfortable margin. The implication for deployment is that "
-        "the system is sensitive to distribution shift, which is consistent with the per-source "
-        "result of 50.0% recall on the deepfake subset reported in §4.7."
+        "Topluluğun ezberleyip ezberlemediğini doğrudan sorgulamanın bir yolu, her "
+        "modelin eğitim doğruluğunu 5-katlı çapraz doğrulama doğruluğu ile karşılaştırmaktır. "
+        "Şekil 18, sonucu raporlamaktadır. Rastgele Orman %100,0 eğitim doğruluğuna karşı "
+        "CV altında %86,1'e ulaşmakta; bu 13,9 puanlık bir fark anlamına gelmektedir. "
+        "LightGBM ve SVM sırasıyla 12,0 ve 13,4 puanlık farklarla yakın takipte. XGBoost "
+        "ve Gradyan Artırma bile -daha güçlü yerleşik düzenleştirmelerine rağmen- 8-9 "
+        "puanlık bir fark sergilemektedir. Eğitim ve CV doğruluklarının esasen örtüştüğü "
+        "tek topluluk üyesi 0,6 puanlık fark ile Lojistik Regresyondur. Bu örüntü "
+        "bilgilendiricidir: ağaç toplulukları, 5-katlı CV'nin yakaladığı ama tek bir "
+        "eğitim/test bölünmesinin yakalamayacağı gerçek bir aşırı öğrenme taşımaktadır. "
+        "Nihai %88,0 CV doğruluğu (LightGBM) anlamlı bir tavan olarak okunmalı, rahat "
+        "bir marj olarak değil."
     ))
+
     figure(doc, "train_val_gap.png",
-           "Figure 18. Train vs. 5-fold cross-validation accuracy for the seven feature-based "
-           "models. The gap quantifies how much of each model's nominal accuracy comes from "
-           "memorising the training set rather than generalising. Only Logistic Regression "
-           "shows no overfit.")
+           "Şekil 18. Yedi öznitelik tabanlı modelin eğitim ve 5-katlı çapraz doğrulama "
+           "doğrulukları. Fark, her modelin nominal doğruluğunun ne kadarının eğitim "
+           "setini ezberlemekten geldiğini ölçmektedir.",
+           "Train versus 5-fold cross-validation accuracy for the seven feature-based "
+           "models. The gap quantifies how much of each model's nominal accuracy comes "
+           "from memorising the training set.")
 
-    subheading(doc, "3.13. Feature Redundancy")
+    subheading(doc, "3.13. Öznitelik Fazlalığı (Feature Redundancy)")
     body(doc, (
-        "The 47 features are by design redundant — they cover overlapping aspects of spectrum, "
-        "rhythm and voice — but the redundancy is heavier than one might expect. Twenty "
-        "feature pairs have |Pearson r| above 0.85 on the full dataset. Four pairs exceed "
-        "0.97: has_vocals with vocal_harmonic_ratio (r = 0.994), pitch_std_cents with "
-        "vibrato_extent_cents (0.983), vocal_texture_score with vocal_harmonic_ratio (0.975), "
-        "and has_vocals with vocal_texture_score (0.974). Among non-vocal features the "
-        "spectral centroid, bandwidth and rolloff means form a tight cluster (pairwise r > "
-        "0.94) and the rolling MFCC delta and delta-delta variances are nearly inseparable "
-        "(r = 0.924). Figure 19 plots the full |r| matrix; the dark off-diagonal blocks in "
-        "the lower-right correspond to the vocal feature family, which is the densest "
-        "redundancy region. The implication is that the effective feature dimensionality is "
-        "substantially below 47, which is consistent with the ablation curve presented next."
+        "47 öznitelik tasarım gereği fazlalıklıdır -spektrum, ritim ve sesin örtüşen "
+        "yönlerini kapsamaktadır- ancak fazlalık beklenenden ağırdır. Yirmi öznitelik "
+        "çiftinin |Pearson r| değeri tüm veri kümesinde 0,85'in üzerindedir. Dört çift "
+        "0,97'yi aşmaktadır: has_vocals ile vocal_harmonic_ratio (r = 0,994), "
+        "pitch_std_cents ile vibrato_extent_cents (0,983), vocal_texture_score ile "
+        "vocal_harmonic_ratio (0,975) ve has_vocals ile vocal_texture_score (0,974). "
+        "Vokal olmayan öznitelikler arasında spektral merkez, bant genişliği ve azalma "
+        "ortalamaları sıkı bir küme oluşturmaktadır (ikili r > 0,94). Şekil 19, tüm "
+        "|r| matrisini çizmekte; aşağı-sağda yer alan koyu çapraz-dışı bloklar vokal "
+        "öznitelik ailesine karşılık gelmektedir."
     ))
+
     figure(doc, "feature_correlation_heatmap.png",
-           "Figure 19. Absolute Pearson correlation between the 47 features across all 5,195 "
-           "tracks. Dark cells mark redundant pairs. The vocal feature family in the "
-           "lower-right corner is the most internally correlated block.",
+           "Şekil 19. 47 öznitelik arasında mutlak Pearson korelasyon ısı haritası "
+           "(tüm 5.195 parça üzerinden). Koyu hücreler fazlalıklı çiftleri "
+           "işaretlemektedir.",
+           "Absolute Pearson correlation heatmap between the 47 features across all "
+           "5,195 tracks. Dark cells mark redundant pairs.",
            width_cm=14.0)
 
-    subheading(doc, "3.14. How Many Features Are Actually Needed?")
+    subheading(doc, "3.14. Kaç Öznitelik Gerçekten Gereklidir? "
+                    "(How Many Features Are Actually Needed?)")
     body(doc, (
-        "Figure 20 reports a feature ablation experiment. Features are ranked by LightGBM "
-        "importance and the top-N for N ∈ {1, 3, 5, 10, 15, 20, 30, 47} are passed back through "
-        "the same 5-fold cross-validation pipeline. The curve is steep up to N = 10 — accuracy "
-        "rises from 59.8% (N = 1) through 78.1% (N = 5) to 84.7% (N = 10) — and then plateaus. "
-        "By N = 20 the accuracy is 88.0%, by N = 30 it is 88.7%, and using all 47 features "
-        "gives 88.5%, essentially the same as N = 30 within one standard deviation. In other "
-        "words, the bottom seventeen features as ranked by importance contribute no measurable "
-        "additional accuracy. They do, however, increase the parameter count of the trained "
-        "model and the feature-extraction time at inference. A practical deployment could drop "
-        "the long tail without sacrificing detection quality; the present paper retains the "
-        "full 47-feature vector for reproducibility but flags this redundancy as a clear "
-        "optimisation target."
+        "Şekil 20, bir öznitelik çıkarma deneyi raporlamaktadır. Öznitelikler LightGBM "
+        "önemine göre sıralanmakta ve ilk-N için N ∈ {1, 3, 5, 10, 15, 20, 30, 47} "
+        "değerleri aynı 5-katlı çapraz doğrulama hattından geçirilmektedir. Eğri "
+        "N = 10'a kadar diktir -doğruluk %59,8'den (N=1), %78,1 (N=5), %84,7 (N=10) "
+        "değerlerine yükselmektedir- ve sonrasında plato yapar. N = 20'de doğruluk "
+        "%88,0, N = 30'da %88,7'ye ulaşmakta ve tüm 47 özniteliğin kullanılması %88,5 "
+        "vermektedir -bu N = 30 ile bir standart sapma içinde eşdeğerdir. Başka bir "
+        "deyişle, önem sırasına göre sondaki on yedi öznitelik ölçülebilir ek doğruluk "
+        "sağlamamaktadır. Pratik bir konuşlandırma, kalite kaybı olmadan bu uzun "
+        "kuyruğu kesebilir."
     ))
+
     figure(doc, "feature_ablation_curve.png",
-           "Figure 20. 5-fold CV accuracy of LightGBM as a function of the number of features "
-           "retained, ranked by importance. The plateau begins at roughly 20 features; the "
-           "last 17 features do not change measured accuracy.")
+           "Şekil 20. LightGBM'in 5-katlı CV doğruluğunun, öneme göre sıralanmış "
+           "korunan öznitelik sayısının bir fonksiyonu olarak değişimi. Plato yaklaşık "
+           "20 öznitelikte başlamakta; son 17 öznitelik ölçülen doğruluğu "
+           "değiştirmemektedir.",
+           "5-fold CV accuracy of LightGBM as a function of the number of features "
+           "retained, ranked by importance. The plateau begins at roughly 20 features; "
+           "the last 17 features do not change measured accuracy.")
 
-    subheading(doc, "3.15. Limitations")
+    subheading(doc, "3.15. Sınırlamalar (Limitations)")
     body(doc, (
-        "Four limitations are worth recording explicitly. First, features are extracted from the "
-        "full clip, which is typically between fifteen and thirty seconds long; shorter clips "
-        "(< 5 seconds) yield less reliable estimates for tempo and vibrato statistics in "
-        "particular, and so the system is not yet evaluated in the live-microphone short-clip "
-        "regime. Second, the fine-tuned wav2vec2 model is validated qualitatively on held-out "
-        "samples but does not yet have a formal 5-fold cross-validation report, which limits "
-        "direct head-to-head comparison with the eleven feature-based classifiers. Third, "
-        "although the dataset covers twenty genres, certain genres (ambient and lo-fi in "
-        "particular) are over-represented in the AI portion; a genre-stratified evaluation would "
-        "provide a more rigorous account of generalisation. Fourth, adversarial robustness has "
-        "not been tested. Post-processing such as MP3 compression, pitch shifting, or "
-        "time-stretching is known to degrade detection performance for systems that rely on "
-        "vocoder fingerprints (Afchar et al., 2025); the same is likely to affect AURIS to some "
-        "degree, though less catastrophically since its features are not built around vocoder "
-        "traces."
+        "Açıkça kaydedilmesi gereken dört sınırlama bulunmaktadır. Birincisi, "
+        "öznitelikler 15-30 saniye uzunluğundaki tam klipten çıkarılmaktadır; daha kısa "
+        "klipler (< 5 saniye) özellikle tempo ve vibrato istatistikleri için daha az "
+        "güvenilir tahminler vermektedir, dolayısıyla sistem henüz canlı-mikrofon kısa-"
+        "klip rejiminde değerlendirilmemiştir. İkincisi, veri kümesi yirmi türü "
+        "kapsamakla birlikte, bazı türler (özellikle ambient ve lo-fi) yapay zekâ "
+        "kısmında aşırı temsil edilmektedir; tür-stratifiye değerlendirme genellemeyi "
+        "daha titiz olarak hesaba katacaktır. Üçüncüsü, düşmanca sağlamlık açıkça test "
+        "edilmemiştir; MP3 sıkıştırma, perde kaydırma veya zaman gerdirme gibi sonradan "
+        "işlemlerin tespit performansını azalttığı, vokoder izlerine dayanan sistemler "
+        "için bilinmektedir (Afchar vd. [7]). AURIS, öznitelikleri vokoder izleri "
+        "etrafında kurulu olmadığından bu etkiye daha az ciddi biçimde uğrayacaktır "
+        "ama bağışıklık değildir. Dördüncüsü, §3.12'de raporlanan eğitim-CV farkları "
+        "modelin dağılım kayışına duyarlı olduğunu göstermektedir; bu durum SONICS [23] "
+        "ve FakeMusicCaps [24] gibi yeni kıyaslamalar üzerinde resmi bir tutulan "
+        "değerlendirme ile teyit edilmelidir."
     ))
 
-    # ╔════════════════════════════════════════════════════════════════════╗
-    # ║  6. CONCLUSION                                                       ║
-    # ╚════════════════════════════════════════════════════════════════════╝
-
-    heading(doc, "4. Conclusion")
+    # ══════════════════════════════════════════════════════════════════
+    # 4. SONUÇ
+    # ══════════════════════════════════════════════════════════════════
+    heading(doc, "4. Sonuç (Conclusion)")
     body(doc, (
-        "This paper has presented AURIS, an end-to-end system for detecting AI-generated music "
-        "that combines a 47-dimensional handcrafted acoustic feature vector with an ensemble of "
-        "eleven classification models trained on 5,195 samples drawn from twelve or more AI "
-        "generation systems. The principal empirical findings are as follows. LightGBM achieves "
-        "the highest mean ROC-AUC at 0.9548, narrowly ahead of Deep MLP at 0.9542, and also the "
-        "lowest fold-to-fold variance (±0.0023). Spectral flatness is the single most informative "
-        "feature for the AI-versus-human distinction, a pattern that is interpretable in terms of "
-        "the difference between synthetic and recorded spectra. Per-fold Youden's J threshold "
-        "optimisation systematically outperforms the default 0.5 cutoff under the present 1:1.5 "
-        "class imbalance, and the resulting model is well calibrated, with a Brier score of 0.083 "
-        "on the aggregated validation predictions. Two limitations are made explicit by the "
-        "diagnostic analysis: every tree ensemble shows an 8-14 percentage-point gap between "
-        "training and cross-validation accuracy, and the feature ablation shows that the bottom "
-        "seventeen of the 47 features add no measurable accuracy."
+        "Bu çalışmada, yapay zekâ tarafından üretilen müziği insan kompozisyonundan "
+        "ayırt etmek için AURIS adlı uçtan-uca bir sistem sunulmuştur. Sistem, 47 "
+        "boyutlu elle tasarlanmış bir akustik öznitelik vektörünü, on iki veya daha "
+        "fazla yapay zekâ üretim sisteminden derlenen 5.195 örnek üzerinde eğitilen on "
+        "bir sınıflandırma modelinden oluşan bir topluluk ile eşleştirmektedir. Temel "
+        "ampirik bulgular şunlardır: LightGBM, %95,48 ortalama ROC-AUC değeri ile en "
+        "yüksek performansı elde etmekte, Deep MLP %95,42 ile çok yakın bir ikinci sıra "
+        "almakta ve LightGBM aynı zamanda havuzdaki en düşük katlar-arası varyansı "
+        "(±0,0023) göstermektedir. Spektral düzlük, yapay zekâ-insan ayrımı için en "
+        "bilgilendirici tek öznitelik olarak ortaya çıkmakta ve bu örüntü sentetik ve "
+        "kaydedilmiş spektrumlar arasındaki fark açısından yorumlanabilir niteliktedir. "
+        "Youden J ölçütü ile her kat için eşik optimizasyonu, mevcut 1:1,5 sınıf "
+        "dengesizliği altında varsayılan 0,5 kesim noktasını sistematik biçimde "
+        "geçmektedir. Tanı analizi iki sınırlamayı açıkça ortaya koymaktadır: tüm ağaç "
+        "toplulukları eğitim ile çapraz doğrulama doğruluğu arasında 8-14 puanlık bir "
+        "fark sergilemekte ve öznitelik çıkarma, 47 özniteliğin sondaki yaklaşık on "
+        "yedisinin ölçülebilir ek doğruluk sağlamadığını göstermektedir."
     ))
     body(doc, (
-        "Future work will pursue four directions. First, a formal cross-generator held-out "
-        "evaluation will be conducted on emerging public benchmarks such as SONICS and "
-        "FakeMusicCaps. Second, the fine-tuned wav2vec2 model will be integrated into the "
-        "5-fold cross-validation protocol for a direct comparison with the feature-based "
-        "classifiers. Third, adversarial robustness will be evaluated explicitly under MP3 "
-        "compression, pitch shifting and time-stretching. Fourth, the dataset will be expanded "
-        "toward ten thousand samples and updated to include emerging generation systems as they "
-        "appear, with particular attention to the cross-generator generalisation challenge "
-        "identified by Li et al. (2024)."
+        "Gelecek çalışmalar dört yön takip edecektir. Birincisi, SONICS [23] ve "
+        "FakeMusicCaps [24] gibi gelişmekte olan halka açık kıyaslamalar üzerinde "
+        "resmi bir üretici-modeller arası tutulan değerlendirme gerçekleştirilecektir. "
+        "İkincisi, ince ayar yapılmış wav2vec2 [13] modeli, öznitelik tabanlı "
+        "sınıflandırıcılarla doğrudan karşılaştırma için 5-katlı çapraz doğrulama "
+        "protokolüne entegre edilecektir. Üçüncüsü, düşmanca sağlamlık MP3 sıkıştırma, "
+        "perde kaydırma ve zaman gerdirme altında açıkça değerlendirilecektir. "
+        "Dördüncüsü, veri kümesi on bin örneğe doğru genişletilecek ve ortaya çıkan "
+        "yapay zekâ üretim sistemleri eklenecektir; özellikle Li vd. [5] tarafından "
+        "tanımlanan üretici-modeller arası genelleme zorluğuna odaklanılacaktır."
     ))
 
-    # ╔════════════════════════════════════════════════════════════════════╗
-    # ║  AI DISCLOSURE, AUTHOR CONTRIBUTIONS, ETC.                           ║
-    # ╚════════════════════════════════════════════════════════════════════╝
-
-    heading(doc, "AI Disclosure")
+    heading(doc, "Yapay Zekâ Beyanı (AI Disclosure)")
     body(doc, (
-        "Generative AI was used as an assistive tool for language editing and for parts of the "
-        "figure and analysis code. All data, trained models and experimental results are the "
-        "author's own, and every reported value was verified against the underlying data. The "
-        "author takes full responsibility for the integrity and accuracy of all content."
+        "Üretken yapay zekâ, bu çalışmanın hazırlanması sırasında dil düzenlemesi ve "
+        "şekil/analiz kodunun bir kısmı için yardımcı bir araç olarak kullanılmıştır. "
+        "Tüm veriler, eğitilmiş modeller ve deneysel sonuçlar yazara aittir ve raporlanan "
+        "her sayısal değer dayanak alınan veriler ile doğrulanmıştır. Yazar, tüm içeriğin "
+        "bütünlüğü ve doğruluğunun sorumluluğunu üstlenmektedir."
     ))
 
-    heading(doc, "Author Contributions")
+    heading(doc, "Yazar Katkıları (Author Contributions)")
     body(doc, (
-        "Hasan Arthur Altuntaş: conceptualisation, methodology, software, data curation, "
-        "formal analysis, investigation, writing — original draft, writing — review and editing, "
-        "visualisation."
+        "Hasan Arthur Altuntaş: Kavramsallaştırma, metodoloji, yazılım, veri "
+        "küratörlüğü, biçimsel analiz, araştırma, yazma — taslak hazırlama, yazma — "
+        "inceleme ve düzenleme, görselleştirme."
     ))
 
-    heading(doc, "Acknowledgement")
-    body(doc, "This research received no external funding.")
+    heading(doc, "Teşekkür (Acknowledgement)")
+    body(doc, "Bu araştırma herhangi bir dış finansman almamıştır.")
 
-    heading(doc, "Conflict of Interest")
-    body(doc, "The author declares no conflict of interest.")
+    heading(doc, "Çıkar Çatışması (Conflict of Interest)")
+    body(doc, "Yazar herhangi bir çıkar çatışması beyan etmemektedir.")
 
-    # ╔════════════════════════════════════════════════════════════════════╗
-    # ║  REFERENCES                                                          ║
-    # ╚════════════════════════════════════════════════════════════════════╝
-
-    ref_heading = heading(doc, "References")
-    _page_break_before(ref_heading)
+    # ══════════════════════════════════════════════════════════════════
+    # KAYNAKLAR (IEEE numerik format)
+    # ══════════════════════════════════════════════════════════════════
+    refs_heading = heading(doc, "Kaynaklar (References)")
+    _page_break_before(refs_heading)
 
     refs = [
-        "Afchar, D., Meseguer Brocal, G., & Hennequin, R. (2025). AI-generated music detection "
-        "and its challenges. In Proceedings of IEEE ICASSP 2025. IEEE. "
-        "https://doi.org/10.48550/arXiv.2501.10111",
+        "Copet J., Kreuk F., Gat I., Remez T., Kant D., Synnaeve G., Adi Y., Défossez A., "
+        "Simple and Controllable Music Generation, Advances in Neural Information "
+        "Processing Systems, 36, 2023. DOI: 10.48550/arXiv.2306.05284.",
 
-        "Baevski, A., Zhou, Y., Mohamed, A., & Auli, M. (2020). wav2vec 2.0: A framework for "
-        "self-supervised learning of speech representations. Advances in Neural Information "
-        "Processing Systems, 33, 12449–12460. https://doi.org/10.5555/3495724.3496768",
+        "Liu H., Chen Z., Yuan Y., Mei X., Liu X., Mandic D., Wang W., Plumbley M.D., "
+        "AudioLDM: Text-to-Audio Generation with Latent Diffusion Models, Proceedings "
+        "of the International Conference on Machine Learning (ICML 2023), 21450-21474, "
+        "Honolulu, Hawaii, A.B.D., 23-29 Temmuz, 2023. DOI: 10.48550/arXiv.2301.12503.",
 
-        "Copet, J., Kreuk, F., Gat, I., Remez, T., Kant, D., Synnaeve, G., Adi, Y., & Défossez, "
-        "A. (2023). Simple and controllable music generation. Advances in Neural Information "
-        "Processing Systems, 36. https://doi.org/10.48550/arXiv.2306.05284",
+        "Yi J., Fu R., Tao J., Nie S., Ma H., Wang C., Wang T., Tian Z., Bai Y., Fan C., "
+        "ADD 2022: The First Audio Deep Synthesis Detection Challenge, Proceedings of "
+        "the IEEE International Conference on Acoustics, Speech and Signal Processing "
+        "(ICASSP 2022), 9216-9220, Singapur, 22-27 Mayıs, 2022. DOI: "
+        "10.1109/ICASSP43922.2022.9746939.",
 
-        "Elizalde, B., Deshmukh, S., Al Ismail, M., & Wang, H. (2023). CLAP: Learning audio "
-        "concepts from natural language supervision. In Proceedings of ICASSP 2023 (pp. 1–5). "
-        "IEEE. https://doi.org/10.1109/ICASSP49357.2023.10095889",
+        "Frank J., Schönherr L., WaveFake: A Data Set to Facilitate Audio Deepfake "
+        "Detection, Advances in Neural Information Processing Systems 2021 Datasets "
+        "and Benchmarks Track, 2021. DOI: 10.5281/zenodo.5642694.",
 
-        "Frank, J., & Schönherr, L. (2021). WaveFake: A data set to facilitate audio deepfake "
-        "detection. NeurIPS 2021 Datasets and Benchmarks Track. "
-        "https://doi.org/10.5281/zenodo.5642694",
+        "Li Y., Milling M., Specia L., Schuller B.W., From Audio Deepfake Detection to "
+        "AI-Generated Music Detection: A Pathway and Overview, arXiv preprint "
+        "arXiv:2412.00571, 2024. DOI: 10.48550/arXiv.2412.00571.",
 
-        "Gan, R., Huang, T., Shao, J., & Wang, F. (2024). Music genre classification based on "
-        "VMD-IWOA-XGBoost. Mathematics, 12(10), 1549. https://doi.org/10.3390/math12101549",
+        "Yi J., Wang C., Tao J., Zhang X., Zhang C.Y., Zhao Y., Audio Deepfake Detection: "
+        "A Survey, arXiv preprint arXiv:2308.14970, 2023. DOI: 10.48550/arXiv.2308.14970.",
 
-        "Gourisaria, M. K., Agrawal, R., & Sahni, M. (2024). Comparative analysis of audio "
-        "classification with MFCC and STFT features using machine learning techniques. "
-        "Discover Internet of Things, 4, Article 1. "
-        "https://doi.org/10.1007/s43926-023-00049-y",
+        "Afchar D., Meseguer Brocal G., Hennequin R., AI-Generated Music Detection and "
+        "Its Challenges, Proceedings of the IEEE International Conference on Acoustics, "
+        "Speech and Signal Processing (ICASSP 2025), Hyderabad, Hindistan, 6-11 Nisan, "
+        "2025. DOI: 10.48550/arXiv.2501.10111.",
 
-        "Kim, Y., & Go, S. (2025). Segment Transformer: AI-generated music detection via music "
-        "structural analysis. arXiv preprint arXiv:2509.08283. "
-        "https://doi.org/10.48550/arXiv.2509.08283",
+        "Kim Y., Go S., Segment Transformer: AI-Generated Music Detection via Music "
+        "Structural Analysis, arXiv preprint arXiv:2509.08283, 2025. DOI: "
+        "10.48550/arXiv.2509.08283.",
 
-        "Kostrzewa, D., Mazur, W., & Brzeski, R. (2022). Wide ensembles of neural networks in "
-        "music genre classification. In Computational Science — ICCS 2022, Lecture Notes in "
-        "Computer Science (Vol. 13351, pp. 91–102). Springer. "
-        "https://doi.org/10.1007/978-3-031-08754-7_9",
+        "Chen T., Guestrin C., XGBoost: A Scalable Tree Boosting System, Proceedings of "
+        "the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data "
+        "Mining (KDD '16), 785-794, San Francisco, CA, A.B.D., 13-17 Ağustos, 2016. "
+        "DOI: 10.1145/2939672.2939785.",
 
-        "Li, Y., Milling, M., Specia, L., & Schuller, B. W. (2024). From audio deepfake detection "
-        "to AI-generated music detection: A pathway and overview. arXiv preprint "
-        "arXiv:2412.00571. https://doi.org/10.48550/arXiv.2412.00571",
+        "Ke G., Meng Q., Finley T., Wang T., Chen W., Ma W., Ye Q., Liu T.Y., LightGBM: "
+        "A Highly Efficient Gradient Boosting Decision Tree, Advances in Neural "
+        "Information Processing Systems 30 (NIPS 2017), 3149-3157, Long Beach, "
+        "California, A.B.D., 4-9 Aralık, 2017.",
 
-        "Liu, H., Chen, Z., Yuan, Y., Mei, X., Liu, X., Mandic, D., Wang, W., & Plumbley, M. D. "
-        "(2023). AudioLDM: Text-to-audio generation with latent diffusion models. In "
-        "Proceedings of ICML 2023. https://doi.org/10.48550/arXiv.2301.12503",
+        "Lundberg S.M., Lee S.I., A Unified Approach to Interpreting Model Predictions, "
+        "Advances in Neural Information Processing Systems 30 (NIPS 2017), 4768-4777, "
+        "Long Beach, California, A.B.D., 4-9 Aralık, 2017. DOI: "
+        "10.48550/arXiv.1705.07874.",
 
-        "Liu, Y., Yin, Y., Zhu, Q., & Cui, W. (2022). Musical instrument recognition by XGBoost "
-        "combining feature fusion. arXiv preprint arXiv:2206.00901. "
-        "https://doi.org/10.48550/arXiv.2206.00901",
+        "Martín-Doñas J.M., Álvarez A., The Vicomtech Audio Deepfake Detection System "
+        "Based on Wav2vec2 for the 2022 ADD Challenge, Proceedings of the IEEE "
+        "International Conference on Acoustics, Speech and Signal Processing (ICASSP "
+        "2022), 9266-9270, Singapur, 22-27 Mayıs, 2022. DOI: "
+        "10.1109/ICASSP43922.2022.9747768.",
 
-        "Martín-Doñas, J. M., & Álvarez, A. (2022). The Vicomtech audio deepfake detection "
-        "system based on Wav2vec2 for the 2022 ADD challenge. In Proceedings of ICASSP 2022 "
-        "(pp. 9266–9270). IEEE. https://doi.org/10.1109/ICASSP43922.2022.9747768",
+        "Baevski A., Zhou Y., Mohamed A., Auli M., wav2vec 2.0: A Framework for "
+        "Self-Supervised Learning of Speech Representations, Advances in Neural "
+        "Information Processing Systems, 33, 12449-12460, 2020. DOI: "
+        "10.5555/3495724.3496768.",
 
-        "Wu, Y., Chen, K., Zhang, T., Hui, Y., Berg-Kirkpatrick, T., & Dubnov, S. (2023). "
-        "Large-scale contrastive language-audio pretraining with feature fusion and "
-        "keyword-to-caption augmentation. In Proceedings of ICASSP 2023 (pp. 1–5). IEEE. "
-        "https://doi.org/10.1109/ICASSP49357.2023.10095969",
+        "Elizalde B., Deshmukh S., Al Ismail M., Wang H., CLAP: Learning Audio Concepts "
+        "from Natural Language Supervision, Proceedings of the IEEE International "
+        "Conference on Acoustics, Speech and Signal Processing (ICASSP 2023), 1-5, "
+        "Rhodes, Yunanistan, 4-10 Haziran, 2023. DOI: 10.1109/ICASSP49357.2023.10095889.",
 
-        "Yi, J., Fu, R., Tao, J., Nie, S., Ma, H., Wang, C., Wang, T., Tian, Z., Bai, Y., & "
-        "Fan, C. (2022). ADD 2022: The first audio deep synthesis detection challenge. In "
-        "Proceedings of ICASSP 2022 (pp. 9216–9220). IEEE. "
-        "https://doi.org/10.1109/ICASSP43922.2022.9746939",
+        "Wu Y., Chen K., Zhang T., Hui Y., Berg-Kirkpatrick T., Dubnov S., Large-Scale "
+        "Contrastive Language-Audio Pretraining with Feature Fusion and "
+        "Keyword-to-Caption Augmentation, Proceedings of the IEEE International "
+        "Conference on Acoustics, Speech and Signal Processing (ICASSP 2023), 1-5, "
+        "Rhodes, Yunanistan, 4-10 Haziran, 2023. DOI: 10.1109/ICASSP49357.2023.10095969.",
 
-        "Yi, J., Wang, C., Tao, J., Zhang, X., Zhang, C. Y., & Zhao, Y. (2023). Audio deepfake "
-        "detection: A survey. arXiv preprint arXiv:2308.14970. "
-        "https://doi.org/10.48550/arXiv.2308.14970",
+        "Liu Y., Yin Y., Zhu Q., Cui W., Musical Instrument Recognition by XGBoost "
+        "Combining Feature Fusion, arXiv preprint arXiv:2206.00901, 2022. DOI: "
+        "10.48550/arXiv.2206.00901.",
+
+        "Gan R., Huang T., Shao J., Wang F., Music Genre Classification Based on "
+        "VMD-IWOA-XGBoost, Mathematics, 12 (10), 1549, 2024. DOI: 10.3390/math12101549.",
+
+        "Hızlısoy S., Tüfekci Z., Derin Öğrenme İle Türkçe Müziklerden Müzik Türü "
+        "Sınıflandırması, Avrupa Bilim ve Teknoloji Dergisi, 24, 176-183, 2021. DOI: "
+        "10.31590/ejosat.898588.",
+
+        "Özbalcı M.C., Şahin H., Bilgin T.T., Classification of Music Genres of GTZAN "
+        "Dataset with Machine Learning Methods, Mühendislik Bilimleri ve Araştırmaları "
+        "Dergisi, 6 (1), 2024.",
+
+        "Turan A.K., Polat H., Yarı Denetimli Makine Öğrenmesi Yöntemini Kullanarak "
+        "Müzik Türlerinin Tespiti, Gazi Üniversitesi Fen Bilimleri Dergisi Part C: "
+        "Tasarım ve Teknoloji, 12 (1), 92-107, 2024. DOI: 10.29109/gujsc.1352477.",
+
+        "Kostrzewa D., Mazur W., Brzeski R., Wide Ensembles of Neural Networks in Music "
+        "Genre Classification, Computational Science -- ICCS 2022, Lecture Notes in "
+        "Computer Science, vol. 13351, 91-102, Springer, 2022. DOI: "
+        "10.1007/978-3-031-08754-7_9.",
+
+        "Gourisaria M.K., Agrawal R., Sahni M., Comparative Analysis of Audio "
+        "Classification with MFCC and STFT Features Using Machine Learning Techniques, "
+        "Discover Internet of Things, 4 (1), 1, 2024. DOI: 10.1007/s43926-023-00049-y.",
+
+        "Rahman M.A., Hakim Z.I.A., Sarker N.H., Paul B., Fattah S.A., SONICS: "
+        "Synthetic Or Not -- Identifying Counterfeit Songs, Proceedings of the "
+        "International Conference on Learning Representations (ICLR 2025), Singapur, "
+        "24-28 Nisan, 2025. DOI: 10.48550/arXiv.2408.14080.",
+
+        "Comanducci L., Bestagini P., Tubaro S., FakeMusicCaps: A Dataset for Detection "
+        "and Attribution of Synthetic Music Generated via Text-to-Music Models, arXiv "
+        "preprint arXiv:2409.10684, 2024. DOI: 10.48550/arXiv.2409.10684.",
+
+        "Pascu O., Oneata D., Cucu H., Müller N.M., Echoes: A Semantically-Aligned "
+        "Music Deepfake Detection Dataset, arXiv preprint arXiv:2603.23667, 2025. DOI: "
+        "10.48550/arXiv.2603.23667.",
+
+        "Sunday N., Detecting Musical Deepfakes, arXiv preprint arXiv:2505.09633, 2025. "
+        "DOI: 10.48550/arXiv.2505.09633.",
+
+        "Sroka T., Wężowicz T., Sidorczuk D., Modrzejewski M., Evaluating Fake Music "
+        "Detection Performance Under Audio Augmentations, arXiv preprint "
+        "arXiv:2507.10447, 2025. DOI: 10.48550/arXiv.2507.10447.",
+
+        "McFee B., Raffel C., Liang D., Ellis D.P.W., McVicar M., Battenberg E., Nieto O., "
+        "librosa: Audio and Music Signal Analysis in Python, Proceedings of the 14th "
+        "Python in Science Conference (SciPy 2015), 18-24, Austin, Texas, A.B.D., "
+        "6-12 Temmuz, 2015. DOI: 10.25080/Majora-7b98e3ed-003.",
+
+        "Pedregosa F., Varoquaux G., Gramfort A., Michel V., Thirion B., Grisel O., "
+        "Blondel M., Prettenhofer P., Weiss R., Dubourg V., Vanderplas J., Passos A., "
+        "Cournapeau D., Brucher M., Perrot M., Duchesnay E., Scikit-learn: Machine "
+        "Learning in Python, Journal of Machine Learning Research, 12, 2825-2830, 2011.",
+
+        "Kingma D.P., Ba J., Adam: A Method for Stochastic Optimization, Proceedings of "
+        "the 3rd International Conference on Learning Representations (ICLR 2015), 1-15, "
+        "San Diego, California, A.B.D., 7-9 Mayıs, 2015. DOI: 10.48550/arXiv.1412.6980.",
     ]
 
-    for ref in refs:
-        reference_entry(doc, ref)
+    for i, ref in enumerate(refs, start=1):
+        reference_entry(doc, i, ref)
 
+    # Save
     try:
         doc.save(str(OUT))
         target = OUT
     except PermissionError:
-        target = OUT.parent / "AURIS_paper_GUJSA_v2.docx"
+        target = OUT.parent / "AURIS_paper_TR_v2.docx"
         doc.save(str(target))
-        print(f"NOTE: {OUT.name} was locked (probably open in Word). Saved as {target.name} instead.")
+        print(f"NOTE: {OUT.name} locked, saved as {target.name} instead.")
     print(f"Saved: {target} ({target.stat().st_size // 1024} KB)")
-    print(f"Figures embedded from: {FIGURES}")
 
 
 if __name__ == "__main__":
