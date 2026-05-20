@@ -1,6 +1,6 @@
 TY  - CONF
 AU  - Copet, Jade
-AU  - othersfossez, Alexandre
+AU  - others
 TI  - Simple and Controllable Music Generation
 BT  - Advances in Neural Information Processing Systems
 PY  - 2023
@@ -155,11 +155,7 @@ ER  -
 
 TY  - CONF
 AU  - Wu, Yusong
-AU  - Chen, Ke
-AU  - Zhang, Tianyu
-AU  - Hui, Yuchen
-AU  - Berg-Kirkpatrick, Taylor
-AU  - Dubnov, Shlomo
+AU  - others
 TI  - Large-Scale Contrastive Language-Audio Pretraining with Feature Fusion and Keyword-to-Caption Augmentation
 BT  - Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2023)
 PY  - 2023
@@ -322,21 +318,7 @@ ER  -
 
 TY  - JOUR
 AU  - Pedregosa, Fabian
-AU  - Varoquaux, Gael
-AU  - Gramfort, Alexandre
-AU  - Michel, Vincent
-AU  - Thirion, Bertrand
-AU  - Grisel, Olivier
-AU  - Blondel, Mathieu
-AU  - Prettenhofer, Peter
-AU  - Weiss, Ron
-AU  - Dubourg, Vincent
-AU  - Vanderplas, Jake
-AU  - Passos, Alexandre
-AU  - Cournapeau, David
-AU  - Brucher, Matthieu
-AU  - Perrot, Matthieu
-AU  - Duchesnay, Édouard
+AU  - others
 TI  - Scikit-learn: Machine Learning in Python
 JO  - Journal of Machine Learning Research
 PY  - 2011
