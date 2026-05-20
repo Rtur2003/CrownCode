@@ -114,7 +114,7 @@ def body(doc, text: str, *, size=9, justify=True, indent_cm=0.5):
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY if justify else WD_ALIGN_PARAGRAPH.LEFT
     pf = p.paragraph_format
-    pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
+    pf.line_spacing = 1.5
     pf.space_before = Pt(0)
     pf.space_after = Pt(6)
     if indent_cm:
@@ -131,7 +131,7 @@ def heading(doc, text: str, *, all_caps=False):
     pf = p.paragraph_format
     pf.space_before = Pt(12)
     pf.space_after = Pt(4)
-    pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
+    pf.line_spacing = 1.5
     r = p.add_run(text)
     _set_font(r, size=9, bold=True)
     _set_keep_with_next(p)
@@ -145,7 +145,7 @@ def subheading(doc, text: str):
     pf = p.paragraph_format
     pf.space_before = Pt(8)
     pf.space_after = Pt(2)
-    pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
+    pf.line_spacing = 1.5
     r = p.add_run(text)
     _set_font(r, size=9, bold=True, italic=True)
     _set_keep_with_next(p)
