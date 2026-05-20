@@ -1201,68 +1201,53 @@ def build():
     ))
 
     # ══════════════════════════════════════════════════════════════════
-    # 4. SONUÇ
+    # SONUÇLAR (Conclusions) — Talha hoca yapısı: numarasız, kapanış
     # ══════════════════════════════════════════════════════════════════
-    heading(doc, "4. Sonuç (Conclusion)")
+    heading(doc, "Sonuçlar (Conclusions)")
     body(doc, (
-        "Bu çalışmada, yapay zekâ tarafından üretilen müziği insan kompozisyonundan "
-        "ayırt etmek için AURIS adlı uçtan-uca bir sistem sunulmuştur. Sistem, 47 "
-        "boyutlu elle tasarlanmış bir akustik öznitelik vektörünü, on iki veya daha "
-        "fazla yapay zekâ üretim sisteminden derlenen 5.195 örnek üzerinde eğitilen on "
-        "bir sınıflandırma modelinden oluşan bir topluluk ile eşleştirmektedir. Temel "
-        "ampirik bulgular şunlardır: LightGBM, %95,48 ortalama ROC-AUC değeri ile en "
-        "yüksek performansı elde etmekte, Deep MLP %95,42 ile çok yakın bir ikinci sıra "
-        "almakta ve LightGBM aynı zamanda havuzdaki en düşük katlar-arası varyansı "
-        "(±0,0023) göstermektedir. Spektral düzlük, yapay zekâ-insan ayrımı için en "
-        "bilgilendirici tek öznitelik olarak ortaya çıkmakta ve bu örüntü sentetik ve "
-        "kaydedilmiş spektrumlar arasındaki fark açısından yorumlanabilir niteliktedir. "
-        "Youden J ölçütü ile her kat için eşik optimizasyonu, mevcut 1:1,5 sınıf "
-        "dengesizliği altında varsayılan 0,5 kesim noktasını sistematik biçimde "
-        "geçmektedir. Tanı analizi iki sınırlamayı açıkça ortaya koymaktadır: tüm ağaç "
-        "toplulukları eğitim ile çapraz doğrulama doğruluğu arasında 8-14 puanlık bir "
-        "fark sergilemekte ve öznitelik çıkarma, 47 özniteliğin sondaki yaklaşık on "
-        "yedisinin ölçülebilir ek doğruluk sağlamadığını göstermektedir."
+        "Bu çalışmada, GenAI tarafından üretilen müziği insan tarafından bestelenmiş "
+        "kayıtlardan ayırt edebilmek için AURIS adlı uçtan-uca bir tespit sistemi "
+        "önerilmiştir. Önerilen sistem; 47 boyutlu elle tasarlanmış bir akustik "
+        "öznitelik vektörünü, on iki veya daha fazla GenAI üretim sisteminden derlenen "
+        "5.195 örnek üzerinde eğitilen on bir sınıflandırma modelinden oluşan bir "
+        "topluluk ile birleştirmektedir. Elde edilen temel ampirik bulgular şu şekilde "
+        "özetlenebilir: LightGBM modeli, %95,48 ortalama ROC-AUC değeri ile en yüksek "
+        "performansı elde etmiş; DMLP ise %95,42 ile çok yakın bir ikinci sırayı "
+        "almıştır. Ayrıca LightGBM, ±0,0023 standart sapma ile havuzdaki en düşük "
+        "katlar-arası varyansa sahip modeli oluşturmuştur. Spektral düzlük "
+        "özniteliği, GenAI ile insan müziği ayrımı için en bilgilendirici tek "
+        "öznitelik olarak öne çıkmakta; bu örüntü, sentetik ve kaydedilmiş "
+        "spektrumlar arasındaki fark üzerinden yorumlanabilir bir nitelik "
+        "taşımaktadır. Youden J ölçütü ile her kat için optimize edilen θ* = 0,4316 "
+        "karar eşiği, mevcut 1:1,5 sınıf dengesizliği altında varsayılan 0,5 kesim "
+        "noktasını sistematik biçimde geçmektedir. Tanılayıcı analiz ise iki önemli "
+        "sınırlamayı açık biçimde ortaya koymaktadır: (𝑖) tüm ağaç tabanlı modeller "
+        "eğitim ile çapraz doğrulama doğrulukları arasında 8-14 puanlık bir fark "
+        "sergilemekte ve (𝑖𝑖) 47 özniteliğin önem sırasına göre sondaki yaklaşık on "
+        "yedisi ölçülebilir bir ek doğruluk sağlamamaktadır."
     ))
     body(doc, (
-        "Gelecek çalışmalar dört yön takip edecektir. Birincisi, SONICS [23] ve "
-        "FakeMusicCaps [24] gibi gelişmekte olan halka açık kıyaslamalar üzerinde "
-        "resmi bir üretici-modeller arası tutulan değerlendirme gerçekleştirilecektir. "
-        "İkincisi, ince ayar yapılmış wav2vec2 [13] modeli, öznitelik tabanlı "
-        "sınıflandırıcılarla doğrudan karşılaştırma için 5-katlı çapraz doğrulama "
-        "protokolüne entegre edilecektir. Üçüncüsü, düşmanca sağlamlık MP3 sıkıştırma, "
-        "perde kaydırma ve zaman gerdirme altında açıkça değerlendirilecektir. "
-        "Dördüncüsü, veri kümesi on bin örneğe doğru genişletilecek ve ortaya çıkan "
-        "yapay zekâ üretim sistemleri eklenecektir; özellikle Li vd. [5] tarafından "
-        "tanımlanan üretici-modeller arası genelleme zorluğuna odaklanılacaktır."
+        "Bu araştırma, GenAI tarafından üretilen müziklerin tespiti alanında derin "
+        "öğrenme ve topluluk öğrenmesi tekniklerinin etkinliğini vurgulayarak, çok "
+        "üreticili müzik tespiti alanında daha fazla ilerleme için umut verici yollar "
+        "sunmaktadır. Gelecek çalışmalar kapsamında dört yön takip edilecektir. "
+        "Birincisi, SONICS [23] ve FakeMusicCaps [24] gibi gelişmekte olan halka açık "
+        "kıyaslamalar üzerinde resmi bir üretici-modeller arası tutulan değerlendirme "
+        "gerçekleştirilecektir. İkincisi, ince ayar yapılmış wav2vec2 [13] modeli, "
+        "öznitelik tabanlı sınıflandırıcılarla doğrudan karşılaştırma için 5-katlı "
+        "çapraz doğrulama protokolüne entegre edilecektir. Üçüncüsü, düşmanca "
+        "sağlamlık (adversarial robustness); MP3 sıkıştırma, perde kaydırma ve zaman "
+        "gerdirme gibi ses manipülasyonları altında açıkça değerlendirilecektir. "
+        "Dördüncüsü, kullanılan veri kümesi on bin örneğe doğru genişletilecek ve "
+        "ortaya çıkan yeni GenAI üretim sistemleri kapsama dahil edilecektir; "
+        "özellikle Li vd. [5] tarafından tanımlanan üretici-modeller arası genelleme "
+        "zorluğuna odaklanılması hedeflenmektedir."
     ))
-
-    heading(doc, "Yapay Zekâ Beyanı (AI Disclosure)")
-    body(doc, (
-        "Üretken yapay zekâ, bu çalışmanın hazırlanması sırasında dil düzenlemesi ve "
-        "şekil/analiz kodunun bir kısmı için yardımcı bir araç olarak kullanılmıştır. "
-        "Tüm veriler, eğitilmiş modeller ve deneysel sonuçlar yazara aittir ve raporlanan "
-        "her sayısal değer dayanak alınan veriler ile doğrulanmıştır. Yazar, tüm içeriğin "
-        "bütünlüğü ve doğruluğunun sorumluluğunu üstlenmektedir."
-    ))
-
-    heading(doc, "Yazar Katkıları (Author Contributions)")
-    body(doc, (
-        "Hasan Arthur Altuntaş: Kavramsallaştırma, metodoloji, yazılım, veri "
-        "küratörlüğü, biçimsel analiz, araştırma, yazma — taslak hazırlama, yazma — "
-        "inceleme ve düzenleme, görselleştirme."
-    ))
-
-    heading(doc, "Teşekkür (Acknowledgement)")
-    body(doc, "Bu araştırma herhangi bir dış finansman almamıştır.")
-
-    heading(doc, "Çıkar Çatışması (Conflict of Interest)")
-    body(doc, "Yazar herhangi bir çıkar çatışması beyan etmemektedir.")
 
     # ══════════════════════════════════════════════════════════════════
-    # KAYNAKLAR (IEEE numerik format)
+    # KAYNAKLAR (References) — IEEE numerik, doğal akış (page break yok)
     # ══════════════════════════════════════════════════════════════════
-    refs_heading = heading(doc, "Kaynaklar (References)")
-    _page_break_before(refs_heading)
+    heading(doc, "Kaynaklar (References)")
 
     refs = [
         "Copet J., Kreuk F., Gat I., Remez T., Kant D., Synnaeve G., Adi Y., Défossez A., "
