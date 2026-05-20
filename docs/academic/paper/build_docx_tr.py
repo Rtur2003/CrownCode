@@ -1052,152 +1052,133 @@ def build():
            "Şekil 17. LightGBM için sınıf bazlı kesinlik, duyarlılık ve F1 değerleri.",
            "Per-class precision, recall and F1 for LightGBM.")
 
-    subheading(doc, "3.8. Spektral Düzlüğün Baskınlığı Neden? "
-                    "(Why Spectral Flatness Dominates)")
+    subheading(doc, "3.8. Tartışma (Discussion)")
     body(doc, (
-        "Spektral düzlüğün öznitelik önem sıralamasındaki baskınlığı, daha geniş ses "
-        "derin sahte literatürü ile tutarlı ve yorumlanabilir bir bulgudur [6]. Spektral "
-        "düzlük, bir sinyalin güç spektrumunun geometrik ve aritmetik ortalamaları "
-        "arasındaki oranı ölçmekte ve spektrumun ne kadar tonal veya gürültü-benzeri "
-        "olduğunu yakalamaktadır. Güncel yapay zekâ üretim sistemleri, algısal kalite "
-        "ölçütlerini -ki bu ölçütler tonal zenginliği desteklemektedir- optimize etme "
-        "eğilimindedir ve bunun yan etkisi olarak spektrumları insan kayıtlarınınkinden "
-        "sistematik olarak daha temiz olan sinyaller üretmektedir. İnsan kayıtları "
-        "buna karşın kayıt ortamlarının, mikrofon ön-yükselticilerinin ve enstrümantal "
-        "performansın katkıda bulunduğu geniş bantlı gürültüyü taşımaktadır."
+        "Bu alt bölümde, elde edilen deneysel sonuçlar literatür ışığında ayrıntılı "
+        "biçimde tartışılmıştır. Spektral düzlük özniteliğinin öznitelik önem "
+        "sıralamasındaki baskın konumu, daha geniş ses derin sahte literatürüyle [6] "
+        "tutarlı ve yorumlanabilir bir bulgu niteliğindedir. Spektral düzlük, bir "
+        "sinyalin güç spektrumunun geometrik ve aritmetik ortalamaları arasındaki oranı "
+        "ölçerek spektrumun ne kadar tonal veya gürültü-benzeri olduğunu yakalamaktadır. "
+        "Güncel GenAI üretim sistemleri, algısal kalite ölçütlerini optimize etme "
+        "eğiliminde olup bunun yan etkisi olarak insan kayıtlarınınkinden sistematik "
+        "biçimde daha temiz spektrumlar üreten sinyaller ortaya çıkarmaktadır. İnsan "
+        "kayıtları ise kayıt ortamı, mikrofon ön-yükselticileri ve enstrümantal "
+        "performansın katkıda bulunduğu geniş bantlı gürültüyü taşımaktadır. Bu yapısal "
+        "fark, spektral düzlüğün ayırt edici güç olarak öne çıkmasının temel nedenini "
+        "oluşturmaktadır."
     ))
 
-    subheading(doc, "3.9. Üretici Modeller Arası Genelleme "
-                    "(Cross-Generator Generalisation)")
     body(doc, (
-        "Veri kümesi otoregresif modellerden (MusicGen [1]) difüzyon-tabanlı sistemlere "
-        "(AudioLDM [2]) ve ticari üreticilere (Suno, Udio) kadar on iki veya daha fazla "
-        "yapay zekâ üretim sistemini kapsamaktadır. Bu çeşitliliğin amacı, modeli tek bir "
-        "üretici ailenin parmak izlerine aşırı uydurmaktan kaçınmaktır. §3.7'de "
-        "raporlanan kaynak bazlı sonuçlar, bu yaklaşımın kısmen başarılı olduğunu "
-        "göstermektedir; Suno ve Echoes parçalarında %88-93 duyarlılık elde edilmekte "
-        "ancak deepfake alt kümesinde performans %50'ye düşmektedir. Bu sonuç, Li vd. "
-        "[5] tarafından alanın açık problemi olarak işaret edilen üretici-modeller arası "
-        "genelleme zorluğunu doğrulamaktadır."
+        "Üretici modeller arası genelleme bağlamında, kullanılan veri kümesinin "
+        "otoregresif modellerden (MusicGen [1]) difüzyon tabanlı sistemlere (AudioLDM "
+        "[2]) ve ticari üreticilere (Suno, Udio) kadar on iki veya daha fazla GenAI "
+        "üretim sistemini kapsadığı görülmektedir. Bu çeşitliliğin temel amacı, modelin "
+        "tek bir üretici ailenin parmak izlerine aşırı uyum sağlamasını engellemektir. "
+        "Bölüm 3.7'de raporlanan kaynak bazlı sonuçlar bu yaklaşımın kısmen başarılı "
+        "olduğunu göstermektedir; Suno ve Echoes parçalarında %88-93 duyarlılık değeri "
+        "elde edilirken deepfake alt kümesinde bu değer %50'ye düşmektedir. Bu sonuç, "
+        "Li vd. [5] tarafından alanın açık problemi olarak işaret edilen üretici "
+        "modeller arası genelleme zorluğunu doğrular niteliktedir."
     ))
 
-    subheading(doc, "3.10. 1D-CNN Neden Düşük Performans Gösteriyor? "
-                    "(Why the 1D-CNN Underperforms)")
     body(doc, (
-        "1D-CNN'nin diğer mimarilere kıyasla belirgin biçimde düşük performansı "
-        "(ROC-AUC = 0,8543) mimari bir uyumsuzluğun sonucudur. Tek boyutlu konvolüsyon, "
-        "bir dizi boyunca yerel korelasyonları sömürmek üzere tasarlanmıştır; ancak "
-        "AURIS'in girişi sıralanmamış 47 boyutlu düz bir öznitelik vektörüdür ve "
-        "vektörün bitişik indeksleri ilgisiz miktarlara karşılık gelmektedir -bir "
-        "spektral istatistik yanında bir tempo istatistiği, yanında bir vokal skor-. "
-        "Bu liste boyunca bir çekirdek kaydıran konvolüsyonun öğreneceği anlamlı bir "
-        "öteleme değişmezliği bulunmamaktadır. Sonuç olarak 1D-CNN, vektörü bir bütün "
-        "olarak işleyen diğer üç DL mimarisinin gerisinde kalmakta ve doğrulukta "
-        "Lojistik Regresyon tarafından bile geçilmektedir."
+        "1D-CNN modelinin diğer mimarilere kıyasla belirgin biçimde düşük performansı "
+        "(ROC-AUC = 0,8543), mimari bir uyumsuzluğun sonucu olarak değerlendirilmektedir. "
+        "Tek boyutlu evrişim, bir dizi boyunca yerel korelasyonları kullanmak üzere "
+        "tasarlanmıştır; ancak önerilen sistemde giriş, sıralanmamış 47 boyutlu düz bir "
+        "öznitelik vektörüdür ve vektörün bitişik indeksleri ilgisiz miktarlara karşılık "
+        "gelmektedir. Bu liste boyunca bir çekirdeği kaydıran evrişim işleminin "
+        "öğrenebileceği anlamlı bir öteleme değişmezliği bulunmadığından, 1D-CNN modeli "
+        "vektörü bir bütün olarak işleyen diğer üç DL mimarisinin gerisinde kalmakta ve "
+        "doğruluk açısından Lojistik Regresyon tarafından bile geçilmektedir."
     ))
 
-    subheading(doc, "3.11. Kalibrasyon ve Operasyonel Yararlılık "
-                    "(Calibration and Operational Utility)")
     body(doc, (
-        "Tespit sistemlerinin operasyonel konuşlandırmaları çoğunlukla bir hedef "
-        "kesinlik veya duyarlılık üzerinden bir karar noktası seçmeyi gerektirir. 0,083 "
-        "Brier skoru bunu mümkün kılmaktadır; çünkü tahmin edilen olasılıklar gerçek "
-        "arka olasılığa yakın karşılık gelmektedir. Bu, 0,7 eşiğinin gerçekten '%70 "
-        "güvenli' anlamına geldiğini, 'skor dağılımının 70. yüzdelik dilimi' anlamına "
-        "gelmediğini ifade eder. Youden-optimal kesim noktası 0,4316, mevcut sınıf oranı "
-        "altında dengeli doğruluk için ilkesel bir varsayılan değerdir; ancak farklı "
-        "operasyonel maliyetlere sahip kullanıcılar Şekil 15'te görselleştirilen eğri "
-        "boyunca eşiği güvenle hareket ettirebilir."
-    ))
-
-    subheading(doc, "3.12. Aşırı Öğrenme Tanısı (Overfit Diagnosis)")
-    body(doc, (
-        "Topluluğun ezberleyip ezberlemediğini doğrudan sorgulamanın bir yolu, her "
-        "modelin eğitim doğruluğunu 5-katlı çapraz doğrulama doğruluğu ile karşılaştırmaktır. "
-        "Şekil 18, sonucu raporlamaktadır. Rastgele Orman %100,0 eğitim doğruluğuna karşı "
-        "CV altında %86,1'e ulaşmakta; bu 13,9 puanlık bir fark anlamına gelmektedir. "
-        "LightGBM ve SVM sırasıyla 12,0 ve 13,4 puanlık farklarla yakın takipte. XGBoost "
-        "ve Gradyan Artırma bile -daha güçlü yerleşik düzenleştirmelerine rağmen- 8-9 "
-        "puanlık bir fark sergilemektedir. Eğitim ve CV doğruluklarının esasen örtüştüğü "
-        "tek topluluk üyesi 0,6 puanlık fark ile Lojistik Regresyondur. Bu örüntü "
-        "bilgilendiricidir: ağaç toplulukları, 5-katlı CV'nin yakaladığı ama tek bir "
-        "eğitim/test bölünmesinin yakalamayacağı gerçek bir aşırı öğrenme taşımaktadır. "
-        "Nihai %88,0 CV doğruluğu (LightGBM) anlamlı bir tavan olarak okunmalı, rahat "
-        "bir marj olarak değil."
+        "Topluluğun ezberleme eğilimini doğrudan değerlendirmek amacıyla, her modelin "
+        "eğitim doğruluğu ile 5-katlı çapraz doğrulama doğruluğu karşılaştırmalı olarak "
+        "incelenmiştir. Şekil 18'de sunulan sonuçlar şu örüntüyü ortaya koymaktadır: "
+        "Rastgele Orman modeli %100,0 eğitim doğruluğuna karşı çapraz doğrulama altında "
+        "%86,1 doğruluk elde etmiş olup aradaki 13,9 puanlık fark dikkat çekicidir. "
+        "LightGBM ve SVM sırasıyla 12,0 ve 13,4 puanlık farklarla bu eğilimi takip "
+        "etmektedir. XGBoost ve Gradyan Artırma modelleri ise -daha güçlü yerleşik "
+        "düzenleştirmelerine rağmen- 8-9 puanlık bir fark sergilemektedir. Eğitim ve "
+        "çapraz doğrulama doğruluklarının esasen örtüştüğü tek topluluk üyesi, yalnızca "
+        "0,6 puanlık fark ile Lojistik Regresyon olmuştur. Bu örüntü, ağaç tabanlı "
+        "toplulukların 5-katlı çapraz doğrulamanın yakalayabildiği ancak tek bir "
+        "eğitim/test bölünmesinin gizleyebileceği gerçek bir aşırı öğrenme "
+        "(overfitting) eğilimi taşıdığını göstermektedir. Bu bulgu, %88,0'lık çapraz "
+        "doğrulama doğruluğunun anlamlı bir performans tavanı olarak yorumlanmasını "
+        "gerektirmektedir."
     ))
 
     figure(doc, "train_val_gap.png",
            "Şekil 18. Yedi öznitelik tabanlı modelin eğitim ve 5-katlı çapraz doğrulama "
-           "doğrulukları. Fark, her modelin nominal doğruluğunun ne kadarının eğitim "
-           "setini ezberlemekten geldiğini ölçmektedir.",
-           "Train versus 5-fold cross-validation accuracy for the seven feature-based "
-           "models. The gap quantifies how much of each model's nominal accuracy comes "
-           "from memorising the training set.")
+           "doğrulukları arasındaki farkın karşılaştırması.",
+           "Comparison of training accuracy and 5-fold cross-validation accuracy for "
+           "the seven feature-based models.")
 
-    subheading(doc, "3.13. Öznitelik Fazlalığı (Feature Redundancy)")
     body(doc, (
-        "47 öznitelik tasarım gereği fazlalıklıdır -spektrum, ritim ve sesin örtüşen "
-        "yönlerini kapsamaktadır- ancak fazlalık beklenenden ağırdır. Yirmi öznitelik "
-        "çiftinin |Pearson r| değeri tüm veri kümesinde 0,85'in üzerindedir. Dört çift "
-        "0,97'yi aşmaktadır: has_vocals ile vocal_harmonic_ratio (r = 0,994), "
-        "pitch_std_cents ile vibrato_extent_cents (0,983), vocal_texture_score ile "
-        "vocal_harmonic_ratio (0,975) ve has_vocals ile vocal_texture_score (0,974). "
-        "Vokal olmayan öznitelikler arasında spektral merkez, bant genişliği ve azalma "
-        "ortalamaları sıkı bir küme oluşturmaktadır (ikili r > 0,94). Şekil 19, tüm "
-        "|r| matrisini çizmekte; aşağı-sağda yer alan koyu çapraz-dışı bloklar vokal "
-        "öznitelik ailesine karşılık gelmektedir."
+        "Öznitelik fazlalığı açısından yapılan analiz, 47 özniteliğin tasarım gereği "
+        "fazlalıklı bir yapıya sahip olduğunu göstermiştir. Yirmi öznitelik çiftinin "
+        "|Pearson r| değeri tüm veri kümesi üzerinde 0,85'in üzerinde ölçülmüştür. Bu "
+        "çiftlerden dördü 0,97 değerini aşmaktadır: has_vocals ile vocal_harmonic_ratio "
+        "(r = 0,994), pitch_std_cents ile vibrato_extent_cents (0,983), "
+        "vocal_texture_score ile vocal_harmonic_ratio (0,975) ve has_vocals ile "
+        "vocal_texture_score (0,974). Vokal olmayan öznitelikler arasında ise spektral "
+        "merkez, bant genişliği ve azalma ortalamaları sıkı bir küme oluşturmaktadır "
+        "(ikili r > 0,94). Şekil 19, 47×47 boyutundaki tüm |r| matrisini "
+        "görselleştirmekte; aşağı-sağda yer alan koyu çapraz-dışı bloklar vokal "
+        "öznitelik ailesindeki yoğun fazlalığı yansıtmaktadır."
     ))
 
     figure(doc, "feature_correlation_heatmap.png",
-           "Şekil 19. 47 öznitelik arasında mutlak Pearson korelasyon ısı haritası "
-           "(tüm 5.195 parça üzerinden). Koyu hücreler fazlalıklı çiftleri "
-           "işaretlemektedir.",
-           "Absolute Pearson correlation heatmap between the 47 features across all "
-           "5,195 tracks. Dark cells mark redundant pairs.",
+           "Şekil 19. 47 öznitelik arasında mutlak Pearson korelasyon ısı haritası.",
+           "Absolute Pearson correlation heatmap between the 47 features.",
            width_cm=8.5)
 
-    subheading(doc, "3.14. Kaç Öznitelik Gerçekten Gereklidir? "
-                    "(How Many Features Are Actually Needed?)")
     body(doc, (
-        "Şekil 20, bir öznitelik çıkarma deneyi raporlamaktadır. Öznitelikler LightGBM "
-        "önemine göre sıralanmakta ve ilk-N için N ∈ {1, 3, 5, 10, 15, 20, 30, 47} "
-        "değerleri aynı 5-katlı çapraz doğrulama hattından geçirilmektedir. Eğri "
-        "N = 10'a kadar diktir -doğruluk %59,8'den (N=1), %78,1 (N=5), %84,7 (N=10) "
-        "değerlerine yükselmektedir- ve sonrasında plato yapar. N = 20'de doğruluk "
-        "%88,0, N = 30'da %88,7'ye ulaşmakta ve tüm 47 özniteliğin kullanılması %88,5 "
-        "vermektedir -bu N = 30 ile bir standart sapma içinde eşdeğerdir. Başka bir "
-        "deyişle, önem sırasına göre sondaki on yedi öznitelik ölçülebilir ek doğruluk "
-        "sağlamamaktadır. Pratik bir konuşlandırma, kalite kaybı olmadan bu uzun "
-        "kuyruğu kesebilir."
+        "Öznitelik sayısının model performansına etkisini değerlendirmek amacıyla "
+        "kapsamlı bir öznitelik çıkarma deneyi gerçekleştirilmiştir. Bu deney "
+        "kapsamında öznitelikler LightGBM önemine göre sıralanmış ve ilk-N öznitelik "
+        "için N ∈ {1, 3, 5, 10, 15, 20, 30, 47} değerleri ile 5-katlı çapraz doğrulama "
+        "tekrarlanmıştır. Şekil 20'de sunulan eğri, N = 10 değerine kadar dik bir artış "
+        "göstermekte (doğruluk %59,8'den %84,7'ye yükselmekte) ve sonrasında belirgin "
+        "bir plato sergilemektedir. N = 20 değerinde %88,0, N = 30 değerinde %88,7 "
+        "doğruluk elde edilmiş; tüm 47 özniteliğin kullanılması ise %88,5 doğruluk "
+        "vermiştir. Bu sonuç, N = 30 değeri ile bir standart sapma içerisinde "
+        "eşdeğerdir. Diğer bir ifadeyle, önem sırasına göre sondaki on yedi öznitelik "
+        "ölçülebilir bir ek doğruluk sağlamamaktadır. Bu bulgu, pratik bir konuşlandırma "
+        "senaryosunda kalite kaybı yaşanmadan öznitelik vektörünün boyutunun "
+        "azaltılabileceğini ortaya koymaktadır."
     ))
 
     figure(doc, "feature_ablation_curve.png",
-           "Şekil 20. LightGBM'in 5-katlı CV doğruluğunun, öneme göre sıralanmış "
-           "korunan öznitelik sayısının bir fonksiyonu olarak değişimi. Plato yaklaşık "
-           "20 öznitelikte başlamakta; son 17 öznitelik ölçülen doğruluğu "
-           "değiştirmemektedir.",
-           "5-fold CV accuracy of LightGBM as a function of the number of features "
-           "retained, ranked by importance. The plateau begins at roughly 20 features; "
-           "the last 17 features do not change measured accuracy.")
+           "Şekil 20. LightGBM modelinin 5-katlı çapraz doğrulama doğruluğunun "
+           "kullanılan öznitelik sayısına bağlı değişimi.",
+           "5-fold cross-validation accuracy of LightGBM as a function of the number "
+           "of features used.")
 
-    subheading(doc, "3.15. Sınırlamalar (Limitations)")
     body(doc, (
-        "Açıkça kaydedilmesi gereken dört sınırlama bulunmaktadır. Birincisi, "
-        "öznitelikler 15-30 saniye uzunluğundaki tam klipten çıkarılmaktadır; daha kısa "
-        "klipler (< 5 saniye) özellikle tempo ve vibrato istatistikleri için daha az "
-        "güvenilir tahminler vermektedir, dolayısıyla sistem henüz canlı-mikrofon kısa-"
-        "klip rejiminde değerlendirilmemiştir. İkincisi, veri kümesi yirmi türü "
-        "kapsamakla birlikte, bazı türler (özellikle ambient ve lo-fi) yapay zekâ "
-        "kısmında aşırı temsil edilmektedir; tür-stratifiye değerlendirme genellemeyi "
-        "daha titiz olarak hesaba katacaktır. Üçüncüsü, düşmanca sağlamlık açıkça test "
-        "edilmemiştir; MP3 sıkıştırma, perde kaydırma veya zaman gerdirme gibi sonradan "
-        "işlemlerin tespit performansını azalttığı, vokoder izlerine dayanan sistemler "
-        "için bilinmektedir (Afchar vd. [7]). AURIS, öznitelikleri vokoder izleri "
-        "etrafında kurulu olmadığından bu etkiye daha az ciddi biçimde uğrayacaktır "
-        "ama bağışıklık değildir. Dördüncüsü, §3.12'de raporlanan eğitim-CV farkları "
-        "modelin dağılım kayışına duyarlı olduğunu göstermektedir; bu durum SONICS [23] "
-        "ve FakeMusicCaps [24] gibi yeni kıyaslamalar üzerinde resmi bir tutulan "
-        "değerlendirme ile teyit edilmelidir."
+        "Önerilen sistemin sınırlamaları açık biçimde değerlendirildiğinde dört temel "
+        "husus öne çıkmaktadır. Birincisi, öznitelikler 15-30 saniye uzunluğundaki tam "
+        "ses kliplerinden çıkarılmakta olup daha kısa klipler (< 5 saniye) özellikle "
+        "tempo ve vibrato istatistikleri için daha az güvenilir tahminler "
+        "üretebilmektedir; bu nedenle önerilen sistemin canlı mikrofon ve kısa klip "
+        "senaryolarındaki performansı henüz değerlendirilmemiştir. İkincisi, kullanılan "
+        "veri kümesi yirmi farklı tür kapsamakla birlikte bazı türlerin (özellikle "
+        "ambient ve lo-fi) GenAI tarafında aşırı temsil edildiği gözlemlenmiştir; tür "
+        "katmanlı bir değerlendirme, genelleme kapasitesinin daha titiz biçimde "
+        "ölçülmesini sağlayacaktır. Üçüncüsü, düşmanca sağlamlık açıkça test "
+        "edilmemiştir; MP3 sıkıştırma, perde kaydırma ve zaman gerdirme gibi sonradan "
+        "işleme tekniklerinin vokoder izlerine dayanan sistemlerin performansını "
+        "düşürdüğü Afchar vd. [7] tarafından raporlanmıştır. AURIS sistemi özniteliklerini "
+        "vokoder izleri etrafında inşa etmediğinden bu etkiye daha az hassas olması "
+        "beklenmektedir; ancak bu varsayımın deneysel olarak doğrulanması gerekmektedir. "
+        "Dördüncüsü, eğitim ile çapraz doğrulama doğrulukları arasında tespit edilen "
+        "fark, modelin dağılım kayışına karşı duyarlı olduğunu göstermektedir; bu "
+        "durumun SONICS [23] ve FakeMusicCaps [24] gibi gelişmekte olan kıyaslamalar "
+        "üzerinde yapılacak resmî değerlendirmelerle teyit edilmesi gerekmektedir."
     ))
 
     # ══════════════════════════════════════════════════════════════════
