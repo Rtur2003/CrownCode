@@ -254,35 +254,52 @@ def reference_entry(doc, idx: int, text: str) -> None:
 def build():
     doc = Document()
 
-    # Gazi MMF Dergisi şablonu: A4, kenarlar Üst 2.79 / Alt 0.49 / Sol 1.50 / Sağ 1.50 cm
+    # GAZİ MMF DERGİSİ resmi kuralları (dergipark.org.tr/tr/pub/gazimmfd/page/1851):
+    # A4 (21x29.7 cm), tüm kenarlar 2.5 cm
     for section in doc.sections:
         section.page_width    = Cm(21.0)
         section.page_height   = Cm(29.7)
-        section.top_margin    = Cm(2.79)
-        section.bottom_margin = Cm(0.49)
-        section.left_margin   = Cm(1.50)
-        section.right_margin  = Cm(1.50)
+        section.top_margin    = Cm(2.5)
+        section.bottom_margin = Cm(2.5)
+        section.left_margin   = Cm(2.5)
+        section.right_margin  = Cm(2.5)
 
-    # ── Türkçe başlık ──
+    # ── Türkçe başlık (14pt, GUJSA standart) ──
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_after = Pt(4)
     r = p.add_run("AURIS: Çoklu-Model Topluluk Yaklaşımı ile Yapay Zekâ "
                   "Tarafından Üretilen Müziklerin Tespiti")
-    _set_font(r, size=13.5, bold=True)
+    _set_font(r, size=14, bold=True)
 
+    # Yazar — Hasan Arthur Altuntaş
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_after = Pt(2)
-    r = p.add_run("Hasan Arthur Altuntaş")
-    _set_font(r, size=8.5, bold=True)
+    r = p.add_run("Hasan Arthur Altuntaş*")
+    _set_font(r, size=10, bold=True)
 
+    # Kurum
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_after = Pt(2)
+    r = p.add_run("Düzce Üniversitesi, Mühendislik Fakültesi, "
+                  "Bilgisayar Mühendisliği Bölümü, 81620, Düzce, Türkiye")
+    _set_font(r, size=9, italic=True)
+
+    # ORCID
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_after = Pt(2)
+    r = p.add_run("ORCID: 0009-0002-8302-7657")
+    _set_font(r, size=9)
+
+    # Yazışma yazarı
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_after = Pt(16)
-    r = p.add_run("Düzce Üniversitesi, Mühendislik Fakültesi, "
-                  "Bilgisayar Mühendisliği Bölümü, 81620, Düzce, Türkiye")
-    _set_font(r, size=7.5)
+    r = p.add_run("*Sorumlu Yazar / Corresponding Author: hasannarthurrr@gmail.com")
+    _set_font(r, size=9, italic=True)
 
     # Highlights TR
     subheading(doc, "Ö N E   Ç I K A N L A R")
