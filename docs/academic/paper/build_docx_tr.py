@@ -1231,20 +1231,18 @@ def build():
     heading(doc, "Kaynaklar (References)")
 
     refs = [
-        "Copet J., Kreuk F., Gat I., Remez T., Kant D., Synnaeve G., Adi Y., Défossez A., "
-        "Simple and Controllable Music Generation, Advances in Neural Information "
-        "Processing Systems, 36, 2023. DOI: 10.48550/arXiv.2306.05284.",
+        "Copet J. vd., Simple and Controllable Music Generation, Advances in Neural "
+        "Information Processing Systems, 36, 2023. DOI: 10.48550/arXiv.2306.05284.",
 
-        "Liu H., Chen Z., Yuan Y., Mei X., Liu X., Mandic D., Wang W., Plumbley M.D., "
-        "AudioLDM: Text-to-Audio Generation with Latent Diffusion Models, Proceedings "
-        "of the International Conference on Machine Learning (ICML 2023), 21450-21474, "
-        "Honolulu, Hawaii, A.B.D., 23-29 Temmuz, 2023. DOI: 10.48550/arXiv.2301.12503.",
+        "Liu H. vd., AudioLDM: Text-to-Audio Generation with Latent Diffusion Models, "
+        "Proceedings of the International Conference on Machine Learning (ICML 2023), "
+        "21450-21474, Honolulu, Hawaii, A.B.D., 23-29 Temmuz, 2023. DOI: "
+        "10.48550/arXiv.2301.12503.",
 
-        "Yi J., Fu R., Tao J., Nie S., Ma H., Wang C., Wang T., Tian Z., Bai Y., Fan C., "
-        "ADD 2022: The First Audio Deep Synthesis Detection Challenge, Proceedings of "
-        "the IEEE International Conference on Acoustics, Speech and Signal Processing "
-        "(ICASSP 2022), 9216-9220, Singapur, 22-27 Mayıs, 2022. DOI: "
-        "10.1109/ICASSP43922.2022.9746939.",
+        "Yi J. vd., ADD 2022: The First Audio Deep Synthesis Detection Challenge, "
+        "Proceedings of the IEEE International Conference on Acoustics, Speech and "
+        "Signal Processing (ICASSP 2022), 9216-9220, Singapur, 22-27 Mayıs, 2022. "
+        "DOI: 10.1109/ICASSP43922.2022.9746939.",
 
         "Frank J., Schönherr L., WaveFake: A Data Set to Facilitate Audio Deepfake "
         "Detection, Advances in Neural Information Processing Systems 2021 Datasets "
@@ -1254,8 +1252,8 @@ def build():
         "AI-Generated Music Detection: A Pathway and Overview, arXiv preprint "
         "arXiv:2412.00571, 2024. DOI: 10.48550/arXiv.2412.00571.",
 
-        "Yi J., Wang C., Tao J., Zhang X., Zhang C.Y., Zhao Y., Audio Deepfake Detection: "
-        "A Survey, arXiv preprint arXiv:2308.14970, 2023. DOI: 10.48550/arXiv.2308.14970.",
+        "Yi J. vd., Audio Deepfake Detection: A Survey, arXiv preprint "
+        "arXiv:2308.14970, 2023. DOI: 10.48550/arXiv.2308.14970.",
 
         "Afchar D., Meseguer Brocal G., Hennequin R., AI-Generated Music Detection and "
         "Its Challenges, Proceedings of the IEEE International Conference on Acoustics, "
