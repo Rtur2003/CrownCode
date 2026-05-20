@@ -642,11 +642,11 @@ def build():
     heading(doc, "2. Materyal ve Yöntem (Material and Method)")
 
     body(doc, (
-        "Bu bölümde önerilen sistemin geliştirilmesinde kullanılan materyal ve yöntemler "
-        "özetlenmiştir. Alt bölümlerde sırasıyla (i) veri kümesi, (ii) öznitelik çıkarma "
-        "boru hattı, (iii) sınıflandırma modelleri, (iv) eğitim protokolü ve eşik "
-        "optimizasyonu açıklanmaktadır. Şekil 1, sistemin uçtan-uca işleyişini "
-        "göstermektedir."
+        "Bu bölümde önerilen AURIS sistemini geliştirmek için kullanılan materyal ve "
+        "yöntemler özetlenmiştir. Alt bölümlerde sırasıyla (𝑖) kullanılan veri kümesi, "
+        "(𝑖𝑖) öznitelik çıkarma boru hattı, (𝑖𝑖𝑖) sınıflandırma modelleri ve (𝑖𝑣) eğitim "
+        "protokolü ile karar eşiği optimizasyonu detaylandırılmaktadır. Önerilen sistemin "
+        "uçtan-uca işleyişine genel bir bakış Şekil 1'de sunulmuştur."
     ))
 
     figure(doc, "paper_pipeline_diagram.png",
@@ -657,17 +657,21 @@ def build():
            "standardisation, 11-model ensemble, probability fusion and decision threshold.",
            width_cm=8.5)
 
-    subheading(doc, "2.1. Veri Kümesi (Dataset)")
+    subheading(doc, "2.1. Kullanılan Veri Kümesi (Utilized Dataset)")
     body(doc, (
-        "Çalışmada toplam 5.195 ses örneği kullanılmıştır. Bu örneklerin 3.113 tanesi insan "
-        "tarafından bestelenmiş ve seslendirilmiş kayıtları (sınıf 0), 2.082 tanesi ise "
-        "yapay zekâ tarafından üretilmiş örnekleri (sınıf 1) temsil etmektedir. İnsan "
-        "kaynakları üç ayrı havuzdan oluşmaktadır: GTZAN (899 örnek; on tür, 30 saniyelik "
-        "klipler), FMA Small (1.000 örnek; sekiz tür) ve özel bir kapak performansı "
-        "veri seti olan SleepyJesse (854 örnek). Yapay zekâ kaynakları daha çeşitlidir; "
-        "Suno (500 örnek, sürüm 3-5), Udio, MusicGen [1], AudioLDM2 [2], Stable Audio, "
-        "Riffusion, Mustango, JEN-1 ve dahili olarak adlandırılan 'Echoes' ve 'AImE' "
-        "alt kümelerini içermektedir. Veri kümesi kompozisyonu Tablo 2'de özetlenmiştir."
+        "Güçlü bir ML/DL modelinin inşa edilebilmesi için en önemli gereksinimlerden biri "
+        "altın standartta bir veri kümesine sahip olmaktır. Bu bağlamda, bu çalışmada "
+        "toplam 5.195 ses örneğinden oluşan kapsamlı bir veri kümesi derlenmiştir. Bu "
+        "örneklerin 3.113 tanesi insan tarafından bestelenmiş ve seslendirilmiş kayıtları "
+        "(sınıf 0), 2.082 tanesi ise GenAI sistemleri tarafından üretilmiş örnekleri "
+        "(sınıf 1) temsil etmektedir. İnsan kaynakları üç ayrı havuzdan oluşturulmuştur: "
+        "GTZAN (899 örnek; on tür, 30 saniyelik klipler), FMA Small (1.000 örnek; sekiz "
+        "tür) ve bir kapak performansı veri seti olan SleepyJesse (854 örnek). GenAI "
+        "kaynakları daha çeşitli bir yapı sergilemekte olup Suno (500 örnek, sürüm 3-5), "
+        "Udio, MusicGen [1], AudioLDM2 [2], Stable Audio, Riffusion, Mustango, JEN-1 ve "
+        "dahili olarak adlandırılan 'Echoes' ile 'AImE' alt kümelerini içermektedir. "
+        "Kullanılan veri kümesinin kompozisyonu ve sınıf dağılımı Tablo 2'de "
+        "özetlenmiştir."
     ))
 
     table_caption(doc,
@@ -689,24 +693,30 @@ def build():
 
     subheading(doc, "2.2. Öznitelik Çıkarma (Feature Extraction)")
     body(doc, (
-        "Her ses parçası 22.050 Hz örnekleme hızında yeniden örneklenmiş ve librosa [28] "
-        "kütüphanesi kullanılarak 47 boyutlu bir öznitelik vektörüne dönüştürülmüştür. "
-        "Bu vektör dört aileye ayrılmaktadır. Spektral aile (16 öznitelik), her birinin "
-        "ortalama ve standart sapması olmak üzere; spektral merkezleme, spektral düzlük, "
-        "spektral bant genişliği, spektral kontrast, spektral azalma ve mel düzlüğünü "
-        "içermektedir. Zamansal aile (10 öznitelik) yüksekliği ve zamanlamayı kapsar: RMS "
-        "enerji ve standart sapması, RMS dinamik aralığı, başlangıç gücü ortalama ve "
-        "standart sapması, sıfır geçiş oranı ve standart sapması, tempo BPM, tempo "
-        "kararlılığı ve tempo varyasyon katsayısı ile vuruş sayısı. Harmonik ve tonal "
-        "aile (9 öznitelik) chroma standart sapması, chroma entropi, chroma geçiş oranı, "
-        "tonnetz standart sapması, harmonik oran, kompozit bir harmonik-yapı skoru, mel "
-        "düzlüğü, ortalama perde (Hz) ve perde standart sapmasını (cent) raporlamaktadır. "
-        "MFCC ailesi (3 öznitelik) MFCC varyansını ve birinci ile ikinci derece delta "
-        "varyanslarını içermektedir. Vokal aile (9 öznitelik) vokal varlık skoru, vokal "
-        "güven, vokal yapay zekâ skoru, perde kararlılığı, vibrato düzenliliği, formant "
-        "tutarlılığı, nefes düzeni, vokal doku ve vokal harmonik oranı ölçmektedir. "
-        "Şekil 2, ilk sekiz öznitelik için insan ve yapay zekâ örneklerinin dağılımlarını "
-        "karşılaştırmaktadır."
+        "Tüm ML/DL modelleri sayısal verilerle çalışmaktadır. Bu nedenle, kullanılan veri "
+        "kümesindeki ses parçalarının ayırt edici sayısal özniteliklerle temsil edilmesi "
+        "gerekmektedir. Bu amaçla her ses parçası, 22.050 Hz örnekleme hızında yeniden "
+        "örneklenmiş ve librosa [28] kütüphanesi kullanılarak 47 boyutlu bir öznitelik "
+        "vektörüne dönüştürülmüştür. Elde edilen öznitelik vektörü, akustik karakteristikleri "
+        "kapsamlı biçimde temsil edebilmek amacıyla dört aileye ayrılmıştır. (𝑖) Spektral "
+        "aile (16 öznitelik), her bir özniteliğin ortalama ve standart sapması olmak üzere "
+        "spektral merkezleme (spectral centroid), spektral düzlük (spectral flatness), "
+        "spektral bant genişliği (spectral bandwidth), spektral kontrast (spectral contrast), "
+        "spektral azalma (spectral rolloff) ve mel düzlüğünü içermektedir. (𝑖𝑖) Zamansal "
+        "aile (10 öznitelik) yüksekliği ve zamanlamayı kapsamakta olup şu öznitelikleri "
+        "içermektedir: Kök Ortalama Kare (Root Mean Square-RMS) enerji ve standart sapması, "
+        "RMS dinamik aralığı, başlangıç gücü ortalaması ve standart sapması, sıfır geçiş "
+        "oranı (zero crossing rate) ve standart sapması, tempo (BPM), tempo kararlılığı, "
+        "tempo varyasyon katsayısı ile vuruş sayısı. (𝑖𝑖𝑖) Harmonik ve tonal aile (9 "
+        "öznitelik), chroma standart sapması, chroma entropi, chroma geçiş oranı, tonnetz "
+        "standart sapması, harmonik oran, kompozit harmonik-yapı skoru, mel düzlüğü, "
+        "ortalama perde (Hz) ve perde standart sapmasını (cent cinsinden) raporlamaktadır. "
+        "(𝑖𝑣) MFCC ailesi (3 öznitelik), MFCC varyansı ile birinci ve ikinci derece delta "
+        "varyanslarından oluşmaktadır. (𝑣) Vokal aile (9 öznitelik) ise vokal varlık skoru, "
+        "vokal güven, vokal AI skoru, perde kararlılığı, vibrato düzenliliği, formant "
+        "tutarlılığı, nefes düzeni, vokal doku ve vokal harmonik oranı niceliklerini "
+        "ölçmektedir. İlk sekiz öznitelik için insan ve GenAI örneklerinin dağılımları "
+        "karşılaştırmalı olarak Şekil 2'de gösterilmiştir."
     ))
 
     figure(doc, "feature_distribution_ai_vs_human.png",
