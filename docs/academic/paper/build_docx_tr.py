@@ -272,11 +272,11 @@ def build():
                   "Tarafından Üretilen Müziklerin Tespiti")
     _set_font(r, size=14, bold=True)
 
-    # Yazar — Hasan Arthur Altuntaş
+    # Yazarlar — Hasan Arthur Altuntaş (öğrenci) & Büşra Takgil (danışman)
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_after = Pt(2)
-    r = p.add_run("Hasan Arthur Altuntaş*")
+    r = p.add_run("Hasan Arthur Altuntaş*, Büşra Takgil")
     _set_font(r, size=10, bold=True)
 
     # Kurum
@@ -291,14 +291,21 @@ def build():
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_after = Pt(2)
-    r = p.add_run("ORCID: 0009-0002-8302-7657")
+    r = p.add_run("ORCID: 0009-0002-8302-7657 (H.A. Altuntaş)")
     _set_font(r, size=9)
 
-    # Yazışma yazarı
+    # Yazışma yazarı + danışman e-posta
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_after = Pt(2)
+    r = p.add_run("*Sorumlu Yazar / Corresponding Author: hasannarthurrr@gmail.com")
+    _set_font(r, size=9, italic=True)
+
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_after = Pt(16)
-    r = p.add_run("*Sorumlu Yazar / Corresponding Author: hasannarthurrr@gmail.com")
+    r = p.add_run("Danışman / Advisor: Dr. Öğr. Üyesi Büşra Takgil, "
+                  "busratakgil@duzce.edu.tr")
     _set_font(r, size=9, italic=True)
 
     # Highlights TR
