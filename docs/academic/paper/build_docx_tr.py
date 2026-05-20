@@ -377,6 +377,11 @@ def build():
               "Audio classification · Spectral flatness", size=10)
 
     # ══════════════════════════════════════════════════════════════════
+    # Kapak bitti — buradan itibaren ÇİFT KOLONLU yapı (Gazi MMF Dergisi)
+    # ══════════════════════════════════════════════════════════════════
+    start_two_column_section(doc)
+
+    # ══════════════════════════════════════════════════════════════════
     # 1. GİRİŞ
     # ══════════════════════════════════════════════════════════════════
     heading(doc, "1. Giriş (Introduction)")
@@ -610,7 +615,7 @@ def build():
            "eşiği.",
            "End-to-end AURIS pipeline: audio input, 47-dimensional feature extraction, "
            "standardisation, 11-model ensemble, probability fusion and decision threshold.",
-           width_cm=15.0)
+           width_cm=8.5)
 
     subheading(doc, "2.1. Veri Kümesi (Dataset)")
     body(doc, (
@@ -670,7 +675,7 @@ def build():
            "log-eksen ile gösterilmiştir.",
            "Distribution of the top eight features by LightGBM importance, human (green) "
            "versus AI (red). The spectral flatness panels use a log x-axis.",
-           width_cm=15.0)
+           width_cm=8.5)
 
     subheading(doc, "2.3. Sınıflandırma Modelleri (Classification Models)")
     body(doc, (
@@ -781,7 +786,7 @@ def build():
            "ROC curves of the seven feature-based classifiers under 5-fold "
            "cross-validation. LightGBM leads with AUC=0.9545; random guessing "
            "(AUC=0.500) is shown as reference.",
-           width_cm=11.5)
+           width_cm=8.5)
 
     figure(doc, "all_models_heatmap.png",
            "Şekil 5. On bir modelin doğruluk, kesinlik, duyarlılık, F1 ve ROC-AUC "
@@ -817,7 +822,7 @@ def build():
            "her panel beş katın ortalaması ve ±σ bant ile birlikte gösterilmektedir.",
            "Per-epoch training curves for the four deep learning architectures, mean "
            "across five folds with ±σ band.",
-           width_cm=15.0)
+           width_cm=8.5)
 
     subheading(doc, "3.3. Katlar-Arası Kararlılık (Cross-Fold Stability)")
     body(doc, (
@@ -839,7 +844,7 @@ def build():
            "Per-fold ROC-AUC for all eleven models, mean AUC (descending) and standard "
            "deviation. LightGBM combines the highest mean with the lowest fold-to-fold "
            "variance (±0.0023).",
-           width_cm=15.0)
+           width_cm=8.5)
 
     subheading(doc, "3.4. Öznitelik Önemi (Feature Importance)")
     body(doc, (
@@ -886,7 +891,7 @@ def build():
            "TreeSHAP global effect plot for LightGBM on a 2,000-sample CV slice; each "
            "point is one sample, horizontal position is the SHAP value, colour encodes "
            "feature magnitude.",
-           width_cm=12.0)
+           width_cm=8.5)
 
     subheading(doc, "3.5. Karmaşıklık Matrisi, Skor Dağılımı ve Kalibrasyon "
                     "(Confusion Matrix, Score Distribution and Calibration)")
@@ -908,7 +913,7 @@ def build():
            "göstermektedir.",
            "Confusion matrix for LightGBM at the Youden-optimal threshold θ* = 0.4316. "
            "Cells show sample counts and corresponding within-class percentages.",
-           width_cm=11.0)
+           width_cm=8.5)
 
     body(doc, (
         "Şekil 12, insan ve yapay zekâ sınıfları için P(AI) tahmini olasılık dağılımlarını "
@@ -934,7 +939,7 @@ def build():
            "karşılık gelir; Brier skoru = 0,083.",
            "Calibration curve for LightGBM. Diagonal corresponds to perfect calibration; "
            "Brier score = 0.083.",
-           width_cm=10.5)
+           width_cm=8.5)
 
     figure(doc, "paper_precision_recall.png",
            "Şekil 14. LightGBM için kesinlik-duyarlılık eğrisi; ortalama kesinlik "
@@ -942,7 +947,7 @@ def build():
            "baz çizgisinin çok üstündedir.",
            "Precision-recall curve for LightGBM; average precision is 0.934, well above "
            "the no-skill baseline of 0.401 implied by the 1:1.5 class ratio.",
-           width_cm=10.5)
+           width_cm=8.5)
 
     subheading(doc, "3.6. Eşik Taraması ve Karar Çalışma Noktaları "
                     "(Threshold Sweep and Decision Operating Points)")
@@ -1091,7 +1096,7 @@ def build():
            "işaretlemektedir.",
            "Absolute Pearson correlation heatmap between the 47 features across all "
            "5,195 tracks. Dark cells mark redundant pairs.",
-           width_cm=14.0)
+           width_cm=8.5)
 
     subheading(doc, "3.14. Kaç Öznitelik Gerçekten Gereklidir? "
                     "(How Many Features Are Actually Needed?)")
