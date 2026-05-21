@@ -159,6 +159,17 @@ def main():
         "θ* = 0.4316 improves balanced accuracy. The architecture of "
         "AURIS is presented in Figure A.")
 
+    # P30: Graphical Abstract görseli — Talha'nın diyagramını sil, bizim pipeline'ı koy
+    p30 = P[30]
+    # Mevcut tüm run'ları sil (görsel dahil)
+    for r in list(p30.runs):
+        r._element.getparent().remove(r._element)
+    # Yeni run ekle ve pipeline diyagramını içine koy
+    pipeline_img = FIGURES / "paper_pipeline_diagram.png"
+    if pipeline_img.exists():
+        new_run = p30.add_run()
+        new_run.add_picture(str(pipeline_img), width=Cm(7.5))
+
     # P31: Figure A caption
     replace_text_keep_format(P[31],
         "Figure A. An overview of the proposed AURIS system pipeline")
