@@ -40,23 +40,36 @@ with open(MODELS / "feature_columns_v1.json") as f:
 
 # ── Stil ──────────────────────────────────────────────────────────────────
 GOLD   = "#C99347"
-BG     = "#faf8f4"
+BG     = "none"
 HUMAN  = "#3cb44b"
 AIRED  = "#e6194b"
 
 plt.rcParams.update({
-    "font.family":   "serif",
-    "font.serif":    ["Times New Roman", "DejaVu Serif"],
-    "font.size":     10,
-    "figure.dpi":    150,
-    "savefig.dpi":   300,
-    "savefig.bbox":  "tight",
-    "axes.grid":     True,
-    "grid.alpha":    0.3,
-    "axes.spines.top":   False,
-    "axes.spines.right": False,
-})
+    "font.family": "Times New Roman",
+    "font.size": 10,
 
+    "font.weight": "normal",
+    "axes.labelweight": "normal",
+    "axes.titleweight": "normal",
+
+    "figure.dpi": 150,
+    "savefig.dpi": 300,
+    "savefig.bbox": "tight",
+    "savefig.transparent": True,
+
+    "axes.grid": True,
+    "grid.alpha": 0.15,
+    "grid.linewidth": 0.5,
+
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.edgecolor": "black",
+
+    "text.color": "black",
+    "axes.labelcolor": "black",
+    "xtick.color": "black",
+    "ytick.color": "black",
+})
 
 def _save(fig, name: str):
     p = FIG_DIR / f"{name}.png"
@@ -105,11 +118,10 @@ def fig_pipeline():
     w = 1.8; h = 1.3; y = 1.8
     for i, (text, color) in enumerate(boxes):
         x = 0.3 + i * 1.95
-        rect = plt.Rectangle((x, y), w, h, facecolor=color, alpha=0.85,
-                              edgecolor="white", linewidth=2)
+        rect = plt.Rectangle((x, y), w, h, facecolor=color)
         ax.add_patch(rect)
         ax.text(x + w/2, y + h/2, text, ha="center", va="center",
-                fontsize=9, fontweight="bold", color="white")
+                fontsize=9, fontweight="normal", color="white")
         ax.text(x + w/2, y - 0.4, sublabels[i], ha="center", va="top",
                 fontsize=8, color="#444", style="italic")
         # Ok
@@ -120,7 +132,7 @@ def fig_pipeline():
 
     ax.set_title("Şekil 1. AURIS Sistem İşleyiş Şeması — "
                  "Uçtan-Uca Yapay Zekâ Müzik Tespiti",
-                 fontsize=12, fontweight="bold", pad=15)
+                 fontsize=12, fontweight="normal", pad=15)
     _save(fig, "paper_pipeline_diagram")
 
 
@@ -154,7 +166,7 @@ def fig_feature_distribution():
     fig, axes = plt.subplots(n_rows, n_cols, figsize=(16, 4.2 * n_rows))
     fig.patch.set_facecolor(BG)
     fig.suptitle("YZ ve İnsan Müziği — İlk Sekiz Özniteliğin Dağılımı",
-                 fontsize=14, fontweight="bold", y=1.02)
+                 fontsize=14, fontweight="normal", y=1.02)
 
     for i, feat in enumerate(available):
         ax = axes.flat[i]
@@ -237,7 +249,7 @@ def fig_model_comparison():
     ax.bar(x + w, aucs, w, color=AIRED, label="ROC-AUC")
     for xi, v in zip(x + w, aucs):
         ax.text(xi, v + 0.005, f"{v:.3f}", ha="center", fontsize=8,
-                fontweight="bold")
+                fontweight="normal")
 
     ax.set_xticks(x)
     ax.set_xticklabels(names, rotation=20, ha="right", fontsize=9)
@@ -245,7 +257,7 @@ def fig_model_comparison():
     ax.set_ylabel("Skor")
     ax.set_title("Model Performans Karşılaştırması — "
                  "11 Model (5 Katlı Çapraz Doğrulama, 47 Öznitelik, 5.195 Örnek)",
-                 fontsize=12, fontweight="bold")
+                 fontsize=12, fontweight="normal")
     ax.legend(loc="lower left")
     _save(fig, "paper_model_comparison")
 
@@ -297,7 +309,7 @@ def fig_roc_curves():
     ax.set_ylabel("Doğru Pozitif Oranı")
     ax.set_title("ROC Eğrileri — Gerçek Tutulan-Kat Tahminleri, "
                  "5 Katlı Çapraz Doğrulama",
-                 fontsize=12, fontweight="bold")
+                 fontsize=12, fontweight="normal")
     ax.legend(loc="lower right", fontsize=8)
     ax.set_xlim(0, 1); ax.set_ylim(0, 1.02)
     _save(fig, "paper_roc_curves")
@@ -354,7 +366,7 @@ def fig_all_models_heatmap():
     ax.set_title("Tüm Modeller — Performans Isı Haritası\n"
                  "5.195 örnek, 47 öznitelik, 5 katlı çapraz doğrulama "
                  "(sütun bazında en iyi değer kalın)",
-                 fontsize=12, fontweight="bold")
+                 fontsize=12, fontweight="normal")
     ax.grid(False)
     _save(fig, "all_models_heatmap")
 
@@ -383,7 +395,7 @@ def fig_ml_vs_dl():
     fig.patch.set_facecolor(BG)
     fig.suptitle("ML ve DL Modellerinin Karşılaştırması — "
                  "47 Öznitelik, 5.195 Örnek, 5 Katlı Çapraz Doğrulama",
-                 fontsize=13, fontweight="bold")
+                 fontsize=13, fontweight="normal")
 
     for ax, ml_vals, dl_vals, title in zip(
         axes,
@@ -396,9 +408,9 @@ def fig_ml_vs_dl():
         dl_y = range(len(dl_names))
         offset = len(ml_names) + 1
 
-        bars_ml = ax.barh(list(ml_y), ml_vals, color=GOLD, alpha=0.85)
+        bars_ml = ax.barh(list(ml_y), ml_vals, color=GOLD)
         bars_dl = ax.barh([i + offset for i in dl_y], dl_vals,
-                          color="#6b4a1e", alpha=0.85)
+                          color="#6b4a1e")
 
         ax.set_yticks(list(ml_y) + [i + offset for i in dl_y])
         ax.set_yticklabels(ml_names + dl_names, fontsize=8)
@@ -407,9 +419,9 @@ def fig_ml_vs_dl():
 
         ax.axhline(len(ml_names) - 0.5, color="#aaa", lw=1, ls="--")
         ax.text(0.66, len(ml_names) / 2 - 0.3, "ML", fontsize=9,
-                color=GOLD, fontweight="bold")
+                color=GOLD, fontweight="normal")
         ax.text(0.66, offset + len(dl_names) / 2 - 0.3, "DL", fontsize=9,
-                color="#6b4a1e", fontweight="bold")
+                color="#6b4a1e", fontweight="normal")
 
         for bar, val in zip(list(bars_ml) + list(bars_dl), ml_vals + dl_vals):
             ax.text(bar.get_width() + 0.002,
@@ -474,7 +486,7 @@ def fig_training_history():
     axes[0].set_ylabel("ROC-AUC")
     fig.suptitle("Eğitim Geçmişi — 5 Katın Ortalaması "
                  "(Gerçek, Epok Bazlı Kayıtlar)",
-                 fontsize=13, fontweight="bold", y=1.04)
+                 fontsize=13, fontweight="normal", y=1.04)
     plt.tight_layout()
     _save(fig, "training_history")
 
@@ -537,17 +549,17 @@ def fig_fold_std_table():
     tbl.scale(1, 1.6)
     for j in range(len(col_labels)):
         tbl[(0, j)].set_facecolor(GOLD)
-        tbl[(0, j)].set_text_props(color="white", fontweight="bold")
+        tbl[(0, j)].set_text_props(color="white", fontweight="normal")
     for i in range(1, len(rows) + 1):
         color = "#f5f0e8" if i % 2 == 0 else BG
         for j in range(len(col_labels)):
             tbl[(i, j)].set_facecolor(color)
         if i == 1:
             for j in range(len(col_labels)):
-                tbl[(i, j)].set_text_props(fontweight="bold")
+                tbl[(i, j)].set_text_props(fontweight="normal")
     ax.set_title("Çapraz Doğrulama AUC Sonuçları (5 Katlı) — "
                  "Ort. ± Std, Tüm On Bir Model",
-                 fontsize=12, fontweight="bold", pad=14)
+                 fontsize=12, fontweight="normal", pad=14)
     out = FIG_DIR / "paper_fold_std_table.png"
     fig.savefig(out); plt.close(fig)
     print(f"  TR  paper_fold_std_table.png ({out.stat().st_size//1024} KB)")
@@ -566,14 +578,14 @@ def fig_feature_importance():
 
     fig, ax = plt.subplots(figsize=(9, 8))
     fig.patch.set_facecolor(BG); ax.set_facecolor(BG)
-    bars = ax.barh(names, vals, color=GOLD, alpha=0.85, edgecolor="white")
+    bars = ax.barh(names, vals, color=GOLD)
     for bar, v in zip(bars, vals):
         ax.text(v + 0.0008, bar.get_y() + bar.get_height()/2,
-                f"{v:.4f}", va="center", fontsize=8, fontweight="bold")
+                f"{v:.4f}", va="center", fontsize=8, fontweight="normal")
     ax.set_xlabel("Normalleştirilmiş Önem")
     ax.set_title("İlk Yirmi Öznitelik Önemi — "
                  "LightGBM (En İyi Model)",
-                 fontsize=12, fontweight="bold")
+                 fontsize=12, fontweight="normal")
     ax.set_xlim(0, max(vals) * 1.12)
     _save(fig, "paper_feature_importance")
 
@@ -609,7 +621,7 @@ def fig_shap_summary():
     fig.patch.set_facecolor(BG)
     plt.title("SHAP Özet Grafiği — LightGBM "
               "(2.000 Örneklik CV Diliminde, Gerçek)",
-              fontsize=11, fontweight="bold", pad=12)
+              fontsize=11, fontweight="normal", pad=12)
     _save(fig, "shap_summary")
 
 
@@ -636,7 +648,7 @@ def fig_confusion_matrix():
         for j in range(2):
             pct = cm[i, j] / cm.sum() * 100
             ax.text(j, i, f"{cm[i,j]}\n(%{pct:.1f})",
-                    ha="center", va="center", fontsize=13, fontweight="bold",
+                    ha="center", va="center", fontsize=13, fontweight="normal",
                     color="white" if cm[i,j] > cm.max()*0.5 else "#333")
 
     ax.set_xticks([0,1]); ax.set_yticks([0,1])
@@ -658,16 +670,16 @@ def fig_score_distribution():
     threshold = 0.4316
     fig, ax = plt.subplots(figsize=(8.5, 5.0))
     fig.patch.set_facecolor(BG); ax.set_facecolor(BG)
-    ax.hist(y_prob[y_true == 0], bins=40, alpha=0.65, color=HUMAN,
+    ax.hist(y_prob[y_true == 0], bins=40, alpha=0.35, color=HUMAN,
             label=f"İnsan (n={int((y_true==0).sum())})")
-    ax.hist(y_prob[y_true == 1], bins=40, alpha=0.65, color=AIRED,
+    ax.hist(y_prob[y_true == 1], bins=40, alpha=0.35, color=AIRED,
             label=f"YZ (n={int((y_true==1).sum())})")
     ax.axvline(threshold, color="#333", ls="--", lw=1.8,
                label=f"Youden-optimal eşik θ* = {threshold}")
     ax.set_xlabel("Tahmin Edilen Olasılık P(YZ)")
     ax.set_ylabel("Sayım")
     ax.set_title("Tahmin Olasılık Dağılımı — LightGBM",
-                 fontsize=12, fontweight="bold")
+                 fontsize=12, fontweight="normal")
     ax.legend(loc="upper center")
     _save(fig, "paper_score_distribution")
 
@@ -692,7 +704,7 @@ def fig_calibration():
     ax.set_ylabel("Pozitif Oranı")
     ax.set_xlim(0, 1); ax.set_ylim(0, 1)
     ax.set_title("Kalibrasyon Eğrisi — LightGBM",
-                 fontsize=12, fontweight="bold")
+                 fontsize=12, fontweight="normal")
     ax.text(0.05, 0.92,
             f"Brier Skoru = {brier:.4f}\nN = 5195 (5 Katlı CV)",
             transform=ax.transAxes, fontsize=10,
@@ -722,7 +734,7 @@ def fig_precision_recall():
     ax.set_ylabel("Kesinlik")
     ax.set_xlim(0, 1); ax.set_ylim(0, 1.05)
     ax.set_title("Kesinlik-Duyarlılık Eğrisi — LightGBM",
-                 fontsize=12, fontweight="bold")
+                 fontsize=12, fontweight="normal")
     ax.legend(loc="center")
     _save(fig, "paper_precision_recall")
 
@@ -767,7 +779,7 @@ def fig_threshold_sweep():
     ax.set_ylabel("Skor")
     ax.set_title("Eşik Taraması — Kesinlik / Duyarlılık / F1 "
                  "Eşiğe Göre (LightGBM)",
-                 fontsize=12, fontweight="bold")
+                 fontsize=12, fontweight="normal")
     ax.legend(loc="lower left", fontsize=9)
     ax.set_ylim(0, 1.02)
     _save(fig, "threshold_sweep")
@@ -796,17 +808,17 @@ def fig_per_source():
     fig.patch.set_facecolor(BG); ax.set_facecolor(BG)
     colors = [AIRED if "YZ" in s else HUMAN for s in d["source_tr"]]
     bars = ax.barh(d["source_tr"] + "  (n=" + d["n"].astype(str) + ")",
-                   d["value"], color=colors, alpha=0.85, edgecolor="white")
+                   d["value"], color=colors)
     for bar, v in zip(bars, d["value"]):
         ax.text(v + 0.005, bar.get_y() + bar.get_height()/2,
-                f"{v:.3f}", va="center", fontsize=9, fontweight="bold")
+                f"{v:.3f}", va="center", fontsize=9, fontweight="normal")
     ax.set_xlim(0, 1.0)
     ax.invert_yaxis()
     ax.set_xlabel("YZ sınıfı duyarlılığı (kırmızı) / "
                   "İnsan sınıfı doğruluğu (yeşil)")
     ax.set_title("Kaynak Bazlı Performans — LightGBM, θ* = 0,4316\n"
                  "(5 Katlı Çapraz Doğrulama Tahminleri Üzerinde)",
-                 fontsize=11, fontweight="bold")
+                 fontsize=11, fontweight="normal")
     _save(fig, "per_source_performance")
 
 
@@ -835,17 +847,17 @@ def fig_per_class():
 
     fig, ax = plt.subplots(figsize=(7.5, 4.8))
     fig.patch.set_facecolor(BG); ax.set_facecolor(BG)
-    ax.bar(x - w, prec, w, label="Kesinlik", color=GOLD, alpha=0.85)
-    ax.bar(x,     rec,  w, label="Duyarlılık", color=HUMAN, alpha=0.85)
-    ax.bar(x + w, f1s,  w, label="F1 Skoru", color="#a64b3c", alpha=0.85)
+    ax.bar(x - w, prec, w, label="Kesinlik", color=GOLD)
+    ax.bar(x,     rec,  w, label="Duyarlılık", color=HUMAN)
+    ax.bar(x + w, f1s,  w, label="F1 Skoru", color="#a64b3c")
     for xi, (p, r, f) in enumerate(zip(prec, rec, f1s)):
-        ax.text(xi - w, p + 0.012, f"{p:.3f}", ha="center", fontsize=9, fontweight="bold")
-        ax.text(xi,     r + 0.012, f"{r:.3f}", ha="center", fontsize=9, fontweight="bold")
-        ax.text(xi + w, f + 0.012, f"{f:.3f}", ha="center", fontsize=9, fontweight="bold")
+        ax.text(xi - w, p + 0.012, f"{p:.3f}", ha="center", fontsize=9, fontweight="normal")
+        ax.text(xi,     r + 0.012, f"{r:.3f}", ha="center", fontsize=9, fontweight="normal")
+        ax.text(xi + w, f + 0.012, f"{f:.3f}", ha="center", fontsize=9, fontweight="normal")
     ax.set_xticks(x); ax.set_xticklabels(classes)
     ax.set_ylabel("Skor"); ax.set_ylim(0, 1.05)
     ax.set_title(f"Sınıf Bazlı Performans — LightGBM, θ* = {threshold}",
-                 fontsize=12, fontweight="bold")
+                 fontsize=12, fontweight="normal")
     ax.legend(loc="lower right")
     _save(fig, "per_class_metrics")
 
@@ -883,7 +895,7 @@ def fig_train_val_gap():
     ax.set_ylabel("Doğruluk")
     ax.set_title("Eğitim ve Çapraz Doğrulama Doğruluğu — "
                  "Aşırı Öğrenme Tanısı",
-                 fontsize=12, fontweight="bold")
+                 fontsize=12, fontweight="normal")
     ax.legend(loc="lower right")
     _save(fig, "train_val_gap")
 
@@ -904,7 +916,7 @@ def fig_correlation_heatmap():
     ax.set_yticks(range(len(corr))); ax.set_yticklabels(corr.columns, fontsize=7)
     ax.set_title("Öznitelik Korelasyon Isı Haritası — "
                  "|Pearson r|, 5.195 parça üzerinden",
-                 fontsize=12, fontweight="bold")
+                 fontsize=12, fontweight="normal")
     ax.grid(False)
     _save(fig, "feature_correlation_heatmap")
 
@@ -923,7 +935,7 @@ def fig_feature_ablation():
     ax.set_ylabel("5 katlı CV doğruluğu")
     ax.set_title("Öznitelik Çıkarma — LightGBM Doğruluğu vs "
                  "Öznitelik Sayısı",
-                 fontsize=12, fontweight="bold")
+                 fontsize=12, fontweight="normal")
     Ns = list(d["top_n"])
     ax.set_xticks(Ns)
     for x, y_, s in zip(d["top_n"], d["mean_acc"], d["std_acc"]):
