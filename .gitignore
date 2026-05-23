@@ -148,4 +148,17 @@ DataSet/
 *.h5
 *.pkl
 *.pickle
-*.joblib    
+*.joblib
+
+# Academic figures & binary documents
+docs/academic/figures/
+docs/academic/_BACKUP_english_v1/
+docs/academic/paper/*.docx
+docs/academic/paper/*.pdf
+docs/academic/paper/deliverables/
+docs/academic/paper/_*.docx
+
+# ==========================================
+# HF / ML backend (separate repo)
+# ==========================================
+hf-crowncode-backend/
