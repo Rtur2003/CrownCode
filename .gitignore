@@ -163,6 +163,25 @@ docs/notes/archive/
 PROGRESS.md
 OPTIMIZATION_PLAN.md
 
+# Stale one-off scripts (academic paper reference tools)
+scripts/check_all_refs.py
+scripts/check_no_pages.py
+scripts/fix_all_ref_pages.py
+scripts/fix_conference_refs.py
+scripts/fix_ref1_pages.py
+scripts/fix_ref29.py
+scripts/gujsa_checklist.py
+scripts/read_template.py
+scripts/update_references.py
+scripts/verify_refs_full.py
+
+# Stale docs
+docs/academic/kural.md
+docs/academic/_reference_paper_extracted.txt
+docs/guides/INTENSIVE_3_MONTH_PLAN.md
+docs/notes/ai-preview-mode.md
+docs/community/CONTRIBUTING.md
+
 # ==========================================
 # HF / ML backend (separate repo)
 # ==========================================
