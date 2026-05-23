@@ -158,6 +158,11 @@ docs/academic/paper/*.pdf
 docs/academic/paper/deliverables/
 docs/academic/paper/_*.docx
 
+# Temp/archive notes
+docs/notes/archive/
+PROGRESS.md
+OPTIMIZATION_PLAN.md
+
 # ==========================================
 # HF / ML backend (separate repo)
 # ==========================================
