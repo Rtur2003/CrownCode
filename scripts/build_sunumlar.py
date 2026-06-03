@@ -653,15 +653,12 @@ def s05(prs):
            "class_weight + is_unbalance",
            "TreeSHAP açıklanabilirlik"],
           fill=MGRAY, bar=NAVY, bfs=11.5, gap=6)
-    panel(s, 8.75, 4.32, 4.18, 2.3, "Eşik Optimizasyonu",
+    panel(s, 8.75, 4.32, 4.18, 2.45, "Eşik Optimizasyonu (Youden J)",
           ["J(θ) = TPR(θ) − FPR(θ)", "",
-           "θ* = 0,4316  (0,5 yerine)", "",
-           "Brier skoru = 0,083 → iyi kalibre"],
+           "θ* = 0,4316  (varsayılan 0,5 yerine)", "",
+           "Brier skoru = 0,083 → model iyi kalibre; "
+           "güven düzeyleri gerçek doğruluğu yansıtır."],
           fill=TEALL, bar=TEAL, bfs=11.5, gap=5)
-    text(s, 0.4, 5.5, 8.1, 1.1,
-         "Karar eşiği Youden J kriteriyle 0,5 yerine 0,4316'ya optimize edildi. "
-         "Brier skoru 0,083, modelin güven düzeylerinin gerçek doğruluğu iyi yansıttığını gösterir.",
-         fs=11.5, color=DGRAY)
     footer(s)
 
     # 8 · Sonuçlar TABLOSU (11 model)
@@ -669,12 +666,12 @@ def s05(prs):
     header(s, "Bölüm 8", "Sonuçlar — Model Karşılaştırması",
            "5-katlı çapraz doğrulama · ROC-AUC sırasına göre")
     rows = [[str(i+1)] + list(m) for i, m in enumerate(MODELS)]
-    table(s, 0.4, 1.72, [0.6, 3.1, 1.0, 1.95, 1.75, 1.95, 1.78],
+    table(s, 0.4, 1.68, [0.6, 3.1, 1.0, 1.95, 1.75, 1.95, 1.78],
           ["#", "Model", "Tip", "Doğruluk", "F1", "ROC-AUC", "Std"], rows,
-          row_h=0.43, fs=11, hdr_fs=11.5, highlight_row=0,
+          row_h=0.41, fs=11, hdr_fs=11.5, highlight_row=0,
           align_cols=[PP_ALIGN.CENTER, PP_ALIGN.LEFT, PP_ALIGN.CENTER,
                       PP_ALIGN.CENTER, PP_ALIGN.CENTER, PP_ALIGN.CENTER, PP_ALIGN.CENTER])
-    text(s, 0.4, 6.9, 12.5, 0.32,
+    text(s, 0.4, 6.62, 12.5, 0.34,
          "LightGBM en yüksek ROC-AUC (0,9548) ve en düşük varyans (±0,0023) — "
          "yüksek performans istikrarsız optimumlardan değil, sağlam öznitelik temsilinden geliyor.",
          fs=10.5, italic=True, color=TGRAY)
@@ -824,10 +821,11 @@ def s05(prs):
     for i, (v, l) in enumerate([("0,9548", "ROC-AUC"), ("47", "Öznitelik"),
                                 ("11", "Model"), ("5.195", "Örnek")]):
         lft = 1.15 + i*2.78
-        stat(s, lft, 3.45, 2.45, 1.4, v, l, vfs=26, fill=NAVY2, vcolor=GOLD)
-        rect(s, lft, 3.45, 2.45, 1.4, None, TEAL, 1.0)
-        text(s, lft, 3.52, 2.45, 0.7, v, fs=26, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
-        text(s, lft, 4.2, 2.45, 0.5, l, fs=12, color=WHITE, align=PP_ALIGN.CENTER)
+        rect(s, lft, 3.45, 2.45, 1.4, NAVY2, TEAL, 1.0)
+        text(s, lft, 3.55, 2.45, 0.65, v, fs=26, bold=True, color=GOLD,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        text(s, lft, 4.18, 2.45, 0.5, l, fs=12, color=WHITE,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     text(s, 0.5, 5.25, 12.3, 0.42, "Hasan Arthur Altuntaş  ·  hasannarthurrr@gmail.com",
          fs=14, color=RGBColor(0xAD,0xC4,0xD6), align=PP_ALIGN.CENTER)
     text(s, 0.5, 5.7, 12.3, 0.38, "Düzce Üniversitesi · Bilgisayar Mühendisliği · BM498 · 2025-2026",
