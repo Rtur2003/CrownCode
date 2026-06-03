@@ -115,9 +115,9 @@ def header(s, kicker, title, sub=None):
 
 def footer(s):
     rect(s, 0.4, 7.02, 12.53, 0.012, LINE)
-    text(s, 0.4, 7.08, 8.5, 0.32,
-         "AURIS  ·  Yapay Zekâ Üretimli Müzik Tespiti", fs=9, color=TGRAY)
-    text(s, 5.5, 7.08, 7.43, 0.32,
+    text(s, 0.4, 7.08, 4.6, 0.32,
+         "AURIS · YZ Üretimli Müzik Tespiti", fs=9, color=TGRAY)
+    text(s, 5.1, 7.08, 7.83, 0.32,
          "Hasan Arthur Altuntaş  ·  BM498  ·  Düzce Üniversitesi  ·  2025-2026",
          fs=9, color=TGRAY, align=PP_ALIGN.RIGHT)
 
