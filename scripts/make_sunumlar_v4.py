@@ -84,9 +84,35 @@ def ft(s, page=None):
        color=TGRAY)
     bx(s, 9.4, 7.12, 3.5, 0.33,
        "Düzce Üniversitesi · 2025-2026", fs=9, color=TGRAY, align=PP_ALIGN.RIGHT)
-def img(s, path, l, t, w, h, caption=None):
+def img(s, path, l, t, w, h, caption=None, frame=False):
+    """Görseli (l,t,w,h) kutusuna EN-BOY ORANINI KORUYARAK yerleştirir.
+    Kutu içinde ortalanır (letterbox); ezilme/bozulma olmaz."""
     if os.path.exists(path):
-        s.shapes.add_picture(path, Inches(l), Inches(t), Inches(w), Inches(h))
+        try:
+            from PIL import Image as _PILImage
+            with _PILImage.open(path) as _im:
+                iw, ih = _im.size
+            img_ar = iw / ih
+            box_ar = w / h
+            if img_ar > box_ar:
+                # görsel daha geniş → genişliğe sığdır, dikeyde ortala
+                draw_w = w
+                draw_h = w / img_ar
+                draw_l = l
+                draw_t = t + (h - draw_h) / 2
+            else:
+                # görsel daha dar/uzun → yüksekliğe sığdır, yatayda ortala
+                draw_h = h
+                draw_w = h * img_ar
+                draw_t = t
+                draw_l = l + (w - draw_w) / 2
+        except Exception:
+            draw_l, draw_t, draw_w, draw_h = l, t, w, h
+        if frame:
+            rc(s, draw_l-0.04, draw_t-0.04, draw_w+0.08, draw_h+0.08,
+               WHITE, RGBColor(0xD5,0xD9,0xDD), 0.75)
+        s.shapes.add_picture(path, Inches(draw_l), Inches(draw_t),
+                             Inches(draw_w), Inches(draw_h))
     else:
         rc(s, l, t, w, h, MGRAY, TEAL)
         bx(s, l, t+h/2-0.2, w, 0.4, f"[{os.path.basename(path)}]", fs=10,
@@ -604,9 +630,9 @@ def make_04(prs):
         bx(s, 1.2, top+0.4, 6.5, 0.3, d, fs=10.5, color=DGRAY)
     img(s, f"{FIGS}/paper_score_distribution.png", 8.1, 1.95, 4.8, 3.9,
         "Şekil 9: P(YZ) olasılık dağılımı")
-    callout(s, 8.1, 6.0, 4.8, 0.95, "Çıktı",
-        "Sınıf etiketi (YZ / İnsan) + güven skoru + SHAP gerekçesi. "
-        "Demo videosu teslim paketinde (Uygulama/).", fill=MGRAY, bar=GOLD)
+    callout(s, 8.1, 5.95, 4.8, 1.1, "Çıktı",
+        "Sınıf etiketi (YZ / İnsan), güven skoru ve\nSHAP gerekçesi. Demo "
+        "videosu teslim\npaketinde (Uygulama/) yer alır.", fill=MGRAY, bar=GOLD)
     ft(s)
 
     # Akademik katkı
@@ -894,10 +920,10 @@ def make_05(prs):
             al = PP_ALIGN.LEFT if ci<=1 else PP_ALIGN.CENTER
             bx(s,x+0.08,top+0.04,w-0.14,0.58,cell,fs=10.5,bold=is_a,
                color=GREEN if is_a else DGRAY,align=al,anchor=MSO_ANCHOR.MIDDLE)
-    callout(s, 0.4, 6.2, 12.5, 0.95, "Konumlandırma",
-        "AURIS (0,9548), Transformer tabanlı SONICS (0,960) ile Li vd. (0,931) arasında yer alıyor — "
-        "üstelik derin öğrenme altyapısı gerektirmeden ve katlar arası en düşük varyansla (±0,0023). "
-        "Hafif bir sistemin ne ölçüde rekabetçi kalabileceğini gösteriyor.", fill=TEALL, bar=TEAL)
+    callout(s, 0.4, 6.18, 12.5, 1.0, "Konumlandırma",
+        "AURIS (0,9548), Transformer tabanlı SONICS (0,960) ile Li vd. (0,931) arasında yer alıyor; üstelik derin\n"
+        "öğrenme altyapısı gerektirmeden ve katlar arası en düşük varyansla (±0,0023). Hafif bir sistemin ne\n"
+        "ölçüde rekabetçi kalabileceğini somut olarak gösteriyor.", fill=TEALL, bar=TEAL)
     ft(s)
 
     # Kısıtlamalar + güçlü yönler
