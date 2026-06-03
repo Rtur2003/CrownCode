@@ -181,13 +181,6 @@ def s01(prs):
     imza(slide(prs), "01", "Dönem Başlangıç Sunumu")
 
 
-def RGBColor_steel():
-    return RGBColor(0xAD, 0xC4, 0xD6)
-
-
-from pptx.dml.color import RGBColor
-
-
 # ════════════════════════════════════════════════════════════
 # 02 — LİTERATÜR TARAMASI
 # ════════════════════════════════════════════════════════════
