@@ -806,13 +806,13 @@ def s05(prs):
             ["Yeni nesil üretici sistemlerin kapsanması",
              "Watermarking ve ses parmak izi entegrasyonu",
              "Sosyal medya ve canlı akış entegrasyonu"])]
-    for ci, (title, fill, bar) in enumerate(fut):
+    for ci, (title, fill, bar, items) in enumerate(fut):
         lft = 0.4 + ci*4.25
         rect(s, lft, 1.78, 4.0, 4.85, fill, bar, 1.2)
         rect(s, lft, 1.78, 4.0, 0.6, bar)
         text(s, lft+0.15, 1.78, 3.7, 0.6, title, fs=15, bold=True, color=WHITE,
              anchor=MSO_ANCHOR.MIDDLE)
-        paras(s, lft+0.2, 2.6, 3.65, 3.9, fut[ci][3], fs=12, color=DGRAY, gap=14, lead="•  ")
+        paras(s, lft+0.2, 2.6, 3.65, 3.9, items, fs=12, color=DGRAY, gap=14, lead="•  ")
     footer(s)
 
     # Teşekkür
