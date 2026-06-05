@@ -93,14 +93,14 @@ def build(prs):
     header(s, "Yol Haritası", "Bugün Ne Anlatacağım?",
            "Baştan sona: geçen dönem ne yaptım, bu dönem ne ekledim")
     items = [
-        ("1", "Proje Hikâyesi", "İki dönemlik gelişim çizelgesi"),
-        ("2", "Geçen Dönem (BM401)", "wav2vec2 hibrit + web + mobil"),
-        ("3", "Bu Dönem (BM498)", "47 öznitelik + 11 model topluluk"),
-        ("4", "Sistem Mimarisi", "Web + Mobil + Backend nasıl birleşiyor?"),
-        ("5", "Veri ve Öznitelikler", "5.195 örnek, neden 47 öznitelik?"),
-        ("6", "Model Seçimi", "11 model denedim, neyi neden seçtim?"),
-        ("7", "Sonuçlar ve SHAP", "Performans, açıklanabilirlik, dürüst analiz"),
-        ("8", "Arayüzler ve Demo", "Gerçek web/mobil ekranlar + canlı gösterim"),
+        ("1", "Proje Hikâyesi", "İki dönemlik gelişim (BM401 → BM498)"),
+        ("2", "Arka Plan", "Problem neden önemli?"),
+        ("3", "Sistem Mimarisi", "Web + Mobil + Backend nasıl birleşiyor?"),
+        ("4", "Veri ve Öznitelikler", "5.195 örnek, neden 47 öznitelik?"),
+        ("5", "Model Seçimi", "11 model denedim, neyi neden seçtim?"),
+        ("6", "Sonuçlar ve SHAP", "Performans, açıklanabilirlik, dürüst analiz"),
+        ("7", "Arayüzler ve Demo", "Gerçek web/mobil ekranlar + canlı gösterim"),
+        ("8", "Teknoloji Yığını", "Hangi araçları neden kullandım?"),
         ("9", "Literatür Karşılaştırması", "AURIS rakiplerine göre nerede?"),
         ("10", "Kısıtlar ve Gelecek", "Ne eksik, sırada ne var?"),
     ]
@@ -227,7 +227,8 @@ def build(prs):
 
     # ─── 4. MOTİVASYON ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "1 · Motivasyon", "Neden Yapay Zekâ Müzik Tespiti?")
+    header(s, "Arka Plan", "Neden Yapay Zekâ Müzik Tespiti?",
+           "Problemin önemi ve bu projenin doğuş nedeni")
     panel(s, 0.4, 1.75, 7.4, 2.2, "Sorun büyüyor",
           "Üretken yapay zekâ son üç yılda müzik üretimini laboratuvardan herkesin eline "
           "taşıdı. Bir metin istemiyle dakikalar içinde, deneyimsiz bir kulağın insan "
@@ -255,7 +256,7 @@ def build(prs):
 
     # ─── 5. SİSTEM MİMARİSİ (3 katman) ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "4 · Sistem Mimarisi", "Üç Katmanlı Çok Platformlu Yapı",
+    header(s, "3 · Sistem Mimarisi", "Üç Katmanlı Çok Platformlu Yapı",
            "Sunum · İş mantığı · Veri/Model katmanları")
     layers = [
         ("SUNUM KATMANI", STEEL,
@@ -284,7 +285,7 @@ def build(prs):
 
     # ─── 6. PIPELINE ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "4 · Sistem Mimarisi", "Ham Sesten Karara: İşleyiş Şeması")
+    header(s, "3 · Sistem Mimarisi", "Ham Sesten Karara: İşleyiş Şeması")
     image(s, f"{FIG}/paper_pipeline_diagram.png", 0.4, 1.9, 12.5, 2.5,
           "AURIS uçtan uca analiz hattı")
     steps = [("1 Giriş", "WAV/MP3"), ("2 Ön işleme", "22.050 Hz, mono"),
@@ -303,7 +304,7 @@ def build(prs):
 
     # ─── 7. VERİ KÜMESİ ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "5 · Veri", "Veri Kümesi: 5.195 Örnek, 8 Kaynak")
+    header(s, "4 · Veri", "Veri Kümesi: 5.195 Örnek, 8 Kaynak")
     rows = [["GTZAN", "İnsan", "899"], ["FMA Small", "İnsan", "1.000"],
             ["SleepyJesse (kapak)", "İnsan", "854"], ["Diğer insan", "İnsan", "360"],
             ["Echoes", "Yapay zekâ", "1.128"], ["Suno (v3–v5)", "Yapay zekâ", "500"],
@@ -333,7 +334,7 @@ def build(prs):
 
     # ─── 8. ÖZNİTELİKLER (NEYİ NEDEN) ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "5 · Öznitelikler", "Neden 47 Öznitelik? Neyi Ölçüyorum?",
+    header(s, "4 · Öznitelikler", "Neden 47 Öznitelik? Neyi Ölçüyorum?",
            "Tek bir akustik temsile bağlı kalmamak için beş aile")
     fams = [("Spektral", "16", "Frekans içeriği ve tını — MFCC, flatness, centroid"),
             ("Zamansal", "10", "Enerji ve zaman yapısı — RMS, sıfır geçiş, dinamik aralık"),
@@ -364,7 +365,7 @@ def build(prs):
 
     # ─── 9. MODEL SEÇİMİ — NEYİ NEDEN (tam tablo) ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "6 · Model Seçimi", "11 Model Denedim — Neyi Neden Seçtim?",
+    header(s, "5 · Model Seçimi", "11 Model Denedim — Neyi Neden Seçtim?",
            "5-katlı çapraz doğrulama · ROC-AUC sırasına göre")
     MODELS = [
         ["1", "LightGBM", "ML", "0,8839", "0,8575", "0,9548", "±0,0023"],
@@ -401,7 +402,7 @@ def build(prs):
 
     # ─── 10. ML vs DL görsel ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "6 · Model Seçimi", "Makine Öğrenmesi mi, Derin Öğrenme mi?")
+    header(s, "5 · Model Seçimi", "Makine Öğrenmesi mi, Derin Öğrenme mi?")
     image(s, f"{FIG}/paper_ml_vs_dl.png", 0.4, 1.78, 7.9, 4.6,
           "ML ve DL ailelerinin performans dağılımı")
     panel(s, 8.55, 1.78, 4.38, 4.95, "Çıkarım",
@@ -418,7 +419,7 @@ def build(prs):
 
     # ─── 11. SONUÇLAR — özet metrik ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "7 · Sonuçlar", "LightGBM Performansı")
+    header(s, "6 · Sonuçlar", "LightGBM Performansı")
     stat(s, 0.4, 1.78, 2.95, 1.5, "0,9548", "ROC-AUC", vfs=28)
     stat(s, 3.55, 1.78, 2.95, 1.5, "0,8839", "Doğruluk", vfs=28)
     stat(s, 6.7, 1.78, 2.95, 1.5, "0,8575", "F1-Skoru", vfs=28)
@@ -438,7 +439,7 @@ def build(prs):
 
     # ─── 12. AÇIKLANABİLİRLİK SHAP ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "7 · Sonuçlar", "Kararı Açıklamak — SHAP Analizi",
+    header(s, "6 · Sonuçlar", "Kararı Açıklamak — SHAP Analizi",
            "Model neden 'yapay zekâ' diyor?")
     image(s, f"{FIG}/shap_summary.png", 0.4, 1.78, 5.9, 4.6,
           "TreeSHAP global etki diyagramı")
@@ -459,7 +460,7 @@ def build(prs):
 
     # ─── 13. KAYNAK BAZLI ANALİZ (dürüst) ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "7 · Sonuçlar", "Hangi Kaynakta Ne Kadar Başarılı?",
+    header(s, "6 · Sonuçlar", "Hangi Kaynakta Ne Kadar Başarılı?",
            "Dürüst değerlendirme: güçlü ve zayıf noktalar")
     panel(s, 0.4, 1.78, 6.15, 2.3, "İyi sonuçlar",
           ["Suno parçaları:  %93,0 duyarlılık",
@@ -485,7 +486,7 @@ def build(prs):
 
     # ─── 14. WEB ARAYÜZÜ (GERÇEK EKRAN) ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "8 · Arayüzler", "Web Platformu — Gerçek Ekran Görüntüsü",
+    header(s, "7 · Arayüzler", "Web Platformu — Gerçek Ekran Görüntüsü",
            "Next.js 14 · TypeScript · Tailwind CSS")
     image(s, f"{SS}/auris_web_hero.png", 0.4, 1.78, 8.1, 4.7,
           "AURIS web arayüzü — analiz sayfası")
@@ -504,7 +505,7 @@ def build(prs):
 
     # ─── 15. WEB — DETAY EKRANLAR ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "8 · Arayüzler", "Web — Analiz ve Sonuç Akışı")
+    header(s, "7 · Arayüzler", "Web — Analiz ve Sonuç Akışı")
     image(s, f"{SS}/auris_web_sec1.png", 0.4, 1.78, 6.15, 3.85,
           "Dosya yükleme ve analiz alanı")
     image(s, f"{SS}/auris_web_sec2.png", 6.75, 1.78, 6.18, 3.85,
@@ -517,7 +518,7 @@ def build(prs):
 
     # ─── 16. MOBİL ARAYÜZ (GERÇEK EKRAN) ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "8 · Arayüzler", "Mobil Uygulama — Gerçek Ekran Görüntüleri",
+    header(s, "7 · Arayüzler", "Mobil Uygulama — Gerçek Ekran Görüntüleri",
            "Kotlin · Jetpack Compose · MVVM mimarisi")
     image(s, f"{SS}/auris_mobile_hero.png", 1.0, 1.78, 2.7, 4.8,
           "AURIS ana ekranı")
@@ -559,7 +560,7 @@ def build(prs):
 
     # ─── 17. TEKNOLOJİ YIĞINI (NE KULLANDIM) ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "Genel", "Ne Kullandım? — Teknoloji Yığını",
+    header(s, "8 · Teknoloji", "Ne Kullandım? — Teknoloji Yığını",
            "Her katmanda neden bu araçları seçtim")
     stacks = [
         ("Yapay Zekâ / Veri", TEAL,
