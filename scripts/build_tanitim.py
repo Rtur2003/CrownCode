@@ -100,7 +100,7 @@ def build(prs):
         ("5", "Veri ve Öznitelikler", "5.195 örnek, neden 47 öznitelik?"),
         ("6", "Model Seçimi", "11 model denedim, neyi neden seçtim?"),
         ("7", "Sonuçlar ve SHAP", "Performans, açıklanabilirlik, dürüst analiz"),
-        ("8", "Arayüzler", "Gerçek web ve mobil ekranlar"),
+        ("8", "Arayüzler ve Demo", "Gerçek web/mobil ekranlar + canlı gösterim"),
         ("9", "Literatür Karşılaştırması", "AURIS rakiplerine göre nerede?"),
         ("10", "Kısıtlar ve Gelecek", "Ne eksik, sırada ne var?"),
     ]
@@ -151,10 +151,10 @@ def build(prs):
     header(s, "2 · Geçen Dönem", "BM401 Proje Tasarımı — Temeli Attım",
            "wav2vec2 tabanlı hibrit model + çok platformlu ürün")
     panel(s, 0.4, 1.75, 6.15, 2.4, "Ne yaptım?",
-          ["wav2vec2 (Facebook AI) ile ham sesten 768 boyutlu derin temsil çıkardım.",
+          ["wav2vec2 (Meta'nın geliştirdiği, sesi otomatik 'anlayan' bir derin öğrenme "
+           "modeli) ile ham sesten 768 boyutlu temsil çıkardım.",
            "Üzerine LightGBM sınıflandırıcı koyarak hibrit bir model kurdum.",
-           "Web (Next.js), mobil (Kotlin) ve backend (FastAPI) ile uçtan uca çalışan "
-           "bir ürün geliştirdim."],
+           "Web, mobil ve backend ile uçtan uca çalışan bir ürün geliştirdim."],
           fill=TEALL, bar=TEAL, bfs=12, gap=6)
     panel(s, 0.4, 4.35, 6.15, 2.25, "Ne öğrendim?",
           ["wav2vec2 güçlü ama ağır — GPU ister, gerçek zamanlı çalışması zor.",
@@ -324,6 +324,11 @@ def build(prs):
            "",
            "class_weight='balanced' ve stratifiye CV ile dengelendi."],
           fill=MGRAY, bar=GOLD, bfs=11.5, gap=5)
+    # Etik / FAIR notu
+    panel(s, 0.4, 6.0, 8.5, 0.78, "Veri Etiği",
+          ["Tüm veriler kamuya açık kaynaklardan derlendi; insan katılımcıdan birincil "
+           "veri toplanmadı, etik kurul izni gerekmedi. Veri yalnızca akademik amaçla kullanıldı."],
+          fill=GREENL, bar=GREEN, bfs=10, tfs=11.5, gap=2)
     footer(s)
 
     # ─── 8. ÖZNİTELİKLER (NEYİ NEDEN) ───
@@ -363,31 +368,35 @@ def build(prs):
            "5-katlı çapraz doğrulama · ROC-AUC sırasına göre")
     MODELS = [
         ["1", "LightGBM", "ML", "0,8839", "0,8575", "0,9548", "±0,0023"],
-        ["2", "Derin ÇKA", "DL", "0,8849", "0,8596", "0,9542", "±0,0036"],
-        ["3", "Artık ÇKA", "DL", "0,8756", "0,8476", "0,9485", "±0,0048"],
+        ["2", "Derin MLP", "DL", "0,8849", "0,8596", "0,9542", "±0,0036"],
+        ["3", "Artık MLP", "DL", "0,8756", "0,8476", "0,9485", "±0,0048"],
         ["4", "XGBoost", "ML", "0,8751", "0,8408", "0,9465", "±0,0029"],
-        ["5", "Gradyan Artırma", "ML", "0,8685", "0,8337", "0,9397", "±0,0038"],
-        ["6", "Rastgele Orman", "ML", "0,8606", "0,8183", "0,9394", "±0,0051"],
-        ["7", "Dikkat ÇKA", "DL", "0,8628", "0,8293", "0,9359", "±0,0059"],
+        ["5", "Gradient Boosting", "ML", "0,8685", "0,8337", "0,9397", "±0,0038"],
+        ["6", "Random Forest", "ML", "0,8606", "0,8183", "0,9394", "±0,0051"],
+        ["7", "Attention MLP", "DL", "0,8628", "0,8293", "0,9359", "±0,0059"],
         ["8", "SVM-RBF", "ML", "0,8612", "0,8252", "0,9346", "±0,0075"],
-        ["9", "ÇKA Sinir Ağı", "ML", "0,8566", "0,8189", "0,9276", "±0,0061"],
-        ["10", "1B-ESA", "DL", "0,7665", "0,7159", "0,8543", "±0,0087"],
-        ["11", "Lojistik Reg.", "ML", "0,7779", "0,7390", "0,8515", "±0,0042"],
+        ["9", "MLP", "ML", "0,8566", "0,8189", "0,9276", "±0,0061"],
+        ["10", "1D-CNN", "DL", "0,7665", "0,7159", "0,8543", "±0,0087"],
+        ["11", "Logistic Reg.", "ML", "0,7779", "0,7390", "0,8515", "±0,0042"],
     ]
-    table(s, 0.4, 1.72, [0.55, 2.75, 0.9, 1.5, 1.4, 1.5, 1.35],
+    table(s, 0.4, 1.68, [0.5, 2.95, 0.85, 1.45, 1.35, 1.5, 1.3],
           ["#", "Model", "Tip", "Doğr.", "F1", "ROC-AUC", "Std"], MODELS,
-          row_h=0.4, fs=10.5, hdr_fs=11, highlight_row=0,
+          row_h=0.38, fs=10.5, hdr_fs=11, highlight_row=0,
           align_cols=[PP_ALIGN.CENTER, PP_ALIGN.LEFT, PP_ALIGN.CENTER,
                       PP_ALIGN.CENTER, PP_ALIGN.CENTER, PP_ALIGN.CENTER, PP_ALIGN.CENTER])
-    panel(s, 10.4, 1.72, 2.53, 4.95, "Neden LightGBM?",
+    panel(s, 10.4, 1.68, 2.53, 3.05, "Neden LightGBM?",
           ["En yüksek ROC-AUC (0,9548)",
-           "",
            "En düşük varyans (±0,0023) → en kararlı",
-           "",
            "Hızlı eğitim, az bellek",
-           "",
-           "Derin ağlara yakın başarı, ama çok daha hafif"],
-          fill=TEALL, bar=TEAL, bfs=10.5, gap=5)
+           "Derin ağlara yakın başarı, çok daha hafif"],
+          fill=TEALL, bar=TEAL, bfs=10, gap=6)
+    # Kısaltma açıklaması (jüri 'ÇKA/CNN ne?' demesin)
+    panel(s, 10.4, 4.9, 2.53, 1.77, "Kısaltmalar",
+          ["MLP: Çok Katmanlı Algılayıcı",
+           "CNN: Evrişimli Sinir Ağı",
+           "SVM: Destek Vektör Makinesi",
+           "ML: Makine Öğr. · DL: Derin Öğr."],
+          fill=MGRAY, bar=GOLD, bfs=9.5, gap=4)
     footer(s)
 
     # ─── 10. ML vs DL görsel ───
@@ -399,7 +408,7 @@ def build(prs):
           ["7 ML modeli ortalama %92,75 ROC-AUC.",
            "4 DL modeli ortalama %92,32.",
            "",
-           "1B-ESA dışlanınca DL ortalaması %94,62'ye çıkıyor.",
+           "1D-CNN dışlanınca DL ortalaması %94,62'ye çıkıyor.",
            "",
            "Sonuç: 47 boyutlu öznitelik vektörü ayırt edici bilginin büyük bölümünü "
            "zaten taşıyor. Karmaşık derin ağ şart değil — hafif LightGBM yeterli ve "
@@ -525,6 +534,28 @@ def build(prs):
            "10 analiz için yalnız %3 batarya tüketimi"],
           fill=TEALL, bar=TEAL, bfs=11.5, gap=6)
     footer(s)
+
+    # ─── 16b. CANLI DEMO GEÇİŞİ ───
+    s = slide(prs); bg(s, NAVY)
+    rect(s, 0, 2.95, SW, 0.06, GOLD)
+    text(s, 0.5, 1.5, 12.3, 0.5, "CANLI DEMO", fs=16, bold=True, color=GOLD,
+         align=PP_ALIGN.CENTER)
+    text(s, 0.5, 2.05, 12.3, 0.9, "Şimdi Sistemi Birlikte Görelim",
+         fs=30, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+    text(s, 0.5, 3.2, 12.3, 0.5, "Bir müzik dosyası yükleyip gerçek zamanlı sonucu inceleyeceğiz",
+         fs=14, color=RGBColor(0xAD, 0xC4, 0xD6), align=PP_ALIGN.CENTER)
+    demo = [("1", "Dosya / bağlantı ver"), ("2", "47 öznitelik çıkar"),
+            ("3", "LightGBM tahmin"), ("4", "Sonuç + SHAP gerekçe")]
+    for i, (no, t) in enumerate(demo):
+        lft = 1.45 + i*2.7
+        rect(s, lft, 4.3, 2.4, 1.4, NAVY2, TEAL, 1.0)
+        text(s, lft, 4.45, 2.4, 0.6, no, fs=26, bold=True, color=GOLD,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        text(s, lft+0.1, 5.05, 2.2, 0.6, t, fs=11, color=WHITE,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    text(s, 0.5, 6.2, 12.3, 0.4,
+         "(Demo videosu teslim paketinde · Uygulama/ klasörü)",
+         fs=11, italic=True, color=RGBColor(0x7E, 0x9A, 0xB4), align=PP_ALIGN.CENTER)
 
     # ─── 17. TEKNOLOJİ YIĞINI (NE KULLANDIM) ───
     s = slide(prs); bg(s, PAPER)
