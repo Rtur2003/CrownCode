@@ -148,7 +148,7 @@ def build(prs):
 
     # ─── 5. GEÇEN DÖNEM (BM401) ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "2 · Geçen Dönem", "BM401 Proje Tasarımı — Temeli Attım",
+    header(s, "1 · Proje Hikâyesi", "BM401 Proje Tasarımı — Temeli Attım",
            "wav2vec2 tabanlı hibrit model + çok platformlu ürün")
     panel(s, 0.4, 1.75, 6.15, 2.4, "Ne yaptım?",
           ["wav2vec2 (Meta'nın geliştirdiği, sesi otomatik 'anlayan' bir derin öğrenme "
@@ -176,7 +176,7 @@ def build(prs):
 
     # ─── 6. BU DÖNEM (BM498) ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "3 · Bu Dönem", "BM498 Mezuniyet Tezi — Akademik Olarak Derinleştirdim",
+    header(s, "1 · Proje Hikâyesi", "BM498 Mezuniyet Tezi — Akademik Olarak Derinleştirdim",
            "Ağır derin modelden, hafif ve açıklanabilir topluluk öğrenmesine")
     panel(s, 0.4, 1.75, 6.15, 2.4, "Ne değişti?",
           ["wav2vec2'nin tek başına çıkardığı temsil yerine, 47 boyutlu elle tasarlanmış "
@@ -204,7 +204,7 @@ def build(prs):
 
     # ─── 7. İKİ DÖNEM KARŞILAŞTIRMASI ───
     s = slide(prs); bg(s, PAPER)
-    header(s, "Karşılaştırma", "İki Dönem Yan Yana — Ne Gelişti?")
+    header(s, "1 · Proje Hikâyesi", "İki Dönem Yan Yana — Ne Gelişti?")
     comp = [
         ["Yöntem", "wav2vec2 + LightGBM hibrit", "47 öznitelik + 11 model topluluk"],
         ["Model ağırlığı", "Ağır (GPU gerekir)", "Hafif (CPU yeterli)"],
