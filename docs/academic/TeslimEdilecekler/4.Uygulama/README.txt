@@ -14,7 +14,6 @@ Dosya adı : AURIS_Demo_Videosu.mp4
              3) Android mobil uygulaması kullanımı
              4) SHAP açıklanabilirlik ekranı
 
-Not: Video kaydı yapılmadıysa, demo sunumunda canlı gösterim yapılacaktır.
 
 ----------------------------------------------------------------
 KAYNAK KODLARI
