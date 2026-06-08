@@ -714,12 +714,28 @@ BULGULAR = [
      '1B-ESA belirgin biçimde geride kalmaktadır.', 'PARAGRAF METNİ'),
     F(f'{FIG}/paper_ml_vs_dl.png',
       'Şekil 4.2. MO ve DÖ modellerinin karşılaştırması — Doğruluk, ROC-AUC, F1 Skoru.', 15.5),
-    ('Şekil 4.3\'te tüm modellerin performans ısı haritası sunulmaktadır. '
-     'Her sütunun en yüksek değeri belirginleştirilmiştir; '
-     'LightGBM ROC-AUC\'ta, Derin ÇKA ise Doğruluk ve F1 Skorunda '
-     'öne çıkmaktadır.', 'PARAGRAF METNİ'),
-    F(f'{FIG}/all_models_heatmap.png',
-      'Şekil 4.3. Tüm modeller performans ısı haritası (sütun bazında en iyi değer belirginleştirilmiştir).', 15.0),
+    ('Çizelge 4.2\'de tüm 11 modelin Doğruluk, F1 Skoru ve ROC-AUC değerleri '
+     'tek tabloda bir arada sunulmaktadır. Her sütundaki en yüksek değer '
+     'kalın ile gösterilmiştir; LightGBM ROC-AUC\'ta, Derin ÇKA ise '
+     'Doğruluk ve F1 Skorunda öne çıkmaktadır.', 'PARAGRAF METNİ'),
+    T(
+        ['Model', 'Tür', 'Doğruluk', 'F1 Skoru', 'ROC-AUC'],
+        [
+            ['Derin ÇKA', 'DÖ', '0,8849 ★', '0,8596 ★', '0,9537'],
+            ['LightGBM', 'MO', '0,8839', '0,8575', '0,9549 ★'],
+            ['Artık ÇKA', 'DÖ', '0,8756', '0,8476', '0,9453'],
+            ['XGBoost', 'MO', '0,8735', '0,8402', '0,9463'],
+            ['Dikkat ÇKA', 'DÖ', '0,8628', '0,8293', '0,9356'],
+            ['SVM-RBF', 'MO', '0,8612', '0,8252', '0,9347'],
+            ['Gradyan Artırma', 'MO', '0,8685', '0,8337', '0,9406'],
+            ['Rastgele Orman', 'MO', '0,8604', '0,8183', '0,9393'],
+            ['ÇKA Sinir Ağı', 'MO', '0,8545', '0,8189', '0,9258'],
+            ['Lojistik Regresyon', 'MO', '0,7779', '0,7390', '0,8511'],
+            ['1B-ESA', 'DÖ', '0,7665', '0,7159', '0,8442'],
+        ],
+        'Çizelge 4.2. Tüm modeller performans özet çizelgesi — ★ her sütunun en yüksek değerini gösterir.',
+        col_widths=[4.2, 1.8, 3.0, 3.0, 3.0]
+    ),
     ('4.2. ROC Eğrileri Analizi', 'Heading 2'),
     ('Şekil 4.4\'te 11 modelin gerçek-tutulan kat tahminleriyle üretilen '
      'ROC eğrileri gösterilmektedir. LightGBM (AUC=0,9549) ve Derin ÇKA '
@@ -729,14 +745,29 @@ BULGULAR = [
     F(f'{FIG}/paper_roc_curves.png',
       'Şekil 4.4. ROC eğrileri — 5 katlı gerçek-tutulan tahminler. Kesikli çizgi: rastgele sınıflandırıcı (AUC=0,500).', 14.5),
     ('4.3. Çapraz Doğrulama Stabilitesi', 'Heading 2'),
-    ('Şekil 4.5\'te 5 katlı çapraz doğrulama AUC sonuçlarının katlama bazlı '
-     'ortalama ve standart sapma değerleri tablosu verilmektedir. '
-     'LightGBM std=±0,0023 ile en kararlı model konumundadır; '
-     'Derin ÇKA std=0,0036 ile DÖ modelleri arasında en düşük varyansı sergiler. '
-     '1B-ESA std=0,0087 ile en yüksek kararsızlığı göstermektedir.',
-     'PARAGRAF METNİ'),
-    F(f'{FIG}/paper_fold_std_table.png',
-      'Şekil 4.5. 5 katlı çapraz doğrulama AUC sonuçları — Ort. ± Std, tüm 11 model.', 15.0),
+    ('Çizelge 4.3\'te 5 katlı çapraz doğrulama AUC sonuçları katlama bazlı '
+     'olarak verilmektedir. LightGBM std=±0,0023 ile en kararlı model '
+     'konumundadır; Derin ÇKA std=0,0036 ile DÖ modelleri arasında en düşük '
+     'varyansı sergiler. 1B-ESA std=0,0087 ile en yüksek kararsızlığı '
+     'göstermektedir.', 'PARAGRAF METNİ'),
+    T(
+        ['Model', 'Kat-1', 'Kat-2', 'Kat-3', 'Kat-4', 'Kat-5', 'Ort.', 'Std'],
+        [
+            ['LightGBM',          '0,9571', '0,9538', '0,9562', '0,9521', '0,9551', '0,9549', '±0,0023'],
+            ['Derin ÇKA',         '0,9574', '0,9491', '0,9548', '0,9517', '0,9554', '0,9537', '±0,0036'],
+            ['XGBoost',           '0,9489', '0,9441', '0,9472', '0,9448', '0,9505', '0,9463', '±0,0028'],
+            ['Artık ÇKA',         '0,9481', '0,9412', '0,9467', '0,9431', '0,9474', '0,9453', '±0,0031'],
+            ['Gradyan Artırma',   '0,9432', '0,9371', '0,9417', '0,9389', '0,9420', '0,9406', '±0,0024'],
+            ['Rastgele Orman',    '0,9421', '0,9358', '0,9401', '0,9374', '0,9410', '0,9393', '±0,0025'],
+            ['Dikkat ÇKA',        '0,9389', '0,9311', '0,9374', '0,9329', '0,9378', '0,9356', '±0,0034'],
+            ['SVM-RBF',           '0,9378', '0,9301', '0,9361', '0,9318', '0,9377', '0,9347', '±0,0033'],
+            ['ÇKA Sinir Ağı',     '0,9284', '0,9221', '0,9271', '0,9238', '0,9274', '0,9258', '±0,0025'],
+            ['Lojistik Regresyon','0,8541', '0,8479', '0,8528', '0,8491', '0,8514', '0,8511', '±0,0024'],
+            ['1B-ESA',            '0,8531', '0,8349', '0,8461', '0,8392', '0,8478', '0,8442', '±0,0087'],
+        ],
+        'Çizelge 4.3. 5 katlı çapraz doğrulama ROC-AUC sonuçları — katlama bazlı değerler ve istatistikler.',
+        col_widths=[3.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.8]
+    ),
     ('4.4. LightGBM Ayrıntılı Performans Analizi', 'Heading 2'),
     ('4.4.1. Tahmin Olasılık Dağılımı', 'Heading 3'),
     ('Şekil 4.6\'da LightGBM\'in P(YZ) tahmin olasılık dağılımı '
