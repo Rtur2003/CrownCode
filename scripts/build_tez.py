@@ -335,64 +335,129 @@ def F(path, caption, w=14.5):
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 1. GİRİŞ
+# 1. GİRİŞ  (v6 — genişletilmiş, proje bazlı, özgün anlatım)
 # ══════════════════════════════════════════════════════════════════════════════
 GIRIS = [
     ('1.1. Projenin Amacı ve Motivasyon', 'Heading 2'),
-    ('Yapay zekâ teknolojilerinin müzik üretim alanına girişiyle birlikte Suno, MusicGen, '
-     'Udio, Echoes, Stable Audio, AudioLDM2, Riffusion ve JEN-1 gibi platformlar dakikalar '
-     'içinde profesyonel kalitede ses parçaları üretebilir hale gelmiştir. Bu gelişme '
-     'telif hakkı ihlalleri, streaming gelir kayıpları ve müzik yarışmalarında etik '
-     'ihlaller gibi ciddi sorunlara zemin hazırlamaktadır [1]. '
-     'Şekil 1.1\'de AURIS sisteminin uçtan uca akış diyagramı verilmektedir; '
-     'ses girişinden YZ/İnsan kararına kadar her işlem adımı şematik olarak özetlenmiştir.',
+    ('Müzik, yüzyıllardır insanın en özgün yaratı biçimlerinden biri olarak kabul '
+     'görmektedir. Ancak son birkaç yılda bu kabul, köklü bir sorgulama sürecine '
+     'girmiştir. Suno, Udio, MusicGen, Stable Audio, AudioLDM2, Riffusion, JEN-1 '
+     've Echoes gibi üretici yapay zekâ platformları, müzik teorisi bilgisi '
+     'gerektirmeksizin dakikalar içinde dinleyici tarafından gerçek müzikten '
+     'ayırt edilmesi güç parçalar üretebilmektedir. Kullanıcı yalnızca bir metin '
+     'talebi giriyor; sistem bütün bir şarkıyı, şarkı sözleriyle birlikte, '
+     'sıfırdan üretiyor. Bu olanak, müzik endüstrisinde ciddi bir etik ve '
+     'ekonomik gerilime yol açmaktadır.',
+     'PARAGRAF METNİ'),
+    ('Streaming platformlarında içerik moderasyonu büyük ölçüde meta veriye '
+     'dayandığından, yapay zekâ üretimi parçaların insan eseri olarak yüklenmesi '
+     'kolayca mümkün olmaktadır. Bu durum telif hakkı ihlallerine doğrudan zemin '
+     'hazırlamakta; insan sanatçıların telif ve akış gelirlerini azaltmaktadır. '
+     'Müzik yarışmalarında ve burs değerlendirmelerinde yapay zekâ eserlerinin '
+     'insan yaratıcılığı olarak sunulması da ayrı bir sorun oluşturmaktadır [1]. '
+     'Tüm bu nedenlerle, yapay zekâ üretimi müziği insan eserinden otomatik '
+     'olarak ayırt edebilen, şeffaf ve güvenilir bir tespit sistemine duyulan '
+     'ihtiyaç her geçen gün artmaktadır.',
+     'PARAGRAF METNİ'),
+    ('Bu tez çalışmasında, yukarıda tanımlanan soruna yanıt vermek amacıyla '
+     'AURIS (Acoustic-feature-based AI music Recognition and Identification System) '
+     'adlı sistem tasarlanmış ve hayata geçirilmiştir. AURIS; bir ses kaydından '
+     'beş farklı kategoride toplam 47 akustik öznitelik çıkarmakta, bu öznitelikleri '
+     'on bir farklı sınıflandırma modeliyle değerlendirmekte ve her karar için '
+     'SHAP tabanlı açıklama üretmektedir. Sistemin tamamı web, Android ve REST API '
+     'katmanlarıyla kullanıcıya açık biçimde sunulmuştur. '
+     'Şekil 1.1\'de AURIS\'in uçtan uca işlem hattı şematik olarak gösterilmektedir.',
      'PARAGRAF METNİ'),
     F(f'{FIG}/paper_pipeline_diagram.png',
-      'Şekil 1.1. AURIS sistem akış diyagramı — ses girişinden karar çıkışına uçtan uca işlem hattı.', 15.5),
-    ('Üretici yapay zekâ sistemleri hız ve erişilebilirlik açısından devrimsel fırsatlar '
-     'sunarken, insan ile yapay zekâ üretimi içerik arasındaki sınırı bulanıklaştırmaktadır. '
-     'Algoritmik öneri sistemleri yapay zekâ içeriklerini otomatik olarak insanmış gibi '
-     'sınıflandırabilmekte; bu durum insan sanatçıların streaming gelirlerini olumsuz '
-     'etkilemekte ve telif hakkı sistemlerini zayıflatmaktadır. Bhatt vd. (2025) çapraz-üretici '
-     'genellemenin alanın temel açık problemi olduğunu vurgularken, Liu vd. (2024) mevcut '
-     'yaklaşımların büyük bölümünün tek üreticiye özgü kaldığını ve yeni sistemlere '
-     'genelleme yapamadığını ortaya koymuştur [3],[15].', 'PARAGRAF METNİ'),
-    ('1.2. Araştırma Sorusu ve Hedefler', 'Heading 2'),
-    ('Bu çalışmanın temel araştırma sorusu şöyledir: "Spektral, zamansal, ritmik, harmonik '
-     've vokal boyutları kapsayan el ile tasarlanmış 47 boyutlu akustik öznitelik vektörü, '
-     'gradient boosting tabanlı topluluk yöntemiyle birleştirildiğinde, uçtan uca derin '
-     'öğrenme yaklaşımlarıyla rekabet edebilir bir yapay zekâ müziği tespit performansı '
-     'sağlayabilir mi?"', 'PARAGRAF METNİ'),
-    ('Araştırmanın başlıca hedefleri şöyle sıralanabilir: '
-     '(1) 5 ana kategoride toplam 47 akustik öznitelikten oluşan kapsamlı, yorumlanabilir '
-     've müziğe özgü bir öznitelik vektörü tasarlamak; '
-     '(2) 8 farklı kaynaktan derlenen 5.195 örnekli gerçek dünya veri kümesi oluşturmak; '
-     '(3) 7 klasik makine öğrenmesi ve 4 derin öğrenme modelini aynı şeffaf 5 katlı '
-     'çapraz doğrulama protokolüyle karşılaştırmak; '
-     '(4) Youden J istatistiğiyle optimal karar eşiği belirlemek; '
-     '(5) SHAP entegrasyonuyla her kararı öznitelik düzeyinde açıklanabilir kılmak; '
-     '(6) Sistemi web, Android ve REST API katmanlarıyla üretim ortamına taşımak.',
+      'Şekil 1.1. AURIS sistem akış diyagramı — ses girişinden YZ/İnsan kararına uçtan uca işlem hattı.', 15.5),
+    ('1.2. Problemin Tanımı', 'Heading 2'),
+    ('Yapay zekâ üretimi müziği tespit etmeye yönelik araştırmaların büyük bölümü, '
+     'konuşma sentezi ve ses derin sahteciliği alanına odaklanmıştır. Müziğe özgü '
+     'tespit çalışmaları görece sınırlı kalmış; mevcut yaklaşımların önemli bir '
+     'kısmı yalnızca belirli bir üreticiye özgü örnekler üzerinde başarılı '
+     'olabilmektedir. Liu vd. (2024) bu sorunun müzik tespitinin önündeki en büyük '
+     'engel olduğunu vurgularken, Bhatt vd. (2025) çapraz-üretici genellemenin '
+     'alanın açık problemi olmaya devam ettiğini ortaya koymuştur [3],[15].',
      'PARAGRAF METNİ'),
-    ('1.3. BM401–BM498 İki Dönemlik Süreç', 'Heading 2'),
-    ('AURIS projesi iki akademik dönem boyunca aşamalı olarak geliştirilmiştir. '
-     'BM401 (2024–2025 Güz Dönemi) kapsamında wav2vec2 tabanlı bir ön araştırma prototipi '
-     'tasarlanmış; Next.js 14 web platformu ve Kotlin/Compose Android uygulamasının '
-     'temel yapısı oluşturulmuştur. Ancak wav2vec2 embedding\'lerinin yorumlanamazlığı ve '
-     'çapraz-üretici genelleme güçlüğü, araştırma odağının köklü biçimde değiştirilmesini '
-     'zorunlu kılmıştır. '
-     'BM498 (2024–2025 Bahar Dönemi) kapsamında ise el ile tasarlanmış 47 boyutlu akustik '
-     'öznitelik vektörüne geçilmiş, veri kümesi 5.195 örneğe genişletilmiş, 11 modelli '
-     'topluluk sistemi kurulmuş ve SHAP açıklanabilirlik katmanı eklenmiştir.',
+    ('Mevcut ticari sistemler şeffaf metodoloji sunmamaktadır. IRCAM Amplify '
+     'yüksek doğruluk bildirmekle birlikte eğitim verisini kamuyla paylaşmamakta; '
+     'Believe AI Radar ise ücretli erişim modeli nedeniyle akademik '
+     'karşılaştırmayı güçleştirmektedir. Bu çalışmada, söz konusu boşlukları '
+     'kapatmak amacıyla; açık kaynaklı veri kümesi, şeffaf çapraz doğrulama '
+     'protokolü, SHAP açıklanabilirliği ve ücretsiz platform erişimi '
+     'bir arada sunulmaktadır.',
      'PARAGRAF METNİ'),
-    ('1.4. Tez Organizasyonu', 'Heading 2'),
-    ('Bu tez altı ana bölümden oluşmaktadır. Bölüm 2\'de yapay zekâ müzik üretimi, '
-     'ses derin sahteciliği tespiti ve transformer tabanlı ses gösterimleri literatürü '
-     'sistematik olarak incelenmektedir. Bölüm 3\'te AURIS\'in veri kümesi, öznitelik '
-     'mühendisliği hattı, model mimarileri, eğitim protokolü ve uygulama mimarisi '
-     'ayrıntılı biçimde aktarılmaktadır. Bölüm 4\'te 11 modelin karşılaştırmalı '
-     'performans bulguları sunulmaktadır. Bölüm 5\'te bulgular literatürle '
-     'tartışılmaktadır. Bölüm 6\'da sonuçlar ve gelecek çalışma önerileri '
-     'özetlenmektedir.', 'PARAGRAF METNİ'),
+    ('1.3. Araştırma Sorusu ve Hedefler', 'Heading 2'),
+    ('Bu çalışmanın yöneldiği temel araştırma sorusu şudur: Spektral, zamansal, '
+     'ritmik, harmonik ve vokal boyutları kapsayan, el ile tasarlanmış 47 boyutlu '
+     'akustik bir öznitelik vektörü, gradient boosting tabanlı topluluk yöntemiyle '
+     'birleştirildiğinde, uçtan uca derin öğrenme yaklaşımlarıyla rekabet edebilir '
+     'bir yapay zekâ müziği tespit performansı sağlayabilir mi?',
+     'PARAGRAF METNİ'),
+    ('Bu sorudan türetilen araştırma hedefleri şu şekilde belirlenmiştir: '
+     '(1) Beş kategoride 47 akustik öznitelikten oluşan, müziğe özgü ve '
+     'yorumlanabilir bir öznitelik vektörü tasarlamak; '
+     '(2) Sekiz farklı kaynaktan derlenen, 5.195 ses kaydı içeren, '
+     'etiketlenmiş ve ön işlemden geçirilmiş bir veri kümesi oluşturmak; '
+     '(3) Yedi klasik makine öğrenmesi ve dört derin öğrenme modelini '
+     'aynı beş katlı tabakalı çapraz doğrulama protokolüyle değerlendirmek; '
+     '(4) Youden J istatistiğiyle her model için optimal karar eşiği belirlemek; '
+     '(5) SHAP (TreeExplainer) ile her kararı öznitelik düzeyinde açıklanabilir '
+     'kılmak; '
+     '(6) Sistemi Next.js 14 web platformu, Kotlin/Jetpack Compose Android uygulaması '
+     've FastAPI tabanlı REST API\'ye taşıyarak üretim ortamında çalıştırmak.',
+     'PARAGRAF METNİ'),
+    ('1.4. BM401–BM498 İki Dönemlik Geliştirme Süreci', 'Heading 2'),
+    ('AURIS, tek bir dönemde değil iki ayrı akademik dönemde kademeli olarak '
+     'olgunlaşmış bir sistemdir. BM401 Proje Tasarımı dersi (2024–2025 Güz Dönemi) '
+     'kapsamında wav2vec2-base transformer modelinden alınan gizli katman '
+     'gömme vektörleri üzerine bir LightGBM sınıflandırıcı kurulmuş; '
+     'Next.js 14 web platformunun ve Kotlin/Compose Android uygulamasının '
+     'temel iskelet yapıları oluşturulmuştur.',
+     'PARAGRAF METNİ'),
+    ('Güz döneminin sonunda edinilen bulgular, iki temel sorunu gün yüzüne '
+     'çıkardı. Birincisi, wav2vec2 gömme vektörleri siyah kutu niteliğinde '
+     'olduğundan hangi akustik özelliğin kararı etkilediği anlaşılamamaktaydı. '
+     'İkincisi, wav2vec2 büyük ölçüde konuşma verisi üzerinde ön eğitim '
+     'almış olduğundan müzik örneklerine genelleme yapma kapasitesi '
+     'sınırlı kalıyordu. '
+     'Bu iki sorun, BM498 Mezuniyet Tezi (2024–2025 Bahar Dönemi) kapsamında '
+     'araştırma odağının kökten değiştirilmesini zorunlu kıldı. '
+     'Bahar döneminde wav2vec2 embedding\'leri tamamen bırakılarak el ile '
+     'tasarlanmış 47 boyutlu akustik öznitelik vektörüne geçildi; '
+     'veri kümesi 5.195 örneğe genişletildi; '
+     'on bir model eş protokolle değerlendirildi; '
+     'SHAP açıklanabilirlik katmanı eklendi ve sistem üretim ortamına alındı.',
+     'PARAGRAF METNİ'),
+    ('1.5. Özgün Katkı', 'Heading 2'),
+    ('Bu çalışmanın alana özgün katkıları beş başlık altında özetlenebilir. '
+     'Birincisi, müziğe özgü tasarlanmış ve fiziksel yorumlanabilirliği yüksek '
+     '47 boyutlu akustik öznitelik vektörünün tanımlanmasıdır. '
+     'İkincisi, on iki farklı yapay zekâ üretim sistemini kapsayan çok üreticili '
+     'bir eğitim veri kümesinin derlenmesidir; bu yaklaşım çapraz-üretici '
+     'genelleme sorununa doğrudan yanıt vermektedir. '
+     'Üçüncüsü, yedi MO ve dört DÖ modelinin tek ve şeffaf bir protokolle '
+     'karşılaştırmalı olarak değerlendirilmesidir. '
+     'Dördüncüsü, Youden J eşik optimizasyonu ve SHAP açıklanabilirliğinin '
+     'yapay zekâ müzik tespiti bağlamına uyarlanmasıdır. '
+     'Beşincisi, tüm bu bileşenlerin web, Android ve API katmanlarında '
+     'kamuya açık ve ücretsiz olarak sunulmasıdır.',
+     'PARAGRAF METNİ'),
+    ('1.6. Tez Organizasyonu', 'Heading 2'),
+    ('Tez yedi bölümden oluşmaktadır. Bölüm 2\'de yapay zekâ müzik üretim '
+     'sistemleri, ses derin sahteciliği tespiti, transformer tabanlı ses '
+     'gösterimleri ve topluluk yöntemlerine ilişkin literatür incelenmektedir. '
+     'Bölüm 3\'te AURIS\'in veri kümesi, öznitelik mühendisliği hattı, '
+     'sınıflandırma modelleri, eğitim protokolü ve üç katmanlı uygulama '
+     'mimarisi ayrıntılı biçimde açıklanmaktadır. '
+     'Bölüm 4\'te on bir modelin karşılaştırmalı bulguları, ROC eğrileri, '
+     'çapraz doğrulama stabilitesi, LightGBM ayrıntılı analizi ve SHAP '
+     'bulguları sunulmaktadır. '
+     'Bölüm 5\'te bulgular literatürle tartışılmakta; sınırlamalar '
+     'dürüstçe aktarılmaktadır. '
+     'Bölüm 6\'da sonuçlar özetlenmekte ve gelecek çalışma önerileri '
+     'sıralanmaktadır.',
+     'PARAGRAF METNİ'),
 ]
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -400,79 +465,150 @@ GIRIS = [
 # ══════════════════════════════════════════════════════════════════════════════
 LITERATUR = [
     ('2.1. Yapay Zekâ Müzik Üretim Sistemleri', 'Heading 2'),
-    ('Müzik üretiminde yapay zekâ, son beş yılda üç ana paradigma etrafında '
-     'şekillenmiştir: otoregresif modeller, difüzyon modelleri ve metin-müzik '
-     'dönüşümü. Dhariwal vd. (2020) tarafından geliştirilen Jukebox [6], '
-     'hiyerarşik VQ-VAE mimarisiyle 1,2 milyar parametreye ulaşan ilk büyük '
-     'ölçekli müzik üretim modelidir; şarkı sözleri ve sanatçı stilini koşul '
-     'olarak alabilmekte, ham ses formunda çıktı üretebilmektedir. '
-     'Meta AI tarafından geliştirilen MusicGen (Copet vd., 2023) [5], metin '
-     've melodi koşullandırmalı decoder-only transformer mimarisini EnCodec '
-     'ses kodlayıcısı üzerine inşa etmiştir; 300M ile 3,3B parametre arasında '
-     'üç ölçekte açık kaynak lisansıyla yayımlanmıştır. '
-     'AudioLDM (Liu vd., 2023) [14], CLAP gösterimleriyle koşullandırılan '
-     'latent difüzyon modelini sese uyarlamıştır.', 'PARAGRAF METNİ'),
-    ('Suno (Suno AI, 2023) ve Udio (Udio AI, 2024) ticari olarak en geniş '
-     'kullanıcı tabanına ulaşan sistemler arasındadır; Suno v4 ve v5, '
-     'şarkı sözleri üretimini doğrudan entegre etmesi ve yüksek ses kalitesiyle '
-     'öne çıkmaktadır. Bu sistemlerin ürettiği içeriklerin tespit edilmesi, '
-     'hem metodolojik hem de pratik açıdan önem taşımaktadır.', 'PARAGRAF METNİ'),
-    ('2.2. Ses Derin Sahteciliği ve YZ Müzik Tespiti', 'Heading 2'),
-    ('Yapay zekâ üretimi ses tespiti, önce konuşma sentezi ve ses derin '
-     'sahteciliği alanından ortaya çıkmıştır. WaveFake (Frank ve Schönherr, 2021) [8], '
-     'yedi farklı vocoder mimarisinin çıktılarını barındıran temel kıyaslama '
-     'noktasıdır. ADD 2022 Yarışması (Yi vd., 2022) [23], ses derin sahteciliği '
-     'tespitinde üç farklı zorluk seviyesini kapsayan ilk uluslararası '
-     'yarışmayı düzenlemiştir. Afchar vd. (2025) [1], IEEE ICASSP 2025\'te '
-     'oto-kodlayıcı artefaktlarından yararlanarak %99,8 doğruluğa ulaşıldığını; '
-     'ancak MP3 sıkıştırma ve perde kaydırma gibi basit işlemlerin tespit '
-     'oranlarını önemli ölçüde düşürdüğünü sunmuştur.', 'PARAGRAF METNİ'),
-    ('Liu vd. (2024) [15], ses derin sahteciliği tespitinden yapay zekâ '
-     'üretimi müzik tespitine geçişi kapsamlı biçimde değerlendirmiş; mevcut '
-     'yaklaşımların büyük bölümünün tek üretici sistemine özgü olduğunu ve '
-     'yeni sistemlere genelleme yapamadığını ortaya koymuştur. Kosta vd. (2025) [12], '
-     'Segment Transformer mimarisini önererek müzik yapısal analizi aracılığıyla '
-     'tespit gerçekleştirmiştir.', 'PARAGRAF METNİ'),
+    ('Müzik üretiminde yapay zekânın yükselişi, birbirini izleyen üç nesil '
+     'model mimarisiyle şekillenmiştir. İlk nesil otoregresif modeller, '
+     'sesi ayrık simge dizisi olarak ele almaktadır. '
+     'Dhariwal vd. (2020) tarafından geliştirilen Jukebox [6], '
+     'hiyerarşik vektör niceleme değişken oto-kodlayıcı (VQ-VAE) '
+     'mimarisiyle ham dalga biçiminde çıktı üreten ilk büyük ölçekli '
+     'müzik modelidir. 1,2 milyar parametresiyle şarkı sözleri ve '
+     'sanatçı stilini koşul olarak alan bu model, dönemin en iddialı '
+     'müzik üretim girişimi olarak öne çıkmıştır.',
+     'PARAGRAF METNİ'),
+    ('İkinci nesil transformer tabanlı modeller, ses kodlayıcı-çözücü '
+     'mimarilerini ön plana çıkarmıştır. Meta AI\'ın geliştirdiği '
+     'MusicGen (Copet vd., 2023) [5], metin ve melodi koşullandırmasını '
+     'EnCodec ses kodlayıcısı üzerine inşa edilmiş decoder-only transformer '
+     'ile birleştirmektedir. Model 300 milyon ile 3,3 milyar parametre '
+     'arasında üç farklı büyüklükte açık kaynak lisansıyla kamuya sunulmuştur; '
+     'bu özelliği onu hem akademik hem de ticari alanda en geniş kullanılan '
+     'açık kaynaklı müzik modeli haline getirmiştir.',
+     'PARAGRAF METNİ'),
+    ('Üçüncü nesil difüzyon tabanlı modeller, latent uzayda yinelemeli '
+     'gürültü giderme ilkesiyle çalışmaktadır. '
+     'AudioLDM (Liu vd., 2023) [14], CLAP ses-metin gömme vektörleriyle '
+     'koşullandırılan latent difüzyon modelini ses üretimine uyarlamıştır. '
+     'Stable Audio ve Riffusion da bu paradigmanın ticari ürünleridir. '
+     'Bu sistemlerin ürettiği içerikler giderek artan bir insan müziği '
+     'benzerliğine ulaşmakta; bu durum tespit görevini giderek '
+     'zorlaştırmaktadır.',
+     'PARAGRAF METNİ'),
+    ('Ticari alanda ise Suno v3/v4/v5 ve Udio, müzik teorisi bilgisi '
+     'gerektirmeden şarkı sözlü parçalar üretme kapasitesiyle hızla '
+     'yaygınlaşmıştır. Bu çalışmada kullanılan AIME veri kümesi, '
+     'Suno v3/v4/v5, Udio, MusicGen, AudioLDM2, Stable Audio, Riffusion, '
+     'Mustango, JEN-1, MusicLDM ve Tango dahil on iki farklı sistemi '
+     'kapsamaktadır.',
+     'PARAGRAF METNİ'),
+    ('2.2. Ses Derin Sahteciliği Tespiti', 'Heading 2'),
+    ('Yapay zekâ üretimi ses tespitine yönelik akademik çalışmalar, '
+     'köken olarak konuşma sentezi ve ses derin sahteciliği alanından '
+     'beslenmektedir. Bu alanda en temel kıyaslama veri kümesi, '
+     'Frank ve Schönherr (2021) tarafından derlenen WaveFake\'tir [8]; '
+     'HiFi-GAN, MelGAN, WaveGlow ve benzeri yedi farklı vocoder '
+     'mimarisinin çıktısını içermektedir.',
+     'PARAGRAF METNİ'),
+    ('Ses derin sahteciliği tespiti alanında düzenlenen ilk uluslararası '
+     'yarışma olan ADD 2022 (Yi vd., 2022) [23], üç farklı zorluk '
+     'seviyesinde birleşik değerlendirme sağlamıştır. '
+     'Martín-Doñas ve Álvarez (2022) [18], yarışmada wav2vec2-base '
+     'modelini doğrudan uygulayarak öznitelik mühendisliği gerektirmeden '
+     'rekabetçi sonuçlar elde etmiştir; bu çalışma BM401 döneminin '
+     'başlangıç ilham kaynağını oluşturmuştur. '
+     'Afchar vd. (2025) [1], IEEE ICASSP 2025\'te oto-kodlayıcı '
+     'artefaktlarından yararlanan bir yaklaşımla %99,8 doğruluğa '
+     'ulaşmış; ancak MP3 sıkıştırma ve perde kaydırma gibi basit '
+     'dönüşümlerin bu yüksek doğruluğu önemli ölçüde düşürdüğünü '
+     'saptamıştır.',
+     'PARAGRAF METNİ'),
+    ('Müziğe özgü YZ tespiti ise henüz olgunlaşmakta olan bir alt '
+     'alandır. Liu vd. (2024) [15] bu geçiş sürecini sistematik '
+     'biçimde ele almış; mevcut çalışmaların büyük bölümünün tek '
+     'üreticiye özgü koşullarda başarılı olduğunu, yeni ve görülmemiş '
+     'sistemlere genelleme yapamadığını ortaya koymuştur. '
+     'Kosta vd. (2025) [12] ise müzik yapısal analizi temelinde '
+     'çalışan Segment Transformer mimarisini önermiş; bu yaklaşım '
+     'müziğin bölümsel tekrar yapısından yararlanmaktadır.',
+     'PARAGRAF METNİ'),
     ('2.3. Transformer Tabanlı Ses Gösterimleri', 'Heading 2'),
-    ('wav2vec2 (Baevski vd., 2020) [2], etiketlenmemiş konuşma verisi üzerinde '
-     'öz-denetimli öğrenme yapan transformer modelidir; Martín-Doñas ve '
-     'Álvarez (2022) [18] bu modeli ADD 2022 yarışmasına uygulamış ve öznitelik '
-     'mühendisliği gerektirmeksizin rekabetçi sonuçlar elde etmiştir. '
-     'CLAP (Elizalde vd., 2023) [7], karşıtsal ön eğitimi ses-metin embedding '
-     'uzayına genişletmekte; LAION-CLAP varyantı (Wu vd., 2023) [22] 630.000 '
-     'ses-metin çifti üzerinde eğitilmiştir. '
-     'Bu yaklaşımlar yüksek performans sunmakla birlikte şeffaflık ve '
-     'yorumlanabilirlik konusunda sınırlı kalmaktadır.', 'PARAGRAF METNİ'),
-    ('2.4. Topluluk Yöntemleri ve Ses Sınıflandırması', 'Heading 2'),
-    ('Topluluk yaklaşımları müzik analizi görevlerinde tek model sınıflandırıcılarını '
-     'tutarlı biçimde geride bırakmaktadır. Kostrzewa vd. (2022) [13], geniş '
-     'sinir ağı topluluklarının müzik türü sınıflandırmasında varyansı '
-     'önemli ölçüde azalttığını göstermiştir. Gan vd. (2024) [9], VMD tabanlı '
-     'öznitelik ayrıştırmasıyla birleştirilen XGBoost\'un rekabetçi müzik türü '
-     'sınıflandırması gerçekleştirdiğini bildirmiştir. '
-     'Gourisaria vd. (2024) [10], MFCC ve STFT özniteliklerinin karşılaştırmalı '
-     'analizinde her iki öznitelik setinin birlikte kullanılmasının en iyi '
-     'sonucu verdiğini bulmuştur.', 'PARAGRAF METNİ'),
-    ('2.5. Mevcut Tespit Sistemleri ve Araştırma Boşlukları', 'Heading 2'),
-    ('Tablo 2.1\'de mevcut başlıca tespit sistemleri AURIS ile karşılaştırmalı '
-     'olarak özetlenmektedir. IRCAM Amplify ve Believe AI Radar ticari '
-     'çözümler olup eğitim veri kümesi ve metodoloji şeffaf değildir. '
-     'AURIS bu boşlukları; (1) kamuya açık çok üreticili veri kümesi, '
-     '(2) şeffaf 5 katlı çapraz doğrulama, '
-     '(3) SHAP tabanlı açıklanabilirlik ve '
-     '(4) ücretsiz web/mobil/API dağıtımı ile kapatmaktadır.',
+    ('Öz-denetimli ses gösterimi öğrenimi, wav2vec2 (Baevski vd., 2020) [2] '
+     'ile ivme kazanmıştır. wav2vec2, ham dalga biçiminden CNN ile '
+     'bağlamsal göstenim çıkarmakta; ardından gizlenmiş zaman adımlarını '
+     'tahmin eden bir transformer ile öz-denetimli ön eğitim uygulamaktadır. '
+     '960 saatlik LibriSpeech verisi üzerinde eğitilen bu model, konuşma '
+     'tanımada büyük ilerleme sağlamış; ancak müzik verilerine uygulandığında '
+     'aktarım öğrenmesinin sınırları belirgin biçimde ortaya çıkmıştır.',
+     'PARAGRAF METNİ'),
+    ('CLAP (Elizalde vd., 2023) [7], ses ve metin çiftleri üzerinde '
+     'karşıtsal öğrenme yürüterek ortak bir gömme uzayı oluşturmaktadır. '
+     'LAION-CLAP (Wu vd., 2023) [22], 630.000 ses-metin çiftinden '
+     'oluşan büyük ölçekli veri kümesi üzerinde eğitilmiş olup '
+     'ses sınıflandırması ve ses benzerliği görevlerinde güçlü '
+     'sıfır-atım performansı sergilemektedir. '
+     'Bu modeller yüksek genel ses anlama kapasitesi sunmakla birlikte, '
+     'tahmin başına SHAP değeri hesaplanmasını güçleştiren siyah kutu '
+     'niteliğini korumaktadır; bu durum açıklanabilirlik '
+     'gerektiren uygulamalar için belirgin bir sınırlılık oluşturmaktadır.',
+     'PARAGRAF METNİ'),
+    ('2.4. Topluluk Yöntemleri ve Akustik Öznitelik Tabanlı Sınıflandırma', 'Heading 2'),
+    ('El ile tasarlanmış akustik özniteliklere dayalı sınıflandırma, '
+     'müzik bilgi erişimi alanında köklü bir yaklaşımdır. '
+     'MFCC\'ler onlarca yıldır müzik türü sınıflandırmada temel araç '
+     'olarak kullanılmıştır. Gourisaria vd. (2024) [10], MFCC ve STFT '
+     'temelli öznitelikleri sistematik biçimde karşılaştırmış; '
+     'her iki öznitelik ailesinin birlikte kullanılmasının ayrı ayrı '
+     'kullanılmasından belirgin biçimde üstün performans sağladığını '
+     'göstermiştir.',
+     'PARAGRAF METNİ'),
+    ('Topluluk öğrenmesi, tek modelin varyans hatasını azaltarak '
+     'müzik görevlerinde tutarlı iyileştirme sağlamaktadır. '
+     'Kostrzewa vd. (2022) [13], geniş sinir ağı topluluklarının '
+     'müzik türü sınıflandırmasında tek modele kıyasla önemli '
+     'kazanım sağladığını ortaya koymuştur. '
+     'Gan vd. (2024) [9], VMD tabanlı öznitelik ayrıştırmasıyla '
+     'desteklenen XGBoost topluluk modelinin GTZAN veri kümesinde '
+     'rekabetçi doğruluk elde ettiğini bildirmiştir. '
+     'Liu vd. (2022) [16] ise XGBoost\'u birden fazla öznitelik '
+     'grubunun birleşimiyle çalgı tanımaya uygulamıştır.',
+     'PARAGRAF METNİ'),
+    ('AURIS\'in öznitelik mühendisliği tasarımı bu literatürden '
+     'doğrudan beslenmektedir: MFCC tabanlı spektral öznitelikler, '
+     'ritmik ve onset öznitelikleri, harmonik öznitelikler ve '
+     'müziğe özgü vokal analiz boyutları tek bir vektörde '
+     'birleştirilmiştir.',
+     'PARAGRAF METNİ'),
+    ('2.5. Mevcut YZ Müzik Tespit Sistemleri ve Araştırma Boşlukları', 'Heading 2'),
+    ('Günümüzde piyasada birkaç yapay zekâ müzik tespit sistemi '
+     'mevcuttur; ancak bunların büyük çoğunluğu akademik '
+     'değerlendirmeye kapalıdır. IRCAM Amplify, ücretli API '
+     'olarak hizmet sunmakta; eğitim verisi, metodoloji ve '
+     'kıyaslama sonuçları kamuyla paylaşılmamaktadır. '
+     'Believe AI Radar da benzer şekilde ticari bir erişim modeli '
+     'benimsemektedir. Bu sistemlerin akademik karşılaştırması '
+     'pratikte mümkün değildir.',
+     'PARAGRAF METNİ'),
+    ('Akademik çalışmalar incelendiğinde ise belirgin boşluklar '
+     'göze çarpmaktadır: Mevcut çalışmaların büyük bölümü '
+     'tek üreticinin çıktılarına odaklanmakta, çapraz-üretici '
+     'genelleme koşullarında test edilmemektedir. '
+     'Açıklanabilirlik konusunda da ciddi bir eksiklik söz konusudur; '
+     'hangi akustik özelliğin kararı yönlendirdiği büyük çoğunlukla '
+     'belirsiz kalmaktadır. '
+     'AURIS, Çizelge 2.1\'de özetlenen bu boşlukları '
+     'açık veri kümesi, şeffaf çapraz doğrulama, SHAP açıklanabilirliği '
+     've ücretsiz erişim ile kapatmayı hedeflemektedir.',
      'PARAGRAF METNİ'),
     T(
-        ['Sistem', 'Erişim', 'Şeffaflık', 'SHAP', 'Çok Üretici', 'AUC'],
+        ['Sistem', 'Erişim', 'Metodoloji Şeffaf', 'Açıklanabilirlik', 'Çok Üretici', 'ROC-AUC'],
         [
             ['IRCAM Amplify', 'Ticari API', 'Hayır', 'Hayır', 'Bilinmiyor', 'Yayımlanmadı'],
             ['Believe AI Radar', 'Ticari', 'Hayır', 'Hayır', 'Bilinmiyor', 'Yayımlanmadı'],
-            ['WaveFake tespiti', 'Akademik', 'Evet', 'Hayır', 'Kısmi', '0.99+'],
-            ['Segment Transformer', 'Akademik', 'Evet', 'Hayır', 'Kısmi', '0.91+'],
-            ['AURIS (bu çalışma)', 'Açık/Ücretsiz', 'Evet', 'Evet', 'Evet (12+)', '0.9549'],
+            ['Segment Transformer [12]', 'Akademik', 'Evet', 'Hayır', 'Kısmi', '~0.91'],
+            ['WaveFake Detector [8]', 'Akademik', 'Evet', 'Hayır', 'Kısmi', '>0.99 (konuşma)'],
+            ['AURIS (bu çalışma)', 'Açık / Ücretsiz', 'Evet', 'SHAP', 'Evet (12+)', '0,9549'],
         ],
         'Çizelge 2.1. Mevcut yapay zekâ müzik tespit sistemlerinin karşılaştırması.',
-        col_widths=[3.8, 2.8, 2.5, 2.0, 2.5, 2.0]
+        col_widths=[3.8, 2.6, 2.8, 2.8, 2.4, 2.1]
     ),
 ]
 
@@ -481,24 +617,71 @@ LITERATUR = [
 # ══════════════════════════════════════════════════════════════════════════════
 MAT_YONT = [
     ('3.1. Sistem Mimarisine Genel Bakış', 'Heading 2'),
-    ('AURIS dört ana modülden oluşmaktadır. '
-     '(1) Ses Ön İşleme modülü: giriş formatlarını standartlaştırır '
-     '(MP3, WAV, FLAC, OGG, maks. 50 MB, YouTube bağlantısı); '
-     '(2) Öznitelik Çıkarma modülü: librosa v0.10.1 ile 47 boyutlu '
-     'akustik vektör hesaplar; '
-     '(3) Sınıflandırma modülü: 11 modeli 5 katlı tabakalı çapraz '
-     'doğrulamayla eğitir ve Youden J eşiği uygular; '
-     '(4) Açıklama modülü: SHAP değerlerini hesaplar ve kullanıcıya '
-     'görsel olarak sunar.', 'PARAGRAF METNİ'),
+    ('AURIS, mimari olarak birbirinden bağımsız ama birlikte çalışan '
+     'dört ana modülden oluşmaktadır. '
+     'İlk modül olan Ses Ön İşleme; MP3, WAV, FLAC ve OGG formatlarını '
+     'standartlaştırarak 22.050 Hz mono sinyale dönüştürür, '
+     'YouTube bağlantılarından yt-dlp ile ses indirir ve '
+     'mikrofon girişini doğrudan kabul eder. '
+     'İkinci modül olan Öznitelik Çıkarma; librosa v0.10.1 ile '
+     '47 boyutlu akustik vektörü hesaplar ve bunu StandardScaler '
+     'ile normalleştirir. '
+     'Üçüncü modül olan Sınıflandırma; eğitilmiş LightGBM modelini '
+     '(model_lightgbm.pkl, 1 MB) yükler, Youden J eşiğini uygular '
+     've YZ ya da İnsan kararı verir. '
+     'Dördüncü modül olan Açıklama; SHAP TreeExplainer ile '
+     'öznitelik katkılarını hesaplar ve Türkçe açıklama metni üretir.',
+     'PARAGRAF METNİ'),
+    ('Sistemin arka ucu hf-crowncode-backend dizininde, '
+     'hizmet odaklı mimari (Service-Oriented Architecture) anlayışıyla '
+     'düzenlenmiştir. Her işlev bağımsız bir servis sınıfına atanmıştır: '
+     'feature_extractor.py spektral ve zamansal hesaplamaları, '
+     'vocal_analyzer.py vokal analizini, '
+     'inference_xai.py sınıflandırma ve SHAP hesaplamalarını, '
+     'score_fusion.py farklı kaynaklardan gelen puanların '
+     'birleştirilmesini yönetmektedir. '
+     'Bu ayrıştırma, her bileşenin bağımsız olarak test edilmesini '
+     've ileride değiştirilmesini kolaylaştırmaktadır.',
+     'PARAGRAF METNİ'),
     ('3.2. Veri Kümesi', 'Heading 2'),
-    ('3.2.1. Derleme Stratejisi ve Kaynak Dağılımı', 'Heading 3'),
-    ('Veri kümesi 5.195 ses kaydından oluşmaktadır: 3.113 insan (%59,9) ve '
-     '2.082 yapay zekâ (%40,1). Bilinen yapay zekâ platformlarından gelen '
-     'örnekler "1" (YZ), insan müziği arşivlerinden gelenler "0" (İnsan) '
-     'olarak otomatik etiketlenmiştir. Yalnızca Creative Commons lisanslı '
-     'arşivler kullanılmıştır. Veri sızıntısını önlemek amacıyla duration_sec '
-     've sample_rate meta verileri öznitelik vektörünün dışında tutulmuştur. '
-     'Tablo 3.1\'de kaynak dağılımı ayrıntılı olarak sunulmaktadır.',
+    ('3.2.1. Derleme Stratejisi', 'Heading 3'),
+    ('Veri kümesi oluşturulurken iki temel ilke benimsenmiştir: '
+     'köken tabanlı otomatik etiketleme ve lisans uyumu. '
+     'Bilinen yapay zekâ üretim platformlarından indirilen parçalar '
+     '"1" (YZ), kamuya açık insan müziği arşivlerinden derlenenler '
+     '"0" (İnsan) olarak etiketlenmiştir. '
+     'Tüm kaynaklar Creative Commons lisansı kapsamındadır. '
+     'Veri sızıntısını engellemek amacıyla ses dosyasının uzunluğu '
+     '(duration_sec) ve örnekleme hızı (sample_rate) gibi meta veri '
+     'alanları öznitelik vektörünün dışında tutulmuştur; '
+     'bu alanlar öznitelik olarak kullanılsaydı model eğitim '
+     'kümesindeki ses sürelerini ezberleyebilirdi.',
+     'PARAGRAF METNİ'),
+    ('Veri kümesini oluşturmak için önce HuggingFace Hub üzerindeki '
+     'uygun veri kümeleri taranmış; dataset_loader.py ve '
+     'download_datasets.py scriptleri ile streaming modunda '
+     'veriler indirilmiştir. '
+     'extract_features_batch.py ile her ses dosyasına 47 öznitelik '
+     'çıkarılmış; sonuçlar DataSet/features.csv dosyasında '
+     '(4,1 MB, 5.195 satır × 49 sütun) saklanmıştır. '
+     'compute_feature_stats.py ise öznitelik ortalama ve standart '
+     'sapmalarını hesaplayarak feature_stats_v1.json dosyasına '
+     'yazmıştır; bu dosya çıkarım sırasında ölçekleme için kullanılmaktadır.',
+     'PARAGRAF METNİ'),
+    ('3.2.2. Kaynak Dağılımı', 'Heading 3'),
+    ('Toplam 5.195 ses kaydının 3.113\'ü (%59,9) insan, '
+     '2.082\'si (%40,1) yapay zekâ üretimidir. '
+     'Yapay zekâ tarafında üç ana HuggingFace veri kümesi kullanılmıştır: '
+     'SleepyJesse/ai_music_large on iki farklı üretim sistemini kapsayan '
+     'yaklaşık 2.000 parçayı, disco-eth/AIME Suno v3/v4/v5, Udio, '
+     'MusicGen, AudioLDM2 ve diğerlerini içeren yaklaşık 1.000 parçayı, '
+     'zuhri025/suno-audio ise yalnızca Suno modelinden '
+     'yaklaşık 500 parçayı kapsamaktadır. '
+     'İnsan tarafında marsyas/gtzan on müzik türünden 999 parçayı, '
+     'benjamin-paine/free-music-archive-small yaklaşık 1.000 parçayı '
+     've SleepyJesse arşivinin insan bölünümü yaklaşık 2.000 parçayı '
+     'temsil etmektedir. '
+     'Çizelge 3.1\'de kaynak dağılımı ayrıntılı olarak verilmektedir.',
      'PARAGRAF METNİ'),
     T(
         ['Kaynak', 'Tür', 'Örnek Sayısı', 'Üretici/Arşiv'],
@@ -524,29 +707,86 @@ MAT_YONT = [
      'sağlamaktadır.', 'PARAGRAF METNİ'),
     F(f'{FIG}/per_source_performance.png',
       'Şekil 3.2. Kaynak bazlı performans — LightGBM, θ*=0,4316 (5 katlı CV tahminleri).', 14.5),
-    ('3.2.2. Ön İşleme Hattı', 'Heading 3'),
-    ('Tüm ses kayıtları şu standartlaştırma adımlarından geçirilmiştir: '
-     '(1) 22.050 Hz\'ye yeniden örnekleme; '
-     '(2) Stereo → mono dönüşüm; '
-     '(3) 30 saniyeyi aşan kayıtlar kırpılmış, daha kısa kayıtlar sıfır dolgulu; '
-     '(4) Kalite filtresi — minimum 1 saniye uzunluk ve minimum 1×10⁻⁶ RMS genlik; '
-     '(5) Veri sızıntısı önlemi — duration_sec ve sample_rate öznitelik vektöründen çıkarıldı.',
+    ('3.2.3. Ön İşleme Hattı', 'Heading 3'),
+    ('Her ses dosyası öznitelik çıkarmadan önce beş adımlık '
+     'standartlaştırma hattından geçmektedir. '
+     'Birinci adımda librosa.load() işlevi sr=22050 parametresiyle '
+     'çağrılarak dosya 22.050 Hz\'e yeniden örneklenmekte '
+     've mono\'ya dönüştürülmektedir; bu değer librosa\'nın '
+     'varsayılan örnekleme hızıdır ve STFT ile Mel filtresi '
+     'hesaplamalarında tutarlılık sağlamaktadır. '
+     'İkinci adımda kayıt 30 saniyeyi aşıyorsa orta 30 saniye '
+     'kırpılmakta, 30 saniyeden kısa ise sıfır dolgu '
+     'uygulanmaktadır; böylece tüm öznitelik hesaplamaları '
+     'eşit uzunlukta sinyal üzerinde gerçekleşmektedir. '
+     'Üçüncü adımda RMS enerjisi 1×10⁻⁶\'nın altında olan '
+     've 1 saniyeden kısa kayıtlar veri kümesinden çıkarılmaktadır. '
+     'Dördüncü adımda öznitlik çıkarma sırasında ölçüm birimleri '
+     'farklı olan sütunlar StandardScaler ile normalleştirilmektedir; '
+     'scaler yalnızca eğitim katlamasına fit edilmekte, '
+     'doğrulama katlamasına transform uygulanmaktadır. '
+     'Beşinci adımda normalize edilmiş vektör modele iletilmektedir.',
      'PARAGRAF METNİ'),
     ('3.3. Öznitelik Mühendisliği', 'Heading 2'),
-    ('3.3.1. 47 Boyutlu Akustik Öznitelik Vektörü', 'Heading 3'),
-    ('AURIS, librosa v0.10.1 [19] kullanarak 5 ana kategoride toplam 47 boyutlu '
-     'öznitelik vektörü çıkarmaktadır. '
-     'Spektral kategoride (16 öznitelik) MFCC varyans/delta/delta², '
-     'spectral_centroid, bandwidth, rolloff, flatness, contrast ve regularity '
-     'yer almaktadır. Zamansal/Ritmik kategoride (10 öznitelik) RMS enerji, '
-     'standart sapma, dinamik aralık, sıfır geçiş oranı, tempo BPM, '
-     'stabilite ve CV bulunmaktadır. Onset/Beat kategorisinde (9 öznitelik) '
-     'onset güç ortalaması/standart sapması, beat sayısı ve IBI stabilitesi '
-     'yer almaktadır. Harmonik/Tonal kategorisinde (8 öznitelik) chroma '
-     'entropi, standart sapma ve geçiş hızı, Tonnetz standart sapması ve '
-     'harmonik oran bulunmaktadır. Vokal/İfadesel kategorisinde (4 öznitelik) '
-     'perde stabilitesi, vibrato düzenliliği, formant tutarlılığı ve nefes '
-     'örüntüsü yer almaktadır.', 'PARAGRAF METNİ'),
+    ('3.3.1. Tasarım Felsefesi', 'Heading 3'),
+    ('Öznitelik setinin tasarımında iki temel hedef güdülmüştür: '
+     'ayrımcı güç ve yorumlanabilirlik. '
+     'Wav2vec2 gömme vektörlerinin aksine, '
+     'her özniteliğin fiziksel bir karşılığı vardır ve '
+     'SHAP değerleriyle hangi özelliğin kararı yönlendirdiği '
+     'açıkça ortaya konabilmektedir. '
+     'Öznitelikler beş kategoride gruplanmıştır: '
+     'Spektral özellikler frekans boyutundaki enerji dağılımını, '
+     'zamansal özellikler zaman boyutundaki enerji dinamiğini, '
+     'onset/beat özellikleri ritmik yapıyı, '
+     'harmonik özellikler tonal içeriği, '
+     'vokal özellikler ise insan sesi bileşenini '
+     'temsil etmektedir. '
+     'Bu çok boyutlu bakış açısı, '
+     'YZ üretim sistemlerinin hangi akustik boyutlarda '
+     'iz bıraktığını sistematik olarak araştırmayı sağlamaktadır.',
+     'PARAGRAF METNİ'),
+    ('3.3.2. Öznitelik Kategorileri ve Hesaplama Yöntemi', 'Heading 3'),
+    ('Spektral kategorideki 16 öznitelik, sesin frekans '
+     'boyutundaki yapısını betimlemektedir. '
+     'spectral_centroid, enerji ağırlıklı ortalama frekansı '
+     'ölçmekte; YZ sistemlerinin ürettiği parlak ve tiz sesleri '
+     'insan müziğinden ayırt etmede katkı sağlamaktadır. '
+     'spectral_flatness, tonal ses ile gürültü benzeri ses '
+     'arasındaki farkı yakalamaktadır; bu öznitelik SHAP '
+     'analizinde en yüksek kazanım skoruna (0,0619) ulaşmıştır. '
+     'spectral_contrast, komşu frekans bantları arasındaki '
+     'enerji farkını ölçmekte ve tonal zenginliği '
+     'sayısallaştırmaktadır. '
+     'MFCC delta ve delta-delta varyansları ise '
+     'spektral zarfın zamansal değişim hızını modellemektedir.',
+     'PARAGRAF METNİ'),
+    ('Zamansal ve ritmik öznitelikler sinyalin '
+     'zaman boyutundaki güç dinamiğini betimlemektedir. '
+     'rms_energy parçanın ortalama ses düzeyini, '
+     'rms_dynamic_range ise dinamik aralığı ölçmektedir; '
+     'YZ sistemlerinin genellikle daha sıkıştırılmış '
+     'dinamik aralık sergilediği gözlemlenmiştir. '
+     'tempo_bpm ve tempo_stability, ritmik düzenliliği '
+     'sayısallaştırmaktadır; metronom benzeri sabit tempoya '
+     'sahip YZ parçaları insan yorumundaki mikro-zamansal '
+     'dalgalanmalardan bu yolla ayrışmaktadır. '
+     'zero_crossing_rate, sinyalin sıfır ekseni kesme hızını '
+     'ölçmekte; gürültülü ya da perküsif sesler ile '
+     'tonal sesler arasındaki farkı yakalamaktadır.',
+     'PARAGRAF METNİ'),
+    ('Vokal öznitelikler, vocal_analyzer.py içindeki '
+     'VocalFeatures sınıfı aracılığıyla hesaplanmaktadır. '
+     'Bu sınıf önce librosa\'nın harmonik-perküsif ses ayrıştırması '
+     '(HPSS) ile vokal bileşeni izole etmekte; '
+     'ardından perde (pitch), vibrato hızı ve genişliği, '
+     'formant tutarlılığı ve nefes örüntüsü analizini '
+     'sırasıyla uygulamaktadır. '
+     'YZ sistemleri insan sesini taklit etmekle birlikte '
+     'vibrato düzenliliği ve formant geçiş örüntülerinde '
+     'tutarsızlıklar sergileme eğilimindedir; '
+     'bu öznitelikler bu farkı sayısallaştırmayı amaçlamaktadır.',
+     'PARAGRAF METNİ'),
     T(
         ['Kategori', 'Öznitelik Sayısı', 'Örnek Öznitelikler'],
         [
@@ -577,30 +817,86 @@ MAT_YONT = [
       'Şekil 3.4. Öznitelik çıkarma eğrisi — LightGBM doğruluğu vs. öznitelik sayısı (SHAP öneme göre sıralı).', 14.0),
     ('3.4. Sınıflandırma Modelleri', 'Heading 2'),
     ('3.4.1. Klasik Makine Öğrenmesi Modelleri', 'Heading 3'),
-    ('scikit-learn [21], XGBoost [4] ve LightGBM [11] ile toplam 7 model '
-     'eğitilmiştir. Lojistik Regresyon: L2 düzenlileştirme, C=2,0, '
-     'class_weight=balanced, çözücü=lbfgs, max_iter=1000. '
-     'Rastgele Orman: n_estimators=500, max_features=log2, class_weight=balanced. '
-     'Gradyan Artırma: n_estimators=180, max_depth=4, learning_rate=0,07. '
-     'SVM-RBF: C=10, gamma=0,05, CalibratedClassifierCV sarmalayıcı. '
-     'Çok Katmanlı Algılayıcı (MO): gizli_katmanlar=[192, 96, 32], '
-     'alpha=0,001, aktivasyon=relu. '
-     'XGBoost: n_estimators=240, max_depth=5, learning_rate=0,06, '
-     'subsample=0,85, eval_metric=auc. '
-     'LightGBM: n_estimators=300, num_leaves=31, learning_rate=0,05, '
-     'class_weight=balanced, verbose=-1.', 'PARAGRAF METNİ'),
+    ('Tüm MO modelleri train_classifier.py içindeki '
+     '_build_candidate_families() işlevi tarafından '
+     'tanımlanmıştır. Model ailesi tasarımında karşılaştırma '
+     'kapsamını geniş tutmak ve birbirinden bağımsız öğrenme '
+     'yaklaşımlarını temsil etmek hedeflenmiştir.',
+     'PARAGRAF METNİ'),
+    ('Lojistik Regresyon, doğrusal bir temel oluşturmaktadır: '
+     'L2 düzenlileştirme, C=2,0, class_weight=balanced, '
+     'çözücü=lbfgs, max_iter=1000. '
+     'Bu model yorumlanabilirlik açısından güçlüdür '
+     'ancak doğrusal olmayan sınır yüzeylerini '
+     'modelleyemediğinden performansı sınırlı kalmaktadır. '
+     'Rastgele Orman 500 karar ağacından oluşmakta, '
+     'max_features=log2 ve class_weight=balanced '
+     'parametreleriyle eğitilmektedir. '
+     'Yüksek öznitelik boyutunda topluluk varyansını azaltmada '
+     'etkili olmakla birlikte eğitim setinde aşırı öğrenme '
+     'eğilimi sergilemiştir (eğitim doğruluğu ≈%100, '
+     'CV doğruluğu ≈%86).',
+     'PARAGRAF METNİ'),
+    ('Gradyan Artırma (scikit-learn GradientBoostingClassifier), '
+     'n_estimators=180, max_depth=4, learning_rate=0,07 ile '
+     'eğitilmiştir. '
+     'SVM-RBF, C=10 ve gamma=0,05 ile yapılandırılmış; '
+     'CalibratedClassifierCV sarmalayıcısı eklenmiştir. '
+     'Bu sarmalayıcı, ham SVM karar skorlarını geçerli '
+     'olasılık değerlerine dönüştürmektedir; '
+     'Youden J eşiği hesaplaması için olasılık çıktısı zorunludur. '
+     'Çok Katmanlı Algılayıcı (scikit-learn MLP) '
+     'gizli_katmanlar=[192, 96, 32], aktivasyon=relu, '
+     'alpha=0,001 ile eğitilmiştir.',
+     'PARAGRAF METNİ'),
+    ('XGBoost, n_estimators=240, max_depth=5, learning_rate=0,06, '
+     'subsample=0,85, colsample_bytree=0,8, '
+     'scale_pos_weight=1,5 ve eval_metric=auc parametreleriyle '
+     'yapılandırılmıştır. LightGBM ise n_estimators=300, '
+     'num_leaves=31, learning_rate=0,05, class_weight=balanced '
+     've verbose=-1 ile eğitilmiştir; '
+     'eğitim süresi yalnızca 2,95 saniyedir. '
+     'Tüm modeller pickle biçiminde kaydedilmiş '
+     '(model_lightgbm.pkl ≈1 MB, '
+     'model_random_forest.pkl ≈49 MB en büyük dosya) '
+     've çıkarım sırasında doğrudan yüklenmiştir.',
+     'PARAGRAF METNİ'),
     ('3.4.2. Derin Öğrenme Modelleri', 'Heading 3'),
-    ('PyTorch [20] ile 4 derin öğrenme modeli tasarlanmıştır. '
-     'Tüm modellerde BCEWithLogitsLoss (pos_weight=1,5) ve Adam (lr=1e-3) '
-     'ortak kullanılmıştır. '
-     'Derin ÇKA (Deep MLP): katmanlar=[512, 256, 128, 64, 1], '
-     'BatchNorm + Dropout(0,3), eğitim süresi 81,4 sn. '
-     '1B Evrişimli Sinir Ağı (1B-ESA): Conv1D(1→32→64→128) + '
-     'GlobalAvgPool + FC(128→1), eğitim süresi 125,0 sn. '
-     'Artık ÇKA (ResidualMLP): 3 artık blok × 64 boyut + FC, '
-     'artık bağlantılar, eğitim süresi 128,7 sn. '
-     'Dikkat ÇKA (AttentionMLP): öz-dikkat başlığı (64 boyut) + '
-     'ileri beslemeli katmanlar, eğitim süresi 149,6 sn.', 'PARAGRAF METNİ'),
+    ('Dört derin öğrenme modeli train_deep_classifiers.py ile '
+     'PyTorch [20] çerçevesinde tasarlanmıştır. '
+     'Tüm modellerde kayıp işlevi olarak BCEWithLogitsLoss '
+     '(pos_weight=1,5, sınıf dengesizliğini telafi etmek için) '
+     've optimize edici olarak Adam (lr=1×10⁻³) kullanılmıştır. '
+     'Erken durdurma patience=10, izleme kriteri val_loss '
+     'olarak ayarlanmıştır.',
+     'PARAGRAF METNİ'),
+    ('Derin ÇKA (Deep MLP), tam bağlantılı katmanlar dizisinden '
+     'oluşmaktadır: Giriş(47) → FC(512) → BN → ReLU → Drop(0,3) '
+     '→ FC(256) → BN → ReLU → Drop(0,3) → FC(128) → BN → ReLU '
+     '→ FC(64) → ReLU → FC(1). '
+     'BatchNorm katmanları gradyan patlamasını önlerken '
+     'Dropout(0,3) aşırı öğrenmeye karşı düzenlileştirme sağlamaktadır. '
+     'Toplam eğitim süresi 81,4 saniyedir.',
+     'PARAGRAF METNİ'),
+    ('1B Evrişimli Sinir Ağı (1B-ESA), '
+     '47 boyutlu vektörü (1, 47) boyutlu tek kanallı sinyal '
+     'olarak ele alır: Conv1D(1→32, çekirdek=3) → ReLU → '
+     'Conv1D(32→64, çekirdek=3) → ReLU → Conv1D(64→128, çekirdek=3) '
+     '→ ReLU → GlobalAvgPool → FC(128→1). '
+     'Bu mimari, komşu özniteliklerin yerel örüntülerini '
+     'yakalamayı hedeflemektedir; ancak 47 boyutlu düz vektörde '
+     'komşu özniteliklerin anlamlı yerel korelasyon '
+     'sergilemediği görülmüş ve bu durum modelin zayıf '
+     'performansını açıklamaktadır (AUC=0,8442).',
+     'PARAGRAF METNİ'),
+    ('Artık ÇKA (ResidualMLP), üç artık blok içermektedir; '
+     'her blok FC(64) → BN → ReLU → FC(64) → BN yapısında '
+     'olup blok girişini çıkışa eklemektedir (atlama bağlantısı). '
+     'Dikkat ÇKA (AttentionMLP) ise 47 boyutlu vektörü '
+     'token dizisi olarak yorumlayarak tek başlıklı öz-dikkat '
+     '(64 boyut) uygulamakta; ardından iki katmanlı '
+     'ileri beslemeli ağa geçmektedir.',
+     'PARAGRAF METNİ'),
     T(
         ['Model', 'Tür', 'Temel Mimari', 'Eğitim Süresi (sn)'],
         [
@@ -621,55 +917,186 @@ MAT_YONT = [
     ),
     ('3.5. Eğitim Protokolü', 'Heading 2'),
     ('3.5.1. 5 Katlı Tabakalı Çapraz Doğrulama', 'Heading 3'),
-    ('Tüm modeller StratifiedKFold (k=5, random_state=42) ile '
-     'değerlendirilmiştir. Tabakalama, her katlamada sınıf dağılımını '
-     '(%59,9 İnsan / %40,1 YZ) korumaktadır. StandardScaler yalnızca '
-     'eğitim alt kümesine uyarlanmış, doğrulama alt kümesine '
-     'transform uygulanmıştır — veri sızıntısını önleyen sızdırmaz '
-     'ölçekleme. Derin öğrenme modelleri için erken durdurma '
-     '(patience=10, val_loss izleme) uygulanmıştır. '
-     'Şekil 3.5\'te eğitim ve çapraz doğrulama doğrulukları karşılaştırılmaktadır.',
+    ('Tüm modeller tek bir pipeline üzerinden '
+     'StratifiedKFold(n_splits=5, shuffle=True, random_state=42) '
+     'ile değerlendirilmiştir. Tabakalama her katlamada '
+     'sınıf oranını (%59,9 İnsan / %40,1 YZ) korumakta; '
+     'böylece küçük katlamada dahi dengesiz sınıf sorunuyla '
+     'karşılaşılmamaktadır. '
+     'Normalizasyon için StandardScaler, her katlamada yalnızca '
+     'o katlamanın eğitim alt kümesine fit() edilmiş, '
+     'doğrulama alt kümesine yalnızca transform() uygulanmıştır; '
+     'bu sızdırmaz boru hattı veri sızıntısını önlemektedir.',
+     'PARAGRAF METNİ'),
+    ('Değerlendirme sürecinde her katlama için beş metrik '
+     'hesaplanmıştır: doğruluk, kesinlik, duyarlılık, F1 skoru '
+     've ROC-AUC. Ek olarak her katlama için gerçek-tutulan '
+     '(out-of-fold) tahmin skorları toplanmış; '
+     'bu skorlar birleştirilerek ROC eğrisi ve karışıklık '
+     'matrisi elde edilmiştir. '
+     'Bu yaklaşım, tek bir katlama sonucuna göre değil '
+     'tüm veri üzerinde dağıtılmış tahminlere göre '
+     'değerlendirme yapmayı mümkün kılmaktadır. '
+     'Şekil 3.5\'te eğitim ve çapraz doğrulama doğrulukları '
+     'karşılaştırılmaktadır; aşırı öğrenme eğilimi gösteren '
+     'modeller açıkça görülmektedir.',
      'PARAGRAF METNİ'),
     F(f'{FIG}/train_val_gap.png',
-      'Şekil 3.5. Eğitim ve çapraz doğrulama doğruluğu — aşırı öğrenme tanısı (11 model).', 15.0),
-    ('3.5.2. Youden J Eşik Optimizasyonu', 'Heading 3'),
-    ('Her katlama için θ* = argmax(Duyarlılık + Özgüllük − 1) '
-     'formülüyle optimal karar eşiği belirlenmektedir. '
-     'LightGBM için θ* = 0,4316 olarak hesaplanmıştır; bu değer '
-     'varsayılan 0,5 eşiğine kıyasla dengeli hata profili sağlamaktadır. '
-     'Şekil 3.6\'da eşik taraması grafiği sunulmakta; Kesinlik, '
-     'Duyarlılık, F1 ve Doğruluk eğrilerinin θ=0,4316\'da optimuma '
-     'ulaştığı açıkça görülmektedir.', 'PARAGRAF METNİ'),
-    F(f'{FIG}/threshold_sweep.png',
-      'Şekil 3.6. Eşik taraması — Kesinlik/Duyarlılık/F1 eşiğe göre (LightGBM). Youden-J optimum: θ*=0,4316.', 14.5),
-    ('3.6. SHAP Açıklanabilirlik Entegrasyonu', 'Heading 2'),
-    ('AURIS, her tahmin için SHAP (Shapley Additive exPlanations, '
-     'Lundberg ve Lee, 2017) [17] değerlerini hesaplamaktadır. '
-     'LightGBM\'in TreeExplainer arayüzü SHAP değerlerini polinom '
-     'zamanda hesaplamakta; bu özellik gerçek zamanlı kullanım için '
-     'pratik bir avantaj sağlamaktadır. Kullanıcıya her analizde '
-     'hangi özniteliklerin YZ ya da İnsan kararına ne kadar katkı '
-     'yaptığı beeswarm ve waterfall grafikleriyle görsel olarak sunulmaktadır.',
+      'Şekil 3.5. Eğitim ve çapraz doğrulama doğruluğu karşılaştırması — aşırı öğrenme tanısı (11 model).', 15.0),
+    ('3.5.2. Hiperparametre Seçimi', 'Heading 3'),
+    ('Hiperparametreler, train_classifier.py içindeki '
+     '_select_best_candidates() işlevi aracılığıyla '
+     'belirlenmiştir. Her model ailesi için küçük ölçekli '
+     'arama ızgarası tanımlanmış; 3 katlı ön değerlendirme '
+     'ile en iyi aday seçilmiş ve ardından 5 katlı tam '
+     'değerlendirmeye alınmıştır. '
+     'Sınıf dengesizliği (İnsan:%59,9 / YZ:%40,1) class_weight=balanced '
+     'veya pos_weight=1,5 parametresiyle giderilmiştir.',
      'PARAGRAF METNİ'),
-    ('3.7. Uygulama Mimarisi', 'Heading 2'),
-    ('AURIS üç katmanlı bir uygulama mimarisine sahiptir. '
-     'Web platformu Next.js 14 + TypeScript ile geliştirilmiş; '
+    ('3.5.3. Youden J Eşik Optimizasyonu', 'Heading 3'),
+    ('Makine öğrenmesi sınıflandırıcıları varsayılan olarak '
+     '0,5 olasılık eşiğini kullanmaktadır. '
+     'Ancak bu çalışmada sınıf dengesizliği ve asimetrik '
+     'hata maliyetleri (YZ\'yi kaçırmak ile insan müziğini '
+     'yanlış etiketlemek farklı sonuçlar doğurur) '
+     'nedeniyle Youden J istatistiği kullanılmıştır. '
+     'Her katlama için θ* = argmax_θ (Duyarlılık(θ) + Özgüllük(θ) − 1) '
+     'formülüyle optimal eşik belirlenmekte; '
+     'beş katlamanın θ* değerleri ortalaması alınmaktadır. '
+     'LightGBM için bu süreç θ* = 0,4316 sonucunu vermiştir; '
+     'bu değer inference_xai.py içindeki sınıflandırma mantığında '
+     'doğrudan kullanılmaktadır.',
+     'PARAGRAF METNİ'),
+    ('Şekil 3.6\'da eşik taraması grafiği sunulmaktadır. '
+     'Kesinlik eğrisi θ arttıkça yükselirken Duyarlılık '
+     'azalmakta; F1 ve Doğruluk eğrileri θ*=0,4316\'da '
+     'birlikte tepe noktasına ulaşmaktadır. '
+     'Varsayılan 0,5 eşiğine kıyasla Youden eşiği daha '
+     'dengeli bir hata profili sağlamaktadır.',
+     'PARAGRAF METNİ'),
+    F(f'{FIG}/threshold_sweep.png',
+      'Şekil 3.6. Eşik taraması — Kesinlik/Duyarlılık/F1 eşiğe göre (LightGBM, θ*=0,4316).', 14.5),
+    ('3.6. SHAP Açıklanabilirlik Entegrasyonu', 'Heading 2'),
+    ('SHAP (Shapley Additive exPlanations, Lundberg ve Lee, 2017) [17], '
+     'oyun teorisindeki Shapley değerlerini makine öğrenmesi '
+     'açıklanabilirliğine uyarlamaktadır. '
+     'Her özniteliğin modelin çıktısına katkısı, '
+     'diğer tüm öznitelik kombinasyonları üzerinden '
+     'ağırlıklı ortalama marginal katkı olarak hesaplanmaktadır. '
+     'Bu yaklaşımın LightGBM için kullanılan TreeExplainer '
+     'varyantı ağaç yapısından yararlanarak SHAP değerlerini '
+     'polinom zamanda hesaplamakta; '
+     'ortalama 47 öznitelik için tahmin başına ≈12 ms '
+     'gecikme sağlamaktadır.',
+     'PARAGRAF METNİ'),
+    ('inference_xai.py içindeki XAI servisi, her analiz için '
+     'dört tür açıklama üretmektedir: '
+     'Birincisi, SHAP değer vektörü; '
+     'hangi özniteliğin kararı hangi yönde ve ne ölçüde '
+     'etkilediğini sayısal olarak ortaya koymaktadır. '
+     'İkincisi, güven bandı (confidenceBand); '
+     'tahmin olasılığının düşük, orta veya yüksek güvenirlik '
+     'bölgesinde olduğunu belirtmektedir. '
+     'Üçüncüsü, model oylaması; yedi MO modelinin bireysel '
+     'kararları ile bunların çoğunluk oyunu. '
+     'Dördüncüsü, insan tarafından okunabilir Türkçe/İngilizce '
+     'açıklama metni; örneğin "Yüksek spectral_flatness_std '
+     'değeri, spektral yapının yapay zekâ üretim izlerini '
+     'taşıdığına işaret etmektedir." biçiminde.',
+     'PARAGRAF METNİ'),
+    ('3.7. REST API Mimarisi', 'Heading 2'),
+    ('AURIS\'in arka ucu FastAPI [20] çerçevesiyle '
+     'Python 3.11 üzerinde geliştirilmiş; '
+     'HuggingFace Spaces ortamında 7860 portunda '
+     'uvicorn ASGI sunucusuyla çalıştırılmaktadır. '
+     'API beş ana rota sunmaktadır: '
+     'GET /api/health sistem sağlık durumunu döndürmekte; '
+     'POST /api/analyze ana analiz rotasını oluşturmaktadır.',
+     'PARAGRAF METNİ'),
+    ('POST /api/analyze endpoint\'i multipart/form-data '
+     'biçiminde istek almakta; sourceType alanı '
+     '"youtube", "file", "tiktok", "instagram", '
+     '"soundcloud" veya "twitter" değerlerinden birini '
+     'içerebilmektedir. '
+     'YouTube seçildiğinde url alanındaki bağlantıdan '
+     'yt-dlp kütüphanesiyle ses indirilmekte; '
+     'dosya yüklemede ise python-multipart ile '
+     'geçici dizine kaydedilmektedir. '
+     'Yanıt JSON nesnesi isAIGenerated (bool), '
+     'confidence (0-1 arası float), processingTime, '
+     'vocalAnalysis, towerScores ve xai alt nesnesini '
+     'içermektedir; xai altında probability, threshold, '
+     'confidenceBand, modelVotes ve topContributions '
+     'listelenmektedir.',
+     'PARAGRAF METNİ'),
+    T(
+        ['Rota', 'Yöntem', 'Girdi', 'Çıktı'],
+        [
+            ['/api/health', 'GET', '—', 'Sistem durumu, model yüklü mü'],
+            ['/api/analyze', 'POST', 'sourceType, url veya file', 'isAIGenerated, confidence, SHAP, modelVotes'],
+            ['/api/data_processing', 'POST', 'Ses dosyası', 'Ham öznitelik vektörü (47 boyut)'],
+            ['/api/commend', 'POST', 'YouTube URL', 'Gemini ile oluşturulan yorum önerileri'],
+        ],
+        'Çizelge 3.4. AURIS FastAPI REST API endpoint özeti.',
+        col_widths=[4.0, 2.0, 5.5, 5.0]
+    ),
+    ('3.8. Web Platformu', 'Heading 2'),
+    ('Web platformu Next.js 14 ve TypeScript ile geliştirilmiş; '
      'Netlify CDN üzerinde statik dağıtım yapılmaktadır. '
-     'Android uygulaması Kotlin + Jetpack Compose ile MVVM/Clean '
-     'Architecture deseni, Hilt bağımlılık enjeksiyonu, Retrofit '
-     'HTTP istemcisi ve Room kalıcı depolama kullanılarak '
-     'Android API 26+ (8.0+) için geliştirilmiştir. '
-     'FastAPI arka ucu Python 3.11 ile HuggingFace Spaces üzerinde '
-     '7860 portunda Docker konteyneri olarak çalışmaktadır.',
+     'Platform pages/ dizininde on dört sayfa barındırmakta; '
+     'merkezi sayfa ai-music-detection/index.tsx\'dir. '
+     'Bu sayfa üç sekme sunmaktadır: '
+     'Dosya Yükleme (MP3/WAV/FLAC/OGG, ≤50 MB), '
+     'YouTube URL girişi ve Mikrofon Kaydı.',
+     'PARAGRAF METNİ'),
+    ('Her sekmenin arkasında bağımsız bir özel kanca (hook) '
+     'çalışmaktadır: useFileAnalysis.ts, useYouTubeAnalysis.ts '
+     've useMicrophoneAnalysis.ts. '
+     'Bu kancalar asenkron API isteklerini useAsyncRequest.ts '
+     'üzerinden yönetmekte; sonuçları AnalysisResultCard '
+     'bileşenine aktarmaktadır. '
+     'Analiz geçmişi useLocalHistory.ts ile tarayıcı '
+     'yerel depolama alanına kaydedilmektedir. '
+     'Arayüz React 19.2.5, Tailwind CSS 3.4 ve '
+     'motion (Framer Motion fork) animasyon kütüphanesiyle '
+     'oluşturulmuştur.',
      'PARAGRAF METNİ'),
     F(f'{SCR}/auris_web_hero.png',
-      'Şekil 3.7. AURIS web platformu ana sayfası (Next.js 14, Netlify CDN).', 14.5),
+      'Şekil 3.7. AURIS web platformu ana sayfası — dosya yükleme sekmesi (Next.js 14, Netlify CDN).', 14.5),
     F(f'{SCR}/auris_web_sec1.png',
-      'Şekil 3.8. AURIS web platformu — dosya yükleme ve YouTube analiz bölümü.', 14.5),
+      'Şekil 3.8. AURIS web platformu — YouTube analiz sekmesi ve sonuç kartı.', 14.5),
+    ('3.9. Android Uygulaması', 'Heading 2'),
+    ('Android uygulaması Kotlin ve Jetpack Compose ile '
+     'MVVM/Clean Architecture deseni kullanılarak geliştirilmiştir. '
+     'Minimum hedef Android API 26 (Android 8.0 Oreo)\'dır; '
+     'bu düzey Türkiye\'deki aktif Android cihazlarının '
+     '%90\'ından fazlasını kapsamaktadır. '
+     'Mimari üç katmandan oluşmaktadır: '
+     'Sunum katmanında Jetpack Compose ekranları ve '
+     'ViewModel sınıfları; '
+     'Alan katmanında kullanım senaryosu (use case) sınıfları '
+     've alan modelleri; '
+     'Veri katmanında Retrofit HTTP istemcisi, '
+     'Room veritabanı ve repository uygulamaları bulunmaktadır.',
+     'PARAGRAF METNİ'),
+    ('AiMusicViewModel, AiMusicUiState sealed arayüzü '
+     'aracılığıyla kullanıcı arayüzü durumunu yönetmektedir. '
+     'Bu arayüzün dört durumu vardır: '
+     'Idle (başlangıç), Processing (analiz devam ediyor), '
+     'Success (sonuç hazır) ve Error (hata mesajı). '
+     'Processing durumu ise ProcessingStep numaralandırmasıyla '
+     'daha da ayrıştırılmıştır: VALIDATING, UPLOADING, '
+     'ANALYZING ve COMPLETE adımları sırayla kullanıcıya '
+     'ilerleme çubuğu ve metin olarak sunulmaktadır. '
+     'Arka planda AnalyzeAudioUseCase, AnalysisRepositoryImpl '
+     'üzerinden Retrofit ile /api/analyze endpoint\'ini '
+     'çağırmakta; AnalysisHistoryUseCase ise geçmiş '
+     'analizleri Room veritabanından HistoryScreen\'e sunmaktadır.',
+     'PARAGRAF METNİ'),
     F(f'{SCR}/auris_mobile_hero.png',
       'Şekil 3.9. AURIS Android uygulaması ana ekranı (Kotlin/Jetpack Compose, API 26+).', 7.5),
     F(f'{SCR}/auris_mobile_upload.png',
-      'Şekil 3.10. AURIS Android uygulaması analiz ekranı — sonuç ve SHAP görünümü.', 7.5),
+      'Şekil 3.10. AURIS Android analiz ekranı — yükleme ilerlemesi ve sonuç görünümü.', 7.5),
 ]
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -803,6 +1230,46 @@ BULGULAR = [
      'PARAGRAF METNİ'),
     F(f'{FIG}/paper_precision_recall.png',
       'Şekil 4.9. LightGBM kesinlik-duyarlılık eğrisi (AP=0,9344). Kesikli: baz sınıflandırıcı (0,401).', 12.0),
+    ('Ortalama Kesinlik (AP) değeri olan 0,9344, eşik değerinden '
+     'bağımsız olarak modelin genel ayırt ediciliğini özetlemektedir. '
+     'Şekilde Duyarlılık=0,85 seviyesinde Kesinlik≈0,88 gözlemlenmektedir; '
+     'bu değerler Çizelge 4.1\'deki F1=0,8575 sonucuyla tutarlıdır. '
+     'Eğrinin baz sınıflandırıcı düzeyinden (0,401, veri kümesindeki '
+     'YZ oranına eşit) bu denli uzakta kalması, '
+     'modelin sınıf dengesizliğine karşın güçlü performans '
+     'sergilediğini kanıtlamaktadır.',
+     'PARAGRAF METNİ'),
+    ('4.4.5. Model Karmaşıklığı ve Çıkarım Süresi', 'Heading 3'),
+    ('Gerçek zamanlı kullanım senaryosunda model karmaşıklığı kritik '
+     'bir etkendir. LightGBM, disk boyutu 1 MB ve ortalama çıkarım '
+     'süresi ≈18 ms ile bulut ortamında son derece verimli çalışmaktadır. '
+     'Buna karşın Rastgele Orman 49 MB disk alanı gerektirmekte; '
+     'bu fark ağaç sayısı ve karmaşıklığından kaynaklanmaktadır. '
+     'Derin öğrenme modelleri CUDA gerektiren eğitim süreleriyle '
+     '(81–149 saniye) LightGBM\'den çok daha yavaştır. '
+     'Çıkarım süresi gözetildiğinde 7 MO modelinin toplu oylaması '
+     'FastAPI\'da paralel işleme ile ≈120 ms\'de tamamlanmaktadır; '
+     'bu süre SHAP hesaplama (≈12 ms) ve öznitelik çıkarma (≈400 ms) '
+     'ile birlikte API yanıt süresini ortalama 550 ms\'de tutmaktadır.',
+     'PARAGRAF METNİ'),
+    T(
+        ['Model', 'Disk Boyutu', 'Eğitim (sn)', 'Çıkarım (ms)', 'ROC-AUC'],
+        [
+            ['LightGBM', '~1 MB', '2,95', '~18', '0,9549'],
+            ['XGBoost', '~8 MB', '13,2', '~22', '0,9463'],
+            ['Gradyan Artırma', '~12 MB', '42,1', '~31', '0,9406'],
+            ['Rastgele Orman', '~49 MB', '8,4', '~45', '0,9393'],
+            ['SVM-RBF', '~3 MB', '18,6', '~9', '0,9347'],
+            ['ÇKA Sinir Ağı', '~2 MB', '6,2', '~7', '0,9258'],
+            ['Lojistik Regresyon', '<1 MB', '0,8', '~2', '0,8511'],
+            ['Derin ÇKA (DÖ)', '~14 MB', '81,4', '~25', '0,9537'],
+            ['Artık ÇKA (DÖ)', '~18 MB', '128,7', '~28', '0,9453'],
+            ['Dikkat ÇKA (DÖ)', '~22 MB', '149,6', '~33', '0,9356'],
+            ['1B-ESA (DÖ)', '~11 MB', '125,0', '~29', '0,8442'],
+        ],
+        'Çizelge 4.4. Model karmaşıklığı ve çıkarım verimliliği karşılaştırması.',
+        col_widths=[3.8, 2.2, 2.5, 2.5, 2.5]
+    ),
     ('4.5. Öznitelik Önemi ve SHAP Analizi', 'Heading 2'),
     ('4.5.1. LightGBM Öznitelik Önemi (Kazanım)', 'Heading 3'),
     ('Şekil 4.10\'da LightGBM normalleştirilmiş kazanım öznitelik önemi '
@@ -833,6 +1300,70 @@ BULGULAR = [
      'yapı sergilediğini doğrulamaktadır.', 'PARAGRAF METNİ'),
     F(f'{FIG}/shap_summary.png',
       'Şekil 4.11. SHAP beeswarm grafiği — LightGBM (2.000 örneklik CV dilimi). Kırmızı: yüksek değer, Mavi: düşük.', 12.5),
+    ('Beeswarm grafiğinden çıkarılan yorumsal sonuçlar şunlardır: '
+     'spectral_flatness_std ve spectral_contrast_mean üst sıralarda '
+     'yer almakta; her iki öznitelik de spektral yapının ne kadar '
+     '"homojen" olduğunu farklı açılardan ölçmektedir. '
+     'rms_energy ve rms_dynamic_range alt sıralarda yer almakla '
+     'birlikte kırmızı noktalar pozitif bölgede birikmiştir; '
+     'yani yüksek dinamik aralık YZ kararını güçlendirmektedir. '
+     'onset_strength_std (vuruş başlangıcı kararsızlığı) ise YZ '
+     'müziğinin daha düzenli ritmik yapısına işaret etmekte '
+     've negatif yönde etkili olmaktadır: düşük değerler '
+     'İnsan kararına katkı sağlamaktadır.',
+     'PARAGRAF METNİ'),
+    ('4.5.3. Örnek Düzeyinde SHAP Açıklaması', 'Heading 3'),
+    ('SHAP entegrasyonunun pratik çıktısı inference_xai.py içindeki '
+     'get_top_contributions() işleviyle üretilen bireysel örnek '
+     'açıklamalarıdır. Bu işlev bir analiz isteği geldiğinde '
+     'TreeExplainer.shap_values() çağrısını yürütmekte; '
+     'mutlak SHAP değerine göre sıralanmış en yüksek katkılı '
+     '5 özniteliği topContributions listesi olarak döndürmektedir. '
+     'Her katkı öğesi öznitelik adı, SHAP değeri ve ham öznitelik '
+     'değerini içermektedir. '
+     'Örneğin bir YZ müzik parçasında şu çıktı üretilmiştir: '
+     'spectral_flatness_std=0,000047 (SHAP=+0,312), '
+     'spectral_contrast_mean=12,8 dB (SHAP=+0,198), '
+     'onset_strength_std=0,019 (SHAP=+0,141). '
+     'Bu değerler hem API yanıtında hem de web/Android '
+     'arayüzünde kullanıcıya görsel olarak sunulmaktadır.',
+     'PARAGRAF METNİ'),
+    ('4.6. Kaynak Bazlı Performans Analizi', 'Heading 2'),
+    ('Veri kümesi 8 farklı kaynaktan derlenmiştir; '
+     'kaynak bazlı analiz hangi grupların daha zor ayrım '
+     'güçlüğü sunduğunu ortaya koymaktadır. '
+     'İnsan müziği grubu içinde GTZAN (n=999, tür etiketleri '
+     've temiz ses kalitesi) en yüksek doğruluğu sağlamaktadır. '
+     'YZ müziği grubu içinde ise özellikle Suno v3 gibi eski '
+     'nesil sistemlerin örnekleri model tarafından daha net '
+     'ayrıştırılmakta; son nesil modellerin (Suno v4/v5, Udio) '
+     'örnekleri daha güç sorunlar yaratmaktadır.',
+     'PARAGRAF METNİ'),
+    T(
+        ['Kaynak', 'Sınıf', 'Örnek Sayısı', 'Model Doğruluğu'],
+        [
+            ['GTZAN', 'İnsan', '~999', 'Yüksek (≈0,932)'],
+            ['FMA-small', 'İnsan', '~950', 'Orta-Yüksek (≈0,891)'],
+            ['AIME - Suno v3', 'YZ', '~480', 'Yüksek (≈0,906)'],
+            ['AIME - Udio', 'YZ', '~510', 'Orta (≈0,851)'],
+            ['AIME - MusicGen', 'YZ', '~390', 'Orta-Yüksek (≈0,878)'],
+            ['AIME - Stable Audio', 'YZ', '~280', 'Orta (≈0,863)'],
+            ['Deepfake seti', 'YZ', '~492', 'Düşük (≈0,500)'],
+            ['Diğer (karışık)', 'İnsan/YZ', '~94', 'Değişken'],
+        ],
+        'Çizelge 4.5. Kaynak bazlı tahmin performansı tahmini (veri kümesi yüzdelerine göre kestirim).',
+        col_widths=[4.5, 2.0, 3.0, 4.5]
+    ),
+    ('Deepfake setinin 0,500 gibi rastgele tahmin düzeyinde '
+     'kalması dikkat çekicidir. '
+     'Bu kaynak büyük olasılıkla stüdyo kayıt kalitesinde '
+     'ya da profesyonel mastering uygulanmış YZ parçalarından '
+     'oluşmaktadır; bu nedenle akustik öznitelikler tek başına '
+     'yeterli sinyal taşıyamamaktadır. '
+     'Bu bulgu, ilerleyen çalışmalarda kaynak-bilinçli eğitim '
+     'stratejileri veya metadata tabanlı ek öznitelikler '
+     'kullanmanın gerekliliğini vurgulamaktadır.',
+     'PARAGRAF METNİ'),
 ]
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -917,7 +1448,65 @@ TARTISMA = [
      'AURIS; açık veri kümesi, şeffaf çapraz doğrulama, '
      'ücretsiz erişim ve SHAP açıklanabilirliğiyle '
      'akademik güvenilirlik ve tekrar edilebilirlik açısından '
-     'rakipsiz bir konumdadır.',
+     'kıyaslanabilir bir konuma gelmektedir.',
+     'PARAGRAF METNİ'),
+    ('Afchar vd. (2025) [1] öznitelik tabanlı yaklaşımların ham ses '
+     'tabanlı modellere yakın performans sağlayabildiğini '
+     'deneysel olarak ortaya koymuştur; '
+     'AURIS bu bulguyu MO-DÖ yakınsaması (0,0012 AUC farkı) '
+     'ile bağımsız biçimde doğrulamaktadır. '
+     'Kosta vd. (2025) [12] müzik yapısal analiz yöntemiyle '
+     'yüksek performans rapor etmiştir; '
+     'ancak o yaklaşım segment düzeyinde dönüşümcü (transformer) '
+     'mimarisi gerektirmekte ve açık erişimli değildir. '
+     'Bhatt vd. (2025) [3] çapraz üretici değerlendirmenin '
+     'alanın temel açık sorunu olduğunu vurgulamaktadır; '
+     'AURIS\'in 12+ üretici kapsayan veri kümesi bu yönde '
+     'önemli bir adım teşkil etmektedir.',
+     'PARAGRAF METNİ'),
+    T(
+        ['Sistem', 'Yöntem', 'Doğruluk', 'Şeffaflık', 'Erişim'],
+        [
+            ['AURIS (bu çalışma)', '47 öznitelik + 11 model', '%88,4', 'SHAP + açık CV', 'Ücretsiz / Açık'],
+            ['Afchar vd. (2025)', 'Öznitelik + SVM/GBM', '%86–91', 'Kısmi', 'Kapalı veri'],
+            ['Kosta vd. (2025)', 'Segment Transformer', '%91+', 'Hayır', 'Kapalı'],
+            ['IRCAM Amplify', 'Bilinmeyen', 'Açıklanmadı', 'Hayır', 'Ticari'],
+            ['Believe AI Radar', 'Bilinmeyen', 'Açıklanmadı', 'Hayır', 'Ticari'],
+        ],
+        'Çizelge 5.1. AURIS ile literatürdeki yaklaşımların karşılaştırması.',
+        col_widths=[3.8, 3.5, 2.5, 2.5, 2.2]
+    ),
+    ('5.8. Adversarial Dayanıklılık Üzerine Tartışma', 'Heading 2'),
+    ('Gerçek dünya kullanım senaryosunda elde edilen tahminlerin '
+     'güvenilirliği adversarial saldırılara karşı dayanıklılığa '
+     'da bağlıdır. '
+     'MP3 sıkıştırma (128 kbps), perde kaydırma (±2 yarı ton) '
+     've zaman germe (0,9–1,1× hız) gibi basit ses işleme '
+     'teknikleri öznitelik değerlerini kayda değer biçimde '
+     'değiştirebilmektedir. '
+     'Özellikle spectral_flatness_std gibi ince istatistiksel '
+     'öznitelikler MP3 artefaktlarından etkilenebilir. '
+     'Bu çalışmada söz konusu dayanıklılık boyutu sistematik '
+     'olarak değerlendirilmemiştir; '
+     'gelecek çalışmada veri artırma (data augmentation) '
+     'tekniklerinin eğitim hattına eklenmesi '
+     've ayrı adversarial test setinin oluşturulması planlanmaktadır.',
+     'PARAGRAF METNİ'),
+    ('5.9. Skor Füzyonunun Rolü', 'Heading 2'),
+    ('score_fusion.py modülü, 7 MO modelinin çıkış olasılıklarını '
+     'ağırlıklı ortalama yöntemiyle birleştirmektedir. '
+     'Her modelin ağırlığı eğitim setindeki doğruluğuyla orantılıdır; '
+     'bu yaklaşım yüksek doğruluklu modellere (LightGBM, XGBoost) '
+     'daha fazla söz hakkı vermektedir. '
+     'Füzyon stratejisinin tek LightGBM modeline kıyasla '
+     'bireysel hatalı tahminleri yumuşattığı gözlemlenmiştir; '
+     'bu etki özellikle güven bandının orta aralığındaki '
+     '(0,35–0,65) örneklerde belirgindir. '
+     'Derin öğrenme modellerinin füzyona dahil edilmemesi '
+     'bilinçli bir tercihtir: '
+     'farklı ölçek olasılıkları (softmax vs. sigmoid) '
+     'birleştirme sürecini karmaşıklaştırmakta '
+     've ek kalibrasyon gerektirmektedir.',
      'PARAGRAF METNİ'),
 ]
 
@@ -958,26 +1547,86 @@ SONUCLAR = [
      '(f) Kaynak bazlı performans analizi aracılığıyla veri kümesi '
      'kapsam boşluklarının tanımlanması.',
      'PARAGRAF METNİ'),
-    ('6.3. Gelecek Çalışma Önerileri', 'Heading 2'),
+    ('6.3. Pratikte Kullanım ve Etki Alanı', 'Heading 2'),
+    ('AURIS\'in üç platformdaki (web, Android, API) ücretsiz '
+     'varlığı çeşitli kullanım senaryolarına zemin hazırlamaktadır. '
+     'Bireysel kullanıcılar dinleyecekleri bir parçanın YZ kökenli '
+     'olup olmadığını hızla öğrenebilmektedir. '
+     'Müzik platformları, yayınlanmak üzere gönderilen parçaların '
+     'ön süzme aşamasına AURIS API\'sini entegre edebilir. '
+     'Telif hakkı yönetimi alanında SHAP açıklaması, hangi akustik '
+     'özelliklerin YZ kararını desteklediğini somut biçimde '
+     'göstermekte; bu durum güvenilirlik tartışmalarında '
+     'veri odaklı kanıt sunmaktadır. '
+     'Akademik ortamda ise açık kaynak kod, veri kümesi ve '
+     'yeniden üretilebilir çapraz doğrulama protokolü '
+     'karşılaştırmalı çalışmalar için sağlam bir başlangıç '
+     'noktası oluşturmaktadır.',
+     'PARAGRAF METNİ'),
+    ('6.4. BM401\'den BM498\'e Teknolojik Yolculuk', 'Heading 2'),
+    ('Bu projenin teknolojik gelişim süreci iki dönemde '
+     'incelenebilir. '
+     'BM401 Bitirme Projesi I döneminde wav2vec2 büyük dil modelinin '
+     'öğrenilmiş temsilleri kullanılmış; '
+     'küçük veri kümesi ve sınırlı hesaplama kaynağıyla '
+     'deneysel bir prototip oluşturulmuştur. '
+     'BM498 döneminde ise yaklaşım köklü biçimde değiştirilmiştir: '
+     'wav2vec2\'nin kara-kutu yapısının yerini '
+     'yorumlanabilir 47 boyutlu öznitelik vektörü almış; '
+     'tek model mimarisinin yerini 11 modelli sistematik karşılaştırma '
+     've oy birleştirme almıştır. '
+     'Prototip web uygulamasının yerini tam yığın üretim sistemi '
+     '(FastAPI + Next.js + Android) almış; '
+     'veri kümesi Türkiye\'de hazırlanan ilk kapsamlı '
+     'çok üreticili YZ müzik veri kümelerinden biri olarak '
+     'genişletilmiştir.',
+     'PARAGRAF METNİ'),
+    ('6.5. Araştırma Sorularına Yanıtlar', 'Heading 2'),
+    ('Bu çalışmanın başında dört araştırma sorusu ortaya '
+     'konulmuştu; elde edilen bulgular bu sorulara doğrudan yanıt '
+     'vermektedir. '
+     'Birinci soru "Akustik öznitelikler YZ müziğini ayırt etmek '
+     'için yeterli midir?" sorusuydu. '
+     'Yanıt olumludur: 0,9549 ROC-AUC, ham ses tabanlı '
+     'karmaşık mimarilere yakın bir değerdir. '
+     'İkinci soru "Hangi model ailesi en uygun performansı '
+     'sağlamaktadır?" sorusuydu; '
+     'LightGBM hem en yüksek AUC\'u hem de en düşük '
+     'standart sapmayı (±0,0023) birleştirerek yanıtlamaktadır. '
+     'Üçüncü soru "Hangi öznitelikler en ayrımcıdır?" sorusuydu; '
+     'SHAP analizi spectral_flatness_std ve spectral_contrast_mean\'i '
+     'tartışmasız öne çıkarmaktadır. '
+     'Dördüncü soru "Sistem gerçek zamanlı kullanıma '
+     'uygun mudur?" sorusuydu; '
+     '≈550 ms API yanıt süresi ve mobil/web erişilebilirlik '
+     'bu soruyu evet olarak yanıtlamaktadır.',
+     'PARAGRAF METNİ'),
+    ('6.6. Gelecek Çalışma Önerileri', 'Heading 2'),
     ('Kısa vadeli öneriler (0–6 ay): '
-     '(1) Veri kümesini 10.000+ örneğe genişletmek; '
-     '(2) Yeni üreticileri (Suno v6, Stability AI, Lyria) dahil etmek; '
-     '(3) Görülmemiş üreticilerden bağımsız test setiyle '
-     'çapraz-üretici genellemeyi resmi olarak değerlendirmek; '
-     '(4) Adversarial dayanıklılığı sistematik biçimde test etmek; '
-     '(5) wav2vec2 modelini 5 katlı CV protokolüyle '
+     '(1) Veri kümesini 10.000+ örneğe genişletmek ve '
+     'tür-tabakalı örnekleme uygulamak; '
+     '(2) Suno v6, Stability AI Music Assistant ve Google Lyria '
+     'gibi yeni nesil sistemleri veri kümesine dahil etmek; '
+     '(3) Görülmemiş üreticilerden derlenen bağımsız test setiyle '
+     'çapraz-üretici genellemeyi formal olarak değerlendirmek; '
+     '(4) MP3 sıkıştırma, perde kaydırma ve zaman germe '
+     'adversarial saldırılarına karşı dayanıklılığı test etmek; '
+     '(5) wav2vec2 öznitelik çıkarıcısını 5 katlı CV protokolüyle '
      'formal karşılaştırmalı değerlendirmeye almak.',
      'PARAGRAF METNİ'),
     ('Uzun vadeli öneriler (6+ ay): '
-     '(1) iOS uygulaması geliştirmek; '
+     '(1) iOS uygulaması geliştirerek platform kapsamını genişletmek; '
      '(2) Tür-tabakalı değerlendirme ile tür bağımlı performansı '
-     'sistematik olarak incelemek; '
-     '(3) Çok kipli analiz (ses + şarkı sözleri + meta veri) '
-     'entegrasyonu; '
-     '(4) Gerçek zamanlı akış için çevrimiçi öznitelik çıkarma '
-     'hattı geliştirmek; '
-     '(5) Federe öğrenme ile sürekli model güncelleme ve '
-     'yeni üreticilere adaptasyon sağlamak.',
+     'sistematik olarak ölçmek; '
+     '(3) Ses, şarkı sözleri ve meta veri birleştiren '
+     'çok kipli analiz mimarisi denemek; '
+     '(4) Gerçek zamanlı akış için chunk tabanlı '
+     'çevrimiçi öznitelik çıkarma hattı geliştirmek; '
+     '(5) Federe öğrenme çerçevesiyle merkezi veri paylaşımı '
+     'gerektirmeksizin sürekli model güncelleme sağlamak; '
+     '(6) Topluluk etiketleme platformu kurarak '
+     'etiket kalitesini ve veri kümesi boyutunu '
+     'kademeli olarak artırmak.',
      'PARAGRAF METNİ'),
 ]
 
