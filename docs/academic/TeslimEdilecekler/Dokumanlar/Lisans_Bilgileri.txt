@@ -1,0 +1,92 @@
+AURIS — LİSANS BİLGİLERİ
+================================================================
+
+Proje      : AURIS — Yapay Zekâ Üretimi Müziklerin Tespiti
+Geliştirici: Hasan Arthur Altuntaş
+Kurum      : Düzce Üniversitesi, Bilgisayar Mühendisliği
+Yıl        : 2025-2026
+
+----------------------------------------------------------------
+1. PROJE LİSANSI
+----------------------------------------------------------------
+
+Bu proje MIT Lisansı altında dağıtılmaktadır.
+
+MIT License
+
+Copyright (c) 2025 Hasan Arthur Altuntaş
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+----------------------------------------------------------------
+2. KULLANILAN ÜÇÜNCÜ TARAF KÜTÜPHANELERİ VE LİSANSLARI
+----------------------------------------------------------------
+
+Yapay Zekâ / Veri İşleme:
+  - librosa ............... ISC License
+  - scikit-learn .......... BSD 3-Clause License
+  - LightGBM .............. MIT License
+  - XGBoost ............... Apache License 2.0
+  - PyTorch ............... BSD-style License
+  - transformers (HF) ..... Apache License 2.0
+  - SHAP .................. MIT License
+  - NumPy / SciPy ......... BSD 3-Clause License
+
+Arka Uç:
+  - FastAPI ............... MIT License
+  - Uvicorn ............... BSD 3-Clause License
+  - Pydantic .............. MIT License
+
+Web Arayüzü:
+  - Next.js ............... MIT License
+  - React ................. MIT License
+  - TypeScript ............ Apache License 2.0
+  - Tailwind CSS .......... MIT License
+
+Mobil Uygulama:
+  - Kotlin ................ Apache License 2.0
+  - Jetpack Compose ....... Apache License 2.0
+  - Retrofit .............. Apache License 2.0
+  - Room .................. Apache License 2.0
+
+----------------------------------------------------------------
+3. VERİ KÜMESİ KAYNAKLARI
+----------------------------------------------------------------
+
+Eğitimde kullanılan veriler kamuya açık kaynaklardan derlenmiştir.
+İnsan katılımcılardan birincil veri toplanmamıştır; bu nedenle etik
+kurul izni gerekmemektedir.
+
+İnsan müziği kaynakları : GTZAN, FMA Small, SleepyJesse (kapak)
+Yapay zekâ kaynakları   : Suno, Udio, MusicGen, AudioLDM2, Echoes,
+                          Stable Audio, Riffusion, Mustango, JEN-1, AImE
+
+Her kaynak kendi kullanım koşullarına tabidir. Veri kümesi yalnızca
+akademik araştırma amacıyla kullanılmıştır.
+
+----------------------------------------------------------------
+4. SORUMLULUK REDDİ
+----------------------------------------------------------------
+
+AURIS bir araştırma projesidir. Analiz sonuçları destekleyici bir
+gösterge olarak değerlendirilmeli, tek başına hukuki veya ticari
+karar dayanağı olarak kullanılmamalıdır.
+
+================================================================
+İletişim: hasannarthurrr@gmail.com
