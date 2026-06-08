@@ -577,7 +577,7 @@ def build():
         'Süre normalizasyonu: 30 saniyeyi aşan kayıtlar kırpılmakta, '
         'kısa kayıtlar sıfırla doldurulmaktadır;',
         'Gürültü ve bozulma kontrolü: minimum 1 saniye uzunluk '
-        've minimum 1×10⁻⁶ genlik eşiği;',
+        've minimum 1e-6 genlik esigi;',
         'Veri sızıntısını önlemek için duration_sec ve sample_rate '
         'meta veri alanları öznitelik vektöründen çıkarılmıştır.',
     ]
