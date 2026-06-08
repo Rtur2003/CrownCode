@@ -1,0 +1,689 @@
+=== SAYFA 1 ===
+BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ
+2025-2026 AKADEMİK YILI
+GÜZ DÖNEMİ
+BM401- Bilgisayar Mühendisliği Proje Tasarımı
+Ders Sorumlusu:
+Doktor Öğretim Üyesi Büşra TAKGİL
+AURIS: Yapay Zeka Üretimi Müziklerin Tespiti
+için
+wav2vec2 Tabanlı Çok Platformlu Analiz Sistemi
+Hazırlayan:
+Hasan Arthur Altuntaş
+Öğrenci No:
+221001047
+=== SAYFA 2 ===
+TEŞEKKÜR
+Lisans öğrenimimde ve bu tezin hazırlanmasında gösterdiği her türlü destek ve yardımdan
+dolayı çok değerli hocam Doktor Öğretim Üyesi Büşra TAKGİL’e en içten dileklerimle
+teşekkür ederim.
+Bu çalışma boyunca yardımlarını ve desteklerini esirgemeyen sevgili aileme ve çalışma
+arkadaşlarıma sonsuz teşekkürlerimi sunarım.
+16 Ocak 2026 Hasan Arthur Altuntaş
+=== SAYFA 3 ===
+İÇİNDEKİLER
+Sayfa No
+ŞEKİL LİSTESİ ......................................................................................... iv
+Tablo Listesi ................................................................................................. v
+KISALTMALAR ........................................................................................ vi
+SİMGELER ............................................................................................... vii
+ÖZET ......................................................................................................... viii
+ABSTRACT ................................................................................................ ix
+1. GİRİŞ ................................................................................................... 1
+1.1. PROJENİN AMACI ................................................................................................... 1
+1.2. LİTERATÜR ÖZETİ ................................................................................................. 3
+2. MATERYAL VE YÖNTEM ............................................................. 5
+2.1. VERİ SETİ VE HAZIRLIK......................................................................................... 5
+2.2. MODEL MİMARİSİ .................................................................................................. 6
+2.3. MODEL EĞİTİMİ VE OPTİMİZASYON ..................................................................... 7
+2.4. WEB PLATFORMU GELİŞTİRME............................................................................. 8
+2.5. MOBİL UYGULAMA GELİŞTİRME .......................................................................... 9
+2.6. ARKA UÇ SERVİSİ VE API TASARIMI .................................................................. 10
+2.7. TEST VE DEĞERLENDİRME METODOLOJİSİ ........................................................ 11
+3. Arayüz uygulamaları ve Model eğitimi .......................................... 12
+3.1. WEB PLATFORM UYGULAMASI ........................................................................ 12
+3.2. ANDROİD MOBİL UYGULAMASI........................................................................ 14
+3.3. MODEL PERFORMANS ANALİZİ ........................................................................ 17
+3.4. MÜZİK TÜRÜ SINIFLANDIRMA PERFORMANSI ................................................. 19
+3.5. SİSTEM YANIT SÜRESİ ANALİZİ ....................................................................... 20
+3.6. KULLANILABİLİRLİK TESTİ SONUÇLARI .......................................................... 21
+3.7. MEVCUT SİSTEMLERLE KARŞILAŞTIRMA ........................................................ 22
+4. SONUÇLAR VE ÖNERİLER ......................................................... 24
+4.1. ELDE EDİLEN SONUÇLAR ................................................................................. 24
+4.2. ÖNERİLER .......................................................................................................... 24
+5. KAYNAKLAR .................................................................................. 26
+6. EKLER .............................................................................................. 27
+EK A: SİSTEM ERİŞİM BİLGİLERİ VE AÇIK KAYNAK DEPOSU ................................. 27
+EK B: SİSTEM MİMARİSİ DETAYLARI ....................................................................... 27
+EK C: MODEL PERFORMANS METRİKLERİ ............................................................... 28
+iii
+=== SAYFA 4 ===
+ŞEKİL LİSTESİ
+Sayfa No
+Şekil 1 Yapay Zeka Model Eğitim Şeması ....................................................................... 1
+Şekil 2 AURIS Sistem Mimarisi ....................................................................................... 2
+Şekil 3 MusicGen Model Mimari ve Karşılaştırması ....................................................... 3
+Şekil 4 Wav2vec2 Model Mimarisi .................................................................................. 4
+Şekil 5 Veri Seti Hazırlama Akışı ..................................................................................... 5
+Şekil 6 Hibrit Model Mimarisi .......................................................................................... 6
+Şekil 7 Kayıp ve Doğruluk Eğrisi ..................................................................................... 7
+Şekil 8 Web Platform Mimarisi ........................................................................................ 8
+Şekil 9 Mobil Uygulama Mimarisi ................................................................................... 9
+Şekil 10 Mobil Uygulama Mimarisi .............................................................................. 10
+Şekil 11 Web Arayüzü .................................................................................................... 12
+Şekil 12 Dosya Yükleme ve Doğrulama ......................................................................... 13
+Şekil 13 Model Çıktısı ..................................................................................................... 14
+Şekil 14 Mobil Arayüz .................................................................................................... 15
+Şekil 15 Mobil Kullanıcı Akışı ....................................................................................... 16
+Şekil 16 Mobil Arayüz Model Çıktısı ............................................................................. 16
+Şekil 17 Model Performans Karşılaştırması ................................................................... 17
+Şekil 18 ROC ve AUC Grafiği ....................................................................................... 18
+Şekil 19 Karışıklık Matrisi .............................................................................................. 18
+Şekil 20 Müzik Türüne Göre Doğruluk Değerleri .......................................................... 19
+Şekil 21 Yanıt Süre Aşamaları ........................................................................................ 20
+Şekil 22 Katılımcı Değerlendirme Skorları .................................................................... 21
+Şekil 23 Sistem Mimari Yapısı ....................................................................................... 27
+iv
+=== SAYFA 5 ===
+TABLO LİSTESİ
+Sayfa No
+Tablo 1 Sistemlerin Karşılaştırma Tablosu .................................................................... 22
+v
+=== SAYFA 6 ===
+KISALTMALAR
+API Uygulama Programlama Arayüzü
+AUC Eğri Altında Kalan Alan
+AUROC ROC Eğrisi Altındaki Alan
+CSV Virgülle Ayrılmış Değerler
+dB Desibel
+FLAC Free Lossless Audio Codec
+GPU Grafik İşlem Birimi
+HTTP Hypertext Transfer Protocol
+Hz Hertz
+JSON JavaScript Object Notation
+kHz Kilohertz
+LightGBM Light Gradient Boosting Machine
+M4A MPEG-4 Audio
+MB Megabyte
+MFCC Mel-Frequency Cepstral Coefficients
+MP3 MPEG Audio Layer 3
+MVVM Model-View-ViewModel
+OGG Ogg Vorbis Audio Format
+REST Representational State Transfer
+ROC Receiver Operating Characteristic
+SNR Sinyal Gürültü Oranı
+SUS Sistem Kullanılabilirlik Ölçeği
+UI Kullanıcı Arayüzü
+URL Uniform Resource Locator
+WAV Waveform Audio File Format
+vi
+=== SAYFA 7 ===
+SİMGELER
+α Öğrenme oranı (learning rate)
+ε Epsilon (hata toleransı)
+η Eta (öğrenme oranı)
+θ Theta (model parametreleri)
+λ Lambda (düzenleme parametresi)
+μ Ortalama
+σ Standart sapma
+f Frekans
+n Örnek sayısı
+t Zaman
+x Girdi vektörü
+y Çıktı değeri
+ℓ Kayıp fonksiyonu
+vii
+=== SAYFA 8 ===
+ÖZET
+AURIS: Müzikte Yapay Zeka Tespiti
+Hasan Arthur ALTUNTAŞ
+Düzce Üniversitesi
+Mühendislik Fakültesi Bilgisayar Mühendisliği Proje Tasarımı Raporu
+Danışman: Doktor Öğretim Üyesi Büşra TAKGİL
+Ocak 2026, 28 sayfa
+Bu çalışma, yapay zeka tarafından üretilen müziklerin insan tarafından üretilen
+müziklerden ayırt edilmesi problemi üzerine odaklanmaktadır. Gelişen yapay zeka
+teknolojileri ile birlikte, Suno, Udio ve MusicGen gibi ses üretim araçlarının
+yaygınlaşması müzik endüstrisinde yeni güvenlik ve telif hakkı sorunları yaratmıştır.
+Çalışmanın temel amacı, yapay zeka üretimi müziklerin otomatik olarak tespit
+edilebilmesi için güvenilir, ölçeklenebilir ve çok platformlu bir sistem geliştirmektir.
+Çalışmada wav2vec2 tabanlı derin öğrenme modelleri ve LightGBM algoritması
+kullanılarak hibrit bir model mimarisi oluşturulmuştur. Geliştirilen AURIS sistemi,
+modüler mimari yaklaşımı benimseyerek üç ana katmandan oluşmaktadır. Sunum
+katmanında Next.js 14 ve TypeScript ile duyarlı web arayüzü ile Kotlin ve Jetpack
+Compose ile yerel Android uygulaması geliştirilmiştir. İş mantığı katmanında FastAPI
+tabanlı arka uç servisi, veri katmanında ise wav2vec2 ve LightGBM hibrit modeli
+konumlandırılmıştır. Sistem, güvenli hata yönetimi ilkeleri ile geliştirilmiş ve gerçek
+zamanlı analiz kapasitesine sahip olacak şekilde tasarlanmıştır.
+Deneysel sonuçlar, sistemin yüzde 97,2 doğruluk oranı ile yapay zeka üretimi müzikleri
+tespit edebildiğini ve AUROC değerinin 0,985 olduğunu göstermektedir. Müzik türü
+sınıflandırması performansı ise yüzde 91,3 doğruluk oranına ulaşmıştır. Sistem, 2 saniye
+altında gerçek zamanlı analiz yapabilmekte ve günde 10.000'in üzerinde analiz
+kapasitesine sahiptir. Platform, web ve mobil arayüzler aracılığıyla kullanıcıların
+hizmetine sunulmuştur.
+Çalışma sonucunda, AURIS sisteminin mevcut ticari çözümlerle rekabet edebilir
+performans gösterdiği ortaya konulmuştur. Açık kaynak yaklaşımıyla geliştirilen sistem,
+müzik endüstrisinde yapay zeka üretimi içerik tespitine yönelik pratik bir çözüm
+sunmakta ve araştırma topluluğuna katkı sağlamaktadır. Sistemin modüler yapısı,
+gelecekteki geliştirmelere ve farklı kullanım senaryolarına kolayca adapte edebilme
+olanağı sağlamaktadır.
+Anahtar sözcükler: Yapay zeka müzik deteksiyonu, wav2vec2, web platformu,
+Android, LightGBM
+viii
+=== SAYFA 9 ===
+ABSTRACT
+AURIS: AI-Generated Music Detection
+Hasan Arthur ALTUNTAŞ
+Düzce University
+Faculty of Engineering, Computer Engineering Project Design Report
+Supervisor: Assistant Professor Dr. Büşra TAKGİL
+January 2026, 28 pages
+This study focuses on the problem of distinguishing artificially generated music from
+human-composed music. With the advancement of artificial intelligence technologies, the
+proliferation of audio generation tools such as Suno, Udio, and MusicGen has created
+new security and copyright issues in the music industry. The primary objective of this
+research is to develop a reliable, scalable, and multi-platform system capable of
+automatically detecting AI-generated music content.
+In this study, a hybrid model architecture was developed using wav2vec2-based deep
+learning models and the LightGBM algorithm. The developed AURIS system adopts a
+modular architectural approach consisting of three main layers. The presentation layer
+comprises a responsive web interface built with Next.js 14 and TypeScript, along with a
+native Android application developed using Kotlin and Jetpack Compose. The business
+logic layer incorporates a FastAPI-based backend service, while the data layer
+implements a wav2vec2 and LightGBM hybrid model. The system was designed with
+fail-safe error management principles to enable real-time analysis capabilities.
+Experimental results demonstrate that the system achieves 97.2 percent accuracy in
+detecting AI-generated music with an AUROC value of 0.985. The music genre
+classification performance reaches 91.3 percent accuracy. The system is capable of
+performing real-time analysis in under 2 seconds and possesses a processing capacity
+exceeding 10,000 analyses per day. The platform has been made available to users
+through web and mobile interfaces.
+The study demonstrates that the AURIS system exhibits competitive performance with
+existing commercial solutions. Developed through an open-source approach, the system
+provides a practical solution for detecting AI-generated content in the music industry and
+contributes to the research community. The modular structure of the system enables easy
+adaptation to future developments and diverse use case scenarios.
+Keywords: AI music detection, wav2vec2, web platform, Android, LightGBM
+ix
+=== SAYFA 10 ===
+1. GİRİŞ
+1.1. Projenin Amacı
+Yapay zeka teknolojileri, bilgisayarların sadece verileri işlediği dönemlerden
+yaratıcı içerikler üretebildiği günümüze kadar büyük bir evrim geçirmiştir. Müzik
+endüstrisi de bu dönüşümden nasibini almış; yapay zeka, besteciler için bir yardımcı
+araç olmaktan çıkıp tek başına profesyonel kalitede eserler üretebilen bir üretici
+konumuna gelmiştir. Son yıllarda Suno, Udio ve MusicGen gibi araçların yükselişiyle
+birlikte yaratıcılığın sadece insana özgü bir ayrıcalık olmadığı sıkça tartışılmaktadır. Bu
+durum, günümüzde dijital müzik platformlarındaki içeriğin hızla değişen yapısını
+özetlemektedir. Birçok araştırma, yayın servislerindeki yapay zeka üretimi içeriğin her
+geçen gün arttığını ve bu durumun telif hakları ile sanatçı emeği konusunda ciddi soru
+işaretleri yarattığını belirtmektedir [1]. Özellikle son yıllarda derin öğrenme
+modellerinin ses sentezleme yeteneği, insan kulağının ayırt edemeyeceği seviyede
+gerçekçi sonuçlar doğurmuştur.
+Bir yapay zeka tespit sisteminin geliştirilme aşamasında veri bilimciler ve
+yazılım mühendisleri kritik bir rol oynamaktadır. Süreç, veri toplama, model mimarisi
+tasarımı ve platform entegrasyonu gibi her biri farklı uzmanlık gerektiren katmanları
+barındırmaktadır. Şekil 1'de gösterildiği üzere, yapay zeka model eğitim şeması üç
+temel aşamadan oluşmaktadır.
+Şekil 1 Yapay Zeka Model Eğitim Şeması
+Yapay zeka tabanlı bir yazılımın geliştirme süreci, kullanılan modelin türü, veri
+setinin büyüklüğü ve hedeflenen platformlara göre farklılık gösterse de geliştirme
+döngüsü temelde üç aşamadan oluşmaktadır. Veri hazırlığı aşamasında binlerce ses
+dosyasının toplanması, temizlenmesi ve etiketlenmesi yer almaktadır. Model eğitimi
+aşamasında wav2vec2 gibi gelişmiş mimariler kullanılarak sistemin ses
+karakteristiklerini öğrenmesi sağlanır ve doğruluk testleri yapılır. Dağıtım aşamasında
+ise eğitilen modelin son kullanıcıya ulaşması için web ve mobil arayüzlerin
+geliştirilmesi gerçekleştirilmektedir.
+1
+=== SAYFA 11 ===
+Müzik endüstrisi, bu teknolojik ilerlemeler sayesinde hem üretim hem de
+tüketim tarafında köklü değişiklikler geçirmiştir. Bu bağlamda, üretilen müziğin
+kaynağını tespit edebilmek hem akademik bir araştırma konusu hem de endüstriyel bir
+zorunluluk haline gelmiştir [2]. Şekil 2'de AURIS sisteminin genel mimarisi ve
+geliştirme aşamaları sunulmaktadır.
+Şekil 2 AURIS Sistem Mimarisi
+Bu projede AURIS isimli bir yapay zeka müzik tespit sistemi geliştirilmiştir.
+AURIS, modern ses üretim araçlarının bıraktığı dijital izleri analiz ederek müziğin
+kökenini tespit eden bir platformdur. İnsan bestesi ile yapay zeka üretimi müzikler
+arasında frekans spektrumunda ve yapısal bütünlükte bariz farklar bulunmaktadır. Bu
+sistem, wav2vec2 tabanlı derin öğrenme modelini kullanarak söz konusu karakteristik
+farkları harmanlayan ve analiz eden bir yapıya sahiptir. Web ve mobil platformlarında
+çalışan ve saniyeler içinde analiz sonucu üreten bu sistemin kullanıcıya şeffaf ve
+güvenilir bir doğrulama deneyimi sunması amaçlanmıştır. Aynı zamanda yüzde 97,2
+gibi yüksek bir doğruluk oranıyla çalışan modüler bir yapı tasarlanmıştır. Bu proje,
+derin öğrenme tekniklerini ve modern yazılım mimarisini birleştirerek müzik
+endüstrisinde insan yaratıcılığını korumayı ve adil bir dijital ekosistem oluşturmayı
+hedeflemektedir.
+2
+=== SAYFA 12 ===
+1.2. Literatür Özeti
+Günümüzde yapay zeka teknolojilerinin demokratikleşmesi ile birlikte dijital
+içerik üretimi endüstrisi hızlı ve rekabetçi bir büyüme gerçekleştirmektedir. Her yıl
+derin öğrenme mimarilerinde büyük yenilikler ve parametre artışları meydana
+gelmektedir. Müzik endüstrisindeki bu gelişmeler, özellikle ses sentezleme kalitesi ve
+üretim hızı açısından geçmiş yıllara kıyasla dramatik farklılıklar göstermiştir.
+Üretken yapay zeka modellerinin evrimi incelendiğinde, OpenAI'ın Jukebox
+projesi ile başlayan ham ses üretim sürecinin Meta'nın MusicGen modeli ve Suno AI
+gibi modern platformlarla zirveye ulaştığı görülmektedir. Jukebox, müzikal tutarlılığı
+sağlamak için Vektör Nicelemeli Değişken Oto Kodlayıcı mimarisini kullanırken, yeni
+nesil modeller dönüştürücü tabanlı yapılarla metinden müziğe dönüşümü saniyeler
+içinde gerçekleştirilebilmektedir [3]. Bu modeller, telif hakkı ve sanatçı hakları
+konusunda yeni bir tartışma alanı yaratmıştır. Şekil 3'de modern müzik üretim
+modellerinin mimari yapısı gösterilmektedir.
+Şekil 3 MusicGen Model Mimari ve Karşılaştırması
+Derin öğrenme ile ses analizi yaklaşımları incelendiğinde, geleneksel ses analizi
+yöntemlerinin el yordamıyla çıkarılan özelliklere dayanırken modern yaklaşımların
+veriden öğrenen modelleri tercih ettiği görülmektedir. Facebook AI Research tarafından
+geliştirilen wav2vec 2.0 modeli, etiketlenmemiş büyük ses verileri üzerinde kendi
+kendine öğrenme yeteneği ile literatürde bir dönüm noktası olmuştur [4]. Bu model,
+3
+=== SAYFA 13 ===
+sesin ham dalga formundan bağlamsal temsiller öğrenerek konuşma ve müzik tanıma
+görevlerinde üstün başarı göstermiştir. Şekil 4'te wav2vec2 modelinin çalışma prensibi
+ve ses işleme katmanları detaylı olarak sunulmaktadır.
+Şekil 4 Wav2vec2 Model Mimarisi
+Literatürde yapay zeka üretimi içeriği tespit etmeye yönelik çalışmalar
+genellikle akademik makalelerle sınırlı kalmış veya son kullanıcıya ulaşmayan kapalı
+sistemler olarak geliştirilmiştir [5]. Mevcut çözümlerin çoğu yüksek işlem gücü
+gerektirmekte veya gerçek zamanlı analiz sunamamaktadır. Erişilebilir tespit
+sistemlerinin geliştirilmesi, hem akademik araştırmalarda hem de endüstriyel
+uygulamalarda önemli bir ihtiyaç olarak öne çıkmaktadır.
+Bu literatür çerçevesinde AURIS, üretken yapay zeka modellerinin bıraktığı
+dijital izleri wav2vec2 mimarisinin güçlü temsil yeteneği ile birleştirerek analiz eden
+hibrit bir sistem sunmayı hedeflemektedir. Proje, akademik literatürdeki derin öğrenme
+tekniklerini son kullanıcının erişebileceği web ve mobil platformlara taşıyarak teorik
+başarıyı pratik bir güvenlik aracına dönüştürmektedir.
+4
+=== SAYFA 14 ===
+2. MATERYAL VE YÖNTEM
+2.1. Veri Seti ve Hazırlık
+Çalışmada kullanılan veri seti, hem insan tarafından üretilen hem de yapay zeka
+tarafından üretilen müzik örneklerinden oluşmaktadır. Veri toplama sürecinde Suno,
+Udio ve MusicGen gibi popüler yapay zeka müzik üretim platformlarından toplam 15.000
+adet ses dosyası toplanmıştır. İnsan tarafından üretilen müzikler için ise açık kaynak
+müzik veri tabanları kullanılarak 15.000 adet orijinal müzik örneği derlenmiştir. Veri
+setinin dengeli bir dağılım göstermesi için her kategoriden eşit sayıda örnek seçilmiştir.
+Veri ön işleme aşamasında, tüm ses dosyaları 16 kHz örnekleme hızına
+dönüştürülmüş ve 30 saniyelik segmentlere bölünmüştür. Şekil 5'de veri seti hazırlama
+ve etiketleme sürecinin genel akış şeması gösterilmektedir.
+Şekil 5 Veri Seti Hazırlama Akışı
+5
+=== SAYFA 15 ===
+Veri setinin kalite kontrolü için otomatik filtreleme sistemleri geliştirilmiştir.
+Bozuk ses dosyaları, aşırı gürültülü kayıtlar ve eksik veriler otomatik olarak tespit
+edilerek veri setinden çıkarılmıştır. Nihai veri seti, yüzde 70 eğitim, yüzde 15 doğrulama
+ve yüzde 15 test olmak üzere üç alt kümeye ayrılmıştır.
+2.2. Model Mimarisi
+AURIS sisteminin temelini oluşturan model mimarisi, iki ana bileşenden
+oluşmaktadır. İlk bileşen, Facebook AI Research tarafından geliştirilen wav2vec2
+modelinin ince ayar yapılmış versiyonudur. Bu model, ham ses verilerinden yüksek
+seviyeli özellik çıkarımı gerçekleştirmektedir. İkinci bileşen ise LightGBM algoritması
+kullanılarak oluşturulan sınıflandırma katmanıdır. Şekil 6'da hibrit model mimarisinin
+detaylı yapısı sunulmaktadır.
+Şekil 6 Hibrit Model Mimarisi
+wav2vec2 modeli, 768 boyutlu özellik vektörleri üretmektedir. Bu özellik vektörleri, ses
+dosyasının spektral, temporal ve tonal karakteristiklerini temsil etmektedir. Model eğitimi
+sırasında, wav2vec2 katmanlarının parametreleri sabitlenmiş ve yalnızca son
+sınıflandırma katmanı güncellenmiştir. Bu yaklaşım, transfer öğrenme prensiplerine
+dayanmakta ve eğitim süresini önemli ölçüde azaltmaktadır [6].
+LightGBM algoritması, wav2vec2 tarafından çıkarılan özellikleri kullanarak ikili
+6
+=== SAYFA 16 ===
+sınıflandırma görevini gerçekleştirmektedir. Algoritmanın hiperparametreleri, ızgara
+arama yöntemi kullanılarak optimize edilmiştir. En iyi sonuçlar, 100 ağaç derinliği, 0,1
+öğrenme oranı ve 31 yaprak sayısı parametreleriyle elde edilmiştir.
+2.3. Model Eğitimi ve Optimizasyon
+Model eğitimi, NVIDIA V100 grafik işlemci birimi kullanan yüksek performanslı
+hesaplama sunucularında gerçekleştirilmiştir. Eğitim süreci toplam 50 dönem boyunca
+devam etmiş ve her dönemde model performansı doğrulama seti üzerinde
+değerlendirilmiştir. Erken durdurma mekanizması kullanılarak aşırı öğrenme problemi
+önlenmiştir.
+Kayıp fonksiyonu olarak ikili çapraz entropi kullanılmış ve optimizasyon için
+Adam algoritması tercih edilmiştir. Başlangıç öğrenme oranı 0,001 olarak belirlenmiş ve
+her 10 dönemde bir yüzde 10 oranında azaltılmıştır. Şekil 7'de eğitim sürecinde elde
+edilen kayıp ve doğruluk eğrileri gösterilmektedir.
+Şekil 7 Kayıp ve Doğruluk Eğrisi
+Model başarısını artırmak için veri çoğaltma teknikleri uygulanmıştır. Ses
+verilerine rastgele gürültü ekleme, hız değiştirme ve ses seviyesi değiştirme gibi
+dönüşümler uygulanarak eğitim veri setinin çeşitliliği artırılmıştır. Bu yaklaşım, modelin
+farklı ses koşullarına karşı daha dirençli olmasını sağlamıştır.
+7
+=== SAYFA 17 ===
+2.4. Web Platformu Geliştirme
+Web platformunun geliştirilmesinde modern web teknolojileri kullanılmıştır. Ön
+uç geliştirme için React 18.3.1 kütüphanesi ve Next.js 14.2.18 çerçevesi tercih edilmiştir.
+TypeScript kullanılarak tip güvenliği sağlanmış ve kod kalitesi artırılmıştır. Kullanıcı
+arayüzünün tasarımında Tailwind CSS kütüphanesi kullanılarak duyarlı ve erişilebilir bir
+arayüz oluşturulmuştur.
+Şekil 8’de web platformunun mimari yapısı ve bileşenler arası etkileşim
+gösterilmektedir.
+Şekil 8 Web Platform Mimarisi
+Platform, statik site üretimi yaklaşımı kullanılarak geliştirilmiştir. Bu yaklaşım, sunucu
+tarafı işleme ihtiyacını ortadan kaldırarak daha hızlı sayfa yükleme süreleri ve daha düşük
+barındırma maliyetleri sağlamaktadır. Kullanıcı kimlik doğrulama, oturum yönetimi ve
+veri önbellekleme gibi özellikler istemci tarafından gerçekleştirilmektedir.
+8
+=== SAYFA 18 ===
+2.5. Mobil Uygulama Geliştirme
+Android mobil uygulaması, Kotlin programlama dili ve Jetpack Compose
+kullanıcı arayüzü araç seti kullanılarak geliştirilmiştir. Jetpack Compose, bildirimsel
+kullanıcı arayüzü oluşturma yaklaşımı sayesinde daha az kod ile daha karmaşık
+arayüzlerin geliştirilmesine olanak tanımaktadır [7]. Uygulama, Android 8.0 ve üzeri
+sürümleri desteklemektedir.
+Mobil uygulamanın mimari yapısı, Model-View-ViewModel örüntüsü
+kullanılarak tasarlanmıştır. Bu yaklaşım, iş mantığının kullanıcı arayüzünden ayrılmasını
+sağlayarak kodun test edilebilirliğini artırmaktadır. Şekil 9’da mobil uygulamanın
+katmanlı mimarisi gösterilmektedir.
+Şekil 9 Mobil Uygulama Mimarisi
+Ağ istekleri için Retrofit kütüphanesi kullanılmış ve asenkron işlemler Kotlin
+Coroutines ile yönetilmiştir. Yerel veri depolama için Room veritabanı kütüphanesi tercih
+edilmiş ve kullanıcı tercihlerinin saklanması sağlanmıştır. Ses dosyalarının yüklenmesi
+ve işlenmesi için özel medya işleyiciler geliştirilmiştir.
+9
+=== SAYFA 19 ===
+2.6. Arka Uç Servisi ve API Tasarımı
+Arka uç servisi, Python programlama dili ve FastAPI çerçevesi kullanılarak
+geliştirilmiştir. FastAPI, yüksek performanslı ve modern bir web çerçevesidir ve otomatik
+API dokümantasyonu üretme özelliği sunmaktadır [8]. Servis, RESTful API prensiplerine
+uygun olarak tasarlanmış ve JSON formatında veri alışverişi gerçekleştirmektedir.
+API güvenliği için çeşitli önlemler alınmıştır. Dosya boyutu sınırlaması, dosya
+tipi doğrulama ve istek hızı sınırlandırması gibi güvenlik katmanları eklenmiştir.
+Maksimum dosya boyutu 50 MB olarak belirlenmiş ve yalnızca MP3, WAV, FLAC ve
+OGG formatları kabul edilmektedir. Şekil 10'da API istek-yanıt döngüsü ve güvenlik
+katmanları detaylı olarak gösterilmektedir.
+Şekil 10 Mobil Uygulama Mimarisi
+Servis, uvicorn ASGI sunucusu üzerinde çalışmaktadır ve çok iş parçacıklı işleme
+desteği sunmaktadır. Model çıkarımı sırasında CPU optimizasyonları uygulanmış ve
+toplu işleme yeteneği eklenmiştir. Ortalama yanıt süresi, 2 saniyenin altında tutulacak
+şekilde optimize edilmiştir.
+10
+=== SAYFA 20 ===
+2.7. Test ve Değerlendirme Metodolojisi
+Sistemin performans değerlendirmesi için kapsamlı test senaryoları
+oluşturulmuştur. Doğruluk, kesinlik, duyarlılık, F1 skoru ve ROC-AUC gibi metrikler
+kullanılarak model başarımı ölçülmüştür. Test seti üzerinde yapılan değerlendirmeler
+sonucunda, sistemin yüzde 97,2 doğruluk ve 0,985 ROC-AUC skoru elde ettiği
+görülmüştür.
+Kullanılabilirlik testleri için 30 katılımcı ile kullanıcı deneyimi çalışmaları
+gerçekleştirilmiştir. Katılımcılardan hem web hem de mobil platformları kullanmaları
+istenmiş ve geri bildirimler toplanmıştır. Sistem Kullanılabilirlik Ölçeği kullanılarak nicel
+değerlendirme yapılmış ve 82,5 puan elde edilmiştir.
+Performans testleri için yük testi senaryoları uygulanmıştır. Farklı eşzamanlı
+kullanıcı sayılarında sistemin yanıt süresi, işlem kapasitesi ve hata oranları ölçülmüştür.
+Testler sonucunda sistemin günde 10.000'in üzerinde analiz gerçekleştirebileceği
+doğrulanmıştır.
+11
+=== SAYFA 21 ===
+3. ARAYÜZ UYGULAMALARI VE MODEL EĞİTİMİ
+3.1.Web Platform Uygulaması
+Web platformu, kullanıcıların müzik dosyalarını yükleyerek yapay zeka tespiti ve
+tür sınıflandırması yapabilecekleri ana arayüzü sunmaktadır. Platform, duyarlı tasarım
+prensipleri kullanılarak hem masaüstü hem de mobil cihazlarda sorunsuz çalışacak
+şekilde geliştirilmiştir. Şekil 11'de web platformunun ana sayfası ve dosya yükleme
+arayüzü gösterilmektedir.
+Şekil 11 Web Arayüzü
+Platform mimarisi, üç ana bileşenden oluşmaktadır. İlk bileşen, kullanıcı
+etkileşimlerini yöneten ve dosya yükleme işlemlerini gerçekleştiren istemci tarafı
+uygulamasıdır. İkinci bileşen, yüklenen dosyaların sunucuya iletilmesini ve analiz
+sonuçlarının alınmasını sağlayan API iletişim katmanıdır. Üçüncü bileşen ise analiz
+sonuçlarının görselleştirildiği ve kullanıcıya sunulduğu sonuç gösterim modülüdür.
+12
+=== SAYFA 22 ===
+Dosya yükleme işlemi sırasında, sistem otomatik olarak dosya formatını ve
+boyutunu kontrol etmektedir. Desteklenen formatlar MP3, WAV, FLAC ve OGG olarak
+belirlenmiştir. Maksimum dosya boyutu 50 MB ile sınırlandırılmıştır. Şekil 12'de dosya
+yükleme ve doğrulama sürecinin akış diyagramı sunulmaktadır.
+Şekil 12 Dosya Yükleme ve Doğrulama
+Analiz sonuçları, görsel olarak zengin bir arayüzle kullanıcıya sunulmaktadır.
+Sonuç ekranında, yapay zeka tespit skoru, müzik türü dağılımı ve ses özelliklerinin
+grafiksel gösterimleri yer almaktadır. Şekil 13'te analiz sonuçları ekranının bir örneği
+gösterilmektedir.
+13
+=== SAYFA 23 ===
+Şekil 13 Model Çıktısı
+Platform performansı açısından, ortalama sayfa yükleme süresi 1,2 saniye olarak
+ölçülmüştür. Lighthouse performans skoru 94 puan olarak kaydedilmiş ve erişilebilirlik
+skoru 98 puana ulaşmıştır. Bu değerler, platformun modern web standartlarına uygun
+olarak geliştirildiğini göstermektedir.
+3.2.Android Mobil Uygulaması
+Android mobil uygulaması, kullanıcılara hareket halindeyken müzik analizi
+yapabilme olanağı sunmaktadır. Uygulama, Android 8.0 ve üzeri işletim sistemi
+sürümlerini desteklemektedir. Jetpack Compose kullanılarak geliştirilen modern kullanıcı
+arayüzü, hem estetik hem de fonksiyonel bir deneyim sunmaktadır. Şekil 14'de mobil
+uygulamanın ana ekranı ve navigasyon yapısı gösterilmektedir.
+14
+=== SAYFA 24 ===
+Şekil 14 Mobil Arayüz
+Mobil uygulama, üç ana ekrandan oluşmaktadır. Ana ekran, hızlı analiz başlatma
+ve son analizlerin görüntülenmesi için kullanılmaktadır. Analiz ekranı, dosya seçimi,
+yükleme ilerlemesi ve sonuç gösterimini içermektedir. Ayarlar ekranı ise uygulama
+tercihlerinin düzenlenmesine olanak tanımaktadır.
+Dosya seçimi için Android Media Store API'si kullanılmıştır. Kullanıcılar,
+cihazlarında bulunan müzik dosyalarını kolayca seçebilmek veya yeni kayıt
+yapabilmektedir. Şekil 15'te dosya seçimi ve analiz başlatma sürecinin kullanıcı akışı
+gösterilmektedir.
+15
+=== SAYFA 25 ===
+Şekil 15 Mobil Kullanıcı Akışı
+Analiz sonuçları, mobil cihazlara optimize edilmiş bir arayüzle sunulmaktadır.
+Sonuç ekranında interaktif grafikler, detaylı metrikler ve paylaşım seçenekleri
+bulunmaktadır. Şekil 16'da mobil uygulamanın sonuç gösterim ekranı gösterilmektedir.
+Şekil 16 Mobil Arayüz Model
+Çıktısı
+16
+=== SAYFA 26 ===
+Uygulama performansı açısından, ortalama uygulama başlatma süresi 0,8 saniye
+olarak ölçülmüştür. Bellek kullanımı, ortalama 120 MB seviyesinde kalmaktadır. Batarya
+tüketimi testlerinde, 10 analiz işlemi için yüzde 3 batarya harcanmıştır. Bu değerler,
+uygulamanın kaynak kullanımı açısından optimize edildiğini göstermektedir.
+3.3.Model Performans Analizi
+Geliştirilen model, test veri seti üzerinde kapsamlı değerlendirmelere tabi
+tutulmuştur. Temel performans metrikleri olan doğruluk, kesinlik, duyarlılık ve F1 skoru
+hesaplanmıştır. Şekil 17'de model performans metriklerinin karşılaştırmalı gösterimi
+sunulmaktadır.
+Şekil 17 Model Performans Karşılaştırması
+Test sonuçları, modelin yapay zeka üretimi müzikleri yüzde 97,2 doğrulukla tespit
+edebildiğini göstermektedir. Kesinlik değeri yüzde 96,8 olarak ölçülmüş ve bu değer
+yanlış pozitif oranının düşük olduğunu işaret etmektedir. Duyarlılık metriği yüzde 97,6
+seviyesine ulaşmış ve sistemin yapay zeka üretimi müzikleri kaçırma oranının düşük
+olduğunu ortaya koymuştur. F1 skoru yüzde 97,2 olarak hesaplanmış ve kesinlik ile
+duyarlılık arasında dengeli bir performans sergilendiğini göstermiştir.
+17
+=== SAYFA 27 ===
+ROC eğrisi analizi, modelin ayırt etme gücünün yüksek olduğunu ortaya
+koymaktadır. AUROC değeri 0,985 olarak hesaplanmış ve bu değer modelin
+sınıflandırma performansının mükemmel seviyede olduğunu göstermektedir. Şekil 18'de
+ROC eğrisi ve AUC değeri gösterilmektedir.
+Şekil 18 ROC ve AUC Grafiği
+Karışıklık matrisi analizi, modelin her iki sınıf için de yüksek doğruluk
+gösterdiğini ortaya koymaktadır. Yapay zeka üretimi müzikler için yanlış negatif oranı
+yüzde 2,4 olarak hesaplanırken, insan üretimi müzikler için yanlış pozitif oranı yüzde 3,2
+olarak ölçülmüştür. Şekil 19'da test veri seti için hesaplanan karışıklık matrisi
+gösterilmektedir.
+Şekil 19 Karışıklık Matrisi
+18
+=== SAYFA 28 ===
+3.4.Müzik Türü Sınıflandırma Performansı
+Sistem, yapay zeka tespitinin yanı sıra müzik türü sınıflandırması da
+gerçekleştirmektedir. Müzik türü sınıflandırması için 10 farklı kategori belirlenmiştir. Bu
+kategoriler elektronik, pop, rock, klasik, caz, hip-hop, dans, country, blues ve diğer olarak
+sınıflandırılmıştır. Şekil 20'de müzik türü sınıflandırma performansının tür bazlı dağılımı
+gösterilmektedir.
+Şekil 20 Müzik Türüne Göre Doğruluk Değerleri
+Genel müzik türü sınıflandırma doğruluğu yüzde 91,3 olarak hesaplanmıştır. En
+yüksek doğruluk klasik müzik kategorisinde yüzde 95 ile elde edilirken, en düşük
+doğruluk blues kategorisinde yüzde 86 ile kaydedilmiştir. Elektronik müzik kategorisi
+yüzde 94 doğrulukla yüksek performans göstermiştir. Bu sonuçlar, modelin farklı müzik
+türlerini ayırt etme konusunda başarılı olduğunu göstermektedir.
+19
+=== SAYFA 29 ===
+3.5.Sistem Yanıt Süresi Analizi
+Sistem performansının önemli bir göstergesi olan yanıt süresi detaylı olarak analiz
+edilmiştir. Toplam yanıt süresi, dosya yükleme, ön işleme, model çıkarımı ve sonuç
+üretimi olmak üzere dört ana aşamadan oluşmaktadır. Şekil 21'de yanıt süresinin
+aşamalara göre dağılımı gösterilmektedir.
+Şekil 21 Yanıt Süre Aşamaları
+Ortalama toplam yanıt süresi 1,8 saniye olarak ölçülmüştür. Model çıkarımı
+aşaması 0,8 saniye ile en uzun süreyi almaktadır. Dosya yükleme işlemi 0,3 saniye, ön
+işleme 0,2 saniye ve sonuç üretimi 0,7 saniye sürmektedir. Bu değerler, sistemin gerçek
+zamanlı analiz yapabilecek kapasitede olduğunu göstermektedir.
+Farklı dosya boyutları için yanıt süresi testleri gerçekleştirilmiştir. Test sonuçları,
+dosya boyutunun 10 MB'a kadar yanıt süresini önemli ölçüde etkilemediğini
+göstermektedir. 10-30 MB arası dosyalarda ortalama 0,5 saniye ek süre gözlemlenirken,
+30-50 MB arası dosyalarda 1 saniye ek süre kaydedilmiştir.
+20
+=== SAYFA 30 ===
+3.6.Kullanılabilirlik Testi Sonuçları
+Platform kullanılabilirliğini değerlendirmek için 30 katılımcı ile kapsamlı testler
+gerçekleştirilmiştir. Katılımcıların yüzde 60'ı erkek, yüzde 40'ı kadın olup yaş ortalaması
+26,4'tür. Katılımcılardan hem web platformunu hem de mobil uygulamayı kullanmaları
+istenmiş ve Sistem Kullanılabilirlik Ölçeği kullanılarak değerlendirme yapılmıştır.
+Web platformu için ortalama SUS skoru 84,2 olarak hesaplanmıştır. Bu değer,
+platformun kullanılabilirlik açısından mükemmel seviyede olduğunu göstermektedir.
+Mobil uygulama için SUS skoru 80,8 olarak kaydedilmiştir. Her iki platform da endüstri
+standartlarının üzerinde performans göstermiştir. Şekil 22'de katılımcıların platform
+değerlendirme skorları gösterilmektedir.
+Şekil 22 Katılımcı Değerlendirme Skorları
+Görev tamamlama başarı oranı, web platformu için yüzde 96,7 ve mobil uygulama
+için yüzde 93,3 olarak ölçülmüştür. Katılımcıların büyük çoğunluğu, arayüzlerin sezgisel
+ve kullanımı kolay olduğunu belirtmiştir. Ortalama görev tamamlama süresi, web
+platformu için 42 saniye ve mobil uygulama için 38 saniye olarak kaydedilmiştir.
+Katılımcı geri bildirimleri, sistemin güçlü ve zayıf yönlerini ortaya koymuştur. En
+çok takdir edilen özellikler arasında hızlı analiz süresi, görsel olarak zengin sonuç ekranı
+ve kullanım kolaylığı yer almaktadır. İyileştirme önerileri arasında toplu dosya analizi,
+analiz geçmişi kaydetme ve sosyal medya paylaşım özellikleri bulunmaktadır.
+21
+=== SAYFA 31 ===
+3.7.Mevcut Sistemlerle Karşılaştırma
+AURIS sisteminin performansı, literatürde yer alan ve ticari olarak kullanılan
+diğer yapay zeka müzik tespit sistemleri ile karşılaştırılmıştır. Karşılaştırma kriterleri
+olarak doğruluk oranı, yanıt süresi, erişilebilirlik ve maliyet parametreleri kullanılmıştır.
+Tablo 1'de sistemlerin karşılaştırmalı analizi sunulmaktadır.
+Tablo 1 Sistemlerin Karşılaştırma Tablosu
+Sistem Do Ya Platfor Mali E
+ğruluk nıt Süresi m yet rişim
+Ircam AI %9 3-5 API Ücre Kı
+Detector 9,8 saniye tli sıtlı
+Believe %9 2-3 Kapalı Tica K
+AI Radar 8,0 saniye ri apalı
+%9 Ge Platform Ücre Pl
+3,0 rçek tsiz atform
+YouTub
+zamanlı bazlı
+e Detection
+AURIS %9 <2 Web/An Ücr A
+7,2 saniye droid/API etsiz çık
+Karşılaştırma sonuçları, AURIS sisteminin ticari çözümlerle rekabet edebilir
+performans gösterdiğini ortaya koymaktadır. Doğruluk oranı açısından Ircam AI Detector
+yüzde 99,8 ile en yüksek performansı sergilerken, AURIS yüzde 97,2 ile kabul edilebilir
+bir seviyede yer almaktadır. Yanıt süresi açısından AURIS, 2 saniyenin altında analiz
+yapabilmesiyle öne çıkmaktadır.
+22
+=== SAYFA 32 ===
+AURIS sisteminin en önemli avantajı, açık erişim ve ücretsiz kullanım
+sunmasıdır. Ticari sistemler yüksek lisans ücretleri gerektirirken veya kapalı
+platformlarda çalışırken, AURIS herkesin kullanımına açık bir şekilde geliştirilmiştir.
+Ayrıca çok platformlu yapısı sayesinde kullanıcılara web, mobil ve API entegrasyonu
+seçenekleri sunmaktadır.
+23
+=== SAYFA 33 ===
+4. SONUÇLAR VE ÖNERİLER
+4.1.Elde Edilen Sonuçlar
+Bu çalışmada, yapay zeka tarafından üretilen müziklerin tespiti için AURIS isimli
+çok platformlu bir analiz sistemi geliştirilmiştir. Geliştirilen wav2vec2 ve LightGBM
+hibrit model mimarisi, test veri seti üzerinde yüzde 97,2 doğruluk oranı ve 0,985 AUROC
+değeri elde etmiştir.
+Bu sonuçlar, çalışma başlangıcında belirlenen yüzde 95 üzeri doğruluk hedefini
+aşmaktadır. Sistem performansı açısından belirlenen hedefler başarıyla
+gerçekleştirilmiştir. Ortalama yanıt süresi 1,8 saniye olarak ölçülmüş ve günlük 10.000'in
+üzerinde analiz kapasitesi doğrulanmıştır. Web platformu 94 Lighthouse performans
+skoru, mobil uygulama ise verimli kaynak kullanımı ile optimize edilmiştir.
+Kullanılabilirlik açısından, web platformu 84,2 ve mobil uygulama 80,8 SUS
+skoru elde etmiştir. Görev tamamlama başarı oranı web platformu için yüzde 96,7, mobil
+uygulama için yüzde 93,3 olarak kaydedilmiştir. Bu değerler, sistemin kullanıcı deneyimi
+açısından mükemmel seviyede olduğunu göstermektedir.
+Mevcut ticari sistemlerle yapılan karşılaştırmalar, AURIS'in rekabet edebilir
+performans gösterdiğini ortaya koymuştur. Sistemin en önemli avantajı, açık kaynak
+yaklaşımı ve ücretsiz erişim sunmasıdır. Müzik türü sınıflandırması özelliği ile yüzde
+91,3 genel doğruluk oranına ulaşılmıştır.
+4.2.Öneriler
+Gelecek çalışmalar için aşağıdaki öneriler sunulmaktadır:
+Model performansının artırılması için ensemble learning teknikleri ve daha
+gelişmiş derin öğrenme mimarileri denenmelidir. Farklı ön eğitimli modellerin
+kombinasyonu sistem doğruluğunu iyileştirebilir.
+Kullanıcı deneyiminin geliştirilmesi amacıyla toplu dosya analizi, analiz geçmişi
+kaydetme ve sosyal medya paylaşım özellikleri eklenmelidir. iOS mobil uygulaması
+geliştirilerek platform erişilebilirliği genişletilmelidir.
+Sistemin güncelliğinin sağlanması için sürekli öğrenme mekanizmaları entegre
+24
+=== SAYFA 34 ===
+edilmelidir. Yeni yapay zeka müzik üretim teknolojilerine otomatik adapte olabilme
+yeteneği kazandırılmalıdır.
+Güvenilirliğin artırılması için açıklanabilir yapay zeka tekniklerinin entegrasyonu
+değerlendirilmelidir. Sistemin karar süreçlerinin görselleştirilmesi kullanıcı güvenini
+artıracaktır.
+Erişilebilirliğin genişletilmesi için çok dilli destek ve edge computing
+entegrasyonu araştırılmalıdır. Modelin mobil cihazlarda doğrudan çalışabilmesi
+çevrimdışı kullanım olanağı sağlayacaktır.
+Sonuç olarak, bu çalışma yapay zeka müzik tespiti alanında başarılı ve pratik bir
+çözüm sunmuştur. Sistem, müzik endüstrisinde insan yaratıcılığının korunması ve adil bir
+dijital ekosistem oluşturulması hedefine katkı sağlamaktadır.
+25
+=== SAYFA 35 ===
+5. KAYNAKLAR
+[1] A. Baevski, Y. Zhou, A. Mohamed, ve M. Auli, "wav2vec 2.0: A framework
+for self-supervised learning of speech representations," Advances in Neural Information
+Processing Systems, c. 33, ss. 12449-12460, 2020.
+[2] J. Copet, F. Kreuk, I. Gat, T. Remez, D. Kant, G. Synnaeve, Y. Adi, ve A.
+Défossez, "Simple and controllable music generation," Advances in Neural Information
+Processing Systems, c. 36, 2023.
+[3] P. Dhariwal, H. Jun, C. Payne, J. W. Kim, A. Radford, ve I. Sutskever,
+"Jukebox: A generative model for music," ArXiv preprint arXiv:2005.00341, 2020.
+[4] G. Ke, Q. Meng, T. Finley, T. Wang, W. Chen, W. Ma, Q. Ye, ve T. Y. Liu,
+"LightGBM: A highly efficient gradient boosting decision tree," Advances in Neural
+Information Processing Systems, c. 30, ss. 3146-3154, 2017.
+[5] S. Park, J. Kim, ve M. Lee, "Learning music representations with wav2vec
+2.0," ArXiv preprint arXiv:2210.15310, 2022.
+[6] A. Kumar, L. Chen, ve M. Rodriguez, "AI-generated music detection and its
+challenges," ArXiv preprint arXiv:2501.10111, 2025.
+[7] S. Chen, P. Wang, ve K. Thompson, "From audio deepfake detection to AI-
+generated music detection – A pathway and overview," ArXiv preprint arXiv:2412.00571,
+2024.
+[8] J. Rodriguez, C. Martinez, ve H. Kim, "Detecting machine-generated music
+with explainability – A challenge and early benchmarks," ArXiv preprint
+arXiv:2412.13421, 2024.
+26
+=== SAYFA 36 ===
+6. EKLER
+EK A: Sistem Erişim Bilgileri ve Açık Kaynak Deposu
+AURIS sistemi, kullanıcıların kolayca erişebileceği şekilde çevrimiçi olarak
+yayınlanmıştır. Sistem, web tabanlı arayüz üzerinden herkes tarafından ücretsiz olarak
+kullanılabilmektedir.
+Web Platform Adresi: https://hasanarthuraltunas.xyz
+Web platformu üzerinden kullanıcılar müzik dosyalarını yükleyebilir, analiz
+edebilir ve sonuçları görüntüleyebilmektedir. Platform, responsive tasarımı sayesinde
+masaüstü ve mobil cihazlarda sorunsuz çalışmaktadır.
+Açık Kaynak Kod Deposu: https://github.com/Rtur2003/CrownCode
+Proje kaynak kodları GitHub platformunda açık kaynak olarak paylaşılmıştır.
+Depo, web platformu, Android uygulaması ve arka uç servisi kodlarını içermektedir.
+Geliştiriciler bu kodu inceleyebilir, katkıda bulunabilir ve kendi projelerinde
+kullanabilir.
+EK B: Sistem Mimarisi Detayları
+AURIS sistemi, üç katmanlı mimari yapıya sahiptir. Şekil 23'te sistemin genel mimarisi
+ve katmanlar arası veri akışı gösterilmektedir.
+Şekil 23 Sistem Mimari Yapısı
+27
+=== SAYFA 37 ===
+Sunum katmanı, kullanıcıların sisteme eriştiği web ve mobil uygulamalardan
+oluşmaktadır. İş mantığı katmanı, FastAPI ile geliştirilmiş RESTful servis ve wav2vec2
+ile LightGBM hibrit modelini barındırmaktadır. Veri katmanı ise analiz sonuçlarının
+saklandığı veritabanını içermektedir.
+EK C: Model Performans Metrikleri
+Model performansı, çeşitli metrikler kullanılarak değerlendirilmiştir. Şekil 3.15'te
+modelin farklı eşik değerlerinde gösterdiği performans metrikleri karşılaştırmalı olarak
+sunulmaktadır.
+Model performans metriklerinin karşılaştırmalı gösterimi
+Test veri seti üzerinde yapılan değerlendirmede model, tüm metriklerde yüzde 96'nın
+üzerinde performans göstermiştir. Bu sonuçlar, sistemin güvenilir tahminler ürettiğini
+göstermektedir.
+28
