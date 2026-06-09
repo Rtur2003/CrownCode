@@ -623,7 +623,7 @@ MAT_YONT = [
      'standartlaştırarak 22.050 Hz mono sinyale dönüştürür, '
      'YouTube bağlantılarından yt-dlp ile ses indirir ve '
      'mikrofon girişini doğrudan kabul eder. '
-     'İkinci modül olan Öznitelik Çıkarma; librosa v0.10.1 [22] ile '
+     'İkinci modül olan Öznitelik Çıkarma; librosa v0.10.1 [18] ile '
      '47 boyutlu akustik vektörü hesaplar ve bunu StandardScaler '
      'ile normalleştirir. '
      'Üçüncü modül olan Sınıflandırma; eğitilmiş LightGBM modelini '
@@ -837,7 +837,7 @@ MAT_YONT = [
      'eğilimi sergilemiştir (eğitim doğruluğu ≈%100, '
      'CV doğruluğu ≈%86).',
      'PARAGRAF METNİ'),
-    ('Gradyan Artırma (scikit-learn GradientBoostingClassifier [23]), '
+    ('Gradyan Artırma (scikit-learn GradientBoostingClassifier [19]), '
      'n_estimators=180, max_depth=4, learning_rate=0,07 ile '
      'eğitilmiştir. '
      'SVM-RBF, C=10 ve gamma=0,05 ile yapılandırılmış; '
@@ -864,7 +864,7 @@ MAT_YONT = [
      'PARAGRAF METNİ'),
     ('3.4.2. Derin Öğrenme Modelleri', 'Heading 3'),
     ('Dört derin öğrenme modeli train_deep_classifiers.py ile '
-     'PyTorch [18] çerçevesinde tasarlanmıştır. '
+     'PyTorch [22] çerçevesinde tasarlanmıştır. '
      'Tüm modellerde kayıp işlevi olarak BCEWithLogitsLoss '
      '(pos_weight=1,5, sınıf dengesizliğini telafi etmek için) '
      've optimize edici olarak Adam (lr=1×10⁻³) kullanılmıştır. '
@@ -978,7 +978,7 @@ MAT_YONT = [
     F(f'{FIG}/threshold_sweep.png',
       'Şekil 3.6. Eşik taraması — Kesinlik/Duyarlılık/F1 eşiğe göre (LightGBM, θ*=0,4316).', 14.5),
     ('3.6. SHAP Açıklanabilirlik Entegrasyonu', 'Heading 2'),
-    ('SHAP (Shapley Additive exPlanations, Lundberg ve Lee, 2017) [19], '
+    ('SHAP (Shapley Additive exPlanations, Lundberg ve Lee, 2017) [23], '
      'oyun teorisindeki Shapley değerlerini makine öğrenmesi '
      'açıklanabilirliğine uyarlamaktadır. '
      'Her özniteliğin modelin çıktısına katkısı, '
@@ -1006,7 +1006,7 @@ MAT_YONT = [
      'taşıdığına işaret etmektedir." biçiminde.',
      'PARAGRAF METNİ'),
     ('3.7. REST API Mimarisi', 'Heading 2'),
-    ('AURIS\'in arka ucu FastAPI [18] çerçevesiyle '
+    ('AURIS\'in arka ucu FastAPI [22] çerçevesiyle '
      'Python 3.11 üzerinde geliştirilmiş; '
      'HuggingFace Spaces ortamında 7860 portunda '
      'uvicorn ASGI sunucusuyla çalıştırılmaktadır. '
