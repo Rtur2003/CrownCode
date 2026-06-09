@@ -375,8 +375,8 @@ GIRIS = [
      'konuşma sentezi ve ses derin sahteciliği alanına odaklanmıştır. Müziğe özgü '
      'tespit çalışmaları görece sınırlı kalmış; mevcut yaklaşımların önemli bir '
      'kısmı yalnızca belirli bir üreticiye özgü örnekler üzerinde başarılı '
-     'olabilmektedir. Liu vd. (2024) bu sorunun müzik tespitinin önündeki en büyük '
-     'engel olduğunu vurgularken, Bhatt vd. (2025) çapraz-üretici genellemenin '
+     'olabilmektedir. Liu vd. [3] bu sorunun müzik tespitinin önündeki en büyük '
+     'engel olduğunu vurgularken, Bhatt vd. [2] çapraz-üretici genellemenin '
      'alanın açık problemi olmaya devam ettiğini ortaya koymuştur [2],[3].',
      'PARAGRAF METNİ'),
     ('Mevcut ticari sistemler şeffaf metodoloji sunmamaktadır. IRCAM Amplify '
@@ -468,7 +468,7 @@ LITERATUR = [
     ('Müzik üretiminde yapay zekânın yükselişi, birbirini izleyen üç nesil '
      'model mimarisiyle şekillenmiştir. İlk nesil otoregresif modeller, '
      'sesi ayrık simge dizisi olarak ele almaktadır. '
-     'Dhariwal vd. (2020) tarafından geliştirilen Jukebox [4], '
+     'Dhariwal vd. tarafından geliştirilen Jukebox [4], '
      'hiyerarşik vektör niceleme değişken oto-kodlayıcı (VQ-VAE) '
      'mimarisiyle ham dalga biçiminde çıktı üreten ilk büyük ölçekli '
      'müzik modelidir. 1,2 milyar parametresiyle şarkı sözleri ve '
@@ -993,7 +993,7 @@ MAT_YONT = [
     F(f'{FIG}/threshold_sweep.png',
       'Şekil 3.6. Eşik taraması — Kesinlik/Duyarlılık/F1 eşiğe göre (LightGBM, θ*=0,4316).', 14.5),
     ('3.6. SHAP Açıklanabilirlik Entegrasyonu', 'Heading 2'),
-    ('SHAP (Shapley Additive exPlanations, Lundberg ve Lee, 2017) [23], '
+    ('SHAP (Shapley Additive exPlanations) [23], '
      'oyun teorisindeki Shapley değerlerini makine öğrenmesi '
      'açıklanabilirliğine uyarlamaktadır. '
      'Her özniteliğin modelin çıktısına katkısı, '
@@ -1430,7 +1430,7 @@ TARTISMA = [
      'oluşturmaktadır; insan müziği ise kayıt ortamı gürültüsü '
      've doğal performans varyasyonları nedeniyle daha geniş '
      'spektral düzlük aralığı sergilemektedir. '
-     'Afchar vd. (2025) ile paralel biçimde bu bulgu, '
+     'Afchar vd. ile paralel biçimde bu bulgu [1], '
      'YZ sentez süreçlerinin tespit edilebilir "spektral iz" '
      'bıraktığını kanıtlamaktadır [1].',
      'PARAGRAF METNİ'),
@@ -1441,7 +1441,7 @@ TARTISMA = [
      'Bu çeşitlilik göz önünde bulundurulduğunda yüksek AUC değerleri, '
      '47 öznitelik temsilinin üretici-bağımsız artefaktları '
      'yakaladığına işaret etmektedir. '
-     'Bhatt vd. (2025) çapraz-üretici genellemenin alanın temel '
+     'Bhatt vd. [2] çapraz-üretici genellemenin alanın temel '
      'açık problemi olduğunu vurgulamakta [2]; AURIS\'in çok '
      'üreticili eğitim stratejisi bu soruna doğrudan yanıt vermektedir.',
      'PARAGRAF METNİ'),
@@ -1455,8 +1455,8 @@ TARTISMA = [
      'temiz etiketi bu başarıyı açıklamaktadır.',
      'PARAGRAF METNİ'),
     ('5.6. Sınırlamalar', 'Heading 2'),
-    ('Ses deepfake tespiti alanının genel sınırlamaları Yi vd. (2023) '
-     'tarafından kapsamlı biçimde incelenmiştir [24]. '
+    ('Ses deepfake tespiti alanının genel sınırlamaları Yi vd. tarafından '
+     'kapsamlı biçimde incelenmiştir [24]. '
      'Bu çalışmanın özgül sınırlamaları şöyle özetlenebilir: '
      '(1) Veri kümesi büyüklüğü — 5.195 örnek ticari sistemlerle '
      'karşılaştırıldığında küçük kalmaktadır; '
@@ -1497,8 +1497,8 @@ TARTISMA = [
         ['Sistem', 'Yöntem', 'Doğruluk', 'Şeffaflık', 'Erişim'],
         [
             ['AURIS (bu çalışma)', '47 öznitelik + 11 model', '%88,4', 'SHAP + açık CV', 'Ücretsiz / Açık'],
-            ['Afchar vd. (2025)', 'Öznitelik + SVM/GBM', '%86–91', 'Kısmi', 'Kapalı veri'],
-            ['Kosta vd. (2025)', 'Segment Transformer', '%91+', 'Hayır', 'Kapalı'],
+            ['Afchar vd. [1]', 'Öznitelik + SVM/GBM', '%86–91', 'Kısmi', 'Kapalı veri'],
+            ['Kosta vd. [10]', 'Segment Transformer', '%91+', 'Hayır', 'Kapalı'],
             ['IRCAM Amplify', 'Bilinmeyen', 'Açıklanmadı', 'Hayır', 'Ticari'],
             ['Believe AI Radar', 'Bilinmeyen', 'Açıklanmadı', 'Hayır', 'Ticari'],
         ],
