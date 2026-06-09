@@ -1953,7 +1953,7 @@ def build():
             set_text(p, 'Danışman: Dr. Öğr. Üyesi Büşra TAKGİL')
         elif 'Eylül 2019' in t:
             set_text(p, 'Haziran 2026')
-        elif ('zeti bir paragraf' in t or 'Buraya tezin' in t) and 'ngilizce' not in t:
+        elif ('zeti bir paragraf' in t or 'Buraya tezin' in t or 'Suno' in t) and 'ngilizce' not in t and 'English' not in t and 'proliferation' not in t:
             # BM401 yapısına uygun: her mantıksal blok ayrı paragraf
             ozet_paragraflar = [
                 'Bu çalışma, yapay zekâ tarafından üretilen müziklerin insan tarafından '
@@ -2015,7 +2015,7 @@ def build():
             set_text(p, 'Supervisor: Asst. Prof. Dr. Büşra TAKGİL')
         elif 'September 2019' in t:
             set_text(p, 'June 2026')
-        elif 'ngilizce' in t and 'zeti' in t:
+        elif ('ngilizce' in t and 'zeti' in t) or ('proliferation' in t) or ('rapid' in t and 'Suno' in t):
             abstract_paragraflar = [
                 'This study focuses on the problem of automatically distinguishing '
                 'AI-generated music from human-composed music. The rapid proliferation '
