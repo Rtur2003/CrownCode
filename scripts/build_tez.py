@@ -2016,16 +2016,47 @@ def build():
         elif 'September 2019' in t:
             set_text(p, 'June 2026')
         elif 'ngilizce' in t and 'zeti' in t:
-            set_text(p,
-                'The rapid proliferation of generative AI platforms such as Suno, MusicGen, '
-                'Udio, and Echoes has led to a dramatic increase in AI-generated music on '
-                'streaming platforms. This thesis presents AURIS, which extracts 47 acoustic '
-                'features across five categories using librosa and evaluates 11 classification '
-                'models under 5-fold stratified cross-validation. The best-performing LightGBM '
-                'achieves 0.9548 ROC-AUC, 88.39% accuracy, 0.8575 F1-score, and Brier score '
-                '0.083. Decision threshold is optimized to θ*=0.4316 via Youden\'s J statistic. '
-                'SHAP provides feature-level explanations for every decision. The complete '
-                'system is deployed as a web application on Hugging Face Spaces.')
+            abstract_paragraflar = [
+                'This study focuses on the problem of automatically distinguishing '
+                'AI-generated music from human-composed music. The rapid proliferation '
+                'of generative AI platforms such as Suno, Udio, MusicGen, and Echoes '
+                'has introduced serious copyright and content authenticity challenges '
+                'in the music industry.',
+
+                'The primary objective of this work is to develop a reliable, interpretable, '
+                'and multi-platform AI music detection system grounded in acoustic feature '
+                'engineering. To this end, AURIS (Acoustic-feature-based AI music '
+                'Recognition and Identification System) has been designed and deployed.',
+
+                'The system extracts 47 acoustic features across five categories — spectral, '
+                'temporal, onset/rhythm, harmonic, and vocal — from audio signals. A dataset '
+                'of 5,195 recordings compiled from 8 distinct sources was used to train and '
+                'evaluate 7 classical machine learning and 4 deep learning models under '
+                '5-fold stratified cross-validation.',
+
+                'Experimental results show that LightGBM achieves the highest performance '
+                'with a ROC-AUC of 0.9548, accuracy of 88.39%, F1-score of 0.8575, and '
+                'Brier score of 0.083. The decision threshold is optimized to θ*=0.4316 '
+                'using Youden\'s J statistic. SHAP (Shapley Additive exPlanations) '
+                'integration provides feature-level explanations for every prediction.',
+
+                'AURIS adopts a modular three-layer architecture. The presentation layer '
+                'includes a responsive web platform built with Next.js 14 and TypeScript, '
+                'and a native Android application developed with Kotlin and Jetpack Compose. '
+                'The business logic layer hosts a FastAPI-based REST API, while the data '
+                'layer contains the trained LightGBM model and SHAP explainability module.',
+
+                'This work demonstrates that AURIS achieves competitive performance with '
+                'existing commercial solutions while offering open-source access, transparent '
+                'cross-validation methodology, and SHAP-based interpretability — '
+                'contributing to reproducibility and accountability in AI music detection.',
+            ]
+            set_text(p, abstract_paragraflar[0])
+            cur = p._element
+            for extra in abstract_paragraflar[1:]:
+                new_p = make_p(doc, extra, 'Normal')
+                cur.addnext(new_p)
+                cur = new_p
         elif 'Keywords: Keyword one' in t:
             set_text(p, 'Keywords: AI music detection, acoustic features, LightGBM, '
                      'ensemble learning, audio classification.')
