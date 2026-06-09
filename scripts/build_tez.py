@@ -1165,13 +1165,13 @@ BULGULAR = [
         col_widths=[4.2, 1.8, 3.0, 3.0, 3.0]
     ),
     ('4.2. ROC Eğrileri Analizi', 'Heading 2'),
-    ('Şekil 4.4\'te 11 modelin gerçek-tutulan kat tahminleriyle üretilen '
+    ('Şekil 4.3\'te 11 modelin gerçek-tutulan kat tahminleriyle üretilen '
      'ROC eğrileri gösterilmektedir. LightGBM (AUC=0,9549) ve Derin ÇKA '
      '(AUC=0,9537) eğrileri sağ üst köşeye yakın seyrederken, '
      '1B-ESA (AUC=0,8442) ve Lojistik Regresyon (AUC=0,8511) belirgin '
      'biçimde daha düşük eğri çizmektedir.', 'PARAGRAF METNİ'),
     F(f'{FIG}/paper_roc_curves.png',
-      'Şekil 4.4. ROC eğrileri — 5 katlı gerçek-tutulan tahminler. Kesikli çizgi: rastgele sınıflandırıcı (AUC=0,500).', 14.5),
+      'Şekil 4.3. ROC eğrileri — 5 katlı gerçek-tutulan tahminler. Kesikli çizgi: rastgele sınıflandırıcı (AUC=0,500).', 14.5),
     ('4.3. Çapraz Doğrulama Stabilitesi', 'Heading 2'),
     ('Çizelge 4.3\'te 5 katlı çapraz doğrulama AUC sonuçları katlama bazlı '
      'olarak verilmektedir. LightGBM std=±0,0023 ile en kararlı model '
@@ -1198,15 +1198,15 @@ BULGULAR = [
     ),
     ('4.4. LightGBM Ayrıntılı Performans Analizi', 'Heading 2'),
     ('4.4.1. Tahmin Olasılık Dağılımı', 'Heading 3'),
-    ('Şekil 4.6\'da LightGBM\'in P(YZ) tahmin olasılık dağılımı '
+    ('Şekil 4.4\'te LightGBM\'in P(YZ) tahmin olasılık dağılımı '
      'gösterilmektedir. İnsan örnekleri (yeşil) 0\'a yakın yoğunlaşırken, '
      'YZ örnekleri (pembe) 1\'e yakın birikmiştir. '
      'Youden-optimal eşik θ*=0,4316, iki dağılımı net biçimde '
      'ayırmaktadır.', 'PARAGRAF METNİ'),
     F(f'{FIG}/paper_score_distribution.png',
-      'Şekil 4.6. LightGBM tahmin olasılık dağılımı. Kesikli çizgi: Youden-optimal eşik θ*=0,4316.', 13.0),
+      'Şekil 4.4. LightGBM tahmin olasılık dağılımı. Kesikli çizgi: Youden-optimal eşik θ*=0,4316.', 13.0),
     ('4.4.2. Karışıklık Matrisi', 'Heading 3'),
-    ('Şekil 4.7\'de LightGBM\'in θ*=0,4316 eşiğiyle elde ettiği '
+    ('Şekil 4.5\'te LightGBM\'in θ*=0,4316 eşiğiyle elde ettiği '
      'karışıklık matrisi gösterilmektedir. '
      'Doğru Negatif (İnsan→İnsan): 2.721 (%87,4); '
      'Doğru Pozitif (YZ→YZ): 1.862 (%89,4); '
@@ -1214,23 +1214,23 @@ BULGULAR = [
      'Yanlış Negatif (YZ→İnsan): 220 (%10,6).',
      'PARAGRAF METNİ'),
     F(f'{FIG}/paper_confusion_matrix_lightgbm.png',
-      'Şekil 4.7. LightGBM karışıklık matrisi (θ*=0,4316). Örnek sayısı ve sınıf yüzdesi gösterilmiştir.', 10.0),
+      'Şekil 4.5. LightGBM karışıklık matrisi (θ*=0,4316). Örnek sayısı ve sınıf yüzdesi gösterilmiştir.', 10.0),
     ('4.4.3. Kalibrasyon Analizi', 'Heading 3'),
-    ('Şekil 4.8\'de LightGBM kalibrasyon eğrisi sunulmaktadır. '
+    ('Şekil 4.6\'da LightGBM kalibrasyon eğrisi sunulmaktadır. '
      'Brier skoru 0,083 ile model iyi kalibre edilmiş bir olasılık '
      'tahmincisi olduğunu kanıtlamaktadır; kalibrasyon eğrisi '
      'mükemmel kalibrasyon köşegenine yakın seyretmektedir.',
      'PARAGRAF METNİ'),
     F(f'{FIG}/paper_calibration.png',
-      'Şekil 4.8. LightGBM kalibrasyon eğrisi. Brier skoru=0,0830, N=5.195 (5 katlı CV).', 12.0),
+      'Şekil 4.6. LightGBM kalibrasyon eğrisi. Brier skoru=0,0830, N=5.195 (5 katlı CV).', 12.0),
     ('4.4.4. Kesinlik-Duyarlılık Analizi', 'Heading 3'),
-    ('Şekil 4.9\'da LightGBM kesinlik-duyarlılık eğrisi (Ortalama Kesinlik '
+    ('Şekil 4.7\'de LightGBM kesinlik-duyarlılık eğrisi (Ortalama Kesinlik '
      'AP=0,9344) gösterilmektedir. Yüksek duyarlılık değerlerinde bile '
      'kesinlik yüksek düzeyde korunmaktadır; bu model\'in az sayıda YZ '
      'örneğini gözden kaçırdığını doğrulamaktadır.',
      'PARAGRAF METNİ'),
     F(f'{FIG}/paper_precision_recall.png',
-      'Şekil 4.9. LightGBM kesinlik-duyarlılık eğrisi (AP=0,9344). Kesikli: baz sınıflandırıcı (0,401).', 12.0),
+      'Şekil 4.7. LightGBM kesinlik-duyarlılık eğrisi (AP=0,9344). Kesikli: baz sınıflandırıcı (0,401).', 12.0),
     ('Ortalama Kesinlik (AP) değeri olan 0,9344, eşik değerinden '
      'bağımsız olarak modelin genel ayırt ediciliğini özetlemektedir. '
      'Şekilde Duyarlılık=0,85 seviyesinde Kesinlik≈0,88 gözlemlenmektedir; '
@@ -1273,7 +1273,7 @@ BULGULAR = [
     ),
     ('4.5. Öznitelik Önemi ve SHAP Analizi', 'Heading 2'),
     ('4.5.1. LightGBM Öznitelik Önemi (Kazanım)', 'Heading 3'),
-    ('Şekil 4.10\'da LightGBM normalleştirilmiş kazanım öznitelik önemi '
+    ('Şekil 4.8\'da LightGBM normalleştirilmiş kazanım öznitelik önemi '
      'gösterilmektedir. İlk 10 öznitelik sırasıyla şöyledir: '
      '(1) spectral_flatness_std: 0,0619, '
      '(2) spectral_contrast_mean: 0,0467, '
@@ -1288,9 +1288,9 @@ BULGULAR = [
      'Spektral kategori ilk 5 özniteliğin 3\'ünde yer alarak '
      'dominant grup olduğunu doğrulamaktadır.', 'PARAGRAF METNİ'),
     F(f'{FIG}/paper_feature_importance.png',
-      'Şekil 4.10. LightGBM normalleştirilmiş kazanım öznitelik önemi — ilk yirmi öznitelik.', 13.5),
+      'Şekil 4.8. LightGBM normalleştirilmiş kazanım öznitelik önemi — ilk yirmi öznitelik.', 13.5),
     ('4.5.2. SHAP Beeswarm Analizi', 'Heading 3'),
-    ('Şekil 4.11\'de SHAP beeswarm grafiği sunulmaktadır. '
+    ('Şekil 4.9\'da SHAP beeswarm grafiği sunulmaktadır. '
      'Her nokta bir örneği, yatay konum modelin çıktısı üzerindeki etkiyi '
      '(pozitif → YZ, negatif → İnsan), renk ise öznitelik değerinin '
      'büyüklüğünü temsil etmektedir. '
@@ -1300,7 +1300,7 @@ BULGULAR = [
      'Bu bulgu, YZ müziğinin daha homojen ve tonal bir spektral '
      'yapı sergilediğini doğrulamaktadır.', 'PARAGRAF METNİ'),
     F(f'{FIG}/shap_summary.png',
-      'Şekil 4.11. SHAP beeswarm grafiği — LightGBM (2.000 örneklik CV dilimi). Kırmızı: yüksek değer, Mavi: düşük.', 12.5),
+      'Şekil 4.9. SHAP beeswarm grafiği — LightGBM (2.000 örneklik CV dilimi). Kırmızı: yüksek değer, Mavi: düşük.', 12.5),
     ('Beeswarm grafiğinden çıkarılan yorumsal sonuçlar şunlardır: '
      'spectral_flatness_std ve spectral_contrast_mean üst sıralarda '
      'yer almakta; her iki öznitelik de spektral yapının ne kadar '
@@ -1637,82 +1637,82 @@ SONUCLAR = [
 # 7. KAYNAKLAR
 # ══════════════════════════════════════════════════════════════════════════════
 KAYNAKLAR = [
-    ('[1]\tAfchar, D., Meseguer Brocal, G. ve Hennequin, R. (2025). '
+    ('[1]	Afchar, D., Meseguer Brocal, G. ve Hennequin, R. (2025). '
      'AI-Generated Music Detection and Its Challenges. '
      'Proc. IEEE ICASSP 2025. https://doi.org/10.48550/arXiv.2501.10111'),
-    ('[2]\tBhatt, A., Rajan, A., Goel, A. ve Gupta, M. (2025). '
+    ('[2]	Bhatt, A., Rajan, A., Goel, A. ve Gupta, M. (2025). '
      'AI-Generated Music Detection: A Survey of Methods and Datasets. '
      'arXiv:2502.04668.'),
-    ('[3]\tLiu, Y., Tan, X., Li, S., Chen, X., Zhao, Y. ve Qian, T. (2024). '
+    ('[3]	Liu, Y., Tan, X., Li, S., Chen, X., Zhao, Y. ve Qian, T. (2024). '
      'From Audio Deepfake Detection to AI-Generated Music Detection: '
      'A Pathway and Overview. arXiv:2412.00571.'),
-    ('[4]\tDhariwal, P., Jun, H., Payne, C., Kim, J. W., Radford, A. ve Sutskever, I. (2020). '
+    ('[4]	Dhariwal, P., Jun, H., Payne, C., Kim, J. W., Radford, A. ve Sutskever, I. (2020). '
      'Jukebox: A Generative Model for Music. arXiv:2005.00341.'),
-    ('[5]\tCopet, J., Kreuk, F., Gat, I., Remez, T., Kant, D., Synnaeve, G., '
+    ('[5]	Copet, J., Kreuk, F., Gat, I., Remez, T., Kant, D., Synnaeve, G., '
      'Adi, Y. ve Défossez, A. (2023). '
      'Simple and Controllable Music Generation. '
      'Advances in Neural Information Processing Systems, 36, 47704-47720.'),
-    ('[6]\tLiu, H., Chen, Z., Yuan, Y., Mei, X., Liu, X., Mandic, D., Wang, W. '
+    ('[6]	Liu, H., Chen, Z., Yuan, Y., Mei, X., Liu, X., Mandic, D., Wang, W. '
      've Plumbley, M. D. (2023). '
      'AudioLDM: Text-to-Audio Generation with Latent Diffusion Models. '
      'Proc. ICML 2023.'),
-    ('[7]\tFrank, J. ve Schönherr, L. (2021). '
+    ('[7]	Frank, J. ve Schönherr, L. (2021). '
      'WaveFake: A Data Set to Facilitate Audio Deepfake Detection. '
      'NeurIPS 2021 Datasets and Benchmarks Track.'),
-    ('[8]\tYi, J., Fu, R., Tao, J., Nie, S., Ma, H., Wang, C. ve diğerleri. (2022). '
+    ('[8]	Yi, J., Fu, R., Tao, J., Nie, S., Ma, H., Wang, C. ve diğerleri. (2022). '
      'ADD 2022: The First Audio Deep Synthesis Detection Challenge. '
      'Proc. ICASSP 2022, s. 9216-9220. IEEE.'),
-    ('[9]\tMartín-Doñas, J. M. ve Álvarez, A. (2022). '
+    ('[9]	Martín-Doñas, J. M. ve Álvarez, A. (2022). '
      'The Vicomtech Audio Deepfake Detection System Based on Wav2vec2 '
      'for the 2022 ADD Challenge. '
      'Proc. ICASSP 2022, s. 9266-9270. IEEE.'),
-    ('[10]\tKosta, K., Meseguer Brocal, G., Afchar, D. ve Hennequin, R. (2025). '
+    ('[10]	Kosta, K., Meseguer Brocal, G., Afchar, D. ve Hennequin, R. (2025). '
      'Segment Transformer: AI-Generated Music Detection via Music Structural Analysis. '
      'arXiv:2509.08283.'),
-    ('[11]\tBaevski, A., Zhou, Y., Mohamed, A. ve Auli, M. (2020). '
+    ('[11]	Baevski, A., Zhou, Y., Mohamed, A. ve Auli, M. (2020). '
      'wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations. '
      'Advances in Neural Information Processing Systems, 33, 12449-12460.'),
-    ('[12]\tElizalde, B., Deshmukh, S., Al Ismail, M. ve Wang, H. (2023). '
+    ('[12]	Elizalde, B., Deshmukh, S., Al Ismail, M. ve Wang, H. (2023). '
      'CLAP: Learning Audio Concepts from Natural Language Supervision. '
      'Proc. ICASSP 2023, s. 1-5. IEEE.'),
-    ('[13]\tWu, Y., Chen, K., Zhang, T., Hui, Y., Berg-Kirkpatrick, T. ve Dubnov, S. (2023). '
+    ('[13]	Wu, Y., Chen, K., Zhang, T., Hui, Y., Berg-Kirkpatrick, T. ve Dubnov, S. (2023). '
      'Large-Scale Contrastive Language-Audio Pretraining with Feature Fusion. '
      'Proc. ICASSP 2023. IEEE.'),
-    ('[14]\tGourisaria, M. K., Agrawal, R. ve Sahni, M. (2024). '
+    ('[14]	Gourisaria, M. K., Agrawal, R. ve Sahni, M. (2024). '
      'Comparative Analysis of Audio Classification with MFCC and STFT Features '
      'Using Machine Learning Techniques. '
      'Discover Internet of Things, 4.'),
-    ('[15]\tKostrzewa, D., Mazur, W. ve Brzeski, R. (2022). '
+    ('[15]	Kostrzewa, D., Mazur, W. ve Brzeski, R. (2022). '
      'Wide Ensembles of Neural Networks in Music Genre Classification. '
      'Proc. MISSI 2022, s. 91-102. Springer.'),
-    ('[16]\tGan, R., Huang, T., Shao, J. ve Wang, F. (2024). '
+    ('[16]	Gan, R., Huang, T., Shao, J. ve Wang, F. (2024). '
      'Music Genre Classification Based on VMD-IWOA-XGBoost. '
      'Mathematics, 12(10), 1549. https://doi.org/10.3390/math12101549'),
-    ('[17]\tLiu, Y., Yin, Y., Zhu, Q. ve Cui, W. (2022). '
+    ('[17]	Liu, Y., Yin, Y., Zhu, Q. ve Cui, W. (2022). '
      'Musical Instrument Recognition by XGBoost Combining Feature Fusion. '
      'arXiv:2206.00901.'),
-    ('[18]\tPaszke, A. ve diğerleri. (2019). '
-     'PyTorch: An Imperative Style, High-Performance Deep Learning Library. '
-     'Advances in Neural Information Processing Systems, 32.'),
-    ('[19]\tLundberg, S. M. ve Lee, S. I. (2017). '
-     'A Unified Approach to Interpreting Model Predictions. '
-     'Advances in Neural Information Processing Systems, 30.'),
-    ('[20]\tChen, T. ve Guestrin, C. (2016). '
-     'XGBoost: A Scalable Tree Boosting System. '
-     'Proc. 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, '
-     's. 785-794.'),
-    ('[21]\tKe, G., Meng, Q., Finley, T., Wang, T., Chen, W., Ma, W., Ye, Q. ve Liu, T. (2017). '
-     'LightGBM: A Highly Efficient Gradient Boosting Decision Tree. '
-     'Advances in Neural Information Processing Systems, 30.'),
-    ('[22]\tMcFee, B., Raffel, C., Liang, D., Ellis, D. P. W., McVicar, M., '
+    ('[18]	McFee, B., Raffel, C., Liang, D., Ellis, D. P. W., McVicar, M., '
      'Battenberg, E. ve Nieto, O. (2015). '
      'librosa: Audio and Music Signal Analysis in Python. '
      'Proc. 14th Python in Science Conference, s. 18-25.'),
-    ('[23]\tPedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., '
+    ('[19]	Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., '
      'Grisel, O. ve diğerleri. (2011). '
      'Scikit-learn: Machine Learning in Python. '
      'Journal of Machine Learning Research, 12, 2825-2830.'),
-    ('[24]\tYi, J., Wang, C., Tao, J., Zhang, X., Zhang, C. Y. ve Zhao, Y. (2023). '
+    ('[20]	Chen, T. ve Guestrin, C. (2016). '
+     'XGBoost: A Scalable Tree Boosting System. '
+     'Proc. 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, '
+     's. 785-794.'),
+    ('[21]	Ke, G., Meng, Q., Finley, T., Wang, T., Chen, W., Ma, W., Ye, Q. ve Liu, T. (2017). '
+     'LightGBM: A Highly Efficient Gradient Boosting Decision Tree. '
+     'Advances in Neural Information Processing Systems, 30.'),
+    ('[22]	Paszke, A. ve diğerleri. (2019). '
+     'PyTorch: An Imperative Style, High-Performance Deep Learning Library. '
+     'Advances in Neural Information Processing Systems, 32.'),
+    ('[23]	Lundberg, S. M. ve Lee, S. I. (2017). '
+     'A Unified Approach to Interpreting Model Predictions. '
+     'Advances in Neural Information Processing Systems, 30.'),
+    ('[24]	Yi, J., Wang, C., Tao, J., Zhang, X., Zhang, C. Y. ve Zhao, Y. (2023). '
      'Audio Deepfake Detection: A Survey. arXiv:2308.14970.'),
 ]
 
