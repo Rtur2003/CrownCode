@@ -1269,10 +1269,7 @@ BULGULAR = [
      'bağımsız olarak modelin genel ayırt ediciliğini özetlemektedir. '
      'Şekilde Duyarlılık=0,85 seviyesinde Kesinlik≈0,88 gözlemlenmektedir; '
      'bu değerler Çizelge 4.1\'deki F1=0,8575 sonucuyla tutarlıdır. '
-     'Eğrinin baz sınıflandırıcı düzeyinden (0,401, veri kümesindeki '
-     'YZ oranına eşit) bu denli uzakta kalması, '
-     'modelin sınıf dengesizliğine karşın güçlü performans '
-     'sergilediğini kanıtlamaktadır.',
+     'Baz sınıflandırıcı düzeyi (AP≈0,401) veri kümesindeki YZ oranına eşittir.',
      'PARAGRAF METNİ'),
     ('4.4.5. Model Karmaşıklığı ve Çıkarım Süresi', 'Heading 3'),
     ('Gerçek zamanlı kullanım senaryosunda model karmaşıklığı kritik '
@@ -1335,17 +1332,13 @@ BULGULAR = [
      'yapı sergilediğini doğrulamaktadır.', 'PARAGRAF METNİ'),
     F(f'{FIG}/shap_summary.png',
       'Şekil 4.9. SHAP beeswarm grafiği — LightGBM (2.000 örneklik CV dilimi). Kırmızı: yüksek değer, Mavi: düşük.', 12.5),
-    ('Beeswarm grafiğinden çıkarılan yorumsal sonuçlar şunlardır: '
-     'spectral_flatness_std ve spectral_contrast_mean üst sıralarda '
-     'yer almakta; her iki öznitelik de spektral yapının ne kadar '
-     '"homojen" olduğunu farklı açılardan ölçmektedir. '
-     'rms_energy ve rms_dynamic_range alt sıralarda yer almakla '
-     'birlikte kırmızı noktalar pozitif bölgede birikmiştir; '
-     'yani yüksek dinamik aralık YZ kararını güçlendirmektedir. '
-     'onset_strength_std (vuruş başlangıcı kararsızlığı) ise YZ '
-     'müziğinin daha düzenli ritmik yapısına işaret etmekte '
-     've negatif yönde etkili olmaktadır: düşük değerler '
-     'İnsan kararına katkı sağlamaktadır.',
+    ('Beeswarm grafiğinden elde edilen gözlemler şöyle sıralanabilir: '
+     'spectral_flatness_std ve spectral_contrast_mean pozitif SHAP '
+     'bölgesinde (YZ yönünde) yoğunlaşmaktadır; '
+     'rms_energy ve rms_dynamic_range yüksek değerlerinde (kırmızı) '
+     'pozitif SHAP bölgesine kümelenmektedir; '
+     'onset_strength_std düşük değerlerinde (mavi) negatif SHAP '
+     'bölgesinde — İnsan yönünde — birikmektedir.',
      'PARAGRAF METNİ'),
     ('4.5.3. Örnek Düzeyinde SHAP Açıklaması', 'Heading 3'),
     ('SHAP entegrasyonunun pratik çıktısı inference_xai.py içindeki '
