@@ -849,10 +849,11 @@ MAT_YONT = [
      'gizli_katmanlar=[192, 96, 32], aktivasyon=relu, '
      'alpha=0,001 ile eğitilmiştir.',
      'PARAGRAF METNİ'),
-    ('XGBoost, n_estimators=240, max_depth=5, learning_rate=0,06, '
-     'subsample=0,85, colsample_bytree=0,8, '
-     'scale_pos_weight=1,5 ve eval_metric=auc parametreleriyle '
-     'yapılandırılmıştır. LightGBM ise n_estimators=300, '
+    ('XGBoost (Chen ve Guestrin, 2016) [20], n_estimators=240, '
+     'max_depth=5, learning_rate=0,06, subsample=0,85, '
+     'colsample_bytree=0,8, scale_pos_weight=1,5 ve '
+     'eval_metric=auc parametreleriyle yapılandırılmıştır. '
+     'LightGBM (Ke vd., 2017) [21] ise n_estimators=300, '
      'num_leaves=31, learning_rate=0,05, class_weight=balanced '
      've verbose=-1 ile eğitilmiştir; '
      'eğitim süresi yalnızca 2,95 saniyedir. '
