@@ -1954,20 +1954,53 @@ def build():
         elif 'Eylül 2019' in t:
             set_text(p, 'Haziran 2026')
         elif ('zeti bir paragraf' in t or 'Buraya tezin' in t) and 'ngilizce' not in t:
-            set_text(p,
-                'Suno, MusicGen, Udio ve Echoes gibi üretici yapay zekâ platformlarının '
-                'yaygınlaşmasıyla yapay zekâ üretimi müzik parçaları içerik akış '
-                'platformlarında hızla artmaktadır. Bu tez çalışmasında AURIS sistemi '
-                'tasarlanmış ve geliştirilmiştir. AURIS, ses sinyallerinden 5 kategoride '
-                'toplam 47 akustik öznitelik çıkarmakta; 7 klasik makine öğrenmesi ve '
-                '4 derin öğrenme modelini 5 katlı tabakalı çapraz doğrulama protokolüyle '
-                'karşılaştırmaktadır. 8 farklı kaynaktan derlenen 5.195 ses kaydı '
-                'üzerinde eğitilen LightGBM modeli 0,8839 doğruluk, 0,8575 F1-skoru ve '
-                '0,9548 ROC-AUC (Brier=0,083) elde etmiştir. Karar eşiği Youden J '
-                'istatistiğiyle θ*=0,4316 olarak optimize edilmiştir. Sistem Next.js 14 '
-                'web platformu, Kotlin/Jetpack Compose Android uygulaması ve FastAPI '
-                'arka ucuyla tam yığın mimaride sunulmuştur. SHAP entegrasyonu her '
-                'kararı öznitelik bazında açıklanabilir kılmaktadır.')
+            # BM401 yapısına uygun: her mantıksal blok ayrı paragraf
+            ozet_paragraflar = [
+                'Bu çalışma, yapay zekâ tarafından üretilen müziklerin insan tarafından '
+                'üretilen müziklerden otomatik olarak ayırt edilmesi problemi üzerine '
+                'odaklanmaktadır. Suno, Udio, MusicGen ve Echoes gibi ses üretim '
+                'platformlarının yaygınlaşmasıyla birlikte müzik endüstrisinde ciddi '
+                'telif hakkı ve içerik doğrulama sorunları ortaya çıkmıştır.',
+
+                'Çalışmanın temel amacı, akustik öznitelik mühendisliğine dayalı, '
+                'yorumlanabilir ve çok platformlu bir yapay zekâ müziği tespit sistemi '
+                'geliştirmektir. Bu amaçla AURIS (Acoustic-feature-based AI music '
+                'Recognition and Identification System) tasarlanmış ve hayata '
+                'geçirilmiştir.',
+
+                'Geliştirilen sistem, ses sinyallerinden beş kategoride toplam 47 akustik '
+                'öznitelik çıkarmaktadır: spektral, zamansal, onset/ritim, harmonik ve '
+                'vokal öznitelikler. 8 farklı kaynaktan derlenen 5.195 ses kaydından '
+                'oluşan veri kümesi üzerinde 7 klasik makine öğrenmesi ve 4 derin öğrenme '
+                'modeli, 5 katlı tabakalı çapraz doğrulama protokolüyle karşılaştırmalı '
+                'olarak değerlendirilmiştir.',
+
+                'Deneysel sonuçlar, LightGBM modelinin 0,9548 ROC-AUC, %88,39 doğruluk '
+                've 0,8575 F1-skoru ile en yüksek performansı sergilediğini ortaya '
+                'koymaktadır. Brier skoru 0,083 olarak hesaplanmış; Youden J istatistiğiyle '
+                'optimal karar eşiği θ*=0,4316 olarak belirlenmiştir. SHAP (Shapley '
+                'Additive exPlanations) entegrasyonu, her kararı öznitelik bazında '
+                'açıklanabilir kılmaktadır.',
+
+                'AURIS sistemi modüler bir mimari benimsemektedir. Sunum katmanında '
+                'Next.js 14 ve TypeScript ile geliştirilen duyarlı web platformu ile '
+                'Kotlin ve Jetpack Compose ile yazılmış yerel Android uygulaması yer '
+                'almaktadır. İş mantığı katmanında FastAPI tabanlı REST API servisi, '
+                'veri katmanında ise eğitilmiş LightGBM modeli ve SHAP açıklanabilirlik '
+                'modülü konumlandırılmıştır.',
+
+                'Çalışma sonucunda AURIS sisteminin, açık kaynak ve ücretsiz erişim '
+                'ilkeleriyle mevcut ticari çözümlerle rekabet edebilir bir performans '
+                'sergilediği ortaya konulmuştur. Sistemin şeffaf metodolojisi, '
+                'SHAP tabanlı açıklanabilirliği ve çok üreticili veri kümesiyle '
+                'akademik tekrar edilebilirliğe önemli bir katkı sunmaktadır.',
+            ]
+            set_text(p, ozet_paragraflar[0])
+            cur = p._element
+            for extra in ozet_paragraflar[1:]:
+                new_p = make_p(doc, extra, 'Normal')
+                cur.addnext(new_p)
+                cur = new_p
         elif 'Anahtar s' in t and 'zc' in t and 'bir' in t:
             set_text(p, 'Anahtar Kelimeler: yapay zekâ müzik tespiti, akustik öznitelik, '
                      'LightGBM, topluluk öğrenmesi, ses sınıflandırma.')
