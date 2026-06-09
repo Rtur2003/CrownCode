@@ -1325,11 +1325,9 @@ BULGULAR = [
      'Her nokta bir örneği, yatay konum modelin çıktısı üzerindeki etkiyi '
      '(pozitif → YZ, negatif → İnsan), renk ise öznitelik değerinin '
      'büyüklüğünü temsil etmektedir. '
-     'spectral_flatness_std yüksek değerlerinin (kırmızı) güçlü '
-     'pozitif SHAP etkisi sergilediği; düşük değerlerin (mavi) ise '
-     'İnsan sınıfına işaret ettiği görülmektedir. '
-     'Bu bulgu, YZ müziğinin daha homojen ve tonal bir spektral '
-     'yapı sergilediğini doğrulamaktadır.', 'PARAGRAF METNİ'),
+     'spectral_flatness_std yüksek değerlerinde (kırmızı) güçlü '
+     'pozitif SHAP etkisi; düşük değerlerinde (mavi) ise '
+     'negatif SHAP etkisi gözlemlenmektedir.', 'PARAGRAF METNİ'),
     F(f'{FIG}/shap_summary.png',
       'Şekil 4.9. SHAP beeswarm grafiği — LightGBM (2.000 örneklik CV dilimi). Kırmızı: yüksek değer, Mavi: düşük.', 12.5),
     ('Beeswarm grafiğinden elde edilen gözlemler şöyle sıralanabilir: '
@@ -1382,15 +1380,12 @@ BULGULAR = [
         'Çizelge 4.5. Kaynak bazlı LightGBM performansı — 5 katlı CV dışında tutulan tahminlerden hesaplanmıştır.',
         col_widths=[4.5, 2.0, 3.0, 4.5]
     ),
-    ('Deepfake setinin 0,500 gibi rastgele tahmin düzeyinde '
-     'kalması dikkat çekicidir. '
-     'Bu kaynak büyük olasılıkla stüdyo kayıt kalitesinde '
-     'ya da profesyonel mastering uygulanmış YZ parçalarından '
-     'oluşmaktadır; bu nedenle akustik öznitelikler tek başına '
-     'yeterli sinyal taşıyamamaktadır. '
-     'Bu bulgu, ilerleyen çalışmalarda kaynak-bilinçli eğitim '
-     'stratejileri veya metadata tabanlı ek öznitelikler '
-     'kullanmanın gerekliliğini vurgulamaktadır.',
+    ('Deepfake seti (YZ, n≈492) LightGBM tarafından 0,500 '
+     'doğrulukla sınıflandırılmıştır; bu değer rastgele '
+     'tahmin düzeyine karşılık gelmektedir. '
+     'Bu kaynağa ait kayıp eğrileri ve bireysel öznitelik '
+     'dağılımları Ek-2\'de sunulmaktadır. '
+     'Kaynak bazlı bulgular Bölüm 5.5\'te yorumlanmaktadır.',
      'PARAGRAF METNİ'),
 ]
 
@@ -1837,7 +1832,7 @@ EKLER = [
     ),
     ('Ek 3. Erişim Bilgileri', 'Heading 2'),
     ('AURIS\'e erişim için aşağıdaki bağlantılar kullanılabilir: '
-     'Web platformu: hasanarthuraltunas.xyz | '
+     'Web platformu: hasanarthuraltuntas.xyz | '
      'HuggingFace Spaces: huggingface.co/spaces/Rtur2003/AURIS | '
      'GitHub: github.com/Rtur2003/CrownCode', 'PARAGRAF METNİ'),
 ]
