@@ -377,7 +377,7 @@ GIRIS = [
      'kısmı yalnızca belirli bir üreticiye özgü örnekler üzerinde başarılı '
      'olabilmektedir. Liu vd. [3] bu sorunun müzik tespitinin önündeki en büyük '
      'engel olduğunu vurgularken, Bhatt vd. [2] çapraz-üretici genellemenin '
-     'alanın açık problemi olmaya devam ettiğini ortaya koymuştur [2],[3].',
+     'alanın açık problemi olmaya devam ettiğini ortaya koymuştur [2], [3].',
      'PARAGRAF METNİ'),
     ('Mevcut ticari sistemler şeffaf metodoloji sunmamaktadır. IRCAM Amplify '
      'yüksek doğruluk bildirmekle birlikte eğitim verisini kamuyla paylaşmamakta; '
