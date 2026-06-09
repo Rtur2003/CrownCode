@@ -1698,7 +1698,7 @@ KAYNAKLAR = [
      'Singapore, 2022, ss. 9266–9270.'),
     ('[10]\tK. Kosta, G. Meseguer Brocal, D. Afchar ve R. Hennequin, '
      '"Segment Transformer: AI-Generated Music Detection via Music Structural Analysis," '
-     'arXiv:2409.08283, 2024.'),
+     'arXiv:2509.08283, 2025.'),
     ('[11]\tA. Baevski, Y. Zhou, A. Mohamed ve M. Auli, '
      '"wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations," '
      'içinde Advances in Neural Information Processing Systems (NeurIPS), '
