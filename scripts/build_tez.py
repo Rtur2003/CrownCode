@@ -623,7 +623,7 @@ MAT_YONT = [
      'standartlaştırarak 22.050 Hz mono sinyale dönüştürür, '
      'YouTube bağlantılarından yt-dlp ile ses indirir ve '
      'mikrofon girişini doğrudan kabul eder. '
-     'İkinci modül olan Öznitelik Çıkarma; librosa v0.10.1 ile '
+     'İkinci modül olan Öznitelik Çıkarma; librosa v0.10.1 [22] ile '
      '47 boyutlu akustik vektörü hesaplar ve bunu StandardScaler '
      'ile normalleştirir. '
      'Üçüncü modül olan Sınıflandırma; eğitilmiş LightGBM modelini '
@@ -837,7 +837,7 @@ MAT_YONT = [
      'eğilimi sergilemiştir (eğitim doğruluğu ≈%100, '
      'CV doğruluğu ≈%86).',
      'PARAGRAF METNİ'),
-    ('Gradyan Artırma (scikit-learn GradientBoostingClassifier), '
+    ('Gradyan Artırma (scikit-learn GradientBoostingClassifier [23]), '
      'n_estimators=180, max_depth=4, learning_rate=0,07 ile '
      'eğitilmiştir. '
      'SVM-RBF, C=10 ve gamma=0,05 ile yapılandırılmış; '
@@ -1429,7 +1429,9 @@ TARTISMA = [
      'temiz etiketi bu başarıyı açıklamaktadır.',
      'PARAGRAF METNİ'),
     ('5.6. Sınırlamalar', 'Heading 2'),
-    ('Bu çalışmanın başlıca sınırlamaları şöyle özetlenebilir: '
+    ('Ses deepfake tespiti alanının genel sınırlamaları Yi vd. (2023) '
+     'tarafından kapsamlı biçimde incelenmiştir [24]. '
+     'Bu çalışmanın özgül sınırlamaları şöyle özetlenebilir: '
      '(1) Veri kümesi büyüklüğü — 5.195 örnek ticari sistemlerle '
      'karşılaştırıldığında küçük kalmaktadır; '
      '(2) Adversarial dayanıklılık — MP3 sıkıştırma, perde kaydırma '
