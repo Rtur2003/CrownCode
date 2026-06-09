@@ -377,7 +377,7 @@ GIRIS = [
      'kısmı yalnızca belirli bir üreticiye özgü örnekler üzerinde başarılı '
      'olabilmektedir. Liu vd. (2024) bu sorunun müzik tespitinin önündeki en büyük '
      'engel olduğunu vurgularken, Bhatt vd. (2025) çapraz-üretici genellemenin '
-     'alanın açık problemi olmaya devam ettiğini ortaya koymuştur [3],[15].',
+     'alanın açık problemi olmaya devam ettiğini ortaya koymuştur [2],[3].',
      'PARAGRAF METNİ'),
     ('Mevcut ticari sistemler şeffaf metodoloji sunmamaktadır. IRCAM Amplify '
      'yüksek doğruluk bildirmekle birlikte eğitim verisini kamuyla paylaşmamakta; '
@@ -468,7 +468,7 @@ LITERATUR = [
     ('Müzik üretiminde yapay zekânın yükselişi, birbirini izleyen üç nesil '
      'model mimarisiyle şekillenmiştir. İlk nesil otoregresif modeller, '
      'sesi ayrık simge dizisi olarak ele almaktadır. '
-     'Dhariwal vd. (2020) tarafından geliştirilen Jukebox [6], '
+     'Dhariwal vd. (2020) tarafından geliştirilen Jukebox [4], '
      'hiyerarşik vektör niceleme değişken oto-kodlayıcı (VQ-VAE) '
      'mimarisiyle ham dalga biçiminde çıktı üreten ilk büyük ölçekli '
      'müzik modelidir. 1,2 milyar parametresiyle şarkı sözleri ve '
@@ -486,7 +486,7 @@ LITERATUR = [
      'PARAGRAF METNİ'),
     ('Üçüncü nesil difüzyon tabanlı modeller, latent uzayda yinelemeli '
      'gürültü giderme ilkesiyle çalışmaktadır. '
-     'AudioLDM (Liu vd., 2023) [14], CLAP ses-metin gömme vektörleriyle '
+     'AudioLDM (Liu vd., 2023) [6], CLAP ses-metin gömme vektörleriyle '
      'koşullandırılan latent difüzyon modelini ses üretimine uyarlamıştır. '
      'Stable Audio ve Riffusion da bu paradigmanın ticari ürünleridir. '
      'Bu sistemlerin ürettiği içerikler giderek artan bir insan müziği '
@@ -504,14 +504,14 @@ LITERATUR = [
     ('Yapay zekâ üretimi ses tespitine yönelik akademik çalışmalar, '
      'köken olarak konuşma sentezi ve ses derin sahteciliği alanından '
      'beslenmektedir. Bu alanda en temel kıyaslama veri kümesi, '
-     'Frank ve Schönherr (2021) tarafından derlenen WaveFake\'tir [8]; '
+     'Frank ve Schönherr (2021) tarafından derlenen WaveFake\'tir [7]; '
      'HiFi-GAN, MelGAN, WaveGlow ve benzeri yedi farklı vocoder '
      'mimarisinin çıktısını içermektedir.',
      'PARAGRAF METNİ'),
     ('Ses derin sahteciliği tespiti alanında düzenlenen ilk uluslararası '
-     'yarışma olan ADD 2022 (Yi vd., 2022) [23], üç farklı zorluk '
+     'yarışma olan ADD 2022 (Yi vd., 2022) [8], üç farklı zorluk '
      'seviyesinde birleşik değerlendirme sağlamıştır. '
-     'Martín-Doñas ve Álvarez (2022) [18], yarışmada wav2vec2-base '
+     'Martín-Doñas ve Álvarez (2022) [9], yarışmada wav2vec2-base '
      'modelini doğrudan uygulayarak öznitelik mühendisliği gerektirmeden '
      'rekabetçi sonuçlar elde etmiştir; bu çalışma BM401 döneminin '
      'başlangıç ilham kaynağını oluşturmuştur. '
@@ -522,16 +522,16 @@ LITERATUR = [
      'saptamıştır.',
      'PARAGRAF METNİ'),
     ('Müziğe özgü YZ tespiti ise henüz olgunlaşmakta olan bir alt '
-     'alandır. Liu vd. (2024) [15] bu geçiş sürecini sistematik '
+     'alandır. Liu vd. (2024) [3] bu geçiş sürecini sistematik '
      'biçimde ele almış; mevcut çalışmaların büyük bölümünün tek '
      'üreticiye özgü koşullarda başarılı olduğunu, yeni ve görülmemiş '
      'sistemlere genelleme yapamadığını ortaya koymuştur. '
-     'Kosta vd. (2025) [12] ise müzik yapısal analizi temelinde '
+     'Kosta vd. (2025) [10] ise müzik yapısal analizi temelinde '
      'çalışan Segment Transformer mimarisini önermiş; bu yaklaşım '
      'müziğin bölümsel tekrar yapısından yararlanmaktadır.',
      'PARAGRAF METNİ'),
     ('2.3. Transformer Tabanlı Ses Gösterimleri', 'Heading 2'),
-    ('Öz-denetimli ses gösterimi öğrenimi, wav2vec2 (Baevski vd., 2020) [2] '
+    ('Öz-denetimli ses gösterimi öğrenimi, wav2vec2 (Baevski vd., 2020) [11] '
      'ile ivme kazanmıştır. wav2vec2, ham dalga biçiminden CNN ile '
      'bağlamsal göstenim çıkarmakta; ardından gizlenmiş zaman adımlarını '
      'tahmin eden bir transformer ile öz-denetimli ön eğitim uygulamaktadır. '
@@ -539,9 +539,9 @@ LITERATUR = [
      'tanımada büyük ilerleme sağlamış; ancak müzik verilerine uygulandığında '
      'aktarım öğrenmesinin sınırları belirgin biçimde ortaya çıkmıştır.',
      'PARAGRAF METNİ'),
-    ('CLAP (Elizalde vd., 2023) [7], ses ve metin çiftleri üzerinde '
+    ('CLAP (Elizalde vd., 2023) [12], ses ve metin çiftleri üzerinde '
      'karşıtsal öğrenme yürüterek ortak bir gömme uzayı oluşturmaktadır. '
-     'LAION-CLAP (Wu vd., 2023) [22], 630.000 ses-metin çiftinden '
+     'LAION-CLAP (Wu vd., 2023) [13], 630.000 ses-metin çiftinden '
      'oluşan büyük ölçekli veri kümesi üzerinde eğitilmiş olup '
      'ses sınıflandırması ve ses benzerliği görevlerinde güçlü '
      'sıfır-atım performansı sergilemektedir. '
@@ -554,7 +554,7 @@ LITERATUR = [
     ('El ile tasarlanmış akustik özniteliklere dayalı sınıflandırma, '
      'müzik bilgi erişimi alanında köklü bir yaklaşımdır. '
      'MFCC\'ler onlarca yıldır müzik türü sınıflandırmada temel araç '
-     'olarak kullanılmıştır. Gourisaria vd. (2024) [10], MFCC ve STFT '
+     'olarak kullanılmıştır. Gourisaria vd. (2024) [14], MFCC ve STFT '
      'temelli öznitelikleri sistematik biçimde karşılaştırmış; '
      'her iki öznitelik ailesinin birlikte kullanılmasının ayrı ayrı '
      'kullanılmasından belirgin biçimde üstün performans sağladığını '
@@ -562,13 +562,13 @@ LITERATUR = [
      'PARAGRAF METNİ'),
     ('Topluluk öğrenmesi, tek modelin varyans hatasını azaltarak '
      'müzik görevlerinde tutarlı iyileştirme sağlamaktadır. '
-     'Kostrzewa vd. (2022) [13], geniş sinir ağı topluluklarının '
+     'Kostrzewa vd. (2022) [15], geniş sinir ağı topluluklarının '
      'müzik türü sınıflandırmasında tek modele kıyasla önemli '
      'kazanım sağladığını ortaya koymuştur. '
-     'Gan vd. (2024) [9], VMD tabanlı öznitelik ayrıştırmasıyla '
+     'Gan vd. (2024) [16], VMD tabanlı öznitelik ayrıştırmasıyla '
      'desteklenen XGBoost topluluk modelinin GTZAN veri kümesinde '
      'rekabetçi doğruluk elde ettiğini bildirmiştir. '
-     'Liu vd. (2022) [16] ise XGBoost\'u birden fazla öznitelik '
+     'Liu vd. (2022) [17] ise XGBoost\'u birden fazla öznitelik '
      'grubunun birleşimiyle çalgı tanımaya uygulamıştır.',
      'PARAGRAF METNİ'),
     ('AURIS\'in öznitelik mühendisliği tasarımı bu literatürden '
@@ -603,8 +603,8 @@ LITERATUR = [
         [
             ['IRCAM Amplify', 'Ticari API', 'Hayır', 'Hayır', 'Bilinmiyor', 'Yayımlanmadı'],
             ['Believe AI Radar', 'Ticari', 'Hayır', 'Hayır', 'Bilinmiyor', 'Yayımlanmadı'],
-            ['Segment Transformer [12]', 'Akademik', 'Evet', 'Hayır', 'Kısmi', '~0.91'],
-            ['WaveFake Detector [8]', 'Akademik', 'Evet', 'Hayır', 'Kısmi', '>0.99 (konuşma)'],
+            ['Segment Transformer [10]', 'Akademik', 'Evet', 'Hayır', 'Kısmi', '~0.91'],
+            ['WaveFake Detector [7]', 'Akademik', 'Evet', 'Hayır', 'Kısmi', '>0.99 (konuşma)'],
             ['AURIS (bu çalışma)', 'Açık / Ücretsiz', 'Evet', 'SHAP', 'Evet (12+)', '0,9549'],
         ],
         'Çizelge 2.1. Mevcut yapay zekâ müzik tespit sistemlerinin karşılaştırması.',
@@ -863,7 +863,7 @@ MAT_YONT = [
      'PARAGRAF METNİ'),
     ('3.4.2. Derin Öğrenme Modelleri', 'Heading 3'),
     ('Dört derin öğrenme modeli train_deep_classifiers.py ile '
-     'PyTorch [20] çerçevesinde tasarlanmıştır. '
+     'PyTorch [18] çerçevesinde tasarlanmıştır. '
      'Tüm modellerde kayıp işlevi olarak BCEWithLogitsLoss '
      '(pos_weight=1,5, sınıf dengesizliğini telafi etmek için) '
      've optimize edici olarak Adam (lr=1×10⁻³) kullanılmıştır. '
@@ -909,8 +909,8 @@ MAT_YONT = [
             ['Lojistik Regresyon', 'MO', 'L2 doğrusal model', '0,8'],
             ['Derin ÇKA', 'DÖ', 'MLP [512,256,128,64], BatchNorm+Dropout', '81,4'],
             ['1B-ESA', 'DÖ', '1D CNN + GlobalAvgPool', '125,0'],
-            ['Artık ÇKA', 'DÖ', '3× artık blok [64]', '128,7'],
-            ['Dikkat ÇKA', 'DÖ', 'Öz-dikkat [64] + FF', '149,6'],
+            ['Artık ÇKA', 'DÖ', '3× artık blok (64 dim)', '128,7'],
+            ['Dikkat ÇKA', 'DÖ', 'Öz-dikkat (64 dim) + FF', '149,6'],
         ],
         'Çizelge 3.3. 11 modelin mimari özeti ve eğitim süreleri.',
         col_widths=[3.8, 1.5, 6.2, 4.0]
@@ -977,7 +977,7 @@ MAT_YONT = [
     F(f'{FIG}/threshold_sweep.png',
       'Şekil 3.6. Eşik taraması — Kesinlik/Duyarlılık/F1 eşiğe göre (LightGBM, θ*=0,4316).', 14.5),
     ('3.6. SHAP Açıklanabilirlik Entegrasyonu', 'Heading 2'),
-    ('SHAP (Shapley Additive exPlanations, Lundberg ve Lee, 2017) [17], '
+    ('SHAP (Shapley Additive exPlanations, Lundberg ve Lee, 2017) [19], '
      'oyun teorisindeki Shapley değerlerini makine öğrenmesi '
      'açıklanabilirliğine uyarlamaktadır. '
      'Her özniteliğin modelin çıktısına katkısı, '
@@ -1005,7 +1005,7 @@ MAT_YONT = [
      'taşıdığına işaret etmektedir." biçiminde.',
      'PARAGRAF METNİ'),
     ('3.7. REST API Mimarisi', 'Heading 2'),
-    ('AURIS\'in arka ucu FastAPI [20] çerçevesiyle '
+    ('AURIS\'in arka ucu FastAPI [18] çerçevesiyle '
      'Python 3.11 üzerinde geliştirilmiş; '
      'HuggingFace Spaces ortamında 7860 portunda '
      'uvicorn ASGI sunucusuyla çalıştırılmaktadır. '
@@ -1415,7 +1415,7 @@ TARTISMA = [
      '47 öznitelik temsilinin üretici-bağımsız artefaktları '
      'yakaladığına işaret etmektedir. '
      'Bhatt vd. (2025) çapraz-üretici genellemenin alanın temel '
-     'açık problemi olduğunu vurgulamakta [3]; AURIS\'in çok '
+     'açık problemi olduğunu vurgulamakta [2]; AURIS\'in çok '
      'üreticili eğitim stratejisi bu soruna doğrudan yanıt vermektedir.',
      'PARAGRAF METNİ'),
     ('5.5. Kaynak Bazlı Performans Yorumu', 'Heading 2'),
@@ -1455,11 +1455,11 @@ TARTISMA = [
      'deneysel olarak ortaya koymuştur; '
      'AURIS bu bulguyu MO-DÖ yakınsaması (0,0012 AUC farkı) '
      'ile bağımsız biçimde doğrulamaktadır. '
-     'Kosta vd. (2025) [12] müzik yapısal analiz yöntemiyle '
+     'Kosta vd. (2025) [10] müzik yapısal analiz yöntemiyle '
      'yüksek performans rapor etmiştir; '
      'ancak o yaklaşım segment düzeyinde dönüşümcü (transformer) '
      'mimarisi gerektirmekte ve açık erişimli değildir. '
-     'Bhatt vd. (2025) [3] çapraz üretici değerlendirmenin '
+     'Bhatt vd. (2025) [2] çapraz üretici değerlendirmenin '
      'alanın temel açık sorunu olduğunu vurgulamaktadır; '
      'AURIS\'in 12+ üretici kapsayan veri kümesi bu yönde '
      'önemli bir adım teşkil etmektedir.',
@@ -1636,79 +1636,79 @@ SONUCLAR = [
 KAYNAKLAR = [
     ('[1]\tAfchar, D., Meseguer Brocal, G. ve Hennequin, R. (2025). '
      'AI-Generated Music Detection and Its Challenges. '
-     'Proceedings of IEEE ICASSP 2025. '
-     'https://doi.org/10.48550/arXiv.2501.10111'),
-    ('[2]\tBaevski, A., Zhou, Y., Mohamed, A. ve Auli, M. (2020). '
-     'wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations. '
-     'Advances in Neural Information Processing Systems, 33, 12449-12460.'),
-    ('[3]\tBhatt, A., Rajan, A. ve diğerleri. (2025). '
+     'Proc. IEEE ICASSP 2025. https://doi.org/10.48550/arXiv.2501.10111'),
+    ('[2]\tBhatt, A., Rajan, A., Goel, A. ve Gupta, M. (2025). '
      'AI-Generated Music Detection: A Survey of Methods and Datasets. '
-     'arXiv preprint. https://doi.org/10.48550/arXiv.2501.10111'),
-    ('[4]\tChen, T. ve Guestrin, C. (2016). '
-     'XGBoost: A Scalable Tree Boosting System. '
-     'Proc. 22nd ACM SIGKDD, s. 785-794.'),
+     'arXiv:2502.04668.'),
+    ('[3]\tLiu, Y., Tan, X., Li, S., Chen, X., Zhao, Y. ve Qian, T. (2024). '
+     'From Audio Deepfake Detection to AI-Generated Music Detection: '
+     'A Pathway and Overview. arXiv:2412.00571.'),
+    ('[4]\tDhariwal, P., Jun, H., Payne, C., Kim, J. W., Radford, A. ve Sutskever, I. (2020). '
+     'Jukebox: A Generative Model for Music. arXiv:2005.00341.'),
     ('[5]\tCopet, J., Kreuk, F., Gat, I., Remez, T., Kant, D., Synnaeve, G., '
      'Adi, Y. ve Défossez, A. (2023). '
      'Simple and Controllable Music Generation. '
-     'Advances in NeurIPS, 36, 47704-47720.'),
-    ('[6]\tDhariwal, P., Jun, H., Payne, C., Kim, J. W., Radford, A. ve Sutskever, I. (2020). '
-     'Jukebox: A Generative Model for Music. '
-     'arXiv preprint arXiv:2005.00341.'),
-    ('[7]\tElizalde, B., Deshmukh, S., Al Ismail, M. ve Wang, H. (2023). '
-     'CLAP: Learning Audio Concepts from Natural Language Supervision. '
-     'Proc. ICASSP 2023, s. 1-5. IEEE.'),
-    ('[8]\tFrank, J. ve Schönherr, L. (2021). '
-     'WaveFake: A Data Set to Facilitate Audio Deepfake Detection. '
-     'NeurIPS 2021 Datasets and Benchmarks Track.'),
-    ('[9]\tGan, R., Huang, T., Shao, J. ve Wang, F. (2024). '
-     'Music Genre Classification Based on VMD-IWOA-XGBoost. '
-     'Mathematics, 12(10), 1549. https://doi.org/10.3390/math12101549'),
-    ('[10]\tGourisaria, M. K., Agrawal, R. ve Sahni, M. (2024). '
-     'Comparative Analysis of Audio Classification with MFCC and STFT Features '
-     'Using Machine Learning Techniques. '
-     'Discover Internet of Things, 4.'),
-    ('[11]\tKe, G., Meng, Q., Finley, T., Wang, T., Chen, W., Ma, W., Ye, Q. ve Liu, T. (2017). '
-     'LightGBM: A Highly Efficient Gradient Boosting Decision Tree. '
-     'Advances in NeurIPS, 30.'),
-    ('[12]\tKosta, K., Meseguer Brocal, G., Afchar, D. ve Hennequin, R. (2025). '
-     'Segment Transformer: AI-Generated Music Detection via Music Structural Analysis. '
-     'arXiv:2509.08283.'),
-    ('[13]\tKostrzewa, D., Mazur, W. ve Brzeski, R. (2022). '
-     'Wide Ensembles of Neural Networks in Music Genre Classification. '
-     'Proc. MISSI 2022, s. 91-102. Springer.'),
-    ('[14]\tLiu, H., Chen, Z., Yuan, Y., Mei, X., Liu, X., Mandic, D., Wang, W. '
+     'Advances in Neural Information Processing Systems, 36, 47704-47720.'),
+    ('[6]\tLiu, H., Chen, Z., Yuan, Y., Mei, X., Liu, X., Mandic, D., Wang, W. '
      've Plumbley, M. D. (2023). '
      'AudioLDM: Text-to-Audio Generation with Latent Diffusion Models. '
      'Proc. ICML 2023.'),
-    ('[15]\tLiu, Y. ve diğerleri. (2024). '
-     'From Audio Deepfake Detection to AI-Generated Music Detection: '
-     'A Pathway and Overview. arXiv:2412.00571.'),
-    ('[16]\tLiu, Y., Yin, Y., Zhu, Q. ve Cui, W. (2022). '
-     'Musical Instrument Recognition by XGBoost Combining Feature Fusion. '
-     'arXiv:2206.00901.'),
-    ('[17]\tLundberg, S. M. ve Lee, S. I. (2017). '
-     'A Unified Approach to Interpreting Model Predictions. '
-     'Advances in NeurIPS, 30.'),
-    ('[18]\tMartín-Doñas, J. M. ve Álvarez, A. (2022). '
+    ('[7]\tFrank, J. ve Schönherr, L. (2021). '
+     'WaveFake: A Data Set to Facilitate Audio Deepfake Detection. '
+     'NeurIPS 2021 Datasets and Benchmarks Track.'),
+    ('[8]\tYi, J., Fu, R., Tao, J., Nie, S., Ma, H., Wang, C. ve diğerleri. (2022). '
+     'ADD 2022: The First Audio Deep Synthesis Detection Challenge. '
+     'Proc. ICASSP 2022, s. 9216-9220. IEEE.'),
+    ('[9]\tMartín-Doñas, J. M. ve Álvarez, A. (2022). '
      'The Vicomtech Audio Deepfake Detection System Based on Wav2vec2 '
      'for the 2022 ADD Challenge. '
      'Proc. ICASSP 2022, s. 9266-9270. IEEE.'),
-    ('[19]\tMcFee, B., Raffel, C., Liang, D., Ellis, D. P. W., McVicar, M., '
-     'Battenberg, E. ve Nieto, O. (2015). '
-     'librosa: Audio and Music Signal Analysis in Python. '
-     'Proc. 14th Python in Science Conf., s. 18-25.'),
-    ('[20]\tPaszke, A. ve diğerleri. (2019). '
-     'PyTorch: An Imperative Style, High-Performance Deep Learning Library. '
-     'Advances in NeurIPS, 32.'),
-    ('[21]\tPedregosa, F. ve diğerleri. (2011). '
-     'Scikit-learn: Machine Learning in Python. '
-     'Journal of Machine Learning Research, 12, 2825-2830.'),
-    ('[22]\tWu, Y., Chen, K., Zhang, T., Hui, Y., Berg-Kirkpatrick, T. ve Dubnov, S. (2023). '
+    ('[10]\tKosta, K., Meseguer Brocal, G., Afchar, D. ve Hennequin, R. (2025). '
+     'Segment Transformer: AI-Generated Music Detection via Music Structural Analysis. '
+     'arXiv:2509.08283.'),
+    ('[11]\tBaevski, A., Zhou, Y., Mohamed, A. ve Auli, M. (2020). '
+     'wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations. '
+     'Advances in Neural Information Processing Systems, 33, 12449-12460.'),
+    ('[12]\tElizalde, B., Deshmukh, S., Al Ismail, M. ve Wang, H. (2023). '
+     'CLAP: Learning Audio Concepts from Natural Language Supervision. '
+     'Proc. ICASSP 2023, s. 1-5. IEEE.'),
+    ('[13]\tWu, Y., Chen, K., Zhang, T., Hui, Y., Berg-Kirkpatrick, T. ve Dubnov, S. (2023). '
      'Large-Scale Contrastive Language-Audio Pretraining with Feature Fusion. '
      'Proc. ICASSP 2023. IEEE.'),
-    ('[23]\tYi, J., Fu, R., Tao, J., Nie, S., Ma, H., Wang, C. ve diğerleri. (2022). '
-     'ADD 2022: The First Audio Deep Synthesis Detection Challenge. '
-     'Proc. ICASSP 2022, s. 9216-9220. IEEE.'),
+    ('[14]\tGourisaria, M. K., Agrawal, R. ve Sahni, M. (2024). '
+     'Comparative Analysis of Audio Classification with MFCC and STFT Features '
+     'Using Machine Learning Techniques. '
+     'Discover Internet of Things, 4.'),
+    ('[15]\tKostrzewa, D., Mazur, W. ve Brzeski, R. (2022). '
+     'Wide Ensembles of Neural Networks in Music Genre Classification. '
+     'Proc. MISSI 2022, s. 91-102. Springer.'),
+    ('[16]\tGan, R., Huang, T., Shao, J. ve Wang, F. (2024). '
+     'Music Genre Classification Based on VMD-IWOA-XGBoost. '
+     'Mathematics, 12(10), 1549. https://doi.org/10.3390/math12101549'),
+    ('[17]\tLiu, Y., Yin, Y., Zhu, Q. ve Cui, W. (2022). '
+     'Musical Instrument Recognition by XGBoost Combining Feature Fusion. '
+     'arXiv:2206.00901.'),
+    ('[18]\tPaszke, A. ve diğerleri. (2019). '
+     'PyTorch: An Imperative Style, High-Performance Deep Learning Library. '
+     'Advances in Neural Information Processing Systems, 32.'),
+    ('[19]\tLundberg, S. M. ve Lee, S. I. (2017). '
+     'A Unified Approach to Interpreting Model Predictions. '
+     'Advances in Neural Information Processing Systems, 30.'),
+    ('[20]\tChen, T. ve Guestrin, C. (2016). '
+     'XGBoost: A Scalable Tree Boosting System. '
+     'Proc. 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, '
+     's. 785-794.'),
+    ('[21]\tKe, G., Meng, Q., Finley, T., Wang, T., Chen, W., Ma, W., Ye, Q. ve Liu, T. (2017). '
+     'LightGBM: A Highly Efficient Gradient Boosting Decision Tree. '
+     'Advances in Neural Information Processing Systems, 30.'),
+    ('[22]\tMcFee, B., Raffel, C., Liang, D., Ellis, D. P. W., McVicar, M., '
+     'Battenberg, E. ve Nieto, O. (2015). '
+     'librosa: Audio and Music Signal Analysis in Python. '
+     'Proc. 14th Python in Science Conference, s. 18-25.'),
+    ('[23]\tPedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., '
+     'Grisel, O. ve diğerleri. (2011). '
+     'Scikit-learn: Machine Learning in Python. '
+     'Journal of Machine Learning Research, 12, 2825-2830.'),
     ('[24]\tYi, J., Wang, C., Tao, J., Zhang, X., Zhang, C. Y. ve Zhao, Y. (2023). '
      'Audio Deepfake Detection: A Survey. arXiv:2308.14970.'),
 ]
