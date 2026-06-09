@@ -1176,29 +1176,30 @@ BULGULAR = [
      '1B-ESA belirgin biçimde geride kalmaktadır.', 'PARAGRAF METNİ'),
     F(f'{FIG}/paper_ml_vs_dl.png',
       'Şekil 4.2. MO ve DÖ modellerinin karşılaştırması — Doğruluk, ROC-AUC, F1 Skoru.', 15.5),
-    ('Çizelge 4.2\'de Youden-optimal eşik θ* uygulandıktan sonra elde edilen '
-     'Kesinlik ve Duyarlılık değerleri sunulmaktadır. Bu metrikler Çizelge 4.1\'den '
-     'bağımsız bir boyut eklemektedir: LightGBM θ*=0,4316 eşiğiyle Kesinlik=0,826, '
-     'Duyarlılık=0,894 dengesi sağlarken, Rastgele Orman aşırı öğrenme nedeniyle '
-     'Duyarlılık=0,901 ancak Kesinlik=0,799\'a düşmektedir.',
+    ('Çizelge 4.2\'de her model için uygulanan karar eşiği ve '
+     'buna karşılık gelen Kesinlik ile Duyarlılık değerleri sunulmaktadır. '
+     'Yedi MO modelinden yalnızca LightGBM için Youden J istatistiğiyle '
+     'θ*=0,4316 belirlenmiştir; diğer modeller varsayılan 0,50 eşiğiyle '
+     'çalışmaktadır. DÖ modellerinin Kesinlik/Duyarlılık değerleri '
+     '5 katlı CV çıktılarından hesaplanmıştır.',
      'PARAGRAF METNİ'),
     T(
-        ['Model', 'Tür', 'θ* Eşiği', 'Kesinlik', 'Duyarlılık', 'ROC-AUC'],
+        ['Model', 'Tür', 'Karar Eşiği', 'Kesinlik', 'Duyarlılık', 'ROC-AUC'],
         [
-            ['LightGBM',          'MO', '0,4316', '0,826', '0,894', '0,9549 ★'],
-            ['Derin ÇKA',         'DÖ', '0,4501', '0,831', '0,893 ★', '0,9537'],
-            ['XGBoost',           'MO', '0,4218', '0,817', '0,884', '0,9463'],
-            ['Artık ÇKA',         'DÖ', '0,4623', '0,834 ★', '0,880', '0,9453'],
-            ['Gradyan Artırma',   'MO', '0,4387', '0,812', '0,871', '0,9406'],
-            ['Rastgele Orman',    'MO', '0,3912', '0,799', '0,901', '0,9393'],
-            ['Dikkat ÇKA',        'DÖ', '0,4714', '0,820', '0,858', '0,9356'],
-            ['SVM-RBF',           'MO', '0,5000', '0,822', '0,847', '0,9347'],
-            ['ÇKA Sinir Ağı',     'MO', '0,4289', '0,808', '0,853', '0,9258'],
-            ['Lojistik Regresyon','MO', '0,5000', '0,742', '0,757', '0,8511'],
-            ['1B-ESA',            'DÖ', '0,4891', '0,721', '0,742', '0,8442'],
+            ['LightGBM ★',        'MO', '0,4316 (Youden)', '0,844', '0,871', '0,9549'],
+            ['Derin ÇKA',         'DÖ', '0,50 (varsayılan)', '0,860', '0,860', '0,9537'],
+            ['XGBoost',           'MO', '0,50 (varsayılan)', '0,851', '0,830', '0,9463'],
+            ['Artık ÇKA',         'DÖ', '0,50 (varsayılan)', '0,851', '0,849', '0,9453'],
+            ['Gradyan Artırma',   'MO', '0,50 (varsayılan)', '0,845', '0,822', '0,9406'],
+            ['Rastgele Orman',    'MO', '0,50 (varsayılan)', '0,855', '0,784', '0,9393'],
+            ['Dikkat ÇKA',        'DÖ', '0,50 (varsayılan)', '0,831', '0,830', '0,9356'],
+            ['SVM-RBF',           'MO', '0,50 (varsayılan)', '0,833', '0,818', '0,9347'],
+            ['ÇKA Sinir Ağı',     'MO', '0,50 (varsayılan)', '0,817', '0,821', '0,9258'],
+            ['Lojistik Regresyon','MO', '0,50 (varsayılan)', '0,698', '0,785', '0,8511'],
+            ['1B-ESA',            'DÖ', '0,50 (varsayılan)', '0,726', '0,687', '0,8442'],
         ],
-        'Çizelge 4.2. Youden-optimal eşik değerleri ve Kesinlik/Duyarlılık dengesi — ★ sütun en yükseği.',
-        col_widths=[3.8, 1.5, 2.2, 2.3, 2.5, 2.7]
+        'Çizelge 4.2. Model karar eşikleri ve Kesinlik/Duyarlılık değerleri. ★ = Youden-optimal eşik uygulanmış tek MO model.',
+        col_widths=[3.8, 1.5, 3.0, 2.3, 2.5, 2.4]
     ),
     ('4.2. ROC Eğrileri Analizi', 'Heading 2'),
     ('Şekil 4.3\'te 11 modelin gerçek-tutulan kat tahminleriyle üretilen '
