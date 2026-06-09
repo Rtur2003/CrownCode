@@ -377,7 +377,7 @@ GIRIS = [
      'kısmı yalnızca belirli bir üreticiye özgü örnekler üzerinde başarılı '
      'olabilmektedir. Liu vd. [3] bu sorunun müzik tespitinin önündeki en büyük '
      'engel olduğunu vurgularken, Bhatt vd. [2] çapraz-üretici genellemenin '
-     'alanın açık problemi olmaya devam ettiğini ortaya koymuştur [2], [3].',
+     'alanın açık problemi olmaya devam ettiğini ortaya koymuştur.',
      'PARAGRAF METNİ'),
     ('Mevcut ticari sistemler şeffaf metodoloji sunmamaktadır. IRCAM Amplify '
      'yüksek doğruluk bildirmekle birlikte eğitim verisini kamuyla paylaşmamakta; '
@@ -394,7 +394,17 @@ GIRIS = [
      'birleştirildiğinde, uçtan uca derin öğrenme yaklaşımlarıyla rekabet edebilir '
      'bir yapay zekâ müziği tespit performansı sağlayabilir mi?',
      'PARAGRAF METNİ'),
-    ('Bu sorudan türetilen araştırma hedefleri şu şekilde belirlenmiştir: '
+    ('Bu temel sorudan dört alt araştırma sorusu türetilmiştir: '
+     '(AS-1) El ile tasarlanmış akustik öznitelikler, YZ müziğini insan '
+     'müziğinden ayırt etmek için yeterli ayrımcı güç sağlayabilir mi? '
+     '(AS-2) Farklı makine öğrenmesi ve derin öğrenme modelleri arasında '
+     'performans açısından hangi aile öne çıkmaktadır? '
+     '(AS-3) Hangi akustik öznitelikler YZ müziğinin tespitinde en belirleyici '
+     'rol oynamaktadır? '
+     '(AS-4) Geliştirilen sistem, gerçek zamanlı kullanım koşullarında '
+     'web, Android ve API platformlarında etkin biçimde çalışabilir mi?',
+     'PARAGRAF METNİ'),
+    ('Bu sorulardan türetilen araştırma hedefleri şu şekilde belirlenmiştir: '
      '(1) Beş kategoride 47 akustik öznitelikten oluşan, müziğe özgü ve '
      'yorumlanabilir bir öznitelik vektörü tasarlamak; '
      '(2) Sekiz farklı kaynaktan derlenen, 5.195 ses kaydı içeren, '
@@ -504,14 +514,14 @@ LITERATUR = [
     ('Yapay zekâ üretimi ses tespitine yönelik akademik çalışmalar, '
      'köken olarak konuşma sentezi ve ses derin sahteciliği alanından '
      'beslenmektedir. Bu alanda en temel kıyaslama veri kümesi, '
-     'Frank ve Schönherr (2021) tarafından derlenen WaveFake\'tir [7]; '
+     'Frank ve Schönherr [7] tarafından derlenen WaveFake\'tir; '
      'HiFi-GAN, MelGAN, WaveGlow ve benzeri yedi farklı vocoder '
      'mimarisinin çıktısını içermektedir.',
      'PARAGRAF METNİ'),
     ('Ses derin sahteciliği tespiti alanında düzenlenen ilk uluslararası '
      'yarışma olan ADD 2022 [8], üç farklı zorluk '
      'seviyesinde birleşik değerlendirme sağlamıştır. '
-     'Martín-Doñas ve Álvarez (2022) [9], yarışmada wav2vec2-base '
+     'Martín-Doñas ve Álvarez [9], yarışmada wav2vec2-base '
      'modelini doğrudan uygulayarak öznitelik mühendisliği gerektirmeden '
      'rekabetçi sonuçlar elde etmiştir; bu çalışma BM401 döneminin '
      'başlangıç ilham kaynağını oluşturmuştur. '
@@ -603,9 +613,9 @@ LITERATUR = [
         [
             ['IRCAM Amplify', 'Ticari API', 'Hayır', 'Hayır', 'Bilinmiyor', 'Yayımlanmadı'],
             ['Believe AI Radar', 'Ticari', 'Hayır', 'Hayır', 'Bilinmiyor', 'Yayımlanmadı'],
-            ['Segment Transformer [10]', 'Akademik', 'Evet', 'Hayır', 'Kısmi', '~0.91'],
-            ['Bhatt vd. [2]', 'Akademik', 'Evet', 'Hayır', 'Evet', 'Raporlanmadı'],
-            ['AURIS (bu çalışma)', 'Açık / Ücretsiz', 'Evet', 'SHAP', 'Evet (12+)', '0,9549'],
+            ['Segment Transformer [10]', 'Akademik', 'Evet', 'Hayır', 'Kısmi', '~%91'],
+            ['Afchar vd. [1]', 'Akademik', 'Evet', 'Kısmi', 'Hayır', '%86–91'],
+            ['AURIS (bu çalışma)', 'Açık / Ücretsiz', 'Evet', 'SHAP', 'Evet (12+)', '%88,4'],
         ],
         'Çizelge 2.1. Mevcut yapay zekâ müzik tespit sistemlerinin karşılaştırması.',
         col_widths=[3.8, 2.6, 2.8, 2.8, 2.4, 2.1]
@@ -1243,17 +1253,15 @@ BULGULAR = [
       'Şekil 4.5. LightGBM karışıklık matrisi (θ*=0,4316). Örnek sayısı ve sınıf yüzdesi gösterilmiştir.', 10.0),
     ('4.4.3. Kalibrasyon Analizi', 'Heading 3'),
     ('Şekil 4.6\'da LightGBM kalibrasyon eğrisi sunulmaktadır. '
-     'Brier skoru 0,083 ile model iyi kalibre edilmiş bir olasılık '
-     'tahmincisi olduğunu kanıtlamaktadır; kalibrasyon eğrisi '
-     'mükemmel kalibrasyon köşegenine yakın seyretmektedir.',
+     'LightGBM için Brier skoru 0,083 olarak hesaplanmıştır; '
+     'kalibrasyon eğrisi mükemmel kalibrasyon köşegenine yakın seyretmektedir.',
      'PARAGRAF METNİ'),
     F(f'{FIG}/paper_calibration.png',
       'Şekil 4.6. LightGBM kalibrasyon eğrisi. Brier skoru=0,0830, N=5.195 (5 katlı CV).', 12.0),
     ('4.4.4. Kesinlik-Duyarlılık Analizi', 'Heading 3'),
-    ('Şekil 4.7\'de LightGBM kesinlik-duyarlılık eğrisi (Ortalama Kesinlik '
-     'AP=0,9344) gösterilmektedir. Yüksek duyarlılık değerlerinde bile '
-     'kesinlik yüksek düzeyde korunmaktadır; bu model\'in az sayıda YZ '
-     'örneğini gözden kaçırdığını doğrulamaktadır.',
+    ('Şekil 4.7\'de LightGBM kesinlik-duyarlılık eğrisi sunulmaktadır. '
+     'Ortalama kesinlik (AP) 0,9344 olarak ölçülmüştür; '
+     'yüksek duyarlılık (≥0,90) değerlerinde kesinlik 0,85\'in üzerinde kalmaktadır.',
      'PARAGRAF METNİ'),
     F(f'{FIG}/paper_precision_recall.png',
       'Şekil 4.7. LightGBM kesinlik-duyarlılık eğrisi (AP=0,9344). Kesikli: baz sınıflandırıcı (0,401).', 12.0),
@@ -1430,19 +1438,20 @@ TARTISMA = [
      'oluşturmaktadır; insan müziği ise kayıt ortamı gürültüsü '
      've doğal performans varyasyonları nedeniyle daha geniş '
      'spektral düzlük aralığı sergilemektedir. '
-     'Afchar vd. ile paralel biçimde bu bulgu [1], '
+     'Afchar vd. [1] ile paralel biçimde bu bulgu, '
      'YZ sentez süreçlerinin tespit edilebilir "spektral iz" '
-     'bıraktığını kanıtlamaktadır [1].',
+     'bıraktığını kanıtlamaktadır.',
      'PARAGRAF METNİ'),
     ('5.4. Çapraz-Üretici Genelleme Kapasitesi', 'Heading 2'),
-    ('AIME veri kümesi 12 farklı YZ üretim mimarisini (Suno v3/v4/v5, '
-     'Udio, MusicGen, Stable Audio, Riffusion, AudioLDM2, Mustango, '
-     'JEN-1, MusicLDM, Tango) tek bir eğitim setinde barındırmaktadır. '
+    ('AIME veri kümesi 12 farklı YZ üretim platformu ve sürümünü '
+     '(Suno v3/v4/v5, Udio, MusicGen, Stable Audio, Riffusion, '
+     'AudioLDM2, Mustango, JEN-1, MusicLDM, Tango) '
+     'tek bir eğitim setinde barındırmaktadır. '
      'Bu çeşitlilik göz önünde bulundurulduğunda yüksek AUC değerleri, '
      '47 öznitelik temsilinin üretici-bağımsız artefaktları '
      'yakaladığına işaret etmektedir. '
      'Bhatt vd. [2] çapraz-üretici genellemenin alanın temel '
-     'açık problemi olduğunu vurgulamakta [2]; AURIS\'in çok '
+     'açık problemi olduğunu vurgulamaktadır; AURIS\'in çok '
      'üreticili eğitim stratejisi bu soruna doğrudan yanıt vermektedir.',
      'PARAGRAF METNİ'),
     ('5.5. Kaynak Bazlı Performans Yorumu', 'Heading 2'),
@@ -1524,8 +1533,9 @@ TARTISMA = [
     ('5.9. Skor Füzyonunun Rolü', 'Heading 2'),
     ('score_fusion.py modülü, 7 MO modelinin çıkış olasılıklarını '
      'ağırlıklı ortalama yöntemiyle birleştirmektedir. '
-     'Her modelin ağırlığı eğitim setindeki doğruluğuyla orantılıdır; '
-     'bu yaklaşım yüksek doğruluklu modellere (LightGBM, XGBoost) '
+     'Her modelin ağırlığı 5 katlı çapraz doğrulamada elde ettiği '
+     'ROC-AUC değeriyle orantılıdır; '
+     'bu yaklaşım yüksek performanslı modellere (LightGBM, XGBoost) '
      'daha fazla söz hakkı vermektedir. '
      'Füzyon stratejisinin tek LightGBM modeline kıyasla '
      'bireysel hatalı tahminleri yumuşattığı gözlemlenmiştir; '
@@ -1595,8 +1605,8 @@ SONUCLAR = [
     ('6.4. BM401\'den BM498\'e Teknolojik Yolculuk', 'Heading 2'),
     ('Bu projenin teknolojik gelişim süreci iki dönemde '
      'incelenebilir. '
-     'BM401 Bitirme Projesi I döneminde wav2vec2 büyük dil modelinin '
-     'öğrenilmiş temsilleri kullanılmış; '
+     'BM401 Bitirme Projesi I döneminde wav2vec2 öz-denetimli ses '
+     'gösterim modelinin öğrenilmiş gömme vektörleri kullanılmış; '
      'küçük veri kümesi ve sınırlı hesaplama kaynağıyla '
      'deneysel bir prototip oluşturulmuştur. '
      'BM498 döneminde ise yaklaşım köklü biçimde değiştirilmiştir: '
