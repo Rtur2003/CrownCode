@@ -1317,8 +1317,7 @@ BULGULAR = [
      '(8) rms_std: 0,0298, '
      '(9) beat_count: 0,0298, '
      '(10) mfcc_delta_var: 0,0289. '
-     'Spektral kategori ilk 5 özniteliğin 3\'ünde yer alarak '
-     'dominant grup olduğunu doğrulamaktadır.', 'PARAGRAF METNİ'),
+     'Spektral kategori ilk 5 öznitelik arasında 3 ile temsil edilmektedir.', 'PARAGRAF METNİ'),
     F(f'{FIG}/paper_feature_importance.png',
       'Şekil 4.8. LightGBM normalleştirilmiş kazanım öznitelik önemi — ilk yirmi öznitelik.', 13.5),
     ('4.5.2. SHAP Beeswarm Analizi', 'Heading 3'),
