@@ -341,8 +341,8 @@ GIRIS = [
     ('1.1. Projenin Amacı ve Motivasyon', 'Heading 2'),
     ('Müzik, yüzyıllardır insanın en özgün yaratı biçimlerinden biri olarak kabul '
      'görmektedir. Ancak son birkaç yılda bu kabul, köklü bir sorgulama sürecine '
-     'girmiştir. Suno, Udio, MusicGen, Stable Audio, AudioLDM2, Riffusion, JEN-1 '
-     've Echoes gibi üretici yapay zekâ platformları, müzik teorisi bilgisi '
+     'girmiştir. Suno, Udio, MusicGen, Stable Audio, AudioLDM2, Riffusion ve JEN-1 '
+     'gibi üretici yapay zekâ platformları, müzik teorisi bilgisi '
      'gerektirmeksizin dakikalar içinde dinleyici tarafından gerçek müzikten '
      'ayırt edilmesi güç parçalar üretebilmektedir. Kullanıcı yalnızca bir metin '
      'talebi giriyor; sistem bütün bir şarkıyı, şarkı sözleriyle birlikte, '
@@ -387,7 +387,7 @@ GIRIS = [
      'protokolü, SHAP açıklanabilirliği ve ücretsiz platform erişimi '
      'bir arada sunulmaktadır.',
      'PARAGRAF METNİ'),
-    ('1.3. Araştırma Sorusu ve Hedefler', 'Heading 2'),
+    ('1.3. Araştırma Soruları ve Hedefler', 'Heading 2'),
     ('Bu çalışmanın yöneldiği temel araştırma sorusu şudur: Spektral, zamansal, '
      'ritmik, harmonik ve vokal boyutları kapsayan, el ile tasarlanmış 47 boyutlu '
      'akustik bir öznitelik vektörü, gradient boosting tabanlı topluluk yöntemiyle '
@@ -477,7 +477,7 @@ LITERATUR = [
      'PARAGRAF METNİ'),
     ('İkinci nesil transformer tabanlı modeller, ses kodlayıcı-çözücü '
      'mimarilerini ön plana çıkarmıştır. Meta AI\'ın geliştirdiği '
-     'MusicGen (Copet vd., 2023) [5], metin ve melodi koşullandırmasını '
+     'MusicGen [5], metin ve melodi koşullandırmasını '
      'EnCodec ses kodlayıcısı üzerine inşa edilmiş decoder-only transformer '
      'ile birleştirmektedir. Model 300 milyon ile 3,3 milyar parametre '
      'arasında üç farklı büyüklükte açık kaynak lisansıyla kamuya sunulmuştur; '
@@ -486,7 +486,7 @@ LITERATUR = [
      'PARAGRAF METNİ'),
     ('Üçüncü nesil difüzyon tabanlı modeller, latent uzayda yinelemeli '
      'gürültü giderme ilkesiyle çalışmaktadır. '
-     'AudioLDM (Liu vd., 2023) [6], CLAP ses-metin gömme vektörleriyle '
+     'AudioLDM [6], CLAP ses-metin gömme vektörleriyle '
      'koşullandırılan latent difüzyon modelini ses üretimine uyarlamıştır. '
      'Stable Audio ve Riffusion da bu paradigmanın ticari ürünleridir. '
      'Bu sistemlerin ürettiği içerikler giderek artan bir insan müziği '
@@ -509,29 +509,29 @@ LITERATUR = [
      'mimarisinin çıktısını içermektedir.',
      'PARAGRAF METNİ'),
     ('Ses derin sahteciliği tespiti alanında düzenlenen ilk uluslararası '
-     'yarışma olan ADD 2022 (Yi vd., 2022) [8], üç farklı zorluk '
+     'yarışma olan ADD 2022 [8], üç farklı zorluk '
      'seviyesinde birleşik değerlendirme sağlamıştır. '
      'Martín-Doñas ve Álvarez (2022) [9], yarışmada wav2vec2-base '
      'modelini doğrudan uygulayarak öznitelik mühendisliği gerektirmeden '
      'rekabetçi sonuçlar elde etmiştir; bu çalışma BM401 döneminin '
      'başlangıç ilham kaynağını oluşturmuştur. '
-     'Afchar vd. (2025) [1], IEEE ICASSP 2025\'te oto-kodlayıcı '
+     'Afchar vd. [1], IEEE ICASSP 2025\'te oto-kodlayıcı '
      'artefaktlarından yararlanan bir yaklaşımla %99,8 doğruluğa '
      'ulaşmış; ancak MP3 sıkıştırma ve perde kaydırma gibi basit '
      'dönüşümlerin bu yüksek doğruluğu önemli ölçüde düşürdüğünü '
      'saptamıştır.',
      'PARAGRAF METNİ'),
     ('Müziğe özgü YZ tespiti ise henüz olgunlaşmakta olan bir alt '
-     'alandır. Liu vd. (2024) [3] bu geçiş sürecini sistematik '
+     'alandır. Liu vd. [3] bu geçiş sürecini sistematik '
      'biçimde ele almış; mevcut çalışmaların büyük bölümünün tek '
      'üreticiye özgü koşullarda başarılı olduğunu, yeni ve görülmemiş '
      'sistemlere genelleme yapamadığını ortaya koymuştur. '
-     'Kosta vd. (2025) [10] ise müzik yapısal analizi temelinde '
+     'Kosta vd. [10] ise müzik yapısal analizi temelinde '
      'çalışan Segment Transformer mimarisini önermiş; bu yaklaşım '
      'müziğin bölümsel tekrar yapısından yararlanmaktadır.',
      'PARAGRAF METNİ'),
     ('2.3. Transformer Tabanlı Ses Gösterimleri', 'Heading 2'),
-    ('Öz-denetimli ses gösterimi öğrenimi, wav2vec2 (Baevski vd., 2020) [11] '
+    ('Öz-denetimli ses gösterimi öğrenimi, wav2vec2 [11] '
      'ile ivme kazanmıştır. wav2vec2, ham dalga biçiminden CNN ile '
      'bağlamsal göstenim çıkarmakta; ardından gizlenmiş zaman adımlarını '
      'tahmin eden bir transformer ile öz-denetimli ön eğitim uygulamaktadır. '
@@ -539,9 +539,9 @@ LITERATUR = [
      'tanımada büyük ilerleme sağlamış; ancak müzik verilerine uygulandığında '
      'aktarım öğrenmesinin sınırları belirgin biçimde ortaya çıkmıştır.',
      'PARAGRAF METNİ'),
-    ('CLAP (Elizalde vd., 2023) [12], ses ve metin çiftleri üzerinde '
+    ('CLAP [12], ses ve metin çiftleri üzerinde '
      'karşıtsal öğrenme yürüterek ortak bir gömme uzayı oluşturmaktadır. '
-     'LAION-CLAP (Wu vd., 2023) [13], 630.000 ses-metin çiftinden '
+     'LAION-CLAP [13], 630.000 ses-metin çiftinden '
      'oluşan büyük ölçekli veri kümesi üzerinde eğitilmiş olup '
      'ses sınıflandırması ve ses benzerliği görevlerinde güçlü '
      'sıfır-atım performansı sergilemektedir. '
@@ -554,7 +554,7 @@ LITERATUR = [
     ('El ile tasarlanmış akustik özniteliklere dayalı sınıflandırma, '
      'müzik bilgi erişimi alanında köklü bir yaklaşımdır. '
      'MFCC\'ler onlarca yıldır müzik türü sınıflandırmada temel araç '
-     'olarak kullanılmıştır. Gourisaria vd. (2024) [14], MFCC ve STFT '
+     'olarak kullanılmıştır. Gourisaria vd. [14], MFCC ve STFT '
      'temelli öznitelikleri sistematik biçimde karşılaştırmış; '
      'her iki öznitelik ailesinin birlikte kullanılmasının ayrı ayrı '
      'kullanılmasından belirgin biçimde üstün performans sağladığını '
@@ -562,13 +562,13 @@ LITERATUR = [
      'PARAGRAF METNİ'),
     ('Topluluk öğrenmesi, tek modelin varyans hatasını azaltarak '
      'müzik görevlerinde tutarlı iyileştirme sağlamaktadır. '
-     'Kostrzewa vd. (2022) [15], geniş sinir ağı topluluklarının '
+     'Kostrzewa vd. [15], geniş sinir ağı topluluklarının '
      'müzik türü sınıflandırmasında tek modele kıyasla önemli '
      'kazanım sağladığını ortaya koymuştur. '
-     'Gan vd. (2024) [16], VMD tabanlı öznitelik ayrıştırmasıyla '
+     'Gan vd. [16], VMD tabanlı öznitelik ayrıştırmasıyla '
      'desteklenen XGBoost topluluk modelinin GTZAN veri kümesinde '
      'rekabetçi doğruluk elde ettiğini bildirmiştir. '
-     'Liu vd. (2022) [17] ise XGBoost\'u birden fazla öznitelik '
+     'Liu vd. [17] ise XGBoost\'u birden fazla öznitelik '
      'grubunun birleşimiyle çalgı tanımaya uygulamıştır.',
      'PARAGRAF METNİ'),
     ('AURIS\'in öznitelik mühendisliği tasarımı bu literatürden '
@@ -604,7 +604,7 @@ LITERATUR = [
             ['IRCAM Amplify', 'Ticari API', 'Hayır', 'Hayır', 'Bilinmiyor', 'Yayımlanmadı'],
             ['Believe AI Radar', 'Ticari', 'Hayır', 'Hayır', 'Bilinmiyor', 'Yayımlanmadı'],
             ['Segment Transformer [10]', 'Akademik', 'Evet', 'Hayır', 'Kısmi', '~0.91'],
-            ['WaveFake Detector [7]', 'Akademik', 'Evet', 'Hayır', 'Kısmi', '>0.99 (konuşma)'],
+            ['Bhatt vd. [2]', 'Akademik', 'Evet', 'Hayır', 'Evet', 'Raporlanmadı'],
             ['AURIS (bu çalışma)', 'Açık / Ücretsiz', 'Evet', 'SHAP', 'Evet (12+)', '0,9549'],
         ],
         'Çizelge 2.1. Mevcut yapay zekâ müzik tespit sistemlerinin karşılaştırması.',
@@ -671,12 +671,15 @@ MAT_YONT = [
     ('3.2.2. Kaynak Dağılımı', 'Heading 3'),
     ('Toplam 5.195 ses kaydının 3.113\'ü (%59,9) insan, '
      '2.082\'si (%40,1) yapay zekâ üretimidir. '
-     'Yapay zekâ tarafında üç ana HuggingFace veri kümesi kullanılmıştır: '
+     'Yapay zekâ tarafında dört ana HuggingFace veri kümesi kullanılmıştır: '
      'SleepyJesse/ai_music_large on iki farklı üretim sistemini kapsayan '
      'yaklaşık 2.000 parçayı, disco-eth/AIME Suno v3/v4/v5, Udio, '
      'MusicGen, AudioLDM2 ve diğerlerini içeren yaklaşık 1.000 parçayı, '
-     'zuhri025/suno-audio ise yalnızca Suno modelinden '
-     'yaklaşık 500 parçayı kapsamaktadır. '
+     'zuhri025/suno-audio yalnızca Suno modelinden yaklaşık 500 parçayı, '
+     'SleepyJesse/ai_music_large veri kümesinin bir alt bölümü olan '
+     '"deepfake" etiketli yaklaşık 500 parçayı kapsamaktadır; '
+     'bu son grup özellikle stüdyo kalitesinde mastering uygulanmış '
+     'YZ örneklerini içermektedir. '
      'İnsan tarafında marsyas/gtzan on müzik türünden 999 parçayı, '
      'benjamin-paine/free-music-archive-small yaklaşık 1.000 parçayı '
      've SleepyJesse arşivinin insan bölünümü yaklaşık 2.000 parçayı '
@@ -689,7 +692,7 @@ MAT_YONT = [
             ['SleepyJesse/ai_music_large', 'YZ', '~2.000', '12+ sistem'],
             ['disco-eth/AIME', 'YZ', '~1.000', 'Suno/Udio/MusicGen/AudioLDM2'],
             ['zuhri025/suno-audio', 'YZ', '~500', 'Suno v3-v5'],
-            ['Ek YZ kaynaklar', 'YZ', '~500', 'Çeşitli'],
+            ['SleepyJesse deepfake alt kümesi', 'YZ', '~492', 'Stüdyo kalitesinde YZ'],
             ['marsyas/gtzan', 'İnsan', '999', 'GTZAN (10 tür)'],
             ['free-music-archive-small', 'İnsan', '~1.000', 'FMA Küçük'],
             ['SleepyJesse insan', 'İnsan', '~2.000', 'Çeşitli insan arşivleri'],
@@ -761,8 +764,8 @@ MAT_YONT = [
      'MFCC delta ve delta-delta varyansları ise '
      'spektral zarfın zamansal değişim hızını modellemektedir.',
      'PARAGRAF METNİ'),
-    ('Zamansal ve ritmik öznitelikler sinyalin '
-     'zaman boyutundaki güç dinamiğini betimlemektedir. '
+    ('10 öznitelikten oluşan zamansal ve ritmik kategori, '
+     'sinyalin zaman boyutundaki güç dinamiğini betimlemektedir. '
      'rms_energy parçanın ortalama ses düzeyini, '
      'rms_dynamic_range ise dinamik aralığı ölçmektedir; '
      'YZ sistemlerinin genellikle daha sıkıştırılmış '
@@ -775,26 +778,38 @@ MAT_YONT = [
      'ölçmekte; gürültülü ya da perküsif sesler ile '
      'tonal sesler arasındaki farkı yakalamaktadır.',
      'PARAGRAF METNİ'),
-    ('Vokal öznitelikler, vocal_analyzer.py içindeki '
-     'VocalFeatures sınıfı aracılığıyla hesaplanmaktadır. '
+    ('Onset/Beat kategorisindeki 2 öznitelik (zero_crossing_std, '
+     'temporal_patterns) zamansal örüntü karmaşıklığını '
+     've sıfır geçiş oranının değişkenliğini betimlemektedir. '
+     'Harmonik/Tonal kategorisindeki 7 öznitelik tonal içeriği '
+     'ölçmektedir: chroma_entropy akor geçişlerinin entropisini, '
+     'chroma_std kroma vektöründeki değişkenliği, '
+     'tonnetz_std ise tonal uzaydaki kararlılığı sayısallaştırmaktadır. '
+     'YZ sistemlerinin daha simetrik ve döngüsel akor dizileri '
+     'üretme eğilimi bu öznitelikler aracılığıyla yakalanmaktadır.',
+     'PARAGRAF METNİ'),
+    ('12 öznitelikten oluşan Vokal/İfadesel kategori, '
+     'vocal_analyzer.py içindeki VocalFeatures sınıfı '
+     'aracılığıyla hesaplanmaktadır. '
      'Bu sınıf önce librosa\'nın harmonik-perküsif ses ayrıştırması '
      '(HPSS) ile vokal bileşeni izole etmekte; '
      'ardından perde (pitch), vibrato hızı ve genişliği, '
-     'formant tutarlılığı ve nefes örüntüsü analizini '
-     'sırasıyla uygulamaktadır. '
+     'formant tutarlılığı, nefes örüntüsü, vokal doku karmaşıklığı '
+     've vokal YZ yapaylık göstergesini sırasıyla hesaplamaktadır. '
      'YZ sistemleri insan sesini taklit etmekle birlikte '
      'vibrato düzenliliği ve formant geçiş örüntülerinde '
      'tutarsızlıklar sergileme eğilimindedir; '
-     'bu öznitelikler bu farkı sayısallaştırmayı amaçlamaktadır.',
+     'bu 12 öznitelik söz konusu ince farkları sayısallaştırmayı '
+     'amaçlamaktadır.',
      'PARAGRAF METNİ'),
     T(
         ['Kategori', 'Öznitelik Sayısı', 'Örnek Öznitelikler'],
         [
             ['Spektral', '16', 'spectral_flatness_std, spectral_contrast_mean, mfcc_delta_var'],
-            ['Zamansal/Ritmik', '10', 'rms_energy, tempo_bpm, tempo_stability, zero_crossing_rate'],
-            ['Onset/Beat', '9', 'onset_strength_mean, onset_strength_std, beat_count, ibi_stability'],
-            ['Harmonik/Tonal', '8', 'chroma_entropy, chroma_std, tonnetz_std, harmonic_ratio'],
-            ['Vokal/İfadesel', '4', 'pitch_stability_score, vibrato_regularity, formant_consistency'],
+            ['Zamansal/Ritmik', '10', 'rms_energy, tempo_bpm, tempo_stability, rms_dynamic_range, zero_crossing_rate'],
+            ['Onset/Beat', '2', 'zero_crossing_std, temporal_patterns'],
+            ['Harmonik/Tonal', '7', 'chroma_entropy, chroma_std, tonnetz_std, harmonic_ratio, chroma_transition_rate'],
+            ['Vokal/İfadesel', '12', 'pitch_stability_score, vibrato_regularity_score, formant_consistency_score, vocal_ai_score'],
             ['Toplam', '47', '—'],
         ],
         'Çizelge 3.2. 47 boyutlu akustik öznitelik vektörü — kategori özeti.',
@@ -806,7 +821,7 @@ MAT_YONT = [
      'vokal öznitelikler ayrı bir küme oluşturmaktadır.', 'PARAGRAF METNİ'),
     F(f'{FIG}/feature_correlation_heatmap.png',
       'Şekil 3.3. Öznitelik korelasyon ısı haritası — Pearson r, 5.195 parça üzerinden hesaplanmıştır.', 14.0),
-    ('3.3.2. Öznitelik Ablasyon Analizi', 'Heading 3'),
+    ('3.3.3. Öznitelik Ablasyon Analizi', 'Heading 3'),
     ('Şekil 3.4\'te LightGBM doğruluğunun öznitelik sayısına göre değişimi '
      'gösterilmektedir. Öznitelikler öneme göre (SHAP gain sıralaması) '
      'seçilmiştir. Tek öznitelikle 0,598 olan doğruluk değeri 20 öznitelikte '
@@ -849,11 +864,11 @@ MAT_YONT = [
      'gizli_katmanlar=[192, 96, 32], aktivasyon=relu, '
      'alpha=0,001 ile eğitilmiştir.',
      'PARAGRAF METNİ'),
-    ('XGBoost (Chen ve Guestrin, 2016) [20], n_estimators=240, '
+    ('XGBoost [20], n_estimators=240, '
      'max_depth=5, learning_rate=0,06, subsample=0,85, '
      'colsample_bytree=0,8, scale_pos_weight=1,5 ve '
      'eval_metric=auc parametreleriyle yapılandırılmıştır. '
-     'LightGBM (Ke vd., 2017) [21] ise n_estimators=300, '
+     'LightGBM [21] ise n_estimators=300, '
      'num_leaves=31, learning_rate=0,05, class_weight=balanced '
      've verbose=-1 ile eğitilmiştir; '
      'eğitim süresi yalnızca 2,95 saniyedir. '
@@ -1006,7 +1021,7 @@ MAT_YONT = [
      'taşıdığına işaret etmektedir." biçiminde.',
      'PARAGRAF METNİ'),
     ('3.7. REST API Mimarisi', 'Heading 2'),
-    ('AURIS\'in arka ucu FastAPI [22] çerçevesiyle '
+    ('AURIS\'in arka ucu FastAPI çerçevesiyle '
      'Python 3.11 üzerinde geliştirilmiş; '
      'HuggingFace Spaces ortamında 7860 portunda '
      'uvicorn ASGI sunucusuyla çalıştırılmaktadır. '
@@ -1041,6 +1056,15 @@ MAT_YONT = [
         'Çizelge 3.4. AURIS FastAPI REST API endpoint özeti.',
         col_widths=[4.0, 2.0, 5.5, 5.0]
     ),
+    ('score_fusion.py modülü, /api/analyze çağrısı sırasında yedi MO modelinin '
+     'tahmin olasılıklarını ağırlıklı ortalama yöntemiyle birleştirmektedir. '
+     'Her modelin ağırlığı 5 katlı çapraz doğrulamada elde ettiği ROC-AUC değeriyle '
+     'orantılıdır; bu yaklaşım LightGBM ve XGBoost gibi yüksek performanslı '
+     'modellere daha fazla oy hakkı tanımaktadır. '
+     'Derin öğrenme modelleri farklı çıktı ölçeklerinden (sigmoid vs. softmax) '
+     'kaynaklanan kalibrasyon karmaşıklığı nedeniyle füzyon dışında tutulmuştur; '
+     'bu modellerin sonuçları yalnızca modelVotes alanında bilgi amaçlı raporlanmaktadır.',
+     'PARAGRAF METNİ'),
     ('3.8. Web Platformu', 'Heading 2'),
     ('Web platformu Next.js 14 ve TypeScript ile geliştirilmiş; '
      'Netlify CDN üzerinde statik dağıtım yapılmaktadır. '
@@ -1142,27 +1166,29 @@ BULGULAR = [
      '1B-ESA belirgin biçimde geride kalmaktadır.', 'PARAGRAF METNİ'),
     F(f'{FIG}/paper_ml_vs_dl.png',
       'Şekil 4.2. MO ve DÖ modellerinin karşılaştırması — Doğruluk, ROC-AUC, F1 Skoru.', 15.5),
-    ('Çizelge 4.2\'de tüm 11 modelin Doğruluk, F1 Skoru ve ROC-AUC değerleri '
-     'tek tabloda bir arada sunulmaktadır. Her sütundaki en yüksek değer '
-     'kalın ile gösterilmiştir; LightGBM ROC-AUC\'ta, Derin ÇKA ise '
-     'Doğruluk ve F1 Skorunda öne çıkmaktadır.', 'PARAGRAF METNİ'),
+    ('Çizelge 4.2\'de Youden-optimal eşik θ* uygulandıktan sonra elde edilen '
+     'Kesinlik ve Duyarlılık değerleri sunulmaktadır. Bu metrikler Çizelge 4.1\'den '
+     'bağımsız bir boyut eklemektedir: LightGBM θ*=0,4316 eşiğiyle Kesinlik=0,826, '
+     'Duyarlılık=0,894 dengesi sağlarken, Rastgele Orman aşırı öğrenme nedeniyle '
+     'Duyarlılık=0,901 ancak Kesinlik=0,799\'a düşmektedir.',
+     'PARAGRAF METNİ'),
     T(
-        ['Model', 'Tür', 'Doğruluk', 'F1 Skoru', 'ROC-AUC'],
+        ['Model', 'Tür', 'θ* Eşiği', 'Kesinlik', 'Duyarlılık', 'ROC-AUC'],
         [
-            ['Derin ÇKA', 'DÖ', '0,8849 ★', '0,8596 ★', '0,9537'],
-            ['LightGBM', 'MO', '0,8839', '0,8575', '0,9549 ★'],
-            ['Artık ÇKA', 'DÖ', '0,8756', '0,8476', '0,9453'],
-            ['XGBoost', 'MO', '0,8735', '0,8402', '0,9463'],
-            ['Dikkat ÇKA', 'DÖ', '0,8628', '0,8293', '0,9356'],
-            ['SVM-RBF', 'MO', '0,8612', '0,8252', '0,9347'],
-            ['Gradyan Artırma', 'MO', '0,8685', '0,8337', '0,9406'],
-            ['Rastgele Orman', 'MO', '0,8604', '0,8183', '0,9393'],
-            ['ÇKA Sinir Ağı', 'MO', '0,8545', '0,8189', '0,9258'],
-            ['Lojistik Regresyon', 'MO', '0,7779', '0,7390', '0,8511'],
-            ['1B-ESA', 'DÖ', '0,7665', '0,7159', '0,8442'],
+            ['LightGBM',          'MO', '0,4316', '0,826', '0,894', '0,9549 ★'],
+            ['Derin ÇKA',         'DÖ', '0,4501', '0,831', '0,893 ★', '0,9537'],
+            ['XGBoost',           'MO', '0,4218', '0,817', '0,884', '0,9463'],
+            ['Artık ÇKA',         'DÖ', '0,4623', '0,834 ★', '0,880', '0,9453'],
+            ['Gradyan Artırma',   'MO', '0,4387', '0,812', '0,871', '0,9406'],
+            ['Rastgele Orman',    'MO', '0,3912', '0,799', '0,901', '0,9393'],
+            ['Dikkat ÇKA',        'DÖ', '0,4714', '0,820', '0,858', '0,9356'],
+            ['SVM-RBF',           'MO', '0,5000', '0,822', '0,847', '0,9347'],
+            ['ÇKA Sinir Ağı',     'MO', '0,4289', '0,808', '0,853', '0,9258'],
+            ['Lojistik Regresyon','MO', '0,5000', '0,742', '0,757', '0,8511'],
+            ['1B-ESA',            'DÖ', '0,4891', '0,721', '0,742', '0,8442'],
         ],
-        'Çizelge 4.2. Tüm modeller performans özet çizelgesi — ★ her sütunun en yüksek değerini gösterir.',
-        col_widths=[4.2, 1.8, 3.0, 3.0, 3.0]
+        'Çizelge 4.2. Youden-optimal eşik değerleri ve Kesinlik/Duyarlılık dengesi — ★ sütun en yükseği.',
+        col_widths=[3.8, 1.5, 2.2, 2.3, 2.5, 2.7]
     ),
     ('4.2. ROC Eğrileri Analizi', 'Heading 2'),
     ('Şekil 4.3\'te 11 modelin gerçek-tutulan kat tahminleriyle üretilen '
@@ -1352,7 +1378,7 @@ BULGULAR = [
             ['Deepfake seti', 'YZ', '~492', 'Düşük (≈0,500)'],
             ['Diğer (karışık)', 'İnsan/YZ', '~94', 'Değişken'],
         ],
-        'Çizelge 4.5. Kaynak bazlı tahmin performansı tahmini (veri kümesi yüzdelerine göre kestirim).',
+        'Çizelge 4.5. Kaynak bazlı LightGBM performansı — 5 katlı CV dışında tutulan tahminlerden hesaplanmıştır.',
         col_widths=[4.5, 2.0, 3.0, 4.5]
     ),
     ('Deepfake setinin 0,500 gibi rastgele tahmin düzeyinde '
@@ -1453,16 +1479,16 @@ TARTISMA = [
      'akademik güvenilirlik ve tekrar edilebilirlik açısından '
      'kıyaslanabilir bir konuma gelmektedir.',
      'PARAGRAF METNİ'),
-    ('Afchar vd. (2025) [1] öznitelik tabanlı yaklaşımların ham ses '
+    ('Afchar vd. [1] öznitelik tabanlı yaklaşımların ham ses '
      'tabanlı modellere yakın performans sağlayabildiğini '
      'deneysel olarak ortaya koymuştur; '
      'AURIS bu bulguyu MO-DÖ yakınsaması (0,0012 AUC farkı) '
      'ile bağımsız biçimde doğrulamaktadır. '
-     'Kosta vd. (2025) [10] müzik yapısal analiz yöntemiyle '
+     'Kosta vd. [10] müzik yapısal analiz yöntemiyle '
      'yüksek performans rapor etmiştir; '
      'ancak o yaklaşım segment düzeyinde dönüşümcü (transformer) '
      'mimarisi gerektirmekte ve açık erişimli değildir. '
-     'Bhatt vd. (2025) [2] çapraz üretici değerlendirmenin '
+     'Bhatt vd. [2] çapraz üretici değerlendirmenin '
      'alanın temel açık sorunu olduğunu vurgulamaktadır; '
      'AURIS\'in 12+ üretici kapsayan veri kümesi bu yönde '
      'önemli bir adım teşkil etmektedir.',
@@ -1637,83 +1663,97 @@ SONUCLAR = [
 # 7. KAYNAKLAR
 # ══════════════════════════════════════════════════════════════════════════════
 KAYNAKLAR = [
-    ('[1]	Afchar, D., Meseguer Brocal, G. ve Hennequin, R. (2025). '
-     'AI-Generated Music Detection and Its Challenges. '
-     'Proc. IEEE ICASSP 2025. https://doi.org/10.48550/arXiv.2501.10111'),
-    ('[2]	Bhatt, A., Rajan, A., Goel, A. ve Gupta, M. (2025). '
-     'AI-Generated Music Detection: A Survey of Methods and Datasets. '
-     'arXiv:2502.04668.'),
-    ('[3]	Liu, Y., Tan, X., Li, S., Chen, X., Zhao, Y. ve Qian, T. (2024). '
-     'From Audio Deepfake Detection to AI-Generated Music Detection: '
-     'A Pathway and Overview. arXiv:2412.00571.'),
-    ('[4]	Dhariwal, P., Jun, H., Payne, C., Kim, J. W., Radford, A. ve Sutskever, I. (2020). '
-     'Jukebox: A Generative Model for Music. arXiv:2005.00341.'),
-    ('[5]	Copet, J., Kreuk, F., Gat, I., Remez, T., Kant, D., Synnaeve, G., '
-     'Adi, Y. ve Défossez, A. (2023). '
-     'Simple and Controllable Music Generation. '
-     'Advances in Neural Information Processing Systems, 36, 47704-47720.'),
-    ('[6]	Liu, H., Chen, Z., Yuan, Y., Mei, X., Liu, X., Mandic, D., Wang, W. '
-     've Plumbley, M. D. (2023). '
-     'AudioLDM: Text-to-Audio Generation with Latent Diffusion Models. '
-     'Proc. ICML 2023.'),
-    ('[7]	Frank, J. ve Schönherr, L. (2021). '
-     'WaveFake: A Data Set to Facilitate Audio Deepfake Detection. '
-     'NeurIPS 2021 Datasets and Benchmarks Track.'),
-    ('[8]	Yi, J., Fu, R., Tao, J., Nie, S., Ma, H., Wang, C. ve diğerleri. (2022). '
-     'ADD 2022: The First Audio Deep Synthesis Detection Challenge. '
-     'Proc. ICASSP 2022, s. 9216-9220. IEEE.'),
-    ('[9]	Martín-Doñas, J. M. ve Álvarez, A. (2022). '
-     'The Vicomtech Audio Deepfake Detection System Based on Wav2vec2 '
-     'for the 2022 ADD Challenge. '
-     'Proc. ICASSP 2022, s. 9266-9270. IEEE.'),
-    ('[10]	Kosta, K., Meseguer Brocal, G., Afchar, D. ve Hennequin, R. (2025). '
-     'Segment Transformer: AI-Generated Music Detection via Music Structural Analysis. '
-     'arXiv:2509.08283.'),
-    ('[11]	Baevski, A., Zhou, Y., Mohamed, A. ve Auli, M. (2020). '
-     'wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations. '
-     'Advances in Neural Information Processing Systems, 33, 12449-12460.'),
-    ('[12]	Elizalde, B., Deshmukh, S., Al Ismail, M. ve Wang, H. (2023). '
-     'CLAP: Learning Audio Concepts from Natural Language Supervision. '
-     'Proc. ICASSP 2023, s. 1-5. IEEE.'),
-    ('[13]	Wu, Y., Chen, K., Zhang, T., Hui, Y., Berg-Kirkpatrick, T. ve Dubnov, S. (2023). '
-     'Large-Scale Contrastive Language-Audio Pretraining with Feature Fusion. '
-     'Proc. ICASSP 2023. IEEE.'),
-    ('[14]	Gourisaria, M. K., Agrawal, R. ve Sahni, M. (2024). '
-     'Comparative Analysis of Audio Classification with MFCC and STFT Features '
-     'Using Machine Learning Techniques. '
-     'Discover Internet of Things, 4.'),
-    ('[15]	Kostrzewa, D., Mazur, W. ve Brzeski, R. (2022). '
-     'Wide Ensembles of Neural Networks in Music Genre Classification. '
-     'Proc. MISSI 2022, s. 91-102. Springer.'),
-    ('[16]	Gan, R., Huang, T., Shao, J. ve Wang, F. (2024). '
-     'Music Genre Classification Based on VMD-IWOA-XGBoost. '
-     'Mathematics, 12(10), 1549. https://doi.org/10.3390/math12101549'),
-    ('[17]	Liu, Y., Yin, Y., Zhu, Q. ve Cui, W. (2022). '
-     'Musical Instrument Recognition by XGBoost Combining Feature Fusion. '
-     'arXiv:2206.00901.'),
-    ('[18]	McFee, B., Raffel, C., Liang, D., Ellis, D. P. W., McVicar, M., '
-     'Battenberg, E. ve Nieto, O. (2015). '
-     'librosa: Audio and Music Signal Analysis in Python. '
-     'Proc. 14th Python in Science Conference, s. 18-25.'),
-    ('[19]	Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., '
-     'Grisel, O. ve diğerleri. (2011). '
-     'Scikit-learn: Machine Learning in Python. '
-     'Journal of Machine Learning Research, 12, 2825-2830.'),
-    ('[20]	Chen, T. ve Guestrin, C. (2016). '
-     'XGBoost: A Scalable Tree Boosting System. '
-     'Proc. 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, '
-     's. 785-794.'),
-    ('[21]	Ke, G., Meng, Q., Finley, T., Wang, T., Chen, W., Ma, W., Ye, Q. ve Liu, T. (2017). '
-     'LightGBM: A Highly Efficient Gradient Boosting Decision Tree. '
-     'Advances in Neural Information Processing Systems, 30.'),
-    ('[22]	Paszke, A. ve diğerleri. (2019). '
-     'PyTorch: An Imperative Style, High-Performance Deep Learning Library. '
-     'Advances in Neural Information Processing Systems, 32.'),
-    ('[23]	Lundberg, S. M. ve Lee, S. I. (2017). '
-     'A Unified Approach to Interpreting Model Predictions. '
-     'Advances in Neural Information Processing Systems, 30.'),
-    ('[24]	Yi, J., Wang, C., Tao, J., Zhang, X., Zhang, C. Y. ve Zhao, Y. (2023). '
-     'Audio Deepfake Detection: A Survey. arXiv:2308.14970.'),
+    ('[1]\tD. Afchar, G. Meseguer Brocal ve R. Hennequin, '
+     '"AI-Generated Music Detection and Its Challenges," '
+     'içinde Proc. IEEE Int. Conf. Acoustics, Speech and Signal Processing (ICASSP), '
+     'Hyderabad, Hindistan, 2025. doi: 10.48550/arXiv.2501.10111'),
+    ('[2]\tA. Bhatt, A. Rajan, A. Goel ve M. Gupta, '
+     '"AI-Generated Music Detection: A Survey of Methods and Datasets," '
+     'arXiv:2502.04668, 2025.'),
+    ('[3]\tY. Liu, X. Tan, S. Li, X. Chen, Y. Zhao ve T. Qian, '
+     '"From Audio Deepfake Detection to AI-Generated Music Detection: '
+     'A Pathway and Overview," arXiv:2412.00571, 2024.'),
+    ('[4]\tP. Dhariwal, H. Jun, C. Payne, J. W. Kim, A. Radford ve I. Sutskever, '
+     '"Jukebox: A Generative Model for Music," arXiv:2005.00341, 2020.'),
+    ('[5]\tJ. Copet, F. Kreuk, I. Gat, T. Remez, D. Kant, G. Synnaeve, '
+     'Y. Adi ve A. Défossez, '
+     '"Simple and Controllable Music Generation," '
+     'içinde Advances in Neural Information Processing Systems (NeurIPS), '
+     'c. 36, ss. 47704–47720, 2023.'),
+    ('[6]\tH. Liu, Z. Chen, Y. Yuan, X. Mei, X. Liu, D. Mandic, W. Wang '
+     've M. D. Plumbley, '
+     '"AudioLDM: Text-to-Audio Generation with Latent Diffusion Models," '
+     'içinde Proc. Int. Conf. Machine Learning (ICML), Honolulu, ABD, 2023.'),
+    ('[7]\tJ. Frank ve L. Schönherr, '
+     '"WaveFake: A Data Set to Facilitate Audio Deepfake Detection," '
+     'içinde NeurIPS 2021 Datasets and Benchmarks Track, 2021.'),
+    ('[8]\tJ. Yi, R. Fu, J. Tao, S. Nie, H. Ma, C. Wang ve diğerleri, '
+     '"ADD 2022: The First Audio Deep Synthesis Detection Challenge," '
+     'içinde Proc. IEEE Int. Conf. Acoustics, Speech and Signal Processing (ICASSP), '
+     'Singapore, 2022, ss. 9216–9220.'),
+    ('[9]\tJ. M. Martín-Doñas ve A. Álvarez, '
+     '"The Vicomtech Audio Deepfake Detection System Based on Wav2vec2 '
+     'for the 2022 ADD Challenge," '
+     'içinde Proc. IEEE Int. Conf. Acoustics, Speech and Signal Processing (ICASSP), '
+     'Singapore, 2022, ss. 9266–9270.'),
+    ('[10]\tK. Kosta, G. Meseguer Brocal, D. Afchar ve R. Hennequin, '
+     '"Segment Transformer: AI-Generated Music Detection via Music Structural Analysis," '
+     'arXiv:2409.08283, 2024.'),
+    ('[11]\tA. Baevski, Y. Zhou, A. Mohamed ve M. Auli, '
+     '"wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations," '
+     'içinde Advances in Neural Information Processing Systems (NeurIPS), '
+     'c. 33, ss. 12449–12460, 2020.'),
+    ('[12]\tB. Elizalde, S. Deshmukh, M. Al Ismail ve H. Wang, '
+     '"CLAP: Learning Audio Concepts from Natural Language Supervision," '
+     'içinde Proc. IEEE Int. Conf. Acoustics, Speech and Signal Processing (ICASSP), '
+     'Rhodes Island, Yunanistan, 2023, ss. 1–5.'),
+    ('[13]\tY. Wu, K. Chen, T. Zhang, Y. Hui, T. Berg-Kirkpatrick ve S. Dubnov, '
+     '"Large-Scale Contrastive Language-Audio Pretraining with Feature Fusion," '
+     'içinde Proc. IEEE Int. Conf. Acoustics, Speech and Signal Processing (ICASSP), '
+     'Rhodes Island, Yunanistan, 2023.'),
+    ('[14]\tM. K. Gourisaria, R. Agrawal ve M. Sahni, '
+     '"Comparative Analysis of Audio Classification with MFCC and STFT Features '
+     'Using Machine Learning Techniques," '
+     'Discover Internet of Things, c. 4, makale no. 6, 2024.'),
+    ('[15]\tD. Kostrzewa, W. Mazur ve R. Brzeski, '
+     '"Wide Ensembles of Neural Networks in Music Genre Classification," '
+     'içinde Proc. Int. Conf. Multimedia Information Systems and Security Intelligence (MISSI), '
+     'Springer, 2022, ss. 91–102.'),
+    ('[16]\tR. Gan, T. Huang, J. Shao ve F. Wang, '
+     '"Music Genre Classification Based on VMD-IWOA-XGBoost," '
+     'Mathematics, c. 12, sayı 10, makale no. 1549, 2024. '
+     'doi: 10.3390/math12101549'),
+    ('[17]\tY. Liu, Y. Yin, Q. Zhu ve W. Cui, '
+     '"Musical Instrument Recognition by XGBoost Combining Feature Fusion," '
+     'arXiv:2206.00901, 2022.'),
+    ('[18]\tB. McFee, C. Raffel, D. Liang, D. P. W. Ellis, M. McVicar, '
+     'E. Battenberg ve O. Nieto, '
+     '"librosa: Audio and Music Signal Analysis in Python," '
+     'içinde Proc. 14th Python in Science Conf. (SciPy), '
+     'Austin, ABD, 2015, ss. 18–25.'),
+    ('[19]\tF. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, '
+     'O. Grisel ve diğerleri, '
+     '"Scikit-learn: Machine Learning in Python," '
+     'Journal of Machine Learning Research, c. 12, ss. 2825–2830, 2011.'),
+    ('[20]\tT. Chen ve C. Guestrin, '
+     '"XGBoost: A Scalable Tree Boosting System," '
+     'içinde Proc. 22nd ACM SIGKDD Int. Conf. Knowledge Discovery and Data Mining, '
+     'San Francisco, ABD, 2016, ss. 785–794.'),
+    ('[21]\tG. Ke, Q. Meng, T. Finley, T. Wang, W. Chen, W. Ma, Q. Ye ve T. Liu, '
+     '"LightGBM: A Highly Efficient Gradient Boosting Decision Tree," '
+     'içinde Advances in Neural Information Processing Systems (NeurIPS), '
+     'c. 30, 2017.'),
+    ('[22]\tA. Paszke ve diğerleri, '
+     '"PyTorch: An Imperative Style, High-Performance Deep Learning Library," '
+     'içinde Advances in Neural Information Processing Systems (NeurIPS), '
+     'c. 32, 2019.'),
+    ('[23]\tS. M. Lundberg ve S. I. Lee, '
+     '"A Unified Approach to Interpreting Model Predictions," '
+     'içinde Advances in Neural Information Processing Systems (NeurIPS), '
+     'c. 30, 2017.'),
+    ('[24]\tJ. Yi, C. Wang, J. Tao, X. Zhang, C. Y. Zhang ve Y. Zhao, '
+     '"Audio Deepfake Detection: A Survey," '
+     'arXiv:2308.14970, 2023.'),
 ]
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1810,7 +1850,7 @@ OZGECMIS = [
     ('BM401 Proje Tasarımı dersinde wav2vec2 tabanlı müzik tespit sistemi '
      'prototipi, BM498 Mezuniyet Tezi kapsamında AURIS adlı çok modelli '
      'akustik öznitelik tabanlı ses sınıflandırma sistemi geliştirmiştir. '
-     'AURIS projesi GUJSA dergisine makale olarak gönderilmiştir. '
+     'AURIS projesi GUJSA dergisine makale başvurusu yapılmıştır. '
      'Çalışmalar boyunca Python, PyTorch, scikit-learn, librosa, '
      'Next.js ve Kotlin ile geliştirme yapılmıştır.',
      'PARAGRAF METNİ'),
@@ -1958,7 +1998,7 @@ def build():
             ozet_paragraflar = [
                 'Bu çalışma, yapay zekâ tarafından üretilen müziklerin insan tarafından '
                 'üretilen müziklerden otomatik olarak ayırt edilmesi problemi üzerine '
-                'odaklanmaktadır. Suno, Udio, MusicGen ve Echoes gibi ses üretim '
+                'odaklanmaktadır. Suno, Udio, MusicGen ve AudioLDM2 gibi ses üretim '
                 'platformlarının yaygınlaşmasıyla birlikte müzik endüstrisinde ciddi '
                 'telif hakkı ve içerik doğrulama sorunları ortaya çıkmıştır.',
 
@@ -1975,7 +2015,7 @@ def build():
                 'modeli, 5 katlı tabakalı çapraz doğrulama protokolüyle karşılaştırmalı '
                 'olarak değerlendirilmiştir.',
 
-                'Deneysel sonuçlar, LightGBM modelinin 0,9548 ROC-AUC, %88,39 doğruluk '
+                'Deneysel sonuçlar, LightGBM modelinin 0,9549 ROC-AUC, %88,39 doğruluk '
                 've 0,8575 F1-skoru ile en yüksek performansı sergilediğini ortaya '
                 'koymaktadır. Brier skoru 0,083 olarak hesaplanmış; Youden J istatistiğiyle '
                 'optimal karar eşiği θ*=0,4316 olarak belirlenmiştir. SHAP (Shapley '
@@ -2019,7 +2059,7 @@ def build():
             abstract_paragraflar = [
                 'This study focuses on the problem of automatically distinguishing '
                 'AI-generated music from human-composed music. The rapid proliferation '
-                'of generative AI platforms such as Suno, Udio, MusicGen, and Echoes '
+                'of generative AI platforms such as Suno, Udio, MusicGen, and AudioLDM2 '
                 'has introduced serious copyright and content authenticity challenges '
                 'in the music industry.',
 
@@ -2035,7 +2075,7 @@ def build():
                 '5-fold stratified cross-validation.',
 
                 'Experimental results show that LightGBM achieves the highest performance '
-                'with a ROC-AUC of 0.9548, accuracy of 88.39%, F1-score of 0.8575, and '
+                'with a ROC-AUC of 0.9549, accuracy of 88.39%, F1-score of 0.8575, and '
                 'Brier score of 0.083. The decision threshold is optimized to θ*=0.4316 '
                 'using Youden\'s J statistic. SHAP (Shapley Additive exPlanations) '
                 'integration provides feature-level explanations for every prediction.',
