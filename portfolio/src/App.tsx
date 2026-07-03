@@ -8,6 +8,13 @@ import { GLScene } from './gl/GLScene';
 
 const CROWNCODE_PROJECTS: Project[] = [
   {
+    id: 'noir-grain',
+    title: 'Noir & Grain',
+    category: 'Fine Dining / WebGL Template',
+    year: '2026',
+    imageUrl: '/images/noir-grain.jpg',
+  },
+  {
     id: 'auris',
     title: 'AURIS Engine',
     category: 'AI / Deep Learning',
