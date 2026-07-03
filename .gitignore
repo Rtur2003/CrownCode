@@ -157,6 +157,8 @@ docs/academic/paper/*.docx
 docs/academic/paper/*.pdf
 docs/academic/paper/deliverables/
 docs/academic/paper/_*.docx
+docs/academic/TeslimEdilecekler/
+*.rar
 
 # Temp/archive notes
 docs/notes/archive/
