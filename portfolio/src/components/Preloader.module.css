@@ -1,0 +1,21 @@
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--color-background);
+  z-index: var(--z-preloader);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--space-2xl);
+}
+
+.counter h1 {
+  font-size: var(--text-display);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+  overflow: hidden;
+}

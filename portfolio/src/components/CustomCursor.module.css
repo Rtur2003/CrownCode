@@ -1,0 +1,36 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--color-text-primary);
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  transform: translate(-50%, -50%); /* Centering */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: exclusion;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.cursorText {
+  color: var(--color-background);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+@media (pointer: coarse) {
+  .cursor {
+    display: none;
+  }
+}
