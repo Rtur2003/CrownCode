@@ -6,34 +6,34 @@ import { NoiseBackground } from './components/NoiseBackground';
 import { ProjectList, type Project } from './components/ProjectList';
 import { GLScene } from './gl/GLScene';
 
-const DUMMY_PROJECTS: Project[] = [
+const CROWNCODE_PROJECTS: Project[] = [
   {
-    id: '1',
-    title: 'Aethelgard',
-    category: 'E-Commerce / WebGL',
+    id: 'auris',
+    title: 'AURIS Engine',
+    category: 'AI / Deep Learning',
     year: '2026',
-    imageUrl: 'https://picsum.photos/id/10/1024/1024',
+    imageUrl: '/images/auris.png',
   },
   {
-    id: '2',
-    title: 'Nova Sync',
-    category: 'SaaS Platform',
+    id: 'dreams',
+    title: 'Crown Dreams',
+    category: 'Neural Journal / AI',
     year: '2025',
-    imageUrl: 'https://picsum.photos/id/20/1024/1024',
+    imageUrl: '/images/dreams.png',
   },
   {
-    id: '3',
-    title: 'Oasis AI',
-    category: 'Artificial Intelligence',
+    id: 'commend',
+    title: 'Crown Commend',
+    category: 'GenAI / Automation',
     year: '2026',
-    imageUrl: 'https://picsum.photos/id/30/1024/1024',
+    imageUrl: '/images/commend.png',
   },
   {
-    id: '4',
-    title: 'Lumina',
-    category: 'Brand Identity',
+    id: 'vote',
+    title: 'VOTRYX',
+    category: 'Selenium / Automation',
     year: '2024',
-    imageUrl: 'https://picsum.photos/id/40/1024/1024',
+    imageUrl: '/images/vote.png',
   }
 ];
 
@@ -54,8 +54,8 @@ function App() {
       <SmoothScroll>
         <main className="container" style={{ paddingTop: '20vh', minHeight: '200vh' }}>
           <header style={{ marginBottom: '10vh' }}>
-            <h1 style={{ fontSize: 'var(--text-display)', maxWidth: '800px', lineHeight: 1 }}>
-              Creative Developer & Interactive Designer.
+            <h1 style={{ fontSize: 'var(--text-display)', maxWidth: '900px', lineHeight: 1 }}>
+              Engineering Intelligence &amp; Crafting Digital Experiences.
             </h1>
           </header>
           
@@ -64,7 +64,7 @@ function App() {
               Selected Works & Case Studies
             </p>
             <ProjectList 
-              projects={DUMMY_PROJECTS} 
+              projects={CROWNCODE_PROJECTS} 
               onProjectHover={setActiveImageUrl} 
             />
           </section>
