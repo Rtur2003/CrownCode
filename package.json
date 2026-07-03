@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "npm run dev:platform",
     "dev:platform": "npm --prefix platform run dev",
+    "dev:portfolio": "npm --prefix portfolio run dev",
     "build": "npm run build:platform",
     "build:platform": "npm --prefix platform run build",
+    "build:portfolio": "npm --prefix portfolio run build",
     "test": "npm run test:platform",
     "test:platform": "npm --prefix platform run test --if-present",
     "test:all": "npm run test",
@@ -19,6 +21,7 @@
     "deploy:production": "npm run build && npm run deploy:production:platform",
     "deploy:staging:platform": "cd platform && npx netlify-cli deploy --build",
     "deploy:production:platform": "cd platform && npx netlify-cli deploy --build --prod",
+    "deploy:production:portfolio": "cd portfolio && npx netlify-cli deploy --build --prod",
     "setup": "npm install && npm run setup:platform",
     "setup:platform": "npm --prefix platform install",
     "clean": "npm run clean:platform",
@@ -81,7 +84,8 @@
     ]
   },
   "workspaces": [
-    "platform"
+    "platform",
+    "portfolio"
   ],
   "dependencies": {
     "@google/generative-ai": "^0.24.1"
