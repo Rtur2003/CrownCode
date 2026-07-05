@@ -78,6 +78,32 @@
       "button": "GitHub'da Görüntüle"
     },
     "items": {
+      "noirGrain": {
+        "title": "Noir & Grain - Restoran Şablonu",
+        "description": "Fine-dining restoranlar için sinematik web şablonu: WebGL mürekkep geçişleri, yatay scroll sineması, mobilde story-modu ve WhatsApp rezervasyon akışı.",
+        "status": "Aktif",
+        "stats": "4 Sayfa · 60FPS",
+        "features": [
+          "React 19 + GSAP",
+          "WebGL Shader",
+          "Mobil Story-Modu"
+        ],
+        "page": {
+          "subtitle": "Karanlık, tahıl ve ateş — satışa hazır vitrin şablonu",
+          "galleryTitle": "Sayfalar",
+          "galleryItems": {
+            "hero": "Sinematik Kapak",
+            "menu": "Tam Ekran Menü Sahnesi",
+            "reservation": "Canlı Not Kartlı Rezervasyon",
+            "story": "Dergi Forması Hikaye"
+          },
+          "aboutTitle": "Ne Sunuyor?",
+          "about": "Müşteriye 'metninizi ve görsellerinizi verin, size böyle bir sayfa tasarlayalım' diyebileceğiniz örnek ürün. Masaüstünde yatay scroll sineması ve WebGL mürekkep geçişleri; mobilde tamamen ayrı, uygulama hissi veren story-modu deneyimi. Rezervasyon talepleri backend'siz WhatsApp akışıyla, istenirse CrownCode API'si üzerinden admin masa paneliyle yönetilir.",
+          "techTitle": "Teknoloji",
+          "runTitle": "Yerelde Çalıştır",
+          "sourceNote": "Kaynak: templates/noir-grain"
+        }
+      },
       "aiMusic": {
         "title": "AURIS - AI Müzik Tespit Motoru",
         "description": "AURIS, wav2vec2 tabanlı derin öğrenme modeli ile AI üretimi müzikleri insan bestelerinden ayırt etmeyi hedefleyen araştırma platformudur. Geliştirme aşamasında.",

@@ -78,6 +78,32 @@
       "button": "View on GitHub"
     },
     "items": {
+      "noirGrain": {
+        "title": "Noir & Grain - Restaurant Template",
+        "description": "Cinematic web template for fine-dining restaurants: WebGL ink transitions, horizontal scroll cinema, mobile story-mode and a WhatsApp reservation flow.",
+        "status": "Active",
+        "stats": "4 Pages · 60FPS",
+        "features": [
+          "React 19 + GSAP",
+          "WebGL Shaders",
+          "Mobile Story-Mode"
+        ],
+        "page": {
+          "subtitle": "Noir, grain and fire — a sale-ready showcase template",
+          "galleryTitle": "Pages",
+          "galleryItems": {
+            "hero": "Cinematic Cover",
+            "menu": "Full-Screen Menu Stage",
+            "reservation": "Live Note-Card Reservation",
+            "story": "Magazine Spread Story"
+          },
+          "aboutTitle": "What It Offers",
+          "about": "A showcase product that lets you tell clients: 'give us your copy and images, we will design a page like this for you.' Horizontal scroll cinema and WebGL ink transitions on desktop; a completely separate, app-like story-mode experience on mobile. Reservations work backend-free via WhatsApp, or through the CrownCode API with an admin table panel.",
+          "techTitle": "Technology",
+          "runTitle": "Run Locally",
+          "sourceNote": "Source: templates/noir-grain"
+        }
+      },
       "aiMusic": {
         "title": "AURIS - AI Music Detection Engine",
         "description": "AURIS is a research platform aiming to distinguish AI-generated music from human compositions using wav2vec2-based deep learning model. Currently in development.",

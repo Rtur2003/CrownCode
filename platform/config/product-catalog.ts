@@ -10,7 +10,7 @@
  */
 
 import type { LucideIcon } from 'lucide-react'
-import { Music, Brain, Crown, Moon, Youtube, Bot } from 'lucide-react'
+import { Music, Brain, Crown, Moon, Youtube, Bot, UtensilsCrossed } from 'lucide-react'
 
 // ── Types ───────────────────────────────────────────────────────────
 
@@ -78,6 +78,14 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     href: '/crown-vote',
     icon: Bot,
     gradient: 'from-emerald-400 via-green-500 to-teal-600',
+    category: 'project',
+  },
+  {
+    id: 'noir-grain',
+    localeKey: 'noirGrain',
+    href: '/noir-grain',
+    icon: UtensilsCrossed,
+    gradient: 'from-stone-700 via-amber-600 to-yellow-500',
     category: 'project',
   },
 ] as const
