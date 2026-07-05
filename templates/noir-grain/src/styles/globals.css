@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-noir-bg text-noir-text font-body;
+    cursor: none; /* Custom cursor replaces it */
+  }
+
+  /* Disable custom cursor on touch devices */
+  @media (hover: none) {
+    body {
+      cursor: auto;
+    }
+  }
+
+  ::selection {
+    background-color: #c89b5a;
+    color: #0e0c09;
+  }
+
+  :focus-visible {
+    outline: 2px solid #c89b5a;
+    outline-offset: 3px;
+  }
+
+  /* Film grain overlay — sits above everything, purely decorative.
+     Not: data-URI SVG bir kez rasterize edilip döşenir (canlı filtre değildir);
+     yine de zayıf mobil GPU'ları tamamen rahat bırakmak için <lg'de kapalı. */
+  @media (max-width: 1023px) {
+    body::after {
+      display: none;
+    }
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    pointer-events: none;
+    opacity: 0.08;
+    background-image: radial-gradient(#c89b5a 0.5px, transparent 0.5px);
+    background-size: 3px 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  /* ── Katman Sistemi ─────────────────────────────────────────
+     z-0  : filigran + renk yıkamaları (watermark, wash)
+     z-10 : medya (duotone görseller)
+     z-20 : öne taşan tipografi
+     z-30 : UI (butonlar, nav)                                  */
+
+  /* Dev hayalet tipografi — dekoratif, seçilemez */
+  .watermark {
+    @apply absolute z-0 font-display leading-none text-noir-text/[0.05] select-none pointer-events-none whitespace-nowrap;
+  }
+
+  /* Şarap bordosu renk bloğu — görsellerin arkasına ofsetli konur */
+  .wash {
+    @apply absolute z-0 bg-noir-wine/35 pointer-events-none;
+  }
+
+  /* Görsel üstü duotone yıkama */
+  .duotone::after {
+    content: '';
+    @apply absolute inset-0 z-10 pointer-events-none;
+    background: linear-gradient(160deg, rgba(92, 31, 26, 0.28), transparent 55%);
+    mix-blend-mode: multiply;
+  }
+
+  /* Cep Servisi: mobilde story-modu — kartlar ekrana oturur */
+  @media (max-width: 1023px) {
+    html {
+      scroll-snap-type: y proximity;
+    }
+    .snap-card {
+      scroll-snap-align: start;
+    }
+  }
+
+  /* Akan yazı bandı */
+  .marquee-track {
+    animation: marquee 28s linear infinite;
+  }
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+  }
+}
