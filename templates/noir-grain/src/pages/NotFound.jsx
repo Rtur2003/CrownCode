@@ -9,9 +9,9 @@ export default function NotFound() {
   usePageTitle('Sayfa bulunamadı')
 
   return (
-    <main className="min-h-screen bg-noir-bg text-noir-text pt-28 lg:pt-36 pb-24 relative overflow-hidden">
+    <main className="min-h-svh bg-noir-bg text-noir-text pt-28 pb-24 lg:py-36 relative overflow-hidden flex items-center">
       {/* z-0: dev filigran — diğer sayfalardaki katman sistemiyle aynı dil */}
-      <span className="watermark text-[38vw] lg:text-[26vw] left-1/2 -translate-x-1/2 top-24 tabular-nums" aria-hidden="true">
+      <span className="watermark text-[38vw] lg:text-[26vw] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 tabular-nums" aria-hidden="true">
         404
       </span>
 
