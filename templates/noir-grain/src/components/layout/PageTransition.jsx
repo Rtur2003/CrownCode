@@ -63,6 +63,7 @@ export default function PageTransition({ children }) {
         className="fixed inset-0 z-[100] bg-noir-bg pointer-events-none origin-top scale-y-0"
         aria-hidden="true"
       />
+      <p className="sr-only" role="status" aria-live="polite">{announcement}</p>
       {children}
     </>
   )
