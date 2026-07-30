@@ -146,14 +146,14 @@ export default function ContactSplit() {
 
         {/* Doğrudan hat */}
         <div className="flex flex-wrap items-center gap-x-8 gap-y-3 mt-10 pt-8 border-t border-noir-border">
-          <a href={`tel:${site.phone.replace(/\s/g, '')}`} className="font-display text-xl text-noir-text hover:text-noir-accent transition-colors">
+          <a href={`tel:${site.phone.replace(/\s/g, '')}`} className="inline-block py-2 font-display text-xl text-noir-text hover:text-noir-accent transition-colors">
             {site.phone}
           </a>
-          <a href={`mailto:${site.email}`} className="font-body text-sm text-noir-text/60 hover:text-noir-accent transition-colors">
+          <a href={`mailto:${site.email}`} className="inline-block py-2.5 font-body text-sm text-noir-text/60 hover:text-noir-accent transition-colors">
             {site.email}
           </a>
           {site.socials.map(({ label, url }) => (
-            <a key={label} href={url} target="_blank" rel="noreferrer" className="font-body text-sm tracking-widest uppercase text-noir-text/60 hover:text-noir-accent transition-colors">
+            <a key={label} href={url} target="_blank" rel="noreferrer" className="inline-block py-2.5 font-body text-sm tracking-widest uppercase text-noir-text/60 hover:text-noir-accent transition-colors">
               {label}
             </a>
           ))}

@@ -27,8 +27,8 @@ export default function Footer() {
           <p className="text-xs tracking-widest uppercase text-noir-accent mb-4 font-body">İletişim</p>
           <ul className="text-sm text-noir-text/70 font-body space-y-1">
             <li>{site.address.line1}</li>
-            <li><a href={`tel:${site.phone.replace(/\s/g, '')}`} className="hover:text-noir-accent transition-colors">{site.phone}</a></li>
-            <li><a href={`mailto:${site.email}`} className="hover:text-noir-accent transition-colors">{site.email}</a></li>
+            <li><a href={`tel:${site.phone.replace(/\s/g, '')}`} className="inline-block py-2 hover:text-noir-accent transition-colors">{site.phone}</a></li>
+            <li><a href={`mailto:${site.email}`} className="inline-block py-2 hover:text-noir-accent transition-colors">{site.email}</a></li>
           </ul>
         </div>
       </div>
@@ -44,7 +44,7 @@ export default function Footer() {
               href={url}
               target="_blank"
               rel="noreferrer"
-              className="text-xs text-noir-text/50 hover:text-noir-accent transition-colors font-body tracking-wider uppercase"
+              className="inline-block py-2.5 text-xs text-noir-text/60 hover:text-noir-accent transition-colors font-body tracking-wider uppercase"
             >
               {label}
             </a>
