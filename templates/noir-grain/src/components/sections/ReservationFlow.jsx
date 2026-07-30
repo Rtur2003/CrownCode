@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { site } from '../../data/site.js'
 import { reservation } from '../../data/content.js'
 import { images } from '../../data/images.js'
-import { buildWhatsAppLink, buildMailtoLink, toTrDate } from '../../utils/links.js'
+import { buildWhatsAppLink, buildMailtoLink, toTrDate, fillTokens } from '../../utils/links.js'
 import { getMediaCapability } from '../../hooks/useMediaCapability.js'
 
 gsap.registerPlugin(useGSAP)
@@ -194,9 +194,15 @@ export default function ReservationFlow() {
             </svg>
           </span>
         </div>
-        <p className="success-text font-display text-3xl lg:text-4xl text-noir-text mb-4">Masanız adınıza ayrılıyor.</p>
+        <p className="success-text font-display text-3xl lg:text-4xl text-noir-text mb-4">
+          {reservation.successTitle}
+        </p>
         <p className="success-text font-display italic text-xl text-noir-text/60 max-w-md mx-auto">
-          Sayın {formValues.name}, {toTrDate(formValues.date)} tarihinde saat {formValues.time} için talebiniz WhatsApp üzerinden iletildi. Onay için sizinle iletişime geçeceğiz.
+          {fillTokens(reservation.successBody, {
+            name: formValues.name,
+            date: toTrDate(formValues.date),
+            time: formValues.time,
+          })}
         </p>
       </div>
     )
@@ -209,7 +215,7 @@ export default function ReservationFlow() {
             yalnızca spinner gösterdiği için mühür animasyonu hiç görünmüyordu. */}
         <NoteCard values={formValues} sealed />
         <p className="font-display italic text-2xl text-noir-text/70 text-center">
-          Masanız adınıza ayrılıyor…
+          {reservation.sealing}
         </p>
       </div>
     )
@@ -229,7 +235,7 @@ export default function ReservationFlow() {
       <div>
         {/* İlerleme */}
         <p className="relative z-20 font-body text-xs tracking-[0.4em] uppercase text-noir-text/40 mb-6 lg:mb-10">
-          Fasıl {stepIdx + 1} / {STEPS.length}
+          {labels.chapter} {stepIdx + 1} / {STEPS.length}
         </p>
 
         {/* Mobil: kompakt fiş — dolan alanlar özetlenir */}
@@ -386,7 +392,7 @@ export default function ReservationFlow() {
               data-cursor="Mühürle"
               className="px-8 h-14 bg-noir-accent text-noir-bg font-body text-sm tracking-[0.2em] uppercase hover:bg-noir-text transition-colors duration-300"
             >
-              Rezervasyonu Tamamla
+              {labels.submit}
             </button>
           ) : (
             <button
