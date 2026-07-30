@@ -11,8 +11,7 @@ export default function PageTransition({ children }) {
 
   const location = useLocation()
 
-  // SPA'da rota değişimi ekran okuyucuya duyurulmaz; kullanıcı sayfanın
-  // değiştiğini fark etmez. usePageTitle başlığı zaten güncelliyor, onu okut.
+  // SPA rota degisimi ekran okuyucuya duyurulmaz; basligi okut.
   useEffect(() => {
     if (isFirstRender.current) return
     const id = requestAnimationFrame(() => setAnnouncement(document.title))
