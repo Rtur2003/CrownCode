@@ -22,7 +22,7 @@ export const mobileBar = {
 export const hero = {
   eyebrow: 'İstanbul · Karaköy',
   title: 'Noir & Grain',
-  subtitle: 'Karanlık, tahıl ve ateş. Yedi fasıllık bir gece.',
+  subtitle: 'Yedi fasıllık tadım menüsü ve kokteyl bar.',
   scrollHint: 'Servis başlıyor',
 }
 
@@ -42,10 +42,10 @@ export const signature = {
 export const story = {
   eyebrow: 'Fasıl II',
   title: 'Hikaye',
-  statement: 'Ateş sabırla, tahıl zamanla konuşur.',
+  statement: 'Ekmek her sabah dörtte yoğuruluyor, ateş altıda yakılıyor.',
   paragraphs: [
-    'Noir & Grain, Karaköy\'ün taş duvarları arasında iki tutkunun buluşmasıdır: kömür ateşinin karanlığı ve ekşi maya tahılın sabrı.',
-    'Menümüz mevsimle birlikte yedi fasılda döner; her tabak, İstanbul\'un pazarlarından o hafta ne geldiyse onunla kurulur.',
+    'Bankalar Caddesi\'ndeki eski bir tahıl deposunda, 2019\'dan beri aynı yerdeyiz. Mutfakta tek ısı kaynağımız kömür.',
+    'Menü mevsimle değişiyor. Her fasıl, o hafta pazardan ne geldiyse ona göre kuruluyor.',
   ],
 }
 
@@ -53,18 +53,16 @@ export const invite = {
   eyebrow: 'Fasıl III',
   // İki satır olarak dizilir; ikinci satır altın italik vurguyla ayrışır.
   titleLines: ['Masanızı', 'Ayırın'],
-  note: 'Geceyi bizimle açın — masanız hazır olsun.',
+  note: 'On iki masamız var. Aynı gün rezervasyon için telefonla arayın.',
   cta: 'Rezervasyon',
 }
 
 export const menuPage = {
-  eyebrow: 'Tadım Menüsü',
-  title: 'Menü',
-  note: 'Mevsimle dönen fasıllar. Fiyatlar TL\'dir.',
+  title: 'Tadım Menüsü',
+  note: 'Fiyatlar TL\'dir. Menü mevsimle değişir.',
 }
 
 export const reservation = {
-  eyebrow: 'Rezervasyon',
   title: 'Masanızı Ayırın',
   steps: {
     guests: { question: 'Kaç kişisiniz?', hint: 'Daha kalabalık gruplar için bizi arayın.' },
@@ -79,11 +77,12 @@ export const reservation = {
     sendEmail: 'E-posta ile gönder',
     chapter: 'Fasıl',
   },
-  // Mühürlenme (gönderim) ekranı
-  sealing: 'Masanız adınıza ayrılıyor…',
-  successTitle: 'Masanız adınıza ayrılıyor.',
-  // {name} / {date} / {time} yer tutucuları form değerleriyle doldurulur.
-  successBody: 'Sayın {name}, {date} tarihinde saat {time} için talebiniz WhatsApp üzerinden iletildi. Onay için sizinle iletişime geçeceğiz.',
+  sealing: 'Notunuz hazırlanıyor…',
+  // Dürüstlük: WhatsApp mesajı yalnızca HAZIRLANIR, göndermeyi kullanıcı yapar.
+  // Eski metin "iletildi" diyordu; gönderilmemiş talep için yanlış bilgiydi.
+  successTitle: 'Notunuz WhatsApp\'ta hazır.',
+  // {name} / {date} / {time} form değerleriyle doldurulur.
+  successBody: '{date}, saat {time}, {name} adına. Mesajı WhatsApp\'tan göndermeniz yeterli; onayı biz döneceğiz.',
 }
 
 export const marqueeItems = [
@@ -91,18 +90,17 @@ export const marqueeItems = [
 ]
 
 export const contactPage = {
-  eyebrow: 'İletişim',
   title: 'Bizi Bulun',
   note: 'Karaköy\'ün taş sokaklarında, Bankalar Caddesi\'nin hemen üzerinde.',
   hoursTitle: 'Servis Saatleri',
   hoursNote: 'Pazartesi kapalıyız.',
   formTitle: 'Bize Yazın',
-  formNote: 'Özel davet, etkinlik ve iş birlikleri için — aynı gün dönüş yapıyoruz.',
+  formNote: 'Etkinlik ve özel davetler için yazın. Aynı gün dönüyoruz.',
   labels: { name: 'Ad Soyad', email: 'E-posta', message: 'Mesajınız', send: 'Gönder' },
   mailSubject: 'Web sitesi üzerinden mesaj',
   directionsCta: 'Yol Tarifi Al',
-  // Form backend'siz çalışır: mesaj kullanıcının e-posta istemcisinde açılır.
-  sentNote: 'E-posta istemciniz mesajınızla birlikte açıldı. Açılmadıysa doğrudan aşağıdaki adrese yazabilirsiniz.',
+  // Backend yok: mesaj kullanıcının e-posta istemcisinde açılır.
+  sentNote: 'Mesajınız e-posta istemcinizde açıldı. Açılmadıysa aşağıdaki adrese yazabilirsiniz.',
 }
 
 export const footer = {
@@ -110,8 +108,7 @@ export const footer = {
 }
 
 export const notFound = {
-  eyebrow: 'Fasıl bulunamadı',
-  title: 'Bu masa boş.',
-  body: 'Aradığınız sayfa kaldırılmış ya da adresi değişmiş olabilir. Sizi salona geri alalım.',
+  title: 'Böyle bir sayfa yok.',
+  body: 'Adres değişmiş ya da bağlantı eski olabilir.',
   homeCta: 'Ana sayfaya dön',
 }
