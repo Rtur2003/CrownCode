@@ -36,6 +36,11 @@ export default defineConfig([
       'react/react-in-jsx-scope': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
+      // 'warn': pages router SSR'inde localStorage/sessionStorage/matchMedia'dan
+      // durum geri yuklemek zorunlu olarak effect'te olur (sunucu HTML'i ile
+      // ayni ilk render sart, yoksa hydration uyusmazligi). Sinyal gorunur
+      // kalsin ama mesru kalibi hata sayip lint'i kirmasin.
+      'react-hooks/set-state-in-effect': 'warn',
     },
   },
 

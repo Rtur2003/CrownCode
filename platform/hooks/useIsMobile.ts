@@ -84,7 +84,7 @@ export const useDeviceInfo = (): DeviceInfo => {
         const isTouchDevice =
           'ontouchstart' in window ||
           navigator.maxTouchPoints > 0 ||
-          // @ts-expect-error
+          // @ts-expect-error msMaxTouchPoints eski IE/Edge ozelligi, lib.dom'da yok
           navigator.msMaxTouchPoints > 0
 
         setDeviceInfo({
