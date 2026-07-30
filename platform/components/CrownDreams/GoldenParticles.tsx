@@ -241,26 +241,25 @@ function DreamStars({ count = 200 }: { count?: number }) {
 
 type PerformanceTier = 'full' | 'reduced' | 'none'
 
+// Bilesen `dynamic(..., { ssr: false })` ile yuklenir; window/navigator ilk
+// render'da hazir. Tier bu yuzden lazy initializer'da hesaplanir: effect'te
+// set edilirse dusuk donanimli cihaz once 3500 parcacikli tam sahneyi kurup
+// sonra 800'e dusuyor ve optimizasyon ilk boyamada bosa gidiyordu.
+function detectTier(): PerformanceTier {
+  if (typeof window === 'undefined') {return 'full'}
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {return 'none'}
+  const cores = navigator.hardwareConcurrency || 2
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+  return cores <= 2 || (isMobile && cores <= 4) ? 'reduced' : 'full'
+}
+
 function usePerformanceTier(): PerformanceTier {
-  const [tier, setTier] = useState<PerformanceTier>('full')
+  const [tier, setTier] = useState<PerformanceTier>(detectTier)
 
   useEffect(() => {
-    // Respect prefers-reduced-motion
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    if (motionQuery.matches) {
-      setTier('none')
-      return
-    }
-
-    // Detect low-end devices: few cores or mobile with low memory
-    const cores = navigator.hardwareConcurrency || 2
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
-    if (cores <= 2 || (isMobile && cores <= 4)) {
-      setTier('reduced')
-    }
-
     const onChange = (e: MediaQueryListEvent) => {
-      setTier(e.matches ? 'none' : 'full')
+      setTier(e.matches ? 'none' : detectTier())
     }
     motionQuery.addEventListener('change', onChange)
     return () => motionQuery.removeEventListener('change', onChange)

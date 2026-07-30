@@ -36,13 +36,11 @@ interface AnimatedCounterProps {
 
 const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ end, suffix = '', duration = 2000 }) => {
   const [count, setCount] = useState(0)
-  const [hasAnimated, setHasAnimated] = useState(false)
 
+  // hasAnimated guard'i kaldirildi: deps'te olup effect icinde set edildigi
+  // icin state degisimi cleanup'i tetikliyor, interval temizlenip erken
+  // donuluyordu — sayac hic saymiyordu.
   useEffect(() => {
-    if (hasAnimated) {
-      return
-    }
-    setHasAnimated(true)
     const startTime = Date.now()
     const timer = setInterval(() => {
       const elapsed = Date.now() - startTime
@@ -54,7 +52,7 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ end, suffix = '', dur
       }
     }, 16)
     return () => clearInterval(timer)
-  }, [end, duration, hasAnimated])
+  }, [end, duration])
 
   return <span>{count}{suffix}</span>
 }
