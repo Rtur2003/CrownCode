@@ -7,9 +7,12 @@ export default function ServiceRail({ sections, activeId }) {
   if (reducedMotion) return null
 
   return (
-    <nav
+    // Etkileşimsiz bir ilerleme göstergesi — <nav> olarak işaretlenmesi ekran
+    // okuyucuya var olmayan bir gezinme vaat ediyordu. İçerik zaten sayfa
+    // akışında sırayla mevcut, o yüzden tamamen dekoratif sayılır.
+    <div
       className="fixed right-6 bottom-10 z-40 hidden lg:flex flex-col gap-4 pointer-events-none"
-      aria-label="Fasıl ilerlemesi"
+      aria-hidden="true"
     >
       {sections.map(({ id, numeral, label }) => {
         const active = id === activeId
@@ -32,6 +35,6 @@ export default function ServiceRail({ sections, activeId }) {
           </span>
         )
       })}
-    </nav>
+    </div>
   )
 }
