@@ -3,8 +3,7 @@ import { nav, notFound } from '../data/content.js'
 import { usePageTitle } from '../hooks/usePageTitle.js'
 import Magnetic from '../components/ui/Magnetic.jsx'
 
-// Bilinmeyen rotalar için 404. Önceden catch-all rota yoktu: hatalı bir
-// adreste Navbar ile Footer arası tamamen boş kalıyordu.
+// Catch-all 404
 export default function NotFound() {
   usePageTitle('Sayfa bulunamadı')
 

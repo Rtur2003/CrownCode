@@ -1,5 +1,4 @@
-// Cihaz yeteneklerini tek yerden raporlar; tüm sinematik katman
-// (Lenis, WebGL, imleç, pinned animasyonlar) bu sinyale göre düşüş yapar.
+// Cihaz yetenekleri tek kaynaktan; tum sinematik katman buna gore dususe geciyor
 let cached = null
 
 export function getMediaCapability() {
