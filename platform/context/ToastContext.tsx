@@ -31,6 +31,11 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined)
 export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [toasts, setToasts] = useState<Toast[]>([])
 
+  // showToast'tan once tanimli olmali: auto-dismiss bunu cagiriyor.
+  const hideToast = useCallback((id: string) => {
+    setToasts((prev) => prev.filter((toast) => toast.id !== id))
+  }, [])
+
   const showToast = useCallback((
     type: ToastType,
     title: string,
@@ -55,11 +60,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         hideToast(id)
       }, duration)
     }
-  }, [])
-
-  const hideToast = useCallback((id: string) => {
-    setToasts((prev) => prev.filter((toast) => toast.id !== id))
-  }, [])
+  }, [hideToast])
 
   // Convenience methods
   const success = useCallback((title: string, message?: string) => {
