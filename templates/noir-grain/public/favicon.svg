@@ -2,7 +2,9 @@
   <!-- Noir & Grain amblemi — src/components/ui/Wordmark.jsx ile aynı mark.
        16px'te de okunsun diye taneler iki çift + uç olarak sadeleştirildi. -->
   <defs>
-    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+    <!-- userSpaceOnUse: objectBoundingBox biriminde sıfır genişlikli gövde
+         çizgisinin bbox'ı dejenere olur ve gradyan hiç boyanmaz. -->
+    <linearGradient id="gold" gradientUnits="userSpaceOnUse" x1="4" y1="4" x2="28" y2="28">
       <stop offset="0%" stop-color="#E8CE9A" />
       <stop offset="45%" stop-color="#C89B5A" />
       <stop offset="100%" stop-color="#8C6631" />
@@ -10,14 +12,15 @@
   </defs>
 
   <rect width="32" height="32" rx="6" fill="#0E0C09" />
-  <circle cx="16" cy="16" r="12.6" fill="none" stroke="url(#gold)" stroke-width="1.3" opacity="0.8" />
+  <circle cx="16" cy="16" r="12.6" fill="none" stroke="url(#gold)" stroke-width="1.4" opacity="0.85" />
 
   <g fill="url(#gold)" stroke="url(#gold)">
-    <path d="M16 23.4V10.6" fill="none" stroke-width="1.3" stroke-linecap="round" />
-    <ellipse cx="16" cy="10.4" rx="1.05" ry="2.4" stroke="none" />
-    <ellipse cx="0" cy="0" rx="1.15" ry="2.5" stroke="none" transform="translate(18.15 14.3) rotate(30)" />
-    <ellipse cx="0" cy="0" rx="1.15" ry="2.5" stroke="none" transform="translate(13.85 14.3) rotate(-30)" />
-    <ellipse cx="0" cy="0" rx="1.15" ry="2.5" stroke="none" transform="translate(18.15 18.4) rotate(30)" />
-    <ellipse cx="0" cy="0" rx="1.15" ry="2.5" stroke="none" transform="translate(13.85 18.4) rotate(-30)" />
+    <path d="M16 24V9.5" fill="none" stroke-width="1.4" stroke-linecap="round" />
+    <ellipse cx="16" cy="9.6" rx="1.35" ry="3.1" stroke="none" />
+    <ellipse cx="0" cy="0" rx="1.4" ry="2.9" stroke="none" transform="translate(18.4 14) rotate(32)" />
+    <ellipse cx="0" cy="0" rx="1.4" ry="2.9" stroke="none" transform="translate(13.6 14) rotate(-32)" />
+    <ellipse cx="0" cy="0" rx="1.4" ry="2.9" stroke="none" transform="translate(18.4 18.4) rotate(32)" />
+    <ellipse cx="0" cy="0" rx="1.4" ry="2.9" stroke="none" transform="translate(13.6 18.4) rotate(-32)" />
+    <path d="M13.3 24.8h5.4" fill="none" stroke-width="1.4" stroke-linecap="round" />
   </g>
 </svg>

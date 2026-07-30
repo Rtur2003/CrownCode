@@ -26,7 +26,10 @@ export default function Wordmark({ className = '', compact = false }) {
         aria-hidden="true"
       >
         <defs>
-          <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
+          {/* gradientUnits="userSpaceOnUse" şart: varsayılan objectBoundingBox
+              biriminde, sıfır genişlikli gövde çizgisi gibi yassı öğelerin
+              bounding box'ı dejenere olduğu için gradyan hiç boyanmıyor. */}
+          <linearGradient id={gradientId} gradientUnits="userSpaceOnUse" x1="2" y1="2" x2="30" y2="30">
             <stop offset="0%" stopColor="#E8CE9A" />
             <stop offset="45%" stopColor="#C89B5A" />
             <stop offset="100%" stopColor="#8C6631" />
@@ -42,18 +45,18 @@ export default function Wordmark({ className = '', compact = false }) {
 
         <g fill={`url(#${gradientId})`} stroke={`url(#${gradientId})`}>
           {/* Gövde */}
-          <path d="M16 24.1V10.4" fill="none" strokeWidth="0.9" strokeLinecap="round" />
+          <path d="M16 25.8V9" fill="none" strokeWidth="1" strokeLinecap="round" />
           {/* Uç tane */}
-          <ellipse cx="16" cy="10.2" rx="0.85" ry="2" stroke="none" />
+          <ellipse cx="16" cy="9" rx="1.3" ry="3.2" stroke="none" />
           {/* Simetrik tane çiftleri */}
           {kernelRows.map(y => (
             <g key={y} stroke="none">
-              <ellipse cx="0" cy="0" rx="0.92" ry="2.05" transform={`translate(17.75 ${y}) rotate(30)`} />
-              <ellipse cx="0" cy="0" rx="0.92" ry="2.05" transform={`translate(14.25 ${y}) rotate(-30)`} />
+              <ellipse cx="0" cy="0" rx="1.35" ry="3" transform={`translate(18.5 ${y}) rotate(32)`} />
+              <ellipse cx="0" cy="0" rx="1.35" ry="3" transform={`translate(13.5 ${y}) rotate(-32)`} />
             </g>
           ))}
           {/* Taban çizgisi — başağı mühür içinde oturtur */}
-          <path d="M13.4 24.9h5.2" fill="none" strokeWidth="0.9" strokeLinecap="round" />
+          <path d="M13 26.6h6" fill="none" strokeWidth="1" strokeLinecap="round" />
         </g>
       </svg>
 

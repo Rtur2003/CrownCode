@@ -72,13 +72,16 @@ function NoteCard({ values, sealed }) {
       >
         <svg viewBox="0 0 32 32" className="w-8 h-8">
           <g fill="#C89B5A" stroke="#C89B5A">
-            <circle cx="16" cy="16" r="13" fill="none" strokeWidth="1" />
-            <path d="M16 23.4V10.6" fill="none" strokeWidth="1.1" strokeLinecap="round" />
-            <ellipse cx="16" cy="10.4" rx="1" ry="2.3" stroke="none" />
-            <ellipse cx="0" cy="0" rx="1.1" ry="2.4" stroke="none" transform="translate(18.1 14.3) rotate(30)" />
-            <ellipse cx="0" cy="0" rx="1.1" ry="2.4" stroke="none" transform="translate(13.9 14.3) rotate(-30)" />
-            <ellipse cx="0" cy="0" rx="1.1" ry="2.4" stroke="none" transform="translate(18.1 18.4) rotate(30)" />
-            <ellipse cx="0" cy="0" rx="1.1" ry="2.4" stroke="none" transform="translate(13.9 18.4) rotate(-30)" />
+            <circle cx="16" cy="16" r="13.2" fill="none" strokeWidth="1" />
+            <path d="M16 25.4V9.4" fill="none" strokeWidth="1.1" strokeLinecap="round" />
+            <ellipse cx="16" cy="9.4" rx="1.3" ry="3.1" stroke="none" />
+            <ellipse cx="0" cy="0" rx="1.35" ry="2.9" stroke="none" transform="translate(18.4 13.3) rotate(32)" />
+            <ellipse cx="0" cy="0" rx="1.35" ry="2.9" stroke="none" transform="translate(13.6 13.3) rotate(-32)" />
+            <ellipse cx="0" cy="0" rx="1.35" ry="2.9" stroke="none" transform="translate(18.4 17.2) rotate(32)" />
+            <ellipse cx="0" cy="0" rx="1.35" ry="2.9" stroke="none" transform="translate(13.6 17.2) rotate(-32)" />
+            <ellipse cx="0" cy="0" rx="1.35" ry="2.9" stroke="none" transform="translate(18.4 21.1) rotate(32)" />
+            <ellipse cx="0" cy="0" rx="1.35" ry="2.9" stroke="none" transform="translate(13.6 21.1) rotate(-32)" />
+            <path d="M13 26.2h6" fill="none" strokeWidth="1.1" strokeLinecap="round" />
           </g>
         </svg>
       </span>

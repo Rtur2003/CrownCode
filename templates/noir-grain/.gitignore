@@ -25,3 +25,9 @@ dist-ssr
 
 # Project planning (not for version control)
 .superpowers/
+
+# Tarayıcı otomasyonu çıktıları (Playwright / DevTools MCP)
+.playwright-mcp/
+.chrome-devtools-mcp/
+test-results/
+playwright-report/
