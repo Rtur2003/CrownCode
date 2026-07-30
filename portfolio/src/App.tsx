@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { SmoothScroll } from './components/SmoothScroll';
 import { CustomCursor } from './components/CustomCursor';
 import { Preloader } from './components/Preloader';
 import { NoiseBackground } from './components/NoiseBackground';
 import { ProjectList, type Project } from './components/ProjectList';
-import { GLScene } from './gl/GLScene';
+
+// three + drei ~874 kB. Dekoratif katman ilk boyamayi bloklamasin;
+// preloader zaten gorunurken arkada yuklenir.
+const GLScene = lazy(() =>
+  import('./gl/GLScene').then((m) => ({ default: m.GLScene }))
+);
 
 const CROWNCODE_PROJECTS: Project[] = [
   {
@@ -52,7 +57,9 @@ function App() {
     <>
       <NoiseBackground />
       <CustomCursor />
-      <GLScene activeImageUrl={activeImageUrl} />
+      <Suspense fallback={null}>
+        <GLScene activeImageUrl={activeImageUrl} />
+      </Suspense>
       
       {isLoading && (
         <Preloader onComplete={() => setIsLoading(false)} />
