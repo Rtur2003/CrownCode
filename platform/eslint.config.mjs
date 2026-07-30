@@ -47,4 +47,17 @@ export default defineConfig([
       '@typescript-eslint/no-explicit-any': 'off',
     },
   },
+
+  // Node build scriptleri: CJS require mesru
+  {
+    files: ['scripts/**/*.{js,cjs,mjs}'],
+    rules: { '@typescript-eslint/no-require-imports': 'off' },
+  },
+
+  // Service worker: tarayici worker ortami, React/Next kurallari gecmez
+  {
+    files: ['public/sw.js'],
+    languageOptions: { globals: { self: 'readonly', caches: 'readonly', clients: 'readonly' } },
+    rules: { 'no-console': 'off' },
+  },
 ])
