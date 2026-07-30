@@ -47,16 +47,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- ŞABLON: Kapak görseli LCP öğesidir; src/data/images.js içindeki
-         `hero` URL'si ile elle senkron tutulur. Görseli değiştirirseniz
-         burayı da güncelleyin, yoksa preload boşa gider. -->
+    <!-- Görseller Unsplash'ten geliyor; bağlantı el sıkışması peşin yapılır.
+         Not: kapak görseline <link rel="preload"> KONMAZ — SPA tüm rotalara
+         aynı index.html'i sunduğu için menü/rezervasyon/iletişim sayfalarında
+         boşa indirme olurdu. Öncelik, Cover.jsx'teki fetchPriority ile verilir. -->
     <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
-    <link
-      rel="preload"
-      as="image"
-      fetchpriority="high"
-      href="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2000&auto=format&fit=crop"
-    />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600&display=swap"
       rel="stylesheet"
