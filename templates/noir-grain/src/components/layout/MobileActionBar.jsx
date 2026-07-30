@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { nav, mobileBar } from '../../data/content.js'
+import { nav, mobileBar, navLabels } from '../../data/content.js'
 import { site } from '../../data/site.js'
 
 // Mobil "Cep Servisi": hamburger yerine başparmak-dostu sabit alt bar.
@@ -11,7 +11,7 @@ export default function MobileActionBar() {
     <nav
       className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-noir-bg/90 backdrop-blur-md border-t border-noir-border"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
-      aria-label={mobileBar.label}
+      aria-label={navLabels.mobile}
     >
       {/* flex + flex-1: sabit grid-cols-4 idi, content.js'e dördüncü bir nav
           öğesi eklenince beşinci hücre alt satıra taşıp barı bozuyordu. */}
