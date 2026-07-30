@@ -16,10 +16,7 @@ export default function NotFound() {
       </span>
 
       <div className="relative z-20 px-6 lg:px-16 max-w-2xl">
-        <p className="text-xs tracking-[0.4em] uppercase text-noir-accent font-body mb-4">
-          {notFound.eyebrow}
-        </p>
-        <h1 className="font-display text-5xl lg:text-7xl mb-6">{notFound.title}</h1>
+        <h1 className="font-display text-5xl lg:text-7xl text-balance mb-6">{notFound.title}</h1>
         <p className="font-display italic text-lg lg:text-xl text-noir-text/60 mb-12 max-w-lg">
           {notFound.body}
         </p>
