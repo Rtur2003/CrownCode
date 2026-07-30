@@ -27,7 +27,7 @@ export default function ServiceRail({ sections, activeId }) {
             </span>
             <span
               className={`font-display text-sm transition-colors duration-500 ${
-                active ? 'text-noir-accent' : 'text-noir-text/30'
+                active ? 'text-noir-accent' : 'text-noir-text/50'
               }`}
             >
               {numeral}
