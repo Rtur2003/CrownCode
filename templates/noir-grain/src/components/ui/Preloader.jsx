@@ -7,7 +7,7 @@ import Wordmark from './Wordmark.jsx'
 
 const SEEN_KEY = 'ng_seen'
 
-// Safari gizli sekme / kısıtlı çerez ayarlarında sessionStorage erişimi
+// sessionStorage exception atabilir; sarilmazsa preloader hic bitmez
 function hasSeen() {
   try {
     return Boolean(sessionStorage.getItem(SEEN_KEY))

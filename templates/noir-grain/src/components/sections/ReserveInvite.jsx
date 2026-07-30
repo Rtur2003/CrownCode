@@ -16,7 +16,7 @@ function CornerMark({ className }) {
   )
 }
 
-// "Davetiye Kartı": loş servis fotoğrafı üzerinde çift çizgili altın
+// "Davetiye Karti": los servis fotografi uzerinde cift cizgili altin cerceve
 export default function ReserveInvite() {
   const frame = (
     <div className="relative h-full w-full border border-noir-accent/40 p-[6px]">
