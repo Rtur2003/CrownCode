@@ -72,7 +72,7 @@ export default function Cover() {
         <SplitText
           as="h1"
           animate
-          className="font-display text-[clamp(3rem,12vw,10rem)] leading-none text-noir-text"
+          className="font-display text-[clamp(2.75rem,9vw,6rem)] leading-[1.04] text-balance text-noir-text"
         >
           {hero.title}
         </SplitText>
