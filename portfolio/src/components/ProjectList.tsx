@@ -1,7 +1,11 @@
 import React, { useRef } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import styles from './ProjectList.module.css';
+
+// Kayit burada da yapilir: import sirasina bagli kalmasin (idempotent).
+gsap.registerPlugin(ScrollTrigger);
 
 export interface Project {
   id: string;
@@ -21,9 +25,9 @@ export const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectHov
 
   useGSAP(() => {
     // Parallax or subtle reveal effect on list items
-    const items = gsap.utils.toArray(listRef.current?.children || []);
-    
-    items.forEach((item: any) => {
+    const items = gsap.utils.toArray<HTMLElement>(listRef.current?.children || []);
+
+    items.forEach((item) => {
       gsap.fromTo(item, 
         { y: 50, opacity: 0 },
         { 

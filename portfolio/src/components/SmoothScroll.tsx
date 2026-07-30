@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface SmoothScrollProps {
   children: React.ReactNode;
@@ -23,20 +26,18 @@ export const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
 
     lenisRef.current = lenis;
 
-    // Sync Lenis with GSAP ScrollTrigger if used later
-    // lenis.on('scroll', ScrollTrigger.update);
+    // Lenis native scroll'u devraldigi icin ScrollTrigger'i besle
+    lenis.on('scroll', ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-
+    // Ayni referans: remove() yeni bir arrow alirsa callback hic kaldirilmaz
+    const raf = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
-      gsap.ticker.remove((time) => {
-        lenis.raf(time * 1000);
-      });
+      gsap.ticker.remove(raf);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
