@@ -7,9 +7,8 @@ export default function CustomCursor() {
   const cursorRef = useRef(null)
   const dotRef = useRef(null)
   const labelRef = useRef(null)
-  // Dokunmatikte ve reduced-motion'da hiç render edilmez. Önceden yalnızca
-  // olay dinleyicileri atlanıyor, nokta yine basılıyordu: globals.css yerel
-  // imleci gizlediği için kullanıcı hareketsiz bir noktayla kalıyordu.
+  // Dokunmatik + reduced-motion'da hic render edilmez
+  // (yerel imlec gizli oldugu icin hareketsiz nokta kaliyordu)
   const { isTouch, reducedMotion } = getMediaCapability()
   const enabled = !isTouch && !reducedMotion
 
@@ -53,8 +52,8 @@ export default function CustomCursor() {
       gsap.to(label, { opacity: 0, duration: 0.2 })
     }
 
-    // Tıklanan eleman DOM'dan kalkarsa (adım geçişi, rota değişimi) mouseout
-    // hiç ateşlenmez ve etiket asılı kalır — tık sonrası durumu doğrula
+    // Tiklanan eleman DOM'dan kalkarsa mouseout atesletmez; etiket asili kalir
+    // -> tik sonrasi imlec altindaki ogeyi dogrula
     const onClick = () => {
       requestAnimationFrame(() => {
         const under = document.elementFromPoint(

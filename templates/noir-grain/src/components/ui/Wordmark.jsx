@@ -3,7 +3,7 @@ import { site } from '../../data/site.js'
 
 // Marka amblemi + yazı kilidi (wordmark).
 //
-// Üst öge `group` sınıfı taşırsa (ör. Navbar'daki <Link>) amblem hover'da
+// Ust oge `group` tasirsa amblem hover'da canlanir
 export default function Wordmark({ className = '', compact = false }) {
   const parts = site.name.split('&').map(s => s.trim())
   const hasAmp = parts.length === 2

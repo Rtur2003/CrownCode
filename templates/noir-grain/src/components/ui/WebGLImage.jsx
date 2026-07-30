@@ -27,7 +27,7 @@ vec2 coverUv(vec2 uv, vec2 planeRes, vec2 imageRes) {
 }
 `
 
-// Prosedürel value-noise + fbm — harici doku gerektirmeden organik
+// Prosedurel value-noise + fbm: harici doku olmadan organik murekkep davranisi
 const NOISE_GLSL = /* glsl */ `
 float hash(vec2 p) {
   return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
@@ -77,7 +77,7 @@ void main() {
 }
 `
 
-// Crossfade: mürekkep dağılması (ink dispersion) — görsel, noise haritası
+// Crossfade: noise haritasi uzerinden murekkep gibi cozulme
 const FRAG_FADE = /* glsl */ `
 precision highp float;
 uniform sampler2D uTex0;
@@ -126,7 +126,7 @@ function createRenderer(container) {
   return renderer
 }
 
-// Canvas'ı DOM'dan çıkarmak WebGL context'ini serbest bırakmaz; tarayıcının
+// canvas.remove() context'i birakmaz; tarayici limiti (~16) dolarsa canvas kararir
 function disposeRenderer(gl) {
   gl.canvas.remove()
   gl.getExtension('WEBGL_lose_context')?.loseContext()
@@ -309,7 +309,8 @@ export function WebGLCrossfade({ images, activeIndex, alt = '', className = '' }
       stateRef.current = null
       disposeRenderer(gl)
     }
-    // Bağımlılık dizi kimliği değil içerik: çağıran her render'da yeni dizi
+    // Dizi kimligi degil icerigi (imagesKey): cagiran yeni dizi uretse de guvenli
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imagesKey, webgl])
 
   // activeIndex değişince distortion'lı crossfade

@@ -9,7 +9,7 @@ import { useJourney } from './journeyContext.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// "Dergi Forması": solda tam boy ana görsel, dev italik cümle görselin
+// "Dergi Formasi": solda tam boy gorsel, dev italik cumle uzerine tasar
 export default function StoryCollage() {
   const rootRef = useRef(null)
   const { pinned, anim } = useJourney()
