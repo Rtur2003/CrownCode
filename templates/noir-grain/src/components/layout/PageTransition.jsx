@@ -1,20 +1,37 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { getMediaCapability } from '../../hooks/useMediaCapability.js'
 
 export default function PageTransition({ children }) {
   const curtainRef = useRef(null)
   const isFirstRender = useRef(true)
+  const [announcement, setAnnouncement] = useState('')
 
   const location = useLocation()
 
+  // SPA'da rota değişimi ekran okuyucuya duyurulmaz; kullanıcı sayfanın
+  // değiştiğini fark etmez. usePageTitle başlığı zaten güncelliyor, onu okut.
+  useEffect(() => {
+    if (isFirstRender.current) return
+    const id = requestAnimationFrame(() => setAnnouncement(document.title))
+    return () => cancelAnimationFrame(id)
+  }, [location.pathname])
+
   useGSAP(() => {
+    // Diğer tüm hareket katmanları gibi hareket azaltma tercihine uy.
+    const { reducedMotion } = getMediaCapability()
+
     if (isFirstRender.current) {
       isFirstRender.current = false
-      gsap.from(document.body, { opacity: 0, duration: 0.6, ease: 'power2.out' })
+      if (!reducedMotion) {
+        gsap.from(document.body, { opacity: 0, duration: 0.6, ease: 'power2.out' })
+      }
       return
     }
+
+    if (reducedMotion) return
 
     const curtain = curtainRef.current
     if (!curtain) return
