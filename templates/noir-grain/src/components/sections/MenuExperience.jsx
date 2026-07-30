@@ -65,6 +65,7 @@ export default function MenuExperience() {
               return (
                 <Magnetic key={id} strength={0.3}>
                   <button
+                    type="button"
                     onClick={() => selectCategory(id)}
                     aria-pressed={active}
                     className="group flex flex-col items-start transition-colors duration-300"
