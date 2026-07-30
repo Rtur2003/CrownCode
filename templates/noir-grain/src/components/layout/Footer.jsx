@@ -34,7 +34,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-noir-border max-w-7xl mx-auto px-6 md:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-xs text-noir-text/30 font-body">
+        <p className="text-xs text-noir-text/60 font-body">
           © {new Date().getFullYear()} {site.name}. {footer.rights}
         </p>
         <div className="flex gap-6">

@@ -23,7 +23,7 @@ export default function ContactSplit() {
   }
 
   const inputCls =
-    'w-full bg-transparent border-b border-noir-border focus:border-noir-accent outline-none py-3 font-body text-base text-noir-text placeholder:text-noir-text/30 transition-colors'
+    'w-full bg-transparent border-b border-noir-border focus:border-noir-accent outline-none py-3 font-body text-base text-noir-text placeholder:text-noir-text/55 transition-colors'
 
   const mapsHref = `https://maps.google.com/?q=${encodeURIComponent(`${site.address.line1} ${site.address.line2}`)}`
 
@@ -40,7 +40,7 @@ export default function ContactSplit() {
             <img src={images.contact} alt="" loading="lazy" className="w-full h-full object-cover" />
           </div>
           {/* Editoryal metin plakası: görsele bilinçli taşar, kontrast garanti */}
-          <div className="relative z-20 -mt-10 lg:-mt-14 ml-4 lg:ml-8 inline-block bg-noir-bg px-5 py-4 border-l-2 border-noir-accent shadow-[0_20px_60px_rgba(14,12,9,0.7)]">
+          <div className="relative z-20 -mt-10 lg:-mt-14 ml-4 lg:ml-8 inline-block bg-noir-bg px-5 py-4 border border-noir-accent/30 shadow-[0_20px_60px_rgba(14,12,9,0.7)]">
             <p className="font-display text-[clamp(1.7rem,2.6vw,2.6rem)] leading-[1.12] text-noir-text">
               {site.address.line1}
             </p>
@@ -68,7 +68,7 @@ export default function ContactSplit() {
               </li>
             ))}
           </ul>
-          <p className="font-display italic text-sm text-noir-text/40 mt-3">{contactPage.hoursNote}</p>
+          <p className="font-display italic text-sm text-noir-text/60 mt-3">{contactPage.hoursNote}</p>
         </div>
 
         {/* Harita kartı */}
