@@ -98,6 +98,7 @@ export default function MenuExperience() {
               return (
                 <li key={item.id} className="menu-row">
                   <button
+                    type="button"
                     onMouseEnter={() => setActiveItemId(item.id)}
                     onFocus={() => setActiveItemId(item.id)}
                     onClick={() => setActiveItemId(item.id)}
@@ -153,6 +154,7 @@ export default function MenuExperience() {
             return (
               <button
                 key={id}
+                type="button"
                 onClick={() => selectCategory(id)}
                 aria-pressed={active}
                 className="shrink-0 flex flex-col items-center"
