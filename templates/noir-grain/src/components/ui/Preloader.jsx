@@ -89,7 +89,7 @@ export default function Preloader() {
       >
         000
       </p>
-      <p className="text-xs tracking-[0.4em] uppercase text-noir-text/40 font-body">
+      <p className="text-xs tracking-[0.4em] uppercase text-noir-text/60 font-body">
         {site.tagline}
       </p>
     </div>
