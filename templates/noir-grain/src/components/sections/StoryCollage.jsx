@@ -109,11 +109,11 @@ export default function StoryCollage() {
           <p className="text-xs tracking-[0.4em] uppercase text-noir-accent font-body mb-4 ml-[4vw]">
             {story.eyebrow}
           </p>
-          <h2 className="font-display text-7xl text-noir-text ml-[4vw]">{story.title}</h2>
+          <h2 className="font-display text-7xl text-balance text-noir-text ml-[4vw]">{story.title}</h2>
 
           {/* Editoryal metin plakası: görsele bilinçli taşar, siyah zemin
               kontrastı her koşulda garanti eder */}
-          <p className="story-statement relative z-20 font-display italic text-[clamp(2rem,3vw,4.2rem)] leading-[1.18] text-noir-text max-w-[52vw] -ml-[12vw] mt-12 bg-noir-bg px-8 py-6 border-l-2 border-noir-accent shadow-[0_20px_60px_rgba(14,12,9,0.7)]">
+          <p className="story-statement relative z-20 font-display italic text-[clamp(2rem,3vw,4.2rem)] leading-[1.18] text-balance text-noir-text max-w-[52vw] -ml-[12vw] mt-12 bg-noir-bg px-8 py-6 border border-noir-accent/30 shadow-[0_20px_60px_rgba(14,12,9,0.7)]">
             {story.statement}
           </p>
 

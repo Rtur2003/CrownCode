@@ -181,7 +181,7 @@ export default function ReservationFlow() {
     ) : null
 
   const inputCls =
-    'w-full bg-transparent border-b border-noir-border focus:border-noir-accent outline-none py-3 font-body text-lg text-noir-text placeholder:text-noir-text/30 transition-colors'
+    'w-full bg-transparent border-b border-noir-border focus:border-noir-accent outline-none py-3 font-body text-lg text-noir-text placeholder:text-noir-text/55 transition-colors'
 
   if (sent) {
     return (
@@ -234,7 +234,7 @@ export default function ReservationFlow() {
 
       <div>
         {/* İlerleme */}
-        <p className="relative z-20 font-body text-xs tracking-[0.4em] uppercase text-noir-text/40 mb-6 lg:mb-10">
+        <p className="relative z-20 font-body text-xs tracking-[0.4em] uppercase text-noir-text/60 mb-6 lg:mb-10">
           {labels.chapter} {stepIdx + 1} / {STEPS.length}
         </p>
 
