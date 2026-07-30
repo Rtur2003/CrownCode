@@ -35,7 +35,7 @@ export default function NotFound() {
               <li key={to}>
                 <Link
                   to={to}
-                  className="font-body text-sm tracking-widest uppercase text-noir-text/50 hover:text-noir-accent transition-colors duration-200"
+                  className="inline-block py-2.5 font-body text-sm tracking-widest uppercase text-noir-text/60 hover:text-noir-accent transition-colors duration-200"
                 >
                   {label}
                 </Link>
