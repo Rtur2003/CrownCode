@@ -8,10 +8,15 @@ export const nav = [
   { to: '/iletisim', label: 'İletişim' },
 ]
 
+// Gezinme landmark etiketleri — sayfada iki <nav> var, ayırt edilebilmeli
+export const navLabels = {
+  main: 'Ana gezinme',
+  mobile: 'Alt gezinme',
+}
+
 // Mobil alt bar: nav öğelerinin yanına eklenen doğrudan arama eylemi
 export const mobileBar = {
   call: 'Ara',
-  label: 'Alt gezinme',
 }
 
 export const hero = {

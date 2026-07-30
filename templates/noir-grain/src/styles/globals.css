@@ -55,14 +55,6 @@
     html {
       scroll-behavior: auto;
     }
-
-    /* Tailwind'in animate-* yardımcıları hareket azaltma tercihini kendiliğinden
-       dinlemez; sürekli dönen/nabız atan dekoratif öğeler burada durdurulur.
-       (GSAP tarafı getMediaCapability üzerinden ayrıca kontrol edilir.) */
-    .animate-ping,
-    .animate-pulse {
-      animation: none;
-    }
   }
 }
 
@@ -124,5 +116,17 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .marquee-track { animation: none; }
+  }
+}
+
+/* ── Hareket azaltma: Tailwind animate-* yardımcıları ────────────────────
+   Bu blok bilinçli olarak @layer DIŞINDA. Kural `base` katmanına konursa
+   Tailwind'in `utilities` katmanı katman sırası gereği onu ezer ve
+   animasyon durmaz. Katmansız CSS her zaman katmanlı CSS'i geçer.
+   (GSAP tarafı ayrıca getMediaCapability ile kontrol edilir.)          */
+@media (prefers-reduced-motion: reduce) {
+  .animate-ping,
+  .animate-pulse {
+    animation: none;
   }
 }
