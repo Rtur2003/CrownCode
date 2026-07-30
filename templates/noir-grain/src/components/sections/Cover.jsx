@@ -23,7 +23,6 @@ export default function Cover() {
     )
 
     // Katmanlı fare paralaksı: görsel ters yöne, başlık bloğu hafifçe fareye
-    // doğru kayar — iki katman farklı hızda hareket edince 3D derinlik doğar
     if (!isTouch && sectionRef.current) {
       const imgX = gsap.quickTo(imgRef.current, 'xPercent', { duration: 0.8, ease: 'power2.out' })
       const imgY = gsap.quickTo(imgRef.current, 'yPercent', { duration: 0.8, ease: 'power2.out' })
@@ -50,8 +49,7 @@ export default function Cover() {
 
   return (
     <section ref={sectionRef} className="snap-card relative h-svh overflow-hidden flex items-center justify-center" data-story-card>
-      {/* LCP öğesi: gecikmeli yüklenmemeli ve tarayıcı sırasında öne alınmalı.
-          index.html'deki preload ile birlikte çalışır. */}
+      {/* LCP öğesi: gecikmeli yüklenmemeli ve tarayıcı sırasında öne alınmalı. */}
       <img
         ref={imgRef}
         src={images.hero}
