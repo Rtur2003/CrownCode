@@ -690,7 +690,7 @@ function seededChoice<T>(array: T[], seed: number): T {
  * Kullanıcı ID oluştur veya mevcut olanı getir
  */
 export function getUserId(): string {
-  if (typeof window === 'undefined') return 'server'
+  if (typeof window === 'undefined') {return 'server'}
 
   let userId = localStorage.getItem(STORAGE_KEYS.USER_ID)
   if (!userId) {
@@ -843,7 +843,7 @@ export function getEnergyDescription(energy: DestinyCard['energy'], language: 't
  * Tarayıcı konsolundan: clearDestinyData()
  */
 export function clearDestinyData(): void {
-  if (typeof window === 'undefined') return
+  if (typeof window === 'undefined') {return}
   localStorage.removeItem(STORAGE_KEYS.DAILY_DESTINY)
   localStorage.removeItem(STORAGE_KEYS.REVEALED)
   localStorage.removeItem(STORAGE_KEYS.IS_REVERSED)

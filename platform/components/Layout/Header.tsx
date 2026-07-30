@@ -39,7 +39,7 @@ export const Header: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    if (pathname !== '/' || window.location.hash !== '#products') return
+    if (pathname !== '/' || window.location.hash !== '#products') {return}
     const timer = setTimeout(() => {
       document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
       window.history.replaceState(null, '', '/')

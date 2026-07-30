@@ -68,7 +68,7 @@ const SystemStatusPage: NextPage = () => {
 
   useEffect(() => {
     checkServices()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [])
 
   const allOk = services.every((s) => s.status === 'ok')

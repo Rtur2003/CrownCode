@@ -16,20 +16,20 @@ type ParsedSource =
 const YOUTUBE_ID_RE = /^[a-zA-Z0-9_-]{11}$/
 
 const parseTimeOffset = (raw: string | null): number | undefined => {
-  if (!raw) return undefined
+  if (!raw) {return undefined}
   const value = raw.trim().toLowerCase()
   if (/^\d+$/.test(value)) {
     return Number(value)
   }
 
   const matches = value.match(/(\d+)(h|m|s)/g)
-  if (!matches) return undefined
+  if (!matches) {return undefined}
 
   return matches.reduce((total, item) => {
     const amount = Number(item.slice(0, -1))
     const unit = item.slice(-1)
-    if (unit === 'h') return total + amount * 3600
-    if (unit === 'm') return total + amount * 60
+    if (unit === 'h') {return total + amount * 3600}
+    if (unit === 'm') {return total + amount * 60}
     return total + amount
   }, 0)
 }
@@ -55,7 +55,7 @@ const parseYouTubeUrl = (input: string): ParsedSource | null => {
       const parts = path.split('/').filter(Boolean)
       const trackIndex = parts.findIndex((p) => p === 'track')
       const trackId = trackIndex >= 0 ? parts[trackIndex + 1] : null
-      if (!trackId) return null
+      if (!trackId) {return null}
       const normalizedUrl = `https://open.spotify.com/track/${trackId}`
       return { kind: 'spotify', trackId, normalizedUrl }
     }
@@ -183,7 +183,7 @@ export const useYouTubeAnalysis = () => {
 
     const fallbackToPreview = async (warningKey?: string) => {
       await ensureMinDuration()
-      if (isStale()) return
+      if (isStale()) {return}
       const elapsedSec = (Date.now() - startTimeRef.current) / 1000
       const warningsBuffer = warningKey ? [warningKey] : []
       const result = await buildPreviewResult(parsed, url, elapsedSec, warningsBuffer)
@@ -211,11 +211,11 @@ export const useYouTubeAnalysis = () => {
         url
       })
 
-      if (isStale()) return
+      if (isStale()) {return}
 
       if (result) {
         await ensureMinDuration()
-        if (isStale()) return
+        if (isStale()) {return}
         setAnalysisResult(result)
         setProcessingState('complete')
         return
@@ -228,7 +228,7 @@ export const useYouTubeAnalysis = () => {
         setProcessingState('error')
       }
     } catch (fetchError) {
-      if (isStale()) return
+      if (isStale()) {return}
       fallbackToPreview('backend_unreachable')
     }
   }, [apiBaseUrl, url])

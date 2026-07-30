@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           console.log('[SW] Service Worker registered:', registration.scope)
         })
         .catch((error) => {
-          // eslint-disable-next-line no-console
+           
           console.error('[SW] Service Worker registration failed:', error)
         })
     }

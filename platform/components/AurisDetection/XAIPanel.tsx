@@ -193,7 +193,7 @@ function ModelEnsemble({ votes, bestModel, locale }: {
   bestModel: string
   locale: 'tr' | 'en'
 }) {
-  if (!votes.length) return null
+  if (!votes.length) {return null}
   const aiCount = votes.filter(v => v.vote === 'ai').length
   const humanCount = votes.length - aiCount
 

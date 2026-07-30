@@ -403,8 +403,8 @@ export function formatDreamDate(dateStr: string, language: 'tr' | 'en'): string 
   const diffTime = now.getTime() - date.getTime()
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
 
-  if (diffDays === 0) return language === 'tr' ? 'Bugün' : 'Today'
-  if (diffDays === 1) return language === 'tr' ? 'Dün' : 'Yesterday'
+  if (diffDays === 0) {return language === 'tr' ? 'Bugün' : 'Today'}
+  if (diffDays === 1) {return language === 'tr' ? 'Dün' : 'Yesterday'}
   if (diffDays < 7) {
     const weekdays = language === 'tr'
       ? ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi']
@@ -419,7 +419,7 @@ export function formatDreamDate(dateStr: string, language: 'tr' | 'en'): string 
 }
 
 export function truncateDreamContent(text: string, maxLength: number = 80): string {
-  if (text.length <= maxLength) return text
+  if (text.length <= maxLength) {return text}
   return text.slice(0, maxLength) + '...'
 }
 
@@ -432,17 +432,17 @@ export function getEmotionColor(emotion: EmotionType): string {
 }
 
 export function getLucidityLevel(lucidity: number, language: 'tr' | 'en'): string {
-  if (lucidity >= 80) return language === 'tr' ? 'Tam Kontrol' : 'Full Control'
-  if (lucidity >= 60) return language === 'tr' ? 'Yüksek Farkındalık' : 'High Awareness'
-  if (lucidity >= 40) return language === 'tr' ? 'Orta Düzey' : 'Moderate'
-  if (lucidity >= 20) return language === 'tr' ? 'Hafif Farkındalık' : 'Glimpses'
+  if (lucidity >= 80) {return language === 'tr' ? 'Tam Kontrol' : 'Full Control'}
+  if (lucidity >= 60) {return language === 'tr' ? 'Yüksek Farkındalık' : 'High Awareness'}
+  if (lucidity >= 40) {return language === 'tr' ? 'Orta Düzey' : 'Moderate'}
+  if (lucidity >= 20) {return language === 'tr' ? 'Hafif Farkındalık' : 'Glimpses'}
   return language === 'tr' ? 'Lüsid Değil' : 'Non-Lucid'
 }
 
 export function getSleepQualityLabel(quality: number, language: 'tr' | 'en'): string {
-  if (quality >= 90) return language === 'tr' ? 'Mükemmel' : 'Excellent'
-  if (quality >= 70) return language === 'tr' ? 'İyi' : 'Good'
-  if (quality >= 50) return language === 'tr' ? 'Orta' : 'Fair'
-  if (quality >= 30) return language === 'tr' ? 'Zayıf' : 'Poor'
+  if (quality >= 90) {return language === 'tr' ? 'Mükemmel' : 'Excellent'}
+  if (quality >= 70) {return language === 'tr' ? 'İyi' : 'Good'}
+  if (quality >= 50) {return language === 'tr' ? 'Orta' : 'Fair'}
+  if (quality >= 30) {return language === 'tr' ? 'Zayıf' : 'Poor'}
   return language === 'tr' ? 'Çok Zayıf' : 'Very Poor'
 }

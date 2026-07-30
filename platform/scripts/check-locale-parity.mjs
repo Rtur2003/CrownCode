@@ -54,8 +54,8 @@ function getNestedValue(obj, path) {
     const re = /^([^[]*)?(?:\[(\d+)\])?$/
     const m = seg.match(re)
     if (m) {
-      if (m[1] !== undefined && m[1] !== '') parts.push(m[1])
-      if (m[2] !== undefined) parts.push(Number(m[2]))
+      if (m[1] !== undefined && m[1] !== '') {parts.push(m[1])}
+      if (m[2] !== undefined) {parts.push(Number(m[2]))}
     } else {
       parts.push(seg)
     }
@@ -65,7 +65,7 @@ function getNestedValue(obj, path) {
 }
 
 function extractPlaceholders(str) {
-  if (typeof str !== 'string') return []
+  if (typeof str !== 'string') {return []}
   const matches = str.match(/\{\{?\w+\}?\}/g)
   return matches ? matches.sort() : []
 }
@@ -88,7 +88,7 @@ for (const key of trKeys) {
 
 // 2. Array length parity check
 for (const key of enKeys) {
-  if (!trKeys.has(key)) continue
+  if (!trKeys.has(key)) {continue}
   const enVal = getNestedValue(en, key)
   const trVal = getNestedValue(tr, key)
   if (Array.isArray(enVal) && Array.isArray(trVal) && enVal.length !== trVal.length) {
@@ -98,7 +98,7 @@ for (const key of enKeys) {
 
 // 3. Placeholder parity check (only for keys present in both)
 for (const key of enKeys) {
-  if (!trKeys.has(key)) continue
+  if (!trKeys.has(key)) {continue}
   const enVal = getNestedValue(en, key)
   const trVal = getNestedValue(tr, key)
   const enPh = extractPlaceholders(enVal)

@@ -62,7 +62,7 @@ export const useSearch = () => {
 
   // Search function
   const search = useCallback((searchQuery: string): SearchItem[] => {
-    if (!searchQuery.trim()) return searchItems
+    if (!searchQuery.trim()) {return searchItems}
 
     const lowercaseQuery = searchQuery.toLowerCase()
 

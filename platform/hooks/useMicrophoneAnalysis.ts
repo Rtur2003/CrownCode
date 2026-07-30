@@ -16,10 +16,10 @@ const MAX_RECORD_MS = 30_000
 const MIN_RECORD_MS = 1_500
 
 const pickMimeType = (): string => {
-  if (typeof MediaRecorder === 'undefined') return 'audio/webm'
+  if (typeof MediaRecorder === 'undefined') {return 'audio/webm'}
   const candidates = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4;codecs=mp4a.40.2', 'audio/mp4']
   for (const type of candidates) {
-    if (MediaRecorder.isTypeSupported(type)) return type
+    if (MediaRecorder.isTypeSupported(type)) {return type}
   }
   return ''
 }
@@ -124,7 +124,7 @@ export const useMicrophoneAnalysis = () => {
 
   const pollAmplitude = useCallback(() => {
     const analyser = analyserRef.current
-    if (!analyser) return
+    if (!analyser) {return}
     const data = new Uint8Array(analyser.frequencyBinCount)
     analyser.getByteTimeDomainData(data)
     let sum = 0
@@ -271,7 +271,7 @@ export const useMicrophoneAnalysis = () => {
 
   const stopRecording = useCallback(() => {
     const recorder = mediaRecorderRef.current
-    if (!recorder) return
+    if (!recorder) {return}
     if (recorder.state === 'recording') {
       setMicState('stopping')
       setProcessingState('downloading')

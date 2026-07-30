@@ -92,7 +92,7 @@ const COMMEND_ERROR_CODE_MAP: Record<string, keyof CommendMessages> = {
 }
 
 const mapCommendErrorCode = (code: string | undefined, msgs: CommendMessages): string | undefined => {
-  if (!code) return undefined
+  if (!code) {return undefined}
   const key = COMMEND_ERROR_CODE_MAP[code]
   return key ? msgs[key] : undefined
 }
@@ -163,7 +163,7 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
         })
       })
 
-      if (isStale()) return
+      if (isStale()) {return}
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ detail: {} }))
@@ -175,7 +175,7 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
 
       const data: GenerateResponse = await response.json()
 
-      if (isStale()) return
+      if (isStale()) {return}
 
       setGeneratedComment(data.generatedText)
       setVideoDetails(data.videoDetails)
@@ -185,7 +185,7 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
       saveCommend(videoUrl, { comment: data.generatedText, videoTitle: data.videoDetails?.title ?? '' })
 
     } catch (err) {
-      if (isStale()) return
+      if (isStale()) {return}
       const message = err instanceof Error ? err.message : i18nMessages.failedToGenerate
       setError({ code: 'generate_failed', message })
       setState('error')

@@ -43,11 +43,11 @@ export const useKeyboardShortcuts = ({
         const { key, modifiers = [], callback, allowInInput } = shortcut
 
         // Skip non-allowed shortcuts when user is typing
-        if (isInputFocused && !allowInInput) continue
+        if (isInputFocused && !allowInInput) {continue}
 
         // Check if key matches
         const keyMatch = event.key.toLowerCase() === key.toLowerCase()
-        if (!keyMatch) continue
+        if (!keyMatch) {continue}
 
         // Check modifiers
         const ctrlMatch = modifiers.includes('ctrl') || modifiers.includes('cmd')

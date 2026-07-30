@@ -68,8 +68,8 @@ self.addEventListener('fetch', (event) => {
   const { request } = event
   const url = new URL(request.url)
 
-  if (request.method !== 'GET') return
-  if (url.origin !== location.origin) return
+  if (request.method !== 'GET') {return}
+  if (url.origin !== location.origin) {return}
 
   // Network-first for pages with daily/dynamic content
   if (NETWORK_FIRST_PAGES.includes(url.pathname)) {
@@ -98,7 +98,7 @@ self.addEventListener('fetch', (event) => {
 
 async function cacheFirst(request) {
   const cached = await caches.match(request)
-  if (cached) return cached
+  if (cached) {return cached}
 
   try {
     const response = await fetch(request)
@@ -125,7 +125,7 @@ async function networkFirst(request) {
     return response
   } catch {
     const cached = await caches.match(request)
-    if (cached) return cached
+    if (cached) {return cached}
     if (request.mode === 'navigate') {
       return caches.match('/offline.html')
     }

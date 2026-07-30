@@ -28,12 +28,12 @@ const ALLOWED_EXTENSIONS = new Set(['.mp3', '.wav', '.flac', '.m4a', '.mp4', '.a
 
 const getFileExtension = (fileName: string) => {
   const dotIndex = fileName.lastIndexOf('.')
-  if (dotIndex === -1) return ''
+  if (dotIndex === -1) {return ''}
   return fileName.slice(dotIndex).toLowerCase()
 }
 
 const isSafeFileName = (fileName: string) => {
-  if (!fileName.trim()) return false
+  if (!fileName.trim()) {return false}
   if (fileName.includes('..') || fileName.includes('/') || fileName.includes('\\')) {
     return false
   }
@@ -205,7 +205,7 @@ export const useFileAnalysis = () => {
           `Note: Analysis completed with limited backend availability.`
         ]
       }
-      if (isStale()) return
+      if (isStale()) {return}
       setAnalysisResult(preview)
       setProcessingState('complete')
     }
@@ -224,7 +224,7 @@ export const useFileAnalysis = () => {
         file: selectedFile
       })
 
-      if (isStale()) return
+      if (isStale()) {return}
 
       if (result) {
         setAnalysisResult(result)
@@ -239,7 +239,7 @@ export const useFileAnalysis = () => {
         setProcessingState('error')
       }
     } catch (fetchError) {
-      if (isStale()) return
+      if (isStale()) {return}
       fallbackToPreview('backend_unreachable')
     }
   }, [apiBaseUrl, selectedFile, validateFile])

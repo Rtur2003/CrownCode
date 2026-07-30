@@ -19,7 +19,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   useEffect(() => {
     // SSR safe check - localStorage only available in browser
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined') {return}
 
     const savedLang = localStorage.getItem('language') as Language
     if (savedLang && (savedLang === 'tr' || savedLang === 'en')) {

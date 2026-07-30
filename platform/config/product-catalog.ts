@@ -172,9 +172,9 @@ export const FOOTER_PRODUCT_LOCALE_MAP: Record<FooterProductId, string> = {
  */
 export function getProductHref(id: string): string {
   const catalogEntry = PRODUCT_CATALOG.find((e) => e.id === id)
-  if (catalogEntry) return catalogEntry.href
+  if (catalogEntry) {return catalogEntry.href}
   const registryEntry = SEARCH_REGISTRY.find((e) => e.id === id)
-  if (registryEntry) return registryEntry.href
+  if (registryEntry) {return registryEntry.href}
   return '/'
 }
 

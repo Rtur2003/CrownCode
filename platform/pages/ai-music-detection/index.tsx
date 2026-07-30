@@ -138,7 +138,7 @@ const AIMusicDetectionPage: NextPage = () => {
 
   const handleTabChange = useCallback(
     (tab: 'file' | 'youtube' | 'mic') => {
-      if (tab === activeSource) return
+      if (tab === activeSource) {return}
       resetYouTube()
       resetFile()
       mic.reset()

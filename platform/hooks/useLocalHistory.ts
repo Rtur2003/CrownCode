@@ -25,14 +25,14 @@ function generateId(): string {
 function readAll<T>(key: string): HistoryEntry<T>[] {
   try {
     const raw = localStorage.getItem(key)
-    if (!raw) return []
+    if (!raw) {return []}
     const parsed = JSON.parse(raw)
     // Migrate from V1 single-entry format
     if (parsed && !Array.isArray(parsed) && typeof parsed.timestamp === 'number') {
       const migrated = { ...parsed, id: parsed.id || generateId() } as HistoryEntry<T>
       return [migrated]
     }
-    if (!Array.isArray(parsed)) return []
+    if (!Array.isArray(parsed)) {return []}
     // Backfill id for entries missing it
     return parsed.map((e: HistoryEntry<T>) => (e.id ? e : { ...e, id: generateId() }))
   } catch {
@@ -58,7 +58,7 @@ function clearKey(key: string): void {
 
 export function useLocalHistory<T>(storageKey: string) {
   const [entries, setEntries] = useState<HistoryEntry<T>[]>(() => {
-    if (typeof window === 'undefined') return []
+    if (typeof window === 'undefined') {return []}
     return readAll<T>(storageKey)
   })
 
