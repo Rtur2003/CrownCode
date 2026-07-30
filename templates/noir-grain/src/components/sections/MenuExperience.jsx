@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { categories, menuItems } from '../../data/menu.js'
@@ -12,18 +12,29 @@ import { getMediaCapability } from '../../hooks/useMediaCapability.js'
 // (mürekkep crossfade), üzerinde dev editoryal yemek indeksi yüzer.
 export default function MenuExperience() {
   const [activeCat, setActiveCat] = useState(categories[0].id)
-  const items = menuItems.filter(i => i.category === activeCat)
-  const [activeItemId, setActiveItemId] = useState(items[0]?.id)
+  const [activeItemId, setActiveItemId] = useState(null)
   const listRef = useRef(null)
 
-  const catImages = items.map(i => images.dishes[i.id])
-  const activeIndex = Math.max(0, items.findIndex(i => i.id === activeItemId))
-  const activeItem = items.find(i => i.id === activeItemId)
+  const items = useMemo(() => menuItems.filter(i => i.category === activeCat), [activeCat])
 
-  // Kategori değişince öğeler stagger ile girer, aktif görsel sıfırlanır
+  // WebGLCrossfade bu diziyi effect bağımlılığı olarak kullanır. Memoize
+  // edilmezse her hover'da yeni referans doğar ve WebGL context'i baştan
+  // kurulur — tarayıcının context limiti dolup canvas ölür.
+  const catImages = useMemo(() => items.map(i => images.dishes[i.id]), [items])
+
+  // Aktif öğe türetilir: kategori değişiminde activeItemId bir an eski
+  // kategoriyi işaret ettiği için ilk öğeye düşülür (state'i effect içinde
+  // set etmek fazladan render ve tek karelik 'undefined' penceresi yaratıyordu).
+  const activeItem = items.find(i => i.id === activeItemId) ?? items[0]
+  const activeIndex = Math.max(0, items.findIndex(i => i.id === activeItem?.id))
+
+  const selectCategory = (id) => {
+    setActiveCat(id)
+    setActiveItemId(menuItems.find(i => i.category === id)?.id ?? null)
+  }
+
+  // Kategori değişince öğeler stagger ile girer
   useGSAP(() => {
-    setActiveItemId(menuItems.find(i => i.category === activeCat)?.id)
-
     const { reducedMotion } = getMediaCapability()
     if (reducedMotion || !listRef.current) return
     const rows = listRef.current.querySelectorAll('.menu-row')
@@ -51,7 +62,7 @@ export default function MenuExperience() {
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-noir-bg to-transparent" />
         </div>
 
-        <div className="relative z-10 flex gap-[4vw] px-[6vw] pb-32 min-h-svh">
+        <div className="relative z-10 flex items-start gap-[4vw] px-[6vw] pb-32 min-h-svh">
           {/* Kategori rayı — roma rakamları tadım sırasını taşır */}
           <nav className="sticky top-40 self-start flex flex-col gap-8 pt-2 shrink-0" aria-label="Menü kategorileri">
             {categories.map(({ id, label, numeral }) => {
@@ -59,7 +70,7 @@ export default function MenuExperience() {
               return (
                 <Magnetic key={id} strength={0.3}>
                   <button
-                    onClick={() => setActiveCat(id)}
+                    onClick={() => selectCategory(id)}
                     aria-pressed={active}
                     className="group flex flex-col items-start transition-colors duration-300"
                   >
@@ -84,7 +95,8 @@ export default function MenuExperience() {
           </nav>
 
           {/* Dev yemek indeksi */}
-          <ul ref={listRef} className="flex-1 max-w-4xl pt-2">
+          <div className="flex-1 max-w-4xl pt-2">
+          <ul ref={listRef}>
             {items.map((item) => {
               const active = item.id === activeItemId
               return (
@@ -130,8 +142,10 @@ export default function MenuExperience() {
                 </li>
               )
             })}
-            <p className="font-body text-xs text-noir-text/40 mt-10">{menuPage.note}</p>
           </ul>
+          {/* <ul> yalnızca <li> barındırabilir — bu not listenin dışına alındı. */}
+          <p className="font-body text-xs text-noir-text/40 mt-10">{menuPage.note}</p>
+          </div>
         </div>
       </div>
 
@@ -143,7 +157,7 @@ export default function MenuExperience() {
             return (
               <button
                 key={id}
-                onClick={() => setActiveCat(id)}
+                onClick={() => selectCategory(id)}
                 aria-pressed={active}
                 className="shrink-0 flex flex-col items-center"
               >
