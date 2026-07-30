@@ -1,6 +1,6 @@
 // ─────────────────────────────────────────────────────────────
 // ŞABLON ÖZELLEŞTİRME: TÜM görseller bu dosyadan yönetilir.
-// Satın aldığınız görselleri /public/images/ altına koyup
+// Gorselleri /public/images/ altina koyup URL'leri degistirmeniz yeterli
 // URL'leri '/images/dosya.jpg' ile değiştirmeniz yeterli.
 // Mevcut URL'ler Unsplash'ten geçici örneklerdir.
 // ─────────────────────────────────────────────────────────────

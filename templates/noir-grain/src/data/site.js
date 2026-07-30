@@ -1,7 +1,4 @@
 // ─────────────────────────────────────────────────────────────
-// ŞABLON ÖZELLEŞTİRME: Restoran bilgilerinizi buradan değiştirin.
-// Bu dosya dışında hiçbir bileşende iletişim bilgisi yoktur.
-// ─────────────────────────────────────────────────────────────
 export const site = {
   name: 'Noir & Grain',
   tagline: 'Fine Dining & Kokteyl Bar',
@@ -13,8 +10,7 @@ export const site = {
     line1: 'Karaköy Mah., Bankalar Cd. No:12',
     line2: 'Beyoğlu, İstanbul',
   },
-  // Not: Harita gömülü iframe ile değil, yukarıdaki adresten üretilen bir
-  // "yol tarifi" bağlantısıyla verilir (üçüncü taraf çerezi ve ek yük yok).
+// Harita: iframe yerine adresten uretilen yol tarifi baglantisi
   hours: [
     { days: 'Salı – Perşembe', time: '18:00 – 00:00' },
     { days: 'Cuma – Cumartesi', time: '18:00 – 02:00' },

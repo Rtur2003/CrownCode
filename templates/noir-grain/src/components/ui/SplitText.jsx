@@ -16,7 +16,7 @@ export default function SplitText({
   delay = 0,
 }) {
   const containerRef = useRef(null)
-  // Kaynak metin DOM'dan değil prop'tan okunur. DOM'dan okunduğunda effect
+  // Kaynak prop'tan okunur: DOM'dan okumak bolunmus cikti'yi tekrar boluyordu
   const text = typeof children === 'string' ? children : ''
 
   useGSAP(() => {
@@ -33,7 +33,7 @@ export default function SplitText({
         `<span class="inline-block overflow-hidden mr-[0.25em]"><span class="split-word inline-block">${escapeHtml(word)}</span></span>`
       )
 
-    // Parçalanmış görsel katman ekran okuyuculardan saklanır (harf harf
+    // Parcalanmis katman aria-hidden, gercek metin sr-only kopyada
     el.innerHTML =
       `<span class="sr-only">${escapeHtml(text)}</span>` +
       `<span aria-hidden="true">${pieces.join('')}</span>`
