@@ -18,7 +18,6 @@ export default function ContactSplit() {
       body: `${form.message}\n\n${form.name}\n${form.email}`,
     })
     // mailto: gezinmesi sessizce başarısız olabilir (istemci tanımlı değilse).
-    // Kullanıcı hiç geri bildirim almadan kalmasın.
     setSent(true)
   }
 
