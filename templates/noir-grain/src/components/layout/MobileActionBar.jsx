@@ -3,7 +3,6 @@ import { nav, mobileBar, navLabels } from '../../data/content.js'
 import { site } from '../../data/site.js'
 
 // Mobil "Cep Servisi": hamburger yerine başparmak-dostu sabit alt bar.
-// Masaüstünde görünmez; navigasyonun tamamını üstlenir.
 export default function MobileActionBar() {
   const location = useLocation()
 
@@ -13,8 +12,7 @@ export default function MobileActionBar() {
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       aria-label={navLabels.mobile}
     >
-      {/* flex + flex-1: sabit grid-cols-4 idi, content.js'e dördüncü bir nav
-          öğesi eklenince beşinci hücre alt satıra taşıp barı bozuyordu. */}
+      {/* flex-1: sabit grid-cols-4 4. nav ogesinde alt satira tasiyordu */}
       <div className="flex">
         {nav.map(({ to, label }) => {
           const active = location.pathname === to
