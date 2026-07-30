@@ -16,7 +16,7 @@ export default function Wordmark({ className = '', compact = false }) {
   const gradientId = `wm-gold-${useId()}`
 
   // Başağın tane sıraları: gövdeye simetrik, yukarı doğru açılı.
-  const kernelRows = [11.9, 14.9, 17.9]
+  const kernelRows = [13, 17, 21]
 
   return (
     <span lang="en" className={`inline-flex items-center gap-3 ${className}`}>
