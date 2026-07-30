@@ -17,7 +17,6 @@ function CornerMark({ className }) {
 }
 
 // "Davetiye Kartı": loş servis fotoğrafı üzerinde çift çizgili altın
-// çerçeve — fiziksel bir davetiyenin ekrana büyümüş hali.
 export default function ReserveInvite() {
   const frame = (
     <div className="relative h-full w-full border border-noir-accent/40 p-[6px]">
@@ -30,8 +29,7 @@ export default function ReserveInvite() {
         <p className="text-xs tracking-[0.4em] uppercase text-noir-accent font-body mb-6">
           {invite.eyebrow}
         </p>
-        {/* Başlık content.js'ten gelir — önceden burada sabit yazılıydı ve
-            invite.title'ı düzenlemek hiçbir şeyi değiştirmiyordu. */}
+        {/* Başlık content.js'ten gelir — önceden burada sabit yazılıydı ve */}
         <h2 className="font-display text-[clamp(2.6rem,6vw,5.5rem)] leading-[1.05] text-noir-text">
           {invite.titleLines.map((line, i) => (
             <span key={line} className={i === 0 ? 'block' : 'block italic text-noir-accent'}>
