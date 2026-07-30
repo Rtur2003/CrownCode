@@ -8,9 +8,6 @@ import Wordmark from './Wordmark.jsx'
 const SEEN_KEY = 'ng_seen'
 
 // Safari gizli sekme / kısıtlı çerez ayarlarında sessionStorage erişimi
-// exception atar. Sarmalanmazsa preloader hiç bitmez: tam ekran katman
-// kalkmaz ve 'preloader:done' beklediği için tüm SplitText başlıkları
-// görünmez kalır.
 function hasSeen() {
   try {
     return Boolean(sessionStorage.getItem(SEEN_KEY))
