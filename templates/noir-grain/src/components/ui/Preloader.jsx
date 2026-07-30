@@ -7,6 +7,26 @@ import Wordmark from './Wordmark.jsx'
 
 const SEEN_KEY = 'ng_seen'
 
+// Safari gizli sekme / kısıtlı çerez ayarlarında sessionStorage erişimi
+// exception atar. Sarmalanmazsa preloader hiç bitmez: tam ekran katman
+// kalkmaz ve 'preloader:done' beklediği için tüm SplitText başlıkları
+// görünmez kalır.
+function hasSeen() {
+  try {
+    return Boolean(sessionStorage.getItem(SEEN_KEY))
+  } catch {
+    return false
+  }
+}
+
+function markSeen() {
+  try {
+    sessionStorage.setItem(SEEN_KEY, '1')
+  } catch {
+    // Depolama yok — her ziyarette uzun sayaç gösterilir, kritik değil.
+  }
+}
+
 function finish() {
   document.documentElement.dataset.preloaderDone = '1'
   document.dispatchEvent(new CustomEvent('preloader:done'))
@@ -25,13 +45,12 @@ export default function Preloader() {
       return
     }
 
-    const seen = sessionStorage.getItem(SEEN_KEY)
-    const countDuration = seen ? 0.5 : 1.6
+    const countDuration = hasSeen() ? 0.5 : 1.6
     const counter = { value: 0 }
 
     const tl = gsap.timeline({
       onComplete: () => {
-        sessionStorage.setItem(SEEN_KEY, '1')
+        markSeen()
         setDone(true)
         finish()
       },

@@ -3,6 +3,9 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { getMediaCapability } from '../../hooks/useMediaCapability.js'
 
+const ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;' }
+const escapeHtml = s => s.replace(/[&<>]/g, c => ESCAPES[c])
+
 // Metni karakter/kelime span'lerine böler; `animate` verilirse
 // preloader bittikten sonra maske altından stagger ile açar.
 export default function SplitText({
@@ -14,27 +17,31 @@ export default function SplitText({
   delay = 0,
 }) {
   const containerRef = useRef(null)
+  // Kaynak metin DOM'dan değil prop'tan okunur. DOM'dan okunduğunda effect
+  // ikinci kez koştuğunda zaten bölünmüş çıktıyı tekrar bölüyordu: kelime
+  // modunda boşluklar margin'e dönüştüğü için tüm satır tek kelimeye
+  // yapışıyor, karakter modunda ise boşluklar NBSP olarak geri geliyordu.
+  const text = typeof children === 'string' ? children : ''
 
   useGSAP(() => {
     const el = containerRef.current
-    if (!el) return
-    const text = el.textContent || ''
-    el.setAttribute('aria-label', text)
+    if (!el || !text) return
 
-    if (type === 'chars') {
-      el.innerHTML = text
-        .split('')
-        .map(char => char === ' '
-          ? '<span class="inline-block">&nbsp;</span>'
-          : `<span class="inline-block overflow-hidden"><span class="split-char inline-block">${char}</span></span>`
-        )
-        .join('')
-    } else {
-      el.innerHTML = text
-        .split(' ')
-        .map(word => `<span class="inline-block overflow-hidden mr-[0.25em]"><span class="split-word inline-block">${word}</span></span>`)
-        .join('')
-    }
+    const pieces = type === 'chars'
+      // Array.from: kod noktası bazlı böler, surrogate çiftlerini kırmaz.
+      ? Array.from(text).map(char => char === ' '
+        ? '<span class="inline-block">&nbsp;</span>'
+        : `<span class="inline-block overflow-hidden"><span class="split-char inline-block">${escapeHtml(char)}</span></span>`
+      )
+      : text.split(/\s+/).filter(Boolean).map(word =>
+        `<span class="inline-block overflow-hidden mr-[0.25em]"><span class="split-word inline-block">${escapeHtml(word)}</span></span>`
+      )
+
+    // Parçalanmış görsel katman ekran okuyuculardan saklanır (harf harf
+    // okunmasın); erişilebilir metin sr-only kopyada durur.
+    el.innerHTML =
+      `<span class="sr-only">${escapeHtml(text)}</span>` +
+      `<span aria-hidden="true">${pieces.join('')}</span>`
 
     if (!animate) return
     const { reducedMotion } = getMediaCapability()
@@ -62,7 +69,7 @@ export default function SplitText({
     return () => {
       document.removeEventListener('preloader:done', play)
     }
-  }, { dependencies: [children, type, animate, delay], scope: containerRef })
+  }, { dependencies: [text, type, animate, delay], scope: containerRef })
 
   return (
     <Tag ref={containerRef} className={className}>

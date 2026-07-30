@@ -91,6 +91,20 @@
     }
   }
 
+  /* Rezervasyon not kartının mumlu mührü — büyük gelip yerine basılır.
+     Mount anında sealed=true render edildiği için CSS geçişi değil
+     keyframe gerekiyor (geçişin başlangıç durumu olmaz). */
+  .seal-stamp {
+    animation: seal-stamp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+  }
+  @keyframes seal-stamp {
+    from { transform: scale(2.4) rotate(-14deg); opacity: 0; }
+    to   { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .seal-stamp { animation: none; }
+  }
+
   /* Akan yazı bandı */
   .marquee-track {
     animation: marquee 28s linear infinite;

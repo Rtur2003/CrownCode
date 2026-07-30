@@ -22,7 +22,3 @@ export function getMediaCapability() {
   cached = { reducedMotion, isTouch, hasWebGL }
   return cached
 }
-
-export function useMediaCapability() {
-  return getMediaCapability()
-}

@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { site } from '../../data/site.js'
 import { reservation } from '../../data/content.js'
 import { images } from '../../data/images.js'
-import { buildWhatsAppLink, buildMailtoLink } from '../../utils/links.js'
+import { buildWhatsAppLink, buildMailtoLink, toTrDate } from '../../utils/links.js'
 import { getMediaCapability } from '../../hooks/useMediaCapability.js'
 
 gsap.registerPlugin(useGSAP)
@@ -24,7 +24,6 @@ const STEP_FIELDS = {
 }
 
 const todayIso = () => new Date().toISOString().slice(0, 10)
-const toTrDate = (iso) => (iso ? iso.split('-').reverse().join('.') : '')
 
 const schema = z.object({
   guests: z.number().min(1, 'Lütfen kişi sayısını seçin.').max(12, '1 ile 12 arasında kişi sayısı seçin.'),
@@ -64,16 +63,23 @@ function NoteCard({ values, sealed }) {
       {line('Kişi', values.guests > 0 ? String(values.guests) : '')}
       {values.note?.trim() ? line('Not', values.note.trim()) : null}
 
-      {/* Mühür: gönderimde amblem damgalanır */}
+      {/* Mühür: gönderimde marka amblemi mum mührü gibi damgalanır */}
       <span
-        className={`seal absolute -right-4 -bottom-4 w-16 h-16 rounded-full bg-noir-wine flex items-center justify-center shadow-lg transition-transform ${
-          sealed ? 'scale-100' : 'scale-0'
+        className={`absolute -right-4 -bottom-4 w-16 h-16 rounded-full bg-noir-wine flex items-center justify-center shadow-lg ${
+          sealed ? 'seal-stamp' : 'scale-0'
         }`}
         aria-hidden="true"
       >
         <svg viewBox="0 0 32 32" className="w-8 h-8">
-          <circle cx="16" cy="16" r="13" fill="none" stroke="#C89B5A" strokeWidth="1" />
-          <rect x="12.5" y="12.5" width="7" height="7" fill="none" stroke="#C89B5A" strokeWidth="1" transform="rotate(45 16 16)" />
+          <g fill="#C89B5A" stroke="#C89B5A">
+            <circle cx="16" cy="16" r="13" fill="none" strokeWidth="1" />
+            <path d="M16 23.4V10.6" fill="none" strokeWidth="1.1" strokeLinecap="round" />
+            <ellipse cx="16" cy="10.4" rx="1" ry="2.3" stroke="none" />
+            <ellipse cx="0" cy="0" rx="1.1" ry="2.4" stroke="none" transform="translate(18.1 14.3) rotate(30)" />
+            <ellipse cx="0" cy="0" rx="1.1" ry="2.4" stroke="none" transform="translate(13.9 14.3) rotate(-30)" />
+            <ellipse cx="0" cy="0" rx="1.1" ry="2.4" stroke="none" transform="translate(18.1 18.4) rotate(30)" />
+            <ellipse cx="0" cy="0" rx="1.1" ry="2.4" stroke="none" transform="translate(13.9 18.4) rotate(-30)" />
+          </g>
         </svg>
       </span>
     </div>
@@ -113,7 +119,7 @@ export default function ReservationFlow() {
   useGSAP(() => {
     if (!sent || !successRef.current) return
     const tl = gsap.timeline()
-    tl.fromTo('.success-ring', { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: 'elastic.out(1, 0.5)' })
+    tl.fromTo('.success-ring', { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, ease: 'power4.out' })
       .fromTo('.success-text', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power2.out' }, '-=0.4')
   }, { dependencies: [sent], scope: successRef })
 
@@ -128,10 +134,28 @@ export default function ReservationFlow() {
 
   const goBack = () => setStepIdx(i => Math.max(i - 1, 0))
 
+  // Tek <form>: ara adımlarda Enter / mobil klavyedeki "Git" sonraki fasla
+  // geçirir, son adımda gerçek gönderim koşar. Form öğesi olmadan bu akış
+  // yalnızca fareyle çalışıyordu.
+  const onFormSubmit = (event) => {
+    if (!isLast) {
+      event.preventDefault()
+      goNext()
+      return
+    }
+    handleSubmit(onSubmit)(event)
+  }
+
   const onSubmit = async (data) => {
     // Gerçek gönderim: kullanıcı hareketiyle senkron aç (popup engeline takılmaz).
     // Şablon backend'siz çalışır — talep, önceden yazılmış WhatsApp mesajı olarak iletilir.
-    window.open(buildWhatsAppLink(site.whatsapp, data), '_blank', 'noopener')
+    const waLink = buildWhatsAppLink(site.whatsapp, data)
+    // Popup engellendiyse aynı sekmede aç: aksi halde kullanıcıya "iletildi"
+    // denip hiçbir mesaj gönderilmemiş olur.
+    if (!window.open(waLink, '_blank', 'noopener')) {
+      window.location.href = waLink
+      return
+    }
     const { reducedMotion } = getMediaCapability()
     if (!reducedMotion) {
       setIsSubmitting(true)
@@ -177,15 +201,23 @@ export default function ReservationFlow() {
 
   if (isSubmitting) {
     return (
-      <div className="text-center py-32 flex flex-col items-center justify-center">
-        <span className="block w-12 h-12 rounded-full border-t-2 border-r-2 border-noir-accent animate-spin mb-8" aria-hidden="true" />
-        <p className="font-display italic text-2xl text-noir-text/70 animate-pulse">Masanız adınıza ayrılıyor…</p>
+      <div className="py-20 flex flex-col items-center justify-center gap-12" role="status">
+        {/* Tasarımın "kart mühürlenip gönderilir" adımı. Önceden bu ekran
+            yalnızca spinner gösterdiği için mühür animasyonu hiç görünmüyordu. */}
+        <NoteCard values={formValues} sealed />
+        <p className="font-display italic text-2xl text-noir-text/70 text-center">
+          Masanız adınıza ayrılıyor…
+        </p>
       </div>
     )
   }
 
   return (
-    <div className="relative lg:grid lg:grid-cols-[1fr,26rem] lg:gap-16">
+    <form
+      noValidate
+      onSubmit={onFormSubmit}
+      className="relative lg:grid lg:grid-cols-[1fr,26rem] lg:gap-16"
+    >
       {/* z-0: dev adım numarası filigranı */}
       <span className="watermark text-[20vw] lg:text-[12vw] right-4 top-0 lg:-top-10 tabular-nums" aria-hidden="true">
         {stepIdx + 1}
@@ -347,8 +379,7 @@ export default function ReservationFlow() {
           )}
           {isLast ? (
             <button
-              type="button"
-              onClick={handleSubmit(onSubmit)}
+              type="submit"
               data-cursor="Mühürle"
               className="px-8 h-14 bg-noir-accent text-noir-bg font-body text-sm tracking-[0.2em] uppercase hover:bg-noir-text transition-colors duration-300"
             >
@@ -356,8 +387,7 @@ export default function ReservationFlow() {
             </button>
           ) : (
             <button
-              type="button"
-              onClick={goNext}
+              type="submit"
               data-cursor="Devam"
               className="px-8 h-14 border border-noir-accent text-noir-accent font-body text-sm tracking-[0.2em] uppercase hover:bg-noir-accent hover:text-noir-bg transition-colors duration-300"
             >
@@ -386,6 +416,6 @@ export default function ReservationFlow() {
           </div>
         </div>
       </aside>
-    </div>
+    </form>
   )
 }

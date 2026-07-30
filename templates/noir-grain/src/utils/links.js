@@ -1,7 +1,9 @@
-// 'YYYY-MM-DD' → 'DD.MM.YYYY' (rezervasyon mesajlarında TR gösterim)
-function toTrDate(isoDate) {
-  const [y, m, d] = isoDate.split('-')
-  return `${d}.${m}.${y}`
+// 'YYYY-MM-DD' → 'DD.MM.YYYY' (rezervasyon mesajlarında ve canlı not
+// kartında TR gösterim). Boş/eksik değerde boş string döner — form
+// doldurulurken kart "undefined.undefined.undefined" göstermesin.
+export function toTrDate(isoDate) {
+  if (!isoDate) return ''
+  return isoDate.split('-').reverse().join('.')
 }
 
 export function buildWhatsAppLink(whatsappNumber, form) {
