@@ -50,10 +50,15 @@ export default function Cover() {
 
   return (
     <section ref={sectionRef} className="snap-card relative h-svh overflow-hidden flex items-center justify-center" data-story-card>
+      {/* LCP öğesi: gecikmeli yüklenmemeli ve tarayıcı sırasında öne alınmalı.
+          index.html'deki preload ile birlikte çalışır. */}
       <img
         ref={imgRef}
         src={images.hero}
         alt=""
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
         className="absolute inset-0 w-full h-full object-cover"
       />
       {/* Okunabilirlik için karartma */}
