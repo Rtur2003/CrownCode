@@ -4,9 +4,6 @@ import gsap from 'gsap'
 import { getMediaCapability } from '../../hooks/useMediaCapability.js'
 
 // ─────────────────────────────────────────────────────────────
-// WebGL destekli görseller. Destek yoksa / dokunmatikte /
-// reduced-motion'da sade resim etiketine düşer — alt metni her dalda korunur.
-// ─────────────────────────────────────────────────────────────
 
 const VERT = /* glsl */ `
 attribute vec2 uv;
@@ -31,7 +28,6 @@ vec2 coverUv(vec2 uv, vec2 planeRes, vec2 imageRes) {
 `
 
 // Prosedürel value-noise + fbm — harici doku gerektirmeden organik
-// "mürekkep/sıvı" davranışı üretir
 const NOISE_GLSL = /* glsl */ `
 float hash(vec2 p) {
   return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
@@ -82,7 +78,6 @@ void main() {
 `
 
 // Crossfade: mürekkep dağılması (ink dispersion) — görsel, noise haritası
-// üzerinden organik lekeler halinde çözülerek diğerine dönüşür
 const FRAG_FADE = /* glsl */ `
 precision highp float;
 uniform sampler2D uTex0;
@@ -132,8 +127,6 @@ function createRenderer(container) {
 }
 
 // Canvas'ı DOM'dan çıkarmak WebGL context'ini serbest bırakmaz; tarayıcının
-// eşzamanlı context limiti (~16) dolunca en eski context kaybedilir ve
-// canvas'lar kararır. Bileşen her yeniden kurulduğunda açıkça bırakılmalı.
 function disposeRenderer(gl) {
   gl.canvas.remove()
   gl.getExtension('WEBGL_lose_context')?.loseContext()
@@ -317,8 +310,6 @@ export function WebGLCrossfade({ images, activeIndex, alt = '', className = '' }
       disposeRenderer(gl)
     }
     // Bağımlılık dizi kimliği değil içerik: çağıran her render'da yeni dizi
-    // üretse bile sahne yalnızca görseller gerçekten değişince kurulur.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imagesKey, webgl])
 
   // activeIndex değişince distortion'lı crossfade
