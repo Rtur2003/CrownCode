@@ -1,0 +1,5 @@
+# SPA fallback (Netlify / Cloudflare Pages).
+# BrowserRouter kullanıldığı için /menu gibi derin linkler sunucuda dosya
+# olarak bulunmaz; bu kural olmadan doğrudan girişte veya yenilemede 404 döner.
+# 200 (rewrite) kullanılır: adres çubuğu korunur, React Router rotayı çözer.
+/*  /index.html  200

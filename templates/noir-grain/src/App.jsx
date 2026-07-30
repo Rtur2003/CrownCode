@@ -9,6 +9,7 @@ import Home from './pages/Home.jsx'
 import Menu from './pages/Menu.jsx'
 import Reservation from './pages/Reservation.jsx'
 import Contact from './pages/Contact.jsx'
+import NotFound from './pages/NotFound.jsx'
 import { useScrollTriggerRefresh } from './hooks/useScrollTrigger.js'
 import { useLenis } from './hooks/useLenis.js'
 
@@ -26,6 +27,7 @@ function AppInner() {
         <Route path="/menu"         element={<Menu />} />
         <Route path="/rezervasyon"  element={<Reservation />} />
         <Route path="/iletisim"     element={<Contact />} />
+        <Route path="*"             element={<NotFound />} />
       </Routes>
       <Footer />
       {/* Alt barın kapladığı alan için mobil boşluk */}
