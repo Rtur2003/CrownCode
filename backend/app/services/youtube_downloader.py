@@ -6,9 +6,24 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Optional
+from typing import TYPE_CHECKING, Any, List, Optional
 
-import yt_dlp
+if TYPE_CHECKING:  # pragma: no cover
+    import yt_dlp
+
+
+# yt-dlp agir ve opsiyonel bir bagimlilik. Modul seviyesinde import edilirse
+# kurulu olmadiginda app/main.py zincirle patliyor ve /health dahil TUM API
+# ayaga kalkmiyordu. Ilk kullanimda yuklenir.
+def _load_yt_dlp() -> "Any":
+    try:
+        import yt_dlp as _mod
+    except ModuleNotFoundError as exc:  # pragma: no cover
+        raise RuntimeError(
+            "yt-dlp kurulu degil; YouTube analizi kullanilamaz."
+            " Kurulum: pip install yt-dlp"
+        ) from exc
+    return _mod
 
 
 @dataclass
@@ -59,6 +74,7 @@ class YouTubeDownloader:
             ],
         }
         try:
+            yt_dlp = _load_yt_dlp()
             with yt_dlp.YoutubeDL(options) as ydl:
                 return ydl.extract_info(url, download=True)
         except Exception:
@@ -72,6 +88,7 @@ class YouTubeDownloader:
             "quiet": True,
             "no_warnings": True,
         }
+        yt_dlp = _load_yt_dlp()
         with yt_dlp.YoutubeDL(options) as ydl:
             return ydl.extract_info(url, download=True)
 
