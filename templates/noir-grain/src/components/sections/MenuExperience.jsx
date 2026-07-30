@@ -9,7 +9,6 @@ import Magnetic from '../ui/Magnetic.jsx'
 import { getMediaCapability } from '../../hooks/useMediaCapability.js'
 
 // "Karanlık Vitrin": masaüstünde aktif yemeğin görseli tüm ekranı kaplar
-// (mürekkep crossfade), üzerinde dev editoryal yemek indeksi yüzer.
 export default function MenuExperience() {
   const [activeCat, setActiveCat] = useState(categories[0].id)
   const [activeItemId, setActiveItemId] = useState(null)
@@ -18,13 +17,9 @@ export default function MenuExperience() {
   const items = useMemo(() => menuItems.filter(i => i.category === activeCat), [activeCat])
 
   // WebGLCrossfade bu diziyi effect bağımlılığı olarak kullanır. Memoize
-  // edilmezse her hover'da yeni referans doğar ve WebGL context'i baştan
-  // kurulur — tarayıcının context limiti dolup canvas ölür.
   const catImages = useMemo(() => items.map(i => images.dishes[i.id]), [items])
 
   // Aktif öğe türetilir: kategori değişiminde activeItemId bir an eski
-  // kategoriyi işaret ettiği için ilk öğeye düşülür (state'i effect içinde
-  // set etmek fazladan render ve tek karelik 'undefined' penceresi yaratıyordu).
   const activeItem = items.find(i => i.id === activeItemId) ?? items[0]
   const activeIndex = Math.max(0, items.findIndex(i => i.id === activeItem?.id))
 
