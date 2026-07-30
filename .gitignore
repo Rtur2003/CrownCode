@@ -188,3 +188,21 @@ docs/community/CONTRIBUTING.md
 # HF / ML backend (separate repo)
 # ==========================================
 hf-crowncode-backend/
+
+# ==========================================
+# Tarayıcı otomasyonu / ajan çıktıları
+# ==========================================
+
+# Playwright & Chrome DevTools MCP anlık görüntüleri, izleri
+.playwright-mcp/
+.chrome-devtools-mcp/
+trace.zip
+*.trace.zip
+
+# Kök dizine düşen doğrulama ekran görüntüleri.
+# Yalnızca kök seviye: platform/public altındaki gerçek görseller izlenmeye devam eder.
+/*.png
+/*.jpg
+/*.jpeg
+/*.webp
+/*.gif
