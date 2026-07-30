@@ -15,7 +15,6 @@ export default function SignatureStrip() {
   const { pinned, anim } = useJourney()
 
   // İmza öğe: görseller "tabak kapağı kaldırılır" gibi maske-açılımla belirir
-  // (pinned yatay modda, scrub'a bağlı)
   useEffect(() => {
     if (!pinned) return
 
@@ -53,8 +52,7 @@ export default function SignatureStrip() {
                 <p className="text-xs tracking-[0.4em] uppercase text-noir-accent font-body mb-2">
                   {signature.eyebrow}
                 </p>
-                {/* <span> içine <h2> geçersiz HTML'di (phrasing content başlık
-                    barındıramaz) — sarmalayıcı div'e çevrildi. */}
+                {/* <span> içine <h2> geçersiz HTML'di (phrasing content başlık */}
                 <div className="flex items-baseline gap-3">
                   <h2 className="font-display text-5xl text-noir-text">{signature.title}</h2>
                   <p className="font-display italic text-noir-text/60 text-base">{signature.note}</p>
