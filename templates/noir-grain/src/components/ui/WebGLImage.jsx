@@ -5,7 +5,7 @@ import { getMediaCapability } from '../../hooks/useMediaCapability.js'
 
 // ─────────────────────────────────────────────────────────────
 // WebGL destekli görseller. Destek yoksa / dokunmatikte /
-// reduced-motion'da sade <img>'e düşer — alt metni her dalda korunur.
+// reduced-motion'da sade resim etiketine düşer — alt metni her dalda korunur.
 // ─────────────────────────────────────────────────────────────
 
 const VERT = /* glsl */ `
@@ -131,6 +131,14 @@ function createRenderer(container) {
   return renderer
 }
 
+// Canvas'ı DOM'dan çıkarmak WebGL context'ini serbest bırakmaz; tarayıcının
+// eşzamanlı context limiti (~16) dolunca en eski context kaybedilir ve
+// canvas'lar kararır. Bileşen her yeniden kurulduğunda açıkça bırakılmalı.
+function disposeRenderer(gl) {
+  gl.canvas.remove()
+  gl.getExtension('WEBGL_lose_context')?.loseContext()
+}
+
 function loadTexture(gl, src, onLoad) {
   const texture = new Texture(gl)
   const img = new Image()
@@ -226,7 +234,7 @@ export default function WebGLImage({ src, alt = '', className = '' }) {
       container.removeEventListener('mousemove', onMove)
       container.removeEventListener('mouseenter', onEnter)
       container.removeEventListener('mouseleave', onLeave)
-      gl.canvas.remove()
+      disposeRenderer(gl)
     }
   }, [src, webgl])
 
@@ -252,6 +260,7 @@ export function WebGLCrossfade({ images, activeIndex, alt = '', className = '' }
   const containerRef = useRef(null)
   const stateRef = useRef(null)
   const webgl = canUseWebGL()
+  const imagesKey = images.join('|')
 
   useEffect(() => {
     if (!webgl) return
@@ -305,9 +314,12 @@ export function WebGLCrossfade({ images, activeIndex, alt = '', className = '' }
       stopLoop()
       ro.disconnect()
       stateRef.current = null
-      gl.canvas.remove()
+      disposeRenderer(gl)
     }
-  }, [images, webgl])
+    // Bağımlılık dizi kimliği değil içerik: çağıran her render'da yeni dizi
+    // üretse bile sahne yalnızca görseller gerçekten değişince kurulur.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imagesKey, webgl])
 
   // activeIndex değişince distortion'lı crossfade
   useEffect(() => {

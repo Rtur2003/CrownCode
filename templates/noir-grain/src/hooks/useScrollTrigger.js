@@ -9,6 +9,9 @@ export function useScrollTriggerRefresh() {
   const location = useLocation()
 
   useEffect(() => {
-    ScrollTrigger.refresh()
+    // Bir kare beklenir: commit anında yeni rotanın düzeni henüz oturmamış
+    // olabiliyor ve pinned bölümler yanlış yükseklik ölçüp kayıyordu.
+    const id = requestAnimationFrame(() => ScrollTrigger.refresh())
+    return () => cancelAnimationFrame(id)
   }, [location.pathname])
 }

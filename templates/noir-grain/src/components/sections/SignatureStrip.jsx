@@ -53,10 +53,12 @@ export default function SignatureStrip() {
                 <p className="text-xs tracking-[0.4em] uppercase text-noir-accent font-body mb-2">
                   {signature.eyebrow}
                 </p>
-                <span className="flex items-baseline gap-3">
+                {/* <span> içine <h2> geçersiz HTML'di (phrasing content başlık
+                    barındıramaz) — sarmalayıcı div'e çevrildi. */}
+                <div className="flex items-baseline gap-3">
                   <h2 className="font-display text-5xl text-noir-text">{signature.title}</h2>
-                  <span className="font-display italic text-noir-text/60 text-base">{signature.note}</span>
-                </span>
+                  <p className="font-display italic text-noir-text/60 text-base">{signature.note}</p>
+                </div>
               </div>
             )}
             <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-noir-bg via-noir-bg/70 to-transparent" aria-hidden="true" />

@@ -10,13 +10,15 @@
 
   body {
     @apply bg-noir-bg text-noir-text font-body;
-    cursor: none; /* Custom cursor replaces it */
   }
 
-  /* Disable custom cursor on touch devices */
-  @media (hover: none) {
+  /* Yerel imleç YALNIZCA özel imlecin gerçekten çizildiği koşullarda gizlenir.
+     CustomCursor: dokunmatikte ve reduced-motion'da null döner, ayrıca
+     `hidden md:block` ile 768px altında görünmez. Bu koşullar birebir
+     eşleşmezse kullanıcı hiç imleçsiz kalır. */
+  @media (hover: hover) and (min-width: 768px) and (prefers-reduced-motion: no-preference) {
     body {
-      cursor: auto;
+      cursor: none;
     }
   }
 
@@ -52,6 +54,14 @@
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
+    }
+
+    /* Tailwind'in animate-* yardımcıları hareket azaltma tercihini kendiliğinden
+       dinlemez; sürekli dönen/nabız atan dekoratif öğeler burada durdurulur.
+       (GSAP tarafı getMediaCapability üzerinden ayrıca kontrol edilir.) */
+    .animate-ping,
+    .animate-pulse {
+      animation: none;
     }
   }
 }

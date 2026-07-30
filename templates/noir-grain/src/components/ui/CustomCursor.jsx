@@ -7,10 +7,14 @@ export default function CustomCursor() {
   const cursorRef = useRef(null)
   const dotRef = useRef(null)
   const labelRef = useRef(null)
+  // Dokunmatikte ve reduced-motion'da hiç render edilmez. Önceden yalnızca
+  // olay dinleyicileri atlanıyor, nokta yine basılıyordu: globals.css yerel
+  // imleci gizlediği için kullanıcı hareketsiz bir noktayla kalıyordu.
+  const { isTouch, reducedMotion } = getMediaCapability()
+  const enabled = !isTouch && !reducedMotion
 
   useGSAP(() => {
-    const { isTouch, reducedMotion } = getMediaCapability()
-    if (isTouch || reducedMotion) return
+    if (!enabled) return
 
     const cursor = cursorRef.current
     const dot = dotRef.current
@@ -76,7 +80,9 @@ export default function CustomCursor() {
       document.removeEventListener('mouseout', onMouseOut)
       document.removeEventListener('click', onClick)
     }
-  }, { scope: cursorRef })
+  }, { dependencies: [enabled], scope: cursorRef })
+
+  if (!enabled) return null
 
   return (
     <div

@@ -8,6 +8,12 @@ export const nav = [
   { to: '/iletisim', label: 'İletişim' },
 ]
 
+// Mobil alt bar: nav öğelerinin yanına eklenen doğrudan arama eylemi
+export const mobileBar = {
+  call: 'Ara',
+  label: 'Alt gezinme',
+}
+
 export const hero = {
   eyebrow: 'İstanbul · Karaköy',
   title: 'Noir & Grain',
@@ -40,7 +46,8 @@ export const story = {
 
 export const invite = {
   eyebrow: 'Fasıl III',
-  title: 'Masanızı Ayırın',
+  // İki satır olarak dizilir; ikinci satır altın italik vurguyla ayrışır.
+  titleLines: ['Masanızı', 'Ayırın'],
   note: 'Geceyi bizimle açın — masanız hazır olsun.',
   cta: 'Rezervasyon',
 }
@@ -63,11 +70,15 @@ export const reservation = {
   },
   labels: {
     name: 'Ad Soyad', phone: 'Telefon', note: 'Notunuz (opsiyonel)',
-    back: 'Geri', next: 'Devam', skip: 'Atla',
-    sendWhatsApp: 'WhatsApp ile Gönder', sendEmail: 'E-posta ile gönder',
-    preview: 'Notunuz hazır', edit: 'Düzenle',
+    back: 'Geri', next: 'Devam', submit: 'Rezervasyonu Tamamla',
+    sendEmail: 'E-posta ile gönder',
+    chapter: 'Fasıl',
   },
-  success: 'Notunuz iletildi. Onay için sizinle iletişime geçeceğiz.',
+  // Mühürlenme (gönderim) ekranı
+  sealing: 'Masanız adınıza ayrılıyor…',
+  successTitle: 'Masanız adınıza ayrılıyor.',
+  // {name} / {date} / {time} yer tutucuları form değerleriyle doldurulur.
+  successBody: 'Sayın {name}, {date} tarihinde saat {time} için talebiniz WhatsApp üzerinden iletildi. Onay için sizinle iletişime geçeceğiz.',
 }
 
 export const marqueeItems = [
@@ -84,6 +95,9 @@ export const contactPage = {
   formNote: 'Özel davet, etkinlik ve iş birlikleri için — aynı gün dönüş yapıyoruz.',
   labels: { name: 'Ad Soyad', email: 'E-posta', message: 'Mesajınız', send: 'Gönder' },
   mailSubject: 'Web sitesi üzerinden mesaj',
+  directionsCta: 'Yol Tarifi Al',
+  // Form backend'siz çalışır: mesaj kullanıcının e-posta istemcisinde açılır.
+  sentNote: 'E-posta istemciniz mesajınızla birlikte açıldı. Açılmadıysa doğrudan aşağıdaki adrese yazabilirsiniz.',
 }
 
 export const footer = {

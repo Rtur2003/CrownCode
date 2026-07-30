@@ -22,3 +22,12 @@ export function buildWhatsAppLink(whatsappNumber, form) {
 export function buildMailtoLink(email, { subject, body }) {
   return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
+
+// content.js'teki '{name}' gibi yer tutucuları doldurur. Metnin tamamı
+// içerik dosyasında kalsın diye: cümleyi bileşene bölmek yerine tek
+// string olarak çevrilebilir/düzenlenebilir tutar.
+export function fillTokens(template, values) {
+  return template.replace(/\{(\w+)\}/g, (match, key) =>
+    key in values ? String(values[key] ?? '') : match
+  )
+}

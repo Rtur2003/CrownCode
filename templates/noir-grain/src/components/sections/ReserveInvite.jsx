@@ -30,9 +30,14 @@ export default function ReserveInvite() {
         <p className="text-xs tracking-[0.4em] uppercase text-noir-accent font-body mb-6">
           {invite.eyebrow}
         </p>
+        {/* Başlık content.js'ten gelir — önceden burada sabit yazılıydı ve
+            invite.title'ı düzenlemek hiçbir şeyi değiştirmiyordu. */}
         <h2 className="font-display text-[clamp(2.6rem,6vw,5.5rem)] leading-[1.05] text-noir-text">
-          Masanızı
-          <span className="block italic text-noir-accent">Ayırın</span>
+          {invite.titleLines.map((line, i) => (
+            <span key={line} className={i === 0 ? 'block' : 'block italic text-noir-accent'}>
+              {line}
+            </span>
+          ))}
         </h2>
         <p className="font-display italic text-noir-text/70 mt-6 text-lg max-w-md">{invite.note}</p>
 

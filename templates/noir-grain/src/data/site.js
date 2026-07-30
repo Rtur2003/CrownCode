@@ -13,7 +13,8 @@ export const site = {
     line1: 'Karaköy Mah., Bankalar Cd. No:12',
     line2: 'Beyoğlu, İstanbul',
   },
-  mapsEmbedUrl: 'https://www.google.com/maps?q=Karak%C3%B6y%2C%20%C4%B0stanbul&output=embed',
+  // Not: Harita gömülü iframe ile değil, yukarıdaki adresten üretilen bir
+  // "yol tarifi" bağlantısıyla verilir (üçüncü taraf çerezi ve ek yük yok).
   hours: [
     { days: 'Salı – Perşembe', time: '18:00 – 00:00' },
     { days: 'Cuma – Cumartesi', time: '18:00 – 02:00' },
