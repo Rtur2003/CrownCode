@@ -2,13 +2,8 @@ import { useId } from 'react'
 import { site } from '../../data/site.js'
 
 // Marka amblemi + yazı kilidi (wordmark).
-// Amblem "Grain Seal": altın gradyanlı mühür halkası içinde stilize buğday
-// başağı (tahıl = markanın adı). Dolgulu taneler küçük boyutta da net okunur,
-// hairline yerine tek kalın halka kullanılır — 28px'te sub-pixel kırılmaz.
-// site.name '&' içeriyorsa ampersand vurgulu dizilir; içermiyorsa düz yazılır.
 //
 // Üst öge `group` sınıfı taşırsa (ör. Navbar'daki <Link>) amblem hover'da
-// hafifçe canlanır.
 export default function Wordmark({ className = '', compact = false }) {
   const parts = site.name.split('&').map(s => s.trim())
   const hasAmp = parts.length === 2
@@ -26,9 +21,7 @@ export default function Wordmark({ className = '', compact = false }) {
         aria-hidden="true"
       >
         <defs>
-          {/* gradientUnits="userSpaceOnUse" şart: varsayılan objectBoundingBox
-              biriminde, sıfır genişlikli gövde çizgisi gibi yassı öğelerin
-              bounding box'ı dejenere olduğu için gradyan hiç boyanmıyor. */}
+          {/* gradientUnits="userSpaceOnUse" şart: varsayılan objectBoundingBox */}
           <linearGradient id={gradientId} gradientUnits="userSpaceOnUse" x1="2" y1="2" x2="30" y2="30">
             <stop offset="0%" stopColor="#E8CE9A" />
             <stop offset="45%" stopColor="#C89B5A" />
