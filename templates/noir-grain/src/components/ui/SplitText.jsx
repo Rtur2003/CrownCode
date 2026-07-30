@@ -7,7 +7,6 @@ const ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;' }
 const escapeHtml = s => s.replace(/[&<>]/g, c => ESCAPES[c])
 
 // Metni karakter/kelime span'lerine böler; `animate` verilirse
-// preloader bittikten sonra maske altından stagger ile açar.
 export default function SplitText({
   children,
   className = '',
@@ -18,9 +17,6 @@ export default function SplitText({
 }) {
   const containerRef = useRef(null)
   // Kaynak metin DOM'dan değil prop'tan okunur. DOM'dan okunduğunda effect
-  // ikinci kez koştuğunda zaten bölünmüş çıktıyı tekrar bölüyordu: kelime
-  // modunda boşluklar margin'e dönüştüğü için tüm satır tek kelimeye
-  // yapışıyor, karakter modunda ise boşluklar NBSP olarak geri geliyordu.
   const text = typeof children === 'string' ? children : ''
 
   useGSAP(() => {
@@ -38,7 +34,6 @@ export default function SplitText({
       )
 
     // Parçalanmış görsel katman ekran okuyuculardan saklanır (harf harf
-    // okunmasın); erişilebilir metin sr-only kopyada durur.
     el.innerHTML =
       `<span class="sr-only">${escapeHtml(text)}</span>` +
       `<span aria-hidden="true">${pieces.join('')}</span>`
