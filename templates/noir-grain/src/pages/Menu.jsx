@@ -11,10 +11,7 @@ export default function Menu() {
         Menü
       </span>
       <header className="relative z-20 px-6 lg:px-[6vw] mb-10 lg:mb-12">
-        <p className="text-xs tracking-[0.4em] uppercase text-noir-accent font-body mb-4">
-          {menuPage.eyebrow}
-        </p>
-        <h1 className="font-display text-5xl lg:text-7xl">{menuPage.title}</h1>
+        <h1 className="font-display text-5xl lg:text-7xl text-balance">{menuPage.title}</h1>
       </header>
       <MenuExperience />
     </main>
