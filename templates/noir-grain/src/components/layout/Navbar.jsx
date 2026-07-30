@@ -21,8 +21,7 @@ export default function Navbar() {
         scrolled ? 'bg-noir-bg/90 backdrop-blur-md border-b border-noir-border' : ''
       }`}
     >
-      {/* Etiket şart: sayfada MobileActionBar ile birlikte iki navigasyon
-          landmark'ı var, etiketsiz kalırsa ekran okuyucuda ayırt edilemez. */}
+      {/* Etiket şart: sayfada MobileActionBar ile birlikte iki navigasyon */}
       <nav
         aria-label={navLabels.main}
         className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-16 md:h-20"
