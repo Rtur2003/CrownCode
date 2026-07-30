@@ -122,19 +122,24 @@ export const useMicrophoneAnalysis = () => {
     setElapsedSeconds(0)
   }, [cleanup])
 
+  // rAF dongusu icteki `tick` ile kurulur: useCallback'in kendi degerine
+  // referans vermesi (pollAmplitude -> pollAmplitude) kirilgan bir baglama.
   const pollAmplitude = useCallback(() => {
-    const analyser = analyserRef.current
-    if (!analyser) {return}
-    const data = new Uint8Array(analyser.frequencyBinCount)
-    analyser.getByteTimeDomainData(data)
-    let sum = 0
-    for (let i = 0; i < data.length; i++) {
-      const v = (data[i] - 128) / 128
-      sum += v * v
+    const tick = () => {
+      const analyser = analyserRef.current
+      if (!analyser) {return}
+      const data = new Uint8Array(analyser.frequencyBinCount)
+      analyser.getByteTimeDomainData(data)
+      let sum = 0
+      for (let i = 0; i < data.length; i++) {
+        const v = (data[i] - 128) / 128
+        sum += v * v
+      }
+      const rms = Math.sqrt(sum / data.length)
+      setAmplitude(Math.min(1, rms * 3))
+      rafRef.current = requestAnimationFrame(tick)
     }
-    const rms = Math.sqrt(sum / data.length)
-    setAmplitude(Math.min(1, rms * 3))
-    rafRef.current = requestAnimationFrame(pollAmplitude)
+    tick()
   }, [])
 
   const sampleRateRef = useRef<number>(0)
