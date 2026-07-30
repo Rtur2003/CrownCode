@@ -89,3 +89,10 @@ export const contactPage = {
 export const footer = {
   rights: 'Tüm hakları saklıdır.',
 }
+
+export const notFound = {
+  eyebrow: 'Fasıl bulunamadı',
+  title: 'Bu masa boş.',
+  body: 'Aradığınız sayfa kaldırılmış ya da adresi değişmiş olabilir. Sizi salona geri alalım.',
+  homeCta: 'Ana sayfaya dön',
+}
