@@ -76,14 +76,14 @@ export default function MenuExperience() {
                   >
                     <span
                       className={`font-display text-5xl leading-none transition-colors duration-300 ${
-                        active ? 'text-noir-accent' : 'text-noir-text/25 group-hover:text-noir-text/60'
+                        active ? 'text-noir-accent' : 'text-noir-text/40 group-hover:text-noir-text/70'
                       }`}
                     >
                       {numeral}
                     </span>
                     <span
                       className={`font-body text-[10px] tracking-[0.3em] uppercase mt-1 transition-opacity duration-300 ${
-                        active ? 'text-noir-accent opacity-100' : 'text-noir-text/40 opacity-0 group-hover:opacity-100'
+                        active ? 'text-noir-accent opacity-100' : 'text-noir-text/60 opacity-0 group-hover:opacity-100'
                       }`}
                     >
                       {label}
@@ -98,7 +98,7 @@ export default function MenuExperience() {
           <div className="flex-1 max-w-4xl pt-2">
           <ul ref={listRef}>
             {items.map((item) => {
-              const active = item.id === activeItemId
+              const active = item.id === activeItem?.id
               return (
                 <li key={item.id} className="menu-row">
                   <button
@@ -125,7 +125,7 @@ export default function MenuExperience() {
                       />
                       <span
                         className={`font-body text-base tabular-nums shrink-0 transition-colors duration-300 ${
-                          active ? 'text-noir-accent' : 'text-noir-text/40'
+                          active ? 'text-noir-accent' : 'text-noir-text/60'
                         }`}
                       >
                         {item.price} ₺
@@ -144,7 +144,7 @@ export default function MenuExperience() {
             })}
           </ul>
           {/* <ul> yalnızca <li> barındırabilir — bu not listenin dışına alındı. */}
-          <p className="font-body text-xs text-noir-text/40 mt-10">{menuPage.note}</p>
+          <p className="font-body text-xs text-noir-text/60 mt-10">{menuPage.note}</p>
           </div>
         </div>
       </div>
@@ -161,10 +161,10 @@ export default function MenuExperience() {
                 aria-pressed={active}
                 className="shrink-0 flex flex-col items-center"
               >
-                <span className={`font-display text-3xl leading-none ${active ? 'text-noir-accent' : 'text-noir-text/30'}`}>
+                <span className={`font-display text-3xl leading-none ${active ? 'text-noir-accent' : 'text-noir-text/45'}`}>
                   {numeral}
                 </span>
-                <span className={`font-body text-[10px] tracking-[0.25em] uppercase mt-1 ${active ? 'text-noir-accent' : 'text-noir-text/40'}`}>
+                <span className={`font-body text-[10px] tracking-[0.25em] uppercase mt-1 ${active ? 'text-noir-accent' : 'text-noir-text/60'}`}>
                   {label}
                 </span>
               </button>
@@ -192,7 +192,7 @@ export default function MenuExperience() {
             </figure>
           ))}
         </div>
-        <p className="font-body text-xs text-noir-text/40 px-6 pb-10">{menuPage.note}</p>
+        <p className="font-body text-xs text-noir-text/60 px-6 pb-10">{menuPage.note}</p>
       </div>
 
       {/* Ekran okuyucular için aktif yemek duyurusu */}
