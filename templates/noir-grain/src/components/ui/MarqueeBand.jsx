@@ -13,9 +13,13 @@ export default function MarqueeBand({ items, className = '' }) {
       className={`relative overflow-hidden border-y border-noir-border py-6 ${className}`}
       aria-hidden="true"
     >
-      <div className="marquee-track flex w-max gap-10">
-        <div className="flex gap-10 shrink-0">{row}</div>
-        <div className="flex gap-10 shrink-0">{row}</div>
+      {/* Döngü translateX(-50%) ile kapanır, yani iki kopya tam olarak yarım
+          iz genişliği olmalı. Boşluk dışta (gap-10) verildiğinde -50% yarım
+          boşluk kadar eksik kalıyor ve her turda görünür bir zıplama oluyordu.
+          Boşluk artık her kopyanın kendi sağ dolgusunda. */}
+      <div className="marquee-track flex w-max">
+        <div className="flex gap-10 shrink-0 pr-10">{row}</div>
+        <div className="flex gap-10 shrink-0 pr-10">{row}</div>
       </div>
     </div>
   )
