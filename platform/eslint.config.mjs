@@ -54,6 +54,14 @@ export default defineConfig([
     rules: { '@typescript-eslint/no-require-imports': 'off' },
   },
 
+  // Dekoratif WebGL parcacik alani: rastgelelik kasitli ve bilesen
+  // `dynamic(..., { ssr: false })` ile yukleniyor, yani hydration riski yok.
+  // Determinizm istemek gorsel amaci bozardi.
+  {
+    files: ['components/CrownDreams/GoldenParticles.tsx'],
+    rules: { 'react-hooks/purity': 'off' },
+  },
+
   // Service worker: tarayici worker ortami, React/Next kurallari gecmez
   {
     files: ['public/sw.js'],
