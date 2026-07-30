@@ -12,8 +12,7 @@ import { getMediaCapability } from '../../hooks/useMediaCapability.js'
 
 gsap.registerPlugin(useGSAP)
 
-// "Şefin Masası": sol tarafta adımlar, sağda siz cevapladıkça canlı
-// yazılan not kartı — son adımda kart mühürlenip gönderilir.
+// "Sefin Masasi": solda adimlar, sagda canli yazilan not karti
 const STEPS = ['guests', 'date', 'time', 'contact', 'note']
 const STEP_FIELDS = {
   guests: ['guests'],
@@ -137,9 +136,7 @@ export default function ReservationFlow() {
 
   const goBack = () => setStepIdx(i => Math.max(i - 1, 0))
 
-  // Tek <form>: ara adımlarda Enter / mobil klavyedeki "Git" sonraki fasla
-  // geçirir, son adımda gerçek gönderim koşar. Form öğesi olmadan bu akış
-  // yalnızca fareyle çalışıyordu.
+  // Tek form: Enter ile ilerleme. Form ogesi olmadan sadece fareyle calisiyordu
   const onFormSubmit = (event) => {
     if (!isLast) {
       event.preventDefault()
@@ -151,10 +148,8 @@ export default function ReservationFlow() {
 
   const onSubmit = async (data) => {
     // Gerçek gönderim: kullanıcı hareketiyle senkron aç (popup engeline takılmaz).
-    // Şablon backend'siz çalışır — talep, önceden yazılmış WhatsApp mesajı olarak iletilir.
     const waLink = buildWhatsAppLink(site.whatsapp, data)
-    // Popup engellendiyse aynı sekmede aç: aksi halde kullanıcıya "iletildi"
-    // denip hiçbir mesaj gönderilmemiş olur.
+    // Popup engellenirse ayni sekmede ac; yoksa gonderilmemis talep "iletildi" sanilir
     if (!window.open(waLink, '_blank', 'noopener')) {
       window.location.href = waLink
       return
@@ -211,8 +206,7 @@ export default function ReservationFlow() {
   if (isSubmitting) {
     return (
       <div className="py-20 flex flex-col items-center justify-center gap-12" role="status">
-        {/* Tasarımın "kart mühürlenip gönderilir" adımı. Önceden bu ekran
-            yalnızca spinner gösterdiği için mühür animasyonu hiç görünmüyordu. */}
+        {/* Tasarımın "kart mühürlenip gönderilir" adımı. Önceden bu ekran */}
         <NoteCard values={formValues} sealed />
         <p className="font-display italic text-2xl text-noir-text/70 text-center">
           {reservation.sealing}

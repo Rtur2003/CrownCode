@@ -22,7 +22,7 @@ export default function Cover() {
       { scale: 1.06, duration: 6, ease: 'power1.out' }
     )
 
-    // Katmanlı fare paralaksı: görsel ters yöne, başlık bloğu hafifçe fareye
+    // Katmanli fare paralaksi: gorsel ters yone, baslik fareye dogru kayar
     if (!isTouch && sectionRef.current) {
       const imgX = gsap.quickTo(imgRef.current, 'xPercent', { duration: 0.8, ease: 'power2.out' })
       const imgY = gsap.quickTo(imgRef.current, 'yPercent', { duration: 0.8, ease: 'power2.out' })

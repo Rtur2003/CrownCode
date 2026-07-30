@@ -30,7 +30,7 @@ export default function HorizontalJourney({ children, onChapterChange }) {
       const tween = gsap.to(track, {
         x: () => -distance(),
         ease: 'none',
-        // Not: fasıl takibi tween onUpdate'inde — scrub'ın görsel konumuyla
+        // Fasil takibi tween onUpdate'inde: scrub'in gorsel konumuyla senkron kalir
         // senkron kalır (scrollTrigger.onUpdate ani scroll'da erken ateşlenir)
         onUpdate: () => {
           if (!onChapterChange) return
