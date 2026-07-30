@@ -1,0 +1,68 @@
+- generic [ref=f1e2]:
+  - generic: Mühürle
+  - banner [ref=f1e22]:
+    - navigation [ref=f1e23]:
+      - link "Noir & Grain" [ref=f1e24] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f1e25]: Noir&Grain
+  - main [ref=f1e41]:
+    - generic [ref=f1e42]:
+      - generic [ref=f1e43]:
+        - paragraph [ref=f1e44]: Rezervasyon
+        - heading "Masanızı Ayırın" [level=1] [ref=f1e45]
+      - generic [ref=f1e46]:
+        - generic: "5"
+        - generic [ref=f1e47]:
+          - paragraph [ref=f1e48]: Fasıl 5 / 5
+          - generic [ref=f1e122]:
+            - generic [ref=f1e123]: 2 kişi
+            - generic [ref=f1e129]: 15.08.2026
+            - generic [ref=f1e143]: 20:00
+            - generic [ref=f1e154]: Hasan Arthur Altuntaş
+          - generic [ref=f1e155]:
+            - generic [ref=f1e156]: Eklemek istediğiniz bir not var mı?
+            - paragraph [ref=f1e157]: Alerjiler, kutlamalar, pencere kenarı…
+            - textbox "Eklemek istediğiniz bir not var mı?" [ref=f1e158]
+          - generic [ref=f1e66]:
+            - button "Geri" [ref=f1e128] [cursor=pointer]
+            - button "Rezervasyonu Tamamla" [ref=f1e159] [cursor=pointer]
+            - link "E-posta ile gönder" [ref=f1e160] [cursor=pointer]:
+              - /url: mailto:merhaba@noirgrain.com?subject=Rezervasyon%20Talebi&body=Merhaba%2C%20rezervasyon%20yapmak%20istiyorum.%0AAd%3A%20Hasan%20Arthur%20Altunta%C5%9F%0ATarih%3A%2015.08.2026%0ASaat%3A%2020%3A00%0AKi%C5%9Fi%3A%202
+  - contentinfo [ref=f1e68]:
+    - generic [ref=f1e69]:
+      - generic [ref=f1e70]:
+        - generic [ref=f1e71]: Noir&Grain
+        - paragraph [ref=f1e87]: Fine Dining & Kokteyl BarBeyoğlu, İstanbul
+      - generic [ref=f1e88]:
+        - paragraph [ref=f1e89]: Saatler
+        - list [ref=f1e90]:
+          - listitem [ref=f1e91]: "Salı – Perşembe: 18:00 – 00:00"
+          - listitem [ref=f1e92]: "Cuma – Cumartesi: 18:00 – 02:00"
+          - listitem [ref=f1e93]: "Pazar: 17:00 – 23:00"
+      - generic [ref=f1e94]:
+        - paragraph [ref=f1e95]: İletişim
+        - list [ref=f1e96]:
+          - listitem [ref=f1e97]: Karaköy Mah., Bankalar Cd. No:12
+          - listitem [ref=f1e98]:
+            - link "+90 212 000 00 00" [ref=f1e99] [cursor=pointer]:
+              - /url: tel:+902120000000
+          - listitem [ref=f1e100]:
+            - link "merhaba@noirgrain.com" [ref=f1e101] [cursor=pointer]:
+              - /url: mailto:merhaba@noirgrain.com
+    - generic [ref=f1e102]:
+      - paragraph [ref=f1e103]: © 2026 Noir & Grain. Tüm hakları saklıdır.
+      - generic [ref=f1e104]:
+        - link "Instagram" [ref=f1e105] [cursor=pointer]:
+          - /url: https://instagram.com/noirgrain
+        - link "X" [ref=f1e106] [cursor=pointer]:
+          - /url: https://x.com/noirgrain
+  - navigation "Alt gezinme" [ref=f1e108]:
+    - generic [ref=f1e109]:
+      - link "Menü" [ref=f1e110] [cursor=pointer]:
+        - /url: /menu
+      - link "Rezervasyon" [ref=f1e113] [cursor=pointer]:
+        - /url: /rezervasyon
+      - link "İletişim" [ref=f1e116] [cursor=pointer]:
+        - /url: /iletisim
+      - link "Ara" [ref=f1e119] [cursor=pointer]:
+        - /url: tel:+902120000000
