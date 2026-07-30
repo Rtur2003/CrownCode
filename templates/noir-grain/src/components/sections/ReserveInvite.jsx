@@ -50,7 +50,7 @@ export default function ReserveInvite() {
         </Magnetic>
 
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 mt-10 font-body text-xs tracking-[0.2em] text-noir-text/50">
-          <a href={`tel:${site.phone.replace(/\s/g, '')}`} className="hover:text-noir-accent transition-colors">
+          <a href={`tel:${site.phone.replace(/\s/g, '')}`} className="inline-block py-2 hover:text-noir-accent transition-colors">
             {site.phone}
           </a>
           <span aria-hidden="true" className="w-1 h-1 rotate-45 bg-noir-accent/60" />
