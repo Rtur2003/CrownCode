@@ -21,7 +21,6 @@ export const useScrollAnimation = (options: UseScrollAnimationOptions = {}) => {
 
   const elementRef = useRef<HTMLElement>(null)
   const [isVisible, setIsVisible] = useState(false)
-  const [hasTriggered, setHasTriggered] = useState(false)
 
   useEffect(() => {
     const element = elementRef.current
@@ -31,7 +30,6 @@ export const useScrollAnimation = (options: UseScrollAnimationOptions = {}) => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
-          setHasTriggered(true)
           if (triggerOnce) {
             observer.disconnect()
           }

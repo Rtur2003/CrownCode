@@ -14,7 +14,6 @@ import { useState, useMemo } from 'react'
 import {
   TrendingUp, TrendingDown, Minus,
   Target, Users, Microscope, ChevronRight,
-  AlertCircle, CheckCircle2,
 } from 'lucide-react'
 import type {
   XAIExplanation,

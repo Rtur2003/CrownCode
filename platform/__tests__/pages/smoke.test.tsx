@@ -83,9 +83,6 @@ jest.mock('@formkit/auto-animate/react', () => ({
   useAutoAnimate: () => [() => {}, () => {}],
 }))
 
-// Shared variable for motion handler
-const motionHandlerRef = motionHandler
-
 function renderWithProviders(ui: React.ReactElement) {
   return render(<LanguageProvider>{ui}</LanguageProvider>)
 }

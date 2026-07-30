@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { motion, AnimatePresence } from 'motion/react'
-import { Github, ExternalLink, Menu, X, Code2, ChevronDown, Zap, MessageSquare, Vote, Sparkles } from 'lucide-react'
+import { Github, Menu, X, Code2, ChevronDown, Zap, MessageSquare, Vote, Sparkles } from 'lucide-react'
 import { LanguageSelector } from '@/components/Navigation/LanguageSelector'
 import { useLanguage } from '@/context/LanguageContext'
 

@@ -238,7 +238,7 @@ export const useFileAnalysis = () => {
         setError(gatewayError || 'unsupportedFileType')
         setProcessingState('error')
       }
-    } catch (fetchError) {
+    } catch {
       if (isStale()) {return}
       fallbackToPreview('backend_unreachable')
     }

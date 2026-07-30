@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, act } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { LanguageProvider } from '@/context/LanguageContext'
 

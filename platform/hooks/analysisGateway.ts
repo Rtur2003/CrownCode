@@ -87,7 +87,7 @@ export const analyzeSource = async (
     }
 
     return { result: data.result, error: null }
-  } catch (error) {
+  } catch {
     return { result: null, error: 'backend_unreachable' as AnalysisErrorCode }
   }
 }

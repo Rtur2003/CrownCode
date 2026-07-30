@@ -85,7 +85,7 @@ const parseYouTubeUrl = (input: string): ParsedSource | null => {
       normalizedUrl,
       ...(startTimeSec !== undefined ? { startTimeSec } : {})
     }
-  } catch (error) {
+  } catch {
     return null
   }
 }
@@ -227,7 +227,7 @@ export const useYouTubeAnalysis = () => {
         setError(gatewayError || 'invalidYouTubeUrl')
         setProcessingState('error')
       }
-    } catch (fetchError) {
+    } catch {
       if (isStale()) {return}
       fallbackToPreview('backend_unreachable')
     }

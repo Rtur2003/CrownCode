@@ -36,11 +36,6 @@ const gaussianRandom = (): number => {
   return Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2)
 }
 
-const jitter = (value: number, magnitude: number) => {
-  const delta = gaussianRandom() * magnitude
-  return Number(clamp01(value + delta).toFixed(3))
-}
-
 const calculateBaseConfidence = (seed: number): number => {
   const x = seed * Math.PI * 2
   const base = (Math.sin(x) + 1) / 2
