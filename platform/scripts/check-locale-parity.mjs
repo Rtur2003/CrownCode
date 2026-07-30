@@ -61,7 +61,7 @@ function getNestedValue(obj, path) {
     }
     return parts
   })
-  return segments.reduce((o, k) => (o != null ? o[k] : undefined), obj)
+  return segments.reduce((o, k) => (o !== null ? o[k] : undefined), obj)
 }
 
 function extractPlaceholders(str) {
