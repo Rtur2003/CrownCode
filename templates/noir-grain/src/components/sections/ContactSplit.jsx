@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { site } from '../../data/site.js'
 import { contactPage } from '../../data/content.js'
 import { images } from '../../data/images.js'
@@ -7,6 +7,9 @@ import { buildMailtoLink } from '../../utils/links.js'
 // "Bulun / Yazın": sol kolon mekânı bulmaya, sağ kolon yazmaya adanır.
 export default function ContactSplit() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [sent, setSent] = useState(false)
+  // Desen id'si benzersiz olmalı — sabit id başka bir <defs> ile çakışabilir.
+  const patternId = `streets-${useId()}`
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -14,6 +17,9 @@ export default function ContactSplit() {
       subject: `${contactPage.mailSubject} — ${form.name}`,
       body: `${form.message}\n\n${form.name}\n${form.email}`,
     })
+    // mailto: gezinmesi sessizce başarısız olabilir (istemci tanımlı değilse).
+    // Kullanıcı hiç geri bildirim almadan kalmasın.
+    setSent(true)
   }
 
   const inputCls =
@@ -75,12 +81,12 @@ export default function ContactSplit() {
         >
           <svg className="absolute inset-0 w-full h-full" aria-hidden="true">
             <defs>
-              <pattern id="streets" width="72" height="72" patternUnits="userSpaceOnUse">
+              <pattern id={patternId} width="72" height="72" patternUnits="userSpaceOnUse">
                 <path d="M0 36h72M36 0v72" stroke="#F2E9DA" strokeOpacity="0.06" strokeWidth="1" />
                 <path d="M0 12h72M12 0v72" stroke="#F2E9DA" strokeOpacity="0.03" strokeWidth="0.5" />
               </pattern>
             </defs>
-            <rect width="100%" height="100%" fill="url(#streets)" />
+            <rect width="100%" height="100%" fill={`url(#${patternId})`} />
             <path d="M0 140 Q 180 100 380 150 T 800 120" fill="none" stroke="#F2E9DA" strokeOpacity="0.08" strokeWidth="12" />
           </svg>
           <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" aria-hidden="true">
@@ -89,7 +95,7 @@ export default function ContactSplit() {
             <span className="relative block w-3 h-3 rotate-45 bg-noir-accent" />
           </span>
           <span className="absolute bottom-3 right-4 font-body text-xs tracking-[0.25em] uppercase text-noir-accent group-hover:translate-x-1 transition-transform duration-300">
-            Yol Tarifi Al →
+            {contactPage.directionsCta} <span aria-hidden="true">→</span>
           </span>
         </a>
       </div>
@@ -131,6 +137,12 @@ export default function ContactSplit() {
           >
             {contactPage.labels.send}
           </button>
+
+          {sent && (
+            <p role="status" className="font-display italic text-noir-accent max-w-md">
+              {contactPage.sentNote}
+            </p>
+          )}
         </form>
 
         {/* Doğrudan hat */}
