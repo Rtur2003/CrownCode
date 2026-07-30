@@ -1,7 +1,4 @@
 // ─────────────────────────────────────────────────────────────
-// ŞABLON ÖZELLEŞTİRME: Tüm sayfa metinleri burada.
-// Fasıl yapısı: site bir tadım menüsü gibi sıralı "fasıllara" bölünür.
-// ─────────────────────────────────────────────────────────────
 export const nav = [
   { to: '/menu', label: 'Menü' },
   { to: '/rezervasyon', label: 'Rezervasyon' },
@@ -79,7 +76,6 @@ export const reservation = {
   },
   sealing: 'Notunuz hazırlanıyor…',
   // Dürüstlük: WhatsApp mesajı yalnızca HAZIRLANIR, göndermeyi kullanıcı yapar.
-  // Eski metin "iletildi" diyordu; gönderilmemiş talep için yanlış bilgiydi.
   successTitle: 'Notunuz WhatsApp\'ta hazır.',
   // {name} / {date} / {time} form değerleriyle doldurulur.
   successBody: '{date}, saat {time}, {name} adına. Mesajı WhatsApp\'tan göndermeniz yeterli; onayı biz döneceğiz.',
