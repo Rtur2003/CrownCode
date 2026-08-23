@@ -4,6 +4,9 @@ export default function Document() {
   return (
     <Html lang="tr">
       <Head>
+        {/* Google Search Console verification */}
+        <meta name="google-site-verification" content="_uAYFuA-3T0i19IF6PNXau841TDdLlyrMPJpIvQ4wYU" />
+
         {/* Google Fonts — IM Fell Double Pica (body) + JetBrains Mono; headings use local Portmanteau */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
