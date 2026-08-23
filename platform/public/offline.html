@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="_uAYFuA-3T0i19IF6PNXau841TDdLlyrMPJpIvQ4wYU" />
     <title>Offline - CrownCode</title>
     <style>
         @font-face {
@@ -134,8 +136,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         .icon {
@@ -158,6 +167,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="icon">
@@ -167,7 +177,8 @@
         <h1>Çevrimdışısınız</h1>
 
         <p>
-            İnternet bağlantınız yok gibi görünüyor. CrownCode Platformu'nun bazı özelliklerini çevrimdışı olarak kullanabilirsiniz.
+            İnternet bağlantınız yok gibi görünüyor. CrownCode Platformu'nun bazı özelliklerini çevrimdışı olarak
+            kullanabilirsiniz.
         </p>
 
         <button class="retry-btn" onclick="retryConnection()">
@@ -228,4 +239,5 @@
         updateConnectionStatus();
     </script>
 </body>
+
 </html>
