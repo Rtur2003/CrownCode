@@ -25,7 +25,7 @@ const TermsPage: NextPage = () => {
     <MainLayout
       title={tm.meta.title}
       description={tm.meta.description}
-      url="https://hasanarthuraltuntas.xyz/terms"
+      url="https://hasan-arthur-altuntas.xyz/terms"
     >
       <div className="min-h-screen py-24 px-4">
         <div className="max-w-4xl mx-auto">
@@ -124,11 +124,11 @@ const TermsPage: NextPage = () => {
                 {tm.contactLabel}
               </p>
               <a
-                href="mailto:contact@hasanarthuraltuntas.xyz"
+                href="mailto:contact@hasan-arthur-altuntas.xyz"
                 className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors"
               >
                 <Mail size={20} />
-                <span>contact@hasanarthuraltuntas.xyz</span>
+                <span>contact@hasan-arthur-altuntas.xyz</span>
               </a>
             </motion.div>
           </motion.div>

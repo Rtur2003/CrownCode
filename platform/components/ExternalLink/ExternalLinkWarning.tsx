@@ -15,7 +15,7 @@ interface ExternalLinkWarningProps {
 
 export const ExternalLinkWarning: React.FC<ExternalLinkWarningProps> = ({
   enabled = true,
-  trustedDomains = ['hasanarthuraltuntas.xyz', 'hasanarthuraltuntas.com.tr', 'github.com', 'localhost']
+  trustedDomains = ['hasan-arthur-altuntas.xyz', 'hasan-arthur-altuntas.com.tr', 'github.com', 'localhost']
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [targetUrl, setTargetUrl] = useState('')

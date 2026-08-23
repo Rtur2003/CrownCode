@@ -25,7 +25,7 @@ const PrivacyPage: NextPage = () => {
     <MainLayout
       title={p.meta.title}
       description={p.meta.description}
-      url="https://hasanarthuraltuntas.xyz/privacy"
+      url="https://hasan-arthur-altuntas.xyz/privacy"
     >
       <div className="min-h-screen py-24 px-4">
         <div className="max-w-4xl mx-auto">
@@ -101,11 +101,11 @@ const PrivacyPage: NextPage = () => {
                 {p.contactLabel}
               </p>
               <a
-                href="mailto:contact@hasanarthuraltuntas.xyz"
+                href="mailto:contact@hasan-arthur-altuntas.xyz"
                 className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors"
               >
                 <Mail size={20} />
-                <span>contact@hasanarthuraltuntas.xyz</span>
+                <span>contact@hasan-arthur-altuntas.xyz</span>
               </a>
             </motion.div>
           </motion.div>

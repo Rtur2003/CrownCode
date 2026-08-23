@@ -46,8 +46,8 @@ export const Footer: React.FC = () => {
     {
       title: t.footer.sections.developer.title,
       links: [
-        { label: t.footer.sections.developer.contact, href: 'mailto:contact@hasanarthuraltuntas.xyz', external: true },
-        { label: t.footer.sections.developer.portfolio, href: 'https://hasanarthuraltuntas.xyz', external: true },
+        { label: t.footer.sections.developer.contact, href: 'mailto:contact@hasan-arthur-altuntas.xyz', external: true },
+        { label: t.footer.sections.developer.portfolio, href: 'https://hasan-arthur-altuntas.xyz', external: true },
       ],
     },
   ]
@@ -87,7 +87,7 @@ export const Footer: React.FC = () => {
                 <Github size={20} />
               </a>
               <a
-                href="https://hasanarthuraltuntas.xyz"
+                href="https://hasan-arthur-altuntas.xyz"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"
@@ -96,7 +96,7 @@ export const Footer: React.FC = () => {
                 <Globe size={20} />
               </a>
               <a
-                href="mailto:contact@hasanarthuraltuntas.xyz"
+                href="mailto:contact@hasan-arthur-altuntas.xyz"
                 className="social-link"
                 aria-label={t.aria.email}
               >
@@ -161,7 +161,7 @@ export const Footer: React.FC = () => {
                 <Heart size={14} className="heart-icon" />
                 {' '}{t.footer.bottom.by}{' '}
                 <a
-                  href="https://hasanarthuraltuntas.xyz"
+                  href="https://hasan-arthur-altuntas.xyz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="author-link"

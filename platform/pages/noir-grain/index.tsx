@@ -32,7 +32,7 @@ const NoirGrainPage: NextPage = () => {
       title={`${item?.title ?? 'Noir & Grain'} | CrownCode`}
       description={item?.description ?? ''}
       keywords="restaurant template, webgl, gsap, react, fine dining"
-      url="https://hasanarthuraltuntas.xyz/noir-grain"
+      url="https://hasan-arthur-altuntas.xyz/noir-grain"
     >
       <section className="mx-auto max-w-6xl px-6 pb-24 pt-32">
         {/* ===== HERO ===== */}

@@ -612,7 +612,7 @@ const CrownFortunePage: NextPage = () => {
       ? `🔮 Bugünkü kaderim: ${cardName}${isReversed ? ' (Ters)' : ''} - ${catLabel}\n\n"${displayMessage}"\n\n#CrownDestiny #Tarot`
       : `🔮 My destiny today: ${cardName}${isReversed ? ' (Reversed)' : ''} - ${catLabel}\n\n"${displayMessage}"\n\n#CrownDestiny #Tarot`
 
-    const shareUrl = 'https://hasanarthuraltuntas.xyz/crown-fortune'
+    const shareUrl = 'https://hasan-arthur-altuntas.xyz/crown-fortune'
 
     triggerHaptic(HAPTIC.LIGHT)
 
@@ -727,7 +727,7 @@ const CrownFortunePage: NextPage = () => {
         title={t.crownFortune.meta.title}
         description={t.crownFortune.meta.description}
         keywords={t.crownFortune.meta.keywords}
-        url="https://hasanarthuraltuntas.xyz/crown-fortune"
+        url="https://hasan-arthur-altuntas.xyz/crown-fortune"
         noCache={true}
       >
         <div className={styles['fortune-page']}>

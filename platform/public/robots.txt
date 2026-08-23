@@ -5,8 +5,8 @@ User-agent: *
 Allow: /
 
 # Sitemap locations (both domains)
-Sitemap: https://hasanarthuraltuntas.xyz/sitemap.xml
-Sitemap: https://hasanarthuraltuntas.com.tr/sitemap.xml
+Sitemap: https://hasan-arthur-altuntas.xyz/sitemap.xml
+Sitemap: https://hasan-arthur-altuntas.com.tr/sitemap.xml
 
 # Crawl delay (optional - 1 second)
 Crawl-delay: 1

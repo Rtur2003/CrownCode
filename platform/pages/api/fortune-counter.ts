@@ -132,8 +132,8 @@ export default async function handler(
   // CORS - allow only same origin (or specific domains in production)
   const origin = req.headers.origin || ''
   const allowedOrigins = [
-    'https://hasanarthuraltuntas.xyz',
-    'https://www.hasanarthuraltuntas.xyz',
+    'https://hasan-arthur-altuntas.xyz',
+    'https://www.hasan-arthur-altuntas.xyz',
     'http://localhost:3000',
     'http://localhost:3001'
   ]

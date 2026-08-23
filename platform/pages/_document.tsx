@@ -46,7 +46,7 @@ export default function Document() {
               '@type': 'WebSite',
               name: 'CrownCode Platform',
               description: 'Central platform showcasing software projects, research work, and development processes',
-              url: 'https://hasanarthuraltuntas.xyz',
+              url: 'https://hasan-arthur-altuntas.xyz',
               author: {
                 '@type': 'Person',
                 name: 'Hasan Arthur Altuntaş',
@@ -54,7 +54,7 @@ export default function Document() {
               },
               potentialAction: {
                 '@type': 'SearchAction',
-                target: 'https://hasanarthuraltuntas.xyz/search?q={search_term_string}',
+                target: 'https://hasan-arthur-altuntas.xyz/search?q={search_term_string}',
                 'query-input': 'required name=search_term_string'
               }
             })
@@ -69,8 +69,8 @@ export default function Document() {
               '@context': 'https://schema.org',
               '@type': 'Organization',
               name: 'CrownCode',
-              url: 'https://hasanarthuraltuntas.xyz',
-              logo: 'https://hasanarthuraltuntas.xyz/logo-main.png',
+              url: 'https://hasan-arthur-altuntas.xyz',
+              logo: 'https://hasan-arthur-altuntas.xyz/logo-main.png',
               description: 'Open-source project showcase and demo applications platform',
               founder: {
                 '@type': 'Person',
@@ -79,7 +79,7 @@ export default function Document() {
               },
               sameAs: [
                 'https://github.com/Rtur2003',
-                'https://hasanarthuraltuntas.com.tr'
+                'https://hasan-arthur-altuntas.com.tr'
               ],
               contactPoint: {
                 '@type': 'ContactPoint',
