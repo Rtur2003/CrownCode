@@ -1,12 +1,10 @@
-# Hasan Arthur Altuntaş - Portfolio & Research Platform
+# Hasan Arthur Altuntaş - CrownCode Platform
 # Allow all search engines to crawl the site
 
 User-agent: *
 Allow: /
 
-# Sitemap locations (both domains)
 Sitemap: https://hasan-arthur-altuntas.xyz/sitemap.xml
-Sitemap: https://hasan-arthur-altuntas.com.tr/sitemap.xml
 
 # Crawl delay (optional - 1 second)
 Crawl-delay: 1
@@ -16,9 +14,3 @@ Disallow: /api/
 
 # Disallow build artifacts
 Disallow: /_next/static/
-
-# Allow important pages
-Allow: /
-Allow: /ai-music-detection
-Allow: /crown-fortune
-Allow: /crown-commend

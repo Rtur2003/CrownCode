@@ -177,10 +177,6 @@
             </div>
             <div class="stat">
               <div class="stat-value">2</div>
-              <div class="stat-label">Domains</div>
-            </div>
-            <div class="stat">
-              <div class="stat-value">2</div>
               <div class="stat-label">Languages</div>
             </div>
           </div>
