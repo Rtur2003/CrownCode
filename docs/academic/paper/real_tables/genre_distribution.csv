@@ -1,0 +1,13 @@
+genre,n_human,n_ai,ai_fraction
+blues,100,0,0.0
+caz,99,0,0.0
+edm_house,100,0,0.0
+folk_country,100,0,0.0
+klasik,100,0,0.0
+metal,100,0,0.0
+mixed,1854,704,0.275
+pop,100,0,0.0
+rap_hiphop,100,0,0.0
+reggae_dub,100,0,0.0
+rock,100,0,0.0
+vocal_deepfake,242,250,0.508

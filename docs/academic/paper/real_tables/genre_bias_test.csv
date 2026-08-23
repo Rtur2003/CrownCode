@@ -1,0 +1,3 @@
+subset,n,roc_auc,f1,balanced_accuracy,note
+natural_test_split,1215,0.9743,0.8428,0.9163,
+genre_balanced_test_split,572,0.9758,0.9215,0.9196,

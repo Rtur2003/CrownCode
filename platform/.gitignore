@@ -55,6 +55,11 @@ temp/
 .vercel/
 .netlify/
 
+# Cloudflare (OpenNext / Wrangler)
+.open-next/
+.wrangler/
+cloudflare-env.d.ts
+
 # Bundle analysis
 bundle-report.html
 stats.json

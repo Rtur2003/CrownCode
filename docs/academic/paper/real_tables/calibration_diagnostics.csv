@@ -1,0 +1,17 @@
+metric,value
+brier_score,0.083
+ece_10bin,0.0146
+calibration_slope,0.9857
+calibration_intercept,-0.1668
+
+bin_mean_predicted,bin_fraction_positive
+0.0243,0.0206
+0.1426,0.1234
+0.2473,0.2632
+0.3514,0.345
+0.4472,0.4085
+0.5517,0.5394
+0.6494,0.5754
+0.7508,0.6955
+0.8534,0.8094
+0.9651,0.959

@@ -1,0 +1,8 @@
+Segment/track-level leakage check
+==================================================
+Total files: 5195
+Files matching a segment-numbering pattern (base_part1, base_seg2, ...): 0
+Distinct base tracks with >1 segment file: 0
+Files with no recognizable segment suffix: 5195
+
+FINDING: no filename-based segment groups detected. Filenames appear to be one-file-per-track (e.g. gtzan_blues_0000.wav), so standard stratified splitting does not leak track identity via segment numbering. This does not rule out leakage from duplicate or near-duplicate source audio uploaded under different filenames, which is not filename-detectable.

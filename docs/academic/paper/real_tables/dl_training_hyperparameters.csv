@@ -1,0 +1,11 @@
+hyperparameter,value
+note,"shared across all 4 DL architectures (Deep MLP, 1D-CNN, Residual MLP, Attention MLP) — architecture differs, training recipe does not"
+optimizer,AdamW
+learning_rate,1e-3
+weight_decay,1e-4
+lr_scheduler,"ReduceLROnPlateau(mode=max, factor=0.5, patience=5)"
+loss,BCEWithLogitsLoss(pos_weight=n_neg/n_pos)
+epochs_max,100
+early_stopping_patience,10
+batch_size,64
+seed,42 (+fold index)

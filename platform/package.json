@@ -13,6 +13,9 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
@@ -43,6 +46,7 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.1.6",
+    "@opennextjs/cloudflare": "^1.20.2",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -57,6 +61,7 @@
     "@typescript-eslint/parser": "^8.17.0",
     "autoprefixer": "^10.4.20",
     "cross-env": "^7.0.3",
+    "esbuild": "^0.28.2",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.3",
     "eslint-config-prettier": "^9.1.0",
@@ -70,7 +75,8 @@
     "sharp": "^0.34.5",
     "tailwindcss": "^3.4.17",
     "ts-jest": "^29.4.6",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "wrangler": "^4.125.0"
   },
   "engines": {
     "node": ">=20.18.1"

@@ -1,0 +1,6 @@
+held_out_generator,n_train,n_test,n_ai_test,n_human_test,threshold_from_train,accuracy,precision,recall,f1,balanced_accuracy,mcc,roc_auc,pr_auc
+aime,4991,204,204,0,0.7047,0.1814,1.0,0.1814,0.3071,0.1814,0.0,,
+deepfake_audio,4803,392,200,192,0.6357,0.5842,1.0,0.185,0.3122,0.5925,0.3163,0.8898,0.9182
+deepfake_audio_dataset,5095,100,50,50,0.5681,0.54,0.5213,0.98,0.6806,0.54,0.1684,0.676,0.668
+echoes,4067,1128,1128,0,0.9118,0.0222,1.0,0.0222,0.0434,0.0222,0.0,,
+suno_audio,4695,500,500,0,0.6869,0.252,1.0,0.252,0.4026,0.252,0.0,,

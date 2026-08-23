@@ -1,0 +1,4 @@
+config,n_features,roc_auc,f1,balanced_accuracy,threshold
+47_features_all,47,0.9549,0.8591,0.8844,0.4316
+46_features_without_flatness_std,46,0.9489,0.8484,0.8758,0.394
+1_feature_flatness_std_only,1,0.6276,0.5765,0.597,0.4624

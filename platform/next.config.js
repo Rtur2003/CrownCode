@@ -3,21 +3,16 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
-const deploymentTarget = process.env.DEPLOYMENT_TARGET || 'server'
-const isStaticExport = deploymentTarget === 'static'
-
 const nextConfig = {
   reactStrictMode: true,
 
-  // Image optimization
+  // Image optimization — running in server mode on Cloudflare Workers
+  // (via @opennextjs/cloudflare), so next/image optimization stays enabled.
   images: {
-    // For static export mode, keep next/image unoptimized.
-    // For server mode, Next can optimize images at runtime.
-    unoptimized: isStaticExport,
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'hasanarthuraltuntas.xyz',
+        hostname: 'hasan-arthur-altuntas.xyz',
         port: '',
         pathname: '/**',
       },
@@ -58,13 +53,6 @@ const nextConfig = {
       : false,
   },
 
-  // Output configuration for Netlify
-  ...(isStaticExport
-    ? {
-        output: 'export',
-        distDir: 'out',
-      }
-    : {}),
   trailingSlash: false, // Changed to false for better sitemap compatibility
 
   // Compression

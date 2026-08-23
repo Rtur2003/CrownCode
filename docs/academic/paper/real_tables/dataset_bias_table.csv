@@ -1,0 +1,10 @@
+source,n,label,n_ai,n_human,n_distinct_genres,top_genre,top_genre_frac,duration_mean_sec,duration_std_sec,duration_min_sec,duration_max_sec,sample_rate_modes
+aime,204,AI,204,0,1,mixed,1.0,21.94,9.74,10.18,30.0,22050=204
+archive_org,18,Human,0,18,0,n/a,0.0,120.0,0.0,120.0,120.0,22050=18
+deepfake_audio,392,AI,200,192,1,vocal_deepfake,1.0,4.42,3.99,1.02,26.75,22050=392
+deepfake_audio_dataset,100,Human,50,50,1,vocal_deepfake,1.0,10.0,0.0,10.0,10.0,22050=100
+echoes,1128,AI,1128,0,0,n/a,0.0,30.0,0.0,30.0,30.0,22050=1128
+fma,1000,Human,0,1000,1,mixed,1.0,29.99,0.01,29.96,30.0,22050=1000
+gtzan,999,Human,0,999,10,blues,0.1,30.0,0.0,29.93,30.0,22050=999
+sleepyjesse,854,Human,0,854,1,mixed,1.0,29.86,1.49,8.07,30.0,22050=854
+suno_audio,500,AI,500,0,1,mixed,1.0,30.0,0.0,30.0,30.0,22050=500
