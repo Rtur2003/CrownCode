@@ -3,6 +3,7 @@
 import { defineConfig, globalIgnores } from 'eslint/config'
 import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTypescript from 'eslint-config-next/typescript'
+import reactHooks from 'eslint-plugin-react-hooks'
 
 export default defineConfig([
   ...nextVitals,
@@ -10,6 +11,8 @@ export default defineConfig([
 
   globalIgnores([
     '.next/**',
+    '.open-next/**',
+    '.wrangler/**',
     'out/**',
     'build/**',
     'dist/**',
@@ -19,6 +22,7 @@ export default defineConfig([
   ]),
 
   {
+    plugins: { 'react-hooks': reactHooks },
     rules: {
       '@typescript-eslint/no-unused-vars': [
         'warn',
