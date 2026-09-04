@@ -5,6 +5,7 @@
  */
 
 import React, { Component, ReactNode, ErrorInfo } from 'react'
+import Router from 'next/router'
 import { ErrorFallback } from './ErrorFallback'
 
 interface Props {
@@ -30,6 +31,17 @@ export class ErrorBoundary extends Component<Props, State> {
 
   static getDerivedStateFromError(_error: Error): Partial<State> {
     return { hasError: true }
+  }
+
+  override componentDidMount() {
+    // SPA navigation doesn't remount this boundary, so without this it
+    // would keep showing the fallback forever after the first crash —
+    // even after the user clicks a link to leave the broken page.
+    Router.events.on('routeChangeComplete', this.handleReset)
+  }
+
+  override componentWillUnmount() {
+    Router.events.off('routeChangeComplete', this.handleReset)
   }
 
   override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
