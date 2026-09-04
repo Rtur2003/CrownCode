@@ -213,7 +213,7 @@ export const useFileAnalysis = () => {
     setProcessingState('downloading')
 
     if (!apiBaseUrl) {
-      fallbackToPreview('backend_not_configured')
+      await fallbackToPreview('backend_not_configured')
       return
     }
 
@@ -233,14 +233,21 @@ export const useFileAnalysis = () => {
       }
 
       if (gatewayError === 'backend_not_configured' || gatewayError === 'backend_unreachable') {
-        fallbackToPreview(gatewayError)
+        await fallbackToPreview(gatewayError)
       } else {
         setError(gatewayError || 'unsupportedFileType')
         setProcessingState('error')
       }
     } catch {
       if (isStale()) {return}
-      fallbackToPreview('backend_unreachable')
+      try {
+        await fallbackToPreview('backend_unreachable')
+      } catch {
+        if (!isStale()) {
+          setError('backend_unreachable')
+          setProcessingState('error')
+        }
+      }
     }
   }, [apiBaseUrl, selectedFile, validateFile])
 
