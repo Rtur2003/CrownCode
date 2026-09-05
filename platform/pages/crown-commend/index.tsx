@@ -190,8 +190,13 @@ const CrownCommendPage: NextPage = () => {
               </motion.button>
             </div>
 
-            {/* Results Section */}
-            <AnimatePresence mode="wait">
+            {/* Results Section — these blocks (error, success, video, comment)
+                aren't mutually exclusive alternatives (video + comment render
+                together after a successful generate), so `mode="wait"` is the
+                wrong tool here: it serializes exit/enter across ALL children
+                as if only one could exist, which glitches the transition when
+                regenerating. Default `sync` mode animates each independently. */}
+            <AnimatePresence>
               {/* Error */}
               {error && (
                 <motion.div
