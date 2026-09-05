@@ -103,8 +103,23 @@ function getTurkeyHour(): number {
   return parseInt(formatter.format(now), 10)
 }
 
-// Generate a realistic base count for the day
-function getBaseCount(): number {
+// Deterministic hash so the same (date, hour) always produces the same
+// jitter value. Using Math.random() here meant a serverless cold start
+// mid-day (common — this store is in-memory and resets on every cold
+// start) recomputed a brand-new random baseline, so the "daily counter"
+// could visibly drop or jump on refresh instead of only ever growing.
+function seededJitter(seed: string, max: number): number {
+  let hash = 0
+  for (let i = 0; i < seed.length; i++) {
+    hash = ((hash << 5) - hash) + seed.charCodeAt(i)
+    hash = hash & hash
+  }
+  return Math.abs(hash) % max
+}
+
+// Generate a realistic base count for the day — deterministic per
+// (date, hour) so a cold-start restart never regresses the count.
+function getBaseCount(today: string): number {
   const turkeyHour = getTurkeyHour()
 
   // Simulate activity based on time of day
@@ -121,8 +136,9 @@ function getBaseCount(): number {
   // Base count grows through the day
   const hoursPassed = turkeyHour
   const estimatedHourlyVisits = Math.floor(15 * baseMultiplier)
+  const jitter = seededJitter(`${today}_${turkeyHour}`, 10)
 
-  return Math.floor(hoursPassed * estimatedHourlyVisits + Math.random() * 10)
+  return Math.floor(hoursPassed * estimatedHourlyVisits + jitter)
 }
 
 export default async function handler(
@@ -164,7 +180,7 @@ export default async function handler(
   if (counterStore.date !== today) {
     counterStore = {
       date: today,
-      count: getBaseCount()
+      count: getBaseCount(today)
     }
   }
 
