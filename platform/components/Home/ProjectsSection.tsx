@@ -57,6 +57,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
   const commend = byId('crown-commend')
   const vote = byId('crown-vote')
   const noirGrain = byId('noir-grain')
+  const kognita = byId('kognita')
 
   return (
     <section
@@ -199,6 +200,30 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
                   </div>
                 </div>
               </Link>
+            </motion.div>
+          )}
+
+          {/* Kognita — external repo, no in-platform page; technical tool
+              treatment like Commend/Vote, links out to GitHub directly */}
+          {kognita && (
+            <motion.div variants={cellVariants} className="bento-cell" role="listitem">
+              <a
+                href={kognita.entry.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bento-tile bento-tile--tool"
+                aria-label={`${kognita.resolved.title} — ${kognita.resolved.description} (opens on GitHub)`}
+              >
+                <div className="bento-tile-content">
+                  <span className="bento-eyebrow bento-eyebrow--mono">{kognita.resolved.status}</span>
+                  <h3 className="bento-title">{kognita.resolved.title}</h3>
+                  <p className="bento-desc">{kognita.resolved.description}</p>
+                  <div className="bento-foot">
+                    <span className="bento-metric bento-metric--mono">{kognita.resolved.stats}</span>
+                    <span className="bento-go" aria-hidden="true"><ArrowUpRight size={16} /></span>
+                  </div>
+                </div>
+              </a>
             </motion.div>
           )}
 
