@@ -1,5 +1,8 @@
 /* Error Page Styles */
-/* Bu dosya error boundary ve custom error pages için kullanılır */
+/* Shared by the ErrorBoundary fallback (React render crashes) and the
+   custom _error.tsx page (500s / server errors) — a cracked wax-seal
+   motif instead of a generic alert-triangle-in-a-circle, so a serious
+   failure state still reads as this brand rather than stock error UI. */
 
 .error-page {
   min-height: 100vh;
@@ -7,84 +10,167 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(166, 75, 60, 0.06), transparent 60%),
+    var(--color-background);
 }
 
 .error-container {
-  max-width: 600px;
+  max-width: 560px;
   width: 100%;
 }
 
 .error-content {
   text-align: center;
-  padding: 40px;
+  padding: 3rem 2.5rem;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-2xl);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+}
+
+.error-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 3rem;
+  right: 3rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(166, 75, 60, 0.4), transparent);
 }
 
 .error-icon {
   display: inline-flex;
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 24px;
-  background: rgba(166, 75, 60, 0.12);
-  border: 2px solid rgba(166, 75, 60, 0.4);
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: 0 auto 1.75rem;
+  background:
+    conic-gradient(from 45deg, rgba(166, 75, 60, 0.18), rgba(166, 75, 60, 0.04) 40%, rgba(166, 75, 60, 0.18));
+  border: 1px solid rgba(166, 75, 60, 0.35);
   border-radius: 50%;
   color: var(--color-error);
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.error-icon::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px dashed rgba(166, 75, 60, 0.25);
 }
 
 .error-status-code {
-  font-size: 6rem;
-  font-weight: 900;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin: 0 0 16px 0;
+  font-family: var(--font-family-heading);
+  font-size: clamp(3rem, 8vw, 4.5rem);
+  font-weight: 400;
+  color: var(--color-text-primary);
+  line-height: 1;
+  margin: 0 0 1rem 0;
+  text-shadow: 0 0 40px rgba(166, 75, 60, 0.2);
 }
 
 .error-title {
-  font-size: 1.875rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--color-text-primary);
-  margin: 0 0 12px 0;
+  margin: 0 0 0.75rem 0;
 }
 
 .error-message {
-  font-size: 1.125rem;
+  font-size: 1rem;
   color: var(--color-text-secondary);
-  margin: 0 0 32px 0;
+  line-height: 1.6;
+  margin: 0 0 2rem 0;
 }
 
 .error-actions {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .error-actions .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px 24px;
-  border-radius: var(--radius-lg);
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border-radius: var(--radius-full);
   text-decoration: none;
   cursor: pointer;
   border: none;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: transform 0.4s var(--ease-out-cubic), box-shadow 0.4s var(--ease-out-cubic);
 }
 
 .error-actions .btn-primary {
   background: var(--gradient-primary);
   color: var(--color-text-inverse);
+  box-shadow: 0 4px 16px rgba(201, 147, 71, 0.2);
+}
+
+.error-actions .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(201, 147, 71, 0.3);
 }
 
 .error-actions .btn-secondary {
   background: var(--color-surface);
   color: var(--color-text-primary);
   border: 1px solid var(--color-border);
+}
+
+.error-actions .btn-secondary:hover {
+  border-color: var(--color-border-hover);
+}
+
+.error-details {
+  margin: 0 0 1.5rem 0;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 0.875rem 1rem;
+}
+
+.error-details summary {
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.error-stack {
+  margin-top: 0.75rem;
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 12rem;
+  overflow-y: auto;
+}
+
+@media (min-width: 480px) {
+  .error-actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .error-actions .btn {
+    flex: 0 1 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .error-actions .btn-primary:hover {
+    transform: none;
+  }
 }
