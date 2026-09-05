@@ -4,7 +4,7 @@
  * Bağımlılıklar: components/UI/Toast, styles/components/toast.css
  */
 
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react'
+import React, { createContext, useContext, useState, useCallback, useMemo, ReactNode } from 'react'
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info'
 
@@ -79,7 +79,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     showToast('info', title, message)
   }, [showToast])
 
-  const value = {
+  const value = useMemo(() => ({
     toasts,
     showToast,
     hideToast,
@@ -87,7 +87,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     error,
     warning,
     info
-  }
+  }), [toasts, showToast, hideToast, success, error, warning, info])
 
   return (
     <ToastContext.Provider value={value}>
