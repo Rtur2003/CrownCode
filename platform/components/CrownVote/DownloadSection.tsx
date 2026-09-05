@@ -18,6 +18,8 @@ export const DownloadSection: React.FC = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let isMounted = true
+
     const fetchRelease = async () => {
       try {
         const res = await fetchWithTimeout('https://api.github.com/repos/Rtur2003/VOTRYX/releases/latest', { timeout: 10_000 })
@@ -25,21 +27,29 @@ export const DownloadSection: React.FC = () => {
           const data = await res.json()
           const exeAsset = data.assets?.find((a: { name: string }) => a.name.endsWith('.exe'))
 
-          setReleaseInfo({
-            version: data.tag_name || 'v1.0.0',
-            downloadUrl: exeAsset?.browser_download_url || data.html_url,
-            size: exeAsset ? `${(exeAsset.size / 1024 / 1024).toFixed(1)} MB` : 'N/A',
-            date: new Date(data.published_at).toLocaleDateString(),
-          })
+          if (isMounted) {
+            setReleaseInfo({
+              version: data.tag_name || 'v1.0.0',
+              downloadUrl: exeAsset?.browser_download_url || data.html_url,
+              size: exeAsset ? `${(exeAsset.size / 1024 / 1024).toFixed(1)} MB` : 'N/A',
+              date: new Date(data.published_at).toLocaleDateString(),
+            })
+          }
         }
       } catch (error) {
         console.error('Failed to fetch release info:', error)
       } finally {
-        setLoading(false)
+        if (isMounted) {
+          setLoading(false)
+        }
       }
     }
 
     fetchRelease()
+
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   const downloadText = t.crownVote?.download
