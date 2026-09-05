@@ -61,28 +61,29 @@ interface FloatingCardData {
 }
 
 const BackgroundFloatingCards = () => {
-  const [cards, setCards] = useState<FloatingCardData[]>([])
   const [isMobile, setIsMobile] = useState(false)
   const prefersReducedMotion = useReducedMotion()
 
-  // Generate card data on mount
+  // Track viewport breakpoint separately from card generation so resizing
+  // across 768px doesn't reroll every card's random position/image below.
   useEffect(() => {
-    // Check for mobile
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768)
     }
     checkMobile()
     window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
-    // Generate cards for each layer
+  // Generate card data once on mount — a fixed pool sized for the desktop
+  // (larger) count, with mobile hiding the extras via CSS/slice below,
+  // so an in-session breakpoint cross never rerolls existing cards.
+  const allCards = useMemo(() => {
     const generatedCards: FloatingCardData[] = []
     let cardId = 0
 
     LAYERS.forEach((layer) => {
-      // Reduce count on mobile
-      const count = isMobile ? Math.max(1, Math.floor(layer.count / 2)) : layer.count
-
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < layer.count; i++) {
         generatedCards.push({
           id: cardId++,
           layer,
@@ -96,10 +97,19 @@ const BackgroundFloatingCards = () => {
       }
     })
 
-    setCards(generatedCards)
+    return generatedCards
+  }, [])
 
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [isMobile])
+  const cards = useMemo(() => {
+    if (!isMobile) {return allCards}
+    // Keep roughly half the cards per layer on mobile, same selection every time.
+    const perLayerSeen = new Map<number, number>()
+    return allCards.filter((card) => {
+      const seen = perLayerSeen.get(card.layer.depth) ?? 0
+      perLayerSeen.set(card.layer.depth, seen + 1)
+      return seen < Math.max(1, Math.floor(card.layer.count / 2))
+    })
+  }, [allCards, isMobile])
 
   if (prefersReducedMotion) {
     return null
