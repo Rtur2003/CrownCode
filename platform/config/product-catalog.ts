@@ -10,7 +10,7 @@
  */
 
 import type { LucideIcon } from 'lucide-react'
-import { Music, Brain, Crown, Moon, Youtube, Bot, UtensilsCrossed } from 'lucide-react'
+import { Music, Brain, Crown, Moon, Youtube, Bot, UtensilsCrossed, Eye } from 'lucide-react'
 
 // ── Types ───────────────────────────────────────────────────────────
 
