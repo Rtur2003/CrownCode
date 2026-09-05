@@ -124,6 +124,9 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
   }, [videoUrl])
 
   const reset = useCallback(() => {
+    // Invalidate any in-flight generate/post request so its response can't
+    // land after reset and silently repopulate the just-cleared state.
+    requestIdRef.current++
     setState('idle')
     setGeneratedComment(null)
     setVideoDetails(null)
@@ -190,7 +193,7 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
       setError({ code: 'generate_failed', message })
       setState('error')
     }
-  }, [videoUrl, language, style, isValidUrl, apiBaseUrl, i18nMessages])
+  }, [videoUrl, language, style, isValidUrl, apiBaseUrl, i18nMessages, saveCommend])
 
   const postComment = useCallback(async () => {
     if (!generatedComment || !videoUrl) {
@@ -202,6 +205,13 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
       setError({ code: 'no_api', message: i18nMessages.apiNotConfigured })
       return
     }
+
+    // Guard against a second click firing before the 'posting' state
+    // re-render disables the button, and against a stale response landing
+    // after reset()/a new generate/post cycle has started.
+    if (state === 'posting') {return}
+    const currentRequestId = ++requestIdRef.current
+    const isStale = () => requestIdRef.current !== currentRequestId
 
     setState('posting')
     setError(null)
@@ -215,6 +225,8 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
           commentText: generatedComment
         })
       })
+
+      if (isStale()) {return}
 
       // Handle already commented (409 Conflict)
       if (response.status === 409) {
@@ -244,11 +256,12 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
       setState('success')
 
     } catch (err) {
+      if (isStale()) {return}
       const message = err instanceof Error ? err.message : i18nMessages.failedToPost
       setError({ code: 'post_failed', message })
       setState('error')
     }
-  }, [generatedComment, videoUrl, apiBaseUrl, i18nMessages])
+  }, [generatedComment, videoUrl, apiBaseUrl, i18nMessages, state])
 
   const updateComment = useCallback((text: string) => {
     setGeneratedComment(text)
