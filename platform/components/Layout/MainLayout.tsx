@@ -13,6 +13,8 @@ interface MainLayoutProps {
   image?: string
   url?: string
   noCache?: boolean
+  /** Internal-search-results and similar low-value pages should not be indexed. */
+  noIndex?: boolean
 }
 
 export const MainLayout: React.FC<MainLayoutProps> = ({
@@ -23,6 +25,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   image = '/og-image.png',
   url = 'https://hasan-arthur-altuntas.xyz',
   noCache = false,
+  noIndex = false,
 }) => {
   const { language } = useLanguage()
   const router = useRouter()
@@ -41,7 +44,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     "@type": "Organization",
     "name": "CrownCode",
     "url": baseUrl,
-    "logo": `${baseUrl}/favicon.svg`,
+    "logo": `${baseUrl}/logo-main.png`,
+    "description": "Open-source project showcase and demo applications platform",
     "founder": {
       "@type": "Person",
       "name": "Hasan Arthur Altuntas",
@@ -52,8 +56,14 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
       }
     },
     "sameAs": [
-      "https://github.com/Rtur2003"
-    ]
+      "https://github.com/Rtur2003",
+      "https://hasan-arthur-altuntas.com.tr"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "Technical Support",
+      "availableLanguage": ["Turkish", "English"]
+    }
   }
 
   const websiteSchema = {
@@ -137,15 +147,18 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#e7c77a" />
         <meta name="author" content="Hasan Arthur Altuntaş (Rthur)" />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta
+          name="robots"
+          content={noIndex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
+        />
         <meta name="language" content={metaLanguage} />
-        <meta name="googlebot" content="index, follow" />
+        <meta name="googlebot" content={noIndex ? 'noindex, follow' : 'index, follow'} />
         <link rel="canonical" href={canonicalUrl} />
 
-        {/* Hreflang for multilingual SEO */}
-        <link rel="alternate" hrefLang="tr" href={`${siteOrigin}${router.asPath.split('?')[0]}`} />
-        <link rel="alternate" hrefLang="en" href={`${siteOrigin}${router.asPath.split('?')[0]}`} />
-        <link rel="alternate" hrefLang="x-default" href={`${siteOrigin}${router.asPath.split('?')[0]}`} />
+        {/* No hreflang: the tr/en toggle is client-side state on one URL,
+            not locale-specific routes, so per Google's own guidance a
+            hreflang block here would point every locale at an identical
+            URL — invalid, and Search Console would flag it as such. */}
 
         {/* Mobile optimization */}
         <meta name="mobile-web-app-capable" content="yes" />
