@@ -88,6 +88,14 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     gradient: 'from-stone-700 via-amber-600 to-yellow-500',
     category: 'project',
   },
+  {
+    id: 'kognita',
+    localeKey: 'kognita',
+    href: 'https://github.com/Rtur2003/Kognita',
+    icon: Eye,
+    gradient: 'from-amber-400 via-yellow-500 to-orange-600',
+    category: 'project',
+  },
 ] as const
 
 // ── Search Registry (pages + features) ──────────────────────────────
