@@ -4,7 +4,7 @@
  * Bağımlılıklar: ThemeProvider, LanguageProvider, ToastProvider, ErrorBoundary, LoadingScreen, global styles
  */
 
-import React, { useState, useEffect, lazy, Suspense } from 'react'
+import React, { useState, useEffect, useLayoutEffect, lazy, Suspense } from 'react'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'next-themes'
 import { LanguageProvider } from '@/context/LanguageContext'
@@ -23,13 +23,19 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [modalsReady, setModalsReady] = useState(false)
 
-  useEffect(() => {
-    // Check if this is first load
-    const hasLoaded = sessionStorage.getItem('hasLoaded')
-    if (hasLoaded) {
+  // useLayoutEffect (not useEffect) so a returning visitor's correction
+  // happens before the browser paints — avoids a one-frame flash of the
+  // full-screen LoadingScreen on every navigation within the session.
+  // The first render must still match SSR (always "loading"), so this
+  // can't be a useState lazy initializer without causing a hydration
+  // mismatch — sessionStorage isn't available on the server.
+  useLayoutEffect(() => {
+    if (sessionStorage.getItem('hasLoaded')) {
       setIsLoading(false)
     }
+  }, [])
 
+  useEffect(() => {
     // Defer modal chunk loading until first user interaction
     const activateModals = () => setModalsReady(true)
     window.addEventListener('keydown', activateModals, { once: true })
