@@ -737,15 +737,19 @@ export function getDailyDestiny(): DailyDestiny {
     }
   }
 
-  // Yeni kader oluştur
-  const baseSeed = seededRandom(`${today}_${userId}`)
+  // Yeni kader oluştur — each draw gets its own hashed seed (a distinct
+  // string through seededRandom) rather than arithmetic on one shared
+  // number, so card/category/tone/message are actually independent draws
+  // instead of correlated outputs of a single linear seed.
+  const dailyKey = `${today}_${userId}`
+  const baseSeed = seededRandom(dailyKey)
 
   // Kart seç
   const cardId = Math.floor(baseSeed * DESTINY_CARDS.length)
 
-  // Kategori seç — derive a second seed from baseSeed to avoid correlation
-  const seed2 = (baseSeed * 7919) % 1
-  const categoryIndex = Math.floor(seed2 * FORTUNE_CATEGORIES.length)
+  // Kategori seç
+  const categorySeed = seededRandom(`${dailyKey}_category`)
+  const categoryIndex = Math.floor(categorySeed * FORTUNE_CATEGORIES.length)
   const category = FORTUNE_CATEGORIES[categoryIndex].key
 
   // Ton belirle (kartın enerjisine göre ağırlıklı)
@@ -755,15 +759,16 @@ export function getDailyDestiny(): DailyDestiny {
     card.energy === 'descending' ? ['negative', 'negative', 'neutral', 'positive'] :
     ['positive', 'neutral', 'neutral', 'negative']
 
-  const seed3 = (baseSeed * 6271) % 1
-  const toneIndex = Math.floor(seed3 * toneWeights.length)
+  const toneSeed = seededRandom(`${dailyKey}_tone`)
+  const toneIndex = Math.floor(toneSeed * toneWeights.length)
   const tone = toneWeights[toneIndex]
 
   // Mesaj seç (ton filtreli)
   const categoryMessages = FORTUNE_MESSAGES[category]
   const filteredMessages = categoryMessages.filter(m => m.tone === tone)
+  const messageSeed = seededRandom(`${dailyKey}_message`)
   const messageIndex = categoryMessages.indexOf(
-    seededChoice(filteredMessages.length > 0 ? filteredMessages : categoryMessages, baseSeed)
+    seededChoice(filteredMessages.length > 0 ? filteredMessages : categoryMessages, messageSeed)
   )
 
   const destiny: DailyDestiny = {
