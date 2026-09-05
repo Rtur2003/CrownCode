@@ -1,0 +1,161 @@
+/* 404 — "the throne room stands empty." A broken-crown motif instead of a
+   generic gradient-number 404, matching the site's royal/serif identity
+   rather than a stock SaaS not-found page. */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 1.5rem 4rem;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(201, 147, 71, 0.08), transparent 60%),
+    var(--color-background);
+}
+
+.floor-glow {
+  position: absolute;
+  bottom: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60rem;
+  height: 30rem;
+  background: radial-gradient(ellipse at center, rgba(201, 147, 71, 0.1), transparent 70%);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 32rem;
+  text-align: center;
+}
+
+.crown-mark {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  color: var(--color-gold-500);
+}
+
+.seal {
+  font-family: var(--font-family-heading);
+  font-size: clamp(4rem, 12vw, 6.5rem);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 60px rgba(201, 147, 71, 0.2);
+}
+
+.title {
+  font-size: clamp(1.5rem, 3vw, 1.875rem);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.description {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+  max-width: 34ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.875rem 1.75rem;
+  background: var(--gradient-primary);
+  color: var(--color-text-inverse);
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9375rem;
+  transition: transform 0.4s var(--ease-out-cubic), box-shadow 0.4s var(--ease-out-cubic);
+  box-shadow: 0 4px 16px rgba(201, 147, 71, 0.25);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(201, 147, 71, 0.35);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.875rem 1.75rem;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-light);
+  cursor: pointer;
+  font-size: 0.9375rem;
+  transition: all 0.4s var(--ease-out-cubic);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-gold-500);
+  color: var(--color-gold-400);
+}
+
+.helpful {
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.helpful-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.helpful-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  justify-content: center;
+}
+
+.helpful-link {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-gold-400);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.helpful-link:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: none;
+  }
+}
