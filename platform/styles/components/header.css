@@ -291,7 +291,12 @@
   visibility: hidden;
   transform: translateY(-8px) scale(0.97);
   transition: all var(--animation-normal) var(--ease-out-cubic);
-  z-index: 1000;
+  /* Must stay above .mobile-menu-backdrop (z-fixed - 1 = 1029), or the
+     backdrop's dim overlay renders on top of the menu instead of behind
+     it, making the panel look washed out and the page bleed through. */
+  z-index: var(--z-fixed);
+  max-height: calc(100dvh - 100% - 1.5rem);
+  overflow-y: auto;
 }
 
 .mobile-menu-open {
