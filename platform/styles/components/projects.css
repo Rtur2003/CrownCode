@@ -83,295 +83,280 @@
   line-height: 1.55;
 }
 
-/* Products Grid — 3 columns */
-.products-grid {
+/* =========================================================================
+   BENTO GRID — asymmetric layout, cell size and treatment grounded in
+   what each product actually is (see ProjectsSection.tsx for the rationale)
+   ========================================================================= */
+
+.bento-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.375rem;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 13.5rem;
+  gap: 1.125rem;
   margin-bottom: 4rem;
   position: relative;
   z-index: 1;
 }
 
-/* Product Card */
-.product-card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  height: 100%;
+.bento-cell {
+  position: relative;
 }
 
-.product-card-inner {
+.bento-cell--hero {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.bento-cell--tall {
+  grid-column: span 1;
+  grid-row: span 2;
+}
+
+.bento-cell--wide {
+  grid-column: span 4;
+  grid-row: span 1;
+}
+
+.bento-tile {
   position: relative;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 1.25rem;
-  padding: 1.75rem;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  border-radius: 1.25rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
   overflow: hidden;
-  transition: transform 0.4s var(--ease-out-cubic),
-              border-color 0.4s var(--ease-out-cubic),
-              box-shadow 0.4s var(--ease-out-cubic);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.5s var(--ease-out-cubic),
+              border-color 0.5s var(--ease-out-cubic),
+              box-shadow 0.5s var(--ease-out-cubic);
 }
 
-/* Top gold wash on hover */
-.product-card-inner::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3.75rem;
-  background: radial-gradient(ellipse at 50% 0%, rgba(201, 147, 71, 0.12), transparent 70%);
-  opacity: 0;
-  transition: opacity 0.4s var(--ease-out-cubic);
-  pointer-events: none;
-}
-
-.product-card:hover .product-card-inner {
-  transform: translateY(-6px);
+.bento-tile:hover {
+  transform: translateY(-4px);
   border-color: var(--color-border-hover);
-  box-shadow:
-    0 20px 40px -10px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(201, 147, 71, 0.15);
+  box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.55), 0 0 32px rgba(201, 147, 71, 0.12);
 }
 
-.product-card:hover .product-card-inner::before {
-  opacity: 1;
-}
-
-/* Featured Card */
-.product-card-featured .product-card-inner {
-  background:
-    radial-gradient(ellipse at 30% 0%, rgba(201, 147, 71, 0.1), transparent 55%),
-    var(--color-surface);
-  border-top-color: rgba(201, 147, 71, 0.4);
-}
-
-.product-card-featured .product-card-inner::after {
-  content: '';
+.bento-tile-media {
   position: absolute;
-  top: 0; left: 3rem; right: 3rem;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-gold-400), transparent);
+  inset: 0;
+  z-index: 0;
 }
 
-/* Card head row: status + arrow */
-.product-card-head {
+.bento-tile-media img {
+  transition: transform 1.2s var(--ease-out-cubic);
+}
+
+.bento-tile:hover .bento-tile-media img {
+  transform: scale(1.05);
+}
+
+.bento-tile-scrim {
+  position: absolute;
+  inset: 0;
+}
+
+.bento-tile-scrim--auris {
+  background: linear-gradient(0deg, rgba(11, 10, 8, 0.95) 15%, rgba(11, 10, 8, 0.55) 55%, rgba(11, 10, 8, 0.35) 100%);
+}
+
+.bento-tile-scrim--noir {
+  background: linear-gradient(90deg, rgba(11, 10, 8, 0.92) 0%, rgba(11, 10, 8, 0.75) 45%, rgba(11, 10, 8, 0.3) 100%);
+}
+
+.bento-tile-content {
+  position: relative;
+  z-index: 1;
+  padding: 1.5rem;
   display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bento-tile-content--row {
+  flex-direction: row;
+  align-items: flex-end;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 0.75rem;
+  gap: 2rem;
+  width: 100%;
 }
 
-/* Status Badge */
-.product-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: var(--radius-full);
-  font-family: var(--font-family-mono);
-  font-size: 0.5625rem;
+.bento-eyebrow {
+  font-size: 0.625rem;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  border: 1px solid;
-}
-
-.product-status.active {
-  background: rgba(127, 176, 105, 0.12);
-  border-color: rgba(127, 176, 105, 0.3);
-  color: var(--color-success);
-}
-
-.product-status.developing {
-  background: rgba(201, 147, 71, 0.12);
-  border-color: rgba(201, 147, 71, 0.3);
   color: var(--color-gold-400);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
 }
 
-.product-status.planned {
-  background: rgba(107, 143, 122, 0.12);
-  border-color: rgba(107, 143, 122, 0.3);
+.bento-eyebrow--mono {
+  font-family: var(--font-family-mono);
   color: var(--color-info);
 }
 
-.status-dot {
-  width: 0.375rem;
-  height: 0.375rem;
-  border-radius: 50%;
-  background: currentColor;
-  box-shadow: 0 0 6px currentColor;
+.bento-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
 }
 
-.status-dot.active,
-.status-dot.research {
-  animation: statusPulse 2s ease-in-out infinite;
+.bento-title--lg {
+  font-size: 1.75rem;
+  line-height: 1.1;
 }
 
-@keyframes statusPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
+.bento-desc {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 46ch;
 }
 
-/* Arrow button */
-.product-arrow {
-  width: 2.375rem;
-  height: 2.375rem;
-  border-radius: var(--radius-full);
-  background: rgba(201, 147, 71, 0.1);
-  border: 1px solid var(--glass-border);
+.bento-cell--hero .bento-desc {
+  font-size: 0.875rem;
+  max-width: 40ch;
+}
+
+.bento-foot {
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: var(--color-gold-400);
-  transition: all 0.4s var(--ease-out-cubic);
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.bento-foot--col {
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+  margin-top: 0;
   flex-shrink: 0;
 }
 
-.product-card:hover .product-arrow {
-  transform: translate(3px, -3px) rotate(-45deg);
+.bento-metric {
+  font-family: var(--font-family-heading);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-gold-400);
+  letter-spacing: -0.01em;
+}
+
+.bento-metric--mono {
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  letter-spacing: 0;
+}
+
+.bento-go {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-full);
+  background: rgba(201, 147, 71, 0.1);
+  border: 1px solid var(--glass-border);
+  color: var(--color-gold-400);
+  flex-shrink: 0;
+  transition: all 0.4s var(--ease-out-cubic);
+}
+
+.bento-tile:hover .bento-go {
+  transform: translate(2px, -2px) rotate(-45deg);
   background: var(--color-gold-400);
   color: var(--color-text-inverse);
   border-color: transparent;
 }
 
-/* Featured label */
-.featured-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.1875rem 0.5rem;
-  background: linear-gradient(135deg, rgba(201, 147, 71, 0.12), rgba(231, 199, 122, 0.08));
-  border: 1px solid rgba(201, 147, 71, 0.2);
-  border-radius: var(--radius-full);
-  font-size: 0.625rem;
-  font-weight: 700;
-  color: var(--color-gold-400);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+/* Fortune tile — tarot card peeking from the corner */
+.bento-tile--fortune {
+  background:
+    radial-gradient(ellipse at 85% 15%, rgba(201, 147, 71, 0.14), transparent 55%),
+    var(--color-surface);
 }
 
-/* Icon Container */
-.product-icon-container {
-  position: relative;
-  width: 3.5rem;
-  height: 3.5rem;
-  transition: transform var(--animation-normal) var(--ease-out-cubic);
-}
-
-.product-card:hover .product-icon-container {
-  transform: scale(1.08);
-}
-
-.product-icon-bg {
+.bento-tile-media--tarot {
   position: absolute;
-  inset: 0;
-  border-radius: var(--radius-xl);
-  opacity: 0.1;
-  transition: opacity var(--animation-normal) var(--ease-out-cubic);
+  top: -1.5rem;
+  right: -0.5rem;
+  width: auto;
+  height: auto;
+  inset: auto;
+  opacity: 0.85;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5));
+  transform: rotate(8deg);
+  transition: transform 0.6s var(--ease-out-cubic);
 }
 
-.product-card:hover .product-icon-bg {
-  opacity: 0.2;
+.bento-tile--fortune:hover .bento-tile-media--tarot {
+  transform: rotate(4deg) translateY(-4px);
 }
 
-.product-icon {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  color: var(--color-text-primary);
-  padding: 0.6875rem;
-  transition: color var(--animation-normal) var(--ease-out-cubic);
+.bento-tarot-card {
+  width: 5rem;
+  height: auto;
+  border-radius: 0.375rem;
 }
 
-.product-card:hover .product-icon {
-  color: var(--color-gold-400);
+/* Dreams tile — soft violet starfield glow, distinct from the gold system's
+   accent while staying within the dark neutral base (page theme lock) */
+.bento-tile--dreams {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(139, 122, 201, 0.16), transparent 60%),
+    var(--color-surface);
 }
 
-/* Content */
-.product-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+.bento-tile--dreams .bento-eyebrow {
+  color: #b3a3e0;
 }
 
-.product-title {
-  font-size: 1.375rem;
-  font-weight: 700;
-  color: var(--color-text-primary);
-  margin-bottom: 0.625rem;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+.bento-tile--dreams .bento-metric {
+  color: #b3a3e0;
 }
 
-.product-description {
-  font-size: 0.84375rem;
-  color: var(--color-text-secondary);
-  line-height: 1.5;
-  flex: 1;
+.bento-tile--dreams .bento-go {
+  color: #b3a3e0;
+  background: rgba(139, 122, 201, 0.12);
+  border-color: rgba(139, 122, 201, 0.25);
 }
 
-/* Stats */
-.product-stats {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding-top: 0.875rem;
-  border-top: 1px solid var(--color-border);
-  margin-top: auto;
+.bento-tile--dreams:hover .bento-go {
+  background: #b3a3e0;
+  color: var(--color-text-inverse);
 }
 
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1875rem;
+/* Commend / Vote — leaner technical treatment: these are literal automation
+   tools (a YouTube bot, a Selenium voting app), not mystical experiences,
+   so the gold ceremonial wash is dropped in favor of a quieter surface */
+.bento-tile--tool {
+  background: var(--color-surface);
 }
 
-.stat-item .stat-number {
-  font-family: var(--font-family-heading);
-  font-size: 1.25rem;
-  font-weight: 900;
-  color: var(--color-gold-400);
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-
-.stat-item .stat-label {
-  font-family: var(--font-family-mono);
-  font-size: 0.625rem;
+.bento-tile--tool .bento-eyebrow--mono {
   color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
 }
 
-/* Feature Tags — pill style */
-.product-features {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.375rem;
+.bento-tile--tool:hover {
+  border-color: rgba(107, 143, 122, 0.4);
 }
 
-.feature-tag {
-  padding: 0.25rem 0.5625rem;
-  background: rgba(201, 147, 71, 0.07);
-  border: 1px solid rgba(201, 147, 71, 0.2);
-  border-radius: var(--radius-full);
-  font-family: var(--font-family-mono);
-  font-size: 0.5625rem;
-  font-weight: 700;
-  color: var(--color-gold-400);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  transition: all var(--animation-normal) var(--ease-out-cubic);
+.bento-tile--tool .bento-go {
+  color: var(--color-info);
+  background: rgba(107, 143, 122, 0.1);
+  border-color: rgba(107, 143, 122, 0.25);
 }
 
-.product-card:hover .feature-tag {
-  background: rgba(201, 147, 71, 0.12);
-  border-color: rgba(201, 147, 71, 0.35);
+.bento-tile--tool:hover .bento-go {
+  background: var(--color-info);
+  color: var(--color-text-inverse);
 }
 
 /* Bottom CTA */
@@ -436,10 +421,33 @@
   box-shadow: 0 10px 36px rgba(201, 147, 71, 0.35);
 }
 
-/* Responsive */
+/* Responsive — bento collapses to 2 columns, then a single column stack;
+   every cell reverts to auto height and span 1 so nothing clips on mobile */
 @media (max-width: 1024px) {
-  .products-grid {
+  .bento-grid {
     grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: auto;
+  }
+
+  .bento-cell--hero {
+    grid-column: span 2;
+    grid-row: auto;
+  }
+
+  .bento-cell--tall {
+    grid-row: auto;
+  }
+
+  .bento-cell--wide {
+    grid-column: span 2;
+  }
+
+  .bento-tile {
+    min-height: 15rem;
+  }
+
+  .bento-cell--hero .bento-tile {
+    min-height: 20rem;
   }
 }
 
@@ -452,13 +460,35 @@
     padding: 0 1rem;
   }
 
-  .products-grid {
+  .bento-grid {
     grid-template-columns: 1fr;
+    gap: 0.875rem;
+  }
+
+  .bento-cell--hero,
+  .bento-cell--wide {
+    grid-column: span 1;
+  }
+
+  .bento-tile-content {
+    padding: 1.25rem;
+  }
+
+  .bento-tile-content--row {
+    flex-direction: column;
+    align-items: flex-start;
     gap: 1rem;
   }
 
-  .product-card-inner {
-    padding: 1.375rem;
+  .bento-foot--col {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .bento-title--lg {
+    font-size: 1.5rem;
   }
 
   .products-cta {
@@ -471,12 +501,12 @@
 }
 
 @media (max-width: 480px) {
-  .products-grid {
-    gap: 0.875rem;
+  .bento-title {
+    font-size: 1rem;
   }
 
-  .product-title {
-    font-size: 1.1875rem;
+  .bento-title--lg {
+    font-size: 1.375rem;
   }
 
   .cta-button {
@@ -487,7 +517,7 @@
 
 /* High Contrast */
 @media (prefers-contrast: high) {
-  .product-card-inner {
+  .bento-tile {
     border-color: var(--color-text-secondary);
   }
 }
@@ -498,11 +528,19 @@
     animation: none;
   }
 
-  .product-card:hover .product-card-inner {
+  .bento-tile:hover {
     transform: none;
   }
 
-  .product-card:hover .product-arrow {
+  .bento-tile:hover .bento-tile-media img {
     transform: none;
+  }
+
+  .bento-tile:hover .bento-go {
+    transform: none;
+  }
+
+  .bento-tile--fortune:hover .bento-tile-media--tarot {
+    transform: rotate(8deg);
   }
 }
