@@ -129,7 +129,7 @@ const celebrateConfetti = (isReversed = false) => {
   // Color scheme based on fortune type
   const colors = isReversed
     ? ['#8b0000', '#4a0000', '#2d0000', '#dc143c'] // Dark reds for reversed
-    : ['#FFD700', '#9b59b6', '#3498db', '#e74c3c', '#27ae60'] // Golden + category colors
+    : ['#eac06f', '#c99347', '#e7c77a', '#8a5f2b'] // Warm golds, matching the brand palette
 
   const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min
 
@@ -1256,7 +1256,7 @@ const CrownFortunePage: NextPage = () => {
                     <div className={styles['progress-bar']}>
                       <div
                         className={styles['progress-fill']}
-                        style={{ width: `${collection.collectionProgress}%` }}
+                        style={{ transform: `scaleX(${collection.collectionProgress / 100})` }}
                       />
                     </div>
                     <span>{collection.seenCardIds.length} / 22 ({collection.collectionProgress}%)</span>
