@@ -80,13 +80,13 @@ const CATEGORY_ICONS_SMALL: Record<FortuneCategory, React.ReactNode> = {
   spirit: <Sparkles size={12} />
 }
 
-// Kategori renkleri
+// Kategori renkleri — sistemin altın/bronz paletiyle uyumlu, sıcak tonlar
 const CATEGORY_COLORS: Record<FortuneCategory, string> = {
-  love: '#e74c3c',
-  career: '#3498db',
-  money: '#f39c12',
-  health: '#27ae60',
-  spirit: '#9b59b6'
+  love: '#c17767',
+  career: '#c99347',
+  money: '#eac06f',
+  health: '#7fb069',
+  spirit: '#a78bc4'
 }
 
 // Animation timing constants (ms)
