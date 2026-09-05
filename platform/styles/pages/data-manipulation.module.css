@@ -18,11 +18,20 @@
   z-index: 1; /* Ensure content stays above background elements but below header */
 }
 
-/* Header Adjustments */
-.page-header {
-  text-align: center;
-  margin-bottom: 4rem;
+/* Workbench intro — asymmetric split instead of a centered hero, matching
+   the rest of the platform's hero language rather than this page's old
+   isolated centered-badge treatment. */
+.workbench-intro {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.workbench-copy {
   position: relative;
+  z-index: 1;
 }
 
 .header-badge {
@@ -34,118 +43,156 @@
   padding: 0.5rem 1rem;
   border-radius: var(--radius-3xl);
   color: var(--color-primary);
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   margin-bottom: 1.5rem;
   backdrop-filter: blur(10px);
 }
 
 .page-title {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(2.25rem, 4.5vw, 3.25rem);
   font-weight: 800;
   background: linear-gradient(135deg, var(--color-text-primary) 0%, var(--color-primary) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   line-height: 1.1;
 }
 
 .page-subtitle {
-  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
   color: var(--color-text-secondary);
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 46ch;
   line-height: 1.6;
 }
 
-/* Tools Grid Layout */
-.tools-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+.workbench-waveform {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gold-500);
+  opacity: 0.35;
+  animation: waveformPulse 4s ease-in-out infinite;
 }
 
-.tool-card {
+@keyframes waveformPulse {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.04); }
+}
+
+/* Pipeline strip — a literal sequential process (upload -> augment ->
+   convert -> organize), so the numbered stage treatment reflects the real
+   content structure rather than decorating three unrelated feature cards
+   identically the way a generic card grid would. */
+.pipeline-strip {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-top: 1rem;
+}
+
+.pipeline-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
-  padding: 2.5rem;
+  padding: 1.75rem 1.5rem;
+  text-align: left;
+  font: inherit;
+  color: inherit;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.4s var(--ease-out-cubic), border-color 0.4s var(--ease-out-cubic), box-shadow 0.4s var(--ease-out-cubic);
   position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
-.tool-card:hover {
+.pipeline-stage--active:hover {
   border-color: var(--color-primary);
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   box-shadow: var(--shadow-glow);
 }
 
-.tool-card::before {
-  content: '';
+.pipeline-stage--locked {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.pipeline-stage-index {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  top: 1.25rem;
+  right: 1.5rem;
+  font-family: var(--font-family-heading);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-border-light);
+  line-height: 1;
 }
 
-.tool-card:hover::before {
-  opacity: 1;
+.pipeline-stage--active .pipeline-stage-index {
+  color: rgba(201, 147, 71, 0.35);
 }
 
-.tool-icon {
-  width: 4rem;
-  height: 4rem;
+.pipeline-stage-icon {
+  width: 3rem;
+  height: 3rem;
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  margin-bottom: 2rem;
-  font-size: 1.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  color: var(--color-gold-400);
+  background: rgba(201, 147, 71, 0.1);
+  border: 1px solid rgba(201, 147, 71, 0.25);
+}
+
+.pipeline-stage--locked .pipeline-stage-icon {
+  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--color-border);
+}
+
+.pipeline-stage-copy {
+  flex: 1;
+}
+
+.pipeline-stage-status {
+  font-family: var(--font-family-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-gold-400);
+}
+
+.pipeline-stage--locked .pipeline-stage-status {
+  color: var(--color-text-muted);
+}
+
+.pipeline-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  flex-shrink: 0;
+  color: var(--color-border-light);
 }
 
 .tool-title {
-  font-size: 1.5rem;
+  font-size: 1.125rem;
   font-weight: 700;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.375rem;
   color: var(--color-text-primary);
 }
 
 .tool-description {
   color: var(--color-text-secondary);
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  flex-grow: 1;
-}
-
-.tool-footer {
-  margin-top: auto;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.tool-action-text {
-  color: var(--color-primary);
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: gap 0.2s ease;
-}
-
-.tool-card:hover .tool-action-text {
-  gap: 0.75rem;
+  line-height: 1.5;
+  font-size: 0.875rem;
 }
 
 /* Tool Interface Layout */
@@ -153,12 +200,26 @@
   animation: fadeIn 0.5s ease-out;
 }
 
+.interface-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.interface-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
 .back-button {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
   color: var(--color-text-secondary);
-  margin-bottom: 3rem;
   padding: 0.75rem 1.5rem;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid transparent;
@@ -166,6 +227,7 @@
   transition: all 0.2s ease;
   cursor: pointer;
   font-weight: 500;
+  flex-shrink: 0;
 }
 
 .back-button:hover {
@@ -299,9 +361,38 @@
     grid-template-columns: 1fr;
     gap: 3rem;
   }
-  
+
   .page-container {
     padding-top: 7rem !important;
+  }
+
+  .workbench-intro {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .workbench-copy {
+    order: 2;
+  }
+
+  .page-subtitle {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .workbench-waveform {
+    order: 1;
+    opacity: 0.2;
+  }
+
+  .pipeline-strip {
+    flex-direction: column;
+  }
+
+  .pipeline-connector {
+    width: auto;
+    height: 1.5rem;
+    transform: rotate(90deg);
   }
 }
 
@@ -309,16 +400,18 @@
   .page-container {
     padding-top: 6rem !important;
   }
-  
+
   .content-wrapper {
     padding: 0 1.5rem;
   }
-  
-  .tools-grid {
-    grid-template-columns: 1fr;
+
+  .workbench-intro {
+    margin-bottom: 2rem;
   }
-  
-  .page-header {
-    margin-bottom: 3rem;
+
+  .interface-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
 }
