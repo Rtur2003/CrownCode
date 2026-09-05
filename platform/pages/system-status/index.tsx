@@ -101,7 +101,7 @@ const SystemStatusPage: NextPage = () => {
             </span>
             <button
               type="button"
-              onClick={checkServices}
+              onClick={() => checkServices(() => true)}
               disabled={checking}
               className={styles['refresh-btn']}
             >
