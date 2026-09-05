@@ -166,9 +166,9 @@ function FeatureBar({ label, value, icon, delay = 0 }: {
       <div className={styles['feature-bar-track']}>
         <motion.div
           className={styles['feature-bar-fill']}
-          style={{ backgroundColor: barColor }}
-          initial={{ width: 0 }}
-          animate={{ width: `${percent}%` }}
+          style={{ backgroundColor: barColor, transformOrigin: 'left' }}
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: percent / 100 }}
           transition={{ duration: 1, delay, ease: 'easeOut' }}
         />
       </div>
@@ -521,8 +521,9 @@ export function AnalysisResultCard({
                   <div className={styles['top-feature-bar-track']}>
                     <motion.div
                       className={styles['top-feature-bar-fill']}
-                      initial={{ width: 0 }}
-                      animate={{ width: `${Math.round(feat.importance * 100)}%` }}
+                      style={{ transformOrigin: 'left' }}
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: feat.importance }}
                       transition={{ duration: 0.6, delay: i * 0.1 }}
                     />
                   </div>
