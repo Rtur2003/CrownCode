@@ -442,8 +442,8 @@
 
 .errorCard svg {
   flex-shrink: 0;
-  color: #e74c3c;
-  filter: drop-shadow(0 0 8px rgba(231, 76, 60, 0.4));
+  color: var(--color-error, #a64b3c);
+  filter: drop-shadow(0 0 8px rgba(166, 75, 60, 0.4));
 }
 
 .errorText {
@@ -453,7 +453,7 @@
 .errorTitle {
   font-weight: 700;
   font-size: 0.95rem;
-  color: #e74c3c;
+  color: var(--color-error, #a64b3c);
   margin-bottom: 0.25rem;
 }
 
@@ -469,22 +469,22 @@
   align-items: center;
   gap: 1rem;
   padding: 1.25rem 1.5rem;
-  background: linear-gradient(135deg, rgba(46, 204, 113, 0.15) 0%, rgba(46, 204, 113, 0.08) 100%);
-  border: 1px solid rgba(46, 204, 113, 0.4);
+  background: linear-gradient(135deg, rgba(127, 176, 105, 0.15) 0%, rgba(127, 176, 105, 0.08) 100%);
+  border: 1px solid rgba(127, 176, 105, 0.4);
   border-radius: var(--radius-lg, 0.875rem);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
 .successToast svg {
-  color: #2ecc71;
-  filter: drop-shadow(0 0 8px rgba(46, 204, 113, 0.4));
+  color: var(--color-success, #7fb069);
+  filter: drop-shadow(0 0 8px rgba(127, 176, 105, 0.4));
 }
 
 .successText {
   flex: 1;
   font-weight: 600;
-  color: #2ecc71;
+  color: var(--color-success, #7fb069);
 }
 
 /* =============== FEATURES SECTION =============== */
