@@ -526,6 +526,17 @@
     padding: 0.375rem 0.75rem;
   }
 
+  /* The clamp() floor (3rem/2.5rem) is still wider than a narrow phone's
+     available space once the 1rem side padding is subtracted, so it needs
+     an explicit override here rather than relying on the clamp minimum. */
+  .hero-title-main {
+    font-size: 2.5rem;
+  }
+
+  .hero-title-accent {
+    font-size: 2.125rem;
+  }
+
   .hero-subtitle {
     font-size: 1rem;
   }
