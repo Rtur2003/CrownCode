@@ -35,6 +35,9 @@ import {
 import { useLanguage } from '@/context/LanguageContext'
 import FileUploader from '@/components/MLToolkit/FileUploader'
 import AudioAugmentation, { AudioAugmentationOptions } from '@/components/MLToolkit/AudioAugmentation'
+import FormatConverter, { FormatConvertOptions } from '@/components/MLToolkit/FormatConverter'
+import DatasetMetadataResult, { DatasetEntryMetadata } from '@/components/MLToolkit/DatasetMetadataResult'
+import ProcessLog, { LogEntry } from '@/components/MLToolkit/ProcessLog'
 
 import styles from '@/styles/pages/data-manipulation.module.css'
 
@@ -52,10 +55,20 @@ const AudioDatasetPage: NextPage = () => {
     mixAudio: false,
     addNoise: false
   })
+  const [convertOptions, setConvertOptions] = useState<FormatConvertOptions>({
+    targetFormat: 'mp3',
+    bitrateKbps: 192
+  })
   const [isProcessing, setIsProcessing] = useState(false)
   const [processedFileUrl, setProcessedFileUrl] = useState<string | null>(null)
+  const [organizeResult, setOrganizeResult] = useState<DatasetEntryMetadata | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [logs, setLogs] = useState<LogEntry[]>([])
   const prevObjectUrlRef = useRef<string | null>(null)
+
+  const pushLog = (message: string, status: LogEntry['status']) => {
+    setLogs((prev) => [...prev, { id: `${Date.now()}-${Math.random()}`, message, status, timestamp: new Date() }])
+  }
 
   // Revoke previous object URL when a new one is created or on unmount
   useEffect(() => {
@@ -79,24 +92,29 @@ const AudioDatasetPage: NextPage = () => {
       title: t.audioDataset.tools.convert.title,
       description: t.audioDataset.tools.convert.description,
       icon: RefreshCw,
-      status: 'coming_soon'
+      status: 'available'
     },
     {
       id: 'organize' as ToolId,
       title: t.audioDataset.tools.organize.title,
       description: t.audioDataset.tools.organize.description,
       icon: FolderOpen,
-      status: 'coming_soon'
+      status: 'available'
     }
   ]
 
   const handleFilesChange = (newFiles: File[]) => {
     setFiles(newFiles)
     setError(null)
+    setOrganizeResult(null)
+    setLogs([])
     if (processedFileUrl) {
       URL.revokeObjectURL(processedFileUrl)
       prevObjectUrlRef.current = null
       setProcessedFileUrl(null)
+    }
+    if (newFiles.length > 0) {
+      pushLog(t.mlToolkit.logs.filesUploaded.replace('{count}', String(newFiles.length)), 'success')
     }
   }
 
@@ -106,22 +124,44 @@ const AudioDatasetPage: NextPage = () => {
       return
     }
 
+    const isConvert = activeTool === 'convert'
+    const isOrganize = activeTool === 'organize'
+    const isAugment = !isConvert && !isOrganize
+
+    if (isAugment && augmentOptions.mixAudio && files.length < 2) {
+      setError(t.mlToolkit.audioOptions.mixAudioNeedsTwoFiles)
+      return
+    }
+
     setIsProcessing(true)
     setError(null)
     setProcessedFileUrl(null)
+    setOrganizeResult(null)
+    pushLog(t.mlToolkit.logs.processStarted, 'processing')
 
-    // For MVP, we process the first file only
+    // For MVP, we process the first file as primary; the second file (if
+    // present) is only used when Mix Audio is enabled.
     const fileToProcess = files[0]
     const formData = new FormData()
     formData.append('file', fileToProcess)
-    formData.append('options', JSON.stringify(augmentOptions))
+    if (!isOrganize) {
+      formData.append('options', JSON.stringify(isConvert ? convertOptions : augmentOptions))
+    }
+    if (isAugment && augmentOptions.mixAudio && files[1]) {
+      formData.append('mix_file', files[1])
+    }
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL
       if (!apiUrl) {
         throw new Error('Backend API URL is not configured.')
       }
-      const response = await fetchWithTimeout(`${apiUrl}/api/process/audio`, {
+      const endpoint = isOrganize
+        ? '/api/process/audio/organize'
+        : isConvert
+          ? '/api/process/audio/convert'
+          : '/api/process/audio'
+      const response = await fetchWithTimeout(`${apiUrl}${endpoint}`, {
         method: 'POST',
         body: formData,
         timeout: 60_000,
@@ -134,6 +174,13 @@ const AudioDatasetPage: NextPage = () => {
         throw new Error(message)
       }
 
+      if (isOrganize) {
+        const metadata: DatasetEntryMetadata = await response.json()
+        setOrganizeResult(metadata)
+        pushLog(t.mlToolkit.logs.allReady.replace('{count}', '1'), 'success')
+        return
+      }
+
       const blob = await response.blob()
       if (prevObjectUrlRef.current) {
         URL.revokeObjectURL(prevObjectUrlRef.current)
@@ -141,9 +188,11 @@ const AudioDatasetPage: NextPage = () => {
       const url = URL.createObjectURL(blob)
       prevObjectUrlRef.current = url
       setProcessedFileUrl(url)
+      pushLog(t.mlToolkit.logs.allReady.replace('{count}', '1'), 'success')
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : t.audioDataset.interface.errors.unexpected
       setError(errorMessage)
+      pushLog(errorMessage, 'error')
     } finally {
       setIsProcessing(false)
     }
@@ -167,7 +216,9 @@ const AudioDatasetPage: NextPage = () => {
                 prevObjectUrlRef.current = null
               }
               setProcessedFileUrl(null)
+              setOrganizeResult(null)
               setError(null)
+              setLogs([])
             }}
             className={styles['back-button']}
           >
@@ -194,14 +245,27 @@ const AudioDatasetPage: NextPage = () => {
                 {files.length > 1 && <span className="text-xs text-muted block mt-1">{t.audioDataset.interface.demoNote}</span>}
               </div>
             )}
+
+            {logs.length > 0 && <ProcessLog logs={logs} />}
           </div>
 
           <div className="right-panel">
-            <h2 className={styles['section-title']}>{t.audioDataset.interface.step2}</h2>
-            <AudioAugmentation 
-              options={augmentOptions} 
-              onChange={setAugmentOptions} 
-            />
+            <h2 className={styles['section-title']}>
+              {activeTool === 'organize' ? t.mlToolkit.organizer.step2 : t.audioDataset.interface.step2}
+            </h2>
+            {activeTool === 'convert' ? (
+              <FormatConverter
+                options={convertOptions}
+                onChange={setConvertOptions}
+              />
+            ) : activeTool === 'organize' ? (
+              <p className={styles['file-status']}>{t.mlToolkit.organizer.description}</p>
+            ) : (
+              <AudioAugmentation
+                options={augmentOptions}
+                onChange={setAugmentOptions}
+              />
+            )}
 
             <div className={styles['action-area']}>
               {error && (
@@ -211,7 +275,7 @@ const AudioDatasetPage: NextPage = () => {
                 </div>
               )}
 
-              <button 
+              <button
                 className={`${styles['process-button']} ${isProcessing ? 'processing' : ''}`}
                 onClick={handleProcess}
                 disabled={isProcessing || files.length === 0}
@@ -224,15 +288,23 @@ const AudioDatasetPage: NextPage = () => {
                 ) : (
                   <>
                     <Play size={20} fill="currentColor" />
-                    {t.audioDataset.interface.startProcessing}
+                    {activeTool === 'organize' ? t.mlToolkit.organizer.analyze : t.audioDataset.interface.startProcessing}
                   </>
                 )}
               </button>
 
-              {processedFileUrl && (
+              {activeTool === 'organize' && organizeResult && (
+                <DatasetMetadataResult metadata={organizeResult} />
+              )}
+
+              {activeTool !== 'organize' && processedFileUrl && (
                 <motion.a
                   href={processedFileUrl}
-                  download={`processed-${files[0]?.name || 'audio'}.wav`}
+                  download={
+                    activeTool === 'convert'
+                      ? `converted-${files[0]?.name?.replace(/\.[^.]+$/, '') || 'audio'}.${convertOptions.targetFormat}`
+                      : `processed-${files[0]?.name || 'audio'}.wav`
+                  }
                   className={styles['download-button']}
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
