@@ -1248,12 +1248,12 @@
   padding: 0.5rem 0.875rem;
   background: linear-gradient(
     135deg,
-    rgba(255, 107, 53, 0.15),
-    rgba(255, 165, 0, 0.1)
+    rgba(201, 147, 71, 0.15),
+    rgba(234, 192, 111, 0.1)
   );
-  border: 1px solid rgba(255, 165, 0, 0.3);
+  border: 1px solid rgba(201, 147, 71, 0.3);
   border-radius: var(--radius-full, 999px);
-  color: #ffa500;
+  color: var(--color-gold-400, #eac06f);
   font-size: 0.875rem;
   font-weight: 600;
   cursor: default;
@@ -1339,12 +1339,12 @@
   padding: 0.5rem 0.75rem;
   background: linear-gradient(
     135deg,
-    rgba(147, 112, 219, 0.15),
-    rgba(75, 0, 130, 0.1)
+    rgba(201, 147, 71, 0.15),
+    rgba(138, 95, 43, 0.1)
   );
-  border: 1px solid rgba(147, 112, 219, 0.3);
+  border: 1px solid rgba(201, 147, 71, 0.3);
   border-radius: var(--radius-full, 999px);
-  color: #dda0dd;
+  color: var(--color-gold-400, #eac06f);
   font-size: 0.8125rem;
   cursor: default;
 }
@@ -1393,10 +1393,10 @@
   padding: 0.75rem 1rem;
   background: linear-gradient(
     135deg,
-    rgba(39, 174, 96, 0.1),
-    rgba(46, 204, 113, 0.05)
+    rgba(201, 147, 71, 0.1),
+    rgba(234, 192, 111, 0.05)
   );
-  border: 1px solid rgba(39, 174, 96, 0.2);
+  border: 1px solid rgba(201, 147, 71, 0.2);
   border-radius: var(--radius-lg, 12px);
 }
 
@@ -1407,15 +1407,15 @@
   align-items: center;
   gap: 0.375rem;
   font-size: 0.8125rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-secondary, #c8b9a7);
 }
 
 .lucky-numbers svg {
-  color: #27ae60;
+  color: var(--color-gold-400, #eac06f);
 }
 
 .lucky-numbers strong {
-  color: #2ecc71;
+  color: var(--color-gold-400, #eac06f);
   font-weight: 600;
 }
 
@@ -1429,7 +1429,7 @@
 
 .lucky-direction span:first-child {
   font-size: 1rem;
-  color: #3498db;
+  color: var(--color-gold-400, #eac06f);
 }
 
 /* =============== DAILY QUOTE =============== */
@@ -1441,17 +1441,16 @@
   padding: 1rem;
   background: linear-gradient(
     135deg,
-    rgba(155, 89, 182, 0.1),
-    rgba(142, 68, 173, 0.05)
+    rgba(201, 147, 71, 0.1),
+    rgba(138, 95, 43, 0.05)
   );
-  border: 1px solid rgba(155, 89, 182, 0.2);
+  border: 1px solid rgba(201, 147, 71, 0.2);
   border-radius: var(--radius-lg, 12px);
-  border-left: 3px solid #9b59b6;
 }
 
 .quote-icon {
   flex-shrink: 0;
-  color: #9b59b6;
+  color: var(--color-gold-400, #eac06f);
   margin-top: 0.125rem;
 }
 
@@ -1554,10 +1553,13 @@
 }
 
 .progress-fill {
+  width: 100%;
   height: 100%;
   background: linear-gradient(90deg, #eac06f, #c99347);
   border-radius: 4px;
-  transition: width 0.5s ease;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.5s var(--ease-out-cubic, ease);
 }
 
 .collection-progress span {
@@ -1629,12 +1631,12 @@
   margin: 0 1.5rem 1.5rem;
   background: linear-gradient(
     135deg,
-    rgba(255, 215, 0, 0.2),
+    rgba(234, 192, 111, 0.2),
     rgba(201, 147, 71, 0.15)
   );
-  border: 1px solid rgba(255, 215, 0, 0.4);
+  border: 1px solid rgba(234, 192, 111, 0.4);
   border-radius: var(--radius-md, 8px);
-  color: #FFD700;
+  color: var(--color-gold-400, #eac06f);
   font-weight: 600;
 }
 
