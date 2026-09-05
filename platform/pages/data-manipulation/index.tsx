@@ -157,22 +157,27 @@ const AudioDatasetPage: NextPage = () => {
         exit={{ opacity: 0, y: -20 }}
         className={styles['tool-interface']}
       >
-        <button 
-          onClick={() => {
-            setActiveTool(null)
-            setFiles([])
-            if (processedFileUrl) {
-              URL.revokeObjectURL(processedFileUrl)
-              prevObjectUrlRef.current = null
-            }
-            setProcessedFileUrl(null)
-            setError(null)
-          }}
-          className={styles['back-button']}
-        >
-          <ArrowLeft size={20} />
-          <span>{t.audioDataset.interface.backToTools}</span>
-        </button>
+        <div className={styles['interface-header']}>
+          <button
+            onClick={() => {
+              setActiveTool(null)
+              setFiles([])
+              if (processedFileUrl) {
+                URL.revokeObjectURL(processedFileUrl)
+                prevObjectUrlRef.current = null
+              }
+              setProcessedFileUrl(null)
+              setError(null)
+            }}
+            className={styles['back-button']}
+          >
+            <ArrowLeft size={20} />
+            <span>{t.audioDataset.interface.backToTools}</span>
+          </button>
+          <h1 className={styles['interface-title']}>
+            {tools.find(tool => tool.id === activeTool)?.title}
+          </h1>
+        </div>
 
         <div className={styles['interface-grid']}>
           <div className="left-panel">
@@ -251,72 +256,71 @@ const AudioDatasetPage: NextPage = () => {
     >
       <div className={styles['page-container']}>
         <div className={styles['content-wrapper']}>
-          <motion.div
-            className={styles['page-header']}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <div className={styles['header-badge']}>
-              <Settings size={16} />
-              <span>{t.audioDataset.title}</span>
-            </div>
-
-            <h1 className={styles['page-title']}>
-              {activeTool ? tools.find(t => t.id === activeTool)?.title : t.audioDataset.title}
-            </h1>
-            
-            {!activeTool && (
-              <p className={styles['page-subtitle']}>
-                {t.audioDataset.subtitle}
-              </p>
-            )}
-          </motion.div>
-
-          <AnimatePresence mode="wait">
-            {activeTool ? (
-              renderToolInterface()
-            ) : (
+          {!activeTool ? (
+            <>
               <motion.div
-                className={styles['tools-grid']}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                className={styles['workbench-intro']}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
               >
+                <div className={styles['workbench-copy']}>
+                  <span className={styles['header-badge']}>{t.audioDataset.title}</span>
+                  <h1 className={styles['page-title']}>{t.audioDataset.title}</h1>
+                  <p className={styles['page-subtitle']}>{t.audioDataset.subtitle}</p>
+                </div>
+                <div className={styles['workbench-waveform']} aria-hidden="true">
+                  <Waves size={140} strokeWidth={1} />
+                </div>
+              </motion.div>
+
+              {/* Pipeline strip: this is a literal sequential process
+                  (upload -> augment -> convert -> organize), so a numbered
+                  stage treatment reflects the real content instead of
+                  decorating three unrelated feature cards identically. */}
+              <div className={styles['pipeline-strip']} role="list" aria-label="Processing pipeline">
                 {tools.map((tool, index) => {
                   const Icon = tool.icon
                   const isAvailable = tool.status === 'available'
 
                   return (
-                    <motion.div
-                      key={tool.id}
-                      className={`${styles['tool-card']} ${!isAvailable ? 'opacity-50 grayscale' : ''}`}
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 * index }}
-                      onClick={() => isAvailable && setActiveTool(tool.id)}
-                    >
-                      <div className="tool-header">
-                        <div className={`${styles['tool-icon']} bg-gradient-to-r ${tool.gradient}`}>
-                          <Icon size={24} />
+                    <React.Fragment key={tool.id}>
+                      <motion.button
+                        type="button"
+                        role="listitem"
+                        className={`${styles['pipeline-stage']} ${isAvailable ? styles['pipeline-stage--active'] : styles['pipeline-stage--locked']}`}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.08 * index }}
+                        onClick={() => isAvailable && setActiveTool(tool.id)}
+                        disabled={!isAvailable}
+                      >
+                        <span className={styles['pipeline-stage-index']}>{index + 1}</span>
+                        <div className={styles['pipeline-stage-icon']}>
+                          {isAvailable ? <Icon size={22} /> : <Lock size={18} />}
                         </div>
-                      </div>
-
-                      <div className="tool-content">
-                        <h3 className={styles['tool-title']}>{tool.title}</h3>
-                        <p className={styles['tool-description']}>{tool.description}</p>
-                      </div>
-
-                      <div className={styles['tool-footer']}>
-                         <span className={styles['tool-action-text']}>
-                           {isAvailable ? t.audioDataset.interface.openTool : t.audioDataset.interface.comingSoon}
-                         </span>
-                      </div>
-                    </motion.div>
+                        <div className={styles['pipeline-stage-copy']}>
+                          <h3 className={styles['tool-title']}>{tool.title}</h3>
+                          <p className={styles['tool-description']}>{tool.description}</p>
+                        </div>
+                        <span className={styles['pipeline-stage-status']}>
+                          {isAvailable ? t.audioDataset.interface.openTool : t.audioDataset.interface.comingSoon}
+                        </span>
+                      </motion.button>
+                      {index < tools.length - 1 && (
+                        <div className={styles['pipeline-connector']} aria-hidden="true">
+                          <ArrowRight size={18} />
+                        </div>
+                      )}
+                    </React.Fragment>
                   )
                 })}
-              </motion.div>
-            )}
-          </AnimatePresence>
+              </div>
+            </>
+          ) : (
+            <AnimatePresence mode="wait">
+              {renderToolInterface()}
+            </AnimatePresence>
+          )}
         </div>
       </div>
 
