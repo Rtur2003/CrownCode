@@ -26,10 +26,9 @@ _origins = _load_origins()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_origins,
-    # credentials=True is only safe with an explicit origin list, not wildcard
     allow_credentials="*" not in _origins,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Accept"],
 )
 
 app.include_router(health_router)

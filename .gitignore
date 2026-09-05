@@ -190,6 +190,18 @@ docs/community/CONTRIBUTING.md
 hf-crowncode-backend/
 
 # ==========================================
+# Secrets & Credentials (MUST NEVER COMMIT)
+# ==========================================
+token.json
+client_secret.json
+*.pem
+*.key
+*.p8
+credentials*.json
+oauth*.json
+.credentials/
+
+# ==========================================
 # Tarayıcı otomasyonu / ajan çıktıları
 # ==========================================
 

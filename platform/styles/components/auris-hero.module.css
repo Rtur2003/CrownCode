@@ -272,9 +272,15 @@
 }
 
 .ringsImg {
+  /* Source asset is a 16:9 rectangle, not square — without a forced 1:1
+     box and object-fit crop, continuous rotation wobbles into a visible
+     ellipse instead of spinning as a clean circle. */
   width: 100%;
   max-width: 480px;
+  aspect-ratio: 1 / 1;
   height: auto;
+  object-fit: cover;
+  border-radius: 50%;
   opacity: 0.6;
   mix-blend-mode: screen;
   filter: drop-shadow(0 0 30px rgba(201, 147, 71, 0.25));

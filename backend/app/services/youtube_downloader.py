@@ -7,9 +7,13 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, List, Optional
+import re
+import logging
 
 if TYPE_CHECKING:  # pragma: no cover
     import yt_dlp
+
+logger = logging.getLogger(__name__)
 
 
 # yt-dlp agir ve opsiyonel bir bagimlilik. Modul seviyesinde import edilirse
@@ -77,7 +81,8 @@ class YouTubeDownloader:
             yt_dlp = _load_yt_dlp()
             with yt_dlp.YoutubeDL(options) as ydl:
                 return ydl.extract_info(url, download=True)
-        except Exception:
+        except Exception as exc:
+            logger.debug(f"FFmpeg download attempt failed: {exc}")
             return None
 
     def _download_without_ffmpeg(self, url: str) -> Optional[dict]:
@@ -93,6 +98,8 @@ class YouTubeDownloader:
             return ydl.extract_info(url, download=True)
 
     def _resolve_output_path(self, video_id: str) -> Path:
+        if not re.match(r'^[a-zA-Z0-9_-]{11}$', video_id):
+            raise ValueError("Invalid video ID format")
         candidates = list(self.output_dir.glob(f"{video_id}.*"))
         if not candidates:
             raise FileNotFoundError("Downloaded audio file could not be located.")

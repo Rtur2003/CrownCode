@@ -268,9 +268,15 @@
 }
 
 .hero-rings-img {
+  /* The source asset is a 16:9 rectangle, not square — without forcing a
+     1:1 box and cropping to fit, the continuous rotation makes it wobble
+     into a visible ellipse instead of spinning as a clean circle. */
   width: 100%;
   max-width: 520px;
+  aspect-ratio: 1 / 1;
   height: auto;
+  object-fit: cover;
+  border-radius: 50%;
   opacity: 0.6;
   mix-blend-mode: screen;
   filter: drop-shadow(0 0 30px rgba(201, 147, 71, 0.25));
@@ -291,7 +297,10 @@
 .hero-orb-img {
   width: 72%;
   max-width: 380px;
+  aspect-ratio: 1 / 1;
   height: auto;
+  object-fit: cover;
+  border-radius: 50%;
   mix-blend-mode: screen;
   filter: drop-shadow(0 0 50px rgba(201, 147, 71, 0.35));
   -webkit-mask-image: radial-gradient(circle, white 40%, transparent 75%);
