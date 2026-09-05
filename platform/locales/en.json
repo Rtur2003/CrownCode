@@ -1181,7 +1181,12 @@
     "deleted": "History cleared.",
     "clearAll": "Clear All",
     "clearAllConfirm": "Clear all history?",
-    "entryCount": "{{count}} analyses"
+    "entryCount": "{{count}} analyses",
+    "verdictAi": "AI Generated",
+    "verdictHuman": "Human Composed",
+    "confidenceLabel": "Confidence Score",
+    "durationLabel": "Processing Time",
+    "modelLabel": "Model"
   },
   "systemStatus": {
     "meta": {
