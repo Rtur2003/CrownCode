@@ -193,16 +193,11 @@ export const Header: React.FC = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
-        <motion.div
-          className={`mobile-menu ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}
-          initial={false}
-          animate={{
-            opacity: isMobileMenuOpen ? 1 : 0,
-            y: isMobileMenuOpen ? 0 : -20,
-          }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        >
+        {/* Mobile Menu — the open/close transition (opacity, y, visibility)
+            is fully handled by the .mobile-menu-open CSS class below;
+            a Motion `animate` prop here would be a second system driving
+            the same inline styles and can desync from the class toggle. */}
+        <div className={`mobile-menu ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
           <nav className="mobile-nav">
             {mainNavItems.map((item, index) => (
               <motion.div
@@ -256,7 +251,7 @@ export const Header: React.FC = () => {
               })}
             </motion.div>
           </nav>
-        </motion.div>
+        </div>
 
         {/* Mobile Menu Backdrop */}
         {isMobileMenuOpen && (
