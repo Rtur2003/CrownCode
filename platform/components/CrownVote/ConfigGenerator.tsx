@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react'
 import { Settings, Download, Eye, Copy } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useToast } from '@/context/ToastContext'
+import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
 import styles from '@/styles/pages/crown-vote.module.css'
 
 interface VotryxConfig {
@@ -27,6 +28,7 @@ interface VotryxConfig {
 export const ConfigGenerator: React.FC = () => {
   const { t, language } = useLanguage()
   const { success } = useToast()
+  const { copyToClipboard } = useCopyToClipboard()
 
   const [config, setConfig] = useState<VotryxConfig>({
     paths: {
@@ -67,9 +69,8 @@ export const ConfigGenerator: React.FC = () => {
     )
   }
 
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(configJson)
-    success(t.toast?.success?.copied || 'Copied to clipboard')
+  const handleCopy = () => {
+    copyToClipboard(configJson)
   }
 
   const fields = t.crownVote?.configGenerator?.fields
