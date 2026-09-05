@@ -468,6 +468,8 @@
       "youtubeAuthenticationRequired": "YouTube oturum doğrulaması istedi. Tarayıcı çerezleri veya cookies.txt dosyası ayarlayıp tekrar deneyin.",
       "unsupportedSource": "Bu kaynak türü henüz desteklenmiyor. YouTube deneyin veya bir ses dosyası yükleyin.",
       "missingFile": "Lütfen analiz için bir ses dosyası seçin.",
+      "missingUrl": "Lütfen bir URL girin.",
+      "invalidSourceType": "Geçersiz kaynak türü. Dosya, URL veya mikrofon seçeneklerinden birini kullanın.",
       "unsupportedFileType": "Desteklenmeyen dosya formatı. MP3, WAV, FLAC, M4A kullanın.",
       "fileTooLarge": "Dosya boyutu 30MB (yaklaşık 6 dk) sınırını aşıyor. Daha küçük dosya seçin.",
       "fileTooSmall": "Dosya çok küçük. Minimum boyut 1KB.",
@@ -554,6 +556,8 @@
     "audioOptions": {
       "title": "Ses İşleme Seçenekleri",
       "selectedCount": "seçenek aktif",
+      "mixAudioNeedsTwoFiles": "Ses Karıştırma için ikinci bir ses dosyası daha yükleyin.",
+      "mixAudioHint": "Karıştırmak için ikinci dosyayı da yükleyin (2. dosya karıştırılacak).",
       "pitchShift": {
         "title": "Pitch Değişimi",
         "description": "Sesin perdesini yukarı veya aşağı kaydır"
@@ -578,6 +582,26 @@
         "title": "Gürültü Ekleme",
         "description": "Hafif arka plan gürültüsü ekle"
       }
+    },
+    "formatConverter": {
+      "title": "Hedef Format Seçin",
+      "lossy": "Kayıplı",
+      "lossless": "Kayıpsız",
+      "bitrateLabel": "Bit Hızı",
+      "convert": "Dönüştür",
+      "converting": "Dönüştürülüyor...",
+      "downloadResult": "Dönüştürülen Dosyayı İndir"
+    },
+    "organizer": {
+      "step2": "Otomatik Etiketleme",
+      "description": "Ses dosyanız analiz edilip süre, tempo, ton ve yükseklik gibi gerçek akustik özellikler çıkarılacak; bu özelliklere göre veri setinize otomatik etiketler önerilecek.",
+      "analyze": "Analiz Et",
+      "duration": "Süre",
+      "tempo": "Tempo",
+      "key": "Ton",
+      "loudness": "Ses Yüksekliği",
+      "noBeat": "Ritim yok",
+      "autoTags": "Önerilen Etiketler"
     },
     "progress": {
       "title": "Veri Seti İstatistikleri",
