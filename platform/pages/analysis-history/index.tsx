@@ -83,23 +83,31 @@ const AnalysisHistoryPage: NextPage = () => {
                   </div>
                   {entry.result && (
                     <div className={styles['entry-result']}>
-                      <div className={styles['verdict-badge']}>
-                        {entry.result.isAIGenerated ? <Sparkles size={14} /> : <User size={14} />}
-                        <span>{entry.result.isAIGenerated ? ah.verdictAi : ah.verdictHuman}</span>
-                      </div>
+                      {typeof entry.result.isAIGenerated === 'boolean' && (
+                        <div className={styles['verdict-badge']}>
+                          {entry.result.isAIGenerated ? <Sparkles size={14} /> : <User size={14} />}
+                          <span>{entry.result.isAIGenerated ? ah.verdictAi : ah.verdictHuman}</span>
+                        </div>
+                      )}
                       <div className={styles['result-stats']}>
-                        <div className={styles['result-stat']}>
-                          <span className={styles['result-stat-label']}>{ah.confidenceLabel}</span>
-                          <span className={styles['result-stat-value']}>{Math.round(entry.result.confidence * 100)}%</span>
-                        </div>
-                        <div className={styles['result-stat']}>
-                          <span className={styles['result-stat-label']}>{ah.durationLabel}</span>
-                          <span className={styles['result-stat-value']}>{entry.result.processingTime.toFixed(1)}s</span>
-                        </div>
-                        <div className={styles['result-stat']}>
-                          <span className={styles['result-stat-label']}>{ah.modelLabel}</span>
-                          <span className={styles['result-stat-value']}>{entry.result.modelVersion}</span>
-                        </div>
+                        {typeof entry.result.confidence === 'number' && (
+                          <div className={styles['result-stat']}>
+                            <span className={styles['result-stat-label']}>{ah.confidenceLabel}</span>
+                            <span className={styles['result-stat-value']}>{Math.round(entry.result.confidence * 100)}%</span>
+                          </div>
+                        )}
+                        {typeof entry.result.processingTime === 'number' && (
+                          <div className={styles['result-stat']}>
+                            <span className={styles['result-stat-label']}>{ah.durationLabel}</span>
+                            <span className={styles['result-stat-value']}>{entry.result.processingTime.toFixed(1)}s</span>
+                          </div>
+                        )}
+                        {entry.result.modelVersion && (
+                          <div className={styles['result-stat']}>
+                            <span className={styles['result-stat-label']}>{ah.modelLabel}</span>
+                            <span className={styles['result-stat-value']}>{entry.result.modelVersion}</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
