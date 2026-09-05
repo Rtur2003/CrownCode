@@ -6,7 +6,7 @@
  * `save` and `remove` work as before.
  */
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
 const MAX_ENTRIES = 20
 
@@ -57,10 +57,16 @@ function clearKey(key: string): void {
 }
 
 export function useLocalHistory<T>(storageKey: string) {
-  const [entries, setEntries] = useState<HistoryEntry<T>[]>(() => {
-    if (typeof window === 'undefined') {return []}
-    return readAll<T>(storageKey)
-  })
+  // Always start empty so the client's first render matches the server's
+  // (localStorage doesn't exist server-side); read the real data in an
+  // effect after mount instead of a lazy initializer, which would make
+  // the client's very first render diverge from SSR output and trigger
+  // a hydration mismatch whenever the user already has saved entries.
+  const [entries, setEntries] = useState<HistoryEntry<T>[]>([])
+
+  useEffect(() => {
+    setEntries(readAll<T>(storageKey))
+  }, [storageKey])
 
   /** Most recent entry (backward compat) */
   const lastEntry = entries.length > 0 ? entries[0] : null
