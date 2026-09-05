@@ -17,9 +17,10 @@ export interface AudioAugmentationOptions {
 interface AudioAugmentationProps {
   options: AudioAugmentationOptions
   onChange: (options: AudioAugmentationOptions) => void
+  fileCount?: number
 }
 
-export const AudioAugmentation: React.FC<AudioAugmentationProps> = ({ options, onChange }) => {
+export const AudioAugmentation: React.FC<AudioAugmentationProps> = ({ options, onChange, fileCount = 0 }) => {
   const { t } = useLanguage()
   const augmentOptions = [
     {
