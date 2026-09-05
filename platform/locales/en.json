@@ -169,6 +169,12 @@
           "Parallel Processing",
           "System Tray"
         ]
+      },
+      "kognita": {
+        "title": "Kognita",
+        "description": "A silent, local-first desktop activity tracker that helps you understand your digital footprint. Your data never leaves your machine.",
+        "status": "On GitHub",
+        "stats": "Privacy First"
       }
     }
   },
