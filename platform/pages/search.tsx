@@ -75,37 +75,32 @@ const SearchPage: NextPage = () => {
       noIndex
     >
       <div className={styles['search-page']}>
-        {/* Search Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className={styles['search-header']}
         >
-          <h1 className={styles['search-title']}>
-            {sp.title}
-          </h1>
-          <p className={styles['search-subtitle']}>
-            {sp.subtitle}
-          </p>
+          <h1 className={styles['search-title']}>{sp.title}</h1>
+          <p className={styles['search-subtitle']}>{sp.subtitle}</p>
         </motion.div>
 
-        {/* Search Form */}
         <motion.form
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.5, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
           onSubmit={handleSearch}
           className={styles['search-form']}
         >
           <div className={styles['search-bar']}>
-            <SearchIcon size={24} className={styles['search-icon']} />
+            <SearchIcon size={20} className={styles['search-icon']} />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={sp.placeholder}
               className={styles['search-input']}
+              autoFocus
             />
             <button type="submit" className={styles['search-button']}>
               {sp.button}
@@ -113,61 +108,45 @@ const SearchPage: NextPage = () => {
           </div>
         </motion.form>
 
-        {/* Results */}
-        {query && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
+        {query ? (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}>
             <h2 className={styles['results-heading']}>
-              {results.length > 0
-                ? `${results.length} ${sp.resultsFound}`
-                : sp.noResults}
+              {results.length > 0 ? `${results.length} ${sp.resultsFound}` : sp.noResults}
             </h2>
 
             <div className={styles['results-list']}>
               {results.map((result, index) => (
                 <motion.div
                   key={result.url}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, delay: Math.min(index * 0.05, 0.3) }}
                 >
                   <Link href={result.url} className={styles['result-link']}>
-                    <div className={styles['result-card']}>
-                      <div className={styles['result-header']}>
-                        <span className={styles['result-icon']}>{result.icon}</span>
-                        <h3 className={styles['result-title']}>
-                          {result.title}
-                        </h3>
-                        <span className={styles['result-badge']}>
-                          {sp.badges[result.type]}
-                        </span>
+                    <div className={`${styles['result-card']} ${styles[`result-card--${result.type}`]}`}>
+                      <span className={styles['result-icon']}>{result.icon}</span>
+                      <div className={styles['result-body']}>
+                        <div className={styles['result-header']}>
+                          <h3 className={styles['result-title']}>{result.title}</h3>
+                          <span className={styles['result-badge']}>{sp.badges[result.type]}</span>
+                        </div>
+                        <p className={styles['result-description']}>{result.description}</p>
                       </div>
-                      <p className={styles['result-description']}>
-                        {result.description}
-                      </p>
                     </div>
                   </Link>
                 </motion.div>
               ))}
             </div>
           </motion.div>
-        )}
-
-        {/* Empty State */}
-        {!query && (
+        ) : (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
             className={styles['empty-state']}
           >
-            <SearchIcon size={64} className={styles['empty-icon']} />
-            <p className={styles['empty-text']}>
-              {sp.emptyState}
-            </p>
+            <SearchIcon size={40} className={styles['empty-icon']} />
+            <p className={styles['empty-text']}>{sp.emptyState}</p>
           </motion.div>
         )}
       </div>
