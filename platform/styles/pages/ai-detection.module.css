@@ -591,7 +591,7 @@
 }
 
 .error-state p {
-  color: #d1a198;
+  color: var(--color-text-secondary, #c8b9a7);
   margin-bottom: 2rem;
 }
 
@@ -616,9 +616,9 @@
   padding: 0.25rem 0.75rem;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #b45309;
-  background: #fef3c7;
-  border: 1px solid #fde68a;
+  color: var(--color-gold-400, #eac06f);
+  background: rgba(201, 147, 71, 0.12);
+  border: 1px solid rgba(201, 147, 71, 0.3);
   border-radius: 9999px;
 }
 
@@ -807,9 +807,9 @@
 }
 
 .feature-bar-fill {
+  width: 100%;
   height: 100%;
   border-radius: 3px;
-  transition: width 1s ease-out;
 }
 
 /* =========================================================================
@@ -1002,8 +1002,8 @@
   gap: 0.6rem;
   padding: 0.6rem 0.75rem;
   background: rgba(11, 10, 8, 0.3);
+  border: 1px solid rgba(201, 147, 71, 0.2);
   border-radius: var(--radius-md, 0.5rem);
-  border-left: 3px solid var(--color-primary, #c99347);
   font-size: 0.85rem;
   color: var(--color-text-secondary);
   line-height: 1.5;
@@ -1115,6 +1115,7 @@
 }
 
 .top-feature-bar-fill {
+  width: 100%;
   height: 100%;
   background: var(--color-primary, #c99347);
   border-radius: 2px;
@@ -1691,10 +1692,10 @@
 .mic-error {
   margin-top: 1rem;
   padding: 0.75rem 1rem;
-  background: rgba(201, 71, 71, 0.14);
-  border: 1px solid rgba(201, 71, 71, 0.35);
+  background: rgba(166, 75, 60, 0.14);
+  border: 1px solid rgba(166, 75, 60, 0.35);
   border-radius: 0.75rem;
-  color: #ffb2b2;
+  color: var(--color-error, #a64b3c);
   font-size: 0.875rem;
 }
 
