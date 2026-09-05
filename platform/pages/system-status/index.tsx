@@ -27,7 +27,7 @@ const SystemStatusPage: NextPage = () => {
 
   const noExternalBackend = !process.env.NEXT_PUBLIC_API_URL
 
-  const checkServices = async () => {
+  const checkServices = async (isMounted: () => boolean) => {
     setChecking(true)
     const hfUrl = process.env.NEXT_PUBLIC_API_URL
 
@@ -61,14 +61,18 @@ const SystemStatusPage: NextPage = () => {
       }),
     )
 
+    if (!isMounted()) {return}
     setServices(results)
     setLastChecked(new Date())
     setChecking(false)
   }
 
   useEffect(() => {
-    checkServices()
-     
+    let mounted = true
+    checkServices(() => mounted)
+    return () => {
+      mounted = false
+    }
   }, [])
 
   const allOk = services.every((s) => s.status === 'ok')
