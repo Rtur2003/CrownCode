@@ -112,9 +112,6 @@
   text-decoration: none;
 }
 
-/* Each category carries its own icon-chip color so scanning grouped
-   results reads as structured information, not one repeated card shape
-   three times over. */
 .result-card {
   display: flex;
   align-items: flex-start;
@@ -139,25 +136,9 @@
   height: 2.25rem;
   border-radius: var(--radius-md);
   flex-shrink: 0;
-  color: var(--color-text-muted);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--color-border);
-}
-
-.result-card--product .result-icon {
   color: var(--color-gold-400);
   background: rgba(201, 147, 71, 0.1);
-  border-color: rgba(201, 147, 71, 0.25);
-}
-
-.result-card--feature .result-icon {
-  color: var(--color-info);
-  background: rgba(107, 143, 122, 0.1);
-  border-color: rgba(107, 143, 122, 0.25);
-}
-
-.result-card--page .result-icon {
-  color: var(--color-text-secondary);
+  border: 1px solid rgba(201, 147, 71, 0.25);
 }
 
 .result-body {
