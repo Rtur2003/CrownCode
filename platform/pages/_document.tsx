@@ -37,58 +37,12 @@ export default function Document() {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta httpEquiv="x-dns-prefetch-control" content="on" />
 
-        {/* Structured Data - JSON-LD for SEO */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'WebSite',
-              name: 'CrownCode Platform',
-              description: 'Central platform showcasing software projects, research work, and development processes',
-              url: 'https://hasan-arthur-altuntas.xyz',
-              author: {
-                '@type': 'Person',
-                name: 'Hasan Arthur Altuntaş',
-                url: 'https://github.com/Rtur2003'
-              },
-              potentialAction: {
-                '@type': 'SearchAction',
-                target: 'https://hasan-arthur-altuntas.xyz/search?q={search_term_string}',
-                'query-input': 'required name=search_term_string'
-              }
-            })
-          }}
-        />
-
-        {/* Organization Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Organization',
-              name: 'CrownCode',
-              url: 'https://hasan-arthur-altuntas.xyz',
-              logo: 'https://hasan-arthur-altuntas.xyz/logo-main.png',
-              description: 'Open-source project showcase and demo applications platform',
-              founder: {
-                '@type': 'Person',
-                name: 'Hasan Arthur Altuntaş',
-                url: 'https://github.com/Rtur2003'
-              },
-              sameAs: [
-                'https://github.com/Rtur2003',
-                'https://hasan-arthur-altuntas.com.tr'
-              ],
-              contactPoint: {
-                '@type': 'ContactPoint',
-                contactType: 'Technical Support',
-                availableLanguage: ['Turkish', 'English']
-              }
-            })
-          }}
-        />
+        {/* Organization and WebSite JSON-LD live in MainLayout (homepage
+            only) instead of here, so every page doesn't ship two
+            contradictory copies of the same schema — Document renders on
+            every route with no way to gate per-page, and duplicate/
+            conflicting structured data is flagged by Google's own
+            guidance rather than helping rich-result eligibility. */}
       </Head>
       <body>
         <Main />
