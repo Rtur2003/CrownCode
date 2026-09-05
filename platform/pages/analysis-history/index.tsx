@@ -83,7 +83,7 @@ const AnalysisHistoryPage: NextPage = () => {
                   </div>
                   {entry.result && (
                     <div className={styles['entry-result']}>
-                      <div className={`${styles['verdict-badge']} ${entry.result.isAIGenerated ? styles['verdict-badge--ai'] : styles['verdict-badge--human']}`}>
+                      <div className={styles['verdict-badge']}>
                         {entry.result.isAIGenerated ? <Sparkles size={14} /> : <User size={14} />}
                         <span>{entry.result.isAIGenerated ? ah.verdictAi : ah.verdictHuman}</span>
                       </div>
