@@ -23,12 +23,14 @@ import {
   RefreshCw,
   Music,
   FolderOpen,
-  Settings,
+  Waves,
   ArrowLeft,
+  ArrowRight,
   Play,
   Download,
   Loader2,
-  AlertCircle
+  AlertCircle,
+  Lock
 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import FileUploader from '@/components/MLToolkit/FileUploader'
