@@ -169,6 +169,12 @@
           "Paralel İşlem",
           "Sistem Tepsisi"
         ]
+      },
+      "kognita": {
+        "title": "Kognita",
+        "description": "Dijital ayak izinizi anlamanıza yardımcı olan, sessiz ve yerel öncelikli bir masaüstü aktivite takipçisi. Veriler yalnızca cihazınızda kalır.",
+        "status": "GitHub'da",
+        "stats": "Gizlilik Öncelikli"
       }
     }
   },
