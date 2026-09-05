@@ -25,6 +25,14 @@ const iconMap: Record<string, React.ReactNode> = {
   'data-augmentation': <Wrench size={18} />
 }
 
+// SearchItem.category is singular ('page' | 'feature' | 'product'), but the
+// locale file's search.categories keys are plural group labels.
+const categoryLabelKey: Record<SearchItem['category'], 'pages' | 'features' | 'product'> = {
+  page: 'pages',
+  feature: 'features',
+  product: 'product'
+}
+
 export const SearchResults: React.FC<SearchResultsProps> = ({
   results,
   query,
@@ -73,7 +81,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
       {Object.entries(groupedResults).map(([category, items]) => (
         <div key={category} className="search-category">
           <h3 className="search-category-title">
-            {t.search?.categories?.[category as 'pages' | 'features'] || category}
+            {t.search?.categories?.[categoryLabelKey[category as SearchItem['category']]] || category}
           </h3>
           <div className="search-items">
             {items.map((item) => (
