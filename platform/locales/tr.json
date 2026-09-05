@@ -1181,7 +1181,12 @@
     "deleted": "Geçmiş temizlendi.",
     "clearAll": "Tümünü Temizle",
     "clearAllConfirm": "Tüm geçmiş silinsin mi?",
-    "entryCount": "{{count}} analiz"
+    "entryCount": "{{count}} analiz",
+    "verdictAi": "AI Üretimi",
+    "verdictHuman": "İnsan Bestesi",
+    "confidenceLabel": "Güven Skoru",
+    "durationLabel": "İşlem Süresi",
+    "modelLabel": "Model"
   },
   "systemStatus": {
     "meta": {
