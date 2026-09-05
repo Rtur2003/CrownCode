@@ -4,9 +4,10 @@
  * Note: Editing disabled to maintain AI-generated content integrity
  */
 
-import React, { useState } from 'react'
+import React from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { Copy, Check, Sparkles, RefreshCw, Send, AlertCircle } from 'lucide-react'
+import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
 import styles from './CommentEditor.module.css'
 
 interface CommentEditorTexts {
@@ -44,17 +45,8 @@ export const CommentEditor: React.FC<CommentEditorProps> = ({
   processingTime,
   texts
 }) => {
-  const [copied, setCopied] = useState(false)
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(comment)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch (err) {
-      console.error('Failed to copy:', err)
-    }
-  }
+  const { copied, copyToClipboard } = useCopyToClipboard()
+  const handleCopy = () => copyToClipboard(comment)
 
   const processingTimeText =
     processingTime !== null
