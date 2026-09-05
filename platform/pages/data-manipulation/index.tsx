@@ -72,7 +72,6 @@ const AudioDatasetPage: NextPage = () => {
       title: t.audioDataset.tools.augment.title,
       description: t.audioDataset.tools.augment.description,
       icon: Music,
-      gradient: 'from-primary to-secondary',
       status: 'available'
     },
     {
@@ -80,7 +79,6 @@ const AudioDatasetPage: NextPage = () => {
       title: t.audioDataset.tools.convert.title,
       description: t.audioDataset.tools.convert.description,
       icon: RefreshCw,
-      gradient: 'from-gray-500 to-gray-600',
       status: 'coming_soon'
     },
     {
@@ -88,7 +86,6 @@ const AudioDatasetPage: NextPage = () => {
       title: t.audioDataset.tools.organize.title,
       description: t.audioDataset.tools.organize.description,
       icon: FolderOpen,
-      gradient: 'from-gray-500 to-gray-600',
       status: 'coming_soon'
     }
   ]
