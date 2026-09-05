@@ -84,6 +84,7 @@ const SystemStatusPage: NextPage = () => {
       title={ss.meta.title}
       description={ss.meta.description}
       keywords={ss.meta.keywords}
+      noIndex
     >
       <div className={styles['page-container']}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>

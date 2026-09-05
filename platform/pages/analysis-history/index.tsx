@@ -21,6 +21,7 @@ const AnalysisHistoryPage: NextPage = () => {
       title={ah.meta.title}
       description={ah.meta.description}
       keywords={ah.meta.keywords}
+      noIndex
     >
       <div className={styles['page-container']}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>

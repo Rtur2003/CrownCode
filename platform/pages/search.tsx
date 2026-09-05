@@ -72,6 +72,7 @@ const SearchPage: NextPage = () => {
       title={`${sp.meta.title}: ${query || ''} - CrownCode`}
       description={sp.meta.description}
       keywords={t.searchMeta?.keywords}
+      noIndex
     >
       <div className={styles['search-page']}>
         {/* Search Header */}

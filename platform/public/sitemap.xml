@@ -4,7 +4,7 @@
 
   <url>
     <loc>https://hasan-arthur-altuntas.xyz/</loc>
-    <lastmod>2026-08-24</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -57,6 +57,18 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+
+  <url>
+    <loc>https://hasan-arthur-altuntas.xyz/data-manipulation</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- /analysis-history, /system-status and /search are intentionally
+       omitted: they're noindexed (personal localStorage data, a live
+       health dashboard, and internal search results respectively) per
+       Google's own guidance on thin/private/duplicate-risk content. -->
 
   <url>
     <loc>https://hasan-arthur-altuntas.xyz/privacy</loc>
