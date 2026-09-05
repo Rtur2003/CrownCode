@@ -468,6 +468,8 @@
       "youtubeAuthenticationRequired": "YouTube requested sign-in verification. Configure browser cookies or a cookies.txt file, then try again.",
       "unsupportedSource": "This source type is not yet supported. Try YouTube or upload an audio file.",
       "missingFile": "Please choose an audio file to analyze.",
+      "missingUrl": "Please enter a URL.",
+      "invalidSourceType": "Invalid source type. Use one of file, URL, or microphone.",
       "unsupportedFileType": "Unsupported file format. Allowed: MP3, WAV, FLAC, M4A.",
       "fileTooLarge": "File size exceeds 30MB limit (about 6 minutes of audio). Please use a smaller file.",
       "fileTooSmall": "File is too small. Minimum file size is 1KB.",
@@ -554,6 +556,8 @@
     "audioOptions": {
       "title": "Audio Processing Options",
       "selectedCount": "options active",
+      "mixAudioNeedsTwoFiles": "Upload a second audio file to mix.",
+      "mixAudioHint": "Upload a second file to mix in (the 2nd file gets blended).",
       "pitchShift": {
         "title": "Pitch Shift",
         "description": "Shift the pitch up or down"
@@ -578,6 +582,26 @@
         "title": "Add Noise",
         "description": "Add slight background noise"
       }
+    },
+    "formatConverter": {
+      "title": "Choose Target Format",
+      "lossy": "Lossy",
+      "lossless": "Lossless",
+      "bitrateLabel": "Bitrate",
+      "convert": "Convert",
+      "converting": "Converting...",
+      "downloadResult": "Download Converted File"
+    },
+    "organizer": {
+      "step2": "Automatic Tagging",
+      "description": "Your audio file will be analyzed to extract real acoustic properties like duration, tempo, key, and loudness, then auto-suggest dataset tags based on them.",
+      "analyze": "Analyze",
+      "duration": "Duration",
+      "tempo": "Tempo",
+      "key": "Key",
+      "loudness": "Loudness",
+      "noBeat": "No beat",
+      "autoTags": "Suggested Tags"
     },
     "progress": {
       "title": "Dataset Statistics",
