@@ -2,7 +2,7 @@ import React from 'react'
 import type { NextPage } from 'next'
 import { motion } from 'motion/react'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { History, Music, FileAudio, Trash2 } from 'lucide-react'
+import { History, Music, FileAudio, Trash2, Sparkles, User } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
 import { useLocalHistory, HISTORY_KEYS } from '@/hooks/useLocalHistory'
@@ -83,10 +83,24 @@ const AnalysisHistoryPage: NextPage = () => {
                   </div>
                   {entry.result && (
                     <div className={styles['entry-result']}>
-                      <pre>
-                        {JSON.stringify(entry.result, null, 2).slice(0, 500)}
-                        {JSON.stringify(entry.result).length > 500 ? '...' : ''}
-                      </pre>
+                      <div className={`${styles['verdict-badge']} ${entry.result.isAIGenerated ? styles['verdict-badge--ai'] : styles['verdict-badge--human']}`}>
+                        {entry.result.isAIGenerated ? <Sparkles size={14} /> : <User size={14} />}
+                        <span>{entry.result.isAIGenerated ? ah.verdictAi : ah.verdictHuman}</span>
+                      </div>
+                      <div className={styles['result-stats']}>
+                        <div className={styles['result-stat']}>
+                          <span className={styles['result-stat-label']}>{ah.confidenceLabel}</span>
+                          <span className={styles['result-stat-value']}>{Math.round(entry.result.confidence * 100)}%</span>
+                        </div>
+                        <div className={styles['result-stat']}>
+                          <span className={styles['result-stat-label']}>{ah.durationLabel}</span>
+                          <span className={styles['result-stat-value']}>{entry.result.processingTime.toFixed(1)}s</span>
+                        </div>
+                        <div className={styles['result-stat']}>
+                          <span className={styles['result-stat-label']}>{ah.modelLabel}</span>
+                          <span className={styles['result-stat-value']}>{entry.result.modelVersion}</span>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </motion.div>
