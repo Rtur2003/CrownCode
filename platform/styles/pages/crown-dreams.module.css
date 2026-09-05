@@ -91,9 +91,9 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #b45309;
-  background: #fef3c7;
-  border: 1px solid #fde68a;
+  color: var(--color-gold-400, #eac06f);
+  background: rgba(201, 147, 71, 0.12);
+  border: 1px solid rgba(201, 147, 71, 0.3);
   border-radius: 9999px;
   vertical-align: middle;
 }
@@ -316,10 +316,10 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding: 0.2rem 0.5rem;
-  background: rgba(255, 215, 0, 0.15);
-  border: 1px solid rgba(255, 215, 0, 0.3);
+  background: rgba(201, 147, 71, 0.15);
+  border: 1px solid rgba(201, 147, 71, 0.3);
   border-radius: 999px;
-  color: #FFD700;
+  color: var(--color-gold-400, #eac06f);
 }
 
 /* =============== CENTER COLUMN =============== */
