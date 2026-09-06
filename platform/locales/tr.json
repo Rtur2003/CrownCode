@@ -865,9 +865,9 @@
   },
   "crownDreams": {
     "meta": {
-      "title": "Crown Dreams - Rüya Günlüğü",
-      "description": "Rüyalarınızı kaydedin, analiz edin ve bilinçaltınızı keşfedin.",
-      "keywords": "rüya günlüğü, lüsid rüya, rüya analizi"
+      "title": "Crown Dreams - AI Destekli Rüya Günlüğü ve Analizi",
+      "description": "Rüyalarınızı kaydedin, Gemini AI ile gerçek zamanlı duygu ve sembol analizi yapın, lüsid rüya takibiyle bilinçaltınızı keşfedin.",
+      "keywords": "rüya günlüğü, lüsid rüya, rüya analizi, AI rüya yorumu, duygu analizi, rüya sembolleri"
     },
     "header": {
       "badge": "Neural Link Aktif",
@@ -1182,9 +1182,9 @@
   },
   "creatorStudio": {
     "meta": {
-      "title": "Creator Studio - CrownCode",
-      "description": "Ses remiks, AI üretimi ve çoklu parça düzenleme araçları.",
-      "keywords": "creator studio, ses remiks, AI üretimi, çoklu parça, müzik araçları"
+      "title": "Creator Studio - AI Remiks Stüdyosu | CrownCode",
+      "description": "İki ses parçasını gerçek zamanlı tempo ve ton analiziyle eşleştirip yumuşak bir crossfade ile birleştiren ücretsiz AI remiks aracı.",
+      "keywords": "AI remiks, tempo eşleştirme, crossfade, ses birleştirme, müzik prodüksiyon aracı, creator studio, çoklu parça"
     },
     "title": "Creator Studio",
     "subtitle": "AI destekli ses oluşturma araçları",
@@ -1234,6 +1234,39 @@
         "rateLimitExceeded": "Çok fazla remiks isteği. Lütfen biraz bekleyin.",
         "validationError": "Parçalardan biri işlenemedi",
         "remixFailed": "Parçalar birleştirilemedi"
+      }
+    },
+    "multitrackMixer": {
+      "title": "Çoklu Parça Mikser",
+      "subtitle": "2-6 parça yükleyin, her birinin ses seviyesini ve stereo konumunu ayarlayın, tek bir mikse birleştirin.",
+      "addTrack": "Parça Ekle ({{count}}/{{max}})",
+      "removeTrack": "Parçayı kaldır",
+      "mute": "Sessize al",
+      "gain": "Ses Seviyesi",
+      "pan": "Konum",
+      "panCenter": "Orta",
+      "panLeft": "Sol",
+      "panRight": "Sağ",
+      "mixButton": "Parçaları Miksle",
+      "processing": "Miksleniyor...",
+      "startOver": "Yeniden Başla",
+      "download": "WAV İndir",
+      "analysis": {
+        "tracksmixed": "Mikslenen Parçalar",
+        "outputDuration": "Çıktı Süresi",
+        "peakLevel": "Zirve Seviyesi",
+        "normalization": "Normalizasyon",
+        "applied": "Uygulandı (kırpma önlendi)"
+      },
+      "errors": {
+        "tooFewTracks": "Lütfen en az 2 parça ekleyin",
+        "tooManyTracks": "En fazla 6 parça desteklenir",
+        "apiNotConfigured": "API yapılandırılmamış",
+        "invalidFileType": "Dosyalardan biri desteklenen bir ses formatında değil",
+        "fileTooLarge": "Dosya çok büyük (parça başına maksimum 30 MB)",
+        "rateLimitExceeded": "Çok fazla miks isteği. Lütfen biraz bekleyin.",
+        "validationError": "Parçalardan biri işlenemedi",
+        "mixFailed": "Parçalar mikslenemedi"
       }
     }
   },
