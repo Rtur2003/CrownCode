@@ -178,33 +178,6 @@
       }
     }
   },
-  "aurisShowcase": {
-    "badge": "Araştırma Projesi",
-    "title": "AURIS",
-    "titleAccent": "Yapay Zeka Müzik Tespit Motoru",
-    "subtitle": "Yapay zeka ile üretilmiş müziği yüksek hassasiyetle tespit etmek için 49 akustik özellik ve vokal analizi kullanan 4-Kule derin öğrenme mimarisi.",
-    "stats": {
-      "towers": "Analiz Kulesi",
-      "features": "Akustik Özellik",
-      "models": "ML Model",
-      "vocal": "Vokal Özellik"
-    },
-    "archTitle": "4-Kule Mimari",
-    "towers": {
-      "tower1": "Transfer öğrenme ile derin ses temsilleri",
-      "tower2": "Spektral, zamansal, harmonik ve vokal analiz",
-      "tower3": "Çapraz-modal ses-metin temsilleri",
-      "tower4": "Harici spektral sahtelik tespiti"
-    },
-    "meta": "Meta-Sınıflandırıcı",
-    "featureCats": {
-      "spectral": "Spektral Özellikler",
-      "temporal": "Zamansal Özellikler",
-      "harmonic": "Harmonik Özellikler",
-      "vocal": "Vokal Özellikler"
-    },
-    "cta": "AURIS Tespitini Dene"
-  },
   "audioDataset": {
     "title": "Ses Veri Seti Araçları",
     "subtitle": "AI müzik tespiti için ses veri setlerini hazırlama ve işleme araçları",
@@ -490,7 +463,7 @@
       "tower2": "Spektral, zamansal, harmonik ve vokal parmak izi",
       "tower3": "Çapraz-modal ses-metin benzerlik analizi",
       "tower4": "Harici spektral sahtelik tespit API'si",
-      "meta": "Meta-Sınıflandırıcı \u2192 YZ / İnsan",
+      "meta": "Meta-Sınıflandırıcı → YZ / İnsan",
       "statFeatures": "Akustik Özellik",
       "statModels": "ML Model",
       "statVocal": "Vokal İşaretçi",
@@ -602,14 +575,6 @@
       "loudness": "Ses Yüksekliği",
       "noBeat": "Ritim yok",
       "autoTags": "Önerilen Etiketler"
-    },
-    "progress": {
-      "title": "Veri Seti İstatistikleri",
-      "original": "Orijinal",
-      "current": "Mevcut",
-      "target": "Hedef",
-      "progress": "İlerleme",
-      "newData": "{count} yeni veri eklendi"
     },
     "processLog": {
       "title": "İşlem Durumu",
@@ -1227,9 +1192,18 @@
     "comingSoonDesc": "Harika bir şey inşa ediyoruz. Ses remiks, AI üretimi ve çoklu parça düzenleme araçları için takipte kalın.",
     "upcomingTitle": "Yakında Geliyor",
     "features": {
-      "remix": { "title": "Ses Remiks", "description": "AI destekli araçlarla ses parçalarını remiksleme ve dönüştürme." },
-      "generate": { "title": "AI Üretimi", "description": "Gelişmiş AI modelleri kullanarak orijinal ses içeriği oluşturma." },
-      "multitrack": { "title": "Çoklu Parça", "description": "Birleşik bir çalışma alanında birden fazla ses parçasını düzenleme ve miksle." }
+      "remix": {
+        "title": "Ses Remiks",
+        "description": "AI destekli araçlarla ses parçalarını remiksleme ve dönüştürme."
+      },
+      "generate": {
+        "title": "AI Üretimi",
+        "description": "Gelişmiş AI modelleri kullanarak orijinal ses içeriği oluşturma."
+      },
+      "multitrack": {
+        "title": "Çoklu Parça",
+        "description": "Birleşik bir çalışma alanında birden fazla ses parçasını düzenleme ve miksle."
+      }
     },
     "remixStudio": {
       "title": "AI Remiks Stüdyosu",
