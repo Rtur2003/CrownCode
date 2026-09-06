@@ -350,3 +350,115 @@
   line-height: 1.5;
 }
 
+/* Multitrack Mixer */
+
+.mixer-tracks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.mixer-track {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 0.875rem 1rem;
+  background: var(--color-background);
+}
+
+.mixer-track-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-text-secondary);
+  font-size: 0.8125rem;
+}
+
+.mixer-track-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--color-text-primary);
+}
+
+.mixer-track-remove {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.mixer-track-remove:hover {
+  color: var(--color-error, #e74c3c);
+}
+
+.mixer-track-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.mixer-mute-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.mixer-mute-active {
+  background: rgba(166, 75, 60, 0.15);
+  border-color: var(--color-error, #a64b3c);
+  color: var(--color-error, #a64b3c);
+}
+
+.mixer-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 140px;
+}
+
+.mixer-slider-label {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.mixer-slider-group input[type='range'] {
+  width: 100%;
+  accent-color: var(--color-gold-400);
+}
+
+.mixer-add-track {
+  margin-bottom: 1.5rem;
+}
+
+.mixer-add-track-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem;
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.mixer-add-track-label:hover {
+  border-color: var(--color-gold-400);
+  background: rgba(201, 147, 71, 0.06);
+}
+
