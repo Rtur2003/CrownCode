@@ -178,33 +178,6 @@
       }
     }
   },
-  "aurisShowcase": {
-    "badge": "Research Project",
-    "title": "AURIS",
-    "titleAccent": "AI Music Detection Engine",
-    "subtitle": "4-Tower deep learning architecture that analyzes 49 acoustic features including vocal patterns to detect AI-generated music with high precision.",
-    "stats": {
-      "towers": "Analysis Towers",
-      "features": "Acoustic Features",
-      "models": "ML Models",
-      "vocal": "Vocal Features"
-    },
-    "archTitle": "4-Tower Architecture",
-    "towers": {
-      "tower1": "Deep audio embeddings via transfer learning",
-      "tower2": "Spectral, temporal, harmonic & vocal analysis",
-      "tower3": "Cross-modal audio-text embeddings",
-      "tower4": "External spectral fakeprint detection"
-    },
-    "meta": "Meta-Classifier",
-    "featureCats": {
-      "spectral": "Spectral Features",
-      "temporal": "Temporal Features",
-      "harmonic": "Harmonic Features",
-      "vocal": "Vocal Features"
-    },
-    "cta": "Try AURIS Detection"
-  },
   "audioDataset": {
     "title": "Audio Dataset Tools",
     "subtitle": "Tools for preparing and processing audio datasets for AI music detection",
@@ -490,7 +463,7 @@
       "tower2": "Spectral, temporal, harmonic & vocal fingerprint",
       "tower3": "Cross-modal audio-text similarity analysis",
       "tower4": "External spectral fakeprint detection API",
-      "meta": "Meta-Classifier \u2192 AI / Human",
+      "meta": "Meta-Classifier → AI / Human",
       "statFeatures": "Acoustic Features",
       "statModels": "ML Models",
       "statVocal": "Vocal Markers",
@@ -602,14 +575,6 @@
       "loudness": "Loudness",
       "noBeat": "No beat",
       "autoTags": "Suggested Tags"
-    },
-    "progress": {
-      "title": "Dataset Statistics",
-      "original": "Original",
-      "current": "Current",
-      "target": "Target",
-      "progress": "Progress",
-      "newData": "{count} new data added"
     },
     "processLog": {
       "title": "Process Status",
@@ -1227,9 +1192,18 @@
     "comingSoonDesc": "We're building something amazing. Stay tuned for audio remix, AI generation, and multi-track editing tools.",
     "upcomingTitle": "Coming Up Next",
     "features": {
-      "remix": { "title": "Audio Remix", "description": "Remix and transform audio tracks with AI-powered tools." },
-      "generate": { "title": "AI Generate", "description": "Generate original audio content using advanced AI models." },
-      "multitrack": { "title": "Multi-Track", "description": "Edit and mix multiple audio tracks in a unified workspace." }
+      "remix": {
+        "title": "Audio Remix",
+        "description": "Remix and transform audio tracks with AI-powered tools."
+      },
+      "generate": {
+        "title": "AI Generate",
+        "description": "Generate original audio content using advanced AI models."
+      },
+      "multitrack": {
+        "title": "Multi-Track",
+        "description": "Edit and mix multiple audio tracks in a unified workspace."
+      }
     },
     "remixStudio": {
       "title": "AI Remix Studio",
