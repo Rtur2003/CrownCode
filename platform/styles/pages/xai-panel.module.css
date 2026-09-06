@@ -610,3 +610,80 @@
   color: var(--color-primary, #c99347);
   font-weight: 600;
 }
+
+/* =========================================================================
+   META-CLASSIFIER PANEL — second-opinion ensemble card
+   ========================================================================= */
+
+.metaVerdictRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.metaVerdictLabel {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.metaVerdictSub {
+  font-size: 0.85rem;
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.65));
+}
+
+.metaTowersTitle {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text, #e7c77a);
+}
+
+.metaTowersList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.metaTowerRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.metaTowerName {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.65));
+  width: 6rem;
+  flex-shrink: 0;
+  text-transform: capitalize;
+}
+
+.metaTowerTrack {
+  flex: 1;
+  height: 6px;
+  background: rgba(201, 147, 71, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.metaTowerFill {
+  height: 100%;
+}
+
+.metaTowerValue {
+  font-size: 0.75rem;
+  width: 2.5rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.metaIndicators {
+  margin: 0;
+  padding: 0 0 0 1.1rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted, rgba(231, 199, 122, 0.65));
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
