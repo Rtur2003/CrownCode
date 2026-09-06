@@ -20,14 +20,16 @@ const sectionVariants: Variants = {
   }
 }
 
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
-  }
-}
+// Each step in the pipeline enters from the direction its number implies —
+// step 1 slides in from the left edge, step 4 from the right — so the
+// sequence itself reads as a left-to-right journey rather than four
+// identical cards rising in lockstep.
+const stepDirections: Variants[] = [
+  { hidden: { opacity: 0, x: -32 }, visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } } },
+  { hidden: { opacity: 0, y: 32 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } } },
+  { hidden: { opacity: 0, y: 32 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } } },
+  { hidden: { opacity: 0, x: 32 }, visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } } },
+]
 
 interface Step {
   icon: React.ReactNode
@@ -110,7 +112,7 @@ export const HowItWorks: React.FC = () => {
             <motion.div
               key={index}
               className={styles.card}
-              variants={cardVariants}
+              variants={stepDirections[index] ?? stepDirections[0]}
             >
               <div className={styles.cardNumber}>
                 <span>{String(index + 1).padStart(2, '0')}</span>
