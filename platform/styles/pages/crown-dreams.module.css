@@ -1027,3 +1027,93 @@
     animation: none;
   }
 }
+
+/* Dream Analyzer — real AI analysis, distinct from the mock journal below */
+.analyzer-wrapper {
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.analyzer-card {
+  padding: 1.75rem;
+}
+
+.analyzer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.analyzer-subtitle {
+  font-size: 0.85rem;
+  color: rgba(212, 175, 55, 0.6);
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+}
+
+.analyzer-textarea {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  color: var(--color-text-primary, #f4ede3);
+  font-family: inherit;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 120px;
+  transition: border-color 0.2s ease;
+}
+
+.analyzer-textarea:focus {
+  outline: none;
+  border-color: rgba(212, 175, 55, 0.5);
+}
+
+.analyzer-textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.analyzer-char-count {
+  text-align: right;
+  font-size: 0.7rem;
+  color: rgba(212, 175, 55, 0.4);
+  margin: 0.35rem 0 1rem 0;
+}
+
+.analyzer-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(178, 34, 34, 0.15);
+  border: 1px solid rgba(178, 34, 34, 0.35);
+  border-radius: 0.5rem;
+  color: #e08a8a;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.analyzer-result {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.analyzer-result-section h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(212, 175, 55, 0.8);
+  margin: 0 0 0.6rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
