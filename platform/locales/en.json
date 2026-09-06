@@ -865,9 +865,9 @@
   },
   "crownDreams": {
     "meta": {
-      "title": "Crown Dreams - Dream Journal",
-      "description": "Record your dreams, analyze them, and explore your subconscious.",
-      "keywords": "dream journal, lucid dream, dream analysis"
+      "title": "Crown Dreams - AI-Powered Dream Journal & Analysis",
+      "description": "Record your dreams, get real-time emotion and symbol analysis from Gemini AI, and explore your subconscious with lucid dream tracking.",
+      "keywords": "dream journal, lucid dream, dream analysis, AI dream interpretation, emotion analysis, dream symbols"
     },
     "header": {
       "badge": "Neural Link Active",
@@ -1182,9 +1182,9 @@
   },
   "creatorStudio": {
     "meta": {
-      "title": "Creator Studio - CrownCode",
-      "description": "Audio remix, AI generation, and multi-track editing tools.",
-      "keywords": "creator studio, audio remix, AI generation, multi-track, music tools"
+      "title": "Creator Studio - AI Remix Studio | CrownCode",
+      "description": "A free AI remix tool that detects and matches tempo and key between two tracks in real time, then blends them with a smooth crossfade.",
+      "keywords": "AI remix, tempo matching, crossfade, audio blending, music production tool, creator studio, multi-track"
     },
     "title": "Creator Studio",
     "subtitle": "Audio creation tools powered by AI",
@@ -1234,6 +1234,39 @@
         "rateLimitExceeded": "Too many remix requests. Please wait before trying again.",
         "validationError": "One of the tracks could not be processed",
         "remixFailed": "Failed to blend the tracks"
+      }
+    },
+    "multitrackMixer": {
+      "title": "Multi-Track Mixer",
+      "subtitle": "Upload 2-6 tracks, adjust each one's level and stereo position, and blend them into a single mix.",
+      "addTrack": "Add Track ({{count}}/{{max}})",
+      "removeTrack": "Remove track",
+      "mute": "Mute",
+      "gain": "Gain",
+      "pan": "Pan",
+      "panCenter": "Center",
+      "panLeft": "Left",
+      "panRight": "Right",
+      "mixButton": "Mix Tracks",
+      "processing": "Mixing...",
+      "startOver": "Start Over",
+      "download": "Download WAV",
+      "analysis": {
+        "tracksmixed": "Tracks Mixed",
+        "outputDuration": "Output Duration",
+        "peakLevel": "Peak Level",
+        "normalization": "Normalization",
+        "applied": "Applied (clipping prevented)"
+      },
+      "errors": {
+        "tooFewTracks": "Please add at least 2 tracks",
+        "tooManyTracks": "A maximum of 6 tracks is supported",
+        "apiNotConfigured": "API not configured",
+        "invalidFileType": "One of the files is not a supported audio format",
+        "fileTooLarge": "File too large (max 30 MB per track)",
+        "rateLimitExceeded": "Too many mix requests. Please wait before trying again.",
+        "validationError": "One of the tracks could not be processed",
+        "mixFailed": "Failed to mix the tracks"
       }
     }
   },
