@@ -138,6 +138,15 @@ export interface FileSourceInfo {
 
 export type AnalysisSource = YouTubeSourceInfo | SpotifySourceInfo | FileSourceInfo
 
+export interface MetaClassifierExplanation {
+  isAIGenerated: boolean
+  confidence: number
+  modelVersion: string
+  towerScores: TowerScores
+  indicators: string[]
+  topFeatures: FeatureImportance[]
+}
+
 export interface AnalysisResult {
   isAIGenerated: boolean
   confidence: number
@@ -152,6 +161,7 @@ export interface AnalysisResult {
   towerScores?: TowerScores
   topFeatures?: FeatureImportance[]
   xai?: XAIExplanation
+  metaClassifier?: MetaClassifierExplanation
 }
 
 export type AnalysisErrorCode =
