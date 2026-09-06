@@ -1,10 +1,10 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import { motion } from 'motion/react'
-import { Wand2, Layers } from 'lucide-react'
+import { Wand2 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
-import { RemixStudio } from '@/components/CreatorStudio'
+import { RemixStudio, MultitrackMixer } from '@/components/CreatorStudio'
 
 import styles from '@/styles/pages/creator-studio.module.css'
 
@@ -12,14 +12,15 @@ const CreatorStudioPage: NextPage = () => {
   const { t } = useLanguage()
   const cs = t.creatorStudio
 
-  // "AI Generate" and "Multitrack" still need infrastructure this platform
-  // doesn't have yet (a generative audio model, a full multitrack editor) —
-  // shown as upcoming rather than faked. Remix is real: see RemixStudio,
-  // backed by the /api/remix/blend DSP engine (real tempo/key detection,
-  // time-stretch/pitch-shift, crossfade).
+  // "AI Generate" still needs infrastructure this platform doesn't have
+  // (a generative audio model — multi-GB weights, long inference, not a
+  // fit for this deployment) — shown as upcoming rather than faked.
+  // Remix and Multitrack are both real: see RemixStudio (/api/remix/blend
+  // — tempo/key detection, time-stretch/pitch-shift, crossfade) and
+  // MultitrackMixer (/api/remix/multitrack — real per-track gain/pan
+  // mixdown with peak normalization).
   const upcomingFeatures = [
     { icon: Wand2, title: cs.features.generate.title, description: cs.features.generate.description },
-    { icon: Layers, title: cs.features.multitrack.title, description: cs.features.multitrack.description },
   ]
 
   return (
@@ -39,6 +40,8 @@ const CreatorStudioPage: NextPage = () => {
         </motion.div>
 
         <RemixStudio />
+
+        <MultitrackMixer />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
