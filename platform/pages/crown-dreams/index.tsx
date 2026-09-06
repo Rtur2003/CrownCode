@@ -32,6 +32,7 @@ import { useLanguage } from '@/context/LanguageContext'
 import { GlassCard, StatCard } from '@/components/CrownDreams/GlassCard'
 import { ProgressBar, CircularProgress } from '@/components/CrownDreams/ProgressBar'
 import { CyberButton } from '@/components/CrownDreams/CyberButton'
+import { DreamAnalyzer } from '@/components/CrownDreams/DreamAnalyzer'
 import {
   MOCK_DREAMS,
   MOCK_STATS,
@@ -70,6 +71,7 @@ const CrownDreamsPage: NextPage = () => {
   const [selectedDream, setSelectedDream] = useState<DreamEntry | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [activeFilter, setActiveFilter] = useState<DreamType | 'all'>('all')
+  const [isAnalyzerOpen, setIsAnalyzerOpen] = useState(false)
 
   const filteredDreams = useMemo(() => {
     let dreams = MOCK_DREAMS
@@ -141,8 +143,8 @@ const CrownDreamsPage: NextPage = () => {
                 </p>
               </div>
               <div className={styles['header-actions']}>
-                <CyberButton leftIcon={<BookOpen size={14} />} disabled title="Demo mode">
-                  {cd.header.newDream}
+                <CyberButton leftIcon={<BookOpen size={14} />} onClick={() => setIsAnalyzerOpen(true)}>
+                  {cd.analyzer.title}
                 </CyberButton>
                 <CyberButton variant="ghost" leftIcon={<BarChart3 size={14} />} disabled title="Demo mode">
                   {cd.header.analytics}
@@ -150,6 +152,21 @@ const CrownDreamsPage: NextPage = () => {
               </div>
             </div>
           </motion.header>
+
+          {/* REAL AI DREAM ANALYZER — genuine Gemini-backed analysis, not
+              part of the demo journal data below it */}
+          <AnimatePresence>
+            {isAnalyzerOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className={styles['analyzer-wrapper']}
+              >
+                <DreamAnalyzer onClose={() => setIsAnalyzerOpen(false)} />
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* STAT CARDS */}
           <div className={styles['stats-grid']}>
