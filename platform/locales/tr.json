@@ -913,6 +913,42 @@
       "analytics": "Analitik",
       "demoNotice": "Demo Verisi"
     },
+    "analyzer": {
+      "title": "Rüyanı Analiz Et",
+      "subtitle": "Rüyanı yaz, yapay zeka gerçek zamanlı olarak duygularını, temalarını ve sembollerini analiz etsin.",
+      "placeholder": "Rüyanı buraya yaz... (en az 10 karakter)",
+      "analyzeButton": "Analiz Et",
+      "analyzing": "Analiz ediliyor...",
+      "analyzeAnother": "Başka Bir Rüya Analiz Et",
+      "close": "Kapat",
+      "emotionsLabel": "Tespit Edilen Duygular",
+      "themesLabel": "Temalar",
+      "symbolsLabel": "Semboller",
+      "interpretationLabel": "Yorum",
+      "lucidDetected": "Lüsid Rüya Tespit Edildi",
+      "emotions": {
+        "joy": "Sevinç",
+        "fear": "Korku",
+        "anxiety": "Endişe",
+        "sadness": "Üzüntü",
+        "anger": "Öfke",
+        "confusion": "Kafa Karışıklığı",
+        "peace": "Huzur",
+        "excitement": "Heyecan",
+        "nostalgia": "Nostalji",
+        "wonder": "Merak",
+        "shame": "Utanç",
+        "love": "Aşk"
+      },
+      "errors": {
+        "tooShort": "Rüya açıklaması çok kısa. Lütfen en az 10 karakter yazın.",
+        "serviceNotConfigured": "Rüya analizi şu anda yapılandırılmamış.",
+        "serviceUnavailable": "Rüya analizi geçici olarak kullanılamıyor.",
+        "analysisFailed": "Analiz başarısız oldu. Lütfen tekrar deneyin.",
+        "rateLimited": "Çok fazla istek. Lütfen biraz bekleyin.",
+        "unknownError": "Bir şeyler ters gitti."
+      }
+    },
     "stats": {
       "totalDreams": "Toplam Rüya",
       "lucidDreams": "Lüsid Rüya",
@@ -1189,10 +1225,42 @@
     "subtitle": "AI destekli ses oluşturma araçları",
     "comingSoon": "Yakında",
     "comingSoonDesc": "Harika bir şey inşa ediyoruz. Ses remiks, AI üretimi ve çoklu parça düzenleme araçları için takipte kalın.",
+    "upcomingTitle": "Yakında Geliyor",
     "features": {
       "remix": { "title": "Ses Remiks", "description": "AI destekli araçlarla ses parçalarını remiksleme ve dönüştürme." },
       "generate": { "title": "AI Üretimi", "description": "Gelişmiş AI modelleri kullanarak orijinal ses içeriği oluşturma." },
       "multitrack": { "title": "Çoklu Parça", "description": "Birleşik bir çalışma alanında birden fazla ses parçasını düzenleme ve miksle." }
+    },
+    "remixStudio": {
+      "title": "AI Remiks Stüdyosu",
+      "subtitle": "İki parça yükleyin — tempo ve tonu gerçek zamanlı analiz edip eşleştirir, ardından yumuşak bir geçişle birleştiririz.",
+      "trackALabel": "Parça A",
+      "trackBLabel": "Parça B",
+      "trackAPlaceholder": "İlk parçayı seçin",
+      "trackBPlaceholder": "İkinci parçayı seçin",
+      "matchTempo": "Tempoyu Eşleştir",
+      "matchKey": "Tonu Eşleştir",
+      "crossfadeLabel": "Geçiş Süresi: {{seconds}}s",
+      "blendButton": "Parçaları Birleştir",
+      "processing": "Analiz ediliyor ve birleştiriliyor...",
+      "startOver": "Yeniden Başla",
+      "download": "WAV İndir",
+      "analysis": {
+        "trackA": "Parça A",
+        "trackB": "Parça B",
+        "stretchApplied": "Uygulanan Tempo Oranı",
+        "pitchShiftApplied": "Uygulanan Ton Kaydırma",
+        "outputDuration": "Çıktı Süresi"
+      },
+      "errors": {
+        "missingTracks": "Lütfen birleştirmek için iki ses parçası seçin",
+        "apiNotConfigured": "API yapılandırılmamış",
+        "invalidFileType": "Dosyalardan biri desteklenen bir ses formatında değil",
+        "fileTooLarge": "Dosya çok büyük (parça başına maksimum 30 MB)",
+        "rateLimitExceeded": "Çok fazla remiks isteği. Lütfen biraz bekleyin.",
+        "validationError": "Parçalardan biri işlenemedi",
+        "remixFailed": "Parçalar birleştirilemedi"
+      }
     }
   },
   "analysisHistory": {
