@@ -19,6 +19,7 @@ import { motion, Variants } from 'motion/react'
 import { ArrowUpRight, Sparkles } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
+import { MLToolkitVisual, DreamsVisual, CommendVisual, VoteVisual, KognitaVisual } from './BentoVisuals'
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -28,13 +29,30 @@ const containerVariants: Variants = {
   }
 }
 
-const cellVariants: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
-  }
+// Every tile used to fly in from the same direction (up), which reads as a
+// single templated stagger rather than a considered composition. Each cell
+// now enters from the direction that matches its position in the grid —
+// the hero settles in from the left, the wide closer rises from below, the
+// side tiles drift in from whichever edge they sit nearest.
+const fromLeft: Variants = {
+  hidden: { opacity: 0, x: -36 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } }
+}
+const fromRight: Variants = {
+  hidden: { opacity: 0, x: 36 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } }
+}
+const fromBelow: Variants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
+}
+const fromAbove: Variants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } }
+}
+const scaleIn: Variants = {
+  hidden: { opacity: 0, scale: 0.92 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
 }
 
 interface ProjectsSectionProps {
@@ -94,9 +112,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
           role="list"
           aria-label="Research projects"
         >
-          {/* AURIS — flagship hero tile */}
+          {/* AURIS — flagship hero tile, settles in from the left */}
           {auris && (
-            <motion.div variants={cellVariants} className="bento-cell bento-cell--hero" role="listitem">
+            <motion.div variants={fromLeft} className="bento-cell bento-cell--hero" role="listitem">
               <Link href={auris.entry.href} className="bento-tile bento-tile--auris" aria-label={`${auris.resolved.title} — ${auris.resolved.description}`}>
                 <div className="bento-tile-media" aria-hidden="true">
                   <Image src="/images/auris/hero-wave.webp" alt="" fill sizes="(max-width: 768px) 100vw, 60vw" style={{ objectFit: 'cover' }} />
@@ -115,10 +133,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
             </motion.div>
           )}
 
-          {/* ML Toolkit — compact companion to AURIS */}
+          {/* ML Toolkit — a live waveform mesh; drifts in from the right,
+              opposite the hero tile it sits beside */}
           {mlToolkit && (
-            <motion.div variants={cellVariants} className="bento-cell bento-cell--tall" role="listitem">
+            <motion.div variants={fromRight} className="bento-cell bento-cell--tall" role="listitem">
               <Link href={mlToolkit.entry.href} className="bento-tile bento-tile--data" aria-label={`${mlToolkit.resolved.title} — ${mlToolkit.resolved.description}`}>
+                <MLToolkitVisual />
                 <div className="bento-tile-content">
                   <span className="bento-eyebrow">{mlToolkit.resolved.status}</span>
                   <h3 className="bento-title">{mlToolkit.resolved.title}</h3>
@@ -132,9 +152,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
             </motion.div>
           )}
 
-          {/* Fortune — tarot art direction */}
+          {/* Fortune — tarot art direction, rises up from below */}
           {fortune && (
-            <motion.div variants={cellVariants} className="bento-cell bento-cell--tall" role="listitem">
+            <motion.div variants={fromBelow} className="bento-cell bento-cell--tall" role="listitem">
               <Link href={fortune.entry.href} className="bento-tile bento-tile--fortune" aria-label={`${fortune.resolved.title} — ${fortune.resolved.description}`}>
                 <div className="bento-tile-media bento-tile-media--tarot" aria-hidden="true">
                   <Image src="/tarot/wheel-of-fortune.png" alt="" width={120} height={200} className="bento-tarot-card" />
@@ -152,10 +172,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
             </motion.div>
           )}
 
-          {/* Dreams — starfield glow */}
+          {/* Dreams — a drifting nebula of star particles, settles from above */}
           {dreams && (
-            <motion.div variants={cellVariants} className="bento-cell" role="listitem">
+            <motion.div variants={fromAbove} className="bento-cell" role="listitem">
               <Link href={dreams.entry.href} className="bento-tile bento-tile--dreams" aria-label={`${dreams.resolved.title} — ${dreams.resolved.description}`}>
+                <DreamsVisual />
                 <div className="bento-tile-content">
                   <span className="bento-eyebrow">{dreams.resolved.status}</span>
                   <h3 className="bento-title">{dreams.resolved.title}</h3>
@@ -169,10 +190,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
             </motion.div>
           )}
 
-          {/* Commend — technical/terminal treatment (literal automation tool) */}
+          {/* Commend — a live-typing terminal, since the product IS an AI
+              comment generator; technical treatment, scales in */}
           {commend && (
-            <motion.div variants={cellVariants} className="bento-cell" role="listitem">
+            <motion.div variants={scaleIn} className="bento-cell" role="listitem">
               <Link href={commend.entry.href} className="bento-tile bento-tile--tool" aria-label={`${commend.resolved.title} — ${commend.resolved.description}`}>
+                <CommendVisual />
                 <div className="bento-tile-content">
                   <span className="bento-eyebrow bento-eyebrow--mono">{commend.resolved.status}</span>
                   <h3 className="bento-title">{commend.resolved.title}</h3>
@@ -186,10 +209,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
             </motion.div>
           )}
 
-          {/* Vote — technical/terminal treatment (literal automation tool) */}
+          {/* Vote — a live vote-count bar race, since the product automates
+              poll voting; technical treatment, drifts in from the right */}
           {vote && (
-            <motion.div variants={cellVariants} className="bento-cell" role="listitem">
+            <motion.div variants={fromRight} className="bento-cell" role="listitem">
               <Link href={vote.entry.href} className="bento-tile bento-tile--tool" aria-label={`${vote.resolved.title} — ${vote.resolved.description}`}>
+                <VoteVisual />
                 <div className="bento-tile-content">
                   <span className="bento-eyebrow bento-eyebrow--mono">{vote.resolved.status}</span>
                   <h3 className="bento-title">{vote.resolved.title}</h3>
@@ -203,10 +228,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
             </motion.div>
           )}
 
-          {/* Kognita — external repo, no in-platform page; technical tool
-              treatment like Commend/Vote, links out to GitHub directly */}
+          {/* Kognita — external repo, no in-platform page; a neural node
+              graph since it's a knowledge-graph tool, links out to GitHub */}
           {kognita && (
-            <motion.div variants={cellVariants} className="bento-cell" role="listitem">
+            <motion.div variants={fromLeft} className="bento-cell" role="listitem">
               <a
                 href={kognita.entry.href}
                 target="_blank"
@@ -214,6 +239,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
                 className="bento-tile bento-tile--tool"
                 aria-label={`${kognita.resolved.title} — ${kognita.resolved.description} (opens on GitHub)`}
               >
+                <KognitaVisual />
                 <div className="bento-tile-content">
                   <span className="bento-eyebrow bento-eyebrow--mono">{kognita.resolved.status}</span>
                   <h3 className="bento-title">{kognita.resolved.title}</h3>
@@ -227,9 +253,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
             </motion.div>
           )}
 
-          {/* Noir & Grain — full-width closer, own product category */}
+          {/* Noir & Grain — full-width closer, own product category, rises
+              up from below to land as the grid's final beat */}
           {noirGrain && (
-            <motion.div variants={cellVariants} className="bento-cell bento-cell--wide" role="listitem">
+            <motion.div variants={fromBelow} className="bento-cell bento-cell--wide" role="listitem">
               <Link href={noirGrain.entry.href} className="bento-tile bento-tile--noir" aria-label={`${noirGrain.resolved.title} — ${noirGrain.resolved.description}`}>
                 <div className="bento-tile-media" aria-hidden="true">
                   <Image src="/images/noir-grain/hero.png" alt="" fill sizes="(max-width: 768px) 100vw, 100vw" style={{ objectFit: 'cover' }} />
