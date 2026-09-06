@@ -378,6 +378,16 @@
   color: var(--color-text-secondary);
 }
 
+.option-hint {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--color-gold-400);
+}
+
+.option-hint-warning {
+  color: var(--color-warning);
+}
+
 .option-checkbox {
   width: 24px;
   height: 24px;

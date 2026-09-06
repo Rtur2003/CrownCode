@@ -103,6 +103,13 @@ export const AudioAugmentation: React.FC<AudioAugmentationProps> = ({ options, o
               <div className="option-content">
                 <h4 className="option-title">{option.title}</h4>
                 <p className="option-description">{option.description}</p>
+                {option.key === 'mixAudio' && isSelected && (
+                  <p className={`option-hint ${fileCount < 2 ? 'option-hint-warning' : ''}`}>
+                    {fileCount < 2
+                      ? t.mlToolkit.audioOptions.mixAudioNeedsTwoFiles
+                      : t.mlToolkit.audioOptions.mixAudioHint}
+                  </p>
+                )}
               </div>
 
               <div className={`option-checkbox ${isSelected ? 'checked' : ''}`}>

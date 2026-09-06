@@ -242,7 +242,13 @@ const AudioDatasetPage: NextPage = () => {
             {files.length > 0 && (
               <div className={styles['file-status']}>
                 <span className="text-primary font-medium">{files[0].name}</span> {t.audioDataset.interface.selected}.
-                {files.length > 1 && <span className="text-xs text-muted block mt-1">{t.audioDataset.interface.demoNote}</span>}
+                {files.length > 1 && (
+                  <span className="text-xs text-muted block mt-1">
+                    {activeTool === 'augment' && augmentOptions.mixAudio
+                      ? t.mlToolkit.audioOptions.mixAudioHint
+                      : t.audioDataset.interface.demoNote}
+                  </span>
+                )}
               </div>
             )}
 
@@ -264,6 +270,7 @@ const AudioDatasetPage: NextPage = () => {
               <AudioAugmentation
                 options={augmentOptions}
                 onChange={setAugmentOptions}
+                fileCount={files.length}
               />
             )}
 
