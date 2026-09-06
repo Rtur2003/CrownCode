@@ -913,6 +913,42 @@
       "analytics": "Analytics",
       "demoNotice": "Demo Data"
     },
+    "analyzer": {
+      "title": "Analyze Your Dream",
+      "subtitle": "Write down your dream and let AI analyze its emotions, themes, and symbols in real time.",
+      "placeholder": "Write your dream here... (at least 10 characters)",
+      "analyzeButton": "Analyze",
+      "analyzing": "Analyzing...",
+      "analyzeAnother": "Analyze Another Dream",
+      "close": "Close",
+      "emotionsLabel": "Detected Emotions",
+      "themesLabel": "Themes",
+      "symbolsLabel": "Symbols",
+      "interpretationLabel": "Interpretation",
+      "lucidDetected": "Lucid Dream Detected",
+      "emotions": {
+        "joy": "Joy",
+        "fear": "Fear",
+        "anxiety": "Anxiety",
+        "sadness": "Sadness",
+        "anger": "Anger",
+        "confusion": "Confusion",
+        "peace": "Peace",
+        "excitement": "Excitement",
+        "nostalgia": "Nostalgia",
+        "wonder": "Wonder",
+        "shame": "Shame",
+        "love": "Love"
+      },
+      "errors": {
+        "tooShort": "Dream description is too short. Please write at least 10 characters.",
+        "serviceNotConfigured": "Dream analysis is not currently configured.",
+        "serviceUnavailable": "Dream analysis is temporarily unavailable.",
+        "analysisFailed": "Analysis failed. Please try again.",
+        "rateLimited": "Too many requests. Please wait a moment.",
+        "unknownError": "Something went wrong."
+      }
+    },
     "stats": {
       "totalDreams": "Total Dreams",
       "lucidDreams": "Lucid Dreams",
@@ -1189,10 +1225,42 @@
     "subtitle": "Audio creation tools powered by AI",
     "comingSoon": "Coming Soon",
     "comingSoonDesc": "We're building something amazing. Stay tuned for audio remix, AI generation, and multi-track editing tools.",
+    "upcomingTitle": "Coming Up Next",
     "features": {
       "remix": { "title": "Audio Remix", "description": "Remix and transform audio tracks with AI-powered tools." },
       "generate": { "title": "AI Generate", "description": "Generate original audio content using advanced AI models." },
       "multitrack": { "title": "Multi-Track", "description": "Edit and mix multiple audio tracks in a unified workspace." }
+    },
+    "remixStudio": {
+      "title": "AI Remix Studio",
+      "subtitle": "Upload two tracks — we detect and match their tempo and key in real time, then blend them with a smooth crossfade.",
+      "trackALabel": "Track A",
+      "trackBLabel": "Track B",
+      "trackAPlaceholder": "Choose the first track",
+      "trackBPlaceholder": "Choose the second track",
+      "matchTempo": "Match Tempo",
+      "matchKey": "Match Key",
+      "crossfadeLabel": "Crossfade: {{seconds}}s",
+      "blendButton": "Blend Tracks",
+      "processing": "Analyzing and blending...",
+      "startOver": "Start Over",
+      "download": "Download WAV",
+      "analysis": {
+        "trackA": "Track A",
+        "trackB": "Track B",
+        "stretchApplied": "Tempo Ratio Applied",
+        "pitchShiftApplied": "Pitch Shift Applied",
+        "outputDuration": "Output Duration"
+      },
+      "errors": {
+        "missingTracks": "Please select two audio tracks to blend",
+        "apiNotConfigured": "API not configured",
+        "invalidFileType": "One of the files is not a supported audio format",
+        "fileTooLarge": "File too large (max 30 MB per track)",
+        "rateLimitExceeded": "Too many remix requests. Please wait before trying again.",
+        "validationError": "One of the tracks could not be processed",
+        "remixFailed": "Failed to blend the tracks"
+      }
     }
   },
   "analysisHistory": {
