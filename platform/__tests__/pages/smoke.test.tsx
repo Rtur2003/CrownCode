@@ -71,12 +71,28 @@ const motionHandler: ProxyHandler<object> = {
   },
 }
 
+// Minimal motion-value stand-in for hooks like TiltCell's mouse-follow tilt
+// (useMotionValue/useSpring/useTransform) — smoke tests only need these to
+// not crash, not to actually animate.
+function mockMotionValue(initial: unknown) {
+  let value = initial
+  return {
+    get: () => value,
+    set: (v: unknown) => { value = v },
+    on: () => () => {},
+  }
+}
+
 jest.mock('motion/react', () => ({
   motion: new Proxy({}, motionHandler),
   AnimatePresence: ({ children }: React.PropsWithChildren) => <>{children}</>,
   useAnimation: () => ({ start: jest.fn() }),
   useInView: () => true,
   useReducedMotion: () => false,
+  useMotionValue: (initial: unknown) => mockMotionValue(initial),
+  useSpring: (source: unknown) => mockMotionValue(source),
+  useTransform: (_source: unknown, _input: unknown, output: unknown[]) =>
+    mockMotionValue(Array.isArray(output) ? output[0] : output),
 }))
 
 jest.mock('@formkit/auto-animate/react', () => ({

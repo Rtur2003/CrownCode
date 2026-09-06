@@ -52,10 +52,10 @@ const NoirGrainPage: NextPage = () => {
 
         {/* ===== GALLERY ===== */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.96 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mb-20"
         >
           <h2 className="mb-6 text-sm uppercase tracking-widest text-amber-400">{page?.galleryTitle}</h2>
@@ -74,10 +74,10 @@ const NoirGrainPage: NextPage = () => {
 
         {/* ===== ABOUT + TECH ===== */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -28 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mb-20 grid gap-12 md:grid-cols-[1.4fr,1fr]"
         >
           <div>
@@ -98,10 +98,10 @@ const NoirGrainPage: NextPage = () => {
 
         {/* ===== RUN LOCALLY ===== */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: 28 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="rounded-xl border border-neutral-800 bg-neutral-900 p-6"
         >
           <h2 className="mb-3 flex items-center gap-2 text-sm uppercase tracking-widest text-amber-400">

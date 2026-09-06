@@ -20,6 +20,7 @@ import { ArrowUpRight, Sparkles } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
 import { MLToolkitVisual, DreamsVisual, CommendVisual, VoteVisual, KognitaVisual } from './BentoVisuals'
+import { TiltCell } from './TiltCell'
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -114,7 +115,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
         >
           {/* AURIS — flagship hero tile, settles in from the left */}
           {auris && (
-            <motion.div variants={fromLeft} className="bento-cell bento-cell--hero" role="listitem">
+            <TiltCell variants={fromLeft} className="bento-cell bento-cell--hero" role="listitem">
               <Link href={auris.entry.href} className="bento-tile bento-tile--auris" aria-label={`${auris.resolved.title} — ${auris.resolved.description}`}>
                 <div className="bento-tile-media" aria-hidden="true">
                   <Image src="/images/auris/hero-wave.webp" alt="" fill sizes="(max-width: 768px) 100vw, 60vw" style={{ objectFit: 'cover' }} />
@@ -130,13 +131,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </TiltCell>
           )}
 
           {/* ML Toolkit — a live waveform mesh; drifts in from the right,
               opposite the hero tile it sits beside */}
           {mlToolkit && (
-            <motion.div variants={fromRight} className="bento-cell bento-cell--tall" role="listitem">
+            <TiltCell variants={fromRight} className="bento-cell bento-cell--tall" role="listitem">
               <Link href={mlToolkit.entry.href} className="bento-tile bento-tile--data" aria-label={`${mlToolkit.resolved.title} — ${mlToolkit.resolved.description}`}>
                 <MLToolkitVisual />
                 <div className="bento-tile-content">
@@ -149,12 +150,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </TiltCell>
           )}
 
           {/* Fortune — tarot art direction, rises up from below */}
           {fortune && (
-            <motion.div variants={fromBelow} className="bento-cell bento-cell--tall" role="listitem">
+            <TiltCell variants={fromBelow} className="bento-cell bento-cell--tall" role="listitem">
               <Link href={fortune.entry.href} className="bento-tile bento-tile--fortune" aria-label={`${fortune.resolved.title} — ${fortune.resolved.description}`}>
                 <div className="bento-tile-media bento-tile-media--tarot" aria-hidden="true">
                   <Image src="/tarot/wheel-of-fortune.png" alt="" width={120} height={200} className="bento-tarot-card" />
@@ -169,12 +170,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </TiltCell>
           )}
 
           {/* Dreams — a drifting nebula of star particles, settles from above */}
           {dreams && (
-            <motion.div variants={fromAbove} className="bento-cell" role="listitem">
+            <TiltCell variants={fromAbove} className="bento-cell" role="listitem">
               <Link href={dreams.entry.href} className="bento-tile bento-tile--dreams" aria-label={`${dreams.resolved.title} — ${dreams.resolved.description}`}>
                 <DreamsVisual />
                 <div className="bento-tile-content">
@@ -187,13 +188,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </TiltCell>
           )}
 
           {/* Commend — a live-typing terminal, since the product IS an AI
               comment generator; technical treatment, scales in */}
           {commend && (
-            <motion.div variants={scaleIn} className="bento-cell" role="listitem">
+            <TiltCell variants={scaleIn} className="bento-cell" role="listitem">
               <Link href={commend.entry.href} className="bento-tile bento-tile--tool" aria-label={`${commend.resolved.title} — ${commend.resolved.description}`}>
                 <CommendVisual />
                 <div className="bento-tile-content">
@@ -206,13 +207,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </TiltCell>
           )}
 
           {/* Vote — a live vote-count bar race, since the product automates
               poll voting; technical treatment, drifts in from the right */}
           {vote && (
-            <motion.div variants={fromRight} className="bento-cell" role="listitem">
+            <TiltCell variants={fromRight} className="bento-cell" role="listitem">
               <Link href={vote.entry.href} className="bento-tile bento-tile--tool" aria-label={`${vote.resolved.title} — ${vote.resolved.description}`}>
                 <VoteVisual />
                 <div className="bento-tile-content">
@@ -225,13 +226,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </TiltCell>
           )}
 
           {/* Kognita — external repo, no in-platform page; a neural node
               graph since it's a knowledge-graph tool, links out to GitHub */}
           {kognita && (
-            <motion.div variants={fromLeft} className="bento-cell" role="listitem">
+            <TiltCell variants={fromLeft} className="bento-cell" role="listitem">
               <a
                 href={kognita.entry.href}
                 target="_blank"
@@ -250,7 +251,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ className = ''
                   </div>
                 </div>
               </a>
-            </motion.div>
+            </TiltCell>
           )}
 
           {/* Noir & Grain — full-width closer, own product category, rises
