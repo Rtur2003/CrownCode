@@ -32,6 +32,7 @@ import {
 import { useState } from 'react'
 import type { AnalysisResult, VocalAnalysis } from '../../hooks/analysisTypes'
 import { XAIPanel } from './XAIPanel'
+import { MetaClassifierPanel } from './MetaClassifierPanel'
 import styles from '../../styles/pages/ai-detection.module.css'
 
 interface TowerLabels {
@@ -392,6 +393,11 @@ export function AnalysisResultCard({
       {/* -- XAI Panel (academic explainable analysis) -- */}
       {result.xai && (
         <XAIPanel xai={result.xai} locale={locale} />
+      )}
+
+      {/* -- Meta-Classifier Panel (second opinion, trained stacking ensemble) -- */}
+      {result.metaClassifier && (
+        <MetaClassifierPanel meta={result.metaClassifier} locale={locale} />
       )}
 
       {/* -- Vocal Analysis -- */}
