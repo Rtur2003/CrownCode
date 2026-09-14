@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { motion, AnimatePresence } from 'motion/react'
-import { Github, Menu, X, Code2, ChevronDown, Zap, MessageSquare, Vote, Sparkles } from 'lucide-react'
+import { Github, Menu, X, ChevronDown, Zap, MessageSquare, Vote, Sparkles } from 'lucide-react'
 import { LanguageSelector } from '@/components/Navigation/LanguageSelector'
 import { useLanguage } from '@/context/LanguageContext'
 
@@ -75,8 +76,8 @@ export const Header: React.FC = () => {
         <div className="header-content">
           {/* Logo */}
           <Link href="/" className="header-logo" aria-label={t.aria?.homePage || 'CrownCode Home'}>
-            <div className="logo-icon">
-              <Code2 size={24} />
+            <div className="logo-icon brand-portrait">
+              <Image src="/logo-main.png" alt="" width={64} height={64} />
             </div>
             <div className="logo-text">
               <span className="logo-main">Crown</span>

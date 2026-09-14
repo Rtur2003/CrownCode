@@ -16,7 +16,7 @@ const CROWNCODE_PROJECTS: Project[] = [
     detail:
       "A multi-tower audio detection system combining wav2vec2 embeddings, handcrafted audio features, CLAP and external spectral analysis in an ensemble classifier.",
     stack: ["Python", "wav2vec2", "FastAPI"],
-    href: "https://hasanarthuraltuntas.xyz/ai-music-detection",
+    href: "https://hasan-arthur-altuntas.xyz/ai-music-detection",
     source: "https://github.com/Rtur2003/Music-AIDetector",
   },
   {
@@ -29,7 +29,7 @@ const CROWNCODE_PROJECTS: Project[] = [
     detail:
       "A fine-dining web template exploring art direction, tactile typography and WebGL interaction. Built as a standalone experience inside the CrownCode workspace.",
     stack: ["React", "WebGL", "GSAP"],
-    href: "https://hasanarthuraltuntas.xyz/noir-grain",
+    href: "https://hasan-arthur-altuntas.xyz/noir-grain",
     source: "https://github.com/Rtur2003/CrownCode",
   },
   {
@@ -42,7 +42,7 @@ const CROWNCODE_PROJECTS: Project[] = [
     detail:
       "An experimental dream journal using language models to interpret and archive dreams. Part of the CrownCode collection of creative tools.",
     stack: ["Next.js", "AI", "TypeScript"],
-    href: "https://hasanarthuraltuntas.xyz/crown-dreams",
+    href: "https://hasan-arthur-altuntas.xyz/crown-dreams",
     source: "https://github.com/Rtur2003/CrownCode",
   },
   {
@@ -55,7 +55,7 @@ const CROWNCODE_PROJECTS: Project[] = [
     detail:
       "A comment generation tool with multilingual support and an admin management system. Explore the interface or inspect the open-source implementation.",
     stack: ["JavaScript", "Gemini", "React"],
-    href: "https://hasanarthuraltuntas.xyz/crown-commend",
+    href: "https://hasan-arthur-altuntas.xyz/crown-commend",
     source: "https://github.com/Rtur2003/Commend-AI",
   },
   {
@@ -84,17 +84,15 @@ function App() {
           stagger: 0.1,
           ease: "power4.out",
         });
-        gsap.from(".sculpture-layer", {
-          rotation: -45,
-          scale: 0.7,
+        gsap.from(".studio-portrait", {
+          scale: 0.94,
           opacity: 0,
           duration: 1.5,
-          stagger: 0.07,
           ease: "power3.out",
         });
-        gsap.to(".sculpture", {
-          rotation: 70,
-          yPercent: 15,
+        gsap.to(".studio-portrait", {
+          yPercent: -12,
+          scale: 0.88,
           ease: "none",
           scrollTrigger: {
             trigger: heroRef.current,
@@ -116,7 +114,8 @@ function App() {
       </a>
       <nav className="site-nav" aria-label="Main navigation">
         <a className="wordmark" href="#top">
-          crowncode<span>®</span>
+          <img src="/logo-main.png" alt="" width="64" height="64" />
+          CrownCode
         </a>
         <div>
           <a href="#work">Work</a>
@@ -133,21 +132,10 @@ function App() {
             <span>By Hasan Arthur Altuntaş</span>
           </div>
           <h1 className="hero-title">
-            <span>Sound, data</span>
-            <span>& experiments.</span>
+            <span>CrownCode</span>
           </h1>
-          <div className="sculpture" aria-hidden="true">
-            {Array.from({ length: 9 }, (_, i) => (
-              <div
-                key={i}
-                className="sculpture-layer"
-                style={{
-                  transform: `rotate(${i * 12}deg)`,
-                  inset: `${i * 4.1}%`,
-                }}
-              />
-            ))}
-            <i />
+          <div className="studio-portrait" aria-hidden="true">
+            <img src="/logo-main.png" alt="" width="1024" height="1024" />
           </div>
           <div className="hero-bottom">
             <p>
@@ -189,7 +177,7 @@ function App() {
               tools and experiments together.
             </p>
             <a
-              href="https://hasanarthuraltuntas.com.tr"
+              href="https://hasan-arthur-altuntas.com.tr"
               target="_blank"
               rel="noreferrer"
             >

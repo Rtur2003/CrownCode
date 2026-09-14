@@ -78,6 +78,25 @@
   z-index: 1;
 }
 
+.brand-portrait,
+.header-logo:hover .brand-portrait {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.brand-portrait img {
+  position: absolute;
+  width: 185%;
+  height: 185%;
+  max-width: none;
+  object-fit: contain;
+  filter: grayscale(1) sepia(0.65) brightness(1.1);
+  mix-blend-mode: screen;
+}
+
 .logo-text {
   display: flex;
   flex-direction: column;
