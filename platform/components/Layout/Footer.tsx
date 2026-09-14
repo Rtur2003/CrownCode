@@ -1,12 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   Github,
   ExternalLink,
   Mail,
   Globe,
-  Heart,
-  Code2
+  Heart
 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { FOOTER_PRODUCT_IDS, FOOTER_PRODUCT_LOCALE_MAP, getProductHref } from '@/config/product-catalog'
@@ -61,8 +61,8 @@ export const Footer: React.FC = () => {
           {/* Brand Section */}
           <div className="footer-brand">
             <div className="footer-logo">
-              <div className="footer-logo-icon">
-                <Code2 size={28} />
+              <div className="footer-logo-icon brand-portrait">
+                <Image src="/logo-main.png" alt="" width={96} height={96} />
               </div>
               <div className="footer-logo-text">
                 <span className="footer-logo-main">Crown</span>
