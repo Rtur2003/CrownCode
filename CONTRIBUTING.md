@@ -315,7 +315,7 @@ Before submitting:
 
 - **Issues**: For bugs and feature requests
 - **Discussions**: For questions and ideas
-- **Email**: contact@hasanarthuraltuntas.xyz
+- **Email**: contact@hasan-arthur-altuntas.xyz
 
 ## Code of Conduct
 
@@ -352,4 +352,4 @@ Your contributions make CrownCode better for everyone. Thank you for taking the 
 
 **Questions?** Open an issue or start a discussion.
 
-**Found a security issue?** Email security@hasanarthuraltuntas.xyz
+**Found a security issue?** Email security@hasan-arthur-altuntas.xyz
