@@ -78,7 +78,8 @@
   z-index: 1;
 }
 
-.brand-portrait,
+.logo-icon.brand-portrait,
+.footer-logo-icon.brand-portrait,
 .header-logo:hover .brand-portrait {
   position: relative;
   overflow: hidden;
