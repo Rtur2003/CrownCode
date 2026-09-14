@@ -1,10 +1,9 @@
-import React, { useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
-import styles from './ProjectList.module.css';
+import { useLayoutEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import styles from "./ProjectList.module.css";
 
-// Kayit burada da yapilir: import sirasina bagli kalmasin (idempotent).
 gsap.registerPlugin(ScrollTrigger);
 
 export interface Project {
@@ -13,58 +12,129 @@ export interface Project {
   category: string;
   year: string;
   imageUrl: string;
+  description: string;
+  detail: string;
+  stack: string[];
+  href?: string;
+  source: string;
 }
 
-interface ProjectListProps {
-  projects: Project[];
-  onProjectHover: (imageUrl: string | null) => void;
-}
+export function ProjectList({ projects }: { projects: Project[] }) {
+  const listRef = useRef<HTMLDivElement>(null);
+  const [category, setCategory] = useState("All work");
+  const categories = [
+    "All work",
+    ...new Set(projects.map((project) => project.category)),
+  ];
+  const visible = projects.filter(
+    (project) => category === "All work" || category === project.category,
+  );
 
-export const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectHover }) => {
-  const listRef = useRef<HTMLUListElement>(null);
-
-  useGSAP(() => {
-    // Parallax or subtle reveal effect on list items
-    const items = gsap.utils.toArray<HTMLElement>(listRef.current?.children || []);
-
-    items.forEach((item) => {
-      gsap.fromTo(item, 
-        { y: 50, opacity: 0 },
-        { 
-          y: 0, 
-          opacity: 1, 
-          duration: 1, 
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: item,
-            start: 'top 85%',
-          }
-        }
+  useGSAP(
+    () => {
+      const media = gsap.matchMedia();
+      media.add(
+        "(min-width: 850px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          gsap.utils
+            .toArray<HTMLElement>(`.${styles.visual}`)
+            .forEach((visual) => {
+              gsap.fromTo(
+                visual.querySelector("img"),
+                { yPercent: -5, scale: 1.12 },
+                {
+                  yPercent: 5,
+                  scale: 1.12,
+                  ease: "none",
+                  scrollTrigger: {
+                    trigger: visual,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true,
+                  },
+                },
+              );
+            });
+        },
       );
-    });
-  }, { scope: listRef });
+      return () => media.revert();
+    },
+    { scope: listRef, dependencies: [category], revertOnUpdate: true },
+  );
+
+  useLayoutEffect(() => {
+    ScrollTrigger.refresh();
+  }, [category]);
 
   return (
-    <ul ref={listRef} className={styles.projectList}>
-      {projects.map((project) => (
-        <li 
-          key={project.id} 
-          className={styles.projectItem}
-          onMouseEnter={() => onProjectHover(project.imageUrl)}
-          onMouseLeave={() => onProjectHover(null)}
-          data-cursor="view"
-        >
-          <div className={styles.projectInfo}>
-            <h2 className={styles.projectTitle}>{project.title}</h2>
-            <div className={styles.projectMeta}>
-              <span className={styles.projectCategory}>{project.category}</span>
-              <span className={styles.projectYear}>{project.year}</span>
+    <div ref={listRef}>
+      <div className={styles.filters} aria-label="Project categories">
+        {categories.map((item) => (
+          <button
+            key={item}
+            aria-pressed={category === item}
+            onClick={() => setCategory(item)}
+          >
+            {item}
+            <span>
+              {item === "All work"
+                ? projects.length
+                : projects.filter((project) => project.category === item)
+                    .length}
+            </span>
+          </button>
+        ))}
+      </div>
+      <p className={styles.count} aria-live="polite">
+        Showing {visible.length} {visible.length === 1 ? "project" : "projects"}
+      </p>
+      <div className={styles.projectList}>
+        {visible.map((project) => (
+          <article key={project.id} className={styles.projectItem}>
+            <a
+              className={styles.visual}
+              href={project.href || project.source}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Explore ${project.title}`}
+            >
+              <img
+                src={project.imageUrl}
+                alt={`${project.title} project artwork`}
+                width="1000"
+                height="750"
+                loading="lazy"
+              />
+              <span className={styles.visit}>
+                Explore project <span aria-hidden="true">↗</span>
+              </span>
+              <span className={styles.year}>{project.year}</span>
+            </a>
+            <div className={styles.projectInfo}>
+              <span className={styles.category}>{project.category}</span>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <div className={styles.stack}>
+                {project.stack.map((tech) => (
+                  <span key={tech}>{tech}</span>
+                ))}
+              </div>
+              <details
+                className={styles.details}
+                onToggle={() => ScrollTrigger.refresh()}
+              >
+                <summary>
+                  Inside the project <span aria-hidden="true">+</span>
+                </summary>
+                <p>{project.detail}</p>
+                <a href={project.source} target="_blank" rel="noreferrer">
+                  View source on GitHub ↗
+                </a>
+              </details>
             </div>
-          </div>
-          {/* Prevent overlap by ensuring absolute positioning of decorative elements is constrained */}
-          <div className={styles.projectDivider} />
-        </li>
-      ))}
-    </ul>
+          </article>
+        ))}
+      </div>
+    </div>
   );
-};
+}
