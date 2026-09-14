@@ -21,20 +21,26 @@ export function ProjectExplorer() {
   const [query, setQuery] = useState('')
   const [group, setGroup] = useState<Group>('all')
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [activeScene, setActiveScene] = useState(0)
   const heroRef = useRef<HTMLElement>(null)
+  const sceneRefs = useRef<Array<HTMLElement | null>>([])
   const reducedMotion = useReducedMotion()
 
   useEffect(() => {
-    if (reducedMotion) {
-      return
-    }
     const updateProgress = () => {
       const hero = heroRef.current
-      if (!hero) {
-        return
+      if (hero && !reducedMotion) {
+        const range = Math.max(hero.offsetHeight, 1)
+        setScrollProgress(Math.min(1, Math.max(0, window.scrollY / range)))
       }
-      const range = Math.max(hero.offsetHeight, 1)
-      setScrollProgress(Math.min(1, Math.max(0, window.scrollY / range)))
+      const focusLine = window.scrollY + window.innerHeight * 0.42
+      let nextScene = 0
+      sceneRefs.current.forEach((scene, index) => {
+        if (scene && focusLine >= scene.offsetTop) {
+          nextScene = index
+        }
+      })
+      setActiveScene(nextScene)
     }
     updateProgress()
     window.addEventListener('scroll', updateProgress, { passive: true })
@@ -70,19 +76,52 @@ export function ProjectExplorer() {
 
   return (
     <div className={styles.root}>
-      <section ref={heroRef} className={styles.hero} aria-labelledby="studio-heading">
+      <div className={styles.progressRail} aria-hidden="true">
+        {[0, 1, 2, 3].map((scene) => (
+          <span key={scene} className={activeScene === scene ? styles.progressActive : ''}>
+            0{scene + 1}
+          </span>
+        ))}
+      </div>
+      <section
+        ref={(element) => {
+          heroRef.current = element
+          sceneRefs.current[0] = element
+        }}
+        className={styles.hero}
+        aria-labelledby="studio-heading"
+      >
         <div className={styles.heroTop}>
-          <span>CrownCode</span>
-          <span>/ Hasan Arthur Altuntaş</span>
+          <div className={styles.brandLockup}>
+            <Image
+              src="/favicon.svg"
+              alt="CrownCode logo"
+              width={48}
+              height={48}
+              priority
+              className={styles.brandLogo}
+            />
+            <span className={styles.brandName}>CrownCode</span>
+            <span className={styles.brandMeta}>independent lab / 001</span>
+          </div>
+          <span className={styles.heroCredit}>/ Hasan Arthur Altuntaş</span>
           <a href="https://github.com/Rtur2003" target="_blank" rel="noreferrer">
             GitHub <ArrowUpRight size={14} />
           </a>
         </div>
-        <h1 id="studio-heading">
-          {en ? 'Sound, data' : 'Ses, veri'}
-          <br />
-          {en ? '& experiments.' : 've deneyler.'}
-        </h1>
+        <div className={styles.heroCopy}>
+          <p className={styles.eyebrow}>{en ? 'A workshop for useful wonder' : 'İşe yarayan merak için bir atölye'}</p>
+          <h1 id="studio-heading">
+            {en ? 'Sound, data' : 'Ses, veri'}
+            <br />
+            {en ? '& experiments.' : 've deneyler.'}
+          </h1>
+          <p className={styles.heroLead}>
+            {en
+              ? 'CrownCode turns questions into instruments — research, software and small digital worlds made to be explored.'
+              : 'CrownCode soruları araçlara dönüştürür — araştırma, yazılım ve keşfedilmeyi bekleyen küçük dijital dünyalar.'}
+          </p>
+        </div>
         <motion.div
           className={styles.orbit}
           style={reducedMotion ? {} : { rotate: rotation, y }}
@@ -95,22 +134,77 @@ export function ProjectExplorer() {
             />
           ))}
         </motion.div>
+        <motion.div
+          className={styles.heroGlow}
+          style={reducedMotion ? {} : { opacity: 0.42 - scrollProgress * 0.2, scale: 1 + scrollProgress * 0.1 }}
+          aria-hidden="true"
+        />
         <div className={styles.heroBottom}>
-          <p>
-            {en
-              ? 'From understanding sound to building creative tools. An independent collection of research, software and digital experiments.'
-              : 'Sesi anlamaktan yaratıcı araçlar geliştirmeye. Araştırma, yazılım ve dijital deneylerden oluşan bağımsız bir koleksiyon.'}
-          </p>
+          <div className={styles.heroMeta}>
+            <span>01 / 04</span>
+            <span>{en ? 'Scroll to enter' : 'İçeri girmek için kaydır'}</span>
+          </div>
           <a href="#project-explorer">
             {en ? 'Find your next discovery' : 'Projeleri keşfet'}
             <ArrowDown size={18} />
           </a>
         </div>
       </section>
-      <section id="project-explorer" className={styles.explorer} aria-labelledby="explorer-heading">
+      <section
+        ref={(element) => {
+          sceneRefs.current[1] = element
+        }}
+        className={`${styles.manifesto} ${activeScene === 1 ? styles.sceneActive : ''}`}
+        aria-labelledby="manifesto-heading"
+      >
+        <div className={styles.chapterMarker}>
+          <span>02</span>
+          <span>{en ? 'The reason behind the work' : 'İşin arkasındaki neden'}</span>
+        </div>
+        <div className={styles.manifestoGrid}>
+          <div className={styles.manifestoCopy}>
+            <p className={styles.eyebrow}>{en ? 'Purpose before polish' : 'Önce amaç, sonra parıltı'}</p>
+            <h2 id="manifesto-heading">
+              {en ? 'Make curiosity tangible.' : 'Merakı elle tutulur hale getir.'}
+            </h2>
+            <p>
+              {en
+                ? 'Every CrownCode project starts with a question. The interface is the invitation; the useful answer lives underneath it.'
+                : 'Her CrownCode projesi bir soruyla başlar. Arayüz davettir; işe yarayan cevap onun altında yaşar.'}
+            </p>
+          </div>
+          <div className={styles.methodRail} aria-label={en ? 'CrownCode method' : 'CrownCode yöntemi'}>
+            {[
+              [en ? 'LISTEN' : 'DİNLE', en ? 'Find the signal.' : 'Sinyali bul.'],
+              [en ? 'SHAPE' : 'ŞEKİLLENDİR', en ? 'Give it a form.' : 'Ona bir biçim ver.'],
+              [en ? 'RELEASE' : 'PAYLAŞ', en ? 'Let people use it.' : 'İnsanların kullanmasına izin ver.'],
+            ].map(([title, caption], index) => (
+              <div key={title} className={styles.methodStep}>
+                <span>0{index + 1}</span>
+                <div>
+                  <strong>{title}</strong>
+                  <small>{caption}</small>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className={styles.manifestoFoot}>
+          <span>{en ? 'Independent / open-ended / human' : 'Bağımsız / açık uçlu / insani'}</span>
+          <span>© 2024—{new Date().getFullYear()}</span>
+        </div>
+      </section>
+      <section
+        id="project-explorer"
+        ref={(element) => {
+          sceneRefs.current[2] = element
+        }}
+        className={`${styles.explorer} ${activeScene === 2 ? styles.sceneActive : ''}`}
+        aria-labelledby="explorer-heading"
+      >
         <div className={styles.explorerHead}>
           <div>
-            <p>{en ? 'Choose your direction' : 'Bir yön seç'}</p>
+            <p>03 / {en ? 'Choose your direction' : 'Bir yön seç'}</p>
             <h2 id="explorer-heading">
               {en ? 'What are you curious about?' : 'Neyi merak ediyorsun?'}
             </h2>
@@ -187,7 +281,13 @@ export function ProjectExplorer() {
           </div>
         )}
       </section>
-      <section className={styles.feature} aria-labelledby="auris-feature-heading">
+      <section
+        ref={(element) => {
+          sceneRefs.current[3] = element
+        }}
+        className={`${styles.feature} ${activeScene === 3 ? styles.sceneActive : ''}`}
+        aria-labelledby="auris-feature-heading"
+      >
         <div className={styles.featureMedia}>
           <Image
             src="/images/auris/hero-wave.webp"
@@ -198,7 +298,7 @@ export function ProjectExplorer() {
           />
         </div>
         <div className={styles.featureCopy}>
-          <span>{en ? 'Where music meets research' : 'Müzik araştırmayla buluştuğunda'}</span>
+          <span>04 / {en ? 'Where music meets research' : 'Müzik araştırmayla buluştuğunda'}</span>
           <h2 id="auris-feature-heading">AURIS</h2>
           <p>{en ? 'Can you hear who made it?' : 'Kimin yaptığını duyabilir misin?'}</p>
           <p>
