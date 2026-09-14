@@ -256,7 +256,7 @@ Yeni dil desteği eklemek için:
 ### Güvenlik Açığı Bildirimi
 Güvenlik açığı bulursanız:
 1. **Public olarak bildirmeyin**
-2. Email gönderin: security@hasanarthuraltuntas.xyz
+2. Email gönderin: security@hasan-arthur-altuntas.xyz
 3. Detaylı açıklama ekleyin
 4. PoC ekleyin (varsa)
 
@@ -270,7 +270,7 @@ Güvenlik açığı bulursanız:
 
 - **GitHub Issues**: Bug ve feature request'ler için
 - **GitHub Discussions**: Genel tartışmalar için
-- **Email**: contact@hasanarthuraltuntas.xyz
+- **Email**: contact@hasan-arthur-altuntas.xyz
 
 ## 🙏 Teşekkürler
 

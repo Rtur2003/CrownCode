@@ -6,7 +6,7 @@
 **Academic Year:** 2025-2026
 **Project Type:** Bachelor's Thesis / Senior Year Capstone Project
 **Date:** January 2025
-**Platform URL:** https://hasanarthuraltuntas.xyz
+**Platform URL:** https://hasan-arthur-altuntas.xyz
 
 ---
 

@@ -400,8 +400,8 @@ I tried reinstalling dependencies but same error.
 
 - **GitHub Issues:** Bug reports and feature requests
 - **GitHub Discussions:** Questions and ideas
-- **Email:** contact@hasanarthuraltuntas.xyz
-- **Security Issues:** security@hasanarthuraltuntas.xyz
+- **Email:** contact@hasan-arthur-altuntas.xyz
+- **Security Issues:** security@hasan-arthur-altuntas.xyz
 
 ## Common Commands Quick Reference
 

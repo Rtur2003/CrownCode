@@ -7,7 +7,7 @@
 **Institution:** Duzce University - Computer Engineering Department
 **Academic Year:** 2025-2026
 **Supervisor:** [Faculty Advisor Name]
-**Platform URL:** <https://hasanarthuraltuntas.xyz>
+**Platform URL:** <https://hasan-arthur-altuntas.xyz>
 
 ---
 
@@ -453,7 +453,7 @@ com.crowncode/
   department  = {Computer Engineering},
   year    = {2026},
   type    = {Bachelor's Thesis},
-  url     = {https://hasanarthuraltuntas.xyz},
+  url     = {https://hasan-arthur-altuntas.xyz},
   note    = {Senior Year Capstone Project 2025-2026}
 }
 ```

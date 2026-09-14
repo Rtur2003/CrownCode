@@ -5,7 +5,7 @@ Bu dokuman, `platform/pages` altindaki mevcut Next.js Pages Router yapisini tani
 Buradaki bilgi, aktif kod tabaniyla birebir uyumlu tutulmalidir.
 
 ## 2) Active Route Map
-Ana alan adi: `https://hasanarthuraltuntas.xyz`
+Ana alan adi: `https://hasan-arthur-altuntas.xyz`
 
 ### Public pages
 - `/` -> `platform/pages/index.tsx`

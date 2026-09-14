@@ -2,7 +2,7 @@
 
 **AI Destekli Arastirma ve Yaratici Araclar Platformu**
 
-[![Live Platform](https://img.shields.io/badge/Live-Platform-brightgreen?style=for-the-badge)](https://hasanarthuraltuntas.xyz)
+[![Live Platform](https://img.shields.io/badge/Live-Platform-brightgreen?style=for-the-badge)](https://hasan-arthur-altuntas.xyz)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
 ---
@@ -25,32 +25,32 @@ CrownCode, yapay zeka destekli ses analizi ve yaratici araclar icin gelistirilmi
 - **Mimari:** wav2vec2 + 49 Akustik Ozellik + CLAP + FST API + Meta-Classifier
 - **Amac:** AI ile uretilen muzigi insan yapimi muzikten ayirt etme
 - **Kaynak:** Dosya yukleme, URL tabanli analiz ve canli mikrofon kaydi (cok kaynakli)
-- **Sayfa:** [`/ai-music-detection`](https://hasanarthuraltuntas.xyz/ai-music-detection)
+- **Sayfa:** [`/ai-music-detection`](https://hasan-arthur-altuntas.xyz/ai-music-detection)
 
 ### 2. ML Toolkit
 
 - **Amac:** Arastirmacilar icin veri seti olusturma ve artirma araclari
-- **Sayfa:** [`/data-manipulation`](https://hasanarthuraltuntas.xyz/data-manipulation)
+- **Sayfa:** [`/data-manipulation`](https://hasan-arthur-altuntas.xyz/data-manipulation)
 
 ### 3. Crown Fortune
 
 - **Amac:** Interaktif sans carki oyunu
-- **Sayfa:** [`/crown-fortune`](https://hasanarthuraltuntas.xyz/crown-fortune)
+- **Sayfa:** [`/crown-fortune`](https://hasan-arthur-altuntas.xyz/crown-fortune)
 
 ### 4. Crown Dreams
 
 - **Amac:** AI destekli ruya yorumlama
-- **Sayfa:** [`/crown-dreams`](https://hasanarthuraltuntas.xyz/crown-dreams)
+- **Sayfa:** [`/crown-dreams`](https://hasan-arthur-altuntas.xyz/crown-dreams)
 
 ### 5. Crown Commend
 
 - **Amac:** YouTube yorum uretici
-- **Sayfa:** [`/crown-commend`](https://hasanarthuraltuntas.xyz/crown-commend)
+- **Sayfa:** [`/crown-commend`](https://hasan-arthur-altuntas.xyz/crown-commend)
 
 ### 6. Crown Vote
 
 - **Amac:** Oylama ve anket sistemi
-- **Sayfa:** [`/crown-vote`](https://hasanarthuraltuntas.xyz/crown-vote)
+- **Sayfa:** [`/crown-vote`](https://hasan-arthur-altuntas.xyz/crown-vote)
 
 ---
 
@@ -174,8 +174,8 @@ npm run lint         # ESLint kontrolu
 **Hasan Arthur Altuntas**
 
 - **GitHub:** [@Rtur2003](https://github.com/Rtur2003)
-- **Website:** [hasanarthuraltuntas.xyz](https://hasanarthuraltuntas.xyz)
-- **Email:** contact@hasanarthuraltuntas.xyz
+- **Website:** [hasan-arthur-altuntas.xyz](https://hasan-arthur-altuntas.xyz)
+- **Email:** contact@hasan-arthur-altuntas.xyz
 
 ---
 

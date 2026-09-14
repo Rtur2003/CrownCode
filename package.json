@@ -46,8 +46,8 @@
   ],
   "author": {
     "name": "Hasan Arthur Altuntaş",
-    "email": "contact@hasanarthuraltuntas.xyz",
-    "url": "https://hasanarthuraltuntas.xyz"
+    "email": "contact@hasan-arthur-altuntas.xyz",
+    "url": "https://hasan-arthur-altuntas.xyz"
   },
   "license": "MIT",
   "repository": {
@@ -57,7 +57,7 @@
   "bugs": {
     "url": "https://github.com/Rtur2003/CrownCode/issues"
   },
-  "homepage": "https://hasanarthuraltuntas.xyz",
+  "homepage": "https://hasan-arthur-altuntas.xyz",
   "engines": {
     "node": ">=20.18.1"
   },

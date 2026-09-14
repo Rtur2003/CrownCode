@@ -10,7 +10,7 @@ body:
       value: |
         ## Security Issue Report
         
-        ⚠️ **For critical vulnerabilities**, please email security@hasanarthuraltuntas.xyz instead.
+        ⚠️ **For critical vulnerabilities**, please email security@hasan-arthur-altuntas.xyz instead.
         
         Use this template for security improvements and non-critical safety gaps.
         
@@ -116,4 +116,4 @@ body:
       value: |
         ---
         
-        **Note:** Critical vulnerabilities should be reported privately to security@hasanarthuraltuntas.xyz
+        **Note:** Critical vulnerabilities should be reported privately to security@hasan-arthur-altuntas.xyz

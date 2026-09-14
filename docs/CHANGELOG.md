@@ -241,5 +241,5 @@ For users upgrading from pre-release versions:
 
 For questions, issues, or contributions:
 - GitHub Issues: https://github.com/Rtur2003/CrownCode/issues
-- Documentation: https://hasanarthuraltuntas.xyz
-- Email: contact@hasanarthuraltuntas.xyz
+- Documentation: https://hasan-arthur-altuntas.xyz
+- Email: contact@hasan-arthur-altuntas.xyz

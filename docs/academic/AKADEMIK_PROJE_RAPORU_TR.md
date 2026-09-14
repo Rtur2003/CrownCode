@@ -6,7 +6,7 @@
 **Akademik Yıl:** 2025-2026
 **Proje Türü:** Lisans Tezi / Son Sınıf Bitirme Projesi
 **Tarih:** Ocak 2025
-**Platform URL:** https://hasanarthuraltuntas.xyz
+**Platform URL:** https://hasan-arthur-altuntas.xyz
 
 ---
 
@@ -203,7 +203,7 @@ AURIS, production ortamında aşağıdaki cloud platformlarını kullanmaktadır
 | Build Command | npm run build (static export) |
 | Node Version | 20.x |
 | Memory | 4GB heap |
-| Domain | hasanarthuraltuntas.xyz |
+| Domain | hasan-arthur-altuntas.xyz |
 | SSL | Otomatik Let's Encrypt |
 
 **Hugging Face Spaces (Backend Hosting):**
@@ -267,7 +267,7 @@ services:
 │  ├─ Frontend (Next.js static export)                   │
 │  ├─ CDN: Global edge network                           │
 │  ├─ Build: Node 20, npm 10.9.2                         │
-│  └─ Domain: hasanarthuraltuntas.xyz                    │
+│  └─ Domain: hasan-arthur-altuntas.xyz                    │
 ├─────────────────────────────────────────────────────────┤
 │  Hugging Face Spaces                                    │
 │  ├─ Backend (FastAPI + Python)                         │
@@ -925,8 +925,8 @@ jobs:
         uses: treosh/lighthouse-ci-action@v10
         with:
           urls: |
-            https://hasanarthuraltuntas.xyz/
-            https://hasanarthuraltuntas.xyz/ai-music-detection
+            https://hasan-arthur-altuntas.xyz/
+            https://hasan-arthur-altuntas.xyz/ai-music-detection
           uploadArtifacts: true
 
   deploy-production:

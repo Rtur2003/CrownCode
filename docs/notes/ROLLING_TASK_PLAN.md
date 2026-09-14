@@ -534,7 +534,7 @@ Kaynak rapor:
 
 - [x] P0: ~~`netlify.toml` app-context mode'a alinacak~~ — **Uygulanmadi**. Root-context (`base` yok, `--workspace platform`) korundu. Kok neden stale `platform/package-lock.json` idi — silindi.
 - [x] P0: Netlify UI override drift temizlendi — UI'daki base/build/publish/functions degerleri kullanici tarafindan bosaltildi. `netlify.toml` tek authoritative kaynak.
-- [x] P0: Clear-cache production deploy alindi — site canli (`hasanarthuraltuntas.xyz`). Runtime crash cozuldu.
+- [x] P0: Clear-cache production deploy alindi — site canli (`hasan-arthur-altuntas.xyz`). Runtime crash cozuldu.
 - [x] P0: Stale `platform/package-lock.json` (10K satir) silindi — cift lockfile kaynakli dependency context cakismasi ortadan kaldirildi.
 - [ ] P1: ~~Gecici function bundling guard~~ — Gerek kalmadi, crash cozuldu. Deferred.
 
@@ -549,8 +549,8 @@ Kaynak rapor:
 
 ### Faz L Dogrulama Logu (Production Smoke)
 
-- [x] `https://hasanarthuraltuntas.xyz/api/health` -> `{"status":"healthy","timestamp":"...","version":"1.0.0","checks":{"api":true}}` HTTP 200
-- [x] `https://hasanarthuraltuntas.xyz/api/version` -> `{"version":"1.0.0","features":{"webVitals":true,"pwa":true,...}}` HTTP 200
+- [x] `https://hasan-arthur-altuntas.xyz/api/health` -> `{"status":"healthy","timestamp":"...","version":"1.0.0","checks":{"api":true}}` HTTP 200
+- [x] `https://hasan-arthur-altuntas.xyz/api/version` -> `{"version":"1.0.0","features":{"webVitals":true,"pwa":true,...}}` HTTP 200
 - [x] Site canli, runtime crash cozuldu.
 
 ### Siradaki Analiz

@@ -71,7 +71,7 @@ This Code of Conduct applies within all project spaces, and also applies when an
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the project team responsible for enforcement at contact@hasanarthuraltuntas.xyz. All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the project team responsible for enforcement at contact@hasan-arthur-altuntas.xyz. All complaints will be reviewed and investigated promptly and fairly.
 
 All project team members are obligated to respect the privacy and security of the reporter of any incident.
 
@@ -124,7 +124,7 @@ Project maintainers will follow these Community Impact Guidelines in determining
 If you experience or witness unacceptable behavior, please report it by contacting:
 
 ### Primary Contact
-* **Email**: contact@hasanarthuraltuntas.xyz
+* **Email**: contact@hasan-arthur-altuntas.xyz
 * **Subject Line**: [Code of Conduct] Brief description of issue
 
 ### Academic Reporting

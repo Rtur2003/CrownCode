@@ -351,8 +351,8 @@ You're doing it right if:
 
 - **Questions:** GitHub Discussions
 - **Bug Reports:** GitHub Issues
-- **Security:** security@hasanarthuraltuntas.xyz
-- **General:** contact@hasanarthuraltuntas.xyz
+- **Security:** security@hasan-arthur-altuntas.xyz
+- **General:** contact@hasan-arthur-altuntas.xyz
 
 ---
 

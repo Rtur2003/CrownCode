@@ -102,7 +102,7 @@ cat TODO.md
 ```typescript
 // Model dosyaları lokasyonu:
 // 1. Local: ./models/music-detector/
-// 2. CDN: https://hasanarthuraltuntas.xyz/models/
+// 2. CDN: https://hasan-arthur-altuntas.xyz/models/
 // 3. Backup: GitHub releases
 
 // Model yükleme kodu:
@@ -155,7 +155,7 @@ npm run build
 netlify deploy --prod --dir=dist
 
 # Domain check:
-curl -I https://hasanarthuraltuntas.xyz
+curl -I https://hasan-arthur-altuntas.xyz
 ```
 
 ### **Backend Deployment (HuggingFace Spaces)**
@@ -169,7 +169,7 @@ cd hf-crowncode-backend
 # HuggingFace Spaces üzerinden deploy edilir (git push to HF remote)
 
 # API health check:
-curl https://api.hasanarthuraltuntas.xyz/health
+curl https://api.hasan-arthur-altuntas.xyz/health
 ```
 
 ### **Database Migration**
@@ -228,7 +228,7 @@ heroku logs --app your-db-app  # Eğer Heroku kullanıyorsan
 - [ ] Bu dosyayı baştan sona oku
 - [ ] Git history'ye bak: `git log --oneline -20`
 - [ ] Current branch'i kontrol et: `git branch`
-- [ ] Son deploy'u kontrol et: https://hasanarthuraltuntas.xyz
+- [ ] Son deploy'u kontrol et: https://hasan-arthur-altuntas.xyz
 - [ ] Progress tracker'ı güncelle
 
 ### **2. İkinci 1 Saat - Environment Check**

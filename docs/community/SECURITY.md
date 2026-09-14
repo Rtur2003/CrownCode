@@ -22,7 +22,7 @@ We take security seriously. If you discover a security vulnerability, please fol
 ### Reporting Methods
 
 #### Primary: Email
-- **Email**: security@hasanarthuraltuntas.xyz
+- **Email**: security@hasan-arthur-altuntas.xyz
 - **PGP Key**: Available upon request
 - **Response Time**: Within 24 hours
 
@@ -226,12 +226,12 @@ Currently, we don't have a formal bug bounty program, but we do offer:
 ## 📞 Security Contacts
 
 ### Primary Contacts
-- **Security Team**: security@hasanarthuraltuntas.xyz
+- **Security Team**: security@hasan-arthur-altuntas.xyz
 - **Project Lead**: Hasan Arthur Altuntaş
 
 ### Emergency Contact
 For critical vulnerabilities requiring immediate attention:
-- **Email**: urgent-security@hasanarthuraltuntas.xyz
+- **Email**: urgent-security@hasan-arthur-altuntas.xyz
 - **Response Time**: Within 2 hours
 
 ## 📜 Disclosure Policy

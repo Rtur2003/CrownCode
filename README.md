@@ -5,7 +5,7 @@
 > **Developer:** Hasan Arthur Altuntas
 > **University:** Duzce University - Computer Engineering
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Platform-blue?style=for-the-badge)](https://hasanarthuraltuntas.xyz)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Platform-blue?style=for-the-badge)](https://hasan-arthur-altuntas.xyz)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-CrownCode-black?style=for-the-badge&logo=github)](https://github.com/Rtur2003/CrownCode)
 
 ---
@@ -231,7 +231,7 @@ MIT License - see [LICENSE](./LICENSE)
   department={Computer Engineering},
   year={2026},
   type={Bachelor's Thesis},
-  url={https://hasanarthuraltuntas.xyz}
+  url={https://hasan-arthur-altuntas.xyz}
 }
 ```
 
@@ -240,5 +240,5 @@ MIT License - see [LICENSE](./LICENSE)
 ## Contact
 
 - **GitHub:** [@Rtur2003](https://github.com/Rtur2003)
-- **Website:** [hasanarthuraltuntas.xyz](https://hasanarthuraltuntas.xyz)
-- **Email:** contact@hasanarthuraltuntas.xyz
+- **Website:** [hasan-arthur-altuntas.xyz](https://hasan-arthur-altuntas.xyz)
+- **Email:** contact@hasan-arthur-altuntas.xyz

@@ -1832,7 +1832,7 @@ EKLER = [
     ),
     ('Ek 3. Erişim Bilgileri', 'Heading 2'),
     ('AURIS\'e erişim için aşağıdaki bağlantılar kullanılabilir: '
-     'Web platformu: hasanarthuraltuntas.xyz | '
+     'Web platformu: hasan-arthur-altuntas.xyz | '
      'HuggingFace Spaces: huggingface.co/spaces/Rtur2003/AURIS | '
      'GitHub: github.com/Rtur2003/CrownCode', 'PARAGRAF METNİ'),
 ]

@@ -484,7 +484,7 @@ If you have questions about these standards:
 1. Check the [Development Guidelines](../docs/DEVELOPMENT_GUIDELINES.md)
 2. Review existing PRs as examples
 3. Open a discussion in GitHub Discussions
-4. Contact: contact@hasanarthuraltuntas.xyz
+4. Contact: contact@hasan-arthur-altuntas.xyz
 
 ---
 
