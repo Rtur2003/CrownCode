@@ -18,23 +18,23 @@
   overflow: clip;
   background: #0b0a08;
   color: var(--ink);
-  font-family: var(--font-family-sans, Arial, sans-serif);
+  font-family: var(--font-family-base);
 }
 .root h1, .root h2, .root h3 {
-  font-family: inherit;
-  font-weight: 500;
+  font-family: var(--font-family-heading);
+  font-weight: 400;
   text-transform: none;
   color: inherit;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.025em;
   text-shadow: none;
 }
 .root a:focus-visible, .root button:focus-visible, .root input:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 6px;
 }
-.entrance { height: 165svh; position: relative; }
+.entrance { height: 145svh; position: relative; background: linear-gradient(180deg, #21170f, #15100b 65%, #0b0a08); }
 .hero {
-  height: 100svh;
+  height: min(100svh, 1100px);
   min-height: 660px;
   position: sticky;
   top: 0;
@@ -49,9 +49,9 @@
 .crest {
   position: absolute;
   z-index: -1;
-  top: 45%;
-  right: -8vw;
-  width: min(78vw, 1050px);
+  top: 48%;
+  right: 3vw;
+  width: min(58vw, 760px);
   aspect-ratio: 1;
   transform: translateY(calc(-50% - var(--progress) * 60px)) scale(calc(1 - var(--progress) * 0.12));
   transform-origin: 55% 45%;
@@ -59,38 +59,42 @@
   mix-blend-mode: screen;
   pointer-events: none;
 }
-.crest img { width: 100%; height: 100%; filter: grayscale(1) sepia(0.7) brightness(0.85); }
-.heroIntro { margin: auto 0 32px; position: relative; z-index: 1; }
-.heroIntro > p { font-size: clamp(24px, 2.6vw, 42px); line-height: 1.25; letter-spacing: -0.025em; }
+.crest img { width: 100%; height: 100%; filter: grayscale(1) contrast(1.8) sepia(0.45); }
+.heroIntro { position: absolute; z-index: 2; right: var(--gutter); bottom: 110px; width: 27%; }
+.heroIntro > p { font-size: clamp(24px, 2.6vw, 42px); line-height: 1.25; }
 .heroIntro > a { display: inline-flex; gap: 10px; align-items: center; margin-top: 22px; color: var(--muted); font-size: 13px; }
-.wordmark { position: relative; z-index: 2; transform: translateY(calc(var(--progress) * -32px)); }
-.wordmark h1 { font-size: clamp(80px, 15.3vw, 265px); line-height: 0.94; letter-spacing: -0.065em; margin: 0 0 24px; }
+.wordmark { position: relative; z-index: 2; margin-top: auto; transform: translateY(calc(var(--progress) * -32px)); }
+.wordmark h1 { font-size: clamp(88px, 13vw, 200px); line-height: .94; letter-spacing: -.03em; margin: 55px 0 45px; }
+.wordmark h1 span { display: block; }
+.wordmark h1 span:last-child { margin-left: 9vw; }
 .heroBottom { display: flex; justify-content: space-between; gap: 30px; align-items: center; }
 .heroBottom p { max-width: 41ch; color: var(--muted); font-size: 14px; line-height: 1.6; }
 .heroBottom a { display: flex; align-items: center; gap: 20px; font-size: 14px; white-space: nowrap; }
-.audio { position: relative; min-height: 115svh; display: flex; flex-direction: column; justify-content: space-between; padding: 9vh var(--gutter) 12vh; isolation: isolate; }
+.audio { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: space-between; padding: 9vh var(--gutter) 12vh; isolation: isolate; }
 .audioMedia { position: absolute; z-index: -1; inset: -14vh -7vw 0; transform: translateY(calc(var(--drift) * -100px)); mask-image: linear-gradient(transparent, #000 25%, #000 60%, transparent 96%); }
 .audioMedia img { object-fit: cover; opacity: 0.75; }
 .audioHeading { position: relative; }
 .audioHeading p { color: var(--muted); font-size: 16px; margin-bottom: 20px; }
-.audioHeading h2 { font-size: clamp(90px, 21vw, 335px); line-height: 0.9; margin: 0; letter-spacing: -0.075em; }
+.audioHeading h2 { font-size: clamp(90px, 16vw, 250px); line-height: 1; margin: 0; letter-spacing: -.025em; }
 .audioDetail { margin: 8vh 0 0 auto; width: min(420px, 100%); }
 .audioDetail > p:first-child { font-size: clamp(22px, 2.4vw, 35px); line-height: 1.25; margin-bottom: 20px; }
 .audioDetail > p:nth-child(2) { color: #d6c9b8; font-size: 16px; line-height: 1.75; }
 .textLink { display: inline-flex; align-items: center; gap: 24px; padding: 16px 0 12px; margin-top: 15px; border-bottom: 1px solid #876f4b; font-size: 15px; }
 .sourceLink { display: block; width: fit-content; margin-top: 24px; color: var(--muted); font-size: 13px; }
-.creative { position: relative; padding: 7vh var(--gutter) 13vh; }
+.creative { position: relative; padding: 7vh var(--gutter) 13vh; background: linear-gradient(#0b0a08, #20170f 55%, #0b0a08); }
 .creativeHeading { position: relative; z-index: 2; pointer-events: none; }
 .creativeHeading > p { color: var(--muted); margin-bottom: 25px; font-size: 15px; }
 .creativeHeading h2 { font-size: clamp(48px, 7.5vw, 118px); line-height: 1.03; max-width: 13ch; }
-.noirFeature { display: block; position: relative; width: 74%; margin: -12vh 0 0 auto; }
+.noirFeature { display: block; position: relative; width: 74%; margin: -5vh 0 0 auto; }
+.noirInset { position: relative; width: 29%; height: clamp(200px, 30vw, 420px); margin-top: -26vh; box-shadow: 20px 30px 60px #0006; }
+.noirInset img { object-fit: cover; }
 .noirMedia { height: clamp(380px, 68vh, 740px); overflow: hidden; position: relative; }
 .noirMedia::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, #0b0a0866, transparent 50%); }
 .noirMedia img { object-fit: cover; transform: translateY(calc(var(--drift) * -55px)) scale(1.15); }
 .noirCaption { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 20px 0; }
 .noirCaption > span:first-child { font-size: clamp(24px, 2.5vw, 38px); letter-spacing: -0.035em; }
 .noirCaption > span:last-child { display: flex; align-items: center; gap: 18px; color: var(--muted); font-size: 13px; }
-.creativeFoot { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin-top: 50px; }
+.creativeFoot { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin: 70px 0 0 35%; }
 .creativeFoot > p { max-width: 40ch; font-size: clamp(19px, 2vw, 28px); line-height: 1.55; color: #c8b9a7; }
 .explorer { padding: 7vh var(--gutter) 85px; scroll-margin-top: 105px; }
 .explorerHead { display: flex; justify-content: space-between; align-items: end; gap: 45px; scroll-margin-top: 105px; }
@@ -125,7 +129,7 @@
   .hero { min-height: 650px; }
   .heroNote span { display: none; }
   .heroIntro { margin-bottom: 42px; }
-  .crest { width: 94vw; right: -17vw; top: 43%; }
+  .crest { width: 70vw; right: -9vw; top: 39%; }
   .heroBottom p { font-size: 13px; }
   .noirFeature { width: 88%; margin-top: -4vh; }
   .explorerHead { flex-direction: column; align-items: start; gap: 30px; }
@@ -136,12 +140,14 @@
   .entrance { height: auto; }
   .hero { position: relative; height: 100svh; min-height: 660px; padding-top: 115px; padding-bottom: 28px; }
   .heroNote { font-size: 12px; }
-  .crest { width: 135vw; right: -30vw; top: 40%; opacity: 0.7; }
-  .heroIntro { margin-top: auto; margin-bottom: 25px; }
+  .crest { width: 92vw; right: -22vw; top: 36%; opacity: 0.65; }
+  .heroIntro { position: relative; right: auto; bottom: auto; width: 100%; margin: 25px 0 0; order: 2; }
   .heroIntro > p { font-size: 24px; }
   .heroIntro > a { margin-top: 10px; font-size: 12px; }
   .wordmark { transform: none; }
-  .wordmark h1 { font-size: 15vw; margin-bottom: 20px; }
+  .wordmark h1 { font-size: clamp(82px, 22vw, 145px); margin: 55px 0 30px; }
+  .wordmark h1 span:last-child { margin-left: 8vw; }
+  .wordmark { margin-top: auto; }
   .heroBottom { align-items: start; flex-direction: column; gap: 14px; }
   .heroBottom p { max-width: 35ch; font-size: 12px; }
   .heroBottom a { font-size: 13px; }
@@ -156,9 +162,10 @@
   .creativeHeading h2 { font-size: clamp(42px, 11vw, 70px); }
   .creativeHeading > p { font-size: 13px; }
   .noirFeature { width: 100%; margin-top: 32px; }
+  .noirInset { width: 48%; height: 230px; margin-top: -100px; }
   .noirMedia { height: 420px; margin-right: calc(-1 * var(--gutter)); }
   .noirCaption { flex-direction: column; align-items: start; gap: 8px; }
-  .creativeFoot { flex-direction: column; align-items: start; gap: 5px; margin-top: 25px; }
+  .creativeFoot { flex-direction: column; align-items: start; gap: 5px; margin: 35px 0 0; }
   .creativeFoot > p { font-size: 19px; }
   .explorer { padding-top: 50px; }
   .explorerHead h2 { font-size: clamp(38px, 10vw, 65px); }
