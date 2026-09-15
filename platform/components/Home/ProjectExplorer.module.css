@@ -45,7 +45,7 @@
 .paths ellipse:nth-child(2) { stroke-dasharray: 2 9; opacity: .7; }
 .paths ellipse:nth-child(3) { opacity: .35; }
 .paths path { stroke: #c3a16a20; }
-.nucleus { position: absolute; left: 50%; top: 46%; width: clamp(105px, 15vw, 230px); aspect-ratio: 1; transform: translate(-50%, -50%); text-align: center; pointer-events: none; }
+.nucleus { position: absolute; left: 50%; top: 46%; width: clamp(105px, 15vw, 230px); aspect-ratio: 1; transform: translate(-50%, -50%); text-align: center; pointer-events: none; mix-blend-mode: screen; }
 .nucleus img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; filter: grayscale(1) contrast(2) sepia(.5); opacity: .85; }
 .nucleus span { position: absolute; left: 0; right: 0; bottom: 0; font-size: 13px; color: #d1b887; letter-spacing: .04em; }
 .nucleusLight { position: absolute; inset: 8%; border-radius: 50%; background: radial-gradient(circle, #b9873c14, #a97b3110 45%, transparent 70%); border: 1px solid #ad854225; }
