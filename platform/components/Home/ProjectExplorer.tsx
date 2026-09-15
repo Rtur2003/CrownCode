@@ -78,14 +78,14 @@ export function ProjectExplorer() {
             <Image src="/logo-main.png" alt="" width={1024} height={1024} sizes="(max-width: 700px) 100vw, 70vw" preload />
           </div>
           <div className={styles.heroIntro}>
-            <p>{en ? 'Music is where it starts.' : 'Başlangıç noktası müzik.'}<br />
-              {en ? 'Curiosity takes it further.' : 'Devamı, merak.'}</p>
+            <p>{en ? 'Ideas you can' : 'Fikirlerin'}<br />
+              {en ? 'step inside.' : 'çalışan hâli.'}</p>
             <a href="https://hasan-arthur-altuntas.com.tr" target="_blank" rel="noreferrer">
               {en ? 'Meet the music side' : 'Müzik tarafını dinle'} <ArrowUpRight size={16} />
             </a>
           </div>
           <div className={styles.wordmark}>
-            <h1 id="studio-heading">CrownCode</h1>
+            <h1 id="studio-heading"><span>Crown</span><span>Code</span></h1>
             <div className={styles.heroBottom}>
               <p>{en ? 'Audio research, open-source tools and digital experiences.' : 'Ses araştırmaları, açık kaynak araçlar ve dijital deneyimler.'}</p>
               <a href="#products">{en ? 'Explore the projects' : 'Projeleri keşfet'} <ArrowDown size={17} /></a>
@@ -98,11 +98,10 @@ export function ProjectExplorer() {
           <Image src="/images/auris/hero-wave.webp" alt="" fill sizes="100vw" />
         </div>
         <div className={styles.audioHeading}>
-          <p>{en ? 'Listening becomes research.' : 'Dinlemek, araştırmaya dönüşür.'}</p>
           <h2 id="auris-heading">AURIS</h2>
         </div>
         <div className={styles.audioDetail}>
-          <p>{en ? 'A human. A machine. A recording.' : 'Bir insan. Bir makine. Bir kayıt.'}</p>
+          <p>{en ? 'What does a recording reveal?' : 'Bir kayıt neler anlatır?'}</p>
           <p>{en
             ? 'AURIS examines the traces of AI-generated music. Upload a recording or use a link to explore its audio analysis.'
             : 'AURIS, müzikte yapay zekânın izlerini araştırıyor. Bir kayıt yükle veya bağlantı paylaş; sesin analizini incele.'}</p>
@@ -116,8 +115,7 @@ export function ProjectExplorer() {
       </section>
       <section className={styles.creative} data-scroll-scene aria-labelledby="creative-heading">
         <div className={styles.creativeHeading}>
-          <p>{en ? 'The same curiosity, a different medium.' : 'Aynı merak, başka bir ifade.'}</p>
-          <h2 id="creative-heading">{en ? 'Give an idea' : 'Bir fikre'}<br />{en ? 'a place to live.' : 'yer aç.'}</h2>
+          <h2 id="creative-heading">{en ? 'An appetite' : 'Atmosferi'}<br />{en ? 'for atmosphere.' : 'hisset.'}</h2>
         </div>
         <Link href="/noir-grain" className={styles.noirFeature}>
           <div className={styles.noirMedia}>
@@ -128,6 +126,9 @@ export function ProjectExplorer() {
             <span>{en ? 'A digital dining room' : 'Dijital bir sofra'} <ArrowUpRight size={20} /></span>
           </div>
         </Link>
+        <div className={styles.noirInset} aria-hidden="true">
+          <Image src="/images/noir-grain/menu.png" alt="" fill sizes="(max-width: 700px) 45vw, 25vw" />
+        </div>
         <div className={styles.creativeFoot}>
           <p>{en ? 'From the atmosphere of a restaurant to the language of a dream. Each project finds its own form.' : 'Bir restoranın atmosferinden bir rüyanın diline. Her projenin kendine ait bir ifadesi var.'}</p>
           <Link href="/crown-dreams" className={styles.textLink}>{en ? 'Discover Crown Dreams' : 'Crown Dreams’i keşfet'} <ArrowUpRight size={18} /></Link>
@@ -136,8 +137,7 @@ export function ProjectExplorer() {
       <section id="products" className={styles.explorer} aria-labelledby="explorer-heading">
         <div id="project-explorer" className={styles.explorerHead}>
           <div>
-            <p>{en ? 'The CrownCode collection' : 'CrownCode koleksiyonu'}</p>
-            <h2 id="explorer-heading">{en ? 'Find your next' : 'Merak ettiğin'}<br />{en ? 'discovery.' : 'yerden devam et.'}</h2>
+            <h2 id="explorer-heading">{en ? 'The collection.' : 'Koleksiyon.'}</h2>
           </div>
           <label className={styles.search}>
             <Search size={18} />
