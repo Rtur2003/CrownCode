@@ -56,7 +56,8 @@ export function ProjectExplorer() {
   const frozenPhase = useRef(0)
   const selected = hovered ?? active
   const products = worlds.map(world => {
-    const entry = PRODUCT_CATALOG.find(product => product.id === world.id)!
+    const entry = PRODUCT_CATALOG.find(product => product.id === world.id)
+    if (!entry) {throw new Error(`Missing showroom project: ${world.id}`)}
     return { ...world, entry, ...resolveProduct(entry, t) }
   })
   const project = products[selected]
@@ -86,7 +87,7 @@ export function ProjectExplorer() {
         const coordinates = position(index, rotation)
         Object.assign(node.style, coordinates)
       })
-      journey.style.setProperty('--travel', motionAllowed ? String(progress) : '0')
+      journey.style.setProperty('--travel', reducedMotion ? '0' : String(phase / (Math.PI * 2)))
       if (!reducedMotion) {setActive(wrap(Math.round(-(phase + offset) / step)))}
     }
     const schedule = () => {
@@ -135,7 +136,7 @@ export function ProjectExplorer() {
             {en ? 'Skip the exploration' : 'Keşfi atla'} <ArrowDown size={14} />
           </a>
 
-          <div className={styles.orbit} ref={orbitRef} aria-label={en ? 'Project worlds' : 'Proje dünyaları'}>
+          <div id="project-explorer" className={styles.orbit} ref={orbitRef} aria-label={en ? 'Project worlds' : 'Proje dünyaları'}>
             <svg className={styles.paths} viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
               <ellipse cx="500" cy="322" rx="370" ry="224" />
               <ellipse cx="500" cy="322" rx="295" ry="174" />
