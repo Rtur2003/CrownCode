@@ -17,6 +17,7 @@
 }
 .home button { font: inherit; cursor: pointer; }
 .home ::selection { background: #d5ad70; color: #171009; }
+:global(body):has(.journey) { overflow-x: clip; }
 .journey { --travel: 0; height: 420svh; position: relative; }
 .stage {
   height: 100svh; min-height: 740px; position: sticky; top: 0;
@@ -120,7 +121,7 @@
   .identity { top: 105px; left: 6vw; width: 88%; }
   .identity h1 { font-size: clamp(30px, 8.7vw, 48px); margin-bottom: 10px; }
   .identity p { font-size: 14px; max-width: none; }
-  .skip { top: 192px; right: 6vw; font-size: 11px; }
+  .skip { top: 84px; right: 6vw; font-size: 11px; }
   .orbit { left: 0; top: 24%; width: 100%; height: 45%; }
   .world { width: 65px; }
   .planet { width: 66%; }

@@ -44,7 +44,6 @@ export function ProjectExplorer() {
   const en = language === 'en'
   const reducedMotion = useReducedMotion()
   const [active, setActive] = useState(0)
-  const [hovered, setHovered] = useState<number | null>(null)
   const [offset, setOffset] = useState(0)
   const [paused, setPaused] = useState(false)
   const [directoryOpen, setDirectoryOpen] = useState(false)
@@ -54,7 +53,7 @@ export function ProjectExplorer() {
   const orbitRef = useRef<HTMLDivElement>(null)
   const scrollPhase = useRef(0)
   const frozenPhase = useRef(0)
-  const selected = hovered ?? active
+  const selected = active
   const products = worlds.map(world => {
     const entry = PRODUCT_CATALOG.find(product => product.id === world.id)
     if (!entry) {throw new Error(`Missing showroom project: ${world.id}`)}
@@ -105,7 +104,6 @@ export function ProjectExplorer() {
 
   const choose = (index: number) => {
     const next = wrap(index)
-    setHovered(null)
     setActive(next)
     setOffset(-next * step - scrollPhase.current)
   }
@@ -155,8 +153,8 @@ export function ProjectExplorer() {
                 className={styles.world} data-world={world.id}
                 data-selected={selected === index ? 'true' : 'false'}
                 style={{ ...position(index, 0), '--tone': world.tone } as CSSProperties}
-                onMouseEnter={() => setHovered(index)} onMouseLeave={() => setHovered(null)}
-                onFocus={() => setHovered(index)} onBlur={() => setHovered(null)}
+                onMouseEnter={() => setActive(index)}
+                onFocus={() => setActive(index)}
                 aria-label={en ? `Open ${world.name}` : `${world.name} projesini aç`}>
                 <span className={styles.planet} data-texture={world.texture} aria-hidden="true">
                   <span className={styles.surface} />
