@@ -43,12 +43,13 @@
   justify-content: space-between;
   padding: 122px var(--gutter) 36px;
   isolation: isolate;
+  background: linear-gradient(180deg, #21170f, #15100b 65%, #0b0a08);
 }
 .heroNote { position: relative; z-index: 2; font-size: 13px; line-height: 1.7; display: flex; justify-content: space-between; gap: 20px; color: var(--muted); }
 .heroNote p { color: var(--ink); }
 .crest {
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   top: 48%;
   right: 3vw;
   width: min(58vw, 760px);
@@ -86,7 +87,7 @@
 .creativeHeading > p { color: var(--muted); margin-bottom: 25px; font-size: 15px; }
 .creativeHeading h2 { font-size: clamp(48px, 7.5vw, 118px); line-height: 1.03; max-width: 13ch; }
 .noirFeature { display: block; position: relative; width: 74%; margin: -5vh 0 0 auto; }
-.noirInset { position: relative; width: 29%; height: clamp(200px, 30vw, 420px); margin-top: -26vh; box-shadow: 20px 30px 60px #0006; }
+.noirInset { position: relative; width: 24%; height: clamp(200px, 30vw, 420px); margin-top: -26vh; box-shadow: 20px 30px 60px #0006; }
 .noirInset img { object-fit: cover; }
 .noirMedia { height: clamp(380px, 68vh, 740px); overflow: hidden; position: relative; }
 .noirMedia::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, #0b0a0866, transparent 50%); }
@@ -145,7 +146,7 @@
   .heroIntro > p { font-size: 24px; }
   .heroIntro > a { margin-top: 10px; font-size: 12px; }
   .wordmark { transform: none; }
-  .wordmark h1 { font-size: clamp(82px, 22vw, 145px); margin: 55px 0 30px; }
+  .wordmark h1 { font-size: clamp(60px, 18vw, 120px); margin: 55px 0 30px; }
   .wordmark h1 span:last-child { margin-left: 8vw; }
   .wordmark { margin-top: auto; }
   .heroBottom { align-items: start; flex-direction: column; gap: 14px; }
@@ -162,7 +163,7 @@
   .creativeHeading h2 { font-size: clamp(42px, 11vw, 70px); }
   .creativeHeading > p { font-size: 13px; }
   .noirFeature { width: 100%; margin-top: 32px; }
-  .noirInset { width: 48%; height: 230px; margin-top: -100px; }
+  .noirInset { width: 58%; height: 230px; margin: 20px 0 0 auto; }
   .noirMedia { height: 420px; margin-right: calc(-1 * var(--gutter)); }
   .noirCaption { flex-direction: column; align-items: start; gap: 8px; }
   .creativeFoot { flex-direction: column; align-items: start; gap: 5px; margin: 35px 0 0; }
