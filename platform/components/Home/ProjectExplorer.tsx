@@ -44,7 +44,7 @@ function Specimen({ product, index, count, progress, onSelect, reducedMotion, in
   reducedMotion: boolean
   interactive: boolean
 }) {
-  const staticScene = () => reducedMotion || (typeof window !== 'undefined' && window.innerHeight < 650)
+  const staticScene = () => reducedMotion
   const orbitalAngle = (value: number) => -Math.PI / 2 + index * Math.PI * 2 / count + (staticScene() ? 0 : value * Math.PI * 2 * 1.05)
   const position = useTransform(progress, value => {
     const angle = orbitalAngle(value)
@@ -67,7 +67,7 @@ function Specimen({ product, index, count, progress, onSelect, reducedMotion, in
   })
   const pointerEvents = useTransform(progress, value => {
     if (staticScene()) {return 'auto'}
-    return nearestFocusAt(value, count) > 0.14 ? 'none' : 'auto'
+    return value < 0.145 || nearestFocusAt(value, count) > 0.14 ? 'none' : 'auto'
   })
   const labelOpacity = useTransform(progress, value => {
     return staticScene() ? 1 : Math.max(0, 1 - nearestFocusAt(value, count) * 5)
@@ -116,36 +116,45 @@ export function ProjectExplorer() {
   const introVisibility = useTransform(scrollYProgress, value => value >= 0.145 ? 'hidden' : 'visible')
   const orbitTurn = useTransform(scrollYProgress, value => reducedMotion ? 0 : value * 360 * 1.05)
   const orbitOpacity = useTransform(scrollYProgress, value => {
-    if (reducedMotion || (typeof window !== 'undefined' && window.innerHeight < 650)) {return 1}
+    if (reducedMotion) {return 1}
     return 0.22 + smooth(value / 0.15) * 0.78
   })
   const atlasMarkOpacity = useTransform(scrollYProgress, value => smooth((value - 0.14) / 0.13) * Math.max(0, 1 - nearestFocusAt(value, count) * 2) * 0.62)
   const activeOpacity = useTransform(scrollYProgress, value => active < 0 || reducedMotion ? 0 : focusAt(value, active, count))
 
   useMotionValueEvent(scrollYProgress, 'change', value => {
-    if (reducedMotion || window.innerHeight < 650) {return}
+    if (reducedMotion) {return}
     const next = value < focusStart - focusRadius(count) * 1.25 ? -1 : Math.max(0, Math.min(count - 1, Math.round((value - focusStart) / focusStep(count))))
     const visible = next >= 0 && focusAt(value, next, count) > 0.14
     setActive(previous => previous === next ? previous : next)
     setFeatureVisible(previous => previous === visible ? previous : visible)
-    setInteractive(previous => previous === !visible ? previous : !visible)
+    const canSelectOrb = value >= 0.145 && !visible
+    setInteractive(previous => previous === canSelectOrb ? previous : canSelectOrb)
   })
 
   useEffect(() => {
     if (!railRef.current) {return}
+    const rail = railRef.current
+    const scrollRail = (left: number) => {
+      if (typeof rail.scrollTo === 'function') {
+        rail.scrollTo({ left, behavior: reducedMotion ? 'instant' : 'smooth' })
+      } else {
+        rail.scrollLeft = left
+      }
+    }
     if (active < 0) {
-      railRef.current.scrollTo({ left: 0, behavior: reducedMotion ? 'instant' : 'smooth' })
+      scrollRail(0)
       return
     }
-    const button = railRef.current.querySelectorAll('button')[active]
+    const button = rail.querySelectorAll('button')[active]
     if (button) {
-      railRef.current.scrollTo({ left: button.offsetLeft - railRef.current.clientWidth / 2 + button.clientWidth / 2, behavior: reducedMotion ? 'instant' : 'smooth' })
+      scrollRail(button.offsetLeft - rail.clientWidth / 2 + button.clientWidth / 2)
     }
   }, [active, reducedMotion])
 
   const select = (index: number, focusRail = false) => {
     if (focusRail) {railRef.current?.querySelectorAll('button')[index]?.focus({ preventScroll: true })}
-    if (reducedMotion || window.matchMedia('(max-height: 650px)').matches) {
+    if (reducedMotion) {
       document.getElementById(`project-${products[index].id}`)?.scrollIntoView({ behavior: 'instant' })
       return
     }
