@@ -127,6 +127,8 @@ react-native/
 Android-App-CrownCode/
 hf-crowncode-backend/
 Commend-AI/
+artemis/
+external-skills/
 
 # DataSet - Large data files, ignore completely
 DataSet/
