@@ -125,7 +125,7 @@
   .scrollCue { display: none; }
 }
 @media (max-height: 649px) and (max-width: 700px) {
-  .intro { top: 58px; }
+  .intro { top: 92px; }
   .feature { top: 96px; }
   .feature h2 { font-size: 34px; }
   .feature > p { font-size: 15px; }
