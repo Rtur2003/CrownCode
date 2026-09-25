@@ -10,7 +10,7 @@
 .home a:focus-visible, .home button:focus-visible { outline: 2px solid #f2cc87; outline-offset: 5px; }
 .home ::selection { background: #d6ab6b; color: #100d0a; }
 :global(body):has(.journey) { overflow-x: clip; }
-.journey { height: 860svh; position: relative; }
+.journey { height: var(--journey-height, 860svh); position: relative; }
 .stage { position: sticky; top: 0; height: 100svh; min-height: 650px; overflow: clip; isolation: isolate; background: #100d0a; }
 .studio, .studioHero, .studioDetail { position: absolute; inset: 0; }
 .studio { z-index: -2; pointer-events: none; }
@@ -29,13 +29,14 @@
 .introLink:hover { color: #f2cc87; }
 .atlasMark { position: absolute; top: 51%; left: 50%; z-index: 0; width: clamp(120px, 16vw, 220px); aspect-ratio: 1; transform: translate(-50%, -50%); pointer-events: none; }
 .orbit { position: absolute; inset: 0; z-index: 1; pointer-events: none; transform-origin: center; }
-.orbitLines { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: #d6ab6b; stroke-width: .6; opacity: .27; pointer-events: none; }
-.specimen { --origin-x: var(--x); --origin-y: var(--y); position: absolute; left: var(--origin-x); top: var(--origin-y); width: clamp(80px, 8.4vw, 124px); text-align: center; transform: translate(-50%, -50%); }
+.orbitLines { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: #d6ab6b; stroke-width: .6; opacity: .27; transform-origin: center; pointer-events: none; }
+.specimen { position: absolute; left: 50%; top: 50%; width: clamp(80px, 8.4vw, 124px); text-align: center; }
 .specimenOrb { display: block; position: relative; width: 100%; aspect-ratio: 1; padding: 0; border: 1px solid #d6ab6b65; border-radius: 50%; overflow: hidden; background: #21170f; box-shadow: inset 0 0 0 1px #f5dca322, 0 12px 28px #07050466; pointer-events: auto; cursor: pointer; transform-origin: center; }
 .specimenOrb img { object-fit: cover; object-position: center; border-radius: 50%; }
 .specimenOrb:hover { outline: 1px solid #f6d18f; outline-offset: 4px; }
 .specimenName { display: block; min-width: 82px; margin: 10px 0 0 50%; color: #efe1c8; font-size: 13px; line-height: 1.2; text-shadow: 0 2px 8px #000; pointer-events: none; white-space: normal; transform: translateX(-50%); }
 .specimenName span { color: #d6ab6b; font-size: 10px; letter-spacing: .13em; }
+.focusShade { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: linear-gradient(90deg, #100d0af2 0%, #100d0ab8 27%, #100d0a50 46%, transparent 70%); }
 .feature { position: absolute; left: 5.4vw; top: 31svh; width: min(410px, 36vw); z-index: 4; }
 .feature h2 { font-family: var(--font-family-heading); font-size: clamp(48px, 5.2vw, 76px); letter-spacing: -.025em; line-height: 1; margin: 0 0 24px; }
 .feature > p { max-width: 35ch; font-size: clamp(17px, 1.45vw, 21px); line-height: 1.5; color: #e6d8c5; }
@@ -79,7 +80,7 @@
   .indexList a { column-gap: 22px; }
 }
 @media (max-width: 700px) {
-  .journey { height: 860svh; }
+  .journey { height: var(--journey-height, 860svh); }
   .stage { min-height: 650px; }
   .studioHero img { object-position: 58% center; }
   .studioDetail img { object-position: 67% center; }
@@ -89,8 +90,9 @@
   .intro h1 { font-size: clamp(32px, 9.4vw, 45px); }
   .intro p { margin-top: 13px; font-size: 18px; max-width: 23ch; }
   .introLink { margin-top: 18px; font-size: 14px; }
-  .specimen { --origin-x: var(--mobile-x); --origin-y: var(--mobile-y); width: clamp(54px, 15vw, 70px); }
+  .specimen { width: clamp(54px, 15vw, 70px); }
   .orbitLines { opacity: .18; }
+  .focusShade { background: linear-gradient(180deg, #100d0af2 0%, #100d0ad8 24%, #100d0a85 43%, transparent 69%); }
   .specimenName { font-size: 10px; margin-top: 5px; }
   .specimenName span { font-size: 8px; }
   .feature { top: 130px; left: 6vw; width: 88vw; }
@@ -120,10 +122,10 @@
   .feature, .scrollCue { display: none; }
   .intro { top: 115px; }
   .brandMark { display: none; }
-  .specimen { top: calc(var(--y) + 65px); }
+  .specimen { top: 56%; }
 }
 @media (max-height: 649px) and (max-width: 700px) {
-  .specimen { top: calc(var(--mobile-y) + 85px); }
+  .specimen { top: 58%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .journey { height: auto; }
