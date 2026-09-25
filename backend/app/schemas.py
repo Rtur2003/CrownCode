@@ -30,7 +30,7 @@ class YouTubeSource(BaseModel):
 class AnalysisSummary(BaseModel):
     is_ai_generated: bool
     confidence: float = Field(..., ge=0.0, le=1.0)
-    decision_source: Literal["music_ai", "ses_analizi", "preview"]
+    decision_source: Literal["music_ai", "ses_analizi", "auris_signal", "preview"]
     model_version: str
     indicators: List[str]
 

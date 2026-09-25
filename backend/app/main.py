@@ -9,6 +9,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from .routes.analyze import router as analyze_router
 from .routes.health import router as health_router
 from .routes.youtube import router as youtube_router
 
@@ -20,7 +21,7 @@ def _load_origins() -> list[str]:
     return [origin.strip() for origin in raw.split(",") if origin.strip()]
 
 
-app = FastAPI(title="CrownCode Backend API", version="0.1.0")
+app = FastAPI(title="CrownCode Backend API", version="0.2.0")
 
 _origins = _load_origins()
 app.add_middleware(
@@ -31,5 +32,6 @@ app.add_middleware(
     allow_headers=["Content-Type", "Accept"],
 )
 
+app.include_router(analyze_router)
 app.include_router(health_router)
 app.include_router(youtube_router)

@@ -12,6 +12,7 @@ import time
 import uuid
 from typing import List
 
+from .audio_analysis import MODEL_VERSION, AudioDecodeError, analyze_path
 from .external_clients import MusicAIDetectorClient, SesAnaliziClient
 from .url_parser import parse_youtube_url
 from .youtube_downloader import YouTubeDownloader
@@ -43,6 +44,21 @@ def _preview_summary(video_id: str, warnings: List[str]) -> AnalysisSummary:
         decision_source="preview",
         model_version="youtube-preview-v1",
         indicators=indicators,
+    )
+
+
+def _signal_summary(path: Path) -> AnalysisSummary | None:
+    """Measure the downloaded audio when no external model answered."""
+    try:
+        result = analyze_path(path, {"kind": "youtube"})
+    except AudioDecodeError:
+        return None
+    return AnalysisSummary(
+        is_ai_generated=result["isAIGenerated"],
+        confidence=result["confidence"],
+        decision_source="auris_signal",
+        model_version=MODEL_VERSION,
+        indicators=list(result["features"]["artificialIndicators"]),
     )
 
 
@@ -96,6 +112,9 @@ class YouTubeAnalysisService:
             music_task = self.music_ai.predict(download_result.file_path)
             ses_task = self.ses_analizi.analyze(download_result.file_path)
             music_ai_result, ses_result = await asyncio.gather(music_task, ses_task)
+            signal_summary = None
+            if not (music_ai_result.response or ses_result.response):
+                signal_summary = await asyncio.to_thread(_signal_summary, download_result.file_path)
             timings["analysis_sec"] = round(time.monotonic() - start_analysis, 4)
 
         if not music_ai_result.available:
@@ -108,7 +127,7 @@ class YouTubeAnalysisService:
         elif ses_result.error:
             warnings.append("ses_analizi_failed")
 
-        summary = self._build_summary(music_ai_result, ses_result, parsed.video_id, warnings)
+        summary = signal_summary or self._build_summary(music_ai_result, ses_result, parsed.video_id, warnings)
         timings["total_sec"] = round(time.monotonic() - start_total, 4)
 
         if music_ai_result.error and music_ai_result.error != "music_ai_not_configured":

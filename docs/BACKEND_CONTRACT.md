@@ -6,19 +6,20 @@
 
 | Component | Path | Role | Serves `/api/analyze`? |
 |-----------|------|------|------------------------|
-| **Core backend** | `backend/` | Minimal FastAPI: health, `/api/youtube/analyze` | No |
-| **HF backend** | `hf-crowncode-backend/` (separate repo) | Advanced FastAPI: commend, data processing, analyze, audio augmentation | **Yes** |
+| **Core backend** | `backend/` | FastAPI: health, `/api/analyze` (AURIS signal analysis), `/api/youtube/analyze` | **Yes** |
+| **HF backend** | `hf-crowncode-backend/` (separate repo) | Advanced FastAPI: commend, data processing, analyze, audio augmentation | Yes (legacy) |
 | **Frontend** | `platform/` | Next.js 14 (Pages Router) | N/A |
 
 > `hf-crowncode-backend/` is **gitignored** in this repo (line 120).
 > It lives as a separate repository deployed to HuggingFace Spaces.
 > CI, dependabot, and CODEOWNERS for it are managed in that repo.
 
-> **Not:** Core backend (`backend/`) sunucu `/api/youtube/analyze` (JSON body, `YouTubeAnalyzeRequest`).
-> Frontend gateway (`analysisGateway.ts`) sadece HF backend'in `/api/analyze` endpointini hedefler.
-> Core backend'e dogrudan frontend'den erisim yoktur; ileride adaptor eklenebilir.
+> Core backend `/api/analyze` runs the AURIS signal analysis
+> (`backend/app/services/audio_analysis.py`). The browser runs the same
+> algorithm (`platform/hooks/auris/signal.ts`) for files and microphone takes,
+> so the backend is only required for links. Keep the two in sync.
 
-## Analyze Endpoint (HF backend only)
+## Analyze Endpoint
 
 **POST** `/api/analyze`
 
@@ -39,8 +40,8 @@
     "confidence": 0.87,              // number, 0.0–1.0
     "processingTime": 3.2,           // number, seconds
     "modelVersion": "v2-enhanced",   // string
-    "decisionSource": "music_ai",    // "music_ai" | "ses_analizi" | "preview"
-    "analysisMode": "production",    // "production" | "preview"  ← REQUIRED
+    "decisionSource": "auris_signal", // "auris_signal" | "music_ai" | "ses_analizi"
+    "analysisMode": "signal",        // "signal" | "production" | "preview"  ← REQUIRED
     "source": { /* see Source variants below */ },
     "features": {
       "spectralRegularity": 0.8,     // number, 0.0–1.0
@@ -57,6 +58,9 @@
       "format": "MP3"                // string
     }
   },
+  // Core backend only: raw readings, per-measure lean/weight and visuals
+  // (waveform peaks, 96-band log spectrogram, high-band residual).
+  // "signal": { "score": 0.45, "band": {...}, "contributions": {...}, "measurements": {...}, "visuals": {...} }
   "warnings": [],                    // string[]
   "errors": []                       // string[] — if non-empty, result may be null
 }
@@ -111,5 +115,5 @@ Accepts both camelCase and snake_case field names via Pydantic aliases:
 |------|---------|
 | `platform/hooks/analysisTypes.ts` | TypeScript interfaces (source of truth for frontend) |
 | `platform/hooks/analysisGateway.ts` | HTTP client for `/api/analyze` |
-| `platform/hooks/useYouTubeAnalysis.ts` | YouTube/Spotify analysis hook with preview fallback |
-| `platform/hooks/useFileAnalysis.ts` | File upload analysis hook with preview fallback |
+| `platform/hooks/auris/useAuris.ts` | File / link / microphone flow for the AURIS page |
+| `platform/hooks/auris/signal.ts` | Browser port of the signal analysis |

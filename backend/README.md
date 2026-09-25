@@ -3,12 +3,17 @@
 YouTube-first backend service for AI music detection workflows.
 
 ## What This Service Does
+- `POST /api/analyze` (multipart: `sourceType`, `file` or `url`): decodes the
+  audio with ffmpeg and runs the AURIS signal analysis — spectral periodicity,
+  bandwidth, flatness/brightness variation, loudness range, tempo drift and
+  stereo correlation — returning the report plus waveform and spectrogram
+  data. Hand-calibrated measurements, not a trained model.
 - Accepts a YouTube URL.
 - Downloads audio via `yt-dlp`.
 - Optionally forwards the audio to external services:
   - Music-AIDetector (`/predict`)
   - Ses-Analizi (`/analyze`)
-- Produces a deterministic preview decision if no model is available.
+- Falls back to the signal analysis when no external model answers.
 
 ## Structure
 ```
@@ -28,9 +33,12 @@ backend/
 
 ## API Endpoints
 ```
+POST /api/analyze
 POST /api/youtube/analyze
 GET  /api/health
 ```
+
+`ffmpeg` must be on PATH for `/api/analyze`.
 
 ### POST /api/youtube/analyze
 Request body:
