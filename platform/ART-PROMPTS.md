@@ -6,11 +6,11 @@ The two scene photographs were generated with the built-in `image_gen` tool and 
 
 **`crown-studio.webp`**
 
-undefined
+The original verbatim prompt was not retained. The recorded direction was a warm, dark mastering-studio still life: a precision-cut brass interpretation of the supplied crowned-face mark, physical record grooves, raking amber light, and ample negative space for homepage type. No generated text.
 
 **`tape-study.webp`**
 
-undefined
+The original verbatim prompt was not retained. The recorded direction was a tactile macro study of the same studio's tape and engraved surfaces, using the first frame as a lighting and palette reference. No generated text.
 
 ## Project specimens
 
