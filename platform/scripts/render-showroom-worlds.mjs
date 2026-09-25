@@ -84,11 +84,11 @@ function ml() {
   const grid = []
   for (let i = -8; i <= 8; i++) {
     const x = 512 + i * 54
-    grid.push(`<path d="M ${x} 85 C ${x - 90 - i * 10} 370 ${x + 65 + i * 6} 705 ${x} 950" fill="none" stroke="#9ba7a4" stroke-width="${i % 4 === 0 ? 1.4 : 0.7}" opacity="${i % 4 === 0 ? 0.32 : 0.19}"/>`)
+    grid.push(`<path d="M ${x} 85 C ${x - 90 - i * 10} 370 ${x + 65 + i * 6} 705 ${x} 950" fill="none" stroke="#9ba7a4" stroke-width="${i % 4 === 0 ? 1.7 : 0.9}" opacity="${i % 4 === 0 ? 0.48 : 0.29}"/>`)
   }
   for (let i = -7; i <= 7; i++) {
     const y = 512 + i * 51
-    grid.push(`<path d="M 65 ${y} C 340 ${y + i * 16} 681 ${y - i * 14} 960 ${y}" fill="none" stroke="#8a9897" stroke-width="0.75" opacity="0.22"/>`)
+    grid.push(`<path d="M 65 ${y} C 340 ${y + i * 16} 681 ${y - i * 14} 960 ${y}" fill="none" stroke="#8a9897" stroke-width="1" opacity="0.31"/>`)
   }
   const nodes = [[251,304],[335,346],[420,289],[483,413],[590,351],[686,428],[747,344],[278,560],[386,493],[507,567],[626,549],[737,598],[313,717],[440,667],[559,741],[680,688],[795,734]]
   const route = [[251,304],[335,346],[420,289],[483,413],[590,351],[686,428],[626,549],[737,598],[680,688],[559,741]]
@@ -209,16 +209,16 @@ function svg(world) {
     <defs>
       <clipPath id="planet"><circle cx="${CENTER}" cy="${CENTER}" r="${RADIUS}"/></clipPath>
       <radialGradient id="base" cx="24%" cy="17%" r="86%">
-        <stop offset="0" stop-color="#534231"/><stop offset="0.3" stop-color="#302a25"/><stop offset="0.62" stop-color="#19191a"/><stop offset="1" stop-color="#090b0d"/>
+        <stop offset="0" stop-color="#534231"/><stop offset="0.3" stop-color="#38312b"/><stop offset="0.62" stop-color="#272829"/><stop offset="1" stop-color="#1a1d1e"/>
       </radialGradient>
       <radialGradient id="tint" cx="31%" cy="24%" r="72%">
         <stop offset="0" stop-color="${world.accent}" stop-opacity="0.34"/><stop offset="0.48" stop-color="${world.accent}" stop-opacity="0.07"/><stop offset="1" stop-color="#000" stop-opacity="0"/>
       </radialGradient>
       <linearGradient id="light" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#f2d0a2" stop-opacity="0.22"/><stop offset="0.29" stop-color="#d5a87a" stop-opacity="0.035"/><stop offset="0.62" stop-color="#06090b" stop-opacity="0.19"/><stop offset="1" stop-color="#030506" stop-opacity="0.8"/>
+        <stop offset="0" stop-color="#f2d0a2" stop-opacity="0.18"/><stop offset="0.29" stop-color="#d5a87a" stop-opacity="0.025"/><stop offset="0.62" stop-color="#06090b" stop-opacity="0.07"/><stop offset="1" stop-color="#030506" stop-opacity="0.23"/>
       </linearGradient>
       <radialGradient id="terminator" cx="29%" cy="24%" r="77%">
-        <stop offset="0.27" stop-color="#000" stop-opacity="0"/><stop offset="0.68" stop-color="#000" stop-opacity="0.08"/><stop offset="1" stop-color="#000" stop-opacity="0.82"/>
+        <stop offset="0.27" stop-color="#000" stop-opacity="0"/><stop offset="0.68" stop-color="#000" stop-opacity="0.03"/><stop offset="1" stop-color="#000" stop-opacity="0.28"/>
       </radialGradient>
       <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0" stop-color="#f2d7a8" stop-opacity="0.75"/><stop offset="0.35" stop-color="${world.metal}" stop-opacity="0.28"/><stop offset="0.7" stop-color="#746957" stop-opacity="0.05"/><stop offset="1" stop-color="#040506" stop-opacity="0"/>
