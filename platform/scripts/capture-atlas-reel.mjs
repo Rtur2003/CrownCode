@@ -10,8 +10,10 @@
  * catalog entry shows up in the reel without editing this script.
  *
  * Usage (a dev or prod server running, from platform/):
- *   node scripts/capture-atlas-reel.mjs [baseUrl] [--lang tr|en] [--out file.mp4] [--keep-frames]
+ *   node scripts/capture-atlas-reel.mjs [baseUrl] [--lang tr|en] [--out file.mp4] [--audio file.wav] [--keep-frames]
  * Defaults: http://localhost:3000, tr, assets-src/video/atlas-reel-9x16.mp4
+ * Audio: --audio muxes a soundtrack (scripts/generate-reel-soundtrack.py
+ * writes one locked to this timeline); without it the audio track is silent.
  * Writes the mp4 plus a poster .jpg next to it. Needs ffmpeg on PATH and
  * Playwright (`npm i -g playwright` or PLAYWRIGHT_MODULE=/path/to/playwright/index.mjs).
  */
@@ -32,6 +34,7 @@ const base = (args.find((a) => /^https?:/.test(a)) ?? 'http://localhost:3000').r
 const lang = flag('lang', 'tr') === 'en' ? 'en' : 'tr'
 const out = path.resolve(root, flag('out', 'assets-src/video/atlas-reel-9x16.mp4'))
 const keepFrames = args.includes('--keep-frames')
+const audio = flag('audio', '') ? path.resolve(root, flag('audio', '')) : ''
 /** `--stills 0.5,6.2` renders just those moments (seconds) as PNGs, for checking the layout. */
 const stills = flag('stills', '')?.split(',').filter(Boolean).map(Number) ?? []
 
@@ -51,7 +54,7 @@ async function loadPlaywright() {
   const candidates = [process.env.PLAYWRIGHT_MODULE, 'playwright', '/opt/node22/lib/node_modules/playwright/index.mjs']
   for (const c of candidates.filter(Boolean)) {
     try {
-      return await import(c.startsWith('/') ? pathToFileURL(c).href : c)
+      return await import(path.isAbsolute(c) ? pathToFileURL(c).href : c)
     } catch {
       // try the next one
     }
@@ -267,11 +270,11 @@ async function main() {
   execFileSync('ffmpeg', [
     '-y', '-loglevel', 'error',
     '-framerate', String(FPS), '-i', path.join(frames, '%05d.png'),
-    '-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=stereo',
+    ...(audio ? ['-i', audio] : ['-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=stereo']),
     '-map', '0:v', '-map', '1:a', '-shortest',
     '-c:v', 'libx264', '-preset', 'slow', '-crf', '17', '-profile:v', 'high', '-level:v', '4.1',
     '-pix_fmt', 'yuv420p', '-r', String(FPS), '-g', String(FPS * 2),
-    '-c:a', 'aac', '-b:a', '128k',
+    '-c:a', 'aac', '-b:a', audio ? '192k' : '128k',
     '-movflags', '+faststart', out,
   ], { stdio: 'inherit' })
   // Cover: the intro title fully in, before the first move.
