@@ -94,6 +94,7 @@ export function ProjectExplorer() {
   const reducedMotion = Boolean(useReducedMotion())
   const journeyRef = useRef<HTMLElement>(null)
   const railRef = useRef<HTMLElement>(null)
+  const uiStateRef = useRef({ active: -1, visible: false, interactive: reducedMotion })
   const [active, setActive] = useState(-1)
   const [featureVisible, setFeatureVisible] = useState(false)
   const [interactive, setInteractive] = useState(reducedMotion)
@@ -115,7 +116,6 @@ export function ProjectExplorer() {
   const introOpacity = useTransform(scrollYProgress, [0, 0.06, 0.145], [1, 1, 0])
   const introY = useTransform(scrollYProgress, [0, 0.15], [0, -45])
   const introVisibility = useTransform(scrollYProgress, value => value >= 0.145 ? 'hidden' : 'visible')
-  const orbitTurn = useTransform(scrollYProgress, value => reducedMotion ? 0 : value * 360 * 1.05)
   const orbitOpacity = useTransform(scrollYProgress, value => {
     if (reducedMotion) {return 1}
     return 0.22 + smooth(value / 0.15) * 0.78
@@ -127,10 +127,11 @@ export function ProjectExplorer() {
     if (reducedMotion) {return}
     const next = value < focusStart - focusRadius(count) * 1.25 ? -1 : Math.max(0, Math.min(count - 1, Math.round((value - focusStart) / focusStep(count))))
     const visible = next >= 0 && focusAt(value, next, count) > 0.14
-    setActive(previous => previous === next ? previous : next)
-    setFeatureVisible(previous => previous === visible ? previous : visible)
+    const ui = uiStateRef.current
+    if (ui.active !== next) {ui.active = next; setActive(next)}
+    if (ui.visible !== visible) {ui.visible = visible; setFeatureVisible(visible)}
     const canSelectOrb = value >= 0.145 && !visible
-    setInteractive(previous => previous === canSelectOrb ? previous : canSelectOrb)
+    if (ui.interactive !== canSelectOrb) {ui.interactive = canSelectOrb; setInteractive(canSelectOrb)}
   })
 
   useEffect(() => {
@@ -201,11 +202,11 @@ export function ProjectExplorer() {
           </motion.span>
           <motion.div id="project-explorer" className={styles.orbit} style={{ opacity: orbitOpacity }}
             aria-label={en ? 'Project objects' : 'Proje cisimleri'}>
-            <motion.svg className={styles.orbitLines} style={{ rotate: orbitTurn }} viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <svg className={styles.orbitLines} viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
               <ellipse cx="500" cy="350" rx="410" ry="170" transform="rotate(-20 500 350)" />
               <ellipse cx="500" cy="350" rx="300" ry="285" transform="rotate(24 500 350)" />
               <ellipse cx="500" cy="350" rx="155" ry="365" transform="rotate(-30 500 350)" />
-            </motion.svg>
+            </svg>
             {products.map((product, index) =>
               <Specimen key={product.id} product={product} index={index} count={count} progress={scrollYProgress}
                 onSelect={select} reducedMotion={reducedMotion} interactive={interactive} />,
