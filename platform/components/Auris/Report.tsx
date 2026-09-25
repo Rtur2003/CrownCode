@@ -71,6 +71,9 @@ export const Report: React.FC<ReportProps> = ({ job, onReset, onRetryServer }) =
   const band = xai?.confidenceBand
     ? (language === 'en' ? xai.confidenceBand.labelEn : xai.confidenceBand.labelTr)
     : r.signal?.band ? (language === 'en' ? r.signal.band.labelEn : r.signal.band.labelTr) : null
+  const meta = r.metaClassifier
+  const metaTop = meta?.topFeatures[0]?.importance || 1
+  const signal = r.signal
   const reason = job.serverError ? ((A.errors as Record<string, string>)[job.serverError] ?? A.errors.internalError) : ''
 
   const exportReport = () => {
@@ -168,27 +171,24 @@ export const Report: React.FC<ReportProps> = ({ job, onReset, onRetryServer }) =
               <>
                 <p className={styles.subhead}>{L.meta.features}</p>
                 <ul className={styles.rankList}>
-                  {r.metaClassifier.topFeatures.slice(0, 6).map(f => {
-                    const max = r.metaClassifier!.topFeatures[0]!.importance || 1
-                    return (
-                      <li key={f.feature}>
-                        <span>{f.feature}</span>
-                        <span className={styles.rankBar}><span style={{ width: `${(f.importance / max) * 100}%` }} /></span>
-                        <span className={styles.mono}>{num(language, f.importance, 3)}</span>
-                      </li>
-                    )
-                  })}
+                  {r.metaClassifier.topFeatures.slice(0, 6).map(f => (
+                    <li key={f.feature}>
+                      <span>{f.feature}</span>
+                      <span className={styles.rankBar}><span style={{ width: `${(f.importance / metaTop) * 100}%` }} /></span>
+                      <span className={styles.mono}>{num(language, f.importance, 3)}</span>
+                    </li>
+                  ))}
                 </ul>
               </>
             )}
           </Panel>
         )}
         {trained && <Vocals result={r} language={language} />}
-        {r.signal?.contributions && (
+        {signal?.contributions && (
           <Panel title={L.signal.title} lead={L.signal.lead} wide>
             <ol className={styles.measureList}>
               {MEASURE_ORDER.map(key => {
-                const c = r.signal!.contributions[key]
+                const c = signal.contributions[key]
                 const copy = A.measures[key]
                 return (
                   <li key={key} className={styles.measure} data-direction={c.direction}>
@@ -261,6 +261,7 @@ const Votes: React.FC<{ votes: NonNullable<AnalysisResult['xai']>['modelVotes'];
         {votes.map(v => {
           const missing = voteMissing(v)
           const tick = v.name === best ? threshold : 0.5
+          const auc = VOTER_AUC[v.name]
           return (
             <li key={v.name} data-missing={missing ? 'true' : undefined} data-best={v.name === best ? 'true' : undefined}>
               <span className={styles.voteName}>
@@ -274,7 +275,7 @@ const Votes: React.FC<{ votes: NonNullable<AnalysisResult['xai']>['modelVotes'];
                 <Bar value={v.probability} mid={tick} tone={v.vote === 'ai' ? 'ai' : 'human'} />
               )}
               <span className={styles.mono}>{missing ? '—' : `${pct(v.probability)}%`}</span>
-              <span className={styles.voteAuc}>{VOTER_AUC[v.name] ? num(language, VOTER_AUC[v.name]!, 3) : ''}</span>
+              <span className={styles.voteAuc}>{auc ? num(language, auc, 3) : ''}</span>
             </li>
           )
         })}
@@ -355,7 +356,8 @@ const Towers: React.FC<{ scores: TowerScores; warnings: string[]; language: stri
         {TOWER_ORDER.map(key => {
           const v = scores[key]
           const missing = typeof v !== 'number'
-          const warned = !!TOWER_WARNING[key] && warnings.includes(TOWER_WARNING[key]!)
+          const code = TOWER_WARNING[key]
+          const warned = !!code && warnings.includes(code)
           return (
             <li key={key} data-missing={missing ? 'true' : undefined} data-warned={warned ? 'true' : undefined}>
               <div className={styles.towerHead}>
