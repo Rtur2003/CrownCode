@@ -104,7 +104,8 @@
           "about": "A sample project for telling a restaurant: 'send us your copy and photos, and we'll build your site like this.' On desktop, scenes scroll sideways with WebGL ink transitions between them. On mobile, a separate story-style interface opens that works like an app. Reservation requests go straight to WhatsApp with no server needed, or can be handled through the CrownCode API with a table management panel.",
           "techTitle": "Technology",
           "runTitle": "Run Locally",
-          "sourceNote": "Source: templates/noir-grain"
+          "sourceNote": "Source: templates/noir-grain",
+          "metaDescription": "A cinematic website template for fine-dining restaurants: WebGL ink transitions, a story-style mobile layout and WhatsApp reservations."
         }
       },
       "aiMusic": {

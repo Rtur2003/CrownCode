@@ -31,7 +31,7 @@ const NoirGrainPage: NextPage = () => {
   return (
     <MainLayout
       title={item?.title ?? 'Noir & Grain'}
-      description={item?.description ?? ''}
+      description={page?.metaDescription ?? item?.description ?? ''}
       keywords="restaurant template, webgl, gsap, react, fine dining"
     >
       <section className="mx-auto max-w-6xl px-6 pb-24 pt-32">

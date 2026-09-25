@@ -104,7 +104,8 @@
           "about": "Bir restorana 'metinlerinizi ve fotoğraflarınızı gönderin, sitenizi böyle kuralım' diyebilmek için hazırlanmış örnek bir iş. Masaüstünde sahneler yatay kayıyor, aralarda WebGL mürekkep geçişleri var. Mobilde ise uygulama gibi çalışan, hikâye biçiminde ayrı bir arayüz açılıyor. Rezervasyon talepleri sunucu gerekmeden WhatsApp'a düşüyor; istenirse CrownCode API'si ve bir masa yönetim paneliyle de yönetilebiliyor.",
           "techTitle": "Teknoloji",
           "runTitle": "Yerelde Çalıştır",
-          "sourceNote": "Kaynak: templates/noir-grain"
+          "sourceNote": "Kaynak: templates/noir-grain",
+          "metaDescription": "Fine-dining restoranları için sinematik site şablonu: WebGL mürekkep geçişleri, mobilde hikâye düzeni ve WhatsApp ile rezervasyon."
         }
       },
       "aiMusic": {
