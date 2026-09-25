@@ -19,6 +19,7 @@ import {
 import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
 import { Header } from './Header'
 import { Footer } from './Footer'
+import { RouteBadge } from './RouteBadge'
 
 interface MainLayoutProps {
   children: ReactNode
@@ -222,6 +223,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
       </a>
       <div className="app-container">
         <Header />
+        {/* Project pages: back to their world in the atlas, or on to the next one. */}
+        <RouteBadge />
         <main id="main-content" className="main-content" tabIndex={-1}>
           {children}
         </main>

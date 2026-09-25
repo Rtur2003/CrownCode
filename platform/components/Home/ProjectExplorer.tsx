@@ -155,6 +155,11 @@ export function ProjectExplorer() {
     const match = window.location.hash.match(/^#world-(.+)$/)
     const index = match ? worlds.findIndex((w) => w.id === decodeURIComponent(match[1])) : -1
     if (index < 0 || !journeyRef.current) {return}
+    // Reduced motion has no flight to stop along: open the world's log entry.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.getElementById(`project-${worlds[index].id}`)?.scrollIntoView({ behavior: 'instant', block: 'center' })
+      return
+    }
     const journey = journeyRef.current
     const top = journey.getBoundingClientRect().top + window.scrollY
     window.scrollTo({ top: top + ((index + 1) / (stations - 1)) * (journey.offsetHeight - window.innerHeight), behavior: 'instant' })
