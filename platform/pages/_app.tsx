@@ -11,6 +11,7 @@ import { LanguageProvider } from '@/context/LanguageContext'
 import { ToastProvider } from '@/context/ToastContext'
 import { ToastContainer } from '@/components/UI/Toast/ToastContainer'
 import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary'
+import { JobPill } from '@/components/Auris/JobPill'
 import { imFell, imFellItalic, jetbrainsMono, portmanteau } from '@/styles/fonts'
 import '@/styles/globals.css'
 
@@ -65,6 +66,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           <ToastProvider>
             <Component {...pageProps} />
             <ToastContainer />
+            {/* AURIS jobs outlive their page; this links back while one runs */}
+            <JobPill />
             {/* Mount modals only after first user interaction to avoid eager chunk loading */}
             {modalsReady && (
               <Suspense fallback={null}>
