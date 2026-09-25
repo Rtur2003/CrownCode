@@ -71,7 +71,7 @@ function Specimen({ product, index, count, progress, onSelect, reducedMotion, in
     return value < 0.145 || nearestFocusAt(value, count) > 0.14 ? 'none' : 'auto'
   })
   const labelOpacity = useTransform(progress, value => {
-    return staticScene() ? 1 : Math.max(0, 1 - nearestFocusAt(value, count) * 5)
+    return staticScene() ? 1 : smooth((value - 0.055) / 0.09) * Math.max(0, 1 - nearestFocusAt(value, count) * 5)
   })
 
   return (
