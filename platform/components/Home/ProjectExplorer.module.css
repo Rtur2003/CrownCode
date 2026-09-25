@@ -12,12 +12,20 @@
 .home ::selection { background: #d6ab6b; color: #100d0a; }
 :global(body):has(.journey) { overflow-x: clip; }
 /* Gentle stops at every world, like a level-select screen. */
-:global(html):has(.journey:not([data-reduced])) { scroll-snap-type: y proximity; }
+:global(html):has(.atlas:not([data-reduced])) { scroll-snap-type: y proximity; }
 
-/* ── Journey ─────────────────────────────────────────────────────────── */
-.journey { position: relative; height: var(--journey-height, 1090svh); }
-.snap { position: absolute; left: 0; width: 1px; height: 1px; top: calc(var(--k) / var(--stations) * (100% - 100svh)); scroll-snap-align: start; pointer-events: none; }
-.stage { position: sticky; top: 0; height: 100svh; min-height: 560px; overflow: clip; isolation: isolate; background: var(--void); }
+/* ── Atlas: pinned stage, scroll track under it, log rising over it ──── */
+.atlas { position: relative; }
+.stage { position: sticky; z-index: 1; top: 0; height: 100svh; min-height: 560px; overflow: clip; isolation: isolate; background: var(--void); }
+.journey { position: relative; height: var(--journey-height, 1090svh); margin-top: -100svh; pointer-events: none; }
+.snap { position: absolute; left: 0; width: 1px; height: 1px; top: calc(var(--k) / var(--stations) * (100% - 100svh)); scroll-snap-align: start; }
+.hud { position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: calc(1 - var(--exit, 0)); }
+.hud > * { pointer-events: auto; }
+.stage[data-exited] .hud { visibility: hidden; }
+.dim { position: absolute; inset: 0; z-index: 5; background: var(--void); opacity: calc(var(--exit, 0) * .4); pointer-events: none; }
+.warp { position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: 0; background: radial-gradient(circle at 63% 50%, color-mix(in srgb, var(--warp-color, #d6ab6b) 55%, transparent) 0%, #07070a 70%); transition: opacity .7s cubic-bezier(.55, 0, .75, .3); }
+.stage[data-warp] .warp { opacity: 1; }
+.stage[data-warp] .hud { opacity: 0; transition: opacity .25s ease; }
 
 .poster, .canvas { position: absolute; inset: 0; }
 .poster img { width: 100%; height: 100%; object-fit: cover; }
@@ -107,15 +115,27 @@
 .hint { grid-column: 1 / -1; justify-self: end; margin: 0; color: #8f7f69; font-family: var(--font-family-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
 .srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
-/* ── Project index ───────────────────────────────────────────────────── */
-.index { position: relative; overflow: clip; padding: 105px 5.4vw 110px; background: #100d0a; }
-.index > * { position: relative; z-index: 1; }
-.indexLead { display: flex; justify-content: space-between; align-items: end; gap: 40px; border-bottom: 1px solid #a98b6347; padding-bottom: 26px; }
-.indexLead h2 { font-family: var(--font-family-heading); font-size: clamp(43px, 5vw, 72px); letter-spacing: -.025em; line-height: 1.05; }
-.indexLead p { max-width: 31ch; color: var(--muted); font-size: 16px; line-height: 1.5; }
-.indexList a { display: grid; min-width: 0; grid-template-columns: 55px clamp(100px, 11vw, 160px) minmax(0, 1fr) 28px; align-items: center; gap: clamp(20px, 4vw, 68px); padding: 26px 0; border-bottom: 1px solid #a98b6345; scroll-margin-top: 90px; }
-.indexList a:hover { color: #f2cc87; }
-.indexNumber { align-self: start; padding-top: 10px; color: var(--world, var(--amber)); font-family: var(--font-family-mono); font-size: 12px; letter-spacing: .15em; }
+/* ── Project log ─────────────────────────────────────────────────────── */
+/* Rises over the pinned atlas: translucent at first so the map stays
+   visible, then settling into solid ground. The gold route continues as
+   the log's vertical line. */
+.index {
+  position: relative; z-index: 2; padding: 38svh 5.4vw 110px;
+  background: linear-gradient(180deg, transparent 0, #07070a73 22svh, #07070ad9 70svh, #0b0908f5 100%);
+}
+.index::before {
+  content: ''; position: absolute; left: calc(5.4vw + 27px); top: 0; bottom: 180px; width: 1px;
+  background: linear-gradient(180deg, transparent 0, #f2cc87 30svh, #d6ab6b66 70%, transparent 100%);
+}
+.indexLead { position: relative; max-width: 760px; padding-left: 80px; }
+.indexLead h2 { margin: 0; font-family: var(--font-family-heading); font-size: clamp(40px, 4.8vw, 70px); letter-spacing: -.025em; line-height: 1.02; }
+.indexLead > p:last-child { margin-top: 16px; max-width: 44ch; color: var(--muted); font-size: 16px; line-height: 1.5; }
+.indexList { margin: 56px 0 0; padding: 0; list-style: none; }
+.indexList a { position: relative; display: grid; min-width: 0; grid-template-columns: 55px clamp(100px, 11vw, 160px) minmax(0, 1fr) 28px; align-items: center; gap: clamp(20px, 4vw, 68px); padding: 26px 0; border-bottom: 1px solid #a98b6330; scroll-margin-top: 90px; transition: color .3s ease; }
+.indexList a:hover, .indexList a:focus-visible { color: #f2cc87; }
+.indexNumber { position: relative; align-self: center; justify-self: center; display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--world, var(--amber)); border-radius: 50%; background: #0b0908; color: var(--world, var(--amber)); font-family: var(--font-family-mono); font-size: 11px; letter-spacing: .08em; transition: box-shadow .35s ease, background-color .35s ease; }
+.indexList a:hover .indexNumber, .indexList a:focus-visible .indexNumber { background: var(--world); color: #0b0908; box-shadow: 0 0 22px var(--world); }
+.indexSector { color: var(--world, var(--amber)); font-family: var(--font-family-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
 .indexImage { position: relative; width: clamp(100px, 11vw, 160px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 1px #b795634d, 0 18px 40px #0008; transition: transform .7s cubic-bezier(.2, .7, .15, 1), box-shadow .7s ease; }
 .indexList a:hover .indexImage { transform: rotate(8deg) scale(1.05); box-shadow: 0 0 0 1px var(--world), 0 0 34px color-mix(in srgb, var(--world) 35%, transparent); }
 .indexImage img { object-fit: cover; }
@@ -130,6 +150,9 @@
 
 /* ── Tall / narrow screens: world above, copy in a bottom sheet ─────── */
 @media (max-aspect-ratio: 4/5), (max-width: 700px) {
+  .index::before { left: calc(6vw + 12px); }
+  .indexLead { padding-left: 34px; }
+  .indexNumber { width: 22px; height: 22px; font-size: 9px; }
   .scrim {
     background:
       linear-gradient(0deg, #07070af7 0%, #07070ae6 24%, #07070a80 42%, transparent 58%),
@@ -149,10 +172,8 @@
   .track button[aria-current='step'] .nodeLabel { display: none; }
   .hint { display: none; }
   .worldLabel { font-size: 11px; }
-  .index { padding: 96px 6vw 80px; }
-  .indexLead { display: block; }
-  .indexLead p { margin-top: 12px; }
-  .indexList a { grid-template-columns: 20px 54px minmax(0, 1fr) 20px; gap: 10px; padding: 20px 0; }
+  .index { padding: 34svh 6vw 80px; }
+  .indexList a { grid-template-columns: 24px 54px minmax(0, 1fr) 20px; gap: 12px; padding: 20px 0; }
   .indexNumber { font-size: 10px; }
   .indexImage { width: 54px; }
   .indexCopy strong { font-size: 19px; }
@@ -169,9 +190,8 @@
 
 /* ── Reduced motion: no flight, a still atlas and the full list ─────── */
 @media (prefers-reduced-motion: reduce) {
-  .journey { height: auto; }
+  .journey { height: 100svh; }
   .snap { display: none; }
-  .stage { position: relative; height: 100svh; }
   .panel { opacity: 1; }
   .copy { animation: none; }
 }

@@ -27,6 +27,12 @@ export interface AtlasWorld {
 export interface AtlasState {
   /** Scroll progress through the journey, 0..1. */
   target: number
+  /** 0..1 while the project log rises over the finished journey. */
+  exit: number
+  /** World hovered in the project log (-1 = none); it lights up on the map. */
+  highlight: number
+  /** performance.now() when "Enter world" was pressed (0 = not warping). */
+  warp: number
   /** Pointer position, -1..1, for a little parallax. */
   pointer: { x: number; y: number }
   /** Seconds; only used when `capture` is on (deterministic video frames). */
@@ -234,11 +240,12 @@ function Crown({ time }: { time: MutableRefObject<number> }) {
   )
 }
 
-function World({ world, index, geometry, focus, time }: {
+function World({ world, index, geometry, focus, glow, time }: {
   world: AtlasWorld
   index: number
   geometry: THREE.SphereGeometry
   focus: MutableRefObject<number[]>
+  glow: MutableRefObject<number[]>
   time: MutableRefObject<number>
 }) {
   const { look, placement } = world
@@ -265,7 +272,7 @@ function World({ world, index, geometry, focus, time }: {
   const atmosphere = useDisposable(() => new THREE.ShaderMaterial({
     vertexShader: atmosphereVertex,
     fragmentShader: atmosphereFragment,
-    uniforms: { uAtmo: { value: new THREE.Color(look.atmosphere) }, uLight: { value: KEY_LIGHT.clone() } },
+    uniforms: { uAtmo: { value: new THREE.Color(look.atmosphere) }, uLight: { value: KEY_LIGHT.clone() }, uGlow: { value: 0 } },
     side: THREE.BackSide,
     transparent: true,
     depthWrite: false,
@@ -290,7 +297,8 @@ function World({ world, index, geometry, focus, time }: {
 
   useFrame(() => {
     if (spinRef.current) {spinRef.current.rotation.y = time.current * look.spin + index}
-    planet.uniforms.uFocus.value = focus.current[index] ?? 0
+    planet.uniforms.uFocus.value = Math.max(focus.current[index] ?? 0, glow.current[index] ?? 0)
+    atmosphere.uniforms.uGlow.value = glow.current[index] ?? 0
     ring.uniforms.uTime.value = time.current
   })
 
@@ -312,6 +320,8 @@ function Rig({ worlds, state, labels, capture, onReady }: Omit<AtlasSceneProps, 
   const smoothed = useRef(state.current.target)
   const travelled = useRef(0)
   const focus = useRef<number[]>(worlds.map(() => 0))
+  const glow = useRef<number[]>(worlds.map(() => 0))
+  const exit = useRef(0)
   const pointer = useRef({ x: 0, y: 0 })
   const ready = useRef(false)
   const frameTimes = useRef<number[]>([])
@@ -400,8 +410,11 @@ function Rig({ worlds, state, labels, capture, onReady }: Omit<AtlasSceneProps, 
     const u = stationEase(smoothed.current, stationCount)
     const s = u * (stationCount - 1)
 
+    exit.current = capture ? state.current.exit : exit.current + (state.current.exit - exit.current) * (1 - Math.exp(-5 * dt))
     for (let i = 0; i < worlds.length; i++) {
       focus.current[i] = Math.max(0, 1 - Math.abs(s - (i + 1)) * 1.6)
+      const want = state.current.highlight === i ? 1 : 0
+      glow.current[i] += (want - glow.current[i]) * (1 - Math.exp(-6 * dt))
     }
     const routeIndex = Math.min(routeArc.length - 1, Math.max(0, s))
     const lo = Math.floor(routeIndex)
@@ -418,6 +431,15 @@ function Rig({ worlds, state, labels, capture, onReady }: Omit<AtlasSceneProps, 
     pointer.current.y += (state.current.pointer.y - pointer.current.y) * (1 - Math.exp(-2.5 * dt))
     paths.camera.getPoint(u, tmp.camLocal)
     paths.target.getPoint(u, tmp.targetLocal)
+    // Entering a world: dive most of the way into it before the page changes.
+    if (state.current.warp) {
+      const w = Math.min(1, (performance.now() - state.current.warp) / 700)
+      tmp.camLocal.lerp(tmp.targetLocal, w * w * 0.82)
+    }
+    // As the log rises over the atlas, the camera keeps drifting back and up
+    // so the whole route stays in view behind the list.
+    tmp.camLocal.z -= exit.current * 9
+    tmp.camLocal.y += exit.current * 6
     if (!capture) {
       tmp.camLocal.x += pointer.current.x * 0.35
       tmp.camLocal.y -= pointer.current.y * 0.22
@@ -442,7 +464,8 @@ function Rig({ worlds, state, labels, capture, onReady }: Omit<AtlasSceneProps, 
       const y = (-tmp.projected.y * 0.5 + 0.5) * size.height
       const radiusPx = (w.look.size / (distance * halfHeight)) * (size.height / 2)
       const onScreen = x > -80 && x < size.width - 60 && y > 96 && y < size.height - 110
-      const visible = behind || !onScreen ? 0 : (1 - focus.current[i]) * Math.min(1, Math.max(0, 1.5 - distance / 70))
+      const seen = behind || !onScreen ? 0 : (1 - focus.current[i]) * Math.min(1, Math.max(0, 1.5 - distance / 70))
+      const visible = behind || !onScreen ? 0 : Math.max(seen * (1 - exit.current), glow.current[i])
       el.style.opacity = visible.toFixed(3)
       el.style.transform = `translate3d(${(x + radiusPx + 10).toFixed(1)}px, ${(y - 10).toFixed(1)}px, 0)`
       el.style.pointerEvents = visible > 0.35 ? 'auto' : 'none'
@@ -479,7 +502,7 @@ function Rig({ worlds, state, labels, capture, onReady }: Omit<AtlasSceneProps, 
         <Route curve={route} travelled={travelled} time={time} />
         <Dust curve={route} time={time} />
         {worlds.map((world, index) => (
-          <World key={world.id} world={world} index={index} geometry={geometry} focus={focus} time={time} />
+          <World key={world.id} world={world} index={index} geometry={geometry} focus={focus} glow={glow} time={time} />
         ))}
       </group>
     </>

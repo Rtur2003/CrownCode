@@ -128,6 +128,13 @@ export function derivedLook(id: string): WorldLook {
   }
 }
 
+/** Short display name of a world (the catalog title without its subtitle). */
+export function worldName(entry: Pick<ProductEntry, 'id'>, title: string): string {
+  if (entry.id === 'crown-vote') {return 'VOTRYX'}
+  if (entry.id === 'ml-toolkit') {return 'ML Toolkit'}
+  return title.split(' - ')[0]
+}
+
 export function worldLook(entry: Pick<ProductEntry, 'id'>): WorldLook {
   return LOOKS[entry.id] ?? derivedLook(entry.id)
 }

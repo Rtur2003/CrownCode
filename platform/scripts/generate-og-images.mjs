@@ -1,5 +1,6 @@
-// Builds the 1200×630 social preview cards in public/og/ from the project
-// artwork. Run after changing artwork or project names:
+// Builds the 1200×630 social preview cards in public/og/ from the atlas:
+// the rendered poster for the site card, and each world's render on the
+// atlas sky for project pages. Run after re-rendering the atlas assets:
 //   node scripts/generate-og-images.mjs
 import fs from 'node:fs'
 import path from 'node:path'
@@ -12,15 +13,15 @@ const W = 1200
 const H = 630
 
 const CARDS = [
-  { file: 'default', art: 'images/showroom/crown-studio.webp', title: 'CrownCode', line: 'Sound · Data · Web' },
-  { file: 'ai-music-detection', art: 'images/showroom/world-auris.webp', title: 'AURIS', line: 'AI Music Detection' },
-  { file: 'data-manipulation', art: 'images/showroom/tape-study.webp', title: 'ML Toolkit', line: 'Audio Dataset Tools' },
-  { file: 'creator-studio', art: 'images/auris/hero-wave.webp', title: 'Creator Studio', line: 'Tempo & Key-Matched Remix' },
-  { file: 'crown-commend', art: 'images/showroom/world-commend.webp', title: 'Crown Commend', line: 'YouTube Comment Writer' },
-  { file: 'crown-fortune', art: 'images/showroom/world-fortune.webp', title: 'Crown Destiny', line: 'Daily Fortune' },
-  { file: 'crown-dreams', art: 'images/showroom/world-dreams.webp', title: 'Crown Dreams', line: 'Dream Journal' },
-  { file: 'crown-vote', art: 'images/showroom/world-votryx.webp', title: 'VOTRYX', line: 'Desktop Voting Automation' },
-  { file: 'noir-grain', art: 'images/noir-grain/hero.png', title: 'Noir & Grain', line: 'Cinematic Restaurant Template' },
+  { file: 'default', title: 'CrownCode', line: 'Sound · Data · Web' },
+  { file: 'ai-music-detection', world: 'ai-music-detection', title: 'AURIS', line: 'AI Music Detection' },
+  { file: 'data-manipulation', world: 'ml-toolkit', title: 'ML Toolkit', line: 'Audio Dataset Tools' },
+  { file: 'creator-studio', world: 'ai-music-detection', title: 'Creator Studio', line: 'Tempo & Key-Matched Remix' },
+  { file: 'crown-commend', world: 'crown-commend', title: 'Crown Commend', line: 'YouTube Comment Writer' },
+  { file: 'crown-fortune', world: 'crown-fortune', title: 'Crown Destiny', line: 'Daily Fortune' },
+  { file: 'crown-dreams', world: 'crown-dreams', title: 'Crown Dreams', line: 'Dream Journal' },
+  { file: 'crown-vote', world: 'crown-vote', title: 'VOTRYX', line: 'Desktop Voting Automation' },
+  { file: 'noir-grain', world: 'noir-grain', title: 'Noir & Grain', line: 'Cinematic Restaurant Template' },
 ]
 
 const escape = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -57,17 +58,35 @@ const logo = await sharp(pub('logo-main.png'))
   .png()
   .toBuffer()
 
+const WORLD = 470
+const worldMask = Buffer.from(`<svg width="${WORLD}" height="${WORLD}"><circle cx="${WORLD / 2}" cy="${WORLD / 2}" r="${WORLD / 2}"/></svg>`)
+const halo = Buffer.from(`<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+  <defs><radialGradient id="h" cx="0.5" cy="0.5" r="0.5">
+    <stop offset="0.55" stop-color="#e7c77a" stop-opacity="0.22"/><stop offset="1" stop-color="#e7c77a" stop-opacity="0"/>
+  </radialGradient></defs>
+  <circle cx="${W - 300}" cy="${H / 2}" r="${WORLD * 0.72}" fill="url(#h)"/>
+</svg>`)
+
 for (const card of CARDS) {
-  const background = await sharp(pub(card.art))
-    .resize(W, H, { fit: 'cover', position: 'attention' })
-    .modulate({ brightness: 0.85 })
-    .toBuffer()
+  const layers = [{ input: overlay(card), top: 0, left: 0 }, { input: logo, top: 72, left: 68 }]
+  let background
+  if (card.world) {
+    background = await sharp(pub('images/atlas/nebula.webp'))
+      .extract({ left: 520, top: 160, width: 1200, height: 630 })
+      .modulate({ brightness: 0.9 })
+      .toBuffer()
+    const world = await sharp(pub(`images/atlas/world-${card.world}.webp`))
+      .resize(WORLD, WORLD)
+      .composite([{ input: worldMask, blend: 'dest-in' }])
+      .png()
+      .toBuffer()
+    layers.unshift({ input: halo, top: 0, left: 0 }, { input: world, top: (H - WORLD) / 2, left: W - 300 - WORLD / 2 })
+  } else {
+    background = await sharp(pub('images/atlas/poster.webp')).resize(W, H, { fit: 'cover', position: 'right' }).toBuffer()
+  }
   const out = pub('og', `${card.file}.jpg`)
   await sharp(background)
-    .composite([
-      { input: overlay(card), top: 0, left: 0 },
-      { input: logo, top: 72, left: 68 },
-    ])
+    .composite(layers)
     .jpeg({ quality: 82, progressive: true, mozjpeg: true })
     .toFile(out)
   console.log(`${path.relative(root, out)}  ${(fs.statSync(out).size / 1024).toFixed(0)} KB`)

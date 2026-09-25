@@ -1,5 +1,13 @@
 # CrownCode orbital field studies
 
+> **Archived (2026-09-25).** The homepage no longer uses these photographs as
+> page art: it renders the CrownCode Atlas in WebGL (procedural worlds). The
+> files now live in `assets-src/showroom-archive/` (not deployed). Atlas
+> assets are generated, not drawn: `scripts/generate-atlas-textures.py`
+> (sky + crown sprite) and `scripts/capture-atlas-assets.py` (poster and
+> world thumbnails rendered from the scene itself).
+
+
 Built-in image generation, 2026-09-25. Both exports are 1536 × 1024 WebP, quality 80. The authentic CrownCode glyph and project worlds belong in the page layer, not in these images.
 
 ## `orbital-field-v3.webp` (preferred)

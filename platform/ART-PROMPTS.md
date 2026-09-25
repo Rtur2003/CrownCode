@@ -1,5 +1,13 @@
 # CrownCode showroom image prompts
 
+> **Archived (2026-09-25).** The homepage no longer uses these photographs as
+> page art: it renders the CrownCode Atlas in WebGL (procedural worlds). The
+> files now live in `assets-src/showroom-archive/` (not deployed). Atlas
+> assets are generated, not drawn: `scripts/generate-atlas-textures.py`
+> (sky + crown sprite) and `scripts/capture-atlas-assets.py` (poster and
+> world thumbnails rendered from the scene itself).
+
+
 The two scene photographs were generated with the built-in `image_gen` tool and converted to 1536 × 1024 WebP. The first uses the supplied `public/logo-main.png` as an identity reference; the second uses the first scene as a visual reference.
 
 ## Scene frames

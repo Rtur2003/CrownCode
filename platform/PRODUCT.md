@@ -20,7 +20,7 @@ The user explicitly requires the existing warm dark palette, crowned-face logo, 
 
 ## Evidence on Hand
 
-`public/logo-main.png` is the supplied brand mark. `public/images/noir-grain/` contains actual project screenshots. `public/images/auris/` contains existing project artwork. New generated studio imagery is conceptual brand artwork, not photography of a real product or place.
+`public/logo-main.png` is the supplied brand mark. `public/images/noir-grain/` contains actual project screenshots. `public/images/auris/` contains existing project artwork. New generated studio imagery is conceptual brand artwork, not photography of a real product or place. The homepage is the CrownCode Atlas: projects are procedural WebGL worlds on a route into depth (`components/Home/Atlas/`, looks in `config/showroom-worlds.ts`); a new catalog entry becomes the next world automatically.
 
 ## Links
 

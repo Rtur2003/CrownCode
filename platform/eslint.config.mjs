@@ -71,6 +71,14 @@ export default defineConfig([
     rules: { 'react-hooks/purity': 'off' },
   },
 
+  // Atlas WebGL sahnesi: R3F'de shader uniform'lari ve Three nesneleri
+  // useFrame icinde kasitli olarak mutasyona ugrar (her karede React render'i
+  // tetiklememenin standart yolu).
+  {
+    files: ['components/Home/Atlas/AtlasScene.tsx'],
+    rules: { 'react-hooks/immutability': 'off' },
+  },
+
   // Service worker: tarayici worker ortami, React/Next kurallari gecmez
   {
     files: ['public/sw.js'],

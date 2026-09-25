@@ -111,13 +111,15 @@ export const atmosphereVertex = /* glsl */ `
 export const atmosphereFragment = /* glsl */ `
   uniform vec3 uAtmo;
   uniform vec3 uLight;
+  uniform float uGlow;
   varying vec3 vNormalW;
   varying vec3 vViewW;
   void main() {
     vec3 N = normalize(vNormalW);
     float rim = pow(max(0.0, 0.72 - dot(-N, normalize(vViewW))), 3.2);
     float lit = 0.35 + 0.65 * smoothstep(-0.3, 0.8, dot(-N, normalize(uLight)));
-    gl_FragColor = vec4(uAtmo * rim * lit * 2.4, rim * lit);
+    lit = mix(lit, 1.6, uGlow); // hovered in the project log: the world flares
+    gl_FragColor = vec4(uAtmo * rim * lit * (2.4 + uGlow * 2.0), rim * lit);
     #include <colorspace_fragment>
   }
 `
