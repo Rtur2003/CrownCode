@@ -295,13 +295,13 @@
   },
   "aiDetection": {
     "meta": {
-      "title": "AURIS — AI-generated music detection",
-      "description": "Send a track to AURIS from a file, a link or your microphone: a LightGBM verdict trained on 47 features, an 11-model vote, a SHAP explanation and a spectrogram in one report.",
+      "title": "AURIS · AI music detection",
+      "description": "Upload a song and AURIS estimates how likely it is to be AI-generated. The verdict comes from a LightGBM model, and the report shows which features mattered.",
       "keywords": "AURIS, AI music detection, LightGBM, SHAP, spectrogram, audio analysis, CrownCode"
     },
     "intro": {
       "eyebrow": "Sound lab · Thesis research",
-      "lead": "Send a track; AURIS runs it through its trained models and shows, one by one, what drove the verdict. The waveform and spectrogram are drawn in your browser; the verdict comes from the server."
+      "lead": "Upload a song. AURIS runs it through trained models and shows which measurements the result is based on."
     },
     "server": {
       "label": "Model server",
@@ -310,8 +310,8 @@
       "ready": "Ready",
       "waking": "Waking up",
       "down": "Unreachable",
-      "wakingNote": "A free Hugging Face Space takes a minute or two to boot when it has been asleep. You can send a track now; it uploads once the server is up.",
-      "downNote": "The server isn't answering. If you send a track, only the browser measurement runs, and the report says so.",
+      "wakingNote": "The server goes to sleep when nobody uses it, and waking up can take a minute or two. You can send a song now and it will upload once the server is up.",
+      "downNote": "The server isn't responding right now. If you send a song anyway, only the browser measurement runs, and the report says so.",
       "retry": "Check again",
       "models": "Model repository",
       "space": "Server"
@@ -326,52 +326,52 @@
       "drop": "Drop a track here",
       "browse": "or choose one from your computer",
       "formats": "MP3 · WAV · FLAC · M4A · OGG · up to 30 MB",
-      "privacy": "The file goes to the AURIS server where the models run, and isn't kept after the analysis."
+      "privacy": "The file is sent to the AURIS server for analysis and isn't stored afterwards."
     },
     "url": {
       "label": "YouTube link",
       "placeholder": "https://youtu.be/…",
       "submit": "Analyse link",
-      "hint": "The server downloads the audio from YouTube and runs the same models. YouTube blocks downloads for some videos; if it does, upload the track as a file."
+      "hint": "The audio is downloaded from YouTube and analysed the same way. Some videos can't be downloaded. If that happens, upload the song as a file."
     },
     "mic": {
       "start": "Record",
       "stop": "Stop",
-      "hint": "Play the track through a speaker and hold your device close. Recording stops by itself at 30 seconds. The room and the microphone affect the result.",
+      "hint": "Play the song through a speaker and keep your device close. Recording stops by itself after 30 seconds. The room and the microphone affect the result.",
       "recording": "Recording",
       "take": "Microphone take"
     },
     "busy": {
       "cancel": "Cancel analysis",
       "locked": "An analysis is running. Cancel it first to start a new one.",
-      "elsewhere": "You can browse other pages; the analysis keeps running and the result will be here when you come back."
+      "elsewhere": "You can leave this page and the analysis keeps going. The result will be here when you come back."
     },
     "wait": {
       "title": "Analysing",
       "elapsed": "Elapsed",
-      "typical": "The last {n} model analyses in this browser took {s} s on average.",
+      "typical": "The last {n} analyses in this browser took {s} s on average.",
       "stages": {
         "waking": "Waking the server",
         "uploading": "Uploading",
         "processing": "Models running on the server",
         "done": "Preparing the report"
       },
-      "wakingNote": "If the Space was asleep, the first request waits for the container to start and load its model weights.",
-      "processingNote": "The server doesn't report progress at this stage. The steps below run in order, and the result arrives all at once.",
+      "wakingNote": "If the server is asleep, we wait for it to start first.",
+      "processingNote": "This server version doesn't report steps. They run in order and the result arrives when they're done.",
       "urlNote": "The audio is downloaded from YouTube first.",
       "pipelineTitle": "Steps on the server",
       "browser": "Browser measurement",
       "browserDone": "Waveform and spectrogram ready",
-      "browserFail": "Your browser can't decode this format; the result will come from the server only.",
+      "browserFail": "Your browser couldn't open this format, so the result will come from the server only.",
       "steps": {
         "download": "Downloading audio from YouTube",
-        "features": "47 features: spectral, temporal, harmonic, rhythm, timbre",
-        "vocals": "Vocal analysis: pitch, vibrato, formants, breath",
-        "wav2vec2": "wav2vec2 acoustic model",
-        "clap": "CLAP audio embedding",
-        "fst": "FST comparison model (external Space)",
-        "xai": "LightGBM verdict, 11-model vote and SHAP",
-        "meta": "Meta-classifier (second opinion)"
+        "features": "Extracting 47 features",
+        "vocals": "Vocal analysis",
+        "wav2vec2": "wav2vec2 model",
+        "clap": "CLAP model",
+        "fst": "FST model (external)",
+        "xai": "LightGBM verdict and 11 model votes",
+        "meta": "Meta-classifier"
       },
       "stepState": {
         "pending": "queued",
@@ -380,13 +380,13 @@
         "failed": "error",
         "skipped": "skipped"
       },
-      "liveNote": "These steps come live from the server: each line is ticked when the server finishes it.",
-      "resumed": "The page was reloaded; the job on the server is being followed from where it was, without uploading again."
+      "liveNote": "These steps come straight from the server. Each one is ticked when it finishes.",
+      "resumed": "The page was reloaded, but the analysis was still running on the server, so we picked it up there."
     },
     "interrupted": {
       "title": "Unfinished analysis",
-      "body": "“{label}” was still running when the page was reloaded or closed. The audio is kept in this browser.",
-      "retry": "Run it again",
+      "body": "The analysis of “{label}” stopped when the page closed. The audio is saved in this browser, so you can start it again.",
+      "retry": "Start again",
       "dismiss": "Dismiss"
     },
     "recent": {
@@ -408,49 +408,49 @@
       "empty": "Waiting for a source",
       "idle": "Pick a track and its waveform and spectrogram are drawn here.",
       "waveform": "Waveform",
-      "spectrogram": "Spectrogram · 40 Hz – 20 kHz",
+      "spectrogram": "Spectrogram · 40 Hz - 20 kHz",
       "residual": "High-band ripple · above 4 kHz",
       "cutoff": "Bandwidth",
       "play": "Play",
       "pause": "Pause",
       "seek": "Position in track",
       "restored": "Saved result",
-      "noVisuals": "Opened from history; audio and visuals are kept for the latest analysis only."
+      "noVisuals": "Opened from history. Audio and graphs are only kept for the latest analysis."
     },
     "report": {
       "eyebrow": "AURIS report",
-      "verdictAi": "Likely AI-generated",
-      "verdictHuman": "Likely made by people",
+      "verdictAi": "Probably AI-generated",
+      "verdictHuman": "Looks human-made",
       "probability": "AI probability",
       "threshold": "Threshold",
-      "thresholdNote": "Decision threshold {t}: the point where LightGBM's Youden J peaked in cross-validation. Above it, the verdict is AI.",
+      "thresholdNote": "Threshold {t}. Above it, the song is marked as AI-generated. The value was picked on validation data during training (Youden J).",
       "band": "Certainty",
       "consensus": "{ai}/{n} models say AI",
       "decidedBy": "Verdict",
       "trained": "Trained model",
       "signalOnly": "Browser measurement only",
       "fallbackTitle": "This result doesn't come from the trained model",
-      "fallbackBody": "No model result came back from the server: {reason} The score below is a weighted average of seven signal readings taken in your browser with hand-set thresholds; it isn't a classifier.",
+      "fallbackBody": "No result came back from the server: {reason} The score below is the average of 7 simple measurements taken in your browser. It isn't a trained model, so don't read it as a firm answer.",
       "retryServer": "Try the server again",
-      "signalScore": "Synthetic trace score",
-      "leanHuman": "Closer to a human recording",
-      "leanAi": "Closer to a generative model",
+      "signalScore": "Measurement score",
+      "leanHuman": "Closer to human-made",
+      "leanAi": "Closer to AI",
       "votes": {
-        "title": "What the models say",
-        "lead": "Eleven models trained on the same 47 features. The bar is each model's AI probability, the tick its threshold; the number on the right is its cross-validated ROC-AUC.",
-        "best": "verdict",
+        "title": "Model votes",
+        "lead": "Eleven models trained on the same data. The bar is each model's probability, the tick is its threshold, and the number on the right is its test score (ROC-AUC).",
+        "best": "main model",
         "unavailable": "failed to load on the server"
       },
       "why": {
-        "title": "What drove the verdict",
-        "lead": "The features that moved LightGBM's decision most (SHAP). Bars to the right pushed towards AI, to the left towards human. z: standard deviations from the training set.",
-        "towardsAi": "Towards AI",
-        "towardsHuman": "Towards human",
-        "none": "This response has no SHAP explanation."
+        "title": "What affected the result most",
+        "lead": "Calculated with SHAP. Bars to the right pulled the result towards AI, bars to the left towards human-made. z shows how far a value is from the training average.",
+        "towardsAi": "AI side",
+        "towardsHuman": "Human side",
+        "none": "There is no SHAP breakdown for this result."
       },
       "families": {
-        "title": "Feature families",
-        "lead": "SHAP contributions of all 47 features, summed by family.",
+        "title": "Feature groups",
+        "lead": "The same effects, added up by group.",
         "categories": {
           "spectral": "Spectral",
           "temporal": "Temporal",
@@ -464,8 +464,8 @@
         }
       },
       "towers": {
-        "title": "Independent layers",
-        "lead": "Signals that run apart from the verdict; 0 leans human, 1 leans AI.",
+        "title": "Other models",
+        "lead": "Separate models that don't take part in the verdict. 0 means human-made, 1 means AI.",
         "missing": "didn't run",
         "names": {
           "xai_ensemble": "LightGBM probability",
@@ -476,20 +476,20 @@
           "fst": "FST (mippia, external)"
         },
         "notes": {
-          "xai_ensemble": "The trained decision model",
-          "wav2vec2": "Deep model trained on raw audio",
-          "local_features": "Average of spectral, temporal and harmonic regularity; untrained",
+          "xai_ensemble": "The main model's probability",
+          "wav2vec2": "Deep learning model trained on raw audio",
+          "local_features": "Average of three simple measurements, not trained",
           "vocals": "Rule-based vocal measurements",
-          "clap": "Audio embedding; falls back to a spectral heuristic without the library",
-          "fst": "Open-source external detector"
+          "clap": "Audio embedding model",
+          "fst": "Another team's open-source model"
         },
-        "clapHeuristic": "The CLAP model didn't load on this run; the score came from its spectral heuristic fallback."
+        "clapHeuristic": "The CLAP model isn't installed on the server, so this score comes from a simple spectral calculation."
       },
       "meta": {
-        "title": "Second opinion",
-        "lead": "A stacking model that combines the layer scores. It never changes the verdict; it's shown for transparency.",
-        "agrees": "Agrees with the verdict",
-        "disagrees": "Disagrees with the verdict",
+        "title": "Meta-classifier",
+        "lead": "A separate model that combines the other models' scores. It doesn't change the main verdict and is shown for comparison.",
+        "agrees": "Same as the main verdict",
+        "disagrees": "Differs from the main verdict",
         "features": "Inputs the model weighs most"
       },
       "vocals": {
@@ -506,21 +506,21 @@
           "breathPatternScore": "Breath pattern",
           "vocalTextureScore": "Vocal texture"
         },
-        "scoresLead": "Each score leans human at 0, AI at 1.",
-        "none": "No clear vocals found."
+        "scoresLead": "0 means human-made, 1 means AI.",
+        "none": "No clear vocals were found in the song."
       },
       "signal": {
         "title": "Browser readings",
-        "lead": "The same audio, measured in your browser with seven hand-tuned readings. They don't feed the verdict; they show what the sound looks like.",
+        "lead": "Seven measurements your browser took on the same audio. They don't affect the result and are shown for reference.",
         "weight": "Weight"
       },
       "warnings": {
         "title": "Server notes",
-        "clap_analysis_unavailable": "The CLAP layer was off for this run.",
-        "wav2vec2_unavailable": "The wav2vec2 model wasn't available for this run.",
-        "vocal_analysis_unavailable": "Vocal analysis didn't complete.",
+        "clap_analysis_unavailable": "CLAP didn't run for this analysis.",
+        "wav2vec2_unavailable": "The wav2vec2 model didn't run for this analysis.",
+        "vocal_analysis_unavailable": "Vocal analysis didn't finish.",
         "fst_analysis_unavailable": "The external FST model couldn't be reached.",
-        "xai_unavailable": "No LightGBM explanation was produced; the verdict came from score fusion.",
+        "xai_unavailable": "The main model couldn't be loaded, so the result was combined from the other scores.",
         "meta_classifier_unavailable": "The meta-classifier didn't run.",
         "unknown": "Server note: {code}"
       },
@@ -535,46 +535,47 @@
         "model": "Model",
         "bpm": "Tempo",
         "peak": "Peak",
-        "analysed": "Listened to"
+        "analysed": "Analysed"
       },
-      "lossyNote": "In a lossy format (MP3, AAC…) the encoder itself cuts the high frequencies, so the browser readings leave bandwidth out.",
+      "lossyNote": "Compressed files like MP3 already have their high frequencies cut, so the bandwidth measurement wasn't used.",
       "export": "Download JSON",
-      "again": "New analysis"
+      "again": "New analysis",
+      "fusionOnly": "Main model didn't run"
     },
     "measures": {
       "spectralPeriodicity": {
         "label": "Spectral periodicity",
-        "desc": "Evenly spaced peaks above 4 kHz that don't move over time. Neural decoders can leave this grid when they upsample audio; musical harmonics shift with every note."
+        "desc": "Looks for evenly spaced peaks above 4 kHz. Some AI models leave this trace when they generate audio."
       },
       "bandwidthCutoff": {
         "label": "Bandwidth",
-        "desc": "The frequency where the energy stops. Many generators cut around 16 kHz; studio recordings usually reach 20 kHz."
+        "desc": "The frequency where the sound stops. Many generators cut around 16 kHz, while studio recordings usually go up to 20 kHz."
       },
       "flatnessVariation": {
         "label": "Flatness variation",
-        "desc": "How much the sound moves between tonal and noisy moments. Very little movement means the texture stays the same from start to finish."
+        "desc": "How much the sound moves between tonal and noisy moments. Little change means the texture stays the same the whole way through."
       },
       "centroidVariation": {
         "label": "Brightness variation",
-        "desc": "How far the spectral centroid wanders over the track. In a live performance it shifts clearly as instruments come and go."
+        "desc": "How much the brightness of the sound changes over the song. In a live performance it changes clearly as instruments come in and out."
       },
       "loudnessRange": {
         "label": "Dynamic range",
-        "desc": "The spread of short-term loudness (similar to LRA). A very narrow range points to heavy compression, which modern masters share."
+        "desc": "How much the loudness moves. A very narrow range points to heavy compression, which modern masters also have."
       },
       "tempoDrift": {
         "label": "Tempo drift",
-        "desc": "The tempo difference across four sections of the track. Human playing drifts a little; grid-locked productions may not drift at all."
+        "desc": "The tempo difference between parts of the song. Human playing drifts a little, while songs made on a computer may not drift at all."
       },
       "stereoCorrelation": {
         "label": "Stereo correlation",
-        "desc": "How similar the left and right channels are. A near-mono image is common with some generators."
+        "desc": "How similar the left and right channels are. Some generators produce an almost mono sound."
       }
     },
     "method": {
       "eyebrow": "Method",
-      "title": "How it was trained, and what it doesn't know",
-      "lead": "The decision model is a LightGBM classifier trained on {features} features from {samples} labelled tracks ({ai} AI, {human} human). The figures below come from {folds}-fold cross-validation; the weights are public on Hugging Face.",
+      "title": "About the model",
+      "lead": "The verdict comes from a LightGBM classifier. It was trained on {samples} songs ({ai} AI-generated, {human} human-made), with {features} features taken from each song. The numbers below come from {folds}-fold cross-validation. The model files are public on Hugging Face.",
       "metrics": {
         "accuracy": "Accuracy",
         "precision": "Precision",
@@ -583,15 +584,15 @@
         "auc": "ROC-AUC",
         "threshold": "Threshold (Youden J)"
       },
-      "stepsTitle": "What happens in an analysis",
-      "step1": "The server decodes the audio to mono with librosa and extracts spectral, temporal, harmonic, rhythm and vocal features.",
-      "step2": "The features are scaled with the training scaler; LightGBM gives a probability and the threshold {t} sets the verdict.",
-      "step3": "The same vector goes through ten more models (the vote), and SHAP computes each feature's push on the verdict.",
-      "step4": "wav2vec2, CLAP, FST and the vocal score are reported as independent layers; a meta-classifier adds a second opinion.",
+      "stepsTitle": "Analysis steps",
+      "step1": "The server opens the audio and extracts 47 features from its first 60 seconds.",
+      "step2": "LightGBM turns those features into a probability. Above {t}, the song is marked as AI-generated.",
+      "step3": "The same features go to 10 more models, and their votes are shown for comparison. SHAP calculates how much each feature moved the result.",
+      "step4": "wav2vec2, FST and the vocal analysis run separately, and their results are shown on their own in the report.",
       "limitsTitle": "Limits",
-      "limit1": "The model knows the generators and genres in its training set; a new generator or an unusual genre can fool it.",
-      "limit2": "Heavily compressed or fully electronic productions can lean AI even when people made them. Microphone takes and lossy formats distort the features.",
-      "limit3": "Accuracy is {acc}%: roughly one track in nine is misclassified. Don't treat the result as proof on its own."
+      "limit1": "The model knows the AI tools and music genres it saw in training. It can be wrong on a song made with a new tool or in a different genre.",
+      "limit2": "Heavily processed or fully electronic songs can look AI-generated even when people made them. Microphone recordings and low-quality files also affect the result.",
+      "limit3": "Accuracy is {acc}%, so roughly one song in nine is misclassified. Don't use the result as proof on its own."
     },
     "errors": {
       "tryAgain": "Try again",
@@ -607,20 +608,20 @@
       "fileTooLarge": "The file is over the 30 MB limit.",
       "fileTooSmall": "The file is too small.",
       "invalidFileName": "The file name is invalid.",
-      "decodeFailed": "The audio couldn't be decoded and the server returned no result. Convert it to WAV or MP3 and try again.",
+      "decodeFailed": "The audio couldn't be opened. Convert the file to WAV or MP3 and try again.",
       "tooShort": "At least 3 seconds of audio is needed.",
       "micDenied": "Microphone access was denied. Allow it in your browser settings and try again.",
       "backend_not_configured": "No AURIS server address is set.",
       "backend_unreachable": "The AURIS server couldn't be reached.",
       "backend_unexpected_response": "The server sent an unexpected response.",
-      "rateLimited": "Too many requests in a short time; wait a minute and try again.",
+      "rateLimited": "Too many requests in a short time. Wait a minute and try again.",
       "cancelled": "The analysis was cancelled.",
-      "serverPreview": "The server couldn't run this audio through the models and returned only a preview, which isn't shown.",
+      "serverPreview": "The server couldn't analyse this audio.",
       "internalError": "Something went wrong on the server.",
-      "serverBusy": "The server is busy with other analyses; try again shortly.",
-      "serverDecodeFailed": "The server couldn't decode this audio file. Convert it to WAV or MP3 and try again.",
-      "audioSilent": "The audio looks silent; there's no signal to analyse.",
-      "jobLost": "The server restarted and lost the job; it needs to be run again."
+      "serverBusy": "The server is handling too many analyses right now. Try again in a bit.",
+      "serverDecodeFailed": "The server couldn't open this file. Convert it to WAV or MP3 and try again.",
+      "audioSilent": "The audio seems to be silent, so there's nothing to analyse.",
+      "jobLost": "The server restarted and the analysis stopped. You'll need to start it again."
     }
   },
   "mlToolkit": {

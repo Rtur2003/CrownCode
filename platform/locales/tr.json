@@ -295,13 +295,13 @@
   },
   "aiDetection": {
     "meta": {
-      "title": "AURIS — Yapay zekâ müziği tespiti",
-      "description": "Bir şarkıyı dosyadan, bağlantıdan ya da mikrofondan AURIS'e gönder: 47 öznitelikle eğitilmiş LightGBM kararı, 11 modelin oyu, SHAP açıklaması ve spektrogram tek raporda.",
+      "title": "AURIS · Yapay zekâ müzik tespiti",
+      "description": "Şarkını yükle, AURIS yapay zekâyla üretilmiş olma ihtimalini hesaplasın. Karar LightGBM modelinden gelir, hangi özelliklerin etkili olduğu raporda görünür.",
       "keywords": "AURIS, yapay zekâ müzik tespiti, LightGBM, SHAP, spektrogram, ses analizi, CrownCode"
     },
     "intro": {
       "eyebrow": "Ses laboratuvarı · Tez araştırması",
-      "lead": "Bir parça gönder; AURIS onu eğitilmiş modellerinden geçirir, kararı neyin belirlediğini tek tek gösterir. Dalga formu ve spektrogram tarayıcında, karar sunucuda."
+      "lead": "Bir şarkı yükle. AURIS onu eğitilmiş modellerle inceler ve sonucun hangi ölçümlere dayandığını gösterir."
     },
     "server": {
       "label": "Model sunucusu",
@@ -310,8 +310,8 @@
       "ready": "Hazır",
       "waking": "Uyanıyor",
       "down": "Ulaşılamıyor",
-      "wakingNote": "Ücretsiz Hugging Face Space'i uykudaysa açılması 1–2 dakika sürer. Parçayı şimdi gönderebilirsin; sunucu açılınca yüklenir.",
-      "downNote": "Sunucu yanıt vermiyor. Parça gönderirsen yalnızca tarayıcı ölçümü yapılır ve rapor bunu açıkça belirtir.",
+      "wakingNote": "Sunucu bir süre kullanılmayınca uykuya geçiyor, açılması 1-2 dakika sürebilir. Şarkıyı şimdiden gönderebilirsin, sunucu açılınca yüklenir.",
+      "downNote": "Sunucu şu an cevap vermiyor. Yine de şarkı gönderirsen sadece tarayıcıdaki ölçüm yapılır, raporda da bu yazar.",
       "retry": "Tekrar yokla",
       "models": "Model deposu",
       "space": "Sunucu"
@@ -323,55 +323,55 @@
       "mic": "Mikrofon"
     },
     "file": {
-      "drop": "Parçayı buraya bırak",
+      "drop": "Şarkıyı buraya bırak",
       "browse": "ya da bilgisayarından seç",
       "formats": "MP3 · WAV · FLAC · M4A · OGG · en fazla 30 MB",
-      "privacy": "Dosya, modellerin çalıştığı AURIS sunucusuna gönderilir ve analizden sonra tutulmaz."
+      "privacy": "Dosya analiz için AURIS sunucusuna gönderilir, sonra saklanmaz."
     },
     "url": {
       "label": "YouTube bağlantısı",
       "placeholder": "https://youtu.be/…",
       "submit": "Bağlantıyı analiz et",
-      "hint": "Sunucu sesi YouTube'dan indirip aynı modellerden geçirir. YouTube bazı videolarda indirmeyi engeller; o zaman parçayı dosya olarak yükle."
+      "hint": "Ses YouTube'dan indirilip aynı şekilde incelenir. Bazı videolar indirilemiyor, o durumda şarkıyı dosya olarak yükle."
     },
     "mic": {
       "start": "Kaydet",
       "stop": "Durdur",
-      "hint": "Parçayı hoparlörden çal, cihazı yakın tut. 30 saniyede kendiliğinden durur. Oda ve mikrofon sonucu etkiler.",
+      "hint": "Şarkıyı hoparlörden çal, cihazı yakın tut. Kayıt 30 saniyede kendisi durur. Odanın sesi ve mikrofon sonucu etkiler.",
       "recording": "Kaydediliyor",
       "take": "Mikrofon kaydı"
     },
     "busy": {
       "cancel": "Analizi iptal et",
       "locked": "Bir analiz sürüyor. Yenisini başlatmak için önce onu iptal et.",
-      "elsewhere": "Başka sayfalara geçebilirsin; analiz arka planda sürer, döndüğünde sonuç burada olur."
+      "elsewhere": "Sayfadan ayrılabilirsin, analiz devam eder. Döndüğünde sonuç burada olur."
     },
     "wait": {
       "title": "Analiz sürüyor",
       "elapsed": "Geçen süre",
-      "typical": "Bu tarayıcıdaki son {n} model analizi ortalama {s} sn sürdü.",
+      "typical": "Bu tarayıcıdaki son {n} analiz ortalama {s} sn sürdü.",
       "stages": {
         "waking": "Sunucu uyanıyor",
         "uploading": "Yükleniyor",
         "processing": "Sunucuda modeller çalışıyor",
         "done": "Rapor hazırlanıyor"
       },
-      "wakingNote": "Space uykudaysa ilk istek konteynerin açılmasını ve model ağırlıklarının yüklenmesini bekler.",
-      "processingNote": "Sunucu bu aşamada ara ilerleme bildirmiyor. Aşağıdaki adımlar sırayla çalışıyor; sonuç tek seferde gelir.",
-      "urlNote": "Ses önce YouTube'dan indiriliyor.",
+      "wakingNote": "Sunucu uykudaysa önce açılmasını bekliyoruz.",
+      "processingNote": "Bu sunucu sürümü ara adımları bildirmiyor. Adımlar sırayla çalışıyor, sonuç bitince gelecek.",
+      "urlNote": "Önce ses YouTube'dan indiriliyor.",
       "pipelineTitle": "Sunucudaki adımlar",
       "browser": "Tarayıcı ölçümü",
       "browserDone": "Dalga formu ve spektrogram hazır",
-      "browserFail": "Tarayıcı bu formatı çözemedi; sonuç yalnızca sunucudan gelecek.",
+      "browserFail": "Tarayıcı bu formatı açamadı, sonuç sadece sunucudan gelecek.",
       "steps": {
-        "download": "YouTube'dan ses indirme",
-        "features": "47 öznitelik: spektral, zamansal, armonik, ritim, tını",
-        "vocals": "Vokal analizi: perde, vibrato, formant, nefes",
-        "wav2vec2": "wav2vec2 akustik model",
-        "clap": "CLAP ses gömmesi",
-        "fst": "FST karşılaştırma modeli (harici Space)",
-        "xai": "LightGBM kararı, 11 model oyu ve SHAP",
-        "meta": "Meta-sınıflandırıcı (ikinci görüş)"
+        "download": "Sesi YouTube'dan indirme",
+        "features": "47 öznitelik çıkarımı",
+        "vocals": "Vokal analizi",
+        "wav2vec2": "wav2vec2 modeli",
+        "clap": "CLAP modeli",
+        "fst": "FST modeli (harici)",
+        "xai": "LightGBM kararı ve 11 modelin oyu",
+        "meta": "Meta-sınıflandırıcı"
       },
       "stepState": {
         "pending": "sırada",
@@ -380,13 +380,13 @@
         "failed": "hata",
         "skipped": "atlandı"
       },
-      "liveNote": "Adımlar sunucudan canlı geliyor: her satır, sunucu o adımı bitirdiğinde işaretlenir.",
-      "resumed": "Sayfa yenilendi; sunucudaki iş kaldığı yerden izleniyor, ses yeniden yüklenmedi."
+      "liveNote": "Adımlar sunucudan anlık geliyor. Biten adımın yanına işaret düşer.",
+      "resumed": "Sayfa yenilendi ama analiz sunucuda devam ediyordu, oradan takip ediliyor."
     },
     "interrupted": {
       "title": "Yarıda kalan analiz",
-      "body": "“{label}” sayfa yenilendiğinde ya da kapandığında sürüyordu. Ses bu tarayıcıda saklı.",
-      "retry": "Yeniden çalıştır",
+      "body": "“{label}” için başlattığın analiz sayfa kapanınca yarıda kaldı. Ses bu tarayıcıda kayıtlı, tekrar başlatabilirsin.",
+      "retry": "Yeniden başlat",
       "dismiss": "Vazgeç"
     },
     "recent": {
@@ -406,51 +406,51 @@
     },
     "scope": {
       "empty": "Kaynak bekleniyor",
-      "idle": "Bir parça seçtiğinde dalga formu ve spektrogram burada çizilir.",
+      "idle": "Bir şarkı seçtiğinde dalga formu ve spektrogram burada çizilir.",
       "waveform": "Dalga formu",
-      "spectrogram": "Spektrogram · 40 Hz – 20 kHz",
+      "spectrogram": "Spektrogram · 40 Hz - 20 kHz",
       "residual": "Yüksek bant dalgalanması · 4 kHz üstü",
       "cutoff": "Bant sınırı",
       "play": "Çal",
       "pause": "Duraklat",
       "seek": "Parçada konum",
       "restored": "Kayıtlı sonuç",
-      "noVisuals": "Geçmişten açıldı; ses ve görseller yalnızca son analiz için saklanır."
+      "noVisuals": "Geçmişten açıldı. Ses ve grafikler sadece son analiz için saklanıyor."
     },
     "report": {
       "eyebrow": "AURIS raporu",
-      "verdictAi": "Yapay zekâ üretimi olası",
-      "verdictHuman": "İnsan yapımı olası",
+      "verdictAi": "Yapay zekâ ile üretilmiş olabilir",
+      "verdictHuman": "İnsan yapımı görünüyor",
       "probability": "AI olasılığı",
       "threshold": "Eşik",
-      "thresholdNote": "Karar eşiği {t}: LightGBM'in çapraz doğrulamada Youden J'yi en yüksek yaptığı nokta. Olasılık eşiğin üstündeyse sonuç AI.",
+      "thresholdNote": "Eşik {t}. Olasılık bunun üstündeyse sonuç yapay zekâ olarak işaretlenir. Bu değer eğitimde doğrulama verisi üzerinde seçildi (Youden J).",
       "band": "Kesinlik",
       "consensus": "{ai}/{n} model AI diyor",
       "decidedBy": "Karar",
       "trained": "Eğitilmiş model",
-      "signalOnly": "Yalnızca tarayıcı ölçümü",
+      "signalOnly": "Sadece tarayıcı ölçümü",
       "fallbackTitle": "Bu sonuç eğitilmiş modelden gelmiyor",
-      "fallbackBody": "Sunucudan model sonucu alınamadı: {reason} Aşağıdaki skor, tarayıcıda el ayarlı eşiklerle yapılan 7 sinyal ölçümünün ağırlıklı ortalaması; bir sınıflandırıcı değildir.",
+      "fallbackBody": "Sunucudan sonuç alınamadı: {reason} Aşağıdaki skor tarayıcıda yapılan 7 basit ölçümün ortalaması. Eğitilmiş bir model değil, kesin bir sonuç gibi okunmamalı.",
       "retryServer": "Sunucuda tekrar dene",
-      "signalScore": "Sentetik iz skoru",
-      "leanHuman": "İnsan kaydına yakın",
-      "leanAi": "Üretken modele yakın",
+      "signalScore": "Ölçüm skoru",
+      "leanHuman": "İnsan yapımına yakın",
+      "leanAi": "Yapay zekâya yakın",
       "votes": {
-        "title": "Modeller ne diyor",
-        "lead": "Aynı 47 öznitelikle eğitilmiş 11 model. Çubuk modelin AI olasılığı, çizgi o modelin eşiği; sağdaki sayı modelin çapraz doğrulama ROC-AUC'u.",
-        "best": "karar",
+        "title": "Model oyları",
+        "lead": "Aynı verilerle eğitilmiş 11 model. Çubuk modelin verdiği olasılık, dikey çizgi o modelin eşiği. Sağdaki sayı modelin test başarısı (ROC-AUC).",
+        "best": "ana model",
         "unavailable": "sunucuda yüklenemedi"
       },
       "why": {
-        "title": "Kararı ne yönlendirdi",
-        "lead": "LightGBM kararına en çok etki eden öznitelikler (SHAP). Sağa uzanan AI yönüne, sola uzanan insan yönüne itti. z: eğitim setine göre kaç standart sapma uzakta.",
-        "towardsAi": "AI yönüne",
-        "towardsHuman": "İnsan yönüne",
-        "none": "SHAP açıklaması bu yanıtta yok."
+        "title": "Sonucu en çok etkileyenler",
+        "lead": "SHAP ile hesaplandı. Sağa uzanan çubuk sonucu yapay zekâ tarafına, sola uzanan insan tarafına çekti. z değeri, ölçümün eğitim verisindeki ortalamadan ne kadar uzak olduğunu gösterir.",
+        "towardsAi": "Yapay zekâ tarafı",
+        "towardsHuman": "İnsan tarafı",
+        "none": "Bu sonuçta SHAP hesabı yok."
       },
       "families": {
-        "title": "Öznitelik aileleri",
-        "lead": "47 özniteliğin SHAP katkısı ailelerine göre toplandı.",
+        "title": "Özellik grupları",
+        "lead": "Aynı etkiler gruplara göre toplandı.",
         "categories": {
           "spectral": "Spektral",
           "temporal": "Zamansal",
@@ -464,8 +464,8 @@
         }
       },
       "towers": {
-        "title": "Bağımsız katmanlar",
-        "lead": "Karardan ayrı çalışan sinyaller; 0 insan, 1 AI yönü.",
+        "title": "Diğer modeller",
+        "lead": "Karara katılmayan, ayrı çalışan modeller. 0 insan yapımı, 1 yapay zekâ demek.",
         "missing": "çalışmadı",
         "names": {
           "xai_ensemble": "LightGBM olasılığı",
@@ -476,20 +476,20 @@
           "fst": "FST (mippia, harici)"
         },
         "notes": {
-          "xai_ensemble": "Eğitilmiş karar modeli",
-          "wav2vec2": "Ham ses üzerinde eğitilmiş derin model",
-          "local_features": "Spektral, zamansal ve armonik düzenlilik ortalaması; eğitilmemiş",
-          "vocals": "Kural tabanlı vokal ölçümleri",
-          "clap": "Ses gömmesi; kütüphane yoksa spektral sezgisele düşer",
-          "fst": "Açık kaynak harici tespit modeli"
+          "xai_ensemble": "Ana karar modelinin olasılığı",
+          "wav2vec2": "Ham ses üzerinde eğitilmiş derin öğrenme modeli",
+          "local_features": "Üç basit ölçümün ortalaması, eğitilmiş değil",
+          "vocals": "Kurala dayalı vokal ölçümleri",
+          "clap": "Ses gömme modeli",
+          "fst": "Başka bir ekibin açık kaynak modeli"
         },
-        "clapHeuristic": "Bu çalıştırmada CLAP modeli yüklenemedi; skor spektral sezgisel yedekten geldi."
+        "clapHeuristic": "CLAP modeli sunucuda kurulu değil, bu skor basit bir spektral hesaptan geliyor."
       },
       "meta": {
-        "title": "İkinci görüş",
-        "lead": "Katman skorlarını birleştiren yığınlama modeli. Kararı değiştirmez; şeffaflık için gösterilir.",
-        "agrees": "Birincil kararla aynı",
-        "disagrees": "Birincil karardan farklı",
+        "title": "Meta-sınıflandırıcı",
+        "lead": "Diğer modellerin skorlarını birleştiren ayrı bir model. Ana kararı değiştirmez, karşılaştırma için burada.",
+        "agrees": "Ana kararla aynı",
+        "disagrees": "Ana karardan farklı",
         "features": "Modelin en çok ağırlık verdiği girdiler"
       },
       "vocals": {
@@ -506,21 +506,21 @@
           "breathPatternScore": "Nefes deseni",
           "vocalTextureScore": "Vokal doku"
         },
-        "scoresLead": "Her skor 0 insan, 1 AI yönü.",
-        "none": "Belirgin vokal bulunmadı."
+        "scoresLead": "0 insan yapımı, 1 yapay zekâ demek.",
+        "none": "Şarkıda belirgin bir vokal bulunamadı."
       },
       "signal": {
         "title": "Tarayıcı ölçümleri",
-        "lead": "Aynı ses, tarayıcıda yedi el ayarlı ölçümle. Model kararına katılmaz; sesin neye benzediğini gösterir.",
+        "lead": "Tarayıcının aynı ses üzerinde yaptığı 7 ölçüm. Sonuca etki etmez, bilgi için gösteriliyor.",
         "weight": "Ağırlık"
       },
       "warnings": {
         "title": "Sunucu notları",
-        "clap_analysis_unavailable": "CLAP katmanı bu çalıştırmada devre dışıydı.",
-        "wav2vec2_unavailable": "wav2vec2 modeli bu çalıştırmada kullanılamadı.",
+        "clap_analysis_unavailable": "CLAP bu analizde çalışmadı.",
+        "wav2vec2_unavailable": "wav2vec2 modeli bu analizde çalışmadı.",
         "vocal_analysis_unavailable": "Vokal analizi tamamlanamadı.",
         "fst_analysis_unavailable": "Harici FST modeline ulaşılamadı.",
-        "xai_unavailable": "LightGBM açıklaması üretilemedi; karar skor birleştirmesinden geldi.",
+        "xai_unavailable": "Ana karar modeli yüklenemedi, sonuç diğer skorların birleşiminden hesaplandı.",
         "meta_classifier_unavailable": "Meta-sınıflandırıcı çalışmadı.",
         "unknown": "Sunucu notu: {code}"
       },
@@ -535,46 +535,47 @@
         "model": "Model",
         "bpm": "Tempo",
         "peak": "Tepe",
-        "analysed": "Dinlenen"
+        "analysed": "İncelenen süre"
       },
-      "lossyNote": "Kayıplı formatta (MP3, AAC…) kodlayıcı yüksek frekansları kendisi keser; tarayıcı ölçümünde bant sınırı hesaba katılmadı.",
+      "lossyNote": "MP3 gibi sıkıştırılmış dosyalarda yüksek frekanslar zaten kesildiği için bant sınırı ölçümü kullanılmadı.",
       "export": "JSON indir",
-      "again": "Yeni analiz"
+      "again": "Yeni analiz",
+      "fusionOnly": "Ana model çalışmadı"
     },
     "measures": {
       "spectralPeriodicity": {
         "label": "Spektral periyodiklik",
-        "desc": "4 kHz üstünde zamanla değişmeyen, eşit aralıklı tepeler. Sinir ağı çözücüleri sesi büyütürken bu ızgarayı bırakabilir; müzikteki armonikler ise notayla birlikte kayar."
+        "desc": "4 kHz üstünde sabit aralıklı tepeler arar. Bazı yapay zekâ modelleri sesi üretirken bu izi bırakır."
       },
       "bandwidthCutoff": {
         "label": "Bant sınırı",
-        "desc": "Enerjinin kesildiği frekans. Birçok üretici 16 kHz civarında keser; stüdyo kayıtları genelde 20 kHz'e kadar uzanır."
+        "desc": "Sesin hangi frekansta kesildiği. Birçok üretici 16 kHz civarında keser, stüdyo kayıtları genelde 20 kHz'e kadar çıkar."
       },
       "flatnessVariation": {
         "label": "Spektral düzlük değişimi",
-        "desc": "Tonal ve gürültülü anlar arasındaki gidiş geliş. Çok az değişim, dokunun baştan sona aynı kaldığını gösterir."
+        "desc": "Sesin tonlu ve gürültülü anlar arasında ne kadar değiştiği. Az değişim, dokunun baştan sona aynı kaldığını gösterir."
       },
       "centroidVariation": {
         "label": "Parlaklık değişimi",
-        "desc": "Spektral ağırlık merkezinin parça boyunca ne kadar oynadığı. Canlı çalımda enstrümanlar girip çıktıkça belirgin biçimde değişir."
+        "desc": "Sesin parlaklığının şarkı boyunca ne kadar değiştiği. Canlı çalımda enstrümanlar girip çıktıkça belirgin şekilde değişir."
       },
       "loudnessRange": {
         "label": "Dinamik aralık",
-        "desc": "Kısa süreli ses seviyesinin yayılımı (LRA benzeri). Çok dar aralık yoğun sıkıştırmaya işaret eder; modern masterlarda da görülür."
+        "desc": "Ses seviyesinin ne kadar oynadığı. Çok dar aralık yoğun sıkıştırmaya işaret eder, modern masterlarda da görülür."
       },
       "tempoDrift": {
         "label": "Tempo kayması",
-        "desc": "Parçanın dört bölümündeki tempo farkı. İnsan çalımı hafifçe kayar; ızgaraya oturmuş prodüksiyonlarda da kayma olmayabilir."
+        "desc": "Şarkının bölümleri arasındaki tempo farkı. İnsan çalımında tempo biraz kayar, bilgisayarda yapılan şarkılarda hiç kaymayabilir."
       },
       "stereoCorrelation": {
         "label": "Stereo korelasyon",
-        "desc": "Sol ve sağ kanalın benzerliği. Neredeyse mono bir görüntü, bazı üreticilerde sık görülür."
+        "desc": "Sol ve sağ kanalın ne kadar benzediği. Bazı üreticilerde neredeyse mono bir ses çıkar."
       }
     },
     "method": {
       "eyebrow": "Yöntem",
-      "title": "Nasıl eğitildi, neyi bilmiyor",
-      "lead": "Karar modeli, {samples} etiketli parçadan ({ai} AI, {human} insan) çıkarılan {features} öznitelikle eğitilmiş bir LightGBM sınıflandırıcısı. Aşağıdaki değerler {folds}-katlı çapraz doğrulamadan; ağırlıklar Hugging Face'te herkese açık.",
+      "title": "Model hakkında",
+      "lead": "Karar modeli bir LightGBM sınıflandırıcısı. {samples} şarkıyla eğitildi ({ai} yapay zekâ, {human} insan yapımı) ve her şarkıdan {features} öznitelik çıkarıldı. Aşağıdaki sonuçlar {folds} katlı çapraz doğrulamadan. Model dosyaları Hugging Face'te herkese açık.",
       "metrics": {
         "accuracy": "Doğruluk",
         "precision": "Kesinlik",
@@ -583,15 +584,15 @@
         "auc": "ROC-AUC",
         "threshold": "Eşik (Youden J)"
       },
-      "stepsTitle": "Bir analizde ne oluyor",
-      "step1": "Ses sunucuda librosa ile mono çözülür; spektral, zamansal, armonik, ritim ve vokal öznitelikleri çıkarılır.",
-      "step2": "Öznitelikler eğitimdeki ölçekleyiciyle normalize edilir; LightGBM olasılık verir, eşik {t} kararı belirler.",
-      "step3": "Aynı vektör 10 başka modelden de geçer (oy), SHAP her özniteliğin karara itişini hesaplar.",
-      "step4": "wav2vec2, CLAP, FST ve vokal skoru bağımsız katman olarak raporlanır; meta-sınıflandırıcı ikinci görüş verir.",
+      "stepsTitle": "Analiz adımları",
+      "step1": "Ses sunucuda açılır ve ilk 60 saniyesinden 47 öznitelik çıkarılır.",
+      "step2": "LightGBM bu özniteliklerden bir olasılık hesaplar. Olasılık {t} üstündeyse sonuç yapay zekâ olur.",
+      "step3": "Aynı öznitelikler 10 modele daha verilir, oyları karşılaştırma için gösterilir. SHAP hangi özniteliğin sonucu ne kadar etkilediğini hesaplar.",
+      "step4": "wav2vec2, FST ve vokal analizi ayrıca çalışır, sonuçları raporda ayrı gösterilir.",
       "limitsTitle": "Sınırlar",
-      "limit1": "Model eğitim setindeki üreticileri ve türleri tanır; yeni bir üretici ya da alışılmadık bir tür hatalı sonuç verebilir.",
-      "limit2": "Yoğun sıkıştırılmış ya da tamamen elektronik prodüksiyonlar, insan yapımı olsa da AI tarafına kayabilir. Mikrofon kaydı ve kayıplı format ölçümleri bozar.",
-      "limit3": "Doğruluk %{acc}: yaklaşık her dokuz parçadan biri yanlış sınıflanır. Sonucu tek başına kanıt olarak kullanma."
+      "limit1": "Model eğitimde gördüğü yapay zekâ araçlarını ve müzik türlerini tanır. Yeni bir araçla üretilmiş ya da farklı türde bir şarkıda yanılabilir.",
+      "limit2": "Yoğun işlenmiş ya da tamamen elektronik şarkılar insan yapımı olsa bile yapay zekâ gibi görünebilir. Mikrofonla kayıt ve düşük kaliteli dosyalar da sonucu etkiler.",
+      "limit3": "Doğruluk %{acc}, yani yaklaşık dokuz şarkıdan biri yanlış sınıflanıyor. Sonucu tek başına kanıt olarak kullanma."
     },
     "errors": {
       "tryAgain": "Tekrar dene",
@@ -607,20 +608,20 @@
       "fileTooLarge": "Dosya 30 MB sınırını aşıyor.",
       "fileTooSmall": "Dosya çok küçük.",
       "invalidFileName": "Dosya adı geçersiz.",
-      "decodeFailed": "Ses çözülemedi ve sunucudan da sonuç alınamadı. WAV ya da MP3'e dönüştürüp tekrar dene.",
+      "decodeFailed": "Ses açılamadı. Dosyayı WAV ya da MP3'e çevirip tekrar dene.",
       "tooShort": "Analiz için en az 3 saniyelik ses gerekiyor.",
       "micDenied": "Mikrofon izni verilmedi. Tarayıcı ayarlarından izin verip tekrar dene.",
       "backend_not_configured": "AURIS sunucu adresi tanımlı değil.",
       "backend_unreachable": "AURIS sunucusuna ulaşılamadı.",
       "backend_unexpected_response": "Sunucu beklenmeyen bir yanıt verdi.",
-      "rateLimited": "Kısa sürede çok fazla istek gönderildi; bir dakika bekleyip tekrar dene.",
+      "rateLimited": "Kısa sürede çok fazla istek gönderildi. Bir dakika bekleyip tekrar dene.",
       "cancelled": "Analiz iptal edildi.",
-      "serverPreview": "Sunucu bu sesi modellerden geçiremedi ve yalnızca bir önizleme döndürdü; önizleme gösterilmiyor.",
+      "serverPreview": "Sunucu bu sesi analiz edemedi.",
       "internalError": "Sunucuda bir hata oluştu.",
-      "serverBusy": "Sunucu şu an başka analizlerle meşgul; biraz sonra tekrar dene.",
-      "serverDecodeFailed": "Sunucu bu ses dosyasını çözemedi. WAV ya da MP3'e dönüştürüp tekrar dene.",
-      "audioSilent": "Ses sessiz görünüyor; analiz edilecek sinyal yok.",
-      "jobLost": "Sunucu yeniden başladığı için iş kayboldu; tekrar çalıştırman gerekiyor."
+      "serverBusy": "Sunucuda şu an çok fazla analiz var, biraz sonra tekrar dene.",
+      "serverDecodeFailed": "Sunucu bu dosyayı açamadı. WAV ya da MP3'e çevirip tekrar dene.",
+      "audioSilent": "Ses tamamen sessiz görünüyor, analiz edilecek bir şey yok.",
+      "jobLost": "Sunucu yeniden başladığı için analiz yarıda kaldı. Tekrar başlatman gerekiyor."
     }
   },
   "mlToolkit": {

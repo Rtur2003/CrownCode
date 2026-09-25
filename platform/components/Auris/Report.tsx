@@ -61,6 +61,9 @@ export const Report: React.FC<ReportProps> = ({ job, onReset, onRetryServer }) =
   const L = A.report
   const r = job.result
   const trained = isTrained(r)
+  // Only the calibrated LightGBM result counts as the model's verdict; a
+  // server run without it fell back to combining the other layers' scores.
+  const modelVerdict = trained && !!r.xai
   const xai = r.xai
   const p = aiProbability(r)
   const threshold = xai?.threshold ?? 0.5
@@ -112,11 +115,11 @@ export const Report: React.FC<ReportProps> = ({ job, onReset, onRetryServer }) =
         <div className={styles.heroMain}>
           <p className={styles.eyebrow}>{L.eyebrow} · <span className={styles.heroLabel}>{job.label}</span></p>
           <h2 id="auris-report-title" className={styles.verdictTitle}>
-            {trained ? (isAi ? L.verdictAi : L.verdictHuman) : (isAi ? L.leanAi : L.leanHuman)}
+            {modelVerdict ? (isAi ? L.verdictAi : L.verdictHuman) : (isAi ? L.leanAi : L.leanHuman)}
           </h2>
           <p className={styles.chips}>
-            <span className={styles.chip} data-tone={trained ? 'ok' : 'warn'}>
-              {trained ? `${L.trained} · ${xai?.bestModel ?? r.decisionSource}` : L.signalOnly}
+            <span className={styles.chip} data-tone={modelVerdict ? 'ok' : 'warn'}>
+              {modelVerdict ? `${L.trained} · ${xai?.bestModel}` : trained ? L.fusionOnly : L.signalOnly}
             </span>
             {band && <span className={styles.chip}>{L.band}: {band}</span>}
             {liveVotes.length > 0 && <span className={styles.chip}>{fill(L.consensus, { ai: aiVotes, n: liveVotes.length })}</span>}

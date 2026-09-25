@@ -50,7 +50,7 @@ const AurisPage: NextPage = () => {
   }, [job?.stage, job?.restored])
 
   const report = job?.stage === 'done' && job.result ? (job as AurisJob & { result: AnalysisResult }) : null
-  const canRerun = report && !isTrained(report.result) && !report.restored
+  const canRerun = report && !report.result.xai && !report.restored
 
   return (
     <MainLayout title={A.meta.title} description={A.meta.description} keywords={A.meta.keywords}>
