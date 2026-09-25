@@ -1,21 +1,21 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { AnimatePresence, m as motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
+import { m as motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { PRODUCT_CATALOG, resolveProduct, type ProductEntry } from '@/config/product-catalog'
 import styles from './ProjectExplorer.module.css'
 
 const materials: Record<string, string> = {
-  'ai-music-detection': '/images/showroom/world-auris.webp',
-  'ml-toolkit': '/images/showroom/world-ml.webp',
-  'crown-fortune': '/images/showroom/world-fortune.webp',
-  'crown-dreams': '/images/showroom/world-dreams.webp',
-  'crown-commend': '/images/showroom/world-commend-v2.webp',
-  'crown-vote': '/images/showroom/world-votryx-v2.webp',
-  'noir-grain': '/images/showroom/world-noir.webp',
-  kognita: '/images/showroom/world-kognita.webp',
+  'ai-music-detection': '/images/showroom/planet-auris.webp',
+  'ml-toolkit': '/images/showroom/planet-ml.webp',
+  'crown-fortune': '/images/showroom/planet-fortune.webp',
+  'crown-dreams': '/images/showroom/planet-dreams.webp',
+  'crown-commend': '/images/showroom/planet-commend.webp',
+  'crown-vote': '/images/showroom/planet-votryx.webp',
+  'noir-grain': '/images/showroom/planet-noir.webp',
+  kognita: '/images/showroom/planet-kognita.webp',
 }
 
 const focusStart = 0.18
@@ -76,10 +76,10 @@ function Specimen({ product, index, count, progress, onSelect, reducedMotion, in
 
   return (
     <motion.div className={styles.specimen} style={{ transform: position }}>
-      <motion.button type="button" className={styles.specimenOrb} style={{ scale, rotate, opacity, pointerEvents }}
+      <motion.button type="button" className={styles.specimenOrb} style={{ scale, opacity, pointerEvents }}
         onClick={() => onSelect(index, true)} tabIndex={interactive ? 0 : -1} aria-hidden={interactive ? undefined : true}
         aria-label={`${product.name}: ${product.title}`}>
-        <Image src={product.image} alt="" fill unoptimized />
+        <motion.span className={styles.planetSurface} style={{ rotate }}><Image src={product.image} alt="" fill unoptimized /></motion.span>
       </motion.button>
       <motion.span className={styles.specimenName} style={{ opacity: labelOpacity }}>
         <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span> {product.name}
@@ -102,17 +102,13 @@ export function ProjectExplorer() {
   const products: Product[] = PRODUCT_CATALOG.map(entry => {
     const localized = resolveProduct(entry, t)
     const name = entry.id === 'crown-vote' ? 'VOTRYX' : entry.id === 'ml-toolkit' ? 'ML Toolkit' : localized.title.split(' - ')[0]
-    return { ...entry, ...localized, image: materials[entry.id] ?? '/images/showroom/atlas-plate.webp', name }
+    return { ...entry, ...localized, image: materials[entry.id] ?? '/images/showroom/planet-generic.webp', name }
   })
   const count = products.length
   const journeyStyle = { '--journey-height': `${(count + 0.6) * 100}svh` } as CSSProperties
 
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.1, 0.22], [1, 1, 0])
-  const heroScale = useTransform(scrollYProgress, [0, 0.28], [1, 1.45])
-  const heroX = useTransform(scrollYProgress, [0, 0.28], ['0%', '-12%'])
-  const detailOpacity = useTransform(scrollYProgress, [0.1, 0.22], [0, 1])
-  const detailScale = useTransform(scrollYProgress, [0.1, 1], [1.1, 1.02])
-  const detailX = useTransform(scrollYProgress, [0.1, 1], ['3%', '-3%'])
+  const fieldScale = useTransform(scrollYProgress, [0, 1], [1.04, 1.18])
+  const fieldX = useTransform(scrollYProgress, [0, 1], ['0%', '-4%'])
   const introOpacity = useTransform(scrollYProgress, [0, 0.06, 0.145], [1, 1, 0])
   const introY = useTransform(scrollYProgress, [0, 0.15], [0, -45])
   const introVisibility = useTransform(scrollYProgress, value => value >= 0.145 ? 'hidden' : 'visible')
@@ -120,7 +116,9 @@ export function ProjectExplorer() {
     if (reducedMotion) {return 1}
     return 0.22 + smooth(value / 0.15) * 0.78
   })
-  const atlasMarkOpacity = useTransform(scrollYProgress, value => smooth((value - 0.14) / 0.13) * Math.max(0, 1 - nearestFocusAt(value, count) * 2) * 0.62)
+  const originX = useTransform(scrollYProgress, value => `${(typeof window !== 'undefined' && window.innerWidth <= 700 ? 0 : 17) * (1 - smooth(value / 0.23))}vw`)
+  const originScale = useTransform(scrollYProgress, value => (typeof window !== 'undefined' && window.innerWidth <= 700 ? 1.55 : 2.05) * (1 - smooth(value / 0.23)) + smooth(value / 0.23))
+  const originOpacity = useTransform(scrollYProgress, value => (value < 0.18 ? 1 : 0.72) * Math.max(0, 1 - nearestFocusAt(value, count) * 2))
   const activeOpacity = useTransform(scrollYProgress, value => active < 0 || reducedMotion ? 0 : focusAt(value, active, count))
 
   useMotionValueEvent(scrollYProgress, 'change', value => {
@@ -174,32 +172,23 @@ export function ProjectExplorer() {
       <section id="products" ref={journeyRef} className={styles.journey} style={journeyStyle} aria-labelledby="showroom-title">
         <div className={styles.stage}>
           <div className={styles.studio} aria-hidden="true">
-            <motion.div className={styles.studioHero} style={{ opacity: heroOpacity, scale: heroScale, x: heroX }}>
-              <Image src="/images/showroom/crown-studio.webp" alt="" fill preload sizes="100vw" />
-            </motion.div>
-            <motion.div className={styles.studioDetail} style={{ opacity: detailOpacity, scale: detailScale, x: detailX }}>
-              <Image src="/images/showroom/atlas-plate.webp" alt="" fill sizes="100vw" />
+            <motion.div className={styles.studioField} style={{ scale: fieldScale, x: fieldX }}>
+              <Image src="/images/showroom/orbital-field-v3.webp" alt="" fill preload sizes="100vw" />
             </motion.div>
           </div>
-          <AnimatePresence>
-            {selected && <motion.div key={selected.id} className={styles.materialExposure}
-              initial={{ opacity: 0 }} animate={{ opacity: featureVisible ? 0.22 : 0 }} exit={{ opacity: 0 }}
-              transition={{ duration: 0.55 }} aria-hidden="true">
-              <Image src={selected.image} alt="" fill sizes="100vw" />
-            </motion.div>}
-          </AnimatePresence>
           <div className={styles.shade} aria-hidden="true" />
           <motion.div className={styles.intro} style={{ opacity: introOpacity, y: introY, visibility: introVisibility }}>
-            <span className={styles.brandMark} aria-hidden="true"><Image src="/images/showroom/crown-glyph.webp" alt="" width={70} height={70} /></span>
             <h1 id="showroom-title">CrownCode</h1>
             <p>{en ? 'Independent work across sound, data and the web.' : 'Ses, veri ve web üzerine bağımsız çalışmalar.'}</p>
             <a href="#project-index" className={styles.introLink}>
               {en ? 'See all projects' : 'Tüm projelere bak'} <ArrowDown size={18} />
             </a>
           </motion.div>
-          <motion.span className={styles.atlasMark} style={{ opacity: atlasMarkOpacity }} aria-hidden="true">
-            <Image src="/images/showroom/crown-glyph.webp" alt="" width={220} height={220} />
-          </motion.span>
+          <div className={styles.originAnchor} aria-hidden="true">
+            <motion.span className={styles.origin} style={{ x: originX, scale: originScale, opacity: originOpacity }}>
+              <Image src="/images/showroom/crown-glyph.webp" alt="" width={220} height={220} />
+            </motion.span>
+          </div>
           <motion.div id="project-explorer" className={styles.orbit} style={{ opacity: orbitOpacity }}
             aria-label={en ? 'Project objects' : 'Proje cisimleri'}>
             <svg className={styles.orbitLines} viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">

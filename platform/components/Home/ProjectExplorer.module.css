@@ -12,27 +12,26 @@
 :global(body):has(.journey) { overflow-x: clip; }
 .journey { height: var(--journey-height, 860svh); position: relative; }
 .stage { position: sticky; top: 0; height: 100svh; min-height: 650px; overflow: clip; isolation: isolate; background: #100d0a; }
-.studio, .studioHero, .studioDetail { position: absolute; inset: 0; }
+.studio, .studioField { position: absolute; inset: 0; }
 .studio { z-index: -2; pointer-events: none; }
-.studioHero img, .studioDetail img { object-fit: cover; object-position: center 58%; }
-.studioHero, .studioDetail { transform-origin: 64% 50%; }
-.studioDetail { opacity: 0; }
-.materialExposure { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
-.materialExposure img { object-fit: cover; object-position: center; }
+.studioField img { object-fit: cover; object-position: center; }
+.studioField { transform-origin: 48% 50%; }
 .shade { position: absolute; z-index: -1; inset: 0; pointer-events: none; background: linear-gradient(90deg, #100d0aeb 0%, #100d0aa4 27%, transparent 59%), linear-gradient(0deg, #100d0af0 0%, transparent 20%, transparent 78%, #100d0a91 100%); }
 .intro { position: absolute; left: 5.4vw; top: clamp(132px, 19svh, 230px); max-width: 430px; z-index: 4; pointer-events: none; }
-.brandMark { display: block; width: 70px; height: 70px; margin-bottom: 28px; }
-.brandMark img, .atlasMark img { display: block; width: 100%; height: 100%; object-fit: contain; filter: brightness(0) invert(1) sepia(.2); }
 .intro h1 { margin: 0; font-family: var(--font-family-heading); font-size: clamp(54px, 5vw, 72px); line-height: .98; letter-spacing: -.03em; }
 .intro p { margin-top: 23px; max-width: 25ch; font-size: clamp(19px, 1.8vw, 26px); line-height: 1.36; color: var(--ink); }
 .introLink { display: inline-flex; align-items: center; gap: 18px; pointer-events: auto; margin-top: 35px; padding: 9px 0; border-bottom: 1px solid #d6ab6b9c; font-size: 16px; }
 .introLink:hover { color: #f2cc87; }
-.atlasMark { position: absolute; top: 51%; left: 50%; z-index: 0; width: clamp(120px, 16vw, 220px); aspect-ratio: 1; transform: translate(-50%, -50%); pointer-events: none; }
+.originAnchor { position: absolute; inset: 0; z-index: 0; display: grid; place-items: center; pointer-events: none; }
+.origin { position: relative; display: grid; place-items: center; width: clamp(120px, 15vw, 220px); aspect-ratio: 1; border: 1px solid #d6ab6b76; border-radius: 50%; background: radial-gradient(circle at 28% 24%, #3a2b1c 0%, #181615 43%, #080b0d 76%); box-shadow: inset -18px -18px 30px #050506, inset 5px 5px 24px #b984352b, 0 0 0 1px #f7d7a71a, 0 0 64px #9a682520; }
+.origin img { display: block; width: 56%; height: 56%; object-fit: contain; filter: brightness(0) invert(1) sepia(.19); }
 .orbit { position: absolute; inset: 0; z-index: 1; pointer-events: none; transform-origin: center; }
 .orbitLines { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: #d6ab6b; stroke-width: .6; opacity: .27; transform-origin: center; pointer-events: none; }
 .specimen { position: absolute; left: 50%; top: 50%; width: clamp(80px, 8.4vw, 124px); text-align: center; }
-.specimenOrb { display: block; position: relative; width: 100%; aspect-ratio: 1; padding: 0; border: 1px solid #d6ab6b65; border-radius: 50%; overflow: hidden; background: #21170f; box-shadow: inset 0 0 0 1px #f5dca322, 0 12px 28px #07050466; pointer-events: auto; cursor: pointer; transform-origin: center; }
-.specimenOrb img { object-fit: cover; object-position: center; border-radius: 50%; }
+.specimenOrb { display: block; position: relative; width: 100%; aspect-ratio: 1; padding: 0; border: 1px solid #d6ab6b65; border-radius: 50%; overflow: hidden; background: #121416; box-shadow: 0 12px 28px #07050466; pointer-events: auto; cursor: pointer; transform-origin: center; }
+.planetSurface { position: absolute; inset: 0; display: block; border-radius: 50%; }
+.planetSurface img { object-fit: cover; object-position: center; border-radius: 50%; }
+.specimenOrb::after { content: ''; position: absolute; inset: 0; z-index: 1; border-radius: 50%; pointer-events: none; background: radial-gradient(circle at 25% 20%, #f3d5a52b 0%, transparent 43%), linear-gradient(105deg, transparent 34%, #07080955 63%, #020405c9 100%); box-shadow: inset 2px 2px 5px #f6c9883d, inset -12px -8px 24px #020305aa; }
 .specimenOrb:hover { outline: 1px solid #f6d18f; outline-offset: 4px; }
 .specimenName { display: block; min-width: 82px; margin: 10px 0 0 50%; color: #efe1c8; font-size: 13px; line-height: 1.2; text-shadow: 0 2px 8px #000; pointer-events: none; white-space: normal; transform: translateX(-50%); }
 .specimenName span { color: #d6ab6b; font-size: 10px; letter-spacing: .13em; }
@@ -53,7 +52,7 @@
 .rail button:hover, .rail button[aria-current='true'] { color: var(--ink); border-bottom-color: var(--amber); }
 .scrollCue { position: absolute; right: 5.4vw; bottom: 102px; z-index: 4; display: flex; gap: 11px; align-items: center; color: #c4ad8f; font-size: 14px; pointer-events: none; }
 .index { position: relative; overflow: clip; padding: 105px 5.4vw 110px; background: #100d0a; scroll-margin-top: 0; }
-.index::before { content: ''; position: absolute; z-index: 0; inset: 0 0 auto; height: min(140svh, 1300px); background: url('/images/showroom/atlas-plate.webp') center top / cover no-repeat; opacity: .24; mask-image: linear-gradient(#000 0%, #000 22%, transparent 100%); pointer-events: none; }
+.index::before { content: ''; position: absolute; z-index: 0; inset: 0 0 auto; height: min(140svh, 1300px); background: url('/images/showroom/orbital-field-v3.webp') center top / cover no-repeat; opacity: .3; mask-image: linear-gradient(#000 0%, #000 22%, transparent 100%); pointer-events: none; }
 .index > * { position: relative; z-index: 1; }
 .indexLead { display: flex; justify-content: space-between; align-items: end; gap: 40px; border-bottom: 1px solid #a98b6347; padding-bottom: 26px; }
 .indexLead h2 { font-family: var(--font-family-heading); font-size: clamp(43px, 5vw, 72px); letter-spacing: -.025em; line-height: 1.05; }
@@ -82,11 +81,10 @@
 @media (max-width: 700px) {
   .journey { height: var(--journey-height, 860svh); }
   .stage { min-height: 650px; }
-  .studioHero img { object-position: 58% center; }
-  .studioDetail img { object-position: 67% center; }
+  .studioField img { object-position: 48% center; }
   .shade { background: linear-gradient(180deg, #100d0aab 0%, #100d0a67 26%, transparent 50%, #100d0aa3 75%, #100d0af0 100%), linear-gradient(90deg, #100d0a8f, transparent 80%); }
   .intro { left: 6vw; top: 110px; max-width: 88vw; }
-  .brandMark { width: 42px; height: 42px; margin-bottom: 12px; }
+  .origin { width: 120px; }
   .intro h1 { font-size: clamp(32px, 9.4vw, 45px); }
   .intro p { margin-top: 13px; font-size: 18px; max-width: 23ch; }
   .introLink { margin-top: 18px; font-size: 14px; }
@@ -137,11 +135,11 @@
   .specimen { top: 63%; }
   .specimenName { display: none; }
   .orbitLines { top: 12%; }
+  .originAnchor { transform: translateY(12%); }
 }
 @media (prefers-reduced-motion: reduce) {
   .journey { height: auto; }
   .stage { position: relative; min-height: 700px; height: 100svh; }
   .feature, .scrollCue { display: none; }
-  .studioHero, .intro { opacity: 1 !important; transform: none !important; visibility: visible !important; }
-  .studioDetail, .atlasMark { display: none; }
+  .studioField, .intro, .origin { opacity: 1 !important; transform: none !important; visibility: visible !important; }
 }
