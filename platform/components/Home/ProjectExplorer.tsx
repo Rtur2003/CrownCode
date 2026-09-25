@@ -8,14 +8,14 @@ import { PRODUCT_CATALOG, resolveProduct, type ProductEntry } from '@/config/pro
 import styles from './ProjectExplorer.module.css'
 
 const materials: Record<string, { image: string; x: number; y: number; mobileX: number; mobileY: number }> = {
-  'ai-music-detection': { image: '/images/showroom/world-auris.webp', x: 64, y: 28, mobileX: 19, mobileY: 38 },
-  'ml-toolkit': { image: '/images/showroom/tape-study.webp', x: 81, y: 43, mobileX: 47, mobileY: 30 },
-  'crown-fortune': { image: '/images/showroom/world-fortune.webp', x: 77, y: 68, mobileX: 78, mobileY: 38 },
-  'crown-dreams': { image: '/images/showroom/world-dreams.webp', x: 55, y: 69, mobileX: 84, mobileY: 57 },
-  'crown-commend': { image: '/images/showroom/world-commend.webp', x: 40, y: 48, mobileX: 68, mobileY: 71 },
-  'crown-vote': { image: '/images/showroom/world-votryx.webp', x: 46, y: 24, mobileX: 35, mobileY: 70 },
-  'noir-grain': { image: '/images/showroom/world-noir.webp', x: 89, y: 24, mobileX: 17, mobileY: 57 },
-  kognita: { image: '/images/showroom/world-kognita.webp', x: 32, y: 70, mobileX: 51, mobileY: 52 },
+  'ai-music-detection': { image: '/images/showroom/world-auris.webp', x: 64, y: 28, mobileX: 19, mobileY: 43 },
+  'ml-toolkit': { image: '/images/showroom/tape-study.webp', x: 81, y: 43, mobileX: 50, mobileY: 41 },
+  'crown-fortune': { image: '/images/showroom/world-fortune.webp', x: 77, y: 68, mobileX: 81, mobileY: 43 },
+  'crown-dreams': { image: '/images/showroom/world-dreams.webp', x: 55, y: 69, mobileX: 81, mobileY: 58 },
+  'crown-commend': { image: '/images/showroom/world-commend.webp', x: 40, y: 48, mobileX: 67, mobileY: 72 },
+  'crown-vote': { image: '/images/showroom/world-votryx.webp', x: 54, y: 18, mobileX: 34, mobileY: 72 },
+  'noir-grain': { image: '/images/showroom/world-noir.webp', x: 89, y: 24, mobileX: 19, mobileY: 58 },
+  kognita: { image: '/images/showroom/world-kognita.webp', x: 32, y: 70, mobileX: 50, mobileY: 57 },
 }
 
 const focalPoint = (index: number) => 0.18 + index * 0.1
@@ -40,11 +40,15 @@ function Specimen({ product, index, progress, onSelect, reducedMotion }: {
   )
   const opacity = useTransform(progress, value => {
     if (reducedMotion) {return 1}
-    const otherFocus = Math.max(...PRODUCT_CATALOG.map((_, itemIndex) => focusAt(value, itemIndex)))
+    const nearest = Math.max(0, Math.min(PRODUCT_CATALOG.length - 1, Math.round((value - 0.18) / 0.1)))
+    const otherFocus = focusAt(value, nearest)
     return Math.max(0, Math.min(1, 1 - otherFocus * 1.4 + focusAt(value, index) * 1.4))
   })
-  const labelOpacity = useTransform(focus, value => Math.max(0, 1 - value * 4))
   const pointerEvents = useTransform(focus, value => value > 0.13 ? 'none' : 'auto')
+  const labelOpacity = useTransform(progress, value => {
+    const nearest = Math.max(0, Math.min(PRODUCT_CATALOG.length - 1, Math.round((value - 0.18) / 0.1)))
+    return reducedMotion ? 1 : Math.max(0, 1 - focusAt(value, nearest) * 5)
+  })
   const position = {
     '--x': `${product.x}vw`, '--y': `${product.y}svh`,
     '--mobile-x': `${product.mobileX}vw`, '--mobile-y': `${product.mobileY}svh`,
@@ -54,10 +58,9 @@ function Specimen({ product, index, progress, onSelect, reducedMotion }: {
     <div className={styles.specimen} style={position}>
       <motion.button type="button" className={styles.specimenOrb} style={{ transform, opacity, pointerEvents }}
         onClick={() => onSelect(index)} aria-label={`${product.name}: ${product.title}`}>
-        <Image src={product.image} alt="" fill sizes="(max-width: 700px) 72px, 130px" />
+        <Image src={product.image} alt="" fill unoptimized />
       </motion.button>
-      <motion.span className={styles.specimenName} style={{ opacity }}>{product.name}</motion.span>
-      <motion.span className={styles.srOnly} style={{ opacity: labelOpacity }} aria-hidden="true" />
+      <motion.span className={styles.specimenName} style={{ opacity: labelOpacity }}>{product.name}</motion.span>
     </div>
   )
 }
@@ -69,12 +72,13 @@ export function ProjectExplorer() {
   const journeyRef = useRef<HTMLElement>(null)
   const railRef = useRef<HTMLElement>(null)
   const [active, setActive] = useState(-1)
+  const [featureVisible, setFeatureVisible] = useState(false)
   const { scrollYProgress } = useScroll({ target: journeyRef, offset: ['start start', 'end end'] })
   const products: Product[] = PRODUCT_CATALOG.map(entry => {
     const material = materials[entry.id]
     if (!material) {throw new Error(`Missing showroom image for ${entry.id}`)}
     const localized = resolveProduct(entry, t)
-    const name = entry.id === 'crown-vote' ? 'VOTRYX' : localized.title.split(' - ')[0]
+    const name = entry.id === 'crown-vote' ? 'VOTRYX' : entry.id === 'ml-toolkit' ? 'ML Toolkit' : localized.title.split(' - ')[0]
     return { ...entry, ...localized, ...material, name }
   })
 
@@ -86,12 +90,15 @@ export function ProjectExplorer() {
   const detailX = useTransform(scrollYProgress, [0.1, 1], ['4%', '-4%'])
   const introOpacity = useTransform(scrollYProgress, [0, 0.06, 0.145], [1, 1, 0])
   const introY = useTransform(scrollYProgress, [0, 0.15], [0, -45])
+  const introVisibility = useTransform(scrollYProgress, value => value >= 0.145 ? 'hidden' : 'visible')
   const activeOpacity = useTransform(scrollYProgress, value => active < 0 || reducedMotion ? 0 : focusAt(value, active))
 
   useMotionValueEvent(scrollYProgress, 'change', value => {
     if (reducedMotion) {return}
     const next = value < 0.115 ? -1 : Math.max(0, Math.min(products.length - 1, Math.round((value - 0.18) / 0.1)))
+    const visible = next >= 0 && focusAt(value, next) > 0.14
     setActive(previous => previous === next ? previous : next)
+    setFeatureVisible(previous => previous === visible ? previous : visible)
   })
 
   useEffect(() => {
@@ -129,7 +136,7 @@ export function ProjectExplorer() {
             </motion.div>
           </div>
           <div className={styles.shade} aria-hidden="true" />
-          <motion.div className={styles.intro} style={{ opacity: introOpacity, y: introY }}>
+          <motion.div className={styles.intro} style={{ opacity: introOpacity, y: introY, visibility: introVisibility }}>
             <h1 id="showroom-title">CrownCode</h1>
             <p>{en ? 'Independent work across sound, data and the web.' : 'Ses, veri ve web üzerine bağımsız çalışmalar.'}</p>
             <a href="#project-index" className={styles.introLink}>
@@ -142,7 +149,7 @@ export function ProjectExplorer() {
                 onSelect={select} reducedMotion={reducedMotion} />,
             )}
           </div>
-          {selected && <motion.article className={styles.feature} style={{ opacity: activeOpacity }} aria-live="off">
+          {selected && featureVisible && <motion.article className={styles.feature} style={{ opacity: activeOpacity }}>
             <h2>{selected.name}</h2>
             <p>{selected.showroomDescription}</p>
             {selected.features.length > 0 && <ul>{selected.features.slice(0, 3).map(feature => <li key={feature}>{feature}</li>)}</ul>}
@@ -162,7 +169,7 @@ export function ProjectExplorer() {
               </button>,
             )}
           </nav>
-          <div className={styles.scrollCue} aria-hidden="true"><ArrowDown size={16} /> {en ? 'Scroll into the work' : 'İşlerin içine kaydır'}</div>
+          <motion.div className={styles.scrollCue} style={{ opacity: introOpacity, visibility: introVisibility }} aria-hidden="true"><ArrowDown size={16} /> {en ? 'Scroll into the work' : 'İşlerin içine kaydır'}</motion.div>
         </div>
       </section>
 
