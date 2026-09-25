@@ -98,6 +98,7 @@ export function ProjectExplorer() {
   const [active, setActive] = useState(-1)
   const [featureVisible, setFeatureVisible] = useState(false)
   const [interactive, setInteractive] = useState(reducedMotion)
+  const [mounted, setMounted] = useState(false)
   const { scrollYProgress } = useScroll({ target: journeyRef, offset: ['start start', 'end end'] })
   const products: Product[] = PRODUCT_CATALOG.map(entry => {
     const localized = resolveProduct(entry, t)
@@ -116,8 +117,8 @@ export function ProjectExplorer() {
     if (reducedMotion) {return 1}
     return 0.22 + smooth(value / 0.15) * 0.78
   })
-  const originX = useTransform(scrollYProgress, value => `${(typeof window !== 'undefined' && window.innerWidth <= 700 ? 0 : 17) * (1 - smooth(value / 0.23))}vw`)
-  const originScale = useTransform(scrollYProgress, value => (typeof window !== 'undefined' && window.innerWidth <= 700 ? 1.55 : 2.05) * (1 - smooth(value / 0.23)) + smooth(value / 0.23))
+  const originX = useTransform(scrollYProgress, value => `${15 * (1 - smooth(value / 0.23))}vw`)
+  const originScale = useTransform(scrollYProgress, value => 1.8 * (1 - smooth(value / 0.23)) + smooth(value / 0.23))
   const originOpacity = useTransform(scrollYProgress, value => (value < 0.18 ? 1 : 0.72) * Math.max(0, 1 - nearestFocusAt(value, count) * 2))
   const activeOpacity = useTransform(scrollYProgress, value => active < 0 || reducedMotion ? 0 : focusAt(value, active, count))
 
@@ -131,6 +132,8 @@ export function ProjectExplorer() {
     const canSelectOrb = value >= 0.145 && !visible
     if (ui.interactive !== canSelectOrb) {ui.interactive = canSelectOrb; setInteractive(canSelectOrb)}
   })
+
+  useEffect(() => setMounted(true), [])
 
   useEffect(() => {
     if (!railRef.current) {return}
@@ -186,7 +189,7 @@ export function ProjectExplorer() {
           </motion.div>
           <div className={styles.originAnchor} aria-hidden="true">
             <motion.span className={styles.origin} style={{ x: originX, scale: originScale, opacity: originOpacity }}>
-              <Image src="/images/showroom/crown-glyph.webp" alt="" width={220} height={220} />
+              <Image src="/images/showroom/crown-glyph.webp" alt="" width={220} height={220} preload />
             </motion.span>
           </div>
           <motion.div id="project-explorer" className={styles.orbit} style={{ opacity: orbitOpacity }}
@@ -196,7 +199,7 @@ export function ProjectExplorer() {
               <ellipse cx="500" cy="350" rx="300" ry="285" transform="rotate(24 500 350)" />
               <ellipse cx="500" cy="350" rx="155" ry="365" transform="rotate(-30 500 350)" />
             </svg>
-            {products.map((product, index) =>
+            {mounted && products.map((product, index) =>
               <Specimen key={product.id} product={product} index={index} count={count} progress={scrollYProgress}
                 onSelect={select} reducedMotion={reducedMotion} interactive={interactive} />,
             )}

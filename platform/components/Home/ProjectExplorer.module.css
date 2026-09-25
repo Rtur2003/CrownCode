@@ -10,6 +10,7 @@
 .home a:focus-visible, .home button:focus-visible { outline: 2px solid #f2cc87; outline-offset: 5px; }
 .home ::selection { background: #d6ab6b; color: #100d0a; }
 :global(body):has(.journey) { overflow-x: clip; }
+:global(html):has(.journey) { position: relative; }
 .journey { height: var(--journey-height, 860svh); position: relative; }
 .stage { position: sticky; top: 0; height: 100svh; min-height: 650px; overflow: clip; isolation: isolate; background: #100d0a; }
 .studio, .studioField { position: absolute; inset: 0; }
