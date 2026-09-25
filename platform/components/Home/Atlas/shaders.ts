@@ -73,8 +73,10 @@ export const planetFragment = /* glsl */ `
     surface = mix(surface, uAccent * 0.55, smoothstep(0.78, 0.98, pattern) * 0.35);
 
     // Engraved topographic contours: the site's brass-engraving motif.
-    float k = pattern * 9.0;
-    float contour = 1.0 - smoothstep(0.0, fwidth(k) * 1.4, abs(fract(k) - 0.5) - 0.44);
+    // d = distance to the nearest contour level, antialiased with fwidth.
+    float k = pattern * 5.5;
+    float d = 0.5 - abs(fract(k) - 0.5);
+    float contour = 1.0 - smoothstep(0.0, fwidth(k) * 1.25, d);
 
     vec3 N = normalize(vNormalW);
     vec3 V = normalize(vViewW);
@@ -82,13 +84,13 @@ export const planetFragment = /* glsl */ `
     float ndl = dot(N, L);
     float day = smoothstep(-0.18, 0.75, ndl);
     float fresnel = pow(1.0 - max(dot(N, V), 0.0), 3.0);
-    float spec = pow(max(dot(reflect(-L, N), V), 0.0), 36.0) * uGloss * day;
+    float spec = pow(max(dot(reflect(-L, N), V), 0.0), 90.0) * uGloss * day;
 
     vec3 color = surface * (0.05 + 1.15 * day);
     // Lines glow faintly by day and clearly on the night side, like lit
     // engravings; closer worlds (uFocus) light up a little more.
-    color += uAccent * contour * uLines * (0.12 + 0.55 * (1.0 - day) + 0.25 * uFocus);
-    color += vec3(1.0, 0.92, 0.78) * spec * 0.6;
+    color += uAccent * contour * uLines * (0.05 + 0.5 * (1.0 - day) + 0.2 * uFocus);
+    color += vec3(1.0, 0.92, 0.78) * spec * 0.45;
     color += uAtmo * fresnel * (0.25 + 0.75 * day) * 0.9;
     gl_FragColor = vec4(color, 1.0);
     #include <colorspace_fragment>
@@ -145,8 +147,9 @@ export const ringFragment = /* glsl */ `
     float alpha;
     vec3 color;
     if (uStyle < 0.5) {
-      // Vinyl: dense grooves with a moving sheen.
-      float groove = 0.5 + 0.5 * sin(r * 240.0);
+      // Vinyl: dense grooves with a moving sheen (faded as they alias).
+      float g = r * 70.0;
+      float groove = mix(0.5 + 0.5 * sin(g * 6.2831853), 0.5, clamp(fwidth(g) * 1.5, 0.0, 1.0));
       float sheen = pow(0.5 + 0.5 * cos(a * 2.0 - uTime * 0.4), 6.0);
       color = mix(uMid * 0.4, uAccent, groove * 0.35 + sheen * 0.55);
       alpha = edge * (0.45 + 0.25 * groove);
@@ -169,9 +172,12 @@ export const ringFragment = /* glsl */ `
 
 export const routeVertex = /* glsl */ `
   varying float vT;
+  varying float vDepth;
   void main() {
     vT = uv.x;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    vec4 mv = modelViewMatrix * vec4(position, 1.0);
+    vDepth = -mv.z;
+    gl_Position = projectionMatrix * mv;
   }
 `
 
@@ -180,12 +186,15 @@ export const routeFragment = /* glsl */ `
   uniform float uTime;
   uniform float uTravelled;
   varying float vT;
+  varying float vDepth;
   void main() {
     // Light pulses travel toward the next world; the part of the route
     // already flown is brighter, like a cleared path on a game map.
     float pulse = smoothstep(0.93, 1.0, fract(vT * 9.0 - uTime * 0.18));
     float travelled = 1.0 - smoothstep(uTravelled - 0.004, uTravelled + 0.004, vT);
-    float alpha = 0.16 + 0.32 * travelled + 0.55 * pulse;
+    // Fade where the tube passes close to the camera, so it never smears.
+    float near = smoothstep(2.0, 9.0, vDepth);
+    float alpha = (0.16 + 0.32 * travelled + 0.55 * pulse) * near;
     gl_FragColor = vec4(uColor * (0.8 + pulse), alpha);
     #include <colorspace_fragment>
   }

@@ -31,6 +31,8 @@ export interface AtlasState {
   pointer: { x: number; y: number }
   /** Seconds; only used when `capture` is on (deterministic video frames). */
   time: number
+  /** Screen position and radius of each world, filled in capture mode (thumbnails). */
+  projected?: { x: number; y: number; r: number }[]
 }
 
 interface AtlasSceneProps {
@@ -43,7 +45,7 @@ interface AtlasSceneProps {
 }
 
 const KEY_LIGHT = new THREE.Vector3(-0.45, 0.55, 0.7).normalize()
-const CROWN_POSITION = new THREE.Vector3(0, 0, 1.5)
+const CROWN_POSITION = new THREE.Vector3(1.5, -0.5, 0)
 const GOLD = new THREE.Color('#e7c77a')
 
 const smoothstep = (a: number, b: number, x: number) => {
@@ -223,9 +225,9 @@ function Crown({ time }: { time: MutableRefObject<number> }) {
   return (
     <group position={CROWN_POSITION}>
       <mesh ref={glowRef} material={glow}>
-        <planeGeometry args={[13, 13]} />
+        <planeGeometry args={[15, 15]} />
       </mesh>
-      <sprite scale={[3.1, 3.1, 1]}>
+      <sprite scale={[3.4, 3.4, 1]}>
         <spriteMaterial map={texture} transparent depthWrite={false} toneMapped={false} />
       </sprite>
     </group>
@@ -337,13 +339,15 @@ function Rig({ worlds, state, labels, capture, onReady }: Omit<AtlasSceneProps, 
     const cams: THREE.Vector3[] = []
     const targets: THREE.Vector3[] = []
     const last = worlds[worlds.length - 1]?.placement.position ?? [0, 0, -10]
-    cams.push(new THREE.Vector3(2.4, 1.3, 15.5))
-    targets.push(new THREE.Vector3(0, -0.2, -10))
+    // Opening shot: from above and to the side, so the route recedes on a
+    // diagonal into depth instead of stacking up behind the crown.
+    cams.push(portrait ? new THREE.Vector3(7, 8, 17) : new THREE.Vector3(9, 6.5, 15))
+    targets.push(portrait ? new THREE.Vector3(-1.5, -1, -24) : new THREE.Vector3(-5.5, -2, -26))
     for (const w of worlds) {
       const [x, y, z] = w.placement.position
       const radial = new THREE.Vector2(x, y).normalize()
       const dir = new THREE.Vector3(radial.x * 0.55, radial.y * 0.55 + 0.32, 1).normalize()
-      const distance = w.look.size * (portrait ? 5.2 : 3.6) + (w.look.ring ? 1.2 : 0)
+      const distance = w.look.size * (portrait ? 5.6 : 5.4) + (w.look.ring ? 2.2 : 0)
       const pos = new THREE.Vector3(x, y, z)
       cams.push(pos.clone().addScaledVector(dir, distance))
       targets.push(pos)
@@ -437,11 +441,15 @@ function Rig({ worlds, state, labels, capture, onReady }: Omit<AtlasSceneProps, 
       const x = (tmp.projected.x * 0.5 + 0.5) * size.width
       const y = (-tmp.projected.y * 0.5 + 0.5) * size.height
       const radiusPx = (w.look.size / (distance * halfHeight)) * (size.height / 2)
-      const onScreen = x > -80 && x < size.width + 40 && y > 40 && y < size.height - 90
+      const onScreen = x > -80 && x < size.width - 60 && y > 96 && y < size.height - 110
       const visible = behind || !onScreen ? 0 : (1 - focus.current[i]) * Math.min(1, Math.max(0, 1.5 - distance / 70))
       el.style.opacity = visible.toFixed(3)
       el.style.transform = `translate3d(${(x + radiusPx + 10).toFixed(1)}px, ${(y - 10).toFixed(1)}px, 0)`
       el.style.pointerEvents = visible > 0.35 ? 'auto' : 'none'
+      if (capture) {
+        const projected = (state.current.projected ??= [])
+        projected[i] = { x, y, r: radiusPx }
+      }
     })
 
     // Adaptive resolution: step the pixel ratio down if frames run long.

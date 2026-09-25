@@ -71,9 +71,11 @@ img = img + (stars > 0.9993)[..., None] * np.array([0.55, 0.5, 0.42]) * rng.rand
 img = np.clip(img, 0, 1) ** (1 / 1.05)
 Image.fromarray((img * 255).astype(np.uint8)).save('public/images/atlas/nebula.webp', quality=82, method=6)
 
-glyph = Image.open('public/images/showroom/crown-glyph.webp').convert('L')
-alpha = 255 - np.asarray(glyph, dtype=np.uint8)
-gold = np.zeros((*alpha.shape, 4), dtype=np.uint8)
-gold[..., 0], gold[..., 1], gold[..., 2], gold[..., 3] = 243, 214, 150, alpha
+# The glyph is dark ink on a transparent/white field: keep only the ink.
+glyph = np.asarray(Image.open('public/images/showroom/crown-glyph.webp').convert('RGBA')).astype(np.float32)
+alpha = (glyph[..., 3] / 255) * (1 - glyph[..., :3].mean(-1) / 255)
+gold = np.zeros(glyph.shape, dtype=np.uint8)
+gold[..., 0], gold[..., 1], gold[..., 2] = 243, 214, 150
+gold[..., 3] = (alpha * 255).astype(np.uint8)
 Image.fromarray(gold, 'RGBA').save('public/images/atlas/crown.png', optimize=True)
 print('ok')
