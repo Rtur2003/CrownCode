@@ -8,8 +8,16 @@ import styles from '@/styles/pages/crown-vote.module.css'
 interface ReleaseInfo {
   version: string
   downloadUrl: string
-  size: string
+  size: string | null
   date: string
+}
+
+interface GitHubRelease {
+  tag_name?: string
+  html_url: string
+  draft: boolean
+  published_at: string
+  assets?: { name: string; size: number; browser_download_url: string }[]
 }
 
 export const DownloadSection: React.FC = () => {
@@ -22,16 +30,19 @@ export const DownloadSection: React.FC = () => {
 
     const fetchRelease = async () => {
       try {
-        const res = await fetchWithTimeout('https://api.github.com/repos/Rtur2003/VOTRYX/releases/latest', { timeout: 10_000 })
+        // /releases/latest skips pre-releases (VOTRYX only has one), so take
+        // the newest published release from the list instead of a 404.
+        const res = await fetchWithTimeout('https://api.github.com/repos/Rtur2003/VOTRYX/releases?per_page=5', { timeout: 10_000 })
         if (res.ok) {
-          const data = await res.json()
-          const exeAsset = data.assets?.find((a: { name: string }) => a.name.endsWith('.exe'))
+          const releases = (await res.json()) as GitHubRelease[]
+          const data = releases.find((r) => !r.draft)
+          const exeAsset = data?.assets?.find((a) => a.name.endsWith('.exe'))
 
-          if (isMounted) {
+          if (data && isMounted) {
             setReleaseInfo({
               version: data.tag_name || 'v1.0.0',
               downloadUrl: exeAsset?.browser_download_url || data.html_url,
-              size: exeAsset ? `${(exeAsset.size / 1024 / 1024).toFixed(1)} MB` : 'N/A',
+              size: exeAsset ? `${(exeAsset.size / 1024 / 1024).toFixed(1)} MB` : null,
               date: new Date(data.published_at).toLocaleDateString(),
             })
           }
@@ -79,9 +90,11 @@ export const DownloadSection: React.FC = () => {
             <span>
               {downloadText?.version || 'Version'}: {releaseInfo.version}
             </span>
-            <span>
-              {downloadText?.size || 'Size'}: {releaseInfo.size}
-            </span>
+            {releaseInfo.size && (
+              <span>
+                {downloadText?.size || 'Size'}: {releaseInfo.size}
+              </span>
+            )}
           </div>
         )}
 
