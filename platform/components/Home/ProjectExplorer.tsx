@@ -1,13 +1,20 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import Image from 'next/image'
-import { m as motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
-import { ArrowDown, ArrowUpRight } from 'lucide-react'
+import Image, { getImageProps } from 'next/image'
+import { useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react'
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { PRODUCT_CATALOG, resolveProduct, type ProductEntry } from '@/config/product-catalog'
+import { worldLook, worldPlacement, type WorldLook, type WorldPlacement } from '@/config/showroom-worlds'
+import type { AtlasState } from './Atlas/AtlasScene'
 import styles from './ProjectExplorer.module.css'
 
-const materials: Record<string, string> = {
+// WebGL only exists in the browser and is not needed for the first paint:
+// the server HTML shows a rendered poster of the same scene.
+const AtlasScene = dynamic(() => import('./Atlas/AtlasScene'), { ssr: false })
+
+const thumbnails: Record<string, string> = {
   'ai-music-detection': '/images/showroom/planet-auris.webp',
   'ml-toolkit': '/images/showroom/planet-ml.webp',
   'crown-fortune': '/images/showroom/planet-fortune.webp',
@@ -18,214 +25,247 @@ const materials: Record<string, string> = {
   kognita: '/images/showroom/planet-kognita.webp',
 }
 
-const focusStart = 0.18
-const focusSpan = 0.7
-const focusStep = (count: number) => focusSpan / Math.max(1, count - 1)
-const focalPoint = (index: number, count: number) => count === 1 ? 0.5 : focusStart + index * focusStep(count)
-const smooth = (value: number) => {
-  const t = Math.max(0, Math.min(1, value))
+/** Scroll distance between two stops, in viewport heights. */
+const HOP = 1.1
+
+type World = ProductEntry & ReturnType<typeof resolveProduct> & {
+  name: string
+  image: string
+  look: WorldLook
+  placement: WorldPlacement
+}
+
+const pad = (n: number) => String(n).padStart(2, '0')
+const smoothstep = (a: number, b: number, x: number) => {
+  const t = Math.min(1, Math.max(0, (x - a) / (b - a)))
   return t * t * (3 - 2 * t)
 }
-const focusRadius = (count: number) => count === 1 ? 0.15 : Math.min(0.052, focusStep(count) * 0.52)
-const focusAt = (progress: number, index: number, count: number) => smooth(1 - Math.abs(progress - focalPoint(index, count)) / focusRadius(count))
-const nearestFocusAt = (progress: number, count: number) => {
-  const index = Math.max(0, Math.min(count - 1, Math.round((progress - focusStart) / focusStep(count))))
-  return focusAt(progress, index, count)
-}
 
-type Product = ProductEntry & ReturnType<typeof resolveProduct> & { name: string; image: string }
-
-function Specimen({ product, index, count, progress, onSelect, reducedMotion, interactive }: {
-  product: Product
-  index: number
-  count: number
-  progress: MotionValue<number>
-  onSelect: (index: number, focusRail?: boolean) => void
-  reducedMotion: boolean
-  interactive: boolean
-}) {
-  const staticScene = () => reducedMotion
-  const orbitalAngle = (value: number) => -Math.PI / 2 + index * Math.PI * 2 / count + (staticScene() ? 0 : value * Math.PI * 2 * 1.05)
-  const position = useTransform(progress, value => {
-    const angle = orbitalAngle(value)
-    const mobile = typeof window !== 'undefined' && window.innerWidth <= 700
-    const shortMobile = mobile && window.innerHeight < 650
-    const x = Math.cos(angle) * (mobile ? 30 : 32) + Math.sin(angle) * (mobile ? 6 : 8)
-    const y = Math.sin(angle) * (shortMobile ? 17 : mobile ? 23 : 29) - Math.cos(angle) * (shortMobile ? 4 : mobile ? 5 : 8)
-    const focus = staticScene() ? 0 : focusAt(value, index, count)
-    return `translate3d(${x * (1 - focus)}vw, ${y * (1 - focus)}svh, 0) translate(-50%, -50%)`
-  })
-  const scale = useTransform(progress, value => {
-    const focus = staticScene() ? 0 : focusAt(value, index, count)
-    const depth = 1 + Math.sin(orbitalAngle(value)) * 0.16
-    return depth * (1 - focus) + focus * 14.5
-  })
-  const rotate = useTransform(progress, value => staticScene() ? 0 : value * 420 + index * 12)
-  const opacity = useTransform(progress, value => {
-    if (staticScene()) {return 1}
-    const otherFocus = nearestFocusAt(value, count)
-    return Math.max(0, Math.min(1, 1 - otherFocus * 1.4 + focusAt(value, index, count) * 1.4))
-  })
-  const pointerEvents = useTransform(progress, value => {
-    if (staticScene()) {return 'auto'}
-    return value < 0.145 || nearestFocusAt(value, count) > 0.14 ? 'none' : 'auto'
-  })
-  const labelOpacity = useTransform(progress, value => {
-    return staticScene() ? 1 : smooth((value - 0.055) / 0.09) * Math.max(0, 1 - nearestFocusAt(value, count) * 5)
-  })
-
-  return (
-    <motion.div className={styles.specimen} style={{ transform: position }}>
-      <motion.button type="button" className={styles.specimenOrb} style={{ scale, opacity, pointerEvents }}
-        onClick={() => onSelect(index, true)} tabIndex={interactive ? 0 : -1} aria-hidden={interactive ? undefined : true}
-        aria-label={`${product.name}: ${product.title}`}>
-        <motion.span className={styles.planetSurface} style={{ rotate }}><Image src={product.image} alt="" fill unoptimized /></motion.span>
-      </motion.button>
-      <motion.span className={styles.specimenName} style={{ opacity: labelOpacity }}>
-        <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span> {product.name}
-      </motion.span>
-    </motion.div>
-  )
+function hasWebGL(): boolean {
+  try {
+    const canvas = document.createElement('canvas')
+    return Boolean(canvas.getContext('webgl2') ?? canvas.getContext('webgl'))
+  } catch {
+    return false
+  }
 }
 
 export function ProjectExplorer() {
   const { t, language } = useLanguage()
   const en = language === 'en'
   const reducedMotion = Boolean(useReducedMotion())
-  const journeyRef = useRef<HTMLElement>(null)
-  const railRef = useRef<HTMLElement>(null)
-  const uiStateRef = useRef({ active: -1, visible: false, interactive: reducedMotion })
-  const [active, setActive] = useState(-1)
-  const [featureVisible, setFeatureVisible] = useState(false)
-  const [interactive, setInteractive] = useState(reducedMotion)
-  const [mounted, setMounted] = useState(false)
-  const { scrollYProgress } = useScroll({ target: journeyRef, offset: ['start start', 'end end'] })
-  const products: Product[] = PRODUCT_CATALOG.map(entry => {
+
+  const worlds: World[] = useMemo(() => PRODUCT_CATALOG.map((entry, index) => {
     const localized = resolveProduct(entry, t)
     const name = entry.id === 'crown-vote' ? 'VOTRYX' : entry.id === 'ml-toolkit' ? 'ML Toolkit' : localized.title.split(' - ')[0]
-    return { ...entry, ...localized, image: materials[entry.id] ?? '/images/showroom/planet-generic.webp', name }
-  })
-  const count = products.length
-  const journeyStyle = { '--journey-height': `${(count + 0.6) * 100}svh` } as CSSProperties
+    return {
+      ...entry,
+      ...localized,
+      name,
+      image: thumbnails[entry.id] ?? '/images/showroom/planet-generic.webp',
+      look: worldLook(entry),
+      placement: worldPlacement(index),
+    }
+  }), [t])
+  const sceneWorlds = useMemo(() => worlds.map(({ id, look, placement }) => ({ id, look, placement })), [worlds])
+  const count = worlds.length
+  const stations = count + 2 // intro, one per world, outro
 
-  const fieldScale = useTransform(scrollYProgress, [0, 1], [1.04, 1.18])
-  const fieldX = useTransform(scrollYProgress, [0, 1], ['0%', '-4%'])
-  const introOpacity = useTransform(scrollYProgress, [0, 0.06, 0.145], [1, 1, 0])
-  const introY = useTransform(scrollYProgress, [0, 0.15], [0, -45])
-  const introVisibility = useTransform(scrollYProgress, value => value >= 0.145 ? 'hidden' : 'visible')
-  const orbitOpacity = useTransform(scrollYProgress, value => {
-    if (reducedMotion) {return 1}
-    return 0.22 + smooth(value / 0.15) * 0.78
-  })
-  const originX = useTransform(scrollYProgress, value => `${15 * (1 - smooth(value / 0.23))}vw`)
-  const originScale = useTransform(scrollYProgress, value => 1.8 * (1 - smooth(value / 0.23)) + smooth(value / 0.23))
-  const originOpacity = useTransform(scrollYProgress, value => (value < 0.18 ? 1 : 0.72) * Math.max(0, 1 - nearestFocusAt(value, count) * 2))
-  const activeOpacity = useTransform(scrollYProgress, value => active < 0 || reducedMotion ? 0 : focusAt(value, active, count))
+  const journeyRef = useRef<HTMLElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
+  const fillRef = useRef<HTMLSpanElement>(null)
+  const labelRefs = useRef<(HTMLElement | null)[]>([])
+  const stationRef = useRef(0)
+  const atlas = useRef<AtlasState>({ target: 0, pointer: { x: 0, y: 0 }, time: 0 })
 
-  useMotionValueEvent(scrollYProgress, 'change', value => {
-    if (reducedMotion) {return}
-    const next = value < focusStart - focusRadius(count) * 1.25 ? -1 : Math.max(0, Math.min(count - 1, Math.round((value - focusStart) / focusStep(count))))
-    const visible = next >= 0 && focusAt(value, next, count) > 0.14
-    const ui = uiStateRef.current
-    if (ui.active !== next) {ui.active = next; setActive(next)}
-    if (ui.visible !== visible) {ui.visible = visible; setFeatureVisible(visible)}
-    const canSelectOrb = value >= 0.145 && !visible
-    if (ui.interactive !== canSelectOrb) {ui.interactive = canSelectOrb; setInteractive(canSelectOrb)}
-  })
+  const [station, setStation] = useState(0)
+  const [inView, setInView] = useState(true)
+  const [canRender, setCanRender] = useState(false)
+  const [sceneReady, setSceneReady] = useState(false)
+  const [capture, setCapture] = useState(false)
 
-  useEffect(() => setMounted(true), [])
+  const { scrollYProgress } = useScroll({ target: journeyRef, offset: ['start start', 'end end'] })
+
+  const applyProgress = useCallback((value: number) => {
+    atlas.current.target = value
+    const s = value * (stations - 1)
+    const nearest = Math.round(s)
+    if (stationRef.current !== nearest) {
+      stationRef.current = nearest
+      setStation(nearest)
+    }
+    // Copy fades between stops and settles while the camera dwells.
+    const dwell = 1 - smoothstep(0.14, 0.38, Math.abs(s - nearest))
+    panelRef.current?.style.setProperty('--dwell', dwell.toFixed(3))
+    panelRef.current?.toggleAttribute('data-passing', dwell < 0.35)
+    if (fillRef.current) {
+      fillRef.current.style.transform = `scaleX(${Math.min(1, Math.max(0, (s - 0.5) / count)).toFixed(4)})`
+    }
+  }, [stations, count])
+
+  useMotionValueEvent(scrollYProgress, 'change', applyProgress)
 
   useEffect(() => {
-    if (!railRef.current) {return}
-    const rail = railRef.current
-    const scrollRail = (left: number) => {
-      if (typeof rail.scrollTo === 'function') {
-        rail.scrollTo({ left, behavior: reducedMotion ? 'instant' : 'smooth' })
-      } else {
-        rail.scrollLeft = left
-      }
-    }
-    if (active < 0) {
-      scrollRail(0)
-      return
-    }
-    const button = rail.querySelectorAll('button')[active]
-    if (button) {
-      scrollRail(button.offsetLeft - rail.clientWidth / 2 + button.clientWidth / 2)
-    }
-  }, [active, reducedMotion])
+    const params = new URLSearchParams(window.location.search)
+    const isCapture = params.has('atlas-capture')
+    // Deterministic hooks for recording the promo video frame by frame.
+    if (isCapture) {(window as unknown as { __atlas: AtlasState }).__atlas = atlas.current}
+    setCapture(isCapture)
+    setCanRender(!reducedMotion && hasWebGL())
+    applyProgress(scrollYProgress.get())
+  }, [reducedMotion, applyProgress, scrollYProgress])
 
-  const select = (index: number, focusRail = false) => {
-    if (focusRail) {railRef.current?.querySelectorAll('button')[index]?.focus({ preventScroll: true })}
+  useEffect(() => {
+    const journey = journeyRef.current
+    if (!journey || typeof IntersectionObserver === 'undefined') {return}
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { rootMargin: '10% 0px' })
+    observer.observe(journey)
+    return () => observer.disconnect()
+  }, [])
+
+  const goTo = useCallback((target: number) => {
+    const next = Math.max(0, Math.min(stations - 1, target))
     if (reducedMotion) {
-      document.getElementById(`project-${products[index].id}`)?.scrollIntoView({ behavior: 'instant' })
+      const world = worlds[next - 1]
+      document.getElementById(world ? `project-${world.id}` : 'project-index')?.scrollIntoView({ behavior: 'instant' })
       return
     }
     const journey = journeyRef.current
     if (!journey) {return}
-    const start = journey.getBoundingClientRect().top + window.scrollY
+    const top = journey.getBoundingClientRect().top + window.scrollY
     const distance = journey.offsetHeight - window.innerHeight
-    window.scrollTo({ top: start + focalPoint(index, count) * distance, behavior: 'smooth' })
-  }
+    window.scrollTo({ top: top + (next / (stations - 1)) * distance, behavior: 'smooth' })
+  }, [stations, reducedMotion, worlds])
 
-  const selected = active >= 0 ? products[active] : null
+  // ← / → move between worlds like a level-select screen.
+  useEffect(() => {
+    if (!inView) {return}
+    const onKey = (e: KeyboardEvent) => {
+      const el = e.target as HTMLElement | null
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || el?.closest('input, textarea, select, [contenteditable="true"]')) {return}
+      if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        goTo(stationRef.current + 1)
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        goTo(stationRef.current - 1)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [inView, goTo])
+
+  const world = station >= 1 && station <= count ? worlds[station - 1] : null
+  const journeyStyle = { '--journey-height': `${(stations - 1) * HOP * 100 + 100}svh`, '--stations': stations - 1 } as CSSProperties
+  const external = (href: string) => href.startsWith('https:')
+
+  const { props: { srcSet: portraitSrcSet } } = getImageProps({ src: '/images/atlas/poster-portrait.webp', alt: '', width: 1080, height: 1920, sizes: '100vw' })
+  const { props: posterProps } = getImageProps({ src: '/images/atlas/poster.webp', alt: '', width: 1920, height: 1080, sizes: '100vw', preload: true })
 
   return (
     <div className={styles.home}>
-      <section id="products" ref={journeyRef} className={styles.journey} style={journeyStyle} aria-labelledby="showroom-title">
+      <section id="products" ref={journeyRef} className={styles.journey} style={journeyStyle} aria-labelledby="showroom-title"
+        data-reduced={reducedMotion ? '' : undefined}>
+        {Array.from({ length: stations }, (_, k) => (
+          <span key={k} className={styles.snap} style={{ '--k': k } as CSSProperties} aria-hidden="true" />
+        ))}
         <div className={styles.stage}>
-          <div className={styles.studio} aria-hidden="true">
-            <motion.div className={styles.studioField} style={{ scale: fieldScale, x: fieldX }}>
-              <Image src="/images/showroom/orbital-field-v3.webp" alt="" fill preload sizes="100vw" />
-            </motion.div>
-          </div>
-          <div className={styles.shade} aria-hidden="true" />
-          <motion.div className={styles.intro} style={{ opacity: introOpacity, y: introY, visibility: introVisibility }}>
-            <h1 id="showroom-title">CrownCode</h1>
-            <p>{en ? 'Independent work across sound, data and the web.' : 'Ses, veri ve web üzerine bağımsız çalışmalar.'}</p>
-            <a href="#project-index" className={styles.introLink}>
-              {en ? 'See all projects' : 'Tüm projelere bak'} <ArrowDown size={18} />
-            </a>
-          </motion.div>
-          <div className={styles.originAnchor} aria-hidden="true">
-            <motion.span className={styles.origin} style={{ x: originX, scale: originScale, opacity: originOpacity }}>
-              <Image src="/images/showroom/crown-glyph.webp" alt="" width={220} height={220} preload />
-            </motion.span>
-          </div>
-          <motion.div id="project-explorer" className={styles.orbit} style={{ opacity: orbitOpacity }}
-            aria-label={en ? 'Project objects' : 'Proje cisimleri'}>
-            <svg className={styles.orbitLines} viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <ellipse cx="500" cy="350" rx="410" ry="170" transform="rotate(-20 500 350)" />
-              <ellipse cx="500" cy="350" rx="300" ry="285" transform="rotate(24 500 350)" />
-              <ellipse cx="500" cy="350" rx="155" ry="365" transform="rotate(-30 500 350)" />
-            </svg>
-            {mounted && products.map((product, index) =>
-              <Specimen key={product.id} product={product} index={index} count={count} progress={scrollYProgress}
-                onSelect={select} reducedMotion={reducedMotion} interactive={interactive} />,
-            )}
-          </motion.div>
-          <motion.div className={styles.focusShade} style={{ opacity: activeOpacity }} aria-hidden="true" />
-          {selected && featureVisible && <motion.article className={styles.feature} style={{ opacity: activeOpacity }}>
-            <h2>{selected.name}</h2>
-            <p>{selected.showroomDescription}</p>
-            {selected.features.length > 0 && <ul>{selected.features.slice(0, 3).map(feature => <li key={feature}>{feature}</li>)}</ul>}
-            <div className={styles.featureActions}>
-              <Link href={selected.href} target={selected.href.startsWith('https:') ? '_blank' : undefined}
-                rel={selected.href.startsWith('https:') ? 'noreferrer' : undefined}>
-                {en ? 'Open project' : 'Projeyi aç'} <ArrowUpRight size={20} />
-              </Link>
-              <span>{selected.status}</span>
+          <picture className={`${styles.poster} ${sceneReady ? styles.posterHidden : ''}`}>
+            <source media="(max-aspect-ratio: 4/5)" srcSet={portraitSrcSet} />
+            {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text -- props come from getImageProps (art direction) */}
+            <img {...posterProps} />
+          </picture>
+          {canRender && (
+            <div className={`${styles.canvas} ${sceneReady ? styles.canvasReady : ''}`}>
+              <AtlasScene worlds={sceneWorlds} state={atlas} labels={labelRefs} active={inView} capture={capture}
+                onReady={() => setSceneReady(true)} />
             </div>
-          </motion.article>}
-          <nav ref={railRef} className={styles.rail} aria-label={en ? 'Move between projects' : 'Projeler arasında gezin'}>
-            {products.map((product, index) =>
-              <button key={product.id} type="button" onClick={() => select(index)}
-                aria-current={active === index ? 'true' : undefined}>
-                <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{product.name}
-              </button>,
+          )}
+          <div className={styles.scrim} aria-hidden="true" />
+
+          {canRender && (
+            <div className={styles.labels} aria-hidden="true">
+              {worlds.map((w, i) => (
+                <button key={w.id} type="button" tabIndex={-1} className={styles.worldLabel}
+                  ref={(el) => { labelRefs.current[i] = el }} onClick={() => goTo(i + 1)}
+                  style={{ '--world': w.look.accent } as CSSProperties}>
+                  <span>{pad(i + 1)}</span>{w.name}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div ref={panelRef} className={styles.panel}>
+            {station === 0 || reducedMotion ? (
+              <div key="intro" className={styles.copy}>
+                <p className={styles.eyebrow}>{en ? `Atlas · ${count} worlds` : `Atlas · ${count} dünya`}</p>
+                <h1 id="showroom-title">CrownCode</h1>
+                <p className={styles.lead}>{en ? 'Independent work across sound, data and the web, laid out as worlds you can travel between.' : 'Ses, veri ve web üzerine bağımsız işler; aralarında gezebileceğin dünyalar olarak.'}</p>
+                <div className={styles.actions}>
+                  <button type="button" className={styles.primary} onClick={() => goTo(1)}>
+                    {en ? 'Enter the atlas' : 'Atlas’a gir'} <ArrowDown size={18} />
+                  </button>
+                  <a href="#project-index" className={styles.secondary}>{en ? 'All projects' : 'Tüm projeler'}</a>
+                </div>
+              </div>
+            ) : world ? (
+              <article key={world.id} className={styles.copy} style={{ '--world': world.look.accent } as CSSProperties}>
+                <p className={styles.eyebrow}>
+                  <span className={styles.worldIndex}>{pad(station)} / {pad(count)}</span>
+                  <span>{en ? world.look.sector.en : world.look.sector.tr}</span>
+                </p>
+                <h2>{world.name}</h2>
+                <p className={styles.lead}>{world.showroomDescription}</p>
+                {world.features.length > 0 && (
+                  <ul className={styles.features}>{world.features.slice(0, 3).map((f) => <li key={f}>{f}</li>)}</ul>
+                )}
+                <div className={styles.actions}>
+                  <Link href={world.href} className={styles.primary}
+                    target={external(world.href) ? '_blank' : undefined} rel={external(world.href) ? 'noreferrer' : undefined}>
+                    {en ? 'Enter world' : 'Dünyaya gir'} <ArrowUpRight size={18} />
+                  </Link>
+                  <span className={styles.status}>{world.status}</span>
+                </div>
+              </article>
+            ) : (
+              <div key="outro" className={styles.copy}>
+                <p className={styles.eyebrow}>{en ? 'Atlas · end of route' : 'Atlas · rotanın sonu'}</p>
+                <h2>{en ? `${count} worlds, one route.` : `${count} dünya, tek rota.`}</h2>
+                <p className={styles.lead}>{en ? 'See every project as a list, or go next door to the music.' : 'Hepsini liste olarak gör ya da yan kapıdaki müziğe geç.'}</p>
+                <div className={styles.actions}>
+                  <a href="#project-index" className={styles.primary}>{en ? 'All projects' : 'Tüm projeler'} <ArrowDown size={18} /></a>
+                  <a href="https://hasan-arthur-altuntas.com.tr" target="_blank" rel="noreferrer" className={styles.secondary}>
+                    {en ? 'Music' : 'Müzik'} <ArrowUpRight size={16} />
+                  </a>
+                </div>
+              </div>
             )}
+          </div>
+
+          <nav className={styles.strip} aria-label={en ? 'Choose a world' : 'Dünya seç'}>
+            <button type="button" className={styles.step} onClick={() => goTo(station - 1)} disabled={station === 0}
+              aria-label={en ? 'Previous world' : 'Önceki dünya'}>
+              <ArrowLeft size={18} />
+            </button>
+            <ol className={styles.track} style={{ '--count': count } as CSSProperties}>
+              <span className={styles.trackLine} aria-hidden="true"><span ref={fillRef} className={styles.trackFill} /></span>
+              {worlds.map((w, i) => (
+                <li key={w.id}>
+                  <button type="button" onClick={() => goTo(i + 1)} aria-current={station === i + 1 ? 'step' : undefined}
+                    style={{ '--world': w.look.accent } as CSSProperties}>
+                    <span className={styles.node} aria-hidden="true" />
+                    <span className={styles.nodeLabel}><span aria-hidden="true">{pad(i + 1)}</span> {w.name}</span>
+                  </button>
+                </li>
+              ))}
+            </ol>
+            <button type="button" className={styles.step} onClick={() => goTo(station + 1)} disabled={station === stations - 1}
+              aria-label={en ? 'Next world' : 'Sonraki dünya'}>
+              <ArrowRight size={18} />
+            </button>
+            <p className={styles.hint} aria-hidden="true">{en ? 'Scroll or use ← →' : 'Kaydır ya da ← → kullan'}</p>
           </nav>
-          <motion.div className={styles.scrollCue} style={{ opacity: introOpacity, visibility: introVisibility }} aria-hidden="true"><ArrowDown size={16} /> {en ? 'Scroll into the work' : 'İşlerin içine kaydır'}</motion.div>
+          <p className={styles.srOnly} aria-live="polite">{world ? `${world.name}: ${world.showroomDescription}` : ''}</p>
         </div>
       </section>
 
@@ -235,16 +275,19 @@ export function ProjectExplorer() {
           <p>{en ? 'Choose a project to see what it does and how it was built.' : 'Ne yaptığını ve nasıl kurulduğunu görmek için bir proje seç.'}</p>
         </div>
         <div className={styles.indexList}>
-          {products.map((product, index) =>
-            <Link id={`project-${product.id}`} key={product.id} href={product.href}
-              target={product.href.startsWith('https:') ? '_blank' : undefined}
-              rel={product.href.startsWith('https:') ? 'noreferrer' : undefined}>
-              <span className={styles.indexNumber} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-              <span className={styles.indexImage}><Image src={product.image} alt="" fill sizes="(max-width: 700px) 54px, 160px" /></span>
-              <span className={styles.indexCopy}><strong>{product.name}</strong><span>{product.showroomDescription}</span></span>
+          {worlds.map((w, index) => (
+            <Link id={`project-${w.id}`} key={w.id} href={w.href}
+              target={external(w.href) ? '_blank' : undefined} rel={external(w.href) ? 'noreferrer' : undefined}
+              style={{ '--world': w.look.accent } as CSSProperties}>
+              <span className={styles.indexNumber} aria-hidden="true">{pad(index + 1)}</span>
+              <span className={styles.indexImage}><Image src={w.image} alt="" fill sizes="(max-width: 700px) 54px, 160px" /></span>
+              <span className={styles.indexCopy}>
+                <strong>{w.name}</strong>
+                <span>{w.showroomDescription}</span>
+              </span>
               <ArrowUpRight size={20} />
-            </Link>,
-          )}
+            </Link>
+          ))}
         </div>
         <div id="studio-end" className={styles.musicBridge}>
           <p>{en ? 'The music lives next door.' : 'Müzik de yan tarafta.'}</p>
