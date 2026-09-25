@@ -12,7 +12,7 @@
 
 import { API_BASE_URL } from '@/config/api'
 import { sendAnalysis, type AnalyzeOutcome } from '@/hooks/analysisGateway'
-import type { AnalysisResult, AnalysisSource } from '@/hooks/analysisTypes'
+import type { AnalysisResult, AnalysisSource, FileSourceInfo } from '@/hooks/analysisTypes'
 import { appendHistory, HISTORY_KEYS } from '@/hooks/useLocalHistory'
 import { clearLastJob, loadLastJob, saveLastJob, type StoredJob } from '@/hooks/auris/persist'
 import { ensureServer } from '@/hooks/auris/server'
@@ -80,7 +80,7 @@ const releaseAudio = (job: AurisJob | null) => {
 
 // ── results ──────────────────────────────────────────────────────────
 
-const sourceOf = (input: JobInput, bytes: number): AnalysisSource => ({
+const sourceOf = (input: JobInput, bytes: number): FileSourceInfo => ({
   kind: 'file',
   fileName: input.kind === 'mic' ? `mikrofon.${input.format.toLowerCase()}` : input.label,
   fileSizeBytes: bytes,
@@ -294,6 +294,17 @@ export const retryInterrupted = async () => {
   if (stored.blob) {input.blob = stored.blob}
   if (stored.url) {input.url = stored.url}
   void startJob(input)
+}
+
+/** Sends the last job's audio (or link) again, e.g. after the server woke up. */
+export const rerunLast = async () => {
+  const stored = await loadLastJob()
+  if (!stored || (!stored.blob && !stored.url)) {return false}
+  const input: JobInput = { kind: stored.kind, label: stored.label, format: stored.format }
+  if (stored.blob) {input.blob = stored.blob}
+  if (stored.url) {input.url = stored.url}
+  void startJob(input)
+  return true
 }
 
 export const dismissInterrupted = () => {
