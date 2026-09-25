@@ -109,5 +109,7 @@ export function useAurisStore<T>(select: (s: AurisState) => T): T {
   return useSyncExternalStore(subscribe, () => select(state), () => select(INITIAL))
 }
 
-export const isActive = (job: AurisJob | null): job is AurisJob =>
+export type ActiveJob = AurisJob & { stage: 'waking' | 'uploading' | 'processing' }
+
+export const isActive = (job: AurisJob | null): job is ActiveJob =>
   !!job && (job.stage === 'waking' || job.stage === 'uploading' || job.stage === 'processing')
