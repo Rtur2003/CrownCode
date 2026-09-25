@@ -242,6 +242,7 @@ for (const [name, world] of Object.entries(worlds)) {
   if (only && !only.includes(name)) continue
   const target = path.join(root, `planet-${name}.webp`)
   await sharp(Buffer.from(svg(world)), { density: 96 })
+    .resize(SIZE, SIZE)
     .webp({ quality: 85, effort: 5, alphaQuality: 100 })
     .toFile(target)
   const { width, height, channels } = await sharp(target).metadata()
