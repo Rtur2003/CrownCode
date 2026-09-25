@@ -11,10 +11,12 @@
  * =========================================================================
  */
 
+import type { SignalReport } from '@/hooks/auris/signal'
+
 export type ProcessingState = 'idle' | 'validating' | 'downloading' | 'analyzing' | 'complete' | 'error'
 
-export type DecisionSource = 'music_ai' | 'ses_analizi' | 'preview' | 'auris_meta' | 'auris_fallback' | 'auris_local' | 'auris_fusion' | string
-export type AnalysisMode = 'production' | 'preview'
+export type DecisionSource = 'auris_signal' | 'music_ai' | 'ses_analizi' | 'preview' | 'auris_meta' | 'auris_fallback' | 'auris_local' | 'auris_fusion' | string
+export type AnalysisMode = 'production' | 'preview' | 'signal'
 
 export interface AnalysisFeatures {
   spectralRegularity: number
@@ -162,6 +164,8 @@ export interface AnalysisResult {
   topFeatures?: FeatureImportance[]
   xai?: XAIExplanation
   metaClassifier?: MetaClassifierExplanation
+  /** Raw measurements and visuals from the AURIS signal analysis. */
+  signal?: SignalReport
 }
 
 export type AnalysisErrorCode =

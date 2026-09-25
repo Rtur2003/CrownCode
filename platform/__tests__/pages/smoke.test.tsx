@@ -132,7 +132,7 @@ describe('Page Smoke Tests', () => {
     it('renders the Crown Commend title', async () => {
       const CrownCommendPage = (await import('@/pages/crown-commend/index')).default
       renderWithProviders(<CrownCommendPage />)
-      expect(screen.getByText('Crown Commend')).toBeInTheDocument()
+      expect(screen.getByRole('heading', { level: 1, name: 'Crown Commend' })).toBeInTheDocument()
     })
   })
 

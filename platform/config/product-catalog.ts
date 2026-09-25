@@ -119,7 +119,7 @@ export interface SearchRegistryEntry {
 export const SEARCH_REGISTRY: readonly SearchRegistryEntry[] = [
   { id: 'home', href: '/', category: 'page', titleKey: 'search.pages.home' },
   { id: 'projects', href: '/#products', category: 'page', titleKey: 'search.pages.projects' },
-  { id: 'url-analysis', href: '/ai-music-detection#url', category: 'feature', titleKey: 'search.features.urlAnalysis', descriptionKey: 'search.features.urlAnalysisDesc' },
+  { id: 'url-analysis', href: '/ai-music-detection', category: 'feature', titleKey: 'search.features.urlAnalysis', descriptionKey: 'search.features.urlAnalysisDesc' },
   { id: 'data-augmentation', href: '/data-manipulation', category: 'feature', titleKey: 'search.features.dataAugmentation', descriptionKey: 'search.features.dataAugmentationDesc' },
   { id: 'creator-studio', href: '/creator-studio', category: 'page', titleKey: 'creatorStudio.title', descriptionKey: 'creatorStudio.subtitle' },
   { id: 'analysis-history', href: '/analysis-history', category: 'page', titleKey: 'analysisHistory.title', descriptionKey: 'analysisHistory.subtitle' },

@@ -24,9 +24,12 @@ function LanguageLink({ code, className, children, onSelect }: {
   const router = useRouter()
   const { language } = useLanguage()
   const active = language === code
+  // Error pages are prerendered as /404; the browser's asPath is the missing
+  // URL, so link to the home page there to keep SSR and hydration equal.
+  const isErrorPage = router.pathname === '/404' || router.pathname === '/_error'
   return (
     <Link
-      href={router.asPath}
+      href={isErrorPage ? '/' : router.asPath}
       locale={code}
       scroll={false}
       hrefLang={code}
