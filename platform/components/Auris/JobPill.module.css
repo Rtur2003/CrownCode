@@ -1,0 +1,84 @@
+.pill {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 60;
+  display: flex;
+  align-items: stretch;
+  max-width: min(360px, calc(100vw - 32px));
+  border: 1px solid rgba(234, 192, 111, 0.32);
+  border-radius: 14px;
+  background: rgba(18, 15, 12, 0.94);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 50px -20px rgba(0, 0, 0, 0.9);
+  color: var(--color-text-primary);
+  animation: rise 0.35s ease-out;
+}
+.pill[data-state='error'] { border-color: rgba(217, 138, 95, 0.5); }
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 0.7rem 0.9rem;
+  color: inherit;
+  text-decoration: none;
+  border-radius: 14px;
+}
+.link:focus-visible { outline: 2px solid var(--color-gold-400); outline-offset: 2px; }
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: #1a130b;
+  background: var(--color-gold-400);
+}
+.pill[data-state='active'] .icon { animation: breathe 1.6s ease-in-out infinite; }
+.pill[data-state='error'] .icon { background: #d98a5f; }
+
+.text { display: flex; flex-direction: column; min-width: 0; }
+.text strong { font-weight: 400; font-size: 0.9rem; }
+.text small {
+  font-family: var(--font-family-mono);
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.open {
+  margin-left: auto;
+  padding-left: 0.5rem;
+  font-family: var(--font-family-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gold-400);
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+  background: none;
+  border: 0;
+  border-left: 1px solid rgba(234, 192, 111, 0.14);
+  cursor: pointer;
+}
+.close:hover { color: var(--color-text-primary); }
+.close:focus-visible { outline: 2px solid var(--color-gold-400); outline-offset: -2px; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes breathe { 50% { box-shadow: 0 0 0 6px rgba(234, 192, 111, 0.18); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .pill, .pill[data-state='active'] .icon { animation: none; }
+}
