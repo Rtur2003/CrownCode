@@ -58,9 +58,9 @@ function Specimen({ product, index, count, progress, onSelect, reducedMotion, in
   const scale = useTransform(progress, value => {
     const focus = staticScene() ? 0 : focusAt(value, index, count)
     const depth = 1 + Math.sin(orbitalAngle(value)) * 0.16
-    return depth * (1 - focus) + focus * 16
+    return depth * (1 - focus) + focus * 14.5
   })
-  const rotate = useTransform(progress, value => staticScene() ? 0 : value * 230 + index * 8)
+  const rotate = useTransform(progress, value => staticScene() ? 0 : value * 420 + index * 12)
   const opacity = useTransform(progress, value => {
     if (staticScene()) {return 1}
     const otherFocus = nearestFocusAt(value, count)

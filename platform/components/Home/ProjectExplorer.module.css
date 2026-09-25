@@ -14,7 +14,7 @@
 .stage { position: sticky; top: 0; height: 100svh; min-height: 650px; overflow: clip; isolation: isolate; background: #100d0a; }
 .studio, .studioField { position: absolute; inset: 0; }
 .studio { z-index: -2; pointer-events: none; }
-.studioField img { object-fit: cover; object-position: center; }
+.studioField img { object-fit: cover; object-position: center; filter: brightness(1.28); }
 .studioField { transform-origin: 48% 50%; }
 .shade { position: absolute; z-index: -1; inset: 0; pointer-events: none; background: linear-gradient(90deg, #100d0aeb 0%, #100d0aa4 27%, transparent 59%), linear-gradient(0deg, #100d0af0 0%, transparent 20%, transparent 78%, #100d0a91 100%); }
 .intro { position: absolute; left: 5.4vw; top: clamp(132px, 19svh, 230px); max-width: 430px; z-index: 4; pointer-events: none; }
@@ -27,11 +27,11 @@
 .origin img { display: block; width: 56%; height: 56%; object-fit: contain; filter: brightness(0) invert(1) sepia(.19); }
 .orbit { position: absolute; inset: 0; z-index: 1; pointer-events: none; transform-origin: center; }
 .orbitLines { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: #d6ab6b; stroke-width: .6; opacity: .27; transform-origin: center; pointer-events: none; }
-.specimen { position: absolute; left: 50%; top: 50%; width: clamp(80px, 8.4vw, 124px); text-align: center; }
+.specimen { position: absolute; left: 50%; top: 50%; width: clamp(90px, 9.7vw, 146px); text-align: center; }
 .specimenOrb { display: block; position: relative; width: 100%; aspect-ratio: 1; padding: 0; border: 1px solid #d6ab6b65; border-radius: 50%; overflow: hidden; background: #121416; box-shadow: 0 12px 28px #07050466; pointer-events: auto; cursor: pointer; transform-origin: center; }
 .planetSurface { position: absolute; inset: 0; display: block; border-radius: 50%; }
-.planetSurface img { object-fit: cover; object-position: center; border-radius: 50%; }
-.specimenOrb::after { content: ''; position: absolute; inset: 0; z-index: 1; border-radius: 50%; pointer-events: none; background: radial-gradient(circle at 25% 20%, #f3d5a52b 0%, transparent 43%), linear-gradient(105deg, transparent 34%, #07080955 63%, #020405c9 100%); box-shadow: inset 2px 2px 5px #f6c9883d, inset -12px -8px 24px #020305aa; }
+.planetSurface img { object-fit: cover; object-position: center; border-radius: 50%; filter: brightness(1.4) contrast(1.06); }
+.specimenOrb::after { content: ''; position: absolute; inset: 0; z-index: 1; border-radius: 50%; pointer-events: none; background: radial-gradient(circle at 25% 20%, #f3d5a52b 0%, transparent 43%), linear-gradient(105deg, transparent 34%, #07080936 63%, #0204058a 100%); box-shadow: inset 2px 2px 5px #f6c9883d, inset -12px -8px 24px #020305aa; }
 .specimenOrb:hover { outline: 1px solid #f6d18f; outline-offset: 4px; }
 .specimenName { display: block; min-width: 82px; margin: 10px 0 0 50%; color: #efe1c8; font-size: 13px; line-height: 1.2; text-shadow: 0 2px 8px #000; pointer-events: none; white-space: normal; transform: translateX(-50%); }
 .specimenName span { color: #d6ab6b; font-size: 10px; letter-spacing: .13em; }

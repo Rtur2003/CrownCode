@@ -98,18 +98,18 @@ function ml() {
 }
 
 function fortune() {
-  const circles = [115,220,339,415].map((r,i) => `<circle cx="528" cy="498" r="${r}" fill="none" stroke="${i === 1 ? '#d4aa68' : '#ab8251'}" stroke-width="${i === 1 ? 2.2 : 1}" opacity="${i === 1 ? 0.6 : 0.4}"/>`).join('')
+  const circles = [115,220,339,415].map((r,i) => `<circle cx="528" cy="498" r="${r}" fill="none" stroke="${i === 1 ? '#d4aa68' : '#ab8251'}" stroke-width="${i === 1 ? 3.5 : 1.5}" opacity="${i === 1 ? 0.77 : 0.53}"/>`).join('')
   const sectors = []
   for (let i = 0; i < 22; i++) {
     const a = -Math.PI / 2 + i * Math.PI * 2 / 22
     const x = 528 + Math.cos(a) * 430
     const y = 498 + Math.sin(a) * 430
-    sectors.push(`<path d="M 528 498 L ${x.toFixed(1)} ${y.toFixed(1)}" stroke="${i === 3 ? '#e4ba78' : '#b09572'}" stroke-width="${i === 3 ? 2.4 : 0.9}" opacity="${i === 3 ? 0.67 : 0.29}"/>`)
+    sectors.push(`<path d="M 528 498 L ${x.toFixed(1)} ${y.toFixed(1)}" stroke="${i === 3 ? '#e4ba78' : '#b09572'}" stroke-width="${i === 3 ? 3.7 : 1.35}" opacity="${i === 3 ? 0.8 : 0.42}"/>`)
     const dotX = 528 + Math.cos(a + Math.PI / 22) * 277
     const dotY = 498 + Math.sin(a + Math.PI / 22) * 277
     sectors.push(`<circle cx="${dotX.toFixed(1)}" cy="${dotY.toFixed(1)}" r="1.5" fill="#ead0a2" opacity="0.55"/>`)
   }
-  return `<g transform="rotate(-18 512 512)">${sectors.join('')}${circles}<circle cx="528" cy="498" r="13" fill="#3b2e21" stroke="#dcab68" stroke-width="1.5" opacity="0.9"/></g>`
+  return `<g transform="rotate(-18 512 512)"><path d="M 528 498 L 794 328 A 315 315 0 0 1 829 404 Z" fill="#bd9259" opacity="0.21"/>${sectors.join('')}${circles}<circle cx="528" cy="498" r="13" fill="#3b2e21" stroke="#dcab68" stroke-width="1.5" opacity="0.9"/></g>`
 }
 
 function dreams() {
@@ -124,12 +124,12 @@ function dreams() {
 
 function commend() {
   const bands = []
-  for (let i = 0; i < 45; i++) {
-    const y = 183 + i * 15
-    const amp = 8 + 34 * Math.abs(Math.sin(i * 0.19))
-    bands.push(`<path d="${sweep(y, i * 0.37, amp, -0.025)}" fill="none" stroke="${i % 7 === 0 ? '#e1ae8e' : i % 3 === 0 ? '#ae766b' : '#705452'}" stroke-width="${i % 7 === 0 ? 2 : 0.8}" opacity="${i % 7 === 0 ? 0.58 : 0.32}"/>`)
+  for (let i = 0; i < 31; i++) {
+    const y = 246 + i * 18
+    const amp = 8 + 35 * Math.abs(Math.sin(i * 0.19))
+    bands.push(`<path d="${sweep(y, i * 0.37, amp, -0.025)}" fill="none" stroke="${i % 6 === 0 ? '#e1ae8e' : i % 3 === 0 ? '#ae766b' : '#705452'}" stroke-width="${i % 6 === 0 ? 2.7 : 1.05}" opacity="${i % 6 === 0 ? 0.72 : 0.38}"/>`)
   }
-  return `<g transform="rotate(-24 512 512)">${bands.join('')}<path d="${sweep(518, 4.2, 51, -0.025)}" fill="none" stroke="#e3bc9b" stroke-width="3.3" opacity="0.44"/></g>`
+  return `<g transform="rotate(-29 512 512)"><path d="${sweep(466, 4.2, 51, -0.025)}" fill="none" stroke="#8a4f49" stroke-width="50" opacity="0.22"/>${bands.join('')}<path d="${sweep(466, 4.2, 51, -0.025)}" fill="none" stroke="#e3bc9b" stroke-width="4.5" opacity="0.72"/></g>`
 }
 
 function votryx() {
@@ -144,8 +144,8 @@ function votryx() {
     const r = 75 + next() * 300
     points.push([512 + Math.cos(a) * r, 512 + Math.sin(a) * r])
   }
-  const routes = [[1,7,13,19,24],[3,9,17,22],[0,6,11,15,27]].map((route,i) => `<path d="${line(route.map(index => points[index]))}" fill="none" stroke="${i === 1 ? '#c4b18a' : '#9ba47b'}" stroke-width="${i === 1 ? 1.8 : 1.2}" stroke-dasharray="${i === 2 ? '3 8' : 'none'}" opacity="0.43"/>`).join('')
-  const dots = points.map(([x,y],i) => `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${i % 6 === 0 ? 6 : 2.7}" fill="${i % 6 === 0 ? '#d7c49b' : '#9fa581'}" opacity="0.75"/>`).join('')
+  const routes = [[1,7,13,19,24],[3,9,17,22],[0,6,11,15,27]].map((route,i) => `<path d="${line(route.map(index => points[index]))}" fill="none" stroke="${i === 1 ? '#c4b18a' : '#9ba47b'}" stroke-width="${i === 1 ? 3.2 : 2.2}" stroke-dasharray="${i === 2 ? '3 8' : 'none'}" opacity="${i === 1 ? 0.71 : 0.59}"/>`).join('')
+  const dots = points.map(([x,y],i) => `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${i % 6 === 0 ? 9 : 4.1}" fill="${i % 6 === 0 ? '#d7c49b' : '#9fa581'}" opacity="0.84"/>`).join('')
   return `<g transform="rotate(-12 512 512)">${zones.join('')}${routes}${dots}</g>`
 }
 
@@ -154,14 +154,14 @@ function noir() {
   const fissures = []
   for (let i = 0; i < 7; i++) {
     const y = 209 + i * 104
-    fissures.push(`<path d="${sweep(y, i * 0.89, 25 + i * 4, -0.18)}" fill="none" stroke="${i % 2 ? '#6d5746' : '#d7a46b'}" stroke-width="${i === 3 ? 3.1 : 1.3}" opacity="${i === 3 ? 0.67 : 0.32}"/>`)
+    fissures.push(`<path d="${sweep(y, i * 0.89, 25 + i * 4, -0.18)}" fill="none" stroke="${i % 2 ? '#6d5746' : '#d7a46b'}" stroke-width="${i === 3 ? 3.1 : 1.3}" opacity="${i === 3 ? 0.55 : 0.24}"/>`)
   }
   const basalt = []
   for (let i = 0; i < 23; i++) {
     const x = 150 + i * 34
     basalt.push(`<path d="M ${x} 182 C ${x - 28} 355 ${x + 67} 486 ${x + 18} 828" fill="none" stroke="#a89175" stroke-width="0.9" opacity="0.12"/>`)
   }
-  return `<g transform="rotate(-10 512 512)">${basalt.join('')}${fissures.join('')}${flecks}</g>`
+  return `<g transform="rotate(-10 512 512)">${basalt.join('')}${fissures.join('')}<path d="M 274 152 C 370 281 347 367 488 440 S 594 567 714 619 S 800 763 851 866" fill="none" stroke="#6f4e35" stroke-width="38" opacity="0.21"/><path d="M 274 152 C 370 281 347 367 488 440 S 594 567 714 619 S 800 763 851 866" fill="none" stroke="#d1a36d" stroke-width="5" opacity="0.65"/><path d="M 488 440 C 510 395 550 374 582 356 M 714 619 C 735 600 743 567 782 551" fill="none" stroke="#c79762" stroke-width="2.8" opacity="0.49"/>${flecks}</g>`
 }
 
 function kognita() {
@@ -239,7 +239,9 @@ function svg(world) {
 
 const only = process.argv.find(arg => arg.startsWith('--only='))?.slice(7).split(',')
 for (const [name, world] of Object.entries(worlds)) {
-  if (only && !only.includes(name)) continue
+  if (only && !only.includes(name)) {
+    continue
+  }
   const target = path.join(root, `planet-${name}.webp`)
   await sharp(Buffer.from(svg(world)), { density: 96 })
     .resize(SIZE, SIZE)
