@@ -128,7 +128,7 @@
 }
 @media (max-height: 649px) and (max-width: 700px) {
   .intro { top: 58px; }
-  .feature { top: 70px; }
+  .feature { top: 96px; }
   .feature h2 { font-size: 34px; }
   .feature > p { font-size: 15px; }
   .feature ul { gap: 2px 12px; }
@@ -141,4 +141,6 @@
   .journey { height: auto; }
   .stage { position: relative; min-height: 700px; height: 100svh; }
   .feature, .scrollCue { display: none; }
+  .studioHero, .intro { opacity: 1 !important; transform: none !important; visibility: visible !important; }
+  .studioDetail, .atlasMark { display: none; }
 }
