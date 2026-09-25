@@ -71,8 +71,13 @@ const motionHandler: ProxyHandler<object> = {
   },
 }
 
+// motion/react re-exports framer-motion, so this mock covers both imports.
+// Components use the lightweight `m` (LazyMotion) component.
 jest.mock('framer-motion', () => ({
   motion: new Proxy({}, motionHandler),
+  m: new Proxy({}, motionHandler),
+  LazyMotion: ({ children }: React.PropsWithChildren) => <>{children}</>,
+  useReducedMotion: () => false,
   AnimatePresence: ({ children }: React.PropsWithChildren) => <>{children}</>,
   useAnimation: () => ({ start: jest.fn() }),
   useInView: () => true,

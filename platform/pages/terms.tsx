@@ -3,7 +3,7 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { motion } from 'motion/react'
+import { m as motion } from 'motion/react'
 import { ArrowLeft, FileText, CheckCircle, AlertTriangle, Scale, Users, Mail } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
@@ -25,15 +25,10 @@ const TermsPage: NextPage = () => {
     <MainLayout
       title={tm.meta.title}
       description={tm.meta.description}
-      url="https://hasan-arthur-altuntas.xyz/terms"
     >
       <div className="min-h-screen py-24 px-4">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <div className="enter-rise">
             {/* Back Link */}
             <Link
               href="/"
@@ -131,7 +126,7 @@ const TermsPage: NextPage = () => {
                 <span>contact@hasan-arthur-altuntas.xyz</span>
               </a>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </MainLayout>

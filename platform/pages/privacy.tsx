@@ -3,7 +3,7 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { motion } from 'motion/react'
+import { m as motion } from 'motion/react'
 import { ArrowLeft, Shield, Eye, Database, Lock, Mail } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
@@ -25,15 +25,10 @@ const PrivacyPage: NextPage = () => {
     <MainLayout
       title={p.meta.title}
       description={p.meta.description}
-      url="https://hasan-arthur-altuntas.xyz/privacy"
     >
       <div className="min-h-screen py-24 px-4">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <div className="enter-rise">
             {/* Back Link */}
             <Link
               href="/"
@@ -108,7 +103,7 @@ const PrivacyPage: NextPage = () => {
                 <span>contact@hasan-arthur-altuntas.xyz</span>
               </a>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </MainLayout>

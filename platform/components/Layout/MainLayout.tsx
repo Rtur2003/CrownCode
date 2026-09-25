@@ -2,6 +2,21 @@ import React, { ReactNode } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useLanguage } from '@/context/LanguageContext'
+import {
+  APP_SCHEMA,
+  AUTHOR_NAME,
+  DEFAULT_LOCALE,
+  GITHUB_URL,
+  HREFLANG,
+  LOCALES,
+  MUSIC_SITE_URL,
+  OG_LOCALE,
+  SITE_NAME,
+  SITE_URL,
+  localizedUrl,
+  normalizePath,
+} from '@/config/site'
+import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
 import { Header } from './Header'
 import { Footer } from './Footer'
 
@@ -10,238 +25,204 @@ interface MainLayoutProps {
   title?: string
   description?: string
   keywords?: string
+  /** Absolute URL or site-relative path of the social preview image. */
   image?: string
-  url?: string
-  noCache?: boolean
-  /** Internal-search-results and similar low-value pages should not be indexed. */
+  /** Internal-search results, personal data and error pages stay out of the index. */
   noIndex?: boolean
+  /** Extra page-specific schema.org nodes merged into the page's JSON-LD graph. */
+  schema?: Record<string, unknown>[]
 }
+
+const DEFAULT_TITLE = 'CrownCode | Hasan Arthur Altuntaş'
+const DEFAULT_DESCRIPTION = 'Hasan Arthur Altuntaş’s independent projects across sound, data and the web.'
+const DEFAULT_OG_IMAGE = '/og/default.jpg'
+
+const OG_IMAGES: Record<string, string> = {
+  '/ai-music-detection': '/og/ai-music-detection.jpg',
+  '/data-manipulation': '/og/data-manipulation.jpg',
+  '/creator-studio': '/og/creator-studio.jpg',
+  '/crown-commend': '/og/crown-commend.jpg',
+  '/crown-fortune': '/og/crown-fortune.jpg',
+  '/crown-dreams': '/og/crown-dreams.jpg',
+  '/crown-vote': '/og/crown-vote.jpg',
+  '/noir-grain': '/og/noir-grain.jpg',
+}
+
+const PERSON_ID = `${SITE_URL}/#person`
+const WEBSITE_ID = `${SITE_URL}/#website`
+
+/** Page name for breadcrumbs: the part of the title before the brand suffix. */
+const shortName = (title: string) => title.split(/\s[|–—-]\s/)[0]?.trim() || title
 
 export const MainLayout: React.FC<MainLayoutProps> = ({
   children,
-  title = 'CrownCode by Rthur - AURIS AI Music Detection Platform',
-  description = 'AURIS - AI muzik tespiti ve veri manipulasyonu icin profesyonel platform. wav2vec2 tabanli derin ogrenme teknolojisi.',
-  keywords = 'AURIS, AI, machine learning, music detection, data processing, web development, developer tools, CrownCode, Rthur, artificial intelligence',
-  image = '/og-image.png',
-  url = 'https://hasan-arthur-altuntas.xyz',
-  noCache = false,
+  title = DEFAULT_TITLE,
+  description = DEFAULT_DESCRIPTION,
+  keywords,
+  image,
   noIndex = false,
+  schema = [],
 }) => {
-  const { language } = useLanguage()
+  const { language, t } = useLanguage()
   const router = useRouter()
-  const siteOrigin = 'https://hasan-arthur-altuntas.xyz'
-  const canonicalUrl = url || `${siteOrigin}${router.asPath.split('?')[0]}`
-  const baseUrl = siteOrigin
-  const imageUrl = image.startsWith('http') ? image : `${baseUrl}${image}`
-  const metaLanguage = language === 'tr' ? 'Turkish' : 'English'
-  const ogLocale = language === 'tr' ? 'tr_TR' : 'en_US'
+  const path = normalizePath(router.asPath)
+  const pathname = router.pathname
+  const isHomePage = pathname === '/'
 
-  const isHomePage = router.pathname === '/'
-  const isAurisPage = router.pathname.startsWith('/ai-music-detection')
+  const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`
+  const canonicalUrl = localizedUrl(path, language)
+  const imagePath = image ?? OG_IMAGES[pathname] ?? DEFAULT_OG_IMAGE
+  const imageUrl = imagePath.startsWith('http') ? imagePath : `${SITE_URL}${imagePath}`
+  const inLanguage = HREFLANG[language]
 
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "CrownCode",
-    "url": baseUrl,
-    "logo": `${baseUrl}/logo-main.png`,
-    "description": "Open-source project showcase and demo applications platform",
-    "founder": {
-      "@type": "Person",
-      "name": "Hasan Arthur Altuntas",
-      "jobTitle": "Computer Engineering Student",
-      "affiliation": {
-        "@type": "EducationalOrganization",
-        "name": "Duzce University"
-      }
-    },
-    "sameAs": [
-      "https://github.com/Rtur2003",
-      "https://hasan-arthur-altuntas.com.tr"
-    ],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "Technical Support",
-      "availableLanguage": ["Turkish", "English"]
-    }
+  const person = {
+    '@type': 'Person',
+    '@id': PERSON_ID,
+    name: AUTHOR_NAME,
+    alternateName: 'Rthur',
+    url: SITE_URL,
+    image: `${SITE_URL}/hasan-arthur-profile.jpg`,
+    jobTitle: language === 'tr' ? 'Bilgisayar Mühendisliği Öğrencisi' : 'Computer Engineering Student',
+    affiliation: { '@type': 'CollegeOrUniversity', name: 'Düzce Üniversitesi' },
+    sameAs: [GITHUB_URL, MUSIC_SITE_URL],
   }
 
-  const websiteSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "CrownCode Platform",
-    "url": baseUrl,
-    "description": description,
-    "inLanguage": [language === 'tr' ? 'tr-TR' : 'en-US'],
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": `${baseUrl}/search?q={search_term_string}`,
-      "query-input": "required name=search_term_string"
-    }
+  const website = {
+    '@type': 'WebSite',
+    '@id': WEBSITE_ID,
+    name: SITE_NAME,
+    url: SITE_URL,
+    inLanguage: LOCALES.map((l) => HREFLANG[l]),
+    publisher: { '@id': PERSON_ID },
   }
 
-  const softwareSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": isAurisPage ? "AURIS - AI Music Detection Engine" : "CrownCode",
-    "description": description,
-    "applicationCategory": isAurisPage ? "MultimediaApplication" : "DeveloperApplication",
-    "operatingSystem": "Web",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "author": {
-      "@type": "Person",
-      "name": "Hasan Arthur Altuntas",
-      "url": baseUrl
-    },
-    "image": imageUrl,
-    "url": canonicalUrl
-  }
+  const graph: Record<string, unknown>[] = []
 
-  const researchSchema = isAurisPage ? {
-    "@context": "https://schema.org",
-    "@type": "ScholarlyArticle",
-    "name": "AURIS: AI Music Detection Using Multi-Tower Deep Learning Architecture",
-    "author": {
-      "@type": "Person",
-      "name": "Hasan Arthur Altuntas",
-      "affiliation": {
-        "@type": "EducationalOrganization",
-        "name": "Duzce University, Computer Engineering"
-      }
-    },
-    "description": "Bachelor's thesis research on detecting AI-generated music using a 4-tower ensemble architecture with 49 acoustic features and vocal analysis.",
-    "keywords": "AI music detection, deep learning, wav2vec2, audio fingerprinting, vocal analysis",
-    "inLanguage": language === 'tr' ? 'tr-TR' : 'en-US',
-    "url": canonicalUrl
-  } : null
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": baseUrl
+  if (isHomePage) {
+    graph.push(website, person, {
+      '@type': 'CollectionPage',
+      '@id': `${canonicalUrl}#page`,
+      url: canonicalUrl,
+      name: fullTitle,
+      description,
+      inLanguage,
+      isPartOf: { '@id': WEBSITE_ID },
+      about: { '@id': PERSON_ID },
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: PRODUCT_CATALOG.map((entry, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: resolveProduct(entry, t).title,
+          url: entry.href.startsWith('http') ? entry.href : localizedUrl(entry.href, language),
+        })),
       },
-      ...(isAurisPage ? [{
-        "@type": "ListItem",
-        "position": 2,
-        "name": "AURIS AI Music Detection",
-        "item": `${baseUrl}/ai-music-detection`
-      }] : [])
-    ]
+    })
+  } else if (!noIndex) {
+    graph.push({
+      '@type': 'WebPage',
+      '@id': `${canonicalUrl}#page`,
+      url: canonicalUrl,
+      name: fullTitle,
+      description,
+      inLanguage,
+      isPartOf: { '@id': WEBSITE_ID },
+      breadcrumb: {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: SITE_NAME, item: localizedUrl('/', language) },
+          { '@type': 'ListItem', position: 2, name: shortName(title), item: canonicalUrl },
+        ],
+      },
+    })
+
+    const app = APP_SCHEMA[pathname]
+    if (app) {
+      graph.push({
+        '@type': app.type ?? 'WebApplication',
+        '@id': `${canonicalUrl}#app`,
+        name: shortName(title),
+        description,
+        url: canonicalUrl,
+        image: imageUrl,
+        applicationCategory: app.category,
+        operatingSystem: app.os,
+        inLanguage,
+        isAccessibleForFree: true,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        author: { '@id': PERSON_ID },
+        mainEntityOfPage: { '@id': `${canonicalUrl}#page` },
+      })
+    }
   }
+
+  graph.push(...schema)
+  // Nodes referenced by @id must exist in the same graph for validators.
+  if (!isHomePage && graph.length > 0) {
+    graph.push(person)
+  }
+
+  const jsonLd = graph.length > 0
+    ? JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c')
+    : null
 
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>{fullTitle}</title>
         <meta name="description" content={description} />
-        <meta name="keywords" content={keywords} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#e7c77a" />
-        <meta name="author" content="Hasan Arthur Altuntaş (Rthur)" />
+        {keywords && <meta name="keywords" content={keywords} />}
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="author" content={AUTHOR_NAME} />
         <meta
           name="robots"
           content={noIndex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
         />
-        <meta name="language" content={metaLanguage} />
-        <meta name="googlebot" content={noIndex ? 'noindex, follow' : 'index, follow'} />
-        <link rel="canonical" href={canonicalUrl} />
 
-        {/* No hreflang: the tr/en toggle is client-side state on one URL,
-            not locale-specific routes, so per Google's own guidance a
-            hreflang block here would point every locale at an identical
-            URL — invalid, and Search Console would flag it as such. */}
-
-        {/* Mobile optimization */}
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="CrownCode" />
-        <meta name="format-detection" content="telephone=no" />
-
-        {/* Cache Control */}
-        {noCache && (
-          <>
-            <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-            <meta httpEquiv="Pragma" content="no-cache" />
-            <meta httpEquiv="Expires" content="0" />
-          </>
-        )}
+        {/* Each language has its own URL, so canonical is self-referencing
+            and hreflang ties the pair together. Noindexed pages carry
+            neither: they shouldn't consolidate signals anywhere. */}
+        {!noIndex && <link rel="canonical" href={canonicalUrl} />}
+        {!noIndex && LOCALES.map((locale) => (
+          <link key={`hreflang-${locale}`} rel="alternate" hrefLang={HREFLANG[locale]} href={localizedUrl(path, locale)} />
+        ))}
+        {!noIndex && <link key="hreflang-x-default" rel="alternate" hrefLang="x-default" href={localizedUrl(path, DEFAULT_LOCALE)} />}
 
         {/* Open Graph */}
-        <meta property="og:type" content={isAurisPage ? 'article' : 'website'} />
-        <meta property="og:title" content={title} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={SITE_NAME} />
+        <meta property="og:title" content={fullTitle} />
         <meta property="og:description" content={description} />
-        <meta property="og:site_name" content="CrownCode Platform" />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:image" content={imageUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content={title} />
-        <meta property="og:locale" content={ogLocale} />
-        <meta property="og:locale:alternate" content={ogLocale === 'tr_TR' ? 'en_US' : 'tr_TR'} />
+        <meta property="og:image:alt" content={fullTitle} />
+        <meta property="og:locale" content={OG_LOCALE[language]} />
+        {LOCALES.filter((l) => l !== language).map((l) => (
+          <meta key={`og-locale-${l}`} property="og:locale:alternate" content={OG_LOCALE[l]} />
+        ))}
 
-        {/* Twitter */}
+        {/* Twitter / X */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
+        <meta name="twitter:title" content={fullTitle} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={imageUrl} />
-        <meta name="twitter:creator" content="@rthur" />
-        <meta name="twitter:site" content="@crowncode" />
 
-        {/* Structured Data — Organization */}
-        {isHomePage && (
+        {jsonLd && (
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+            dangerouslySetInnerHTML={{ __html: jsonLd }}
           />
         )}
-
-        {/* Structured Data — WebSite with SearchAction */}
-        {isHomePage && (
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-          />
-        )}
-
-        {/* Structured Data — Software */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
-        />
-
-        {/* Structured Data — Research / Scholarly Article */}
-        {researchSchema && (
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(researchSchema) }}
-          />
-        )}
-
-        {/* Structured Data — Breadcrumb */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-        />
-
-        {/* Favicon */}
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" type="image/png" href="/favicon.png" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </Head>
 
+      <a href="#main-content" className="skip-link">
+        {t.aria?.skipToContent ?? (language === 'tr' ? 'İçeriğe geç' : 'Skip to content')}
+      </a>
       <div className="app-container">
         <Header />
-        <main className="main-content">
+        <main id="main-content" className="main-content" tabIndex={-1}>
           {children}
         </main>
         <Footer />

@@ -1,6 +1,6 @@
 import React from 'react'
 import type { NextPage } from 'next'
-import { motion } from 'motion/react'
+import { m as motion } from 'motion/react'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { History, Music, FileAudio, Trash2, Sparkles, User } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
@@ -24,7 +24,7 @@ const AnalysisHistoryPage: NextPage = () => {
       noIndex
     >
       <div className={styles['page-container']}>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        <div className="enter-rise">
           <div className={styles['header-row']}>
             <History size={28} className={styles['header-icon']} />
             <h1 className={styles['title']}>
@@ -34,7 +34,7 @@ const AnalysisHistoryPage: NextPage = () => {
           <p className={styles['subtitle']}>
             {ah.subtitle}
           </p>
-        </motion.div>
+        </div>
 
         {entries.length > 0 ? (
           <>

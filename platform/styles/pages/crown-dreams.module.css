@@ -745,6 +745,7 @@
   color: var(--color-text-primary, #f4ede3);
   margin: 0;
   font-style: italic;
+  font-family: var(--font-family-italic);
 }
 
 /* Stats Panel */

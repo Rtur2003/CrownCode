@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { m as motion, AnimatePresence } from 'motion/react'
 import { Sparkles, AlertCircle, Brain, Tag, Layers, Wand2 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useDreamAnalysis, DreamEmotion } from '@/hooks/useDreamAnalysis'

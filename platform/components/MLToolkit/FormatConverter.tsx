@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'motion/react'
+import { m as motion } from 'motion/react'
 import { FileAudio } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 

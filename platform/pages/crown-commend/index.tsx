@@ -2,7 +2,7 @@
 
 import React from 'react'
 import type { NextPage } from 'next'
-import { motion, AnimatePresence } from 'motion/react'
+import { m as motion, AnimatePresence } from 'motion/react'
 import {
   Youtube,
   Wand2,
@@ -86,27 +86,17 @@ const CrownCommendPage: NextPage = () => {
 
         <div className={styles.commendContainer}>
           {/* Header */}
-          <motion.header
-            className={styles.commendHeader}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <header className={`${styles.commendHeader} enter-drop`}>
             <div className={styles.headerBadge}>
               <Youtube size={16} />
               <span>{commendT.header.badge}</span>
             </div>
             <h1 className={styles.commendTitle}>{commendT.header.title}</h1>
             <p className={styles.commendSubtitle}>{commendT.header.subtitle}</p>
-          </motion.header>
+          </header>
 
           {/* Main Section */}
-          <motion.section
-            className={styles.mainSection}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          <section className={`${styles.mainSection} enter-rise`} style={{ '--enter-delay': '0.15s' } as React.CSSProperties}>
             {/* Input Card */}
             <div className={styles.inputCard}>
               {/* URL Input */}
@@ -261,7 +251,7 @@ const CrownCommendPage: NextPage = () => {
                 </motion.div>
               )}
             </AnimatePresence>
-          </motion.section>
+          </section>
 
           {/* Features Section */}
           <motion.section

@@ -27,9 +27,9 @@ module.exports = {
         info: '#6b8f7a',
       },
       fontFamily: {
-        sans: ['IM Fell Double Pica', 'Times New Roman', 'serif'],
-        heading: ['Portmanteau', 'IM Fell Double Pica', 'serif'],
-        mono: ['JetBrains Mono', 'Courier New', 'monospace'],
+        sans: ['var(--font-im-fell)', 'Times New Roman', 'serif'],
+        heading: ['var(--font-portmanteau)', 'var(--font-im-fell)', 'Georgia', 'serif'],
+        mono: ['var(--font-jetbrains-mono)', 'Courier New', 'monospace'],
       },
       boxShadow: {
         'glow': '0 0 40px rgba(201, 147, 71, 0.25)',

@@ -58,6 +58,7 @@ export interface UserProfile {
   name: string
   rank: string
   rankEn: string
+  nameEn: string
   totalDreams: number
   lucidMastery: number
   joinedAt: string
@@ -384,6 +385,7 @@ export const MOCK_PATTERNS: DreamPattern[] = [
 export const MOCK_USER: UserProfile = {
   id: 'user-001',
   name: 'Nexus Kaşifi',
+  nameEn: 'Nexus Explorer',
   rank: 'Rüya Mimarı',
   rankEn: 'Dream Architect',
   totalDreams: 247,

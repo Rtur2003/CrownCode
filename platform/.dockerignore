@@ -30,6 +30,9 @@ dist/
 Thumbs.db
 Desktop.ini
 
+# Source artwork (not served)
+assets-src/
+
 # Testing
 coverage/
 .nyc_output/

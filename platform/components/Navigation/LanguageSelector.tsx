@@ -1,75 +1,120 @@
-'use client'
+import React, { useEffect, useId, useRef, useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { AnimatePresence, m as motion } from 'motion/react'
+import { Check, Globe } from 'lucide-react'
+import { rememberLanguage, useLanguage } from '@/context/LanguageContext'
+import type { Locale } from '@/config/site'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
-import { Globe } from 'lucide-react'
-import { useLanguage } from '@/context/LanguageContext'
+const LANGUAGES: { code: Locale; label: string; short: string }[] = [
+  { code: 'tr', label: 'Türkçe', short: 'TR' },
+  { code: 'en', label: 'English', short: 'EN' },
+]
+
+/**
+ * Language options are real links to the other locale's URL (/en/…), so
+ * crawlers can discover every translation and switching works without JS.
+ */
+function LanguageLink({ code, className, children, onSelect }: {
+  code: Locale
+  className: string
+  children: React.ReactNode
+  onSelect?: (() => void) | undefined
+}) {
+  const router = useRouter()
+  const { language } = useLanguage()
+  const active = language === code
+  return (
+    <Link
+      href={router.asPath}
+      locale={code}
+      scroll={false}
+      hrefLang={code}
+      lang={code}
+      aria-current={active ? 'true' : undefined}
+      className={`${className} ${active ? 'active' : ''}`}
+      onClick={() => {
+        rememberLanguage(code)
+        onSelect?.()
+      }}
+    >
+      {children}
+    </Link>
+  )
+}
 
 export const LanguageSelector: React.FC = () => {
-  const { language, setLanguage } = useLanguage()
+  const { language, t } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
+  const rootRef = useRef<HTMLDivElement>(null)
+  const menuId = useId()
+  const current = LANGUAGES.find((l) => l.code === language) ?? LANGUAGES[0]
 
-  const languages = [
-    { code: 'tr' as const, label: 'Türkçe', flag: '🇹🇷' },
-    { code: 'en' as const, label: 'English', flag: '🇬🇧' }
-  ]
-
-  const currentLang = languages.find(l => l.code === language)
+  useEffect(() => {
+    if (!isOpen) {return}
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {setIsOpen(false)}
+    }
+    const onPointer = (e: PointerEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) {setIsOpen(false)}
+    }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('pointerdown', onPointer)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('pointerdown', onPointer)
+    }
+  }, [isOpen])
 
   return (
-    <div className="language-selector">
+    <div className="language-selector" ref={rootRef}>
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        type="button"
+        onClick={() => setIsOpen((open) => !open)}
         className="language-button"
+        aria-expanded={isOpen}
+        aria-controls={menuId}
+        aria-label={t.aria?.changeLanguage ?? (language === 'tr' ? 'Dili değiştir' : 'Change language')}
       >
-        <Globe size={18} />
-        <span className="language-label">{currentLang?.flag} {currentLang?.label}</span>
+        <Globe size={18} aria-hidden="true" />
+        <span className="language-label">{current.label}</span>
       </button>
 
       <AnimatePresence>
         {isOpen && (
-          <>
-            <motion.div
-              className="language-backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-            />
-            <motion.div
-              className="language-dropdown"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-            >
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => {
-                    setLanguage(lang.code)
-                    setIsOpen(false)
-                  }}
-                  className={`language-option ${language === lang.code ? 'active' : ''}`}
-                >
-                  <span className="language-flag">{lang.flag}</span>
-                  <span>{lang.label}</span>
-                  {language === lang.code && (
-                    <motion.div
-                      className="language-check"
-                      layoutId="check"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                    >
-                      ✓
-                    </motion.div>
-                  )}
-                </button>
-              ))}
-            </motion.div>
-          </>
+          <motion.div
+            id={menuId}
+            className="language-dropdown"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+          >
+            {LANGUAGES.map((lang) => (
+              <LanguageLink key={lang.code} code={lang.code} className="language-option" onSelect={() => setIsOpen(false)}>
+                <span className="language-code" aria-hidden="true">{lang.short}</span>
+                <span>{lang.label}</span>
+                {language === lang.code && <Check size={16} className="language-check" aria-hidden="true" />}
+              </LanguageLink>
+            ))}
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
+  )
+}
+
+/** Compact TR / EN switch for the mobile menu, where the dropdown is hidden. */
+export const LanguageToggle: React.FC<{ onSelect?: (() => void) | undefined }> = ({ onSelect }) => {
+  const { language, t } = useLanguage()
+  return (
+    <nav className="language-toggle" aria-label={t.aria?.changeLanguage ?? (language === 'tr' ? 'Dili değiştir' : 'Change language')}>
+      {LANGUAGES.map((lang) => (
+        <LanguageLink key={lang.code} code={lang.code} className="language-toggle-option" onSelect={onSelect}>
+          <span aria-hidden="true">{lang.short}</span>
+          <span className="sr-only">{lang.label}</span>
+        </LanguageLink>
+      ))}
+    </nav>
   )
 }
 

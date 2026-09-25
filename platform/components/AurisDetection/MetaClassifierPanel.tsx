@@ -7,7 +7,7 @@
  * a competing decision.
  */
 
-import { motion } from 'motion/react'
+import { m as motion } from 'motion/react'
 import { Sparkles, TrendingUp, TrendingDown } from 'lucide-react'
 import type { MetaClassifierExplanation } from '../../hooks/analysisTypes'
 import styles from '../../styles/pages/xai-panel.module.css'

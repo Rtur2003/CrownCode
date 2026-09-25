@@ -1,34 +1,34 @@
 'use client'
 
 import React, { useEffect, useState, useMemo } from 'react'
-import { motion, useReducedMotion } from 'motion/react'
+import { m as motion, useReducedMotion } from 'motion/react'
 import Image from 'next/image'
 import styles from './BackgroundFloatingCards.module.css'
 
 // Tarot card images for floating background
 const TAROT_IMAGES = [
-  '/tarot/the-fool.png',
-  '/tarot/the-magician.png',
-  '/tarot/the-high-priestess.png',
-  '/tarot/the-empress.png',
-  '/tarot/the-emperor.png',
-  '/tarot/the-hierophant.png',
-  '/tarot/the-lovers.png',
-  '/tarot/the-chariot.png',
-  '/tarot/strength.png',
-  '/tarot/the-hermit.png',
-  '/tarot/wheel-of-fortune.png',
-  '/tarot/justice.png',
-  '/tarot/the-hanged-man.png',
-  '/tarot/death.png',
-  '/tarot/temperance.png',
-  '/tarot/the-devil.png',
-  '/tarot/the-tower.png',
-  '/tarot/the-star.png',
-  '/tarot/the-moon.png',
-  '/tarot/the-sun.png',
-  '/tarot/judgement.png',
-  '/tarot/the-world.png',
+  '/tarot/the-fool.webp',
+  '/tarot/the-magician.webp',
+  '/tarot/the-high-priestess.webp',
+  '/tarot/the-empress.webp',
+  '/tarot/the-emperor.webp',
+  '/tarot/the-hierophant.webp',
+  '/tarot/the-lovers.webp',
+  '/tarot/the-chariot.webp',
+  '/tarot/strength.webp',
+  '/tarot/the-hermit.webp',
+  '/tarot/wheel-of-fortune.webp',
+  '/tarot/justice.webp',
+  '/tarot/the-hanged-man.webp',
+  '/tarot/death.webp',
+  '/tarot/temperance.webp',
+  '/tarot/the-devil.webp',
+  '/tarot/the-tower.webp',
+  '/tarot/the-star.webp',
+  '/tarot/the-moon.webp',
+  '/tarot/the-sun.webp',
+  '/tarot/judgement.webp',
+  '/tarot/the-world.webp',
 ]
 
 // Depth layer configuration for parallax effect

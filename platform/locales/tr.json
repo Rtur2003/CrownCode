@@ -227,6 +227,11 @@
         "processingFailed": "İşlem başarısız oldu",
         "unexpected": "Beklenmeyen bir hata oluştu."
       }
+    },
+    "meta": {
+      "title": "ML Toolkit — Ses Veri Seti Araçları",
+      "description": "AI müzik tespiti için ses veri setlerini hazırla: format dönüştürme, veri artırma ve veri seti meta verisi çıkarma araçları.",
+      "keywords": "ses veri seti, veri artırma, format dönüştürme, makine öğrenmesi, AI müzik tespiti"
     }
   },
   "footer": {
@@ -287,8 +292,8 @@
   },
   "aiDetection": {
     "meta": {
-      "title": "AURIS - AI Müzik Tespiti",
-      "description": "AURIS ile çok kaynaklı AI müzik analizi: dosya, URL veya canlı mikrofon. Backend entegrasyonları varsa kullanır, model yoksa deterministik önizleme kullanır.",
+      "title": "AURIS — Yapay Zekâ Müzik Tespiti",
+      "description": "AURIS, bir şarkının yapay zekâyla üretilip üretilmediğini dosya, bağlantı ya da mikrofondan inceleyen bir tez araştırması. Model kapalıyken önizleme sunar.",
       "keywords": "AURIS, AI müzik tespiti, ses analizi, mikrofon, YouTube, CrownCode"
     },
     "header": {
@@ -684,7 +689,7 @@
   "crownFortune": {
     "meta": {
       "title": "Crown Destiny - Günlük Kader",
-      "description": "CrownCode ile günlük kaderini keşfet. Çarkı çevir, kartını aç, evrenin mesajını al.",
+      "description": "Her gün yenilenen kader çarkı: çarkı çevir, 22 kartlık desteden kartını aç; günün mesajını, şanslı öğelerini ve ay evresini gör.",
       "keywords": "günlük kader, şans çarkı, tarot, motivasyon, CrownCode, crown destiny"
     },
     "header": {
@@ -772,7 +777,7 @@
   "crownVote": {
     "meta": {
       "title": "Crown Vote - VOTRYX Otomasyon Aracı",
-      "description": "DistroKid Spotlight için otomatik oylama aracı. Selenium tabanlı masaüstü uygulaması.",
+      "description": "VOTRYX, DistroKid Spotlight oylamalarını otomatikleştiren Selenium tabanlı bir Windows masaüstü uygulaması. İndirme, kurulum ve yapılandırma bu sayfada.",
       "keywords": "votryx, distrokid, spotlight, otomasyon, oylama, selenium"
     },
     "header": {
@@ -973,7 +978,7 @@
   "crownCommend": {
     "meta": {
       "title": "Crown Commend - AI YouTube Yorum Üretici",
-      "description": "Yapay zeka ile YouTube videolarına özgün, yaratıcı ve etkileyici yorumlar üretin.",
+      "description": "Bir YouTube bağlantısı yapıştır; Crown Commend videonun içeriğine uygun, doğal ve özgün yorum taslakları hazırlasın.",
       "keywords": "youtube yorum, ai yorum, yapay zeka, commend ai"
     },
     "header": {
@@ -1077,7 +1082,7 @@
   "privacy": {
     "meta": {
       "title": "Gizlilik Politikası - CrownCode",
-      "description": "CrownCode platformu gizlilik politikası"
+      "description": "CrownCode’un hangi verileri topladığı, bu verileri nasıl kullandığı ve nasıl koruduğu."
     },
     "backToHome": "Ana Sayfaya Dön",
     "title": "Gizlilik Politikası",
@@ -1139,12 +1144,13 @@
       "product": "Ürün",
       "feature": "Özellik",
       "page": "Sayfa"
-    }
+    },
+    "inputLabel": "Projelerde ara"
   },
   "terms": {
     "meta": {
       "title": "Kullanım Koşulları - CrownCode",
-      "description": "CrownCode platformu kullanım koşulları"
+      "description": "CrownCode projelerini ve demo araçlarını kullanma koşulları."
     },
     "backToHome": "Ana Sayfaya Dön",
     "title": "Kullanım Koşulları",
@@ -1186,7 +1192,10 @@
     "website": "Web Sitesi",
     "email": "E-posta",
     "uploadAudioFile": "AI müzik tespiti için ses dosyası yükle",
-    "removeFile": "{{name}} dosyasını kaldır"
+    "removeFile": "{{name}} dosyasını kaldır",
+    "skipToContent": "İçeriğe geç",
+    "changeLanguage": "Dili değiştir",
+    "mainNavigation": "Ana gezinme"
   },
   "creatorStudio": {
     "meta": {
@@ -1313,6 +1322,7 @@
     "degraded": "Kısmi bozulma tespit edildi",
     "refresh": "Yenile",
     "lastChecked": "Son kontrol",
-    "noExternalBackend": "Harici backend yapılandırılmadı — yalnızca yerel API uç noktaları izleniyor"
+    "noExternalBackend": "Harici backend yapılandırılmadı — yalnızca yerel API uç noktaları izleniyor",
+    "checking": "Servisler kontrol ediliyor…"
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import type { NextPage } from 'next'
-import { motion } from 'motion/react'
+import Image from 'next/image'
+import { m as motion } from 'motion/react'
 import { UtensilsCrossed, ArrowUpRight, Terminal } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
@@ -14,10 +15,10 @@ import { useLanguage } from '@/context/LanguageContext'
 // =========================================================================
 
 const GALLERY = [
-  { key: 'hero', src: '/images/noir-grain/hero.png' },
-  { key: 'menu', src: '/images/noir-grain/menu.png' },
-  { key: 'reservation', src: '/images/noir-grain/reservation.png' },
-  { key: 'story', src: '/images/noir-grain/story.png' },
+  { key: 'hero', src: '/images/noir-grain/hero.webp' },
+  { key: 'menu', src: '/images/noir-grain/menu.webp' },
+  { key: 'reservation', src: '/images/noir-grain/reservation.webp' },
+  { key: 'story', src: '/images/noir-grain/story.webp' },
 ] as const
 
 const TECH = ['React 19', 'Vite 8', 'Tailwind CSS', 'GSAP + ScrollTrigger', 'Lenis', 'OGL (WebGL)', 'Vitest'] as const
@@ -29,26 +30,20 @@ const NoirGrainPage: NextPage = () => {
 
   return (
     <MainLayout
-      title={`${item?.title ?? 'Noir & Grain'} | CrownCode`}
+      title={item?.title ?? 'Noir & Grain'}
       description={item?.description ?? ''}
       keywords="restaurant template, webgl, gsap, react, fine dining"
-      url="https://hasan-arthur-altuntas.xyz/noir-grain"
     >
       <section className="mx-auto max-w-6xl px-6 pb-24 pt-32">
         {/* ===== HERO ===== */}
-        <motion.header
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="mb-16"
-        >
+        <header className="mb-16 enter-rise">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-400">
             <UtensilsCrossed size={15} aria-hidden="true" />
             <span>{item?.stats}</span>
           </div>
           <h1 className="mb-4 text-4xl font-bold md:text-6xl">{item?.title}</h1>
           <p className="max-w-2xl text-lg text-neutral-400">{page?.subtitle}</p>
-        </motion.header>
+        </header>
 
         {/* ===== GALLERY ===== */}
         <motion.div
@@ -60,10 +55,17 @@ const NoirGrainPage: NextPage = () => {
         >
           <h2 className="mb-6 text-sm uppercase tracking-widest text-amber-400">{page?.galleryTitle}</h2>
           <div className="grid gap-6 md:grid-cols-2">
-            {GALLERY.map(({ key, src }) => (
+            {GALLERY.map(({ key, src }, index) => (
               <figure key={key} className="overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt={page?.galleryItems?.[key] ?? key} loading="lazy" className="aspect-video w-full object-cover object-top transition-transform duration-500 hover:scale-[1.03]" />
+                <Image
+                  src={src}
+                  alt={page?.galleryItems?.[key] ?? key}
+                  width={1440}
+                  height={900}
+                  sizes="(max-width: 768px) 100vw, 560px"
+                  loading={index < 2 ? 'eager' : 'lazy'}
+                  className="aspect-video h-auto w-full object-cover object-top transition-transform duration-500 hover:scale-[1.03]"
+                />
                 <figcaption className="px-4 py-3 text-sm text-neutral-400">
                   {page?.galleryItems?.[key]}
                 </figcaption>

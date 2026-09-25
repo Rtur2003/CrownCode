@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
+import { m as motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { PRODUCT_CATALOG, resolveProduct, type ProductEntry } from '@/config/product-catalog'
@@ -27,27 +27,33 @@ const focusAt = (progress: number, index: number) => smooth(1 - Math.abs(progres
 
 type Product = ProductEntry & ReturnType<typeof resolveProduct> & { name: string; image: string; x: number; y: number; mobileX: number; mobileY: number }
 
-function Specimen({ product, index, progress, onSelect, reducedMotion }: {
+function Specimen({ product, index, progress, onSelect, reducedMotion, interactive }: {
   product: Product
   index: number
   progress: MotionValue<number>
-  onSelect: (index: number) => void
+  onSelect: (index: number, focusRail?: boolean) => void
   reducedMotion: boolean
+  interactive: boolean
 }) {
-  const focus = useTransform(progress, value => reducedMotion ? 0 : focusAt(value, index))
+  const staticScene = () => reducedMotion || (typeof window !== 'undefined' && window.innerHeight < 650)
+  const focus = useTransform(progress, value => staticScene() ? 0 : focusAt(value, index))
   const transform = useTransform(focus, value =>
-    `translate(calc((50vw - var(--x)) * ${value}), calc((50svh - var(--y)) * ${value})) scale(${1 + value * 15})`,
+    `translate(calc((50vw - var(--origin-x)) * ${value}), calc((50svh - var(--origin-y)) * ${value})) scale(${1 + value * 15})`,
   )
   const opacity = useTransform(progress, value => {
-    if (reducedMotion) {return 1}
+    if (staticScene()) {return 1}
     const nearest = Math.max(0, Math.min(PRODUCT_CATALOG.length - 1, Math.round((value - 0.18) / 0.1)))
     const otherFocus = focusAt(value, nearest)
     return Math.max(0, Math.min(1, 1 - otherFocus * 1.4 + focusAt(value, index) * 1.4))
   })
-  const pointerEvents = useTransform(focus, value => value > 0.13 ? 'none' : 'auto')
+  const pointerEvents = useTransform(progress, value => {
+    if (staticScene()) {return 'auto'}
+    const nearest = Math.max(0, Math.min(PRODUCT_CATALOG.length - 1, Math.round((value - 0.18) / 0.1)))
+    return focusAt(value, nearest) > 0.14 ? 'none' : 'auto'
+  })
   const labelOpacity = useTransform(progress, value => {
     const nearest = Math.max(0, Math.min(PRODUCT_CATALOG.length - 1, Math.round((value - 0.18) / 0.1)))
-    return reducedMotion ? 1 : Math.max(0, 1 - focusAt(value, nearest) * 5)
+    return staticScene() ? 1 : Math.max(0, 1 - focusAt(value, nearest) * 5)
   })
   const position = {
     '--x': `${product.x}vw`, '--y': `${product.y}svh`,
@@ -57,7 +63,8 @@ function Specimen({ product, index, progress, onSelect, reducedMotion }: {
   return (
     <div className={styles.specimen} style={position}>
       <motion.button type="button" className={styles.specimenOrb} style={{ transform, opacity, pointerEvents }}
-        onClick={() => onSelect(index)} aria-label={`${product.name}: ${product.title}`}>
+        onClick={() => onSelect(index, true)} tabIndex={interactive ? 0 : -1} aria-hidden={interactive ? undefined : true}
+        aria-label={`${product.name}: ${product.title}`}>
         <Image src={product.image} alt="" fill unoptimized />
       </motion.button>
       <motion.span className={styles.specimenName} style={{ opacity: labelOpacity }}>{product.name}</motion.span>
@@ -73,6 +80,7 @@ export function ProjectExplorer() {
   const railRef = useRef<HTMLElement>(null)
   const [active, setActive] = useState(-1)
   const [featureVisible, setFeatureVisible] = useState(false)
+  const [interactive, setInteractive] = useState(true)
   const { scrollYProgress } = useScroll({ target: journeyRef, offset: ['start start', 'end end'] })
   const products: Product[] = PRODUCT_CATALOG.map(entry => {
     const material = materials[entry.id]
@@ -94,11 +102,12 @@ export function ProjectExplorer() {
   const activeOpacity = useTransform(scrollYProgress, value => active < 0 || reducedMotion ? 0 : focusAt(value, active))
 
   useMotionValueEvent(scrollYProgress, 'change', value => {
-    if (reducedMotion) {return}
+    if (reducedMotion || window.innerHeight < 650) {return}
     const next = value < 0.115 ? -1 : Math.max(0, Math.min(products.length - 1, Math.round((value - 0.18) / 0.1)))
     const visible = next >= 0 && focusAt(value, next) > 0.14
     setActive(previous => previous === next ? previous : next)
     setFeatureVisible(previous => previous === visible ? previous : visible)
+    setInteractive(previous => previous === !visible ? previous : !visible)
   })
 
   useEffect(() => {
@@ -109,7 +118,8 @@ export function ProjectExplorer() {
     }
   }, [active, reducedMotion])
 
-  const select = (index: number) => {
+  const select = (index: number, focusRail = false) => {
+    if (focusRail) {railRef.current?.querySelectorAll('button')[index]?.focus({ preventScroll: true })}
     if (reducedMotion || window.matchMedia('(max-height: 650px)').matches) {
       document.getElementById(`project-${products[index].id}`)?.scrollIntoView({ behavior: 'instant' })
       return
@@ -146,7 +156,7 @@ export function ProjectExplorer() {
           <div id="project-explorer" className={styles.orbit} aria-label={en ? 'Project objects' : 'Proje cisimleri'}>
             {products.map((product, index) =>
               <Specimen key={product.id} product={product} index={index} progress={scrollYProgress}
-                onSelect={select} reducedMotion={reducedMotion} />,
+                onSelect={select} reducedMotion={reducedMotion} interactive={interactive} />,
             )}
           </div>
           {selected && featureVisible && <motion.article className={styles.feature} style={{ opacity: activeOpacity }}>
@@ -175,7 +185,7 @@ export function ProjectExplorer() {
 
       <section id="project-index" className={styles.index} aria-label={en ? 'All projects' : 'Tüm projeler'}>
         <div className={styles.indexLead}>
-          <h2>{en ? 'The work, up close.' : 'İşlerin tamamı.'}</h2>
+          <h2>{en ? 'Projects' : 'Projeler'}</h2>
           <p>{en ? 'Choose a project to see what it does and how it was built.' : 'Ne yaptığını ve nasıl kurulduğunu görmek için bir proje seç.'}</p>
         </div>
         <div className={styles.indexList}>

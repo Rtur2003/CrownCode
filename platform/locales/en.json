@@ -227,6 +227,11 @@
         "processingFailed": "Processing failed",
         "unexpected": "An unexpected error occurred."
       }
+    },
+    "meta": {
+      "title": "ML Toolkit — Audio Dataset Tools",
+      "description": "Prepare audio datasets for AI music detection: format conversion, data augmentation and dataset metadata extraction tools.",
+      "keywords": "audio dataset, data augmentation, format conversion, machine learning, AI music detection"
     }
   },
   "footer": {
@@ -287,8 +292,8 @@
   },
   "aiDetection": {
     "meta": {
-      "title": "AURIS - AI Music Detection",
-      "description": "AURIS - multi-source AI music analysis: file, URL, or live microphone. Uses backend integrations when available and a deterministic preview when models are offline.",
+      "title": "AURIS — AI Music Detection",
+      "description": "AURIS is thesis research that checks whether a song was AI-generated, from a file, a link or your microphone. Shows a preview when models are offline.",
       "keywords": "AURIS, AI music detection, YouTube analysis, audio analysis, CrownCode"
     },
     "header": {
@@ -684,7 +689,7 @@
   "crownFortune": {
     "meta": {
       "title": "Crown Destiny - Daily Fortune",
-      "description": "Discover your daily destiny with CrownCode. Spin the wheel, reveal your card, receive the universe's message.",
+      "description": "A daily fortune wheel: spin it, reveal your card from a 22-card deck, and read the day’s message, lucky elements and moon phase.",
       "keywords": "daily destiny, fortune wheel, tarot, motivation, CrownCode, crown destiny"
     },
     "header": {
@@ -772,7 +777,7 @@
   "crownVote": {
     "meta": {
       "title": "Crown Vote - VOTRYX Automation Tool",
-      "description": "Automated voting tool for DistroKid Spotlight. Selenium-based desktop application.",
+      "description": "VOTRYX is a Selenium-based Windows desktop app that automates DistroKid Spotlight voting. Download, setup guide and config generator on this page.",
       "keywords": "votryx, distrokid, spotlight, automation, voting, selenium"
     },
     "header": {
@@ -973,7 +978,7 @@
   "crownCommend": {
     "meta": {
       "title": "Crown Commend - AI YouTube Comment Generator",
-      "description": "Generate unique, creative and engaging comments for YouTube videos with AI.",
+      "description": "Paste a YouTube link and Crown Commend drafts natural, original comments that fit what the video is actually about.",
       "keywords": "youtube comment, ai comment, artificial intelligence, commend ai"
     },
     "header": {
@@ -1077,7 +1082,7 @@
   "privacy": {
     "meta": {
       "title": "Privacy Policy - CrownCode",
-      "description": "CrownCode platform privacy policy"
+      "description": "What data CrownCode collects, how it is used and how it is protected."
     },
     "backToHome": "Back to Home",
     "title": "Privacy Policy",
@@ -1139,12 +1144,13 @@
       "product": "Product",
       "feature": "Feature",
       "page": "Page"
-    }
+    },
+    "inputLabel": "Search projects"
   },
   "terms": {
     "meta": {
       "title": "Terms of Service - CrownCode",
-      "description": "CrownCode platform terms of service"
+      "description": "The terms for using CrownCode projects and demo tools."
     },
     "backToHome": "Back to Home",
     "title": "Terms of Service",
@@ -1186,7 +1192,10 @@
     "website": "Website",
     "email": "Email",
     "uploadAudioFile": "Upload audio file for AI music detection",
-    "removeFile": "Remove {{name}}"
+    "removeFile": "Remove {{name}}",
+    "skipToContent": "Skip to content",
+    "changeLanguage": "Change language",
+    "mainNavigation": "Main navigation"
   },
   "creatorStudio": {
     "meta": {
@@ -1313,6 +1322,7 @@
     "degraded": "Partial degradation detected",
     "refresh": "Refresh",
     "lastChecked": "Last checked",
-    "noExternalBackend": "External backend not configured — only local API endpoints are monitored"
+    "noExternalBackend": "External backend not configured — only local API endpoints are monitored",
+    "checking": "Checking services…"
   }
 }

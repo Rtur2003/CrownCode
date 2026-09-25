@@ -1,16 +1,12 @@
-# Hasan Arthur Altuntaş - CrownCode Platform
-# Allow all search engines to crawl the site
+# CrownCode — https://hasan-arthur-altuntas.xyz
+#
+# Crawlers must be able to fetch /_next/static (JS/CSS) to render pages,
+# so it is deliberately NOT disallowed. Personal and diagnostic pages are
+# excluded with <meta name="robots" content="noindex"> instead of here,
+# because a robots.txt block would hide that noindex from crawlers.
 
 User-agent: *
 Allow: /
-
-Sitemap: https://hasan-arthur-altuntas.xyz/sitemap.xml
-
-# Crawl delay (optional - 1 second)
-Crawl-delay: 1
-
-# Disallow API routes
 Disallow: /api/
 
-# Disallow build artifacts
-Disallow: /_next/static/
+Sitemap: https://hasan-arthur-altuntas.xyz/sitemap.xml

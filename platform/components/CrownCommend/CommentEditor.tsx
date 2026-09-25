@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { m as motion, AnimatePresence } from 'motion/react'
 import { Copy, Check, Sparkles, RefreshCw, Send, AlertCircle } from 'lucide-react'
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
 import styles from './CommentEditor.module.css'

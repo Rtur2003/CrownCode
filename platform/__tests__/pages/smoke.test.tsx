@@ -85,10 +85,14 @@ function mockMotionValue(initial: unknown) {
 
 jest.mock('motion/react', () => ({
   motion: new Proxy({}, motionHandler),
+  m: new Proxy({}, motionHandler),
+  LazyMotion: ({ children }: React.PropsWithChildren) => <>{children}</>,
   AnimatePresence: ({ children }: React.PropsWithChildren) => <>{children}</>,
   useAnimation: () => ({ start: jest.fn() }),
   useInView: () => true,
   useReducedMotion: () => false,
+  useScroll: () => ({ scrollYProgress: mockMotionValue(0) }),
+  useMotionValueEvent: () => {},
   useMotionValue: (initial: unknown) => mockMotionValue(initial),
   useSpring: (source: unknown) => mockMotionValue(source),
   useTransform: (_source: unknown, _input: unknown, output: unknown[]) =>

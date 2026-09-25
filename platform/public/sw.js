@@ -1,31 +1,18 @@
 // CrownCode Platform - Service Worker
-// Version 3.0.0
+// Version 4.0.0
 
-const STATIC_CACHE = 'crowncode-static-v3'
-const DYNAMIC_CACHE = 'crowncode-dynamic-v3'
+const STATIC_CACHE = 'crowncode-static-v4'
+const DYNAMIC_CACHE = 'crowncode-dynamic-v4'
 const MAX_DYNAMIC_ENTRIES = 50
 
-// Assets to cache on install
+// Assets to cache on install. offline.html must be here: it is the
+// navigation fallback and can't be fetched once the network is gone.
 const STATIC_ASSETS = [
-  '/',
+  '/offline.html',
   '/manifest.json',
-  '/favicon.ico',
-]
-
-// Pages that use network-first (daily/dynamic content)
-const NETWORK_FIRST_PAGES = [
-  '/crown-fortune',
-]
-
-// Pages that use cache-first with background revalidation
-const CACHEABLE_PAGES = [
-  '/',
-  '/ai-music-detection',
-  '/crown-dreams',
-  '/crown-commend',
-  '/crown-vote',
-  '/data-manipulation',
-  '/search',
+  '/favicon.svg',
+  '/fonts/im-fell-double-pica-regular.woff2',
+  '/fonts/portmanteau-regular.woff2',
 ]
 
 // Install event
@@ -70,30 +57,20 @@ self.addEventListener('fetch', (event) => {
 
   if (request.method !== 'GET') {return}
   if (url.origin !== location.origin) {return}
+  if (url.pathname.startsWith('/api/')) {return}
 
-  // Network-first for pages with daily/dynamic content
-  if (NETWORK_FIRST_PAGES.includes(url.pathname)) {
-    event.respondWith(networkFirst(request))
-    return
-  }
-
-  // Cache-first for static assets and cacheable pages
-  if (
-    request.url.includes('/_next/static/') ||
-    CACHEABLE_PAGES.includes(url.pathname)
-  ) {
+  // Hashed build output never changes under the same URL: cache-first.
+  if (url.pathname.startsWith('/_next/static/')) {
     event.respondWith(cacheFirst(request))
     return
   }
 
-  // Network-first for other _next resources (data, chunks)
-  if (request.url.includes('/_next/')) {
+  // HTML and data are network-first: a cached page from an older deploy
+  // would reference chunk hashes that no longer exist and fail to hydrate.
+  // The cached copy is only an offline fallback.
+  if (request.mode === 'navigate' || url.pathname.startsWith('/_next/data/')) {
     event.respondWith(networkFirst(request))
-    return
   }
-
-  // Default: network only (no caching for unknown routes)
-  event.respondWith(fetch(request))
 })
 
 async function cacheFirst(request) {

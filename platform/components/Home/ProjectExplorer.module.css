@@ -24,7 +24,7 @@
 .introLink { display: inline-flex; align-items: center; gap: 18px; pointer-events: auto; margin-top: 35px; padding: 9px 0; border-bottom: 1px solid #d6ab6b9c; font-size: 16px; }
 .introLink:hover { color: #f2cc87; }
 .orbit { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-.specimen { position: absolute; left: var(--x); top: var(--y); width: clamp(80px, 8.4vw, 124px); text-align: center; transform: translate(-50%, -50%); }
+.specimen { --origin-x: var(--x); --origin-y: var(--y); position: absolute; left: var(--origin-x); top: var(--origin-y); width: clamp(80px, 8.4vw, 124px); text-align: center; transform: translate(-50%, -50%); }
 .specimenOrb { display: block; position: relative; width: 100%; aspect-ratio: 1; padding: 0; border: 0; border-radius: 50%; overflow: hidden; background: #21170f; pointer-events: auto; cursor: pointer; transform-origin: center; }
 .specimenOrb img { object-fit: cover; object-position: center; border-radius: 50%; }
 .specimenOrb:hover { outline: 1px solid #f6d18f; outline-offset: 4px; }
@@ -43,7 +43,7 @@
 .rail button { flex: 0 0 auto; padding: 0 0 8px; border: 0; border-bottom: 1px solid transparent; background: transparent; color: #b9a992; font: inherit; font-size: 14px; cursor: pointer; }
 .rail button:hover, .rail button[aria-current='true'] { color: var(--ink); border-bottom-color: var(--amber); }
 .scrollCue { position: absolute; right: 5.4vw; bottom: 102px; z-index: 4; display: flex; gap: 11px; align-items: center; color: #c4ad8f; font-size: 14px; pointer-events: none; }
-.index { position: relative; overflow: clip; padding: 105px 5.4vw 110px; background: linear-gradient(180deg, #100d0a 0%, #16110c 55%, #100d0a 100%); scroll-margin-top: 96px; }
+.index { position: relative; overflow: clip; padding: 105px 5.4vw 110px; background: linear-gradient(180deg, #100d0a 0%, #16110c 55%, #100d0a 100%); scroll-margin-top: 0; }
 .index::before { content: ''; position: absolute; z-index: 0; top: -5%; right: -22%; width: 72%; height: 60%; background: url('/images/showroom/tape-study.webp') center / cover no-repeat; opacity: .08; pointer-events: none; transform: rotate(-16deg); }
 .index > * { position: relative; z-index: 1; }
 .indexLead { display: flex; justify-content: space-between; align-items: end; gap: 40px; border-bottom: 1px solid #a98b6347; padding-bottom: 26px; }
@@ -78,7 +78,7 @@
   .intro h1 { font-size: clamp(32px, 9.4vw, 45px); }
   .intro p { margin-top: 13px; font-size: 18px; max-width: 23ch; }
   .introLink { margin-top: 18px; font-size: 14px; }
-  .specimen { left: var(--mobile-x); top: var(--mobile-y); width: clamp(54px, 15vw, 70px); }
+  .specimen { --origin-x: var(--mobile-x); --origin-y: var(--mobile-y); width: clamp(54px, 15vw, 70px); }
   .specimenName { font-size: 10px; margin-top: 5px; }
   .feature { top: 130px; left: 6vw; width: 88vw; }
   .feature h2 { font-size: clamp(36px, 10vw, 48px); margin-bottom: 16px; }
@@ -91,7 +91,7 @@
   .rail { left: 6vw; right: 0; bottom: 13px; gap: 24px; padding-right: 6vw; }
   .rail button { font-size: 13px; }
   .scrollCue { right: 6vw; bottom: 86px; font-size: 12px; }
-  .index { padding: 68px 6vw 80px; }
+  .index { padding: 96px 6vw 80px; }
   .indexLead { display: block; }
   .indexLead p { margin-top: 12px; }
   .indexList { display: block; }

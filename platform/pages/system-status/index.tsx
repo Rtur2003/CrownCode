@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
-import { motion } from 'motion/react'
+import { m as motion } from 'motion/react'
 import { Activity, CheckCircle, XCircle, RefreshCw } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
@@ -15,6 +15,29 @@ interface ServiceStatus {
   latency?: number
 }
 
+async function probeServices(): Promise<ServiceStatus[]> {
+  const hfUrl = process.env.NEXT_PUBLIC_API_URL
+  const targets: { name: string; url: string }[] = [
+    { name: 'Frontend API', url: '/api/health' },
+    { name: 'Version', url: '/api/version' },
+  ]
+  if (hfUrl) {
+    targets.push({ name: 'HF Backend', url: `${hfUrl}/api/health` })
+  }
+
+  return Promise.all(
+    targets.map(async (svc) => {
+      const start = Date.now()
+      try {
+        const res = await fetchWithTimeout(svc.url, { timeout: 10_000 })
+        return { ...svc, status: res.ok ? ('ok' as const) : ('error' as const), latency: Date.now() - start }
+      } catch {
+        return { ...svc, status: 'error' as const, latency: Date.now() - start }
+      }
+    }),
+  )
+}
+
 const SystemStatusPage: NextPage = () => {
   const { t } = useLanguage()
   const ss = t.systemStatus
@@ -22,46 +45,13 @@ const SystemStatusPage: NextPage = () => {
     { name: 'Frontend API', url: '/api/health', status: 'loading' },
     { name: 'Version', url: '/api/version', status: 'loading' },
   ])
-  const [checking, setChecking] = useState(false)
+  // The first check starts on mount, so the page begins in the checking state.
+  const [checking, setChecking] = useState(true)
   const [lastChecked, setLastChecked] = useState<Date | null>(null)
 
   const noExternalBackend = !process.env.NEXT_PUBLIC_API_URL
 
-  const checkServices = async (isMounted: () => boolean) => {
-    setChecking(true)
-    const hfUrl = process.env.NEXT_PUBLIC_API_URL
-
-    const targets: { name: string; url: string }[] = [
-      { name: 'Frontend API', url: '/api/health' },
-      { name: 'Version', url: '/api/version' },
-    ]
-    if (hfUrl) {
-      targets.push({ name: 'HF Backend', url: `${hfUrl}/api/health` })
-    }
-
-    const results = await Promise.all(
-      targets.map(async (svc) => {
-        const start = Date.now()
-        try {
-          const res = await fetchWithTimeout(svc.url, { timeout: 10_000 })
-          return {
-            name: svc.name,
-            url: svc.url,
-            status: res.ok ? ('ok' as const) : ('error' as const),
-            latency: Date.now() - start,
-          }
-        } catch {
-          return {
-            name: svc.name,
-            url: svc.url,
-            status: 'error' as const,
-            latency: Date.now() - start,
-          }
-        }
-      }),
-    )
-
-    if (!isMounted()) {return}
+  const applyResults = (results: ServiceStatus[]) => {
     setServices(results)
     setLastChecked(new Date())
     setChecking(false)
@@ -69,12 +59,20 @@ const SystemStatusPage: NextPage = () => {
 
   useEffect(() => {
     let mounted = true
-    checkServices(() => mounted)
+    probeServices().then((results) => {
+      if (mounted) {applyResults(results)}
+    })
     return () => {
       mounted = false
     }
   }, [])
 
+  const refresh = () => {
+    setChecking(true)
+    probeServices().then(applyResults)
+  }
+
+  const isLoading = services.some((s) => s.status === 'loading')
   const allOk = services.every((s) => s.status === 'ok')
   const someOk = services.some((s) => s.status === 'ok')
   const isDegraded = !allOk && someOk && services.every((s) => s.status !== 'loading')
@@ -87,7 +85,7 @@ const SystemStatusPage: NextPage = () => {
       noIndex
     >
       <div className={styles['page-container']}>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        <div className="enter-rise">
           <div className={styles['header-row']}>
             <Activity size={28} className={styles['header-icon']} />
             <h1 className={styles['title']}>
@@ -96,13 +94,13 @@ const SystemStatusPage: NextPage = () => {
           </div>
 
           <div className={styles['status-bar']}>
-            <span className={`${styles['status-dot']} ${allOk ? styles['status-dot-ok'] : isDegraded ? styles['status-dot-degraded'] : styles['status-dot-error']}`} />
-            <span className={styles['status-text']}>
-              {allOk ? ss.allOperational : isDegraded ? ss.degraded : ss.someIssues}
+            <span className={`${styles['status-dot']} ${isLoading ? styles['status-dot-degraded'] : allOk ? styles['status-dot-ok'] : isDegraded ? styles['status-dot-degraded'] : styles['status-dot-error']}`} />
+            <span className={styles['status-text']} role="status" aria-live="polite">
+              {isLoading ? ss.checking : allOk ? ss.allOperational : isDegraded ? ss.degraded : ss.someIssues}
             </span>
             <button
               type="button"
-              onClick={() => checkServices(() => true)}
+              onClick={refresh}
               disabled={checking}
               className={styles['refresh-btn']}
             >
@@ -122,7 +120,7 @@ const SystemStatusPage: NextPage = () => {
               {ss.noExternalBackend}
             </p>
           )}
-        </motion.div>
+        </div>
 
         <div className={styles['services-list']}>
           {services.map((svc, i) => (

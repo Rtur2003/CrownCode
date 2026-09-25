@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react'
 import type { NextPage } from 'next'
 import dynamic from 'next/dynamic'
-import { motion, AnimatePresence } from 'motion/react'
+import { m as motion, AnimatePresence } from 'motion/react'
 import {
   Moon,
   Sparkles,
@@ -122,12 +122,7 @@ const CrownDreamsPage: NextPage = () => {
 
         <div className={styles['dreams-container']}>
           {/* HEADER */}
-          <motion.header
-            className={styles['dreams-header']}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <header className={`${styles['dreams-header']} enter-drop`}>
             <div className={styles['header-top']}>
               <div>
                 <div className={styles['header-badge']}>
@@ -136,7 +131,10 @@ const CrownDreamsPage: NextPage = () => {
                 </div>
                 <span className={styles['demo-badge']}>{cd.header.demoNotice}</span>
                 <h1 className={styles['dreams-title']}>
-                  {cd.header.welcomeBack} {MOCK_USER.name}
+                  {/* The visible heading greets the demo user; the page's
+                      real subject leads the accessible name for search/AT. */}
+                  <span className="sr-only">Crown Dreams — </span>
+                  {cd.header.welcomeBack} {language === 'en' ? MOCK_USER.nameEn : MOCK_USER.name}
                 </h1>
                 <p className={styles['dreams-subtitle']}>
                   {MOCK_STATS.streakDays} {cd.header.streakLabel} &bull; %{MOCK_STATS.lucidPercentage} {cd.header.lucidRateLabel}
@@ -151,7 +149,7 @@ const CrownDreamsPage: NextPage = () => {
                 </CyberButton>
               </div>
             </div>
-          </motion.header>
+          </header>
 
           {/* REAL AI DREAM ANALYZER — genuine Gemini-backed analysis, not
               part of the demo journal data below it */}

@@ -14,7 +14,6 @@ const HomePage: NextPage = () => {
         title={t.homeMeta?.title || 'CrownCode Platform'}
         description={t.homeMeta?.description || ''}
         keywords={t.homeMeta?.keywords || ''}
-        url="https://hasan-arthur-altuntas.xyz"
       >
         <ProjectExplorer />
       </MainLayout>

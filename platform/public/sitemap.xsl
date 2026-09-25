@@ -2,6 +2,7 @@
 <xsl:stylesheet version="2.0"
                 xmlns:html="http://www.w3.org/TR/REC-html40"
                 xmlns:sitemap="http://www.sitemaps.org/schemas/sitemap/0.9"
+                xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
   <xsl:template match="/">
@@ -12,7 +13,7 @@
         <style type="text/css">
           @font-face {
             font-family: 'IM Fell Double Pica';
-            src: url('/fonts/im-fell-double-pica-regular.ttf') format('truetype');
+            src: url('/fonts/im-fell-double-pica-regular.woff2') format('woff2');
             font-weight: 400;
             font-style: normal;
             font-display: swap;
@@ -20,7 +21,7 @@
 
           @font-face {
             font-family: 'Portmanteau';
-            src: url('/fonts/portmanteau-regular.ttf') format('truetype');
+            src: url('/fonts/portmanteau-regular.woff2') format('woff2');
             font-weight: 400;
             font-style: normal;
             font-display: swap;
@@ -168,7 +169,7 @@
       <body>
         <div class="container">
           <h1>🗺️ XML Sitemap</h1>
-          <p class="subtitle">CrownCode Platform - Açık Kaynak Proje Sergisi</p>
+          <p class="subtitle">CrownCode — Hasan Arthur Altuntaş</p>
 
           <div class="stats">
             <div class="stat">
@@ -185,7 +186,7 @@
             <thead>
               <tr>
                 <th>URL</th>
-                <th>Last Modified</th>
+                <th>Languages</th>
                 <th>Change Freq</th>
                 <th>Priority</th>
               </tr>
@@ -199,7 +200,10 @@
                     </a>
                   </td>
                   <td>
-                    <xsl:value-of select="sitemap:lastmod"/>
+                    <xsl:for-each select="xhtml:link">
+                      <span class="changefreq"><xsl:value-of select="@hreflang"/></span>
+                      <xsl:text> </xsl:text>
+                    </xsl:for-each>
                   </td>
                   <td>
                     <span class="changefreq">

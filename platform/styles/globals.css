@@ -7,18 +7,14 @@
 
 /* Component Styles */
 @import './components/header.css';
-@import './components/hero.css';
-@import './components/projects.css';
 @import './components/footer.css';
 @import './components/ml-toolkit.css';
 @import './components/language-selector.css';
 @import './components/toast.css';
 @import './components/error.css';
 @import './components/copy-button.css';
-@import './components/skeleton.css';
 @import './components/shortcuts-modal.css';
 @import './components/search-modal.css';
-@import './components/loading-screen.css';
 @import './components/external-link.css';
 
 /* Utilities */
@@ -28,30 +24,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Fonts */
-@font-face {
-  font-family: 'IM Fell Double Pica';
-  src: url('/fonts/im-fell-double-pica-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IM Fell Double Pica';
-  src: url('/fonts/im-fell-double-pica-italic.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Portmanteau';
-  src: url('/fonts/portmanteau-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+/* Fonts are self-hosted through next/font (see pages/_app.tsx). */
 
 /* App-Specific Styles */
 html {
@@ -67,4 +40,30 @@ html {
 
 .main-content {
   flex: 1;
+}
+
+.main-content:focus {
+  outline: none;
+}
+
+/* Keyboard users can jump past the header; hidden until focused. */
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: calc(var(--z-fixed) + 1);
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: #120e09;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid #fff4d6;
+  outline-offset: 2px;
 }

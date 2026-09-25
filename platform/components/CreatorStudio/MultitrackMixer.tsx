@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useCallback, useRef } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { m as motion, AnimatePresence } from 'motion/react'
 import { Layers, Upload, X, Loader2, AlertCircle, Download, RotateCcw, Music, VolumeX, Volume2 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useMultitrackMixer, MULTITRACK_MIN_TRACKS, MULTITRACK_MAX_TRACKS } from '@/hooks/useMultitrackMixer'

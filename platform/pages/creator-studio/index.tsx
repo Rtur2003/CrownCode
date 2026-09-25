@@ -1,6 +1,6 @@
 import React from 'react'
 import type { NextPage } from 'next'
-import { motion } from 'motion/react'
+import { m as motion } from 'motion/react'
 import { Wand2 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
@@ -30,14 +30,14 @@ const CreatorStudioPage: NextPage = () => {
       keywords={cs.meta.keywords}
     >
       <div className={styles['page-container']}>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        <div className="enter-rise">
           <h1 className={styles['title']}>
             {cs.title}
           </h1>
           <p className={styles['subtitle']}>
             {cs.subtitle}
           </p>
-        </motion.div>
+        </div>
 
         <RemixStudio />
 

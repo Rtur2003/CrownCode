@@ -28,8 +28,6 @@ export const buildSeed = async (value: string): Promise<number> => {
   return Math.abs(hash % 1000) / 1000
 }
 
-const clamp01 = (value: number) => Math.min(0.97, Math.max(0.51, value))
-
 const gaussianRandom = (): number => {
   const u1 = Math.random()
   const u2 = Math.random()

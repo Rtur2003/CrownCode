@@ -9,7 +9,7 @@
  *  - Full 49-feature inspector (expandable)
  */
 
-import { motion } from 'motion/react'
+import { m as motion } from 'motion/react'
 import { useState, useMemo } from 'react'
 import {
   TrendingUp, TrendingDown, Minus,

@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
+import { m as motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import { Github, Menu, X, ChevronDown, Zap, MessageSquare, Vote, Sparkles } from 'lucide-react'
-import { LanguageSelector } from '@/components/Navigation/LanguageSelector'
+import { LanguageSelector, LanguageToggle } from '@/components/Navigation/LanguageSelector'
 import { useLanguage } from '@/context/LanguageContext'
 
 const DROPDOWN_ITEMS = [
@@ -54,15 +54,26 @@ export const Header: React.FC = () => {
         setIsProjectsOpen(false)
       }
     }
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsProjectsOpen(false)
+        setIsMobileMenuOpen(false)
+      }
+    }
     document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+    document.addEventListener('keydown', handleEscape)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleEscape)
+    }
   }, [])
 
   useEffect(() => {
     if (pathname !== '/' || window.location.hash !== '#products') {return}
     const timer = setTimeout(() => {
       document.getElementById('products')?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth' })
-      window.history.replaceState(null, '', '/')
+      // Drop the hash but keep the locale prefix (/en).
+      window.history.replaceState(null, '', window.location.pathname)
     }, 100)
     return () => clearTimeout(timer)
   }, [pathname, reducedMotion])
@@ -85,18 +96,15 @@ export const Header: React.FC = () => {
   const isProjectActive = DROPDOWN_ITEMS.some(item => pathname.startsWith(item.href))
 
   return (
-    <motion.header
-      className={`header ${isScrolled ? 'header-scrolled' : ''}`}
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-    >
+    // The entrance runs in CSS (.enter-drop) so the header is visible in the
+    // server HTML instead of waiting at opacity 0 for hydration.
+    <header className={`header enter-drop ${isScrolled ? 'header-scrolled' : ''}`}>
       <div className="header-container">
         <div className="header-content">
           {/* Logo */}
           <Link href="/" className="header-logo" aria-label={t.aria?.homePage || 'CrownCode Home'}>
             <div className="logo-icon brand-portrait">
-              <Image src="/logo-main.png" alt="" width={64} height={64} />
+              <Image src="/logo-mark.webp" alt="" width={64} height={64} loading="eager" />
             </div>
             <div className="logo-text">
               <span className="logo-main">Crown</span>
@@ -105,40 +113,29 @@ export const Header: React.FC = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="header-nav">
-            {mainNavItems.map((item, index) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 + 0.3, duration: 0.5 }}
-              >
+          <nav className="header-nav" aria-label={t.aria?.mainNavigation ?? 'Main'}>
+            {mainNavItems.map((item) => (
+              <div key={item.label}>
                 {item.href ? (
                   <Link href={item.href} className="nav-link">
                     <span>{item.label}</span>
                   </Link>
                 ) : (
-                  <button onClick={item.action} className="nav-link">
+                  <button type="button" onClick={item.action} className="nav-link">
                     <span>{item.label}</span>
                   </button>
                 )}
-              </motion.div>
+              </div>
             ))}
 
             {/* Projects Dropdown */}
-            <motion.div
-              ref={dropdownRef}
-              className="nav-dropdown-wrapper"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-            >
+            <div ref={dropdownRef} className="nav-dropdown-wrapper">
               <button
                 type="button"
                 className={`nav-link nav-dropdown-trigger ${isProjectActive ? 'nav-link-active' : ''}`}
                 onClick={() => setIsProjectsOpen(prev => !prev)}
                 aria-expanded={isProjectsOpen ? 'true' : 'false'}
-                aria-haspopup="true"
+                aria-controls="projects-dropdown"
               >
                 <span>{t.nav.projects}</span>
                 <motion.span
@@ -153,6 +150,7 @@ export const Header: React.FC = () => {
               <AnimatePresence>
                 {isProjectsOpen && (
                   <motion.div
+                    id="projects-dropdown"
                     className="nav-dropdown"
                     initial={{ opacity: 0, y: -8, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -179,7 +177,7 @@ export const Header: React.FC = () => {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           </nav>
 
           {/* Desktop Actions */}
@@ -190,9 +188,6 @@ export const Header: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="action-button"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.7, duration: 0.5 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -208,6 +203,7 @@ export const Header: React.FC = () => {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? (t.aria?.closeMenu || 'Close Menu') : (t.aria?.openMenu || 'Open Menu')}
             aria-expanded={isMobileMenuOpen ? 'true' : 'false'}
+            aria-controls="mobile-menu"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -217,8 +213,8 @@ export const Header: React.FC = () => {
             is fully handled by the .mobile-menu-open CSS class below;
             a Motion `animate` prop here would be a second system driving
             the same inline styles and can desync from the class toggle. */}
-        <div className={`mobile-menu ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
-          <nav className="mobile-nav">
+        <div id="mobile-menu" className={`mobile-menu ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
+          <nav className="mobile-nav" aria-label={t.aria?.mainNavigation ?? 'Main'}>
             {mainNavItems.map((item, index) => (
               <motion.div
                 key={item.label}
@@ -235,7 +231,7 @@ export const Header: React.FC = () => {
                     <span>{item.label}</span>
                   </Link>
                 ) : (
-                  <button onClick={item.action} className="mobile-nav-link">
+                  <button type="button" onClick={item.action} className="mobile-nav-link">
                     <span>{item.label}</span>
                   </button>
                 )}
@@ -270,6 +266,10 @@ export const Header: React.FC = () => {
                 )
               })}
             </motion.div>
+
+            <div className="mobile-nav-language">
+              <LanguageToggle onSelect={() => setIsMobileMenuOpen(false)} />
+            </div>
           </nav>
         </div>
 
@@ -284,7 +284,7 @@ export const Header: React.FC = () => {
           />
         )}
       </div>
-    </motion.header>
+    </header>
   )
 }
 

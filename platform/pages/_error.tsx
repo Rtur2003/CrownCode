@@ -7,7 +7,7 @@
 import React from 'react'
 import type { NextPage, NextPageContext } from 'next'
 import Link from 'next/link'
-import { motion } from 'motion/react'
+import { m as motion } from 'motion/react'
 import { AlertTriangle, Home, RefreshCcw } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
@@ -47,15 +47,11 @@ const ErrorPage: NextPage<ErrorProps> = ({ statusCode, title }: ErrorProps) => {
     <MainLayout
       title={`${statusCode || 'Error'} - ${getErrorTitle()}`}
       description={getErrorMessage()}
+      noIndex
     >
       <div className="error-page">
         <div className="error-container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="error-content"
-          >
+          <div className="error-content enter-rise">
             {/* Icon */}
             <motion.div
               initial={{ scale: 0 }}
@@ -68,14 +64,9 @@ const ErrorPage: NextPage<ErrorProps> = ({ statusCode, title }: ErrorProps) => {
 
             {/* Status Code */}
             {statusCode && (
-              <motion.h1
-                className="error-status-code"
-                initial={{ scale: 0.5 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.5, type: 'spring' }}
-              >
+              <h1 className="error-status-code">
                 {statusCode}
-              </motion.h1>
+              </h1>
             )}
 
             {/* Title */}
@@ -117,7 +108,7 @@ const ErrorPage: NextPage<ErrorProps> = ({ statusCode, title }: ErrorProps) => {
                 </p>
               </div>
             )}
-          </motion.div>
+          </div>
         </div>
       </div>
     </MainLayout>

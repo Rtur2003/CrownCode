@@ -238,8 +238,41 @@
   animation-duration: var(--animation-slow) !important;
 }
 
+/* Server-rendered entrances.
+   These run on first paint without waiting for JavaScript, so above-the-fold
+   content (and the LCP element) isn't held at opacity 0 until hydration the
+   way a Motion `initial` state would be. `backwards` fill leaves no transform
+   behind once finished, so fixed-position children keep the viewport as
+   their containing block. */
+.enter-rise,
+.enter-drop,
+.enter-fade {
+  animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: backwards;
+  animation-delay: var(--enter-delay, 0s);
+}
+
+.enter-rise {
+  animation-name: slideUp;
+}
+
+.enter-drop {
+  animation-name: slideDown;
+}
+
+.enter-fade {
+  animation-name: fadeIn;
+}
+
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
+  .enter-rise,
+  .enter-drop,
+  .enter-fade {
+    animation: none;
+  }
+
   *,
   *::before,
   *::after {

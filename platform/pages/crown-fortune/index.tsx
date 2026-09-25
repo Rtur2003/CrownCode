@@ -3,9 +3,7 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'motion/react'
-import confetti from 'canvas-confetti'
-import useSound from 'use-sound'
+import { m as motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'motion/react'
 import {
   Crown,
   Sparkles,
@@ -35,6 +33,7 @@ import {
 import { MainLayout } from '@/components/Layout/MainLayout'
 import BackgroundFloatingCards from '@/components/CrownFortune/BackgroundFloatingCards'
 import { useLanguage } from '@/context/LanguageContext'
+import { useFortuneSounds } from '@/hooks/useFortuneSounds'
 import {
   FORTUNE_CATEGORIES,
   STORAGE_KEYS,
@@ -120,8 +119,9 @@ const triggerHaptic = (pattern: number | readonly number[]) => {
   }
 }
 
-// Celebration confetti effect
-const celebrateConfetti = (isReversed = false) => {
+// Celebration confetti effect — the library is only fetched on the first celebration.
+const celebrateConfetti = async (isReversed = false) => {
+  const { default: confetti } = await import('canvas-confetti')
   const duration = 3000
   const animationEnd = Date.now() + duration
   const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 }
@@ -183,11 +183,12 @@ const CrownFortunePage: NextPage = () => {
   // Sound settings state
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true)
 
-  // Sound effects (files should be in /public/sounds/)
-  const [playWhoosh] = useSound('/sounds/whoosh.mp3', { volume: 0.5, soundEnabled })
-  const [playReveal] = useSound('/sounds/reveal.mp3', { volume: 0.6, soundEnabled })
-  const [playSuccess] = useSound('/sounds/success.mp3', { volume: 0.5, soundEnabled })
-  const [playDark] = useSound('/sounds/dark.mp3', { volume: 0.4, soundEnabled })
+  // Sound effects, synthesized in the browser (hooks/useFortuneSounds)
+  const playSound = useFortuneSounds(soundEnabled)
+  const playWhoosh = useCallback(() => playSound('whoosh'), [playSound])
+  const playReveal = useCallback(() => playSound('reveal'), [playSound])
+  const playSuccess = useCallback(() => playSound('success'), [playSound])
+  const playDark = useCallback(() => playSound('dark'), [playSound])
 
   // Card ref for download feature
   const cardRef = useRef<HTMLDivElement>(null)
@@ -512,7 +513,7 @@ const CrownFortunePage: NextPage = () => {
         // Celebration effects
         triggerHaptic(HAPTIC.SUCCESS)
         playSuccess()
-        celebrateConfetti(false)
+        void celebrateConfetti(false)
       }, ANIMATION.CARD_FLIP_DELAY)
       pendingTimers.current.push(flipTimer)
     }, ANIMATION.WHEEL_SPIN_DURATION)
@@ -554,7 +555,7 @@ const CrownFortunePage: NextPage = () => {
 
       // Dark celebration effects
       triggerHaptic(HAPTIC.SUCCESS)
-      celebrateConfetti(true)
+      void celebrateConfetti(true)
 
       localStorage.setItem(STORAGE_KEYS.IS_REVERSED, 'true')
       localStorage.setItem(STORAGE_KEYS.REVERSE_MESSAGE, JSON.stringify(msg))
@@ -727,12 +728,21 @@ const CrownFortunePage: NextPage = () => {
         title={t.crownFortune.meta.title}
         description={t.crownFortune.meta.description}
         keywords={t.crownFortune.meta.keywords}
-        url="https://hasan-arthur-altuntas.xyz/crown-fortune"
-        noCache={true}
       >
         <div className={styles['fortune-page']}>
           <div className={styles['fortune-container']}>
-            <div className={styles['loading']}>
+            {/* The reading depends on the visitor's clock and storage, so it
+                renders after mount — but the heading is static and belongs
+                in the server HTML for search and a fast LCP. */}
+            <header className={`${styles['fortune-header']} enter-rise`}>
+              <div className={styles['header-badge']}>
+                <Crown size={16} />
+                <span>{t.crownFortune.header.badge}</span>
+              </div>
+              <h1 className={styles['fortune-title']}>{t.crownFortune.header.title}</h1>
+              <p className={styles['fortune-subtitle']}>{t.crownFortune.header.subtitle}</p>
+            </header>
+            <div className={styles['loading']} role="status">
               <Sparkles className={styles['loading-icon']} size={32} />
               <span>{t.crownFortune.loading}</span>
             </div>
@@ -747,7 +757,6 @@ const CrownFortunePage: NextPage = () => {
       title={t.crownFortune.meta.title}
       description={t.crownFortune.meta.description}
       keywords={t.crownFortune.meta.keywords}
-      noCache={true}
     >
       <div className={styles['fortune-page']}>
         {/* Background Elements */}
@@ -761,12 +770,7 @@ const CrownFortunePage: NextPage = () => {
         <div className={styles['fortune-container']}>
 
           {/* HEADER */}
-          <motion.header
-            className={styles['fortune-header']}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <header className={styles['fortune-header']}>
             <div className={styles['header-badge']}>
               <Crown size={16} />
               <span>{t.crownFortune.header.badge}</span>
@@ -850,7 +854,7 @@ const CrownFortunePage: NextPage = () => {
                 {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
               </button>
             </div>
-          </motion.header>
+          </header>
 
           {/* WHEEL SECTION */}
           <motion.section
@@ -950,7 +954,7 @@ const CrownFortunePage: NextPage = () => {
                     <div className={`${styles['card-face']} ${styles['card-front']} ${isReversed ? styles['card-front-reversed'] : ''}`}>
                       <div className={styles['card-background']}>
                         <Image
-                          src={details?.card?.image || '/tarot/the-fool.png'}
+                          src={details?.card?.image || '/tarot/the-fool.webp'}
                           alt={cardName}
                           fill
                           className={styles['card-bg-image']}
@@ -1182,7 +1186,7 @@ const CrownFortunePage: NextPage = () => {
                   >
                     <div className={styles['card-modal-image-wrapper']}>
                       <Image
-                        src={details?.card?.image || '/tarot/the-fool.png'}
+                        src={details?.card?.image || '/tarot/the-fool.webp'}
                         alt={cardName}
                         fill
                         className={`${styles['card-modal-image']} ${isReversed ? styles['card-modal-image-reversed'] : ''}`}

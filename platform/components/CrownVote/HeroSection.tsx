@@ -1,5 +1,4 @@
 import React from 'react'
-import { motion } from 'motion/react'
 import { Bot } from 'lucide-react'
 import Image from 'next/image'
 import { useLanguage } from '@/context/LanguageContext'
@@ -9,12 +8,7 @@ export const HeroSection: React.FC = () => {
   const { t } = useLanguage()
 
   return (
-    <motion.header
-      className={styles['vote-header']}
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
+    <header className={`${styles['vote-header']} enter-drop`}>
       <div className={styles['header-badge']}>
         <Bot size={14} />
         <span>{t.crownVote?.header?.badge || 'Desktop Application'}</span>
@@ -30,14 +24,15 @@ export const HeroSection: React.FC = () => {
 
       <div className={styles['hero-image']}>
         <Image
-          src="/votryx/votryx-banner.png"
-          alt="VOTRYX Banner"
-          width={800}
-          height={400}
+          src="/votryx/votryx-banner.webp"
+          alt="VOTRYX"
+          width={1536}
+          height={1024}
+          sizes="(max-width: 900px) 100vw, 800px"
           style={{ width: '100%', height: 'auto' }}
-          priority
+          preload
         />
       </div>
-    </motion.header>
+    </header>
   )
 }

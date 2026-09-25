@@ -285,28 +285,28 @@ export const FORTUNE_CATEGORIES: {
 
 // 22 Kader Kartı - Kendi evrenimiz
 export const DESTINY_CARDS: DestinyCard[] = [
-  { id: 0, name: 'The Wanderer', nameTr: 'Gezgin', symbol: '🌟', image: '/tarot/the-fool.png', element: 'air', energy: 'ascending' },
-  { id: 1, name: 'The Creator', nameTr: 'Yaratıcı', symbol: '✨', image: '/tarot/the-magician.png', element: 'fire', energy: 'ascending' },
-  { id: 2, name: 'The Oracle', nameTr: 'Kahin', symbol: '🔮', image: '/tarot/the-high-priestess.png', element: 'water', energy: 'stable' },
-  { id: 3, name: 'The Nurturer', nameTr: 'Koruyucu', symbol: '🌸', image: '/tarot/the-empress.png', element: 'earth', energy: 'stable' },
-  { id: 4, name: 'The Sovereign', nameTr: 'Hükümdar', symbol: '👑', image: '/tarot/the-emperor.png', element: 'fire', energy: 'stable' },
-  { id: 5, name: 'The Guide', nameTr: 'Rehber', symbol: '🗝️', image: '/tarot/the-hierophant.png', element: 'earth', energy: 'stable' },
-  { id: 6, name: 'The Union', nameTr: 'Birlik', symbol: '💫', image: '/tarot/the-lovers.png', element: 'air', energy: 'ascending' },
-  { id: 7, name: 'The Chariot', nameTr: 'Zafer', symbol: '⚡', image: '/tarot/the-chariot.png', element: 'fire', energy: 'ascending' },
-  { id: 8, name: 'The Phoenix', nameTr: 'Anka', symbol: '🔥', image: '/tarot/strength.png', element: 'fire', energy: 'ascending' },
-  { id: 9, name: 'The Hermit', nameTr: 'Bilge', symbol: '🏔️', image: '/tarot/the-hermit.png', element: 'earth', energy: 'stable' },
-  { id: 10, name: 'The Wheel', nameTr: 'Çark', symbol: '☯️', image: '/tarot/wheel-of-fortune.png', element: 'ether', energy: 'stable' },
-  { id: 11, name: 'The Balance', nameTr: 'Denge', symbol: '⚖️', image: '/tarot/justice.png', element: 'air', energy: 'stable' },
-  { id: 12, name: 'The Reflection', nameTr: 'Yansıma', symbol: '🪞', image: '/tarot/the-hanged-man.png', element: 'water', energy: 'descending' },
-  { id: 13, name: 'The Transformation', nameTr: 'Dönüşüm', symbol: '🦋', image: '/tarot/death.png', element: 'water', energy: 'descending' },
-  { id: 14, name: 'The Harmony', nameTr: 'Uyum', symbol: '🎵', image: '/tarot/temperance.png', element: 'water', energy: 'stable' },
-  { id: 15, name: 'The Shadow', nameTr: 'Gölge', symbol: '🌑', image: '/tarot/the-devil.png', element: 'earth', energy: 'descending' },
-  { id: 16, name: 'The Storm', nameTr: 'Fırtına', symbol: '⛈️', image: '/tarot/the-tower.png', element: 'air', energy: 'descending' },
-  { id: 17, name: 'The Star', nameTr: 'Yıldız', symbol: '⭐', image: '/tarot/the-star.png', element: 'ether', energy: 'ascending' },
-  { id: 18, name: 'The Dream', nameTr: 'Düş', symbol: '🌙', image: '/tarot/the-moon.png', element: 'water', energy: 'stable' },
-  { id: 19, name: 'The Dawn', nameTr: 'Şafak', symbol: '☀️', image: '/tarot/the-sun.png', element: 'fire', energy: 'ascending' },
-  { id: 20, name: 'The Awakening', nameTr: 'Uyanış', symbol: '🔔', image: '/tarot/judgement.png', element: 'ether', energy: 'ascending' },
-  { id: 21, name: 'The Crown', nameTr: 'Taç', symbol: '👑', image: '/tarot/the-world.png', element: 'ether', energy: 'ascending' },
+  { id: 0, name: 'The Wanderer', nameTr: 'Gezgin', symbol: '🌟', image: '/tarot/the-fool.webp', element: 'air', energy: 'ascending' },
+  { id: 1, name: 'The Creator', nameTr: 'Yaratıcı', symbol: '✨', image: '/tarot/the-magician.webp', element: 'fire', energy: 'ascending' },
+  { id: 2, name: 'The Oracle', nameTr: 'Kahin', symbol: '🔮', image: '/tarot/the-high-priestess.webp', element: 'water', energy: 'stable' },
+  { id: 3, name: 'The Nurturer', nameTr: 'Koruyucu', symbol: '🌸', image: '/tarot/the-empress.webp', element: 'earth', energy: 'stable' },
+  { id: 4, name: 'The Sovereign', nameTr: 'Hükümdar', symbol: '👑', image: '/tarot/the-emperor.webp', element: 'fire', energy: 'stable' },
+  { id: 5, name: 'The Guide', nameTr: 'Rehber', symbol: '🗝️', image: '/tarot/the-hierophant.webp', element: 'earth', energy: 'stable' },
+  { id: 6, name: 'The Union', nameTr: 'Birlik', symbol: '💫', image: '/tarot/the-lovers.webp', element: 'air', energy: 'ascending' },
+  { id: 7, name: 'The Chariot', nameTr: 'Zafer', symbol: '⚡', image: '/tarot/the-chariot.webp', element: 'fire', energy: 'ascending' },
+  { id: 8, name: 'The Phoenix', nameTr: 'Anka', symbol: '🔥', image: '/tarot/strength.webp', element: 'fire', energy: 'ascending' },
+  { id: 9, name: 'The Hermit', nameTr: 'Bilge', symbol: '🏔️', image: '/tarot/the-hermit.webp', element: 'earth', energy: 'stable' },
+  { id: 10, name: 'The Wheel', nameTr: 'Çark', symbol: '☯️', image: '/tarot/wheel-of-fortune.webp', element: 'ether', energy: 'stable' },
+  { id: 11, name: 'The Balance', nameTr: 'Denge', symbol: '⚖️', image: '/tarot/justice.webp', element: 'air', energy: 'stable' },
+  { id: 12, name: 'The Reflection', nameTr: 'Yansıma', symbol: '🪞', image: '/tarot/the-hanged-man.webp', element: 'water', energy: 'descending' },
+  { id: 13, name: 'The Transformation', nameTr: 'Dönüşüm', symbol: '🦋', image: '/tarot/death.webp', element: 'water', energy: 'descending' },
+  { id: 14, name: 'The Harmony', nameTr: 'Uyum', symbol: '🎵', image: '/tarot/temperance.webp', element: 'water', energy: 'stable' },
+  { id: 15, name: 'The Shadow', nameTr: 'Gölge', symbol: '🌑', image: '/tarot/the-devil.webp', element: 'earth', energy: 'descending' },
+  { id: 16, name: 'The Storm', nameTr: 'Fırtına', symbol: '⛈️', image: '/tarot/the-tower.webp', element: 'air', energy: 'descending' },
+  { id: 17, name: 'The Star', nameTr: 'Yıldız', symbol: '⭐', image: '/tarot/the-star.webp', element: 'ether', energy: 'ascending' },
+  { id: 18, name: 'The Dream', nameTr: 'Düş', symbol: '🌙', image: '/tarot/the-moon.webp', element: 'water', energy: 'stable' },
+  { id: 19, name: 'The Dawn', nameTr: 'Şafak', symbol: '☀️', image: '/tarot/the-sun.webp', element: 'fire', energy: 'ascending' },
+  { id: 20, name: 'The Awakening', nameTr: 'Uyanış', symbol: '🔔', image: '/tarot/judgement.webp', element: 'ether', energy: 'ascending' },
+  { id: 21, name: 'The Crown', nameTr: 'Taç', symbol: '👑', image: '/tarot/the-world.webp', element: 'ether', energy: 'ascending' },
 ]
 
 // Mesaj havuzu - kategori ve ton bazlı (TR + EN)
@@ -670,13 +670,21 @@ export function getTimeUntilMidnightGMT3(): number {
  * Tarih ve kullanıcı bazlı seed ile tutarlı rastgele sayı
  */
 export function seededRandom(seed: string): number {
-  let hash = 0
+  // FNV-1a plus a murmur3-style finalizer, so seeds that differ in a single
+  // trailing character land far apart. The previous shift-add hash mapped
+  // "…_lucky1" / "…_lucky2" / "…_lucky3" to almost the same fraction, which
+  // made all three lucky numbers identical.
+  let hash = 0x811c9dc5
   for (let i = 0; i < seed.length; i++) {
-    const char = seed.charCodeAt(i)
-    hash = ((hash << 5) - hash) + char
-    hash = hash & hash
+    hash ^= seed.charCodeAt(i)
+    hash = Math.imul(hash, 0x01000193)
   }
-  return (Math.abs(hash) % 1000000) / 1000000
+  hash ^= hash >>> 16
+  hash = Math.imul(hash, 0x85ebca6b)
+  hash ^= hash >>> 13
+  hash = Math.imul(hash, 0xc2b2ae35)
+  hash ^= hash >>> 16
+  return (hash >>> 0) / 4294967296
 }
 
 /**
@@ -792,7 +800,7 @@ const DEFAULT_CARD: DestinyCard = {
   name: 'The Wanderer',
   nameTr: 'Gezgin',
   symbol: '🌟',
-  image: '/tarot/the-fool.png',
+  image: '/tarot/the-fool.webp',
   element: 'air',
   energy: 'ascending'
 }
@@ -853,6 +861,7 @@ export function clearDestinyData(): void {
   localStorage.removeItem(STORAGE_KEYS.REVEALED)
   localStorage.removeItem(STORAGE_KEYS.IS_REVERSED)
   localStorage.removeItem(STORAGE_KEYS.REVERSE_MESSAGE)
+  // eslint-disable-next-line no-console -- development-only helper exposed on window
   console.log('Crown Destiny data cleared. Refresh the page.')
 }
 
@@ -1003,18 +1012,17 @@ export function getMoonPhase(): MoonPhase {
  * Kart ve güne göre şanslı elementleri getir (deterministik)
  */
 export function getLuckyElements(cardId: number, date: string): LuckyElements {
-  const seed1 = seededRandom(`${cardId}_${date}_lucky1`)
-  const seed2 = seededRandom(`${cardId}_${date}_lucky2`)
-  const seed3 = seededRandom(`${cardId}_${date}_lucky3`)
+  // Üç farklı sayı (1-49); aynı gün aynı kart için her zaman aynı sonuç
+  const numbers: number[] = []
+  for (let i = 1; numbers.length < 3; i++) {
+    const n = Math.floor(seededRandom(`${cardId}_${date}_lucky${i}`) * 49) + 1
+    if (!numbers.includes(n)) {numbers.push(n)}
+  }
 
   return {
-    numbers: [
-      Math.floor(seed1 * 49) + 1,
-      Math.floor(seed2 * 49) + 1,
-      Math.floor(seed3 * 49) + 1,
-    ].sort((a, b) => a - b), // Küçükten büyüğe sırala
+    numbers: numbers.sort((a, b) => a - b), // Küçükten büyüğe sırala
     color: LUCKY_COLORS[cardId % LUCKY_COLORS.length],
-    direction: DIRECTIONS[Math.floor(seed1 * 4)],
+    direction: DIRECTIONS[Math.floor(seededRandom(`${cardId}_${date}_direction`) * DIRECTIONS.length)],
   }
 }
 

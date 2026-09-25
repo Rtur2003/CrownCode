@@ -62,7 +62,7 @@ export const Footer: React.FC = () => {
           <div className="footer-brand">
             <div className="footer-logo">
               <div className="footer-logo-icon brand-portrait">
-                <Image src="/logo-main.png" alt="" width={96} height={96} />
+                <Image src="/logo-mark.webp" alt="" width={96} height={96} />
               </div>
               <div className="footer-logo-text">
                 <span className="footer-logo-main">Crown</span>

@@ -7,5 +7,10 @@
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
+  },
+  // Without this binding @opennextjs/cloudflare serves next/image requests
+  // unoptimized (original bytes, no resizing, no AVIF/WebP negotiation).
+  "images": {
+    "binding": "IMAGES"
   }
 }

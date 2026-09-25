@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useCallback, useRef } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { m as motion, AnimatePresence } from 'motion/react'
 import { Music, Upload, X, Wand2, Loader2, AlertCircle, Download, RotateCcw, Gauge, KeyRound } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useRemixStudio } from '@/hooks/useRemixStudio'

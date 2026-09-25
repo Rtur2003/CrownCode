@@ -26,7 +26,7 @@
 .fortune-pattern {
   position: absolute;
   inset: 0;
-  background-image: url('/tarot/the-moon.png');
+  background-image: url('/tarot/the-moon.webp');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -398,7 +398,7 @@
 .card-back-pattern {
   position: absolute;
   inset: 0;
-  background-image: url('/tarot/wheel-of-fortune.png');
+  background-image: url('/tarot/wheel-of-fortune.webp');
   background-size: cover;
   background-position: center;
   opacity: 0.12;
@@ -586,6 +586,7 @@
   line-height: 1.6;
   text-align: center;
   font-style: italic;
+  font-family: var(--font-family-italic);
   margin: 0;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   /* Multi-line ellipsis - max 4 lines */
@@ -656,6 +657,7 @@
   line-height: 1.6;
   text-align: center;
   font-style: italic;
+  font-family: var(--font-family-italic);
   margin: 0;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   display: -webkit-box;
@@ -1046,6 +1048,7 @@
   line-height: 1.7;
   text-align: center;
   font-style: italic;
+  font-family: var(--font-family-italic);
   margin: 0.5rem 0 0;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
@@ -1461,6 +1464,7 @@
 .daily-quote p {
   font-size: 0.9375rem;
   font-style: italic;
+  font-family: var(--font-family-italic);
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.5;
   margin: 0 0 0.5rem 0;

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { MainLayout } from '@/components/Layout/MainLayout'
@@ -8,7 +8,7 @@ import { Search as SearchIcon, ExternalLink } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { buildSearchItems } from '@/hooks/useSearch'
 import Link from 'next/link'
-import { motion } from 'motion/react'
+import { m as motion } from 'motion/react'
 import styles from '@/styles/pages/search.module.css'
 
 interface SearchResult {
@@ -23,8 +23,15 @@ const SearchPage: NextPage = () => {
   const router = useRouter()
   const { t } = useLanguage()
   const sp = t.searchPage
-  const [query, setQuery] = useState<string>('')
-  const [results, setResults] = useState<SearchResult[]>([])
+  // The URL (?q=) is the source of truth for results; the input is a draft
+  // until submitted, so results don't flicker while typing.
+  const urlQuery = typeof router.query.q === 'string' ? router.query.q : ''
+  const [query, setQuery] = useState<string>(urlQuery)
+  const [syncedUrlQuery, setSyncedUrlQuery] = useState<string>(urlQuery)
+  if (urlQuery !== syncedUrlQuery) {
+    setSyncedUrlQuery(urlQuery)
+    setQuery(urlQuery)
+  }
 
   const searchableContent: SearchResult[] = useMemo(() => {
     return buildSearchItems(t).map((item) => ({
@@ -36,61 +43,40 @@ const SearchPage: NextPage = () => {
     }))
   }, [t])
 
-  const performSearch = useCallback((searchQuery: string) => {
-    if (!searchQuery.trim()) {
-      setResults([])
-      return
-    }
-
-    const lowercaseQuery = searchQuery.toLowerCase()
-    const filtered = searchableContent.filter(item =>
-      item.title.toLowerCase().includes(lowercaseQuery) ||
-      item.description.toLowerCase().includes(lowercaseQuery)
+  const results = useMemo(() => {
+    const needle = urlQuery.trim().toLocaleLowerCase()
+    if (!needle) {return []}
+    return searchableContent.filter(item =>
+      item.title.toLocaleLowerCase().includes(needle) ||
+      item.description.toLocaleLowerCase().includes(needle)
     )
-
-    setResults(filtered)
-  }, [searchableContent])
-
-  useEffect(() => {
-    const urlQuery = router.query.q as string
-    if (urlQuery) {
-      setQuery(urlQuery)
-      performSearch(urlQuery)
-    }
-  }, [router.query.q, performSearch])
+  }, [urlQuery, searchableContent])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     if (query.trim()) {
-      router.push(`/search?q=${encodeURIComponent(query)}`, undefined, { shallow: true })
-      performSearch(query)
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`, undefined, { shallow: true })
     }
   }
 
   return (
     <MainLayout
-      title={`${sp.meta.title}: ${query || ''} - CrownCode`}
+      title={urlQuery ? `${sp.meta.title}: ${urlQuery}` : sp.meta.title}
       description={sp.meta.description}
       keywords={t.searchMeta?.keywords}
       noIndex
     >
       <div className={styles['search-page']}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className={styles['search-header']}
-        >
+        <div className={`${styles['search-header']} enter-rise`}>
           <h1 className={styles['search-title']}>{sp.title}</h1>
           <p className={styles['search-subtitle']}>{sp.subtitle}</p>
-        </motion.div>
+        </div>
 
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+        <form
+          role="search"
           onSubmit={handleSearch}
-          className={styles['search-form']}
+          className={`${styles['search-form']} enter-rise`}
+          style={{ '--enter-delay': '0.08s' } as React.CSSProperties}
         >
           <div className={styles['search-bar']}>
             <SearchIcon size={20} className={styles['search-icon']} />
@@ -99,6 +85,7 @@ const SearchPage: NextPage = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={sp.placeholder}
+              aria-label={sp.inputLabel}
               className={styles['search-input']}
               autoFocus
             />
@@ -106,9 +93,9 @@ const SearchPage: NextPage = () => {
               {sp.button}
             </button>
           </div>
-        </motion.form>
+        </form>
 
-        {query ? (
+        {urlQuery ? (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}>
             <h2 className={styles['results-heading']}>
               {results.length > 0 ? `${results.length} ${sp.resultsFound}` : sp.noResults}

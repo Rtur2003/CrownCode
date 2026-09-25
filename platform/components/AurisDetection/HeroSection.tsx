@@ -9,40 +9,19 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { motion, useReducedMotion, Variants } from 'motion/react'
+import type { CSSProperties } from 'react'
+import { m as motion, useReducedMotion } from 'motion/react'
 import { ChevronDown, Shield, Waves, Cpu, Music } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import styles from '@/styles/components/auris-hero.module.css'
 
 // =========================================================================
-// ANIMATION VARIANTS
+// ENTRANCE
 // =========================================================================
+// Staggered CSS entrances (.enter-rise) instead of Motion variants: the hero
+// text is the LCP element and must be visible in the server HTML.
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.2 }
-  }
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] }
-  }
-}
-
-const visualVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.85 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 1, ease: [0.16, 1, 0.3, 1] }
-  }
-}
+const stagger = (index: number) => ({ '--enter-delay': `${0.08 + index * 0.1}s` }) as CSSProperties
 
 // =========================================================================
 // COMPONENT
@@ -66,7 +45,7 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
             src="/images/auris/gradient-bg.webp"
             alt=""
             fill
-            priority
+            preload
             sizes="100vw"
             style={{ objectFit: 'cover' }}
           />
@@ -78,7 +57,7 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
             src="/images/auris/hero-wave.webp"
             alt=""
             fill
-            priority
+            loading="eager"
             sizes="100vw"
             style={{ objectFit: 'cover', objectPosition: 'center 60%' }}
           />
@@ -94,33 +73,28 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
       {/* ===== MAIN CONTENT ===== */}
       <div className={styles.container}>
         {/* ===== LEFT: TEXT ===== */}
-        <motion.div
-          className={styles.content}
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
+        <div className={styles.content}>
           {/* Badge */}
-          <motion.div className={styles.badge} variants={itemVariants}>
+          <div className={`${styles.badge} enter-rise`} style={stagger(0)}>
             <Shield size={14} aria-hidden="true" />
             <span>{t.aiDetection.header.badge}</span>
-          </motion.div>
+          </div>
 
           {/* Title */}
-          <motion.h1 className={styles.title} variants={itemVariants}>
+          <h1 className={`${styles.title} enter-rise`} style={stagger(1)}>
             <span className={styles.titleMain}>AURIS</span>
             <span className={styles.titleAccent}>
               {t.aiDetection.hero?.accent || 'AI Music Detection'}
             </span>
-          </motion.h1>
+          </h1>
 
           {/* Subtitle */}
-          <motion.p className={styles.subtitle} variants={itemVariants}>
+          <p className={`${styles.subtitle} enter-rise`} style={stagger(2)}>
             {t.aiDetection.hero?.description || t.aiDetection.header.subtitle}
-          </motion.p>
+          </p>
 
           {/* Feature pills */}
-          <motion.div className={styles.features} variants={itemVariants}>
+          <div className={`${styles.features} enter-rise`} style={stagger(3)}>
             <div className={styles.feature}>
               <Waves size={16} aria-hidden="true" />
               <span>wav2vec2</span>
@@ -133,11 +107,12 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
               <Music size={16} aria-hidden="true" />
               <span>{t.aiDetection.hero?.featureMulti || 'Multi-Source'}</span>
             </div>
-          </motion.div>
+          </div>
 
           {/* CTA */}
-          <motion.div className={styles.actions} variants={itemVariants}>
+          <div className={`${styles.actions} enter-rise`} style={stagger(4)}>
             <button
+              type="button"
               className={styles.btnPrimary}
               onClick={onScrollToDetection}
               aria-label={t.aiDetection.hero?.cta || 'Start Analysis'}
@@ -152,17 +127,11 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
                 />
               )}
             </button>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* ===== RIGHT: VISUAL ===== */}
-        <motion.div
-          className={styles.visual}
-          variants={visualVariants}
-          initial="hidden"
-          animate="visible"
-          aria-hidden="true"
-        >
+        <div className={`${styles.visual} enter-fade`} style={stagger(2)} aria-hidden="true">
           {/* Glow pulse */}
           <div className={styles.orbGlow} />
 
@@ -180,7 +149,7 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
               width={480}
               height={480}
               className={styles.ringsImg}
-              priority
+              loading="eager"
             />
           </motion.div>
 
@@ -198,7 +167,7 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
               width={420}
               height={420}
               className={styles.centerImg}
-              priority
+              loading="eager"
             />
           </motion.div>
 
@@ -229,11 +198,12 @@ export const AurisHeroSection: React.FC<AurisHeroProps> = ({ onScrollToDetection
               className={styles.floatingOrbImg}
             />
           </motion.div>
-        </motion.div>
+        </div>
       </div>
 
       {/* ===== SCROLL INDICATOR ===== */}
       <motion.button
+        type="button"
         className={styles.scrollCta}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

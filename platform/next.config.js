@@ -3,8 +3,38 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
+const securityHeaders = [
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'X-Frame-Options', value: 'DENY' },
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+  { key: 'Permissions-Policy', value: 'camera=(), geolocation=(), microphone=(self)' },
+  { key: 'Strict-Transport-Security', value: 'max-age=31536000' },
+]
+
 const nextConfig = {
   reactStrictMode: true,
+  poweredByHeader: false,
+
+  // Turkish stays unprefixed, English is served from /en/* so both languages
+  // get their own crawlable URL (hreflang in MainLayout points at them).
+  // No Accept-Language redirect: search bots must see stable URLs.
+  i18n: {
+    locales: ['tr', 'en'],
+    defaultLocale: 'tr',
+    localeDetection: false,
+  },
+
+  async headers() {
+    const week = [{ key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' }]
+    return [
+      { source: '/:path*', headers: securityHeaders },
+      { source: '/fonts/:path*', locale: false, headers: week },
+      { source: '/images/:path*', locale: false, headers: week },
+      { source: '/tarot/:path*', locale: false, headers: week },
+      { source: '/votryx/:path*', locale: false, headers: week },
+      { source: '/og/:path*', locale: false, headers: week },
+    ]
+  },
 
   // Image optimization — running in server mode on Cloudflare Workers
   // (via @opennextjs/cloudflare), so next/image optimization stays enabled.

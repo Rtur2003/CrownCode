@@ -11,7 +11,7 @@
 
 import React, { useCallback, useRef, useState } from 'react'
 import type { NextPage } from 'next'
-import { motion } from 'motion/react'
+import { m as motion } from 'motion/react'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import {
   AlertTriangle,
@@ -129,11 +129,11 @@ const AIMusicDetectionPage: NextPage = () => {
     runYouTubeAnalysis()
   }, [resetFile, runYouTubeAnalysis])
 
+  // "Try again" / "New analysis" keeps the visitor on the tab they were using.
   const resetAll = useCallback(() => {
     resetYouTube()
     resetFile()
     mic.reset()
-    setActiveSource('youtube')
   }, [resetFile, resetYouTube, mic])
 
   const handleTabChange = useCallback(
@@ -256,6 +256,8 @@ const AIMusicDetectionPage: NextPage = () => {
                   <button
                     type="button"
                     role="tab"
+                    id="source-tab-file"
+                    aria-controls="source-panel"
                     aria-selected={activeSource === 'file' ? 'true' : 'false'}
                     className={`${styles['source-tab']} ${activeSource === 'file' ? styles['source-tab-active'] : ''}`}
                     onClick={() => handleTabChange('file')}
@@ -268,6 +270,8 @@ const AIMusicDetectionPage: NextPage = () => {
                   <button
                     type="button"
                     role="tab"
+                    id="source-tab-youtube"
+                    aria-controls="source-panel"
                     aria-selected={activeSource === 'youtube' ? 'true' : 'false'}
                     className={`${styles['source-tab']} ${activeSource === 'youtube' ? styles['source-tab-active'] : ''}`}
                     onClick={() => handleTabChange('youtube')}
@@ -280,6 +284,8 @@ const AIMusicDetectionPage: NextPage = () => {
                   <button
                     type="button"
                     role="tab"
+                    id="source-tab-mic"
+                    aria-controls="source-panel"
                     aria-selected={activeSource === 'mic' ? 'true' : 'false'}
                     className={`${styles['source-tab']} ${activeSource === 'mic' ? styles['source-tab-active'] : ''}`}
                     onClick={() => handleTabChange('mic')}
@@ -291,7 +297,7 @@ const AIMusicDetectionPage: NextPage = () => {
                   </button>
                 </div>
 
-                <div ref={tabPanelRef}>
+                <div ref={tabPanelRef} id="source-panel" role="tabpanel" aria-labelledby={`source-tab-${activeSource}`}>
                 {/* ===== FILE TAB ===== */}
                 {activeSource === 'file' && (
                   <div className={styles['upload-section']}>
@@ -302,6 +308,15 @@ const AIMusicDetectionPage: NextPage = () => {
                       onDragOver={handleDragOver}
                       onDragLeave={handleDragLeave}
                       onClick={() => fileInputRef.current?.click()}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          event.preventDefault()
+                          fileInputRef.current?.click()
+                        }
+                      }}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={t.aria?.uploadAudioFile || 'Upload audio file for AI music detection'}
                     >
                       <Upload size={48} />
                       <h3>{t.aiDetection.upload.dropHere}</h3>
@@ -315,8 +330,8 @@ const AIMusicDetectionPage: NextPage = () => {
                         accept="audio/*,.mp3,.wav,.flac,.m4a,.mp4,.aac"
                         onChange={handleFileSelect}
                         className={styles['hidden']}
-                        aria-label={t.aria?.uploadAudioFile || 'Upload audio file for AI music detection'}
-                        title={t.aria?.uploadAudioFile || 'Upload audio file for AI music detection'}
+                        tabIndex={-1}
+                        aria-hidden="true"
                       />
                     </div>
 
@@ -325,6 +340,7 @@ const AIMusicDetectionPage: NextPage = () => {
                         <Music size={20} />
                         <span>{selectedFile.name}</span>
                         <button
+                          type="button"
                           onClick={handleFileAnalyze}
                           disabled={isProcessing}
                           className={`${styles['btn-primary']} ${isProcessing ? styles['loading'] : ''}`}
@@ -341,7 +357,7 @@ const AIMusicDetectionPage: NextPage = () => {
                   <div className={styles['url-section']} id="url">
                     <h2>{t.aiDetection.url.title}</h2>
                     <div
-                      role="alert"
+                      role="note"
                       className={styles['url-warning'] || ''}
                       style={{
                         display: 'flex',
@@ -365,6 +381,14 @@ const AIMusicDetectionPage: NextPage = () => {
                         <LinkIcon size={20} />
                         <input
                           type="url"
+                          inputMode="url"
+                          autoComplete="off"
+                          aria-label={t.aiDetection.url.title}
+                          onKeyDown={(event) => {
+                            if (event.key === 'Enter' && url.trim() && !isProcessing) {
+                              handleUrlAnalyze()
+                            }
+                          }}
                           placeholder={t.aiDetection.url.placeholder}
                           value={url}
                           onChange={(event) => setUrl(event.target.value)}
@@ -372,6 +396,7 @@ const AIMusicDetectionPage: NextPage = () => {
                         />
                       </div>
                       <button
+                        type="button"
                         onClick={handleUrlAnalyze}
                         disabled={!url.trim() || isProcessing}
                         className={`${styles['btn-primary']} ${isProcessing ? styles['loading'] : ''}`}
@@ -450,6 +475,8 @@ const AIMusicDetectionPage: NextPage = () => {
           {isProcessing && (
             <motion.div
               className={styles['processing-state']}
+              role="status"
+              aria-live="polite"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -474,6 +501,7 @@ const AIMusicDetectionPage: NextPage = () => {
           {errorMessage && (
             <motion.div
               className={styles['error-state']}
+              role="alert"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -481,6 +509,7 @@ const AIMusicDetectionPage: NextPage = () => {
               <h3>{t.aiDetection.error.title}</h3>
               <p>{errorMessage}</p>
               <button
+                type="button"
                 onClick={resetAll}
                 className={styles['btn-primary']}
               >

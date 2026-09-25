@@ -1,7 +1,7 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { motion, useReducedMotion } from 'motion/react'
+import { m as motion, useReducedMotion } from 'motion/react'
 import { Crown, Home, ArrowLeft } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { useLanguage } from '@/context/LanguageContext'
@@ -16,16 +16,12 @@ const NotFoundPage: NextPage = () => {
     <MainLayout
       title={nf.meta.title}
       description={nf.meta.description}
+      noIndex
     >
       <div className={styles.page}>
         <div className={styles['floor-glow']} aria-hidden="true" />
 
-        <motion.div
-          className={styles.content}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <div className={`${styles.content} enter-rise`}>
           <motion.div
             className={styles['crown-mark']}
             initial={{ opacity: 0, rotate: 0, scale: 0.8 }}
@@ -78,7 +74,7 @@ const NotFoundPage: NextPage = () => {
               </a>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </MainLayout>
   )

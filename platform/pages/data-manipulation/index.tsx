@@ -17,7 +17,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
 import type { NextPage } from 'next'
-import { motion, AnimatePresence } from 'motion/react'
+import { m as motion, AnimatePresence } from 'motion/react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import {
   RefreshCw,
@@ -329,19 +329,15 @@ const AudioDatasetPage: NextPage = () => {
 
   return (
     <MainLayout
-      title={`${t.audioDataset.title} - CrownCode Platform`}
-      description={t.audioDataset.subtitle}
-      keywords={t.dataManipulationMeta?.keywords || 'audio dataset, data preparation'}
+      title={t.audioDataset.meta.title}
+      description={t.audioDataset.meta.description}
+      keywords={t.audioDataset.meta.keywords}
     >
       <div className={styles['page-container']}>
         <div className={styles['content-wrapper']}>
           {!activeTool ? (
             <>
-              <motion.div
-                className={styles['workbench-intro']}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
+              <div className={`${styles['workbench-intro']} enter-rise`}>
                 <div className={styles['workbench-copy']}>
                   <span className={styles['header-badge']}>{t.audioDataset.title}</span>
                   <h1 className={styles['page-title']}>{t.audioDataset.title}</h1>
@@ -350,7 +346,7 @@ const AudioDatasetPage: NextPage = () => {
                 <div className={styles['workbench-waveform']} aria-hidden="true">
                   <Waves size={140} strokeWidth={1} />
                 </div>
-              </motion.div>
+              </div>
 
               {/* Pipeline strip: this is a literal sequential process
                   (upload -> augment -> convert -> organize), so a numbered
