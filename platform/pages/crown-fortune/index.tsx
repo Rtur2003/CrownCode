@@ -730,6 +730,12 @@ const CrownFortunePage: NextPage = () => {
         keywords={t.crownFortune.meta.keywords}
       >
         <div className={styles['fortune-page']}>
+          {/* Same first child as the loaded page, so React keeps this node
+              instead of turning the container into the background (CLS). */}
+          <div className={styles['fortune-background']}>
+            <div className={styles['fortune-gradient']} />
+            <div className={styles['fortune-pattern']} />
+          </div>
           <div className={styles['fortune-container']}>
             {/* The reading depends on the visitor's clock and storage, so it
                 renders after mount — but the heading is static and belongs

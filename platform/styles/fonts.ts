@@ -1,5 +1,4 @@
 import localFont from 'next/font/local'
-import { JetBrains_Mono } from 'next/font/google'
 
 // Self-hosted, subset (Latin + Latin Extended-A for Turkish) WOFF2 files.
 // next/font preloads them and generates size-adjusted fallbacks, replacing
@@ -38,10 +37,15 @@ export const portmanteau = localFont({
   fallback: ['Georgia', 'serif'],
 })
 
-export const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500'],
+// Fontsource's latin + latin-ext subsets merged into one file per weight,
+// so builds don't depend on reaching Google Fonts.
+export const jetbrainsMono = localFont({
+  src: [
+    { path: './fonts/jetbrains-mono-400.woff2', weight: '400', style: 'normal' },
+    { path: './fonts/jetbrains-mono-500.woff2', weight: '500', style: 'normal' },
+  ],
   display: 'swap',
   preload: false,
+  adjustFontFallback: false,
   fallback: ['Courier New', 'monospace'],
 })
