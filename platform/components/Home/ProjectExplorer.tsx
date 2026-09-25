@@ -49,8 +49,9 @@ function Specimen({ product, index, count, progress, onSelect, reducedMotion, in
   const position = useTransform(progress, value => {
     const angle = orbitalAngle(value)
     const mobile = typeof window !== 'undefined' && window.innerWidth <= 700
+    const shortMobile = mobile && window.innerHeight < 650
     const x = Math.cos(angle) * (mobile ? 30 : 32) + Math.sin(angle) * (mobile ? 6 : 8)
-    const y = Math.sin(angle) * (mobile ? 23 : 29) - Math.cos(angle) * (mobile ? 5 : 8)
+    const y = Math.sin(angle) * (shortMobile ? 17 : mobile ? 23 : 29) - Math.cos(angle) * (shortMobile ? 4 : mobile ? 5 : 8)
     const focus = staticScene() ? 0 : focusAt(value, index, count)
     return `translate3d(${x * (1 - focus)}vw, ${y * (1 - focus)}svh, 0) translate(-50%, -50%)`
   })
