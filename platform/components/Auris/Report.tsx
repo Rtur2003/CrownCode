@@ -355,15 +355,15 @@ const Towers: React.FC<{ scores: TowerScores; warnings: string[]; language: stri
         {TOWER_ORDER.map(key => {
           const v = scores[key]
           const missing = typeof v !== 'number'
-          const warned = TOWER_WARNING[key] && warnings.includes(TOWER_WARNING[key]!)
+          const warned = !!TOWER_WARNING[key] && warnings.includes(TOWER_WARNING[key]!)
           return (
-            <li key={key} data-missing={missing ? 'true' : undefined}>
+            <li key={key} data-missing={missing ? 'true' : undefined} data-warned={warned ? 'true' : undefined}>
               <div className={styles.towerHead}>
                 <span>{T.names[key]}</span>
                 <span className={styles.mono}>{missing ? T.missing : num(language, v, 2)}</span>
               </div>
               {!missing && <Bar value={v} mid={0.5} />}
-              <p className={styles.small}>{T.notes[key]}{missing && warned ? ' ·' : ''}</p>
+              <p className={styles.small}>{T.notes[key]}</p>
             </li>
           )
         })}
