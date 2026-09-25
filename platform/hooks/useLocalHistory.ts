@@ -122,6 +122,18 @@ export function useLocalHistory<T>(storageKey: string) {
   return { entries, lastEntry, save, remove, removeById, clear }
 }
 
+/** Read a history list outside React (e.g. after a background job). */
+export function readHistory<T>(storageKey: string): HistoryEntry<T>[] {
+  return readAll<T>(storageKey)
+}
+
+/** Append to a history list outside React; newest first, capped like `save`. */
+export function appendHistory<T>(storageKey: string, input: string, result: T): HistoryEntry<T> {
+  const entry: HistoryEntry<T> = { id: generateId(), input, result, timestamp: Date.now() }
+  writeAll(storageKey, [entry, ...readAll<T>(storageKey)].slice(0, MAX_ENTRIES))
+  return entry
+}
+
 // Storage keys used across the platform
 export const HISTORY_KEYS = {
   ANALYSIS: 'crowncode:last-analysis',

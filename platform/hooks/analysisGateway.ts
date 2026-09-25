@@ -15,79 +15,133 @@ export interface AnalyzeResponse {
   errors?: string[]
 }
 
+export interface AnalyzeOutcome {
+  result: AnalysisResult | null
+  error: AnalysisErrorCode | null
+  warnings: string[]
+}
+
 const MAX_BYTES = 30 * 1024 * 1024 // 30MB
+const TIMEOUT_MS = 600_000
+
+// Backend error strings → UI error codes, most specific first.
+const ERROR_MAP: Array<[string, AnalysisErrorCode]> = [
+  ['missing_file', 'missingFile'],
+  ['missing_url', 'missingUrl'],
+  ['unsupported_source', 'unsupportedSource'],
+  ['invalid_youtube_url', 'invalidYouTubeUrl'],
+  ['youtube_authentication_required', 'youtubeAuthenticationRequired'],
+  ['invalid_source_type', 'invalidSourceType'],
+  ['file_too_large', 'fileTooLarge'],
+  ['file_too_small', 'fileTooSmall'],
+  ['invalid_file_type', 'unsupportedFileType'],
+  ['youtube_analysis_failed', 'youtubeAnalysisFailed'],
+  ['internal_error', 'internalError'],
+]
+
+const fail = (error: AnalysisErrorCode, warnings: string[] = []): AnalyzeOutcome => ({ result: null, error, warnings })
+
+/** Validates a payload before it touches the network. */
+const precheck = (apiBaseUrl: string | undefined, payload: AnalyzePayload): AnalyzeOutcome | null => {
+  if (!apiBaseUrl) {return fail('backend_not_configured')}
+  if (payload.file && payload.file.size > MAX_BYTES) {return fail('fileTooLarge')}
+  if (payload.sourceType === 'youtube' && !payload.url) {return fail('enterUrl')}
+  if (payload.sourceType === 'file' && !payload.file) {return fail('missingFile')}
+  return null
+}
+
+const buildForm = (payload: AnalyzePayload) => {
+  const formData = new FormData()
+  formData.append('sourceType', payload.sourceType)
+  if (payload.url) {formData.append('url', payload.url)}
+  if (payload.file) {formData.append('file', payload.file)}
+  return formData
+}
+
+/** Turns an HTTP status + parsed body into a result or an error code. */
+export const readAnalyzeResponse = (status: number, data: AnalyzeResponse | null): AnalyzeOutcome => {
+  if (status === 429) {return fail('rateLimited')}
+  if (status < 200 || status >= 300) {return fail('backend_unreachable')}
+  if (!data) {return fail('backend_unexpected_response')}
+  const warnings = data.warnings ?? []
+
+  if (data.errors && data.errors.length) {
+    const hit = ERROR_MAP.find(([code]) => data.errors!.includes(code))
+    return fail(hit ? hit[1] : 'backend_unexpected_response', warnings)
+  }
+  if (!data.result) {return fail('backend_unexpected_response', warnings)}
+
+  // Normalize analysisMode if backend omits it
+  if (!data.result.analysisMode) {
+    data.result.analysisMode = data.result.decisionSource === 'preview' ? 'preview' : 'production'
+  }
+  return { result: data.result, error: null, warnings }
+}
 
 export const analyzeSource = async (
   apiBaseUrl: string | undefined,
   payload: AnalyzePayload
-): Promise<{ result: AnalysisResult | null; error: AnalysisErrorCode | null }> => {
-  if (!apiBaseUrl) {
-    return { result: null, error: 'backend_not_configured' as AnalysisErrorCode }
-  }
-
-  const formData = new FormData()
-  formData.append('sourceType', payload.sourceType)
-
-  if (payload.url) {
-    formData.append('url', payload.url)
-  }
-
-  if (payload.file) {
-    if (payload.file.size > MAX_BYTES) {
-      return { result: null, error: 'fileTooLarge' }
-    }
-    formData.append('file', payload.file)
-  }
-
-  // Validate required fields before hitting the network
-  if (payload.sourceType === 'youtube' && !payload.url) {
-    return { result: null, error: 'enterUrl' }
-  }
-  if (payload.sourceType === 'file' && !payload.file) {
-    return { result: null, error: 'missingFile' }
-  }
+): Promise<AnalyzeOutcome> => {
+  const invalid = precheck(apiBaseUrl, payload)
+  if (invalid) {return invalid}
 
   try {
     const response = await fetchWithTimeout(`${apiBaseUrl}/api/analyze`, {
       method: 'POST',
-      body: formData,
-      timeout: 600_000,
+      body: buildForm(payload),
+      timeout: TIMEOUT_MS,
     })
-
-    if (!response.ok) {
-      return { result: null, error: 'backend_unreachable' as AnalysisErrorCode }
-    }
-
-    const data = await response.json() as AnalyzeResponse
-    if (data.errors && data.errors.length) {
-      const errs = data.errors
-      if (errs.includes('missing_file')) {return { result: null, error: 'missingFile' }}
-      if (errs.includes('missing_url')) {return { result: null, error: 'missingUrl' }}
-      if (errs.includes('unsupported_source')) {return { result: null, error: 'unsupportedSource' }}
-      if (errs.includes('invalid_youtube_url')) {return { result: null, error: 'invalidYouTubeUrl' }}
-      if (errs.includes('youtube_authentication_required')) {
-        return { result: null, error: 'youtubeAuthenticationRequired' }
-      }
-      if (errs.includes('invalid_source_type')) {return { result: null, error: 'invalidSourceType' }}
-      if (errs.includes('file_too_large')) {return { result: null, error: 'fileTooLarge' }}
-      if (errs.includes('file_too_small')) {return { result: null, error: 'fileTooSmall' }}
-      if (errs.includes('invalid_file_type')) {return { result: null, error: 'unsupportedFileType' }}
-      if (errs.includes('youtube_analysis_failed')) {return { result: null, error: 'youtubeAnalysisFailed' }}
-      if (errs.includes('internal_error')) {return { result: null, error: 'internalError' }}
-      return { result: null, error: 'backend_unexpected_response' as AnalysisErrorCode }
-    }
-
-    if (!data.result) {
-      return { result: null, error: 'backend_unexpected_response' as AnalysisErrorCode }
-    }
-
-    // Normalize analysisMode if backend omits it
-    if (!data.result.analysisMode) {
-      data.result.analysisMode = data.result.decisionSource === 'preview' ? 'preview' : 'production'
-    }
-
-    return { result: data.result, error: null }
+    if (!response.ok) {return readAnalyzeResponse(response.status ?? 500, null)}
+    return readAnalyzeResponse(200, await response.json() as AnalyzeResponse)
   } catch {
-    return { result: null, error: 'backend_unreachable' as AnalysisErrorCode }
+    return fail('backend_unreachable')
   }
+}
+
+export interface SendOptions {
+  /** Bytes sent so far and the request's total size. */
+  onUploadProgress?: (loaded: number, total: number) => void
+  /** Fires once the request body has been fully sent. */
+  onUploaded?: () => void
+  signal?: AbortSignal
+}
+
+/**
+ * Same request as analyzeSource, over XMLHttpRequest so the upload can
+ * report real progress (fetch has no upload progress events).
+ */
+export const sendAnalysis = (
+  apiBaseUrl: string | undefined,
+  payload: AnalyzePayload,
+  { onUploadProgress, onUploaded, signal }: SendOptions = {},
+): Promise<AnalyzeOutcome> => {
+  const invalid = precheck(apiBaseUrl, payload)
+  if (invalid) {return Promise.resolve(invalid)}
+  if (typeof XMLHttpRequest === 'undefined') {return analyzeSource(apiBaseUrl, payload)}
+
+  return new Promise(resolve => {
+    const xhr = new XMLHttpRequest()
+    const done = (outcome: AnalyzeOutcome) => {
+      signal?.removeEventListener('abort', abort)
+      resolve(outcome)
+    }
+    const abort = () => xhr.abort()
+
+    xhr.open('POST', `${apiBaseUrl}/api/analyze`)
+    xhr.timeout = TIMEOUT_MS
+    xhr.responseType = 'json'
+    xhr.upload.onprogress = e => { if (e.lengthComputable) {onUploadProgress?.(e.loaded, e.total)} }
+    xhr.upload.onload = () => onUploaded?.()
+    xhr.onload = () => done(readAnalyzeResponse(xhr.status, xhr.response as AnalyzeResponse | null))
+    xhr.onerror = () => done(fail('backend_unreachable'))
+    xhr.ontimeout = () => done(fail('backend_unreachable'))
+    xhr.onabort = () => done(fail('cancelled'))
+
+    if (signal?.aborted) {
+      done(fail('cancelled'))
+      return
+    }
+    signal?.addEventListener('abort', abort)
+    xhr.send(buildForm(payload))
+  })
 }
