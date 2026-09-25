@@ -65,8 +65,9 @@ export const readAnalyzeResponse = (status: number, data: AnalyzeResponse | null
   if (!data) {return fail('backend_unexpected_response')}
   const warnings = data.warnings ?? []
 
-  if (data.errors && data.errors.length) {
-    const hit = ERROR_MAP.find(([code]) => data.errors!.includes(code))
+  const errors = data.errors ?? []
+  if (errors.length) {
+    const hit = ERROR_MAP.find(([code]) => errors.includes(code))
     return fail(hit ? hit[1] : 'backend_unexpected_response', warnings)
   }
   if (!data.result) {return fail('backend_unexpected_response', warnings)}
