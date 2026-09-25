@@ -94,6 +94,8 @@ export interface ModelVote {
   name: string
   probability: number
   vote: 'ai' | 'human'
+  /** false when the backend couldn't load the model and filled in a placeholder */
+  available?: boolean
 }
 
 export interface XAIExplanation {
@@ -185,3 +187,7 @@ export type AnalysisErrorCode =
   | 'backend_unreachable'
   | 'backend_unexpected_response'
   | 'youtubeAnalysisFailed'
+  | 'rateLimited'
+  | 'cancelled'
+  /** The server answered with its hash-based preview instead of running the models. */
+  | 'serverPreview'
