@@ -295,16 +295,26 @@
   },
   "aiDetection": {
     "meta": {
-      "title": "AURIS — Signal analysis for AI-generated music",
-      "description": "Measure a track from a file, a link or your microphone: spectrogram, bandwidth, spectral periodicity and dynamic range. Your file never leaves the browser.",
-      "keywords": "AURIS, AI music detection, spectrogram, audio analysis, CrownCode"
+      "title": "AURIS — AI-generated music detection",
+      "description": "Send a track to AURIS from a file, a link or your microphone: a LightGBM verdict trained on 47 features, an 11-model vote, a SHAP explanation and a spectrogram in one report.",
+      "keywords": "AURIS, AI music detection, LightGBM, SHAP, spectrogram, audio analysis, CrownCode"
     },
     "intro": {
       "eyebrow": "Sound lab · Thesis research",
-      "lead": "Drop in a track; AURIS measures it and shows, one reading at a time, how closely it resembles the traces generative audio models leave. It doesn't hand down a verdict — it tells you what it saw and why.",
-      "localNote": "Files and mic takes are measured in your browser",
-      "serverOn": "Link analysis available",
-      "serverOff": "Link analysis server offline"
+      "lead": "Send a track; AURIS runs it through its trained models and shows, one by one, what drove the verdict. The waveform and spectrogram are drawn in your browser; the verdict comes from the server."
+    },
+    "server": {
+      "label": "Model server",
+      "unknown": "Not checked",
+      "checking": "Checking…",
+      "ready": "Ready",
+      "waking": "Waking up",
+      "down": "Unreachable",
+      "wakingNote": "A free Hugging Face Space takes a minute or two to boot when it has been asleep. You can send a track now; it uploads once the server is up.",
+      "downNote": "The server isn't answering. If you send a track, only the browser measurement runs, and the report says so.",
+      "retry": "Check again",
+      "models": "Model repository",
+      "space": "Server"
     },
     "tabs": {
       "ariaLabel": "Audio source",
@@ -315,15 +325,14 @@
     "file": {
       "drop": "Drop a track here",
       "browse": "or choose one from your computer",
-      "formats": "MP3 · WAV · FLAC · M4A · OGG — up to 30 MB",
-      "privacy": "Nothing is uploaded; it's processed in this tab."
+      "formats": "MP3 · WAV · FLAC · M4A · OGG · up to 30 MB",
+      "privacy": "The file goes to the AURIS server where the models run, and isn't kept after the analysis."
     },
     "url": {
       "label": "YouTube link",
       "placeholder": "https://youtu.be/…",
-      "submit": "Measure link",
-      "hint": "The server downloads the audio and runs the same measurements. YouTube sometimes blocks downloads; if it does, upload the file instead.",
-      "needsServer": "Downloading audio from a link needs the AURIS server, which isn't connected right now. Upload the track as a file and the same measurement runs in your browser."
+      "submit": "Analyse link",
+      "hint": "The server downloads the audio from YouTube and runs the same models. YouTube blocks downloads for some videos; if it does, upload the track as a file."
     },
     "mic": {
       "start": "Record",
@@ -332,11 +341,58 @@
       "recording": "Recording",
       "take": "Microphone take"
     },
-    "phase": {
-      "decoding": "Decoding audio…",
-      "measuring": "Measuring the spectrum…",
-      "remote": "Measuring on the server…",
-      "recording": "Recording…"
+    "busy": {
+      "cancel": "Cancel analysis",
+      "locked": "An analysis is running. Cancel it first to start a new one.",
+      "elsewhere": "You can browse other pages; the analysis keeps running and the result will be here when you come back."
+    },
+    "wait": {
+      "title": "Analysing",
+      "elapsed": "Elapsed",
+      "typical": "The last {n} model analyses in this browser took {s} s on average.",
+      "stages": {
+        "waking": "Waking the server",
+        "uploading": "Uploading",
+        "processing": "Models running on the server",
+        "done": "Preparing the report"
+      },
+      "wakingNote": "If the Space was asleep, the first request waits for the container to start and load its model weights.",
+      "processingNote": "The server doesn't report progress at this stage. The steps below run in order, and the result arrives all at once.",
+      "urlNote": "The audio is downloaded from YouTube first.",
+      "pipelineTitle": "Steps on the server",
+      "pipeline": [
+        "47 features: spectral, temporal, harmonic, rhythm, timbre",
+        "Vocal analysis: pitch, vibrato, formants, breath",
+        "wav2vec2 acoustic model",
+        "CLAP audio embedding",
+        "FST comparison model (external Space)",
+        "LightGBM verdict, 11-model vote and SHAP explanation",
+        "Meta-classifier (second opinion)"
+      ],
+      "browser": "Browser measurement",
+      "browserDone": "Waveform and spectrogram ready",
+      "browserFail": "Your browser can't decode this format; the result will come from the server only."
+    },
+    "interrupted": {
+      "title": "Unfinished analysis",
+      "body": "“{label}” was still running when the page was reloaded or closed. The audio is kept in this browser.",
+      "retry": "Run it again",
+      "dismiss": "Dismiss"
+    },
+    "recent": {
+      "title": "Recent analyses",
+      "model": "Model",
+      "signal": "Browser",
+      "all": "Full history"
+    },
+    "pill": {
+      "waking": "AURIS server waking up",
+      "uploading": "AURIS uploading",
+      "processing": "AURIS models running",
+      "done": "AURIS result ready",
+      "error": "AURIS analysis didn't finish",
+      "open": "Open",
+      "dismiss": "Dismiss"
     },
     "scope": {
       "empty": "Waiting for a source",
@@ -347,27 +403,131 @@
       "cutoff": "Bandwidth",
       "play": "Play",
       "pause": "Pause",
-      "seek": "Position in track"
+      "seek": "Position in track",
+      "restored": "Saved result",
+      "noVisuals": "Opened from history; audio and visuals are kept for the latest analysis only."
     },
     "report": {
-      "title": "Synthetic trace score",
+      "eyebrow": "AURIS report",
+      "verdictAi": "Likely AI-generated",
+      "verdictHuman": "Likely made by people",
+      "probability": "AI probability",
+      "threshold": "Threshold",
+      "thresholdNote": "Decision threshold {t}: the point where LightGBM's Youden J peaked in cross-validation. Above it, the verdict is AI.",
+      "band": "Certainty",
+      "consensus": "{ai}/{n} models say AI",
+      "decidedBy": "Verdict",
+      "trained": "Trained model",
+      "signalOnly": "Browser measurement only",
+      "fallbackTitle": "This result doesn't come from the trained model",
+      "fallbackBody": "No model result came back from the server: {reason} The score below is a weighted average of seven signal readings taken in your browser with hand-set thresholds; it isn't a classifier.",
+      "retryServer": "Try the server again",
+      "signalScore": "Synthetic trace score",
       "leanHuman": "Closer to a human recording",
       "leanAi": "Closer to a generative model",
-      "scoreHint": "The score is a weighted average of the seven readings below. The thresholds are hand-tuned; this is a measurement report, not a classifier.",
-      "lossyNote": "In a lossy format (MP3, AAC…) the encoder itself cuts the high frequencies, so bandwidth was left out.",
-      "measurements": "Readings",
-      "weight": "Weight",
-      "duration": "Length",
-      "format": "Format",
-      "channels": "Channels",
-      "bpm": "Tempo",
-      "peak": "Peak",
-      "crest": "Peak/RMS",
-      "analysed": "Measured",
-      "time": "Took",
+      "votes": {
+        "title": "What the models say",
+        "lead": "Eleven models trained on the same 47 features. The bar is each model's AI probability, the tick its threshold; the number on the right is its cross-validated ROC-AUC.",
+        "best": "verdict",
+        "unavailable": "failed to load on the server"
+      },
+      "why": {
+        "title": "What drove the verdict",
+        "lead": "The features that moved LightGBM's decision most (SHAP). Bars to the right pushed towards AI, to the left towards human. z: standard deviations from the training set.",
+        "towardsAi": "Towards AI",
+        "towardsHuman": "Towards human",
+        "none": "This response has no SHAP explanation."
+      },
+      "families": {
+        "title": "Feature families",
+        "lead": "SHAP contributions of all 47 features, summed by family.",
+        "categories": {
+          "spectral": "Spectral",
+          "temporal": "Temporal",
+          "harmonic": "Harmonic",
+          "rhythm": "Rhythm",
+          "timbre": "Timbre",
+          "vocal": "Vocal",
+          "meta": "Meta",
+          "composite": "Composite",
+          "other": "Other"
+        }
+      },
+      "towers": {
+        "title": "Independent layers",
+        "lead": "Signals that run apart from the verdict; 0 leans human, 1 leans AI.",
+        "missing": "didn't run",
+        "names": {
+          "xai_ensemble": "LightGBM probability",
+          "wav2vec2": "wav2vec2 (AURIS fine-tune)",
+          "local_features": "Feature average",
+          "vocals": "Vocal score",
+          "clap": "CLAP",
+          "fst": "FST (mippia, external)"
+        },
+        "notes": {
+          "xai_ensemble": "The trained decision model",
+          "wav2vec2": "Deep model trained on raw audio",
+          "local_features": "Average of spectral, temporal and harmonic regularity; untrained",
+          "vocals": "Rule-based vocal measurements",
+          "clap": "Audio embedding; falls back to a spectral heuristic without the library",
+          "fst": "Open-source external detector"
+        }
+      },
+      "meta": {
+        "title": "Second opinion",
+        "lead": "A stacking model that combines the layer scores. It never changes the verdict; it's shown for transparency.",
+        "agrees": "Agrees with the verdict",
+        "disagrees": "Disagrees with the verdict",
+        "features": "Inputs the model weighs most"
+      },
+      "vocals": {
+        "title": "Vocals",
+        "aiScore": "Vocal AI score",
+        "pitchMean": "Mean pitch",
+        "pitchStd": "Pitch spread",
+        "vibratoRate": "Vibrato rate",
+        "vibratoExtent": "Vibrato depth",
+        "scores": {
+          "pitchStabilityScore": "Pitch stability",
+          "vibratoRegularityScore": "Vibrato regularity",
+          "formantConsistencyScore": "Formant consistency",
+          "breathPatternScore": "Breath pattern",
+          "vocalTextureScore": "Vocal texture"
+        },
+        "scoresLead": "Each score leans human at 0, AI at 1.",
+        "none": "No clear vocals found."
+      },
+      "signal": {
+        "title": "Browser readings",
+        "lead": "The same audio, measured in your browser with seven hand-tuned readings. They don't feed the verdict; they show what the sound looks like.",
+        "weight": "Weight"
+      },
+      "warnings": {
+        "title": "Server notes",
+        "clap_analysis_unavailable": "The CLAP layer was off for this run.",
+        "wav2vec2_unavailable": "The wav2vec2 model wasn't available for this run.",
+        "vocal_analysis_unavailable": "Vocal analysis didn't complete.",
+        "fst_analysis_unavailable": "The external FST model couldn't be reached.",
+        "xai_unavailable": "No LightGBM explanation was produced; the verdict came from score fusion.",
+        "meta_classifier_unavailable": "The meta-classifier didn't run.",
+        "unknown": "Server note: {code}"
+      },
+      "facts": {
+        "duration": "Length",
+        "sampleRate": "Sample rate",
+        "bitrate": "Bitrate",
+        "format": "Format",
+        "channels": "Channels",
+        "serverTime": "Server time",
+        "totalTime": "Total time",
+        "model": "Model",
+        "bpm": "Tempo",
+        "peak": "Peak"
+      },
+      "lossyNote": "In a lossy format (MP3, AAC…) the encoder itself cuts the high frequencies, so the browser readings leave bandwidth out.",
       "export": "Download JSON",
-      "again": "New track",
-      "remoteNote": "This result came from an external model:"
+      "again": "New analysis"
     },
     "measures": {
       "spectralPeriodicity": {
@@ -401,24 +561,32 @@
     },
     "method": {
       "eyebrow": "Method",
-      "title": "What is measured, and what isn't",
-      "lead": "AURIS's trained model layer (wav2vec2) is still being developed as part of a thesis. The results on this page are signal measurements only: every number is computed from the audio you provide, with nothing random or estimated.",
-      "stepsTitle": "Steps",
-      "step1": "The audio is decoded to 44.1 kHz stereo; for long tracks the middle 90 seconds are used.",
-      "step2": "A short-time Fourier transform is computed with 2048-sample windows.",
-      "step3": "Seven readings are extracted and each is placed between 0 and 1 using hand-set thresholds.",
-      "step4": "A weighted average gives the synthetic trace score, and each reading's push on that score is shown separately.",
+      "title": "How it was trained, and what it doesn't know",
+      "lead": "The decision model is a LightGBM classifier trained on {features} features from {samples} labelled tracks ({ai} AI, {human} human). The figures below come from {folds}-fold cross-validation; the weights are public on Hugging Face.",
+      "metrics": {
+        "accuracy": "Accuracy",
+        "precision": "Precision",
+        "recall": "Recall",
+        "f1": "F1",
+        "auc": "ROC-AUC",
+        "threshold": "Threshold (Youden J)"
+      },
+      "stepsTitle": "What happens in an analysis",
+      "step1": "The server decodes the audio to mono with librosa and extracts spectral, temporal, harmonic, rhythm and vocal features.",
+      "step2": "The features are scaled with the training scaler; LightGBM gives a probability and the threshold {t} sets the verdict.",
+      "step3": "The same vector goes through ten more models (the vote), and SHAP computes each feature's push on the verdict.",
+      "step4": "wav2vec2, CLAP, FST and the vocal score are reported as independent layers; a meta-classifier adds a second opinion.",
       "limitsTitle": "Limits",
-      "limit1": "Lossy compression, microphones and room acoustics distort the readings. WAV or FLAC gives the cleanest result.",
-      "limit2": "Heavily compressed or fully electronic productions can score high even when people made them.",
-      "limit3": "The score is not proof; don't use it alone to decide where a track came from."
+      "limit1": "The model knows the generators and genres in its training set; a new generator or an unusual genre can fool it.",
+      "limit2": "Heavily compressed or fully electronic productions can lean AI even when people made them. Microphone takes and lossy formats distort the features.",
+      "limit3": "Accuracy is {acc}%: roughly one track in nine is misclassified. Don't treat the result as proof on its own."
     },
     "errors": {
       "tryAgain": "Try again",
       "enterUrl": "Paste a YouTube link.",
       "invalidYouTubeUrl": "That isn't a YouTube link. It should look like youtube.com/watch?v=… or youtu.be/….",
-      "youtubeAuthenticationRequired": "YouTube asked for sign-in on this video. Try uploading the track as a file.",
-      "youtubeAnalysisFailed": "The video couldn't be downloaded. Try uploading the track as a file.",
+      "youtubeAuthenticationRequired": "YouTube asked for sign-in on this video. Upload the track as a file.",
+      "youtubeAnalysisFailed": "The server couldn't download the video. Upload the track as a file.",
       "unsupportedSource": "Only YouTube links are supported for now.",
       "missingFile": "Choose an audio file first.",
       "missingUrl": "Enter a link.",
@@ -427,13 +595,16 @@
       "fileTooLarge": "The file is over the 30 MB limit.",
       "fileTooSmall": "The file is too small.",
       "invalidFileName": "The file name is invalid.",
-      "decodeFailed": "Your browser couldn't decode this file. Convert it to WAV or MP3 and try again.",
+      "decodeFailed": "The audio couldn't be decoded and the server returned no result. Convert it to WAV or MP3 and try again.",
       "tooShort": "At least 3 seconds of audio is needed.",
       "micDenied": "Microphone access was denied. Allow it in your browser settings and try again.",
-      "backend_not_configured": "The AURIS server isn't connected, so links can't be analysed. Upload the track as a file.",
-      "backend_unreachable": "The AURIS server can't be reached. Upload the track as a file or try again later.",
+      "backend_not_configured": "No AURIS server address is set.",
+      "backend_unreachable": "The AURIS server couldn't be reached.",
       "backend_unexpected_response": "The server sent an unexpected response.",
-      "internalError": "Something went wrong. Try again."
+      "rateLimited": "Too many requests in a short time; wait a minute and try again.",
+      "cancelled": "The analysis was cancelled.",
+      "serverPreview": "The server couldn't run this audio through the models and returned only a preview, which isn't shown.",
+      "internalError": "Something went wrong on the server."
     }
   },
   "mlToolkit": {
