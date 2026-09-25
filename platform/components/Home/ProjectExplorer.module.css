@@ -135,7 +135,8 @@
   .feature li { font-size: 11px; }
   .featureActions a { font-size: 15px; }
   .specimen { top: 63%; }
-  .orbitLines { transform: translateY(12%); }
+  .specimenName { display: none; }
+  .orbitLines { top: 12%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .journey { height: auto; }
