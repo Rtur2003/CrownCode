@@ -19,7 +19,7 @@ const ShortcutsModal = lazy(() => import('@/components/KeyboardShortcuts/Shortcu
 const SearchModal = lazy(() => import('@/components/Search/SearchModal').then(m => ({ default: m.SearchModal })))
 const ExternalLinkWarning = lazy(() => import('@/components/ExternalLink/ExternalLinkWarning').then(m => ({ default: m.ExternalLinkWarning })))
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [modalsReady, setModalsReady] = useState(false)
 
@@ -30,7 +30,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   // can't be a useState lazy initializer without causing a hydration
   // mismatch — sessionStorage isn't available on the server.
   useLayoutEffect(() => {
-    if (sessionStorage.getItem('hasLoaded')) {
+    try {
+      if (sessionStorage.getItem('hasLoaded')) {
+        setIsLoading(false)
+      }
+    } catch {
       setIsLoading(false)
     }
   }, [])
@@ -62,7 +66,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [])
 
   const handleLoadingComplete = () => {
-    sessionStorage.setItem('hasLoaded', 'true')
+    try {
+      sessionStorage.setItem('hasLoaded', 'true')
+    } catch {
+      // Storage restrictions must not prevent the loading screen from closing.
+    }
     setIsLoading(false)
   }
 
@@ -76,7 +84,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       >
         <LanguageProvider>
           <ToastProvider>
-            {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
+            {router.pathname !== '/' && isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
             <Component {...pageProps} />
             <ToastContainer />
             {/* Mount modals only after first user interaction to avoid eager chunk loading */}

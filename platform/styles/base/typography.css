@@ -22,7 +22,13 @@ h1, h2, h3, h4, h5, h6 {
 
   /* Disable transform-based hover lifts on touch devices */
   @media (hover: none) and (pointer: coarse) {
-    *:hover {
+    button:hover,
+    .hover-lift:hover,
+    .hover-scale:hover,
+    .nav-link:hover,
+    .action-button:hover,
+    .hero-btn-primary:hover,
+    .hero-btn-secondary:hover {
       transform: initial !important;
     }
   }

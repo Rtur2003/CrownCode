@@ -81,6 +81,7 @@
       "noirGrain": {
         "title": "Noir & Grain - Restoran Şablonu",
         "description": "Fine-dining restoranlar için sinematik web şablonu: WebGL mürekkep geçişleri, yatay scroll sineması, mobilde story-modu ve WhatsApp rezervasyon akışı.",
+        "showroomDescription": "Mobil hikâye deneyimi ve WhatsApp rezervasyon akışı sunan sinematik restoran şablonu.",
         "status": "Aktif",
         "stats": "4 Sayfa · 60FPS",
         "features": [
@@ -107,6 +108,7 @@
       "aiMusic": {
         "title": "AURIS - AI Müzik Tespit Motoru",
         "description": "AURIS, wav2vec2 tabanlı derin öğrenme modeli ile AI üretimi müzikleri insan bestelerinden ayırt etmeyi hedefleyen araştırma platformudur. Geliştirme aşamasında.",
+        "showroomDescription": "AI üretimi müziği ayırt etmeyi araştıran, geliştirme aşamasındaki ses analizi platformu.",
         "status": "Geliştiriliyor",
         "stats": "Hedef %95+ Doğruluk",
         "features": [
@@ -118,6 +120,7 @@
       "mlToolkit": {
         "title": "ML Araştırma Araç Seti",
         "description": "Veri seti artırma, işleme ve analiz için kapsamlı makine öğrenmesi platformu. Otomatik kalite kontrolü ve araştırma kalitesinde veri pipeline'ları içerir.",
+        "showroomDescription": "Veri seti artırma, işleme ve analizi için araştırma araçları.",
         "status": "Araştırma Aktif",
         "stats": "%91.7 Kalite Oranı",
         "features": [
@@ -129,6 +132,7 @@
       "fortune": {
         "title": "Crown Fortune",
         "description": "Günlük motivasyon ve ilham kaynağı. Kraliyet temalı şans çarkı ile eğlenceli bir deneyim.",
+        "showroomDescription": "Günlük ilham ve motivasyon sunan, kraliyet temalı bir şans çarkı.",
         "status": "Aktif",
         "stats": "8 Kategori",
         "features": [
@@ -140,6 +144,7 @@
       "dreams": {
         "title": "Crown Dreams",
         "description": "Neural Rüya Günlüğü - Rüyalarınızı kaydedin, analiz edin ve bilinçaltınızı keşfedin. AI destekli analiz ve lüsid rüya takibi.",
+        "showroomDescription": "Rüyaları kaydetmek, yapay zekâyla analiz etmek ve lüsid rüyaları takip etmek için günlük.",
         "status": "Aktif",
         "stats": "%72 Lüsidlik",
         "features": [
@@ -151,6 +156,7 @@
       "commend": {
         "title": "Crown Commend",
         "description": "YouTube için AI destekli yorum üretici. Gemini AI ile akıllı, bağlamsal yorumlar oluşturun ve doğrudan YouTube'a gönderin.",
+        "showroomDescription": "YouTube videolarına Gemini ile bağlama uygun yorumlar hazırlayan araç.",
         "status": "Aktif",
         "stats": "5 Dil Desteği",
         "features": [
@@ -162,6 +168,7 @@
       "vote": {
         "title": "Crown Vote - VOTRYX",
         "description": "DistroKid Spotlight için Selenium tabanlı otomatik oylama masaüstü uygulaması. Paralel işlem ve sistem tepsisi desteği.",
+        "showroomDescription": "DistroKid Spotlight oylamasını otomatikleştiren, Selenium tabanlı masaüstü uygulaması.",
         "status": "Aktif",
         "stats": "Masaüstü App",
         "features": [
@@ -173,6 +180,7 @@
       "kognita": {
         "title": "Kognita",
         "description": "Dijital ayak izinizi anlamanıza yardımcı olan, sessiz ve yerel öncelikli bir masaüstü aktivite takipçisi. Veriler yalnızca cihazınızda kalır.",
+        "showroomDescription": "Verileri cihazınızda tutarak masaüstü etkinliğinizi izleyen takip aracı.",
         "status": "GitHub'da",
         "stats": "Gizlilik Öncelikli"
       }
@@ -222,7 +230,7 @@
     }
   },
   "footer": {
-    "description": "AURIS - AI müzik tespiti ve ses analizi için profesyonel platform. wav2vec2 tabanlı derin öğrenme teknolojisi ile gelişmiş müzik analizi ve streaming platform entegrasyonu sunan yenilikçi çözüm.",
+    "description": "Hasan Arthur Altuntaş’ın ses, veri ve web üzerine geliştirdiği projeler.",
     "community": {
       "title": "Topluluk",
       "stars": "GitHub Stars",

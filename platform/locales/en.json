@@ -81,6 +81,7 @@
       "noirGrain": {
         "title": "Noir & Grain - Restaurant Template",
         "description": "Cinematic web template for fine-dining restaurants: WebGL ink transitions, horizontal scroll cinema, mobile story-mode and a WhatsApp reservation flow.",
+        "showroomDescription": "A cinematic restaurant template with mobile stories and a WhatsApp reservation flow.",
         "status": "Active",
         "stats": "4 Pages · 60FPS",
         "features": [
@@ -107,6 +108,7 @@
       "aiMusic": {
         "title": "AURIS - AI Music Detection Engine",
         "description": "AURIS is a research platform aiming to distinguish AI-generated music from human compositions using wav2vec2-based deep learning model. Currently in development.",
+        "showroomDescription": "An audio research platform in development, exploring how to distinguish AI-generated music.",
         "status": "In Development",
         "stats": "Target 95%+ Accuracy",
         "features": [
@@ -118,6 +120,7 @@
       "mlToolkit": {
         "title": "ML Research Toolkit",
         "description": "Comprehensive machine learning platform for dataset augmentation, processing, and analysis. Features automated quality control and research-grade data pipelines.",
+        "showroomDescription": "Research tools for dataset augmentation, processing, and analysis.",
         "status": "Research Active",
         "stats": "91.7% Quality Rate",
         "features": [
@@ -129,6 +132,7 @@
       "fortune": {
         "title": "Crown Fortune",
         "description": "Daily motivation and inspiration source. A fun experience with a royal-themed fortune wheel.",
+        "showroomDescription": "A royal-themed fortune wheel for daily inspiration and motivation.",
         "status": "Active",
         "stats": "8 Categories",
         "features": [
@@ -140,6 +144,7 @@
       "dreams": {
         "title": "Crown Dreams",
         "description": "Neural Dream Journal - Record your dreams, analyze them, and explore your subconscious. AI-powered analysis and lucid dream tracking.",
+        "showroomDescription": "A journal for recording dreams, exploring AI analysis, and tracking lucid dreams.",
         "status": "Active",
         "stats": "72% Lucidity",
         "features": [
@@ -151,6 +156,7 @@
       "commend": {
         "title": "Crown Commend",
         "description": "AI-powered YouTube comment generator. Create intelligent, contextual comments using Gemini AI and post directly to YouTube.",
+        "showroomDescription": "A tool that uses Gemini to draft contextual comments for YouTube videos.",
         "status": "Active",
         "stats": "5 Languages",
         "features": [
@@ -162,6 +168,7 @@
       "vote": {
         "title": "Crown Vote - VOTRYX",
         "description": "Selenium-based automated voting desktop application for DistroKid Spotlight. Parallel processing and system tray support.",
+        "showroomDescription": "A Selenium desktop application that automates voting on DistroKid Spotlight.",
         "status": "Active",
         "stats": "Desktop App",
         "features": [
@@ -173,6 +180,7 @@
       "kognita": {
         "title": "Kognita",
         "description": "A silent, local-first desktop activity tracker that helps you understand your digital footprint. Your data never leaves your machine.",
+        "showroomDescription": "A desktop activity tracker that keeps your data on your device.",
         "status": "On GitHub",
         "stats": "Privacy First"
       }
@@ -222,7 +230,7 @@
     }
   },
   "footer": {
-    "description": "AURIS - Professional platform for AI music detection and audio analysis. Advanced wav2vec2-based deep learning technology offering innovative solutions for music analysis and streaming platform integration.",
+    "description": "Projects by Hasan Arthur Altuntaş exploring audio, data, and the web.",
     "community": {
       "title": "Community",
       "stars": "GitHub Stars",

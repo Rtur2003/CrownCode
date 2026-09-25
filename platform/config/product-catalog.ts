@@ -205,6 +205,7 @@ export function resolveProduct(
 ): {
   title: string
   description: string
+  showroomDescription: string
   status: string
   stats: string
   features: string[]
@@ -213,6 +214,7 @@ export function resolveProduct(
   return {
     title: item?.title ?? entry.id,
     description: item?.description ?? '',
+    showroomDescription: item?.showroomDescription ?? item?.description ?? '',
     status: item?.status ?? '',
     stats: item?.stats ?? '',
     features: item?.features ?? [],

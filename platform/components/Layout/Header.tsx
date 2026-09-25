@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import { Github, Menu, X, ChevronDown, Zap, MessageSquare, Vote, Sparkles } from 'lucide-react'
 import { LanguageSelector } from '@/components/Navigation/LanguageSelector'
 import { useLanguage } from '@/context/LanguageContext'
@@ -22,11 +22,30 @@ export const Header: React.FC = () => {
   const { t } = useLanguage()
   const router = useRouter()
   const pathname = router.pathname
+  const reducedMotion = useReducedMotion()
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    // Observe the threshold without reading layout during every scroll event.
+    const sentinel = document.createElement('span')
+    sentinel.setAttribute('aria-hidden', 'true')
+    Object.assign(sentinel.style, {
+      position: 'absolute', top: '50px', left: '0',
+      width: '1px', height: '1px', pointerEvents: 'none',
+    })
+    document.body.appendChild(sentinel)
+    let wasScrolled = false
+    const observer = new IntersectionObserver(([entry]) => {
+      const scrolled = entry.boundingClientRect.top < 0
+      if (scrolled !== wasScrolled) {
+        wasScrolled = scrolled
+        setIsScrolled(scrolled)
+      }
+    }, { threshold: [0, 1] })
+    observer.observe(sentinel)
+    return () => {
+      observer.disconnect()
+      sentinel.remove()
+    }
   }, [])
 
   useEffect(() => {
@@ -42,16 +61,16 @@ export const Header: React.FC = () => {
   useEffect(() => {
     if (pathname !== '/' || window.location.hash !== '#products') {return}
     const timer = setTimeout(() => {
-      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
+      document.getElementById('products')?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth' })
       window.history.replaceState(null, '', '/')
     }, 100)
     return () => clearTimeout(timer)
-  }, [pathname])
+  }, [pathname, reducedMotion])
 
   const scrollToProducts = () => {
     setIsMobileMenuOpen(false)
     if (pathname === '/') {
-      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
+      document.getElementById('products')?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth' })
     } else {
       router.push('/#products')
     }
