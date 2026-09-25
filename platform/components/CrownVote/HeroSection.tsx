@@ -19,7 +19,7 @@ export const HeroSection: React.FC = () => {
       </h1>
 
       <p className={styles['vote-subtitle']}>
-        {t.crownVote?.header?.subtitle || 'Automated Voting Intelligence for DistroKid Spotlight'}
+        {t.crownVote?.header?.subtitle || 'A Windows app that automates DistroKid Spotlight voting'}
       </p>
 
       <div className={styles['hero-image']}>

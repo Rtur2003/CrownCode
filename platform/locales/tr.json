@@ -42,7 +42,9 @@
     "dreams": "Rüya Günlüğü",
     "commend": "AI Yorum",
     "vote": "Crown Vote",
-    "status": "Durum"
+    "status": "Durum",
+    "music": "Müzik",
+    "atlas": "Hepsini atlasta gör"
   },
   "hero": {
     "badge": "Açık Kaynak",
@@ -50,56 +52,56 @@
       "main": "CrownCode",
       "accent": "Platform"
     },
-    "subtitle": "Yapay zeka destekli araçlar, yaratıcı uygulamalar ve araştırma projeleri. Modern teknolojilerle inşa edilmiş, gerçek dünya etkisi için tasarlanmış.",
+    "subtitle": "Ses, veri ve web üzerine araçlar, küçük uygulamalar ve araştırma projeleri. Çoğunun kaynak kodu GitHub'da açık.",
     "cta": {
       "explore": "Projeleri Keşfet",
       "github": "GitHub'da Görüntüle"
     },
     "features": {
       "modern": "Açık Kaynak",
-      "accuracy": "Yapay Zeka",
+      "accuracy": "Yapay Zekâ",
       "github": "Canlı Demolar"
     },
     "orb": {
       "title": "CrownCode",
       "sub": "Platform"
     },
-    "scroll": "Daha Fazlasını Keşfet"
+    "scroll": "Projelere geç"
   },
   "products": {
     "badge": "Projeler",
-    "title": "Araştırma ve",
-    "titleAccent": "Ürünlerimiz",
-    "subtitle": "Yapay zeka destekli ses analizinden yaratıcı araçlara kadar açık kaynaklı projeler. Modern teknolojilerle inşa edilmiş, gerçek dünya kullanımı için tasarlanmış.",
+    "title": "Projeler ve",
+    "titleAccent": "Araştırmalar",
+    "subtitle": "Bir ses analizi araştırmasından restoran şablonuna, masaüstü araçlarından küçük web uygulamalarına kadar. Her projenin kendi sayfası ya da kaynak deposu var.",
     "featuredLabel": "Öne Çıkan",
     "cta": {
-      "title": "Daha Fazla Proje Yolda",
-      "description": "GitHub'da tüm projelerimizi inceleyebilir, katkıda bulunabilirsiniz",
+      "title": "Diğer projeler GitHub'da",
+      "description": "Kaynak kodlar, sürümler ve issue'lar orada",
       "button": "GitHub'da Görüntüle"
     },
     "items": {
       "noirGrain": {
         "title": "Noir & Grain - Restoran Şablonu",
-        "description": "Fine-dining restoranlar için sinematik web şablonu: WebGL mürekkep geçişleri, yatay scroll sineması, mobilde story-modu ve WhatsApp rezervasyon akışı.",
+        "description": "Fine-dining restoranları için hazırlanmış bir site şablonu. Masaüstünde yatay kaydırılan sahneler ve WebGL mürekkep geçişleri, mobilde hikâye biçiminde ayrı bir arayüz, rezervasyon için WhatsApp akışı.",
         "showroomDescription": "Mobil hikâye deneyimi ve WhatsApp rezervasyon akışı sunan sinematik restoran şablonu.",
         "status": "Aktif",
-        "stats": "4 Sayfa · 60FPS",
+        "stats": "4 Sayfa · React 19",
         "features": [
           "React 19 + GSAP",
           "WebGL Shader",
           "Mobil Story-Modu"
         ],
         "page": {
-          "subtitle": "Karanlık, tahıl ve ateş — satışa hazır vitrin şablonu",
+          "subtitle": "Restoranlar için koyu tonlu, film grenli bir site şablonu",
           "galleryTitle": "Sayfalar",
           "galleryItems": {
-            "hero": "Sinematik Kapak",
-            "menu": "Tam Ekran Menü Sahnesi",
-            "reservation": "Canlı Not Kartlı Rezervasyon",
-            "story": "Dergi Forması Hikaye"
+            "hero": "Açılış sayfası",
+            "menu": "Tam ekran menü",
+            "reservation": "Rezervasyon formu",
+            "story": "Dergi düzeninde hikâye"
           },
-          "aboutTitle": "Ne Sunuyor?",
-          "about": "Müşteriye 'metninizi ve görsellerinizi verin, size böyle bir sayfa tasarlayalım' diyebileceğiniz örnek ürün. Masaüstünde yatay scroll sineması ve WebGL mürekkep geçişleri; mobilde tamamen ayrı, uygulama hissi veren story-modu deneyimi. Rezervasyon talepleri backend'siz WhatsApp akışıyla, istenirse CrownCode API'si üzerinden admin masa paneliyle yönetilir.",
+          "aboutTitle": "Nedir?",
+          "about": "Bir restorana 'metinlerinizi ve fotoğraflarınızı gönderin, sitenizi böyle kuralım' diyebilmek için hazırlanmış örnek bir iş. Masaüstünde sahneler yatay kayıyor, aralarda WebGL mürekkep geçişleri var. Mobilde ise uygulama gibi çalışan, hikâye biçiminde ayrı bir arayüz açılıyor. Rezervasyon talepleri sunucu gerekmeden WhatsApp'a düşüyor; istenirse CrownCode API'si ve bir masa yönetim paneliyle de yönetilebiliyor.",
           "techTitle": "Teknoloji",
           "runTitle": "Yerelde Çalıştır",
           "sourceNote": "Kaynak: templates/noir-grain"
@@ -107,70 +109,70 @@
       },
       "aiMusic": {
         "title": "AURIS - AI Müzik Tespit Motoru",
-        "description": "AURIS, wav2vec2 tabanlı derin öğrenme modeli ile AI üretimi müzikleri insan bestelerinden ayırt etmeyi hedefleyen araştırma platformudur. Geliştirme aşamasında.",
-        "showroomDescription": "AI üretimi müziği ayırt etmeyi araştıran, geliştirme aşamasındaki ses analizi platformu.",
+        "description": "Bir şarkının yapay zekâyla mı yoksa insan eliyle mi üretildiğini ayırt etmeye çalışan bir tez araştırması. Model wav2vec2 üzerine kuruluyor ve hâlâ geliştirme aşamasında.",
+        "showroomDescription": "Yapay zekâyla üretilmiş müziği ayırt etmeye çalışan, geliştirme aşamasındaki bir tez araştırması.",
         "status": "Geliştiriliyor",
-        "stats": "Hedef %95+ Doğruluk",
+        "stats": "Tez araştırması · Web",
         "features": [
-          "wav2vec2 Mimarisi",
-          "Transfer Öğrenme",
-          "AURIS Pipeline"
+          "wav2vec2",
+          "Transfer öğrenme",
+          "Dosya · Bağlantı · Mikrofon"
         ]
       },
       "mlToolkit": {
-        "title": "ML Araştırma Araç Seti",
-        "description": "Veri seti artırma, işleme ve analiz için kapsamlı makine öğrenmesi platformu. Otomatik kalite kontrolü ve araştırma kalitesinde veri pipeline'ları içerir.",
-        "showroomDescription": "Veri seti artırma, işleme ve analizi için araştırma araçları.",
-        "status": "Araştırma Aktif",
-        "stats": "%91.7 Kalite Oranı",
+        "title": "ML Araç Seti",
+        "description": "Ses veri setleri için araçlar. Dosyaları formatlar arasında dönüştürür; perde, hız ve gürültüyle oynayarak yeni örnekler üretir; süre, tempo ve ton gibi etiketleri dosyadan çıkarır.",
+        "showroomDescription": "Ses veri setlerini dönüştürmek, çoğaltmak ve etiketlemek için araçlar.",
+        "status": "Deneysel",
+        "stats": "Web · Ses veri setleri",
         "features": [
-          "Veri Seti İşleme",
-          "Kalite Kontrolü",
-          "Araştırma Analitiği"
+          "Format dönüştürme",
+          "Veri artırma",
+          "Otomatik etiketleme"
         ]
       },
       "fortune": {
         "title": "Crown Fortune",
-        "description": "Günlük motivasyon ve ilham kaynağı. Kraliyet temalı şans çarkı ile eğlenceli bir deneyim.",
-        "showroomDescription": "Günlük ilham ve motivasyon sunan, kraliyet temalı bir şans çarkı.",
+        "description": "Her gece yarısı yenilenen bir şans çarkı. Çarkı çevir, 22 kartlık desteden kartını aç, günün mesajını oku. Tamamen eğlence amaçlı.",
+        "showroomDescription": "Her gün yenilenen, 22 kartlık desteyle çalışan bir şans çarkı.",
         "status": "Aktif",
-        "stats": "8 Kategori",
+        "stats": "5 Kategori · 22 Kart",
         "features": [
           "Şans Çarkı",
-          "Motivasyon",
-          "Günlük İlham"
+          "Günün Kartı",
+          "Ay Evresi"
         ]
       },
       "dreams": {
         "title": "Crown Dreams",
-        "description": "Neural Rüya Günlüğü - Rüyalarınızı kaydedin, analiz edin ve bilinçaltınızı keşfedin. AI destekli analiz ve lüsid rüya takibi.",
+        "description": "Rüyanı yaz, Gemini içindeki duyguları, temaları ve sembolleri çıkarsın. Günlük ve lüsid rüya takibi şimdilik örnek verilerle gösteriliyor.",
         "showroomDescription": "Rüyaları kaydetmek, yapay zekâyla analiz etmek ve lüsid rüyaları takip etmek için günlük.",
         "status": "Aktif",
-        "stats": "%72 Lüsidlik",
+        "stats": "Web · Gemini ile analiz",
         "features": [
           "Rüya Günlüğü",
-          "AI Analizi",
-          "Lüsid Takip"
+          "Gemini Analizi",
+          "Lüsid Rüya Takibi"
         ]
       },
       "commend": {
         "title": "Crown Commend",
-        "description": "YouTube için AI destekli yorum üretici. Gemini AI ile akıllı, bağlamsal yorumlar oluşturun ve doğrudan YouTube'a gönderin.",
+        "description": "Bir YouTube videosunun konusuna ve varsa altyazılarına bakıp Gemini ile yorum taslağı hazırlar. Beğendiğin yorumu buradan doğrudan YouTube'a gönderebilirsin.",
         "showroomDescription": "YouTube videolarına Gemini ile bağlama uygun yorumlar hazırlayan araç.",
         "status": "Aktif",
-        "stats": "5 Dil Desteği",
+        "stats": "Web · 5 dil",
         "features": [
-          "AI Yorumlar",
+          "Gemini",
           "YouTube API",
           "Çoklu Dil"
         ]
       },
       "vote": {
         "title": "Crown Vote - VOTRYX",
-        "description": "DistroKid Spotlight için Selenium tabanlı otomatik oylama masaüstü uygulaması. Paralel işlem ve sistem tepsisi desteği.",
+        "description": "DistroKid Spotlight oylamalarını Chrome üzerinden otomatik yapan bir Windows uygulaması. Aynı anda birkaç tarayıcı penceresiyle çalışabiliyor ve arka planda sistem tepsisinde bekliyor.",
         "showroomDescription": "DistroKid Spotlight oylamasını otomatikleştiren, Selenium tabanlı masaüstü uygulaması.",
         "status": "Aktif",
-        "stats": "Masaüstü App",
+        "stats": "Masaüstü · Windows",
         "features": [
           "Selenium Otomasyon",
           "Paralel İşlem",
@@ -179,10 +181,10 @@
       },
       "kognita": {
         "title": "Kognita",
-        "description": "Dijital ayak izinizi anlamanıza yardımcı olan, sessiz ve yerel öncelikli bir masaüstü aktivite takipçisi. Veriler yalnızca cihazınızda kalır.",
+        "description": "Bilgisayardaki etkinliğini arka planda sessizce kaydeden bir masaüstü takipçisi. Kayıtlar yalnızca senin cihazında kalır.",
         "showroomDescription": "Verileri cihazınızda tutarak masaüstü etkinliğinizi izleyen takip aracı.",
         "status": "GitHub'da",
-        "stats": "Gizlilik Öncelikli"
+        "stats": "Masaüstü · Yerel veri"
       }
     }
   },
@@ -286,207 +288,157 @@
       "copyright": "CrownCode. Tüm hakları saklıdır.",
       "privacy": "Gizlilik Politikası",
       "terms": "Kullanım Koşulları",
-      "madeWith": "Made with",
-      "by": "by"
+      "madeWith": "Sevgiyle yapıldı",
+      "by": "·"
     }
   },
   "aiDetection": {
     "meta": {
-      "title": "AURIS — Yapay Zekâ Müzik Tespiti",
-      "description": "AURIS, bir şarkının yapay zekâyla üretilip üretilmediğini dosya, bağlantı ya da mikrofondan inceleyen bir tez araştırması. Model kapalıyken önizleme sunar.",
-      "keywords": "AURIS, AI müzik tespiti, ses analizi, mikrofon, YouTube, CrownCode"
+      "title": "AURIS — Yapay zekâ müziği için sinyal analizi",
+      "description": "Bir şarkıyı dosyadan, bağlantıdan ya da mikrofondan ölç: spektrogram, bant sınırı, spektral periyodiklik ve dinamik aralık. Dosyan tarayıcıdan çıkmaz.",
+      "keywords": "AURIS, yapay zekâ müzik tespiti, spektrogram, ses analizi, CrownCode"
     },
-    "header": {
-      "badge": "AURIS",
-      "title": "AURIS ile AI Müzik Tespiti",
-      "subtitle": "AURIS - dosya, URL ve canlı mikrofon desteği; backend entegrasyonları opsiyonel, önizleme güvenli yedektir."
-    },
-    "hero": {
-      "accent": "AI Müzik Tespiti",
-      "description": "Yapay zeka ile üretilmiş müzikleri derin ses analizi ile tespit edin. Dosya yükleyin, URL yapıştırın veya canlı mikrofondan kaydedin — gerisini AURIS halletsin.",
-      "featureDeep": "Derin Analiz",
-      "featureMulti": "Çoklu Kaynak",
-      "cta": "Analize Başla",
-      "scroll": "Keşfet",
-      "scrollLabel": "Tespit aracına ilerle"
-    },
-    "howItWorks": {
-      "label": "Nasıl Çalışır",
-      "title": "Tespit Hattı",
-      "subtitle": "Ses kaynağından AI kararına — dört adımda.",
-      "step1Title": "Kaynağını Seç",
-      "step1Desc": "Dosya yükle, URL yapıştır ya da mikrofondan canlı kaydet.",
-      "step2Title": "Ses Hazırlansın",
-      "step2Desc": "AURIS örnekleri yeniden örnekleyip analize hazırlar.",
-      "step3Title": "AI Analizi",
-      "step3Desc": "wav2vec2 modeli ile derin sinir ağı analizi.",
-      "step4Title": "Sonuçları Al",
-      "step4Desc": "Güven skoru, ses özellikleri ve detaylı değerlendirme."
-    },
-    "warning": {
-      "title": "AURIS Önizleme Modu",
-      "currentStatus": "Mevcut Durum:",
-      "currentStatusText": "AURIS model çıktısı opsiyonel ve offline olabilir.",
-      "analysisResults": "Analiz Sonuçları:",
-      "analysisResultsText": "Önizleme sonuçları URL tabanlı ve deterministiktir.",
-      "plannedImplementation": "Planlanan Uygulama:",
-      "plannedImplementationText": "AURIS - PyTorch + wav2vec2 modeli ile backend AI entegrasyonu (2025 Q2)."
+    "intro": {
+      "eyebrow": "Ses laboratuvarı · Tez araştırması",
+      "lead": "Bir parça yükle; AURIS onu ölçer ve üretken ses modellerinin bıraktığı izlere ne kadar benzediğini tek tek gösterir. Karar vermez, neyi neden gördüğünü söyler.",
+      "localNote": "Dosya ve mikrofon tarayıcında ölçülür",
+      "serverOn": "Bağlantı analizi açık",
+      "serverOff": "Bağlantı analizi için sunucu kapalı"
     },
     "tabs": {
-      "ariaLabel": "Analiz kaynağı",
+      "ariaLabel": "Ses kaynağı",
       "file": "Dosya",
-      "url": "URL",
+      "url": "Bağlantı",
       "mic": "Mikrofon"
     },
-    "mic": {
-      "title": "Mikrofon Kaydı",
-      "hint": "Bir ses çal ve mikrofona tut. Kayıt otomatik 30 saniyede durur.",
-      "start": "Kaydı başlat",
-      "stop": "Durdur ve analiz et",
-      "recording": "Kaydediliyor…",
-      "permissionDenied": "Mikrofon izni reddedildi. Tarayıcı ayarlarından izin verip tekrar dene."
-    },
-    "upload": {
-      "title": "Ses Dosyası Yükle",
-      "dropHere": "Ses dosyanızı buraya bırakın",
-      "orClick": "veya tıklayıp seçin",
-      "supported": "Desteklenen: MP3, WAV, FLAC, M4A (maks 30MB / ~6 dk)",
-      "analyzeButton": "Dosyayı Analiz Et",
-      "analyzing": "Analiz Ediliyor..."
+    "file": {
+      "drop": "Parçayı buraya bırak",
+      "browse": "ya da bilgisayarından seç",
+      "formats": "MP3 · WAV · FLAC · M4A · OGG — en fazla 30 MB",
+      "privacy": "Dosya yüklenmez, bu sekmede işlenir."
     },
     "url": {
-      "title": "YouTube Bağlantısını Analiz Et",
-      "placeholder": "YouTube linki yapıştırın (youtube.com veya youtu.be)...",
-      "supportedPlatforms": "Girdi seçenekleri:",
-      "sources": {
-        "youtube": "YouTube",
-        "upload": "Dosya yükleme",
-        "spotify": "Spotify (yakında)",
-        "appleMusic": "Apple Music (yakında)"
-      },
-      "analyzeButton": "Bağlantıyı İşle",
-      "analyzing": "İşleniyor...",
-      "botProtectionNotice": "YouTube bot koruması aktif olabilir. URL analizi başarısız olursa lütfen Dosya Yükleme veya Mikrofon sekmesini kullanın — aynı sonucu verir."
+      "label": "YouTube bağlantısı",
+      "placeholder": "https://youtu.be/…",
+      "submit": "Bağlantıyı ölç",
+      "hint": "Ses sunucuda indirilir ve aynı ölçümlerden geçer. YouTube bazen indirmeyi engeller; olursa dosyayı yükle.",
+      "needsServer": "Bağlantıdan ses indirmek için AURIS sunucusu gerekiyor ve şu an bağlı değil. Parçayı dosya olarak yüklersen aynı ölçüm tarayıcında yapılır."
     },
-    "pipeline": {
-      "title": "AURIS Pipeline",
-      "items": {
-        "download": "Ses alma",
-        "musicAi": "AURIS çıkarım",
-        "sesAnalizi": "Ses-Analizi raporu",
-        "preview": "Önizleme yedeği"
-      },
-      "tags": {
-        "ytDlp": "yt-dlp",
-        "optional": "opsiyonel",
-        "always": "her zaman"
-      },
-      "note": "AURIS model yoksa önizleme modu her zaman kullanılır."
+    "mic": {
+      "start": "Kaydet",
+      "stop": "Durdur",
+      "hint": "Parçayı hoparlörden çal, telefonu ya da bilgisayarı yakın tut. 30 saniyede kendiliğinden durur. Oda ve mikrofon sonucu etkiler.",
+      "recording": "Kaydediliyor",
+      "take": "Mikrofon kaydı"
     },
-    "processing": {
-      "title": "Analiz Devam Ediyor...",
-      "subtitle": "Kaynak doğrulanıyor ve analiz akışı hazırlanıyor.",
-      "steps": {
-        "validating": "Kaynak Doğrulama",
-        "downloading": "Ses Hazırlama",
-        "analyzing": "Sinyal Analizi",
-        "complete": "Rapor Tamamlama"
-      }
+    "phase": {
+      "decoding": "Ses çözülüyor…",
+      "measuring": "Spektrum ölçülüyor…",
+      "remote": "Sunucuda ölçülüyor…",
+      "recording": "Kaydediliyor…"
     },
-    "error": {
-      "title": "Analiz Hatası",
-      "tryAgain": "Tekrar Dene"
+    "scope": {
+      "empty": "Kaynak bekleniyor",
+      "idle": "Bir parça seçtiğinde dalga formu ve spektrogram burada çizilir.",
+      "waveform": "Dalga formu",
+      "spectrogram": "Spektrogram · 40 Hz – 20 kHz",
+      "residual": "Yüksek bant dalgalanması · 4 kHz üstü",
+      "cutoff": "Bant sınırı",
+      "play": "Çal",
+      "pause": "Duraklat",
+      "seek": "Parçada konum"
     },
-    "result": {
-      "aiDetected": "AI Üretimi Müzik Tespit Edildi",
-      "humanDetected": "İnsan Bestesi Müzik",
-      "confidence": "Güven",
-      "confidenceLabel": "güven",
-      "model": "Model",
-      "processingTime": "İşlem Süresi",
-      "sampleRate": "Örnekleme Hızı",
+    "report": {
+      "title": "Sentetik iz skoru",
+      "leanHuman": "İnsan kaydına yakın",
+      "leanAi": "Üretken modele yakın",
+      "scoreHint": "Skor, aşağıdaki yedi ölçümün ağırlıklı ortalaması. Eşikler elle ayarlandı; bu bir sınıflandırıcı değil, bir ölçüm raporu.",
+      "lossyNote": "Kayıplı formatta (MP3, AAC…) kodlayıcının kendisi yüksek frekansları keser, bu yüzden bant sınırı hesaba katılmadı.",
+      "measurements": "Ölçümler",
+      "weight": "Ağırlık",
       "duration": "Süre",
       "format": "Format",
-      "analysisDetails": "Analiz Detayları",
-      "exportReport": "Raporu Dışarı Aktar",
-      "analyzeAnother": "Başka Analiz Et",
-      "spotifyTrack": "Spotify Parçası",
-      "decisionSource": "Karar Kaynağı",
-      "previewMode": "Önizleme Modu",
-      "audioFeatureAnalysis": "Ses Özellik Analizi",
-      "multiSignalAnalysis": "Çoklu Sinyal Analizi",
-      "vocalAnalysis": "Vokal Analizi",
-      "noVocalsDetected": "Bu parçada vokal tespit edilmedi",
-      "vocalConfidence": "vokal güveni",
-      "showDetails": "Teknik Detayları Göster",
-      "hideDetails": "Detayları Gizle",
-      "keyDecisionFactors": "Temel Karar Faktörleri",
-      "spectralRegularity": "Spektral Düzenlilik",
-      "temporalPatterns": "Zamansal Örüntüler",
-      "harmonicStructure": "Harmonik Yapı",
-      "vocalAiScore": "Vokal AI Skoru",
-      "pitchStability": "Perde Kararlılığı",
-      "vibratoRegularity": "Vibrato Düzenliliği",
-      "formantConsistency": "Formant Tutarlılığı",
-      "breathPattern": "Nefes Örüntüsü",
-      "vocalTexture": "Vokal Dokusu",
-      "towers": {
-        "wav2vec2": "wav2vec2 Derin Öğrenme",
-        "localFeatures": "Spektral Analiz",
-        "vocals": "Vokal Analizi",
-        "clap": "CLAP Gömmeleri",
-        "fst": "FST Dönüştürücü"
+      "channels": "Kanal",
+      "bpm": "Tempo",
+      "peak": "Tepe",
+      "crest": "Tepe/RMS",
+      "analysed": "Ölçülen",
+      "time": "İşlem",
+      "export": "JSON indir",
+      "again": "Yeni parça",
+      "remoteNote": "Sonuç harici modelden geldi:"
+    },
+    "measures": {
+      "spectralPeriodicity": {
+        "label": "Spektral periyodiklik",
+        "desc": "4 kHz üstünde zamanla değişmeyen, eşit aralıklı tepeler. Sinir ağı çözücüleri sesi büyütürken bu ızgarayı bırakabilir; müzikteki armonikler ise notayla birlikte kayar."
       },
-      "sources": {
-        "musicAi": "AURIS",
-        "sesAnalizi": "Ses-Analizi",
-        "preview": "Önizleme"
+      "bandwidthCutoff": {
+        "label": "Bant sınırı",
+        "desc": "Enerjinin kesildiği frekans. Birçok üretici 16 kHz civarında keser; stüdyo kayıtları genelde 20 kHz'e kadar uzanır."
       },
-      "videoId": "Video ID",
-      "normalizedUrl": "Normalize URL",
-      "fileName": "Dosya Adı",
-      "fileSize": "Dosya Boyutu",
-      "fileFormat": "Dosya Formatı"
+      "flatnessVariation": {
+        "label": "Spektral düzlük değişimi",
+        "desc": "Tonal ve gürültülü anlar arasındaki gidiş geliş. Çok az değişim, dokunun baştan sona aynı kaldığını gösterir."
+      },
+      "centroidVariation": {
+        "label": "Parlaklık değişimi",
+        "desc": "Spektral ağırlık merkezinin parça boyunca ne kadar oynadığı. Canlı çalımda enstrümanlar girip çıktıkça belirgin biçimde değişir."
+      },
+      "loudnessRange": {
+        "label": "Dinamik aralık",
+        "desc": "Kısa süreli ses seviyesinin yayılımı (LRA benzeri). Çok dar aralık yoğun sıkıştırmaya işaret eder; modern masterlarda da görülür."
+      },
+      "tempoDrift": {
+        "label": "Tempo kayması",
+        "desc": "Parçanın dört bölümündeki tempo farkı. İnsan çalımı hafifçe kayar; ızgaraya oturmuş prodüksiyonlarda da kayma olmayabilir."
+      },
+      "stereoCorrelation": {
+        "label": "Stereo korelasyon",
+        "desc": "Sol ve sağ kanalın benzerliği. Neredeyse mono bir görüntü, bazı üreticilerde sık görülür."
+      }
+    },
+    "method": {
+      "eyebrow": "Yöntem",
+      "title": "Ne ölçülüyor, ne ölçülmüyor",
+      "lead": "AURIS'in eğitilmiş model katmanı (wav2vec2) tez kapsamında hâlâ geliştiriliyor. Bu sayfadaki sonuçlar yalnızca sinyal ölçümüdür: her sayı yüklediğin sesten hesaplanır, rastgele ya da tahmini bir değer yoktur.",
+      "stepsTitle": "Adımlar",
+      "step1": "Ses 44.1 kHz stereo olarak çözülür; uzun parçalarda ortadaki 90 saniye alınır.",
+      "step2": "2048 örneklik pencerelerle kısa zamanlı Fourier dönüşümü hesaplanır.",
+      "step3": "Yedi ölçüm çıkarılır ve her biri elle belirlenmiş eşiklerle 0–1 arasına yerleştirilir.",
+      "step4": "Ağırlıklı ortalama sentetik iz skorunu verir; hangi ölçümün skoru ne yöne ittiği ayrıca gösterilir.",
+      "limitsTitle": "Sınırlar",
+      "limit1": "Kayıplı sıkıştırma, mikrofon ve oda akustiği ölçümleri bozar. En temiz sonuç WAV veya FLAC ile alınır.",
+      "limit2": "Yoğun sıkıştırılmış ya da tamamen elektronik prodüksiyonlar insan eliyle yapılmış olsa da yüksek skor alabilir.",
+      "limit3": "Skor bir kanıt değildir; bir parçanın kaynağı hakkında karar vermek için tek başına kullanma."
     },
     "errors": {
-      "enterUrl": "Lütfen bir YouTube URL'si girin.",
-      "invalidYouTubeUrl": "Geçersiz YouTube URL'si. https://www.youtube.com/watch?v=... veya https://youtu.be/... kullanın.",
-      "youtubeAuthenticationRequired": "YouTube oturum doğrulaması istedi. Tarayıcı çerezleri veya cookies.txt dosyası ayarlayıp tekrar deneyin.",
-      "unsupportedSource": "Bu kaynak türü henüz desteklenmiyor. YouTube deneyin veya bir ses dosyası yükleyin.",
-      "missingFile": "Lütfen analiz için bir ses dosyası seçin.",
-      "missingUrl": "Lütfen bir URL girin.",
-      "invalidSourceType": "Geçersiz kaynak türü. Dosya, URL veya mikrofon seçeneklerinden birini kullanın.",
-      "unsupportedFileType": "Desteklenmeyen dosya formatı. MP3, WAV, FLAC, M4A kullanın.",
-      "fileTooLarge": "Dosya boyutu 30MB (yaklaşık 6 dk) sınırını aşıyor. Daha küçük dosya seçin.",
-      "fileTooSmall": "Dosya çok küçük. Minimum boyut 1KB.",
-      "invalidFileName": "Geçersiz dosya adı. Dosyayı yeniden adlandırın.",
-      "backend_not_configured": "Backend ayarlanamadı. Yalnızca önizleme sonucu gösteriliyor.",
-      "backend_unreachable": "Backend şu anda ulaşılamıyor. Yalnızca önizleme sonucu gösteriliyor.",
-      "backend_unexpected_response": "Backend beklenmedik cevap verdi. Yalnızca önizleme sonucu gösteriliyor.",
-      "youtubeAnalysisFailed": "YouTube analizi başarısız oldu. Yalnızca önizleme sonucu gösteriliyor.",
-      "internalError": "Bir dahili hata oluştu. Lütfen daha sonra tekrar deneyin.",
-      "limitedBackendNote": "Not: Analiz, sınırlı backend erişimiyle tamamlandı."
-    },
-    "techStack": {
-      "badge": "Mimari",
-      "title": "Çok Kuleli Tespit Motoru",
-      "subtitle": "Her kule ses sinyalinin farklı bir boyutunu analiz eder, ardından meta-sınıflandırıcı tüm sinyalleri birleştirir",
-      "tower1": "Transfer öğrenme ile derin ses temsilleri",
-      "tower2Name": "49 Özellik",
-      "tower2": "Spektral, zamansal, harmonik ve vokal parmak izi",
-      "tower3": "Çapraz-modal ses-metin benzerlik analizi",
-      "tower4": "Harici spektral sahtelik tespit API'si",
-      "meta": "Meta-Sınıflandırıcı → YZ / İnsan",
-      "statFeatures": "Akustik Özellik",
-      "statModels": "ML Model",
-      "statVocal": "Vokal İşaretçi",
-      "statCV": "Çapraz Doğrulama"
+      "tryAgain": "Tekrar dene",
+      "enterUrl": "Bir YouTube bağlantısı yapıştır.",
+      "invalidYouTubeUrl": "Bu bir YouTube bağlantısı değil. youtube.com/watch?v=… ya da youtu.be/… biçiminde olmalı.",
+      "youtubeAuthenticationRequired": "YouTube bu video için oturum doğrulaması istedi. Parçayı dosya olarak yüklemeyi dene.",
+      "youtubeAnalysisFailed": "Video indirilemedi. Parçayı dosya olarak yüklemeyi dene.",
+      "unsupportedSource": "Şimdilik yalnızca YouTube bağlantıları destekleniyor.",
+      "missingFile": "Önce bir ses dosyası seç.",
+      "missingUrl": "Bir bağlantı gir.",
+      "invalidSourceType": "Geçersiz kaynak türü.",
+      "unsupportedFileType": "Bu dosya türü desteklenmiyor. MP3, WAV, FLAC, M4A ya da OGG kullan.",
+      "fileTooLarge": "Dosya 30 MB sınırını aşıyor.",
+      "fileTooSmall": "Dosya çok küçük.",
+      "invalidFileName": "Dosya adı geçersiz.",
+      "decodeFailed": "Tarayıcın bu dosyayı çözemedi. WAV ya da MP3'e dönüştürüp tekrar dene.",
+      "tooShort": "Ölçüm için en az 3 saniyelik ses gerekiyor.",
+      "micDenied": "Mikrofon izni verilmedi. Tarayıcı ayarlarından izin verip tekrar dene.",
+      "backend_not_configured": "Bağlantı analizi için AURIS sunucusu bağlı değil. Parçayı dosya olarak yükle.",
+      "backend_unreachable": "AURIS sunucusuna ulaşılamadı. Parçayı dosya olarak yükle ya da biraz sonra dene.",
+      "backend_unexpected_response": "Sunucu beklenmeyen bir yanıt verdi.",
+      "internalError": "Bir şeyler ters gitti. Tekrar dene."
     }
   },
   "mlToolkit": {
     "badge": "ML Toolkit",
     "title": "Veri Seti Çoğaltma",
-    "subtitle": "Görsel ve ses veri setlerinizi AI ile 2 katına çıkarın",
+    "subtitle": "Veri setindeki dosyalardan yeni örnekler üretin, formatları dönüştürün, etiketleri çıkarın",
     "dataType": {
       "title": "Veri Tipi Seçin",
       "subtitle": "Hangi tür veri seti ile çalışacaksınız?",
@@ -496,7 +448,7 @@
       },
       "audio": {
         "title": "Ses Veri Seti",
-        "description": "Ses dosyalarınızı işleyip zenginleştirin"
+        "description": "Ses dosyalarınızdan yeni varyasyonlar üretin"
       }
     },
     "fileUploader": {
@@ -607,7 +559,7 @@
     },
     "meta": {
       "title": "ML Toolkit",
-      "description": "Görsel ve ses veri setlerinizi otomatik olarak 2 katına çıkarın. AI destekli augmentation platformu.",
+      "description": "Ses veri setleri için format dönüştürme, veri artırma ve otomatik etiketleme araçları.",
       "keywords": "data augmentation, ML toolkit, image processing, audio processing, dataset generator, CrownCode"
     },
     "buttons": {
@@ -661,7 +613,7 @@
       "aiMusic": "AI Müzik Tespiti",
       "mlToolkit": "ML Araç Seti",
       "projects": "Projeler",
-      "crownFortune": "Kraliyet Şansı",
+      "crownFortune": "Crown Fortune",
       "crownVote": "Crown Vote - VOTRYX"
     },
     "features": {
@@ -783,7 +735,7 @@
     "header": {
       "badge": "Masaüstü Uygulaması",
       "title": "VOTRYX",
-      "subtitle": "DistroKid Spotlight için Otomatik Oylama Zekası"
+      "subtitle": "DistroKid Spotlight oylamalarını otomatikleştiren Windows uygulaması"
     },
     "tabs": {
       "download": "İndir",
@@ -792,27 +744,27 @@
     "features": {
       "automation": {
         "title": "Selenium Otomasyonu",
-        "description": "Chrome tabanlı güçlü browser otomasyonu ile güvenilir oylama"
+        "description": "Oyları Selenium ile Chrome üzerinden verir"
       },
       "parallel": {
         "title": "Paralel İşlem",
-        "description": "Birden fazla tarayıcı penceresi ile eşzamanlı oylama"
+        "description": "Birkaç tarayıcı penceresini aynı anda çalıştırır"
       },
       "tray": {
         "title": "Sistem Tepsisi",
-        "description": "Arka planda çalışma ve sistem tepsisi desteği"
+        "description": "Arka planda, sistem tepsisinden çalışır"
       },
       "logging": {
-        "title": "Detaylı Loglama",
-        "description": "Dosya ve UI bazlı kapsamlı log sistemi"
+        "title": "Kayıt Tutma",
+        "description": "Olanları hem log dosyasına hem uygulama penceresine yazar"
       },
       "safety": {
         "title": "Güvenlik Limitleri",
-        "description": "Yapılandırılabilir hata limitleri ve backoff mekanizması"
+        "description": "Ayarlanabilir hata sınırı; hatadan sonra bekleyip yeniden dener"
       },
       "config": {
-        "title": "Esnek Yapılandırma",
-        "description": "JSON tabanlı kolay yapılandırma sistemi"
+        "title": "Tek Dosyada Ayarlar",
+        "description": "Tüm ayarlar tek bir config.json dosyasında durur"
       }
     },
     "download": {
@@ -878,12 +830,12 @@
   },
   "crownDreams": {
     "meta": {
-      "title": "Crown Dreams - AI Destekli Rüya Günlüğü ve Analizi",
-      "description": "Rüyalarınızı kaydedin, Gemini AI ile gerçek zamanlı duygu ve sembol analizi yapın, lüsid rüya takibiyle bilinçaltınızı keşfedin.",
+      "title": "Crown Dreams - Rüya Günlüğü ve Analizi",
+      "description": "Rüyanı yaz, Gemini içindeki duyguları, temaları ve sembolleri çıkarsın. Günlük ve lüsid rüya takibi şimdilik örnek verilerle çalışıyor.",
       "keywords": "rüya günlüğü, lüsid rüya, rüya analizi, AI rüya yorumu, duygu analizi, rüya sembolleri"
     },
     "header": {
-      "badge": "Neural Link Aktif",
+      "badge": "Rüya Günlüğü",
       "welcomeBack": "Hoş Geldin,",
       "streakLabel": "günlük seri",
       "lucidRateLabel": "lüsid oranı",
@@ -893,7 +845,7 @@
     },
     "analyzer": {
       "title": "Rüyanı Analiz Et",
-      "subtitle": "Rüyanı yaz, yapay zeka gerçek zamanlı olarak duygularını, temalarını ve sembollerini analiz etsin.",
+      "subtitle": "Rüyanı yaz, Gemini içindeki duyguları, temaları ve sembolleri çıkarsın.",
       "placeholder": "Rüyanı buraya yaz... (en az 10 karakter)",
       "analyzeButton": "Analiz Et",
       "analyzing": "Analiz ediliyor...",
@@ -982,9 +934,9 @@
       "keywords": "youtube yorum, ai yorum, yapay zeka, commend ai"
     },
     "header": {
-      "badge": "YouTube AI Asistanı",
+      "badge": "YouTube Yorum Aracı",
       "title": "Crown Commend",
-      "subtitle": "Yapay zeka ile YouTube videolarına özgün, yaratıcı ve etkileyici yorumlar üretin."
+      "subtitle": "Bir YouTube bağlantısı yapıştır, Gemini videoya uygun bir yorum taslağı hazırlasın."
     },
     "form": {
       "urlLabel": "YouTube Video URL",
@@ -1024,20 +976,20 @@
       "title": "Özellikler",
       "items": {
         "advancedAI": {
-          "title": "Gelişmiş AI",
-          "description": "Google Gemini ile video içeriğini analiz eder ve bağlamsal yorumlar üretir."
+          "title": "Gemini",
+          "description": "Yorumları Google Gemini yazar; videonun konusuna göre şekillenir."
         },
         "multiLanguage": {
           "title": "Çoklu Dil",
           "description": "Türkçe, İngilizce, Rusça, Çince ve Japonca dillerinde yorum üretir."
         },
         "transcript": {
-          "title": "Transcript Analizi",
-          "description": "Video altyazılarını analiz ederek daha alakalı yorumlar üretir."
+          "title": "Altyazı Okuma",
+          "description": "Altyazı varsa okur, böylece yorum videoda gerçekten konuşulanlara değinir."
         },
         "transparency": {
-          "title": "Şeffaf AI",
-          "description": "Tüm yorumların AI tarafından üretildiğini belirten bir not içerir."
+          "title": "AI Notu",
+          "description": "Gönderilen her yorumda, yapay zekâyla yazıldığını belirten bir not bulunur."
         }
       }
     },
@@ -1051,7 +1003,7 @@
     },
     "editor": {
       "aiGenerated": "AI Tarafından Üretildi",
-      "withTranscript": "Transcript analizi yapıldı",
+      "withTranscript": "Altyazılar okundu",
       "copy": "Kopyala",
       "copied": "Kopyalandı!",
       "regenerate": "Yeniden Üret",
@@ -1095,7 +1047,7 @@
       },
       "dataUsage": {
         "title": "Veri Kullanımı",
-        "content": "Toplanan veriler yalnızca platform işlevselliğini sağlamak için kullanılır. Verileriniz üçüncü taraflarla paylaşılmaz veya satılmaz. AI araçları (Crown Commend, Crown Fortune) kullanıcı verilerini saklamaz."
+        "content": "Toplanan veriler yalnızca platform işlevselliğini sağlamak için kullanılır. Verileriniz üçüncü taraflarla paylaşılmaz veya satılmaz. Yapay zekâ kullanan araçlar (Crown Commend, Crown Dreams) kullanıcı verilerini saklamaz."
       },
       "dataSecurity": {
         "title": "Veri Güvenliği",
@@ -1181,6 +1133,14 @@
     },
     "contactLabel": "Koşullar hakkında sorularınız için:"
   },
+  "routeBadge": {
+    "label": "Atlas rotası",
+    "backToAtlas": "Atlas’a dön",
+    "current": "Bulunduğun dünya",
+    "previous": "Önceki dünya",
+    "next": "Sonraki dünya",
+    "newTab": "yeni sekmede açılır"
+  },
   "aria": {
     "homePage": "CrownCode Ana Sayfa",
     "openMenu": "Menüyü Aç",
@@ -1199,32 +1159,32 @@
   },
   "creatorStudio": {
     "meta": {
-      "title": "Creator Studio - AI Remiks Stüdyosu | CrownCode",
-      "description": "İki ses parçasını gerçek zamanlı tempo ve ton analiziyle eşleştirip yumuşak bir crossfade ile birleştiren ücretsiz AI remiks aracı.",
+      "title": "Creator Studio - Remiks ve Mikser | CrownCode",
+      "description": "İki parçanın temposunu ve tonunu eşleştirip yumuşak bir geçişle birleştiren ücretsiz remiks aracı. Yanında 2-6 parçalık basit bir mikser de var.",
       "keywords": "AI remiks, tempo eşleştirme, crossfade, ses birleştirme, müzik prodüksiyon aracı, creator studio, çoklu parça"
     },
     "title": "Creator Studio",
-    "subtitle": "AI destekli ses oluşturma araçları",
+    "subtitle": "Parçaları remikslemek ve miks etmek için araçlar",
     "comingSoon": "Yakında",
-    "comingSoonDesc": "Harika bir şey inşa ediyoruz. Ses remiks, AI üretimi ve çoklu parça düzenleme araçları için takipte kalın.",
+    "comingSoonDesc": "Yapay zekâyla ses üretimi henüz yok; üzerinde çalışılıyor.",
     "upcomingTitle": "Yakında Geliyor",
     "features": {
       "remix": {
         "title": "Ses Remiks",
-        "description": "AI destekli araçlarla ses parçalarını remiksleme ve dönüştürme."
+        "description": "İki parçanın temposunu ve tonunu eşleştirip birleştirme."
       },
       "generate": {
-        "title": "AI Üretimi",
-        "description": "Gelişmiş AI modelleri kullanarak orijinal ses içeriği oluşturma."
+        "title": "Yapay Zekâyla Ses Üretimi",
+        "description": "Sıfırdan ses üretmek büyük bir model ve uzun işlem süresi istiyor; bu sitede henüz yok."
       },
       "multitrack": {
         "title": "Çoklu Parça",
-        "description": "Birleşik bir çalışma alanında birden fazla ses parçasını düzenleme ve miksle."
+        "description": "2-6 parçanın ses seviyesini ve stereo konumunu ayarlayıp tek bir miks çıkarma."
       }
     },
     "remixStudio": {
-      "title": "AI Remiks Stüdyosu",
-      "subtitle": "İki parça yükleyin — tempo ve tonu gerçek zamanlı analiz edip eşleştirir, ardından yumuşak bir geçişle birleştiririz.",
+      "title": "Remiks Stüdyosu",
+      "subtitle": "İki parça yükleyin. Tempolarını ve tonlarını eşleştirip yumuşak bir geçişle birleştirelim.",
       "trackALabel": "Parça A",
       "trackBLabel": "Parça B",
       "trackAPlaceholder": "İlk parçayı seçin",
