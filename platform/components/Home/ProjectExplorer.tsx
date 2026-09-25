@@ -95,7 +95,7 @@ export function ProjectExplorer() {
   const railRef = useRef<HTMLElement>(null)
   const [active, setActive] = useState(-1)
   const [featureVisible, setFeatureVisible] = useState(false)
-  const [interactive, setInteractive] = useState(true)
+  const [interactive, setInteractive] = useState(reducedMotion)
   const { scrollYProgress } = useScroll({ target: journeyRef, offset: ['start start', 'end end'] })
   const products: Product[] = PRODUCT_CATALOG.map(entry => {
     const localized = resolveProduct(entry, t)
