@@ -96,10 +96,10 @@ export function ProjectExplorer() {
     return { ...entry, ...localized, ...material, name }
   })
 
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.13, 0.28], [1, 1, 0])
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.1, 0.22], [1, 1, 0])
   const heroScale = useTransform(scrollYProgress, [0, 0.28], [1, 1.45])
   const heroX = useTransform(scrollYProgress, [0, 0.28], ['0%', '-12%'])
-  const detailOpacity = useTransform(scrollYProgress, [0.13, 0.29], [0, 1])
+  const detailOpacity = useTransform(scrollYProgress, [0.1, 0.22], [0, 1])
   const detailScale = useTransform(scrollYProgress, [0.1, 1], [1.1, 1.02])
   const detailX = useTransform(scrollYProgress, [0.1, 1], ['3%', '-3%'])
   const introOpacity = useTransform(scrollYProgress, [0, 0.06, 0.145], [1, 1, 0])
@@ -108,6 +108,10 @@ export function ProjectExplorer() {
   const orbitX = useTransform(scrollYProgress, value => reducedMotion ? 0 : Math.sin(value * Math.PI * 2) * 28 * (1 - nearestFocusAt(value)))
   const orbitY = useTransform(scrollYProgress, value => reducedMotion ? 0 : Math.cos(value * Math.PI * 2) * 17 * (1 - nearestFocusAt(value)))
   const orbitTurn = useTransform(scrollYProgress, value => reducedMotion ? 0 : Math.sin(value * Math.PI * 1.5) * 2.5 * (1 - nearestFocusAt(value)))
+  const orbitOpacity = useTransform(scrollYProgress, value => {
+    if (reducedMotion || (typeof window !== 'undefined' && window.innerHeight < 650)) {return 1}
+    return Math.min(1, smooth(value / 0.15))
+  })
   const atlasMarkOpacity = useTransform(scrollYProgress, value => smooth((value - 0.14) / 0.13) * Math.max(0, 1 - nearestFocusAt(value) * 2) * 0.62)
   const activeOpacity = useTransform(scrollYProgress, value => active < 0 || reducedMotion ? 0 : focusAt(value, active))
 
@@ -121,7 +125,11 @@ export function ProjectExplorer() {
   })
 
   useEffect(() => {
-    if (active < 0 || !railRef.current) {return}
+    if (!railRef.current) {return}
+    if (active < 0) {
+      railRef.current.scrollTo({ left: 0, behavior: reducedMotion ? 'instant' : 'smooth' })
+      return
+    }
     const button = railRef.current.querySelectorAll('button')[active]
     if (button) {
       railRef.current.scrollTo({ left: button.offsetLeft - railRef.current.clientWidth / 2 + button.clientWidth / 2, behavior: reducedMotion ? 'instant' : 'smooth' })
@@ -174,7 +182,7 @@ export function ProjectExplorer() {
           <motion.span className={styles.atlasMark} style={{ opacity: atlasMarkOpacity }} aria-hidden="true">
             <Image src="/images/showroom/crown-glyph.webp" alt="" width={220} height={220} />
           </motion.span>
-          <motion.div id="project-explorer" className={styles.orbit} style={{ x: orbitX, y: orbitY, rotate: orbitTurn }}
+          <motion.div id="project-explorer" className={styles.orbit} style={{ x: orbitX, y: orbitY, rotate: orbitTurn, opacity: orbitOpacity }}
             aria-label={en ? 'Project objects' : 'Proje cisimleri'}>
             <svg className={styles.orbitLines} viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
               <ellipse cx="500" cy="350" rx="410" ry="170" transform="rotate(-20 500 350)" />
@@ -186,6 +194,7 @@ export function ProjectExplorer() {
                 onSelect={select} reducedMotion={reducedMotion} interactive={interactive} />,
             )}
           </motion.div>
+          <motion.div className={styles.focusShade} style={{ opacity: activeOpacity }} aria-hidden="true" />
           {selected && featureVisible && <motion.article className={styles.feature} style={{ opacity: activeOpacity }}>
             <h2>{selected.name}</h2>
             <p>{selected.showroomDescription}</p>
@@ -221,7 +230,7 @@ export function ProjectExplorer() {
               target={product.href.startsWith('https:') ? '_blank' : undefined}
               rel={product.href.startsWith('https:') ? 'noreferrer' : undefined}>
               <span className={styles.indexNumber} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-              <span className={styles.indexImage}><Image src={product.image} alt="" fill sizes="62px" /></span>
+              <span className={styles.indexImage}><Image src={product.image} alt="" fill sizes="(max-width: 700px) 54px, 160px" /></span>
               <span className={styles.indexCopy}><strong>{product.name}</strong><span>{product.showroomDescription}</span></span>
               <ArrowUpRight size={20} />
             </Link>,
