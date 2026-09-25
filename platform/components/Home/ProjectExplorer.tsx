@@ -1,231 +1,194 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useReducedMotion } from 'motion/react'
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, List, Pause, Play, Search, X } from 'lucide-react'
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
+import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
-import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
+import { PRODUCT_CATALOG, resolveProduct, type ProductEntry } from '@/config/product-catalog'
 import styles from './ProjectExplorer.module.css'
 
-const worlds = [
-  { id: 'ai-music-detection', name: 'AURIS', tone: '#d7a34e', texture: 'sound', ring: true },
-  { id: 'ml-toolkit', name: 'ML Toolkit', tone: '#879d93', texture: 'mineral', ring: false },
-  { id: 'crown-fortune', name: 'Crown Fortune', tone: '#c88551', texture: 'sand', ring: true },
-  { id: 'crown-dreams', name: 'Crown Dreams', tone: '#a59aaa', texture: 'cloud', ring: false },
-  { id: 'crown-commend', name: 'Crown Commend', tone: '#b9674f', texture: 'sand', ring: false },
-  { id: 'crown-vote', name: 'VOTRYX', tone: '#98a47b', texture: 'mineral', ring: true },
-  { id: 'noir-grain', name: 'Noir & Grain', tone: '#bfa788', texture: 'cloud', ring: false },
-  { id: 'kognita', name: 'Kognita', tone: '#be9760', texture: 'sound', ring: false },
-] as const
-
-const groups = {
-  all: worlds.map(world => world.id),
-  sound: ['ai-music-detection', 'ml-toolkit'],
-  creative: ['crown-dreams', 'crown-fortune', 'noir-grain'],
-  tools: ['crown-commend', 'crown-vote', 'kognita'],
+const materials: Record<string, { image: string; x: number; y: number; mobileX: number; mobileY: number }> = {
+  'ai-music-detection': { image: '/images/showroom/world-auris.webp', x: 64, y: 28, mobileX: 19, mobileY: 38 },
+  'ml-toolkit': { image: '/images/showroom/tape-study.webp', x: 81, y: 43, mobileX: 47, mobileY: 30 },
+  'crown-fortune': { image: '/images/showroom/world-fortune.webp', x: 77, y: 68, mobileX: 78, mobileY: 38 },
+  'crown-dreams': { image: '/images/showroom/world-dreams.webp', x: 55, y: 69, mobileX: 84, mobileY: 57 },
+  'crown-commend': { image: '/images/showroom/world-commend.webp', x: 40, y: 48, mobileX: 68, mobileY: 71 },
+  'crown-vote': { image: '/images/showroom/world-votryx.webp', x: 46, y: 24, mobileX: 35, mobileY: 70 },
+  'noir-grain': { image: '/images/showroom/world-noir.webp', x: 89, y: 24, mobileX: 17, mobileY: 57 },
+  kognita: { image: '/images/showroom/world-kognita.webp', x: 32, y: 70, mobileX: 51, mobileY: 52 },
 }
-type Group = keyof typeof groups
-const step = Math.PI * 2 / worlds.length
-const wrap = (value: number) => ((value % worlds.length) + worlds.length) % worlds.length
 
-function position(index: number, phase: number): CSSProperties {
-  const angle = index * step + Math.PI / 2 + phase
-  const depth = (Math.sin(angle) + 1) / 2
-  return {
-    left: `${50 + Math.cos(angle) * 37}%`,
-    top: `${46 + Math.sin(angle) * 32}%`,
-    transform: `translate(-50%, -50%) scale(${0.78 + depth * 0.3})`,
-    zIndex: Math.round(depth * 10) + 2,
-  }
+const focalPoint = (index: number) => 0.18 + index * 0.1
+const smooth = (value: number) => {
+  const t = Math.max(0, Math.min(1, value))
+  return t * t * (3 - 2 * t)
+}
+const focusAt = (progress: number, index: number) => smooth(1 - Math.abs(progress - focalPoint(index)) / 0.077)
+
+type Product = ProductEntry & ReturnType<typeof resolveProduct> & { name: string; image: string; x: number; y: number; mobileX: number; mobileY: number }
+
+function Specimen({ product, index, progress, onSelect, reducedMotion }: {
+  product: Product
+  index: number
+  progress: MotionValue<number>
+  onSelect: (index: number) => void
+  reducedMotion: boolean
+}) {
+  const focus = useTransform(progress, value => reducedMotion ? 0 : focusAt(value, index))
+  const transform = useTransform(focus, value =>
+    `translate(calc((50vw - var(--x)) * ${value}), calc((50svh - var(--y)) * ${value})) scale(${1 + value * 15})`,
+  )
+  const opacity = useTransform(progress, value => {
+    if (reducedMotion) {return 1}
+    const otherFocus = Math.max(...PRODUCT_CATALOG.map((_, itemIndex) => focusAt(value, itemIndex)))
+    return Math.max(0, Math.min(1, 1 - otherFocus * 1.4 + focusAt(value, index) * 1.4))
+  })
+  const labelOpacity = useTransform(focus, value => Math.max(0, 1 - value * 4))
+  const pointerEvents = useTransform(focus, value => value > 0.13 ? 'none' : 'auto')
+  const position = {
+    '--x': `${product.x}vw`, '--y': `${product.y}svh`,
+    '--mobile-x': `${product.mobileX}vw`, '--mobile-y': `${product.mobileY}svh`,
+  } as CSSProperties
+
+  return (
+    <div className={styles.specimen} style={position}>
+      <motion.button type="button" className={styles.specimenOrb} style={{ transform, opacity, pointerEvents }}
+        onClick={() => onSelect(index)} aria-label={`${product.name}: ${product.title}`}>
+        <Image src={product.image} alt="" fill sizes="(max-width: 700px) 72px, 130px" />
+      </motion.button>
+      <motion.span className={styles.specimenName} style={{ opacity }}>{product.name}</motion.span>
+      <motion.span className={styles.srOnly} style={{ opacity: labelOpacity }} aria-hidden="true" />
+    </div>
+  )
 }
 
 export function ProjectExplorer() {
   const { t, language } = useLanguage()
   const en = language === 'en'
-  const reducedMotion = useReducedMotion()
-  const [active, setActive] = useState(0)
-  const [offset, setOffset] = useState(0)
-  const [paused, setPaused] = useState(false)
-  const [directoryOpen, setDirectoryOpen] = useState(false)
-  const [query, setQuery] = useState('')
-  const [group, setGroup] = useState<Group>('all')
+  const reducedMotion = Boolean(useReducedMotion())
   const journeyRef = useRef<HTMLElement>(null)
-  const orbitRef = useRef<HTMLDivElement>(null)
-  const scrollPhase = useRef(0)
-  const frozenPhase = useRef(0)
-  const selected = active
-  const products = worlds.map(world => {
-    const entry = PRODUCT_CATALOG.find(product => product.id === world.id)
-    if (!entry) {throw new Error(`Missing showroom project: ${world.id}`)}
-    return { ...world, entry, ...resolveProduct(entry, t) }
+  const railRef = useRef<HTMLElement>(null)
+  const [active, setActive] = useState(-1)
+  const { scrollYProgress } = useScroll({ target: journeyRef, offset: ['start start', 'end end'] })
+  const products: Product[] = PRODUCT_CATALOG.map(entry => {
+    const material = materials[entry.id]
+    if (!material) {throw new Error(`Missing showroom image for ${entry.id}`)}
+    const localized = resolveProduct(entry, t)
+    const name = entry.id === 'crown-vote' ? 'VOTRYX' : localized.title.split(' - ')[0]
+    return { ...entry, ...localized, ...material, name }
   })
-  const project = products[selected]
-  const visible = products.filter(product =>
-    (groups[group] as readonly string[]).includes(product.id) &&
-    `${product.name} ${product.title} ${product.description}`.toLocaleLowerCase(language)
-      .includes(query.trim().toLocaleLowerCase(language)),
-  )
+
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.13, 0.28], [1, 1, 0])
+  const heroScale = useTransform(scrollYProgress, [0, 0.28], [1, 1.45])
+  const heroX = useTransform(scrollYProgress, [0, 0.28], ['0%', '-12%'])
+  const detailOpacity = useTransform(scrollYProgress, [0.13, 0.29], [0, 1])
+  const detailScale = useTransform(scrollYProgress, [0.1, 1], [1.16, 1.03])
+  const detailX = useTransform(scrollYProgress, [0.1, 1], ['4%', '-4%'])
+  const introOpacity = useTransform(scrollYProgress, [0, 0.06, 0.145], [1, 1, 0])
+  const introY = useTransform(scrollYProgress, [0, 0.15], [0, -45])
+  const activeOpacity = useTransform(scrollYProgress, value => active < 0 || reducedMotion ? 0 : focusAt(value, active))
+
+  useMotionValueEvent(scrollYProgress, 'change', value => {
+    if (reducedMotion) {return}
+    const next = value < 0.115 ? -1 : Math.max(0, Math.min(products.length - 1, Math.round((value - 0.18) / 0.1)))
+    setActive(previous => previous === next ? previous : next)
+  })
 
   useEffect(() => {
-    const journey = journeyRef.current
-    const orbit = orbitRef.current
-    if (!journey || !orbit) {return}
-    const nodes = Array.from(orbit.querySelectorAll<HTMLElement>('[data-world]'))
-    let frame = 0
-    const render = () => {
-      frame = 0
-      const rect = journey.getBoundingClientRect()
-      const distance = Math.max(1, journey.offsetHeight - window.innerHeight)
-      const progress = Math.min(1, Math.max(0, -rect.top / distance))
-      const motionAllowed = !reducedMotion && !paused && window.innerHeight >= 740
-      const phase = motionAllowed ? progress * Math.PI * 2 : frozenPhase.current
-      scrollPhase.current = phase
-      if (motionAllowed) {frozenPhase.current = phase}
-      const rotation = reducedMotion ? 0 : phase + offset
-      nodes.forEach((node, index) => {
-        const coordinates = position(index, rotation)
-        Object.assign(node.style, coordinates)
-      })
-      journey.style.setProperty('--travel', reducedMotion ? '0' : String(phase / (Math.PI * 2)))
-      if (!reducedMotion) {setActive(wrap(Math.round(-(phase + offset) / step)))}
+    if (active < 0 || !railRef.current) {return}
+    const button = railRef.current.querySelectorAll('button')[active]
+    if (button) {
+      railRef.current.scrollTo({ left: button.offsetLeft - railRef.current.clientWidth / 2 + button.clientWidth / 2, behavior: reducedMotion ? 'instant' : 'smooth' })
     }
-    const schedule = () => {
-      if (!frame) {frame = window.requestAnimationFrame(render)}
-    }
-    render()
-    window.addEventListener('scroll', schedule, { passive: true })
-    window.addEventListener('resize', schedule)
-    return () => {
-      cancelAnimationFrame(frame)
-      window.removeEventListener('scroll', schedule)
-      window.removeEventListener('resize', schedule)
-    }
-  }, [offset, paused, reducedMotion])
+  }, [active, reducedMotion])
 
-  const choose = (index: number) => {
-    const next = wrap(index)
-    setActive(next)
-    setOffset(-next * step - scrollPhase.current)
+  const select = (index: number) => {
+    if (reducedMotion || window.matchMedia('(max-height: 650px)').matches) {
+      document.getElementById(`project-${products[index].id}`)?.scrollIntoView({ behavior: 'instant' })
+      return
+    }
+    const journey = journeyRef.current
+    if (!journey) {return}
+    const start = journey.getBoundingClientRect().top + window.scrollY
+    const distance = journey.offsetHeight - window.innerHeight
+    window.scrollTo({ top: start + focalPoint(index) * distance, behavior: 'smooth' })
   }
 
-  const labels: Record<Group, string> = en
-    ? { all: 'All projects', sound: 'Sound & data', creative: 'Creative', tools: 'Tools' }
-    : { all: 'Tüm projeler', sound: 'Ses & veri', creative: 'Yaratıcı', tools: 'Araçlar' }
+  const selected = active >= 0 ? products[active] : null
 
   return (
     <div className={styles.home}>
-      <section id="products" ref={journeyRef} className={styles.journey}
-        data-paused={paused || reducedMotion ? 'true' : 'false'} aria-labelledby="studio-heading">
+      <section id="products" ref={journeyRef} className={styles.journey} aria-labelledby="showroom-title">
         <div className={styles.stage}>
-          <div className={styles.cosmos} aria-hidden="true">
-            <div className={styles.nebula} />
-            <svg className={styles.stars} viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice">
-              {Array.from({ length: 85 }, (_, i) => (
-                <circle key={i} cx={(i * 173 + 41) % 1400} cy={(i * 113 + 67) % 900}
-                  r={i % 7 === 0 ? 1.5 : 0.65} fill="#ead6b4" opacity={0.16 + (i % 5) * 0.1} />
-              ))}
-            </svg>
+          <div className={styles.studio} aria-hidden="true">
+            <motion.div className={styles.studioHero} style={{ opacity: heroOpacity, scale: heroScale, x: heroX }}>
+              <Image src="/images/showroom/crown-studio.webp" alt="" fill preload sizes="100vw" />
+            </motion.div>
+            <motion.div className={styles.studioDetail} style={{ opacity: detailOpacity, scale: detailScale, x: detailX }}>
+              <Image src="/images/showroom/tape-study.webp" alt="" fill sizes="100vw" />
+            </motion.div>
           </div>
-          <div className={styles.identity}>
-            <h1 id="studio-heading">CrownCode</h1>
-            <p>{en ? 'A small universe of independent projects.' : 'Bağımsız projelerden küçük bir evren.'}</p>
+          <div className={styles.shade} aria-hidden="true" />
+          <motion.div className={styles.intro} style={{ opacity: introOpacity, y: introY }}>
+            <h1 id="showroom-title">CrownCode</h1>
+            <p>{en ? 'Independent work across sound, data and the web.' : 'Ses, veri ve web üzerine bağımsız çalışmalar.'}</p>
+            <a href="#project-index" className={styles.introLink}>
+              {en ? 'See all projects' : 'Tüm projelere bak'} <ArrowDown size={18} />
+            </a>
+          </motion.div>
+          <div id="project-explorer" className={styles.orbit} aria-label={en ? 'Project objects' : 'Proje cisimleri'}>
+            {products.map((product, index) =>
+              <Specimen key={product.id} product={product} index={index} progress={scrollYProgress}
+                onSelect={select} reducedMotion={reducedMotion} />,
+            )}
           </div>
-          <a className={styles.skip} href="#studio-end">
-            {en ? 'Skip the exploration' : 'Keşfi atla'} <ArrowDown size={14} />
-          </a>
-
-          <div id="project-explorer" className={styles.orbit} ref={orbitRef} aria-label={en ? 'Project worlds' : 'Proje dünyaları'}>
-            <svg className={styles.paths} viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
-              <ellipse cx="500" cy="322" rx="370" ry="224" />
-              <ellipse cx="500" cy="322" rx="295" ry="174" />
-              <ellipse cx="500" cy="322" rx="425" ry="273" />
-              <path d="M80 405 Q480 10 925 295" />
-            </svg>
-            <div className={styles.nucleus} aria-hidden="true">
-              <div className={styles.nucleusLight} />
-              <Image src="/logo-main.png" alt="" width={240} height={240} preload />
-              <span>CrownCode</span>
-            </div>
-            {products.map((world, index) => (
-              <Link key={world.id} href={world.entry.href}
-                target={world.entry.href.startsWith('https://') ? '_blank' : undefined}
-                rel={world.entry.href.startsWith('https://') ? 'noreferrer' : undefined}
-                className={styles.world} data-world={world.id}
-                data-selected={selected === index ? 'true' : 'false'}
-                style={{ ...position(index, 0), '--tone': world.tone } as CSSProperties}
-                onMouseEnter={() => setActive(index)}
-                onFocus={() => setActive(index)}
-                aria-label={en ? `Open ${world.name}` : `${world.name} projesini aç`}>
-                <span className={styles.planet} data-texture={world.texture} aria-hidden="true">
-                  <span className={styles.surface} />
-                  <span className={styles.shade} />
-                  {world.ring && <span className={styles.planetRing} />}
-                </span>
-                <span className={styles.worldName}>{world.name}<ArrowUpRight size={12} /></span>
+          {selected && <motion.article className={styles.feature} style={{ opacity: activeOpacity }} aria-live="off">
+            <h2>{selected.name}</h2>
+            <p>{selected.showroomDescription}</p>
+            {selected.features.length > 0 && <ul>{selected.features.slice(0, 3).map(feature => <li key={feature}>{feature}</li>)}</ul>}
+            <div className={styles.featureActions}>
+              <Link href={selected.href} target={selected.href.startsWith('https:') ? '_blank' : undefined}
+                rel={selected.href.startsWith('https:') ? 'noreferrer' : undefined}>
+                {en ? 'Open project' : 'Projeyi aç'} <ArrowUpRight size={20} />
               </Link>
-            ))}
-          </div>
-
-          <div className={styles.projectInfo}>
-            <div className={styles.projectHeading}>
-              <span className={styles.projectDot} style={{ background: project.tone }} aria-hidden="true" />
-              <h2>{project.name}</h2>
+              <span>{selected.status}</span>
             </div>
-            <p>{project.description}</p>
-            <Link className={styles.openProject} href={project.entry.href}
-              target={project.entry.href.startsWith('https://') ? '_blank' : undefined}
-              rel={project.entry.href.startsWith('https://') ? 'noreferrer' : undefined}>
-              {en ? 'Explore project' : 'Projeyi keşfet'} <ArrowUpRight size={18} />
-            </Link>
-          </div>
-
-          <div className={styles.controls}>
-            <div className={styles.steering} aria-label={en ? 'Choose a project' : 'Proje seç'}>
-              <button type="button" onClick={() => choose(active - 1)} aria-label={en ? 'Previous project' : 'Önceki proje'}><ArrowLeft size={19} /></button>
-              <span aria-live="polite" aria-atomic="true">{active + 1} / {products.length}<span className={styles.srOnly}> — {products[active].name}</span></span>
-              <button type="button" onClick={() => choose(active + 1)} aria-label={en ? 'Next project' : 'Sonraki proje'}><ArrowRight size={19} /></button>
-            </div>
-            <p className={styles.scrollHint}><ArrowDown size={15} />{en ? 'Scroll to orbit. Choose a world to enter.' : 'Kaydır, yörüngede gezin. Bir dünya seç.'}</p>
-            <div className={styles.actions}>
-              {!reducedMotion && <button type="button" onClick={() => setPaused(value => !value)}
-                aria-label={paused ? (en ? 'Resume motion' : 'Hareketi sürdür') : (en ? 'Pause motion' : 'Hareketi durdur')}
-                aria-pressed={paused}>{paused ? <Play size={16} /> : <Pause size={16} />}</button>}
-              <button type="button" onClick={() => setDirectoryOpen(value => !value)} aria-expanded={directoryOpen} aria-controls="project-directory">
-                {directoryOpen ? <X size={16} /> : <List size={16} />}{en ? 'Project index' : 'Proje dizini'}
-              </button>
-            </div>
-          </div>
-
-          {directoryOpen && <aside id="project-directory" className={styles.directory} aria-label={en ? 'Project index' : 'Proje dizini'}>
-            <div className={styles.directoryTop}>
-              <h2>{en ? 'Project index' : 'Proje dizini'}</h2>
-              <button type="button" onClick={() => setDirectoryOpen(false)} aria-label={en ? 'Close index' : 'Dizini kapat'}><X size={20} /></button>
-            </div>
-            <label className={styles.search}><Search size={17} /><span className={styles.srOnly}>{en ? 'Search projects' : 'Proje ara'}</span>
-              <input value={query} onChange={event => setQuery(event.target.value)} placeholder={en ? 'Search projects…' : 'Projelerde ara…'} />
-            </label>
-            <div className={styles.filters}>{(Object.keys(labels) as Group[]).map(key =>
-              <button type="button" key={key} aria-pressed={group === key} onClick={() => setGroup(key)}>{labels[key]}</button>)}</div>
-            <p className={styles.resultCount} aria-live="polite">{visible.length} {en ? 'projects' : 'proje'}</p>
-            <div className={styles.directoryLinks}>{visible.map(world =>
-              <Link key={world.id} href={world.entry.href} target={world.entry.href.startsWith('https://') ? '_blank' : undefined}
-                rel={world.entry.href.startsWith('https://') ? 'noreferrer' : undefined}>
-                <span style={{ background: world.tone }} aria-hidden="true" />{world.name}<ArrowUpRight size={16} />
-              </Link>)}</div>
-            {visible.length === 0 && <div className={styles.empty}>
-              <p>{en ? 'No matching projects.' : 'Eşleşen proje bulunamadı.'}</p>
-              <button type="button" onClick={() => { setQuery(''); setGroup('all') }}>{en ? 'Show all projects' : 'Tüm projeleri göster'}</button>
-            </div>}
-          </aside>}
+          </motion.article>}
+          <nav ref={railRef} className={styles.rail} aria-label={en ? 'Move between projects' : 'Projeler arasında gezin'}>
+            {products.map((product, index) =>
+              <button key={product.id} type="button" onClick={() => select(index)}
+                aria-current={active === index ? 'true' : undefined}>
+                {product.name}
+              </button>,
+            )}
+          </nav>
+          <div className={styles.scrollCue} aria-hidden="true"><ArrowDown size={16} /> {en ? 'Scroll into the work' : 'İşlerin içine kaydır'}</div>
         </div>
       </section>
-      <div id="studio-end" className={styles.exit}>
-        <p>{en ? 'The same curiosity. Another medium.' : 'Aynı merak. Başka bir ifade.'}</p>
-        <a href="https://hasan-arthur-altuntas.com.tr" target="_blank" rel="noreferrer">
-          {en ? 'Listen to the music.' : 'Bir de müziği dinle.'}<ArrowUpRight size={26} />
-        </a>
-        <span>Hasan Arthur Altuntaş</span>
-      </div>
+
+      <section id="project-index" className={styles.index} aria-label={en ? 'All projects' : 'Tüm projeler'}>
+        <div className={styles.indexLead}>
+          <h2>{en ? 'The work, up close.' : 'İşlerin tamamı.'}</h2>
+          <p>{en ? 'Choose a project to see what it does and how it was built.' : 'Ne yaptığını ve nasıl kurulduğunu görmek için bir proje seç.'}</p>
+        </div>
+        <div className={styles.indexList}>
+          {products.map(product =>
+            <Link id={`project-${product.id}`} key={product.id} href={product.href}
+              target={product.href.startsWith('https:') ? '_blank' : undefined}
+              rel={product.href.startsWith('https:') ? 'noreferrer' : undefined}>
+              <span className={styles.indexImage}><Image src={product.image} alt="" fill sizes="62px" /></span>
+              <span className={styles.indexCopy}><strong>{product.name}</strong><span>{product.showroomDescription}</span></span>
+              <ArrowUpRight size={20} />
+            </Link>,
+          )}
+        </div>
+        <div id="studio-end" className={styles.musicBridge}>
+          <p>{en ? 'The music lives next door.' : 'Müzik de yan tarafta.'}</p>
+          <a href="https://hasan-arthur-altuntas.com.tr" target="_blank" rel="noreferrer">
+            {en ? 'Listen to Hasan Arthur Altuntaş' : 'Hasan Arthur Altuntaş’ı dinle'} <ArrowUpRight size={26} />
+          </a>
+        </div>
+      </section>
     </div>
   )
 }
