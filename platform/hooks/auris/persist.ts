@@ -20,6 +20,8 @@ export interface StoredJob {
   blob?: Blob
   /** The link for url jobs. */
   url?: string
+  /** Server-side job id: a reload can resume polling instead of re-uploading. */
+  serverJobId?: string
   result?: AnalysisResult
   warnings?: string[]
   serverError?: string | null

@@ -86,8 +86,11 @@ export interface ConfidenceBand {
   tier: ConfidenceTier
   labelTr: string
   labelEn: string
-  lowerBound: number
-  upperBound: number
+  /** 0 at the decision threshold, 1 at the far end of the verdict's side. */
+  margin?: number
+  /** Older backends sent a heuristic ±0.05–0.10 range; not a statistical interval. */
+  lowerBound?: number
+  upperBound?: number
 }
 
 export interface ModelVote {
@@ -112,6 +115,8 @@ export interface XAIExplanation {
 
 export interface AudioInfo {
   duration: number
+  /** Seconds the server's models actually listened to (the opening of the track). */
+  analysedSec?: number
   sampleRate: number
   bitrate: number
   format: string
@@ -123,7 +128,8 @@ export interface YouTubeSourceInfo {
   url: string
   normalizedUrl: string
   videoId: string
-  startTimeSec?: number
+  startTimeSec?: number | null
+  title?: string
 }
 
 export interface SpotifySourceInfo {
@@ -151,6 +157,15 @@ export interface MetaClassifierExplanation {
   topFeatures: FeatureImportance[]
 }
 
+/** Which implementation a layer actually used on this run. */
+export interface LayerStatus {
+  available: boolean
+  mode?: string | null
+  label?: string | null
+  error?: string | null
+  ensembleLoaded?: number
+}
+
 export interface AnalysisResult {
   isAIGenerated: boolean
   confidence: number
@@ -166,6 +181,7 @@ export interface AnalysisResult {
   topFeatures?: FeatureImportance[]
   xai?: XAIExplanation
   metaClassifier?: MetaClassifierExplanation
+  layers?: Record<string, LayerStatus>
   /** Raw measurements and visuals from the AURIS signal analysis. */
   signal?: SignalReport
 }
@@ -188,6 +204,11 @@ export type AnalysisErrorCode =
   | 'backend_unexpected_response'
   | 'youtubeAnalysisFailed'
   | 'rateLimited'
+  | 'serverBusy'
+  | 'serverDecodeFailed'
+  | 'audioSilent'
+  | 'tooShort'
+  | 'jobLost'
   | 'cancelled'
   /** The server answered with its hash-based preview instead of running the models. */
   | 'serverPreview'

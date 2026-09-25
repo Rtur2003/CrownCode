@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import { AudioWaveform, Check, TriangleAlert, X } from 'lucide-react'
 import { isActive, patchJob, useAurisStore } from '@/hooks/auris/store'
 import { useLanguage } from '@/context/LanguageContext'
-import { clock, useNow } from '@/components/Auris/format'
+import { clock, percent, useNow } from '@/components/Auris/format'
 import styles from './JobPill.module.css'
 
 const AURIS_PATH = '/ai-music-detection'
@@ -17,7 +17,7 @@ const AURIS_PATH = '/ai-music-detection'
 export const JobPill: React.FC = () => {
   const job = useAurisStore(s => s.job)
   const { pathname } = useRouter()
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const P = t.aiDetection.pill
   const active = isActive(job)
   const now = useNow(active)
@@ -28,7 +28,7 @@ export const JobPill: React.FC = () => {
   if (!active && !finished) {return null}
 
   const label = active ? P[job.stage as 'waking' | 'uploading' | 'processing'] : job.stage === 'done' ? P.done : P.error
-  const upload = job.stage === 'uploading' && job.uploadTotal ? ` ${Math.round((job.uploadedBytes / job.uploadTotal) * 100)}%` : ''
+  const upload = job.stage === 'uploading' && job.uploadTotal ? ` ${percent(language, job.uploadedBytes / job.uploadTotal)}` : ''
 
   return (
     <div className={styles.pill} data-state={active ? 'active' : job.stage} role="status" aria-live="polite">

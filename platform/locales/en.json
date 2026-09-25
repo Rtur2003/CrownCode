@@ -360,18 +360,28 @@
       "processingNote": "The server doesn't report progress at this stage. The steps below run in order, and the result arrives all at once.",
       "urlNote": "The audio is downloaded from YouTube first.",
       "pipelineTitle": "Steps on the server",
-      "pipeline": [
-        "47 features: spectral, temporal, harmonic, rhythm, timbre",
-        "Vocal analysis: pitch, vibrato, formants, breath",
-        "wav2vec2 acoustic model",
-        "CLAP audio embedding",
-        "FST comparison model (external Space)",
-        "LightGBM verdict, 11-model vote and SHAP explanation",
-        "Meta-classifier (second opinion)"
-      ],
       "browser": "Browser measurement",
       "browserDone": "Waveform and spectrogram ready",
-      "browserFail": "Your browser can't decode this format; the result will come from the server only."
+      "browserFail": "Your browser can't decode this format; the result will come from the server only.",
+      "steps": {
+        "download": "Downloading audio from YouTube",
+        "features": "47 features: spectral, temporal, harmonic, rhythm, timbre",
+        "vocals": "Vocal analysis: pitch, vibrato, formants, breath",
+        "wav2vec2": "wav2vec2 acoustic model",
+        "clap": "CLAP audio embedding",
+        "fst": "FST comparison model (external Space)",
+        "xai": "LightGBM verdict, 11-model vote and SHAP",
+        "meta": "Meta-classifier (second opinion)"
+      },
+      "stepState": {
+        "pending": "queued",
+        "running": "running",
+        "done": "done",
+        "failed": "error",
+        "skipped": "skipped"
+      },
+      "liveNote": "These steps come live from the server: each line is ticked when the server finishes it.",
+      "resumed": "The page was reloaded; the job on the server is being followed from where it was, without uploading again."
     },
     "interrupted": {
       "title": "Unfinished analysis",
@@ -472,7 +482,8 @@
           "vocals": "Rule-based vocal measurements",
           "clap": "Audio embedding; falls back to a spectral heuristic without the library",
           "fst": "Open-source external detector"
-        }
+        },
+        "clapHeuristic": "The CLAP model didn't load on this run; the score came from its spectral heuristic fallback."
       },
       "meta": {
         "title": "Second opinion",
@@ -523,7 +534,8 @@
         "totalTime": "Total time",
         "model": "Model",
         "bpm": "Tempo",
-        "peak": "Peak"
+        "peak": "Peak",
+        "analysed": "Listened to"
       },
       "lossyNote": "In a lossy format (MP3, AAC…) the encoder itself cuts the high frequencies, so the browser readings leave bandwidth out.",
       "export": "Download JSON",
@@ -604,7 +616,11 @@
       "rateLimited": "Too many requests in a short time; wait a minute and try again.",
       "cancelled": "The analysis was cancelled.",
       "serverPreview": "The server couldn't run this audio through the models and returned only a preview, which isn't shown.",
-      "internalError": "Something went wrong on the server."
+      "internalError": "Something went wrong on the server.",
+      "serverBusy": "The server is busy with other analyses; try again shortly.",
+      "serverDecodeFailed": "The server couldn't decode this audio file. Convert it to WAV or MP3 and try again.",
+      "audioSilent": "The audio looks silent; there's no signal to analyse.",
+      "jobLost": "The server restarted and lost the job; it needs to be run again."
     }
   },
   "mlToolkit": {

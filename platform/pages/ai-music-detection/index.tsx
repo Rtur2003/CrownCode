@@ -11,7 +11,7 @@ import { MainLayout } from '@/components/Layout/MainLayout'
 import { PlayButton, ResidualPlot, Spectrogram, Waveform, usePlayback } from '@/components/Auris/SignalViews'
 import { ModelMetrics, Report } from '@/components/Auris/Report'
 import { JobProgress } from '@/components/Auris/JobProgress'
-import { aiProbability, clock, fill, isTrained, num, pct } from '@/components/Auris/format'
+import { aiProbability, clock, fill, isTrained, num, percent } from '@/components/Auris/format'
 import { AURIS_MODELS_URL, AURIS_SPACE_URL } from '@/config/api'
 import { AURIS_MODEL } from '@/config/auris-model'
 import { useLanguage } from '@/context/LanguageContext'
@@ -376,7 +376,7 @@ const Recent: React.FC<{ current: AurisJob | null }> = ({ current }) => {
                   requestAnimationFrame(() => document.getElementById('auris-report')?.scrollIntoView({ behavior: 'smooth' }))
                 }}
               >
-                <span className={styles.recentVerdict} data-tone={ai ? 'ai' : 'human'}>{pct(p)}%</span>
+                <span className={styles.recentVerdict} data-tone={ai ? 'ai' : 'human'}>{percent(language, p)}</span>
                 <span className={styles.recentLabel}>{e.input}</span>
                 <span className={styles.recentMeta}>
                   {trained ? R.model : R.signal} · {fmt.format(e.timestamp)}

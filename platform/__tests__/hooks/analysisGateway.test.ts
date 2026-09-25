@@ -1,4 +1,4 @@
-import { analyzeSource } from '@/hooks/analysisGateway'
+import { analyzeSource, pollServerJob, readAnalyzeResponse } from '@/hooks/analysisGateway'
 
 // Mock global fetch
 const mockFetch = jest.fn()
@@ -181,5 +181,45 @@ describe('analysisGateway – analyzeSource', () => {
     expect(error).toBeNull()
     expect(result).not.toBeNull()
     expect(result!.analysisMode).toBe('preview')
+  })
+})
+
+describe('analysisGateway – server responses', () => {
+  it('maps undecodable audio to serverDecodeFailed instead of a result', () => {
+    const { result, error } = readAnalyzeResponse(200, { errors: ['audio_decode_failed'] })
+    expect(result).toBeNull()
+    expect(error).toBe('serverDecodeFailed')
+  })
+
+  it('maps a busy server (503) to serverBusy and 429 to rateLimited', () => {
+    expect(readAnalyzeResponse(503, null).error).toBe('serverBusy')
+    expect(readAnalyzeResponse(429, null).error).toBe('rateLimited')
+  })
+
+  it('keeps server warnings alongside a result', () => {
+    const outcome = readAnalyzeResponse(200, {
+      result: { decisionSource: 'auris_xai_lightgbm', analysisMode: 'production' } as never,
+      warnings: ['clap_analysis_unavailable'],
+    })
+    expect(outcome.error).toBeNull()
+    expect(outcome.warnings).toEqual(['clap_analysis_unavailable'])
+  })
+})
+
+describe('analysisGateway – job polling', () => {
+  it('reports a job the server no longer knows as lost', async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 404 })
+    expect(await pollServerJob('http://api', 'abc')).toEqual({ kind: 'lost' })
+  })
+
+  it('returns the snapshot of a running job', async () => {
+    const snapshot = { jobId: 'abc', status: 'running', steps: [{ id: 'features', state: 'done', seconds: 3.1 }], elapsedSec: 4, response: null }
+    mockFetch.mockResolvedValueOnce({ ok: true, status: 200, json: async () => snapshot })
+    expect(await pollServerJob('http://api', 'abc')).toEqual({ kind: 'snapshot', snapshot })
+  })
+
+  it('treats a network error as unreachable, not as a failed analysis', async () => {
+    mockFetch.mockRejectedValueOnce(new Error('offline'))
+    expect(await pollServerJob('http://api', 'abc')).toEqual({ kind: 'unreachable' })
   })
 })

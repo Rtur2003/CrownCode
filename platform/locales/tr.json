@@ -360,18 +360,28 @@
       "processingNote": "Sunucu bu aşamada ara ilerleme bildirmiyor. Aşağıdaki adımlar sırayla çalışıyor; sonuç tek seferde gelir.",
       "urlNote": "Ses önce YouTube'dan indiriliyor.",
       "pipelineTitle": "Sunucudaki adımlar",
-      "pipeline": [
-        "47 öznitelik: spektral, zamansal, armonik, ritim, tını",
-        "Vokal analizi: perde, vibrato, formant, nefes",
-        "wav2vec2 akustik model",
-        "CLAP ses gömmesi",
-        "FST karşılaştırma modeli (harici Space)",
-        "LightGBM kararı, 11 model oyu ve SHAP açıklaması",
-        "Meta-sınıflandırıcı (ikinci görüş)"
-      ],
       "browser": "Tarayıcı ölçümü",
       "browserDone": "Dalga formu ve spektrogram hazır",
-      "browserFail": "Tarayıcı bu formatı çözemedi; sonuç yalnızca sunucudan gelecek."
+      "browserFail": "Tarayıcı bu formatı çözemedi; sonuç yalnızca sunucudan gelecek.",
+      "steps": {
+        "download": "YouTube'dan ses indirme",
+        "features": "47 öznitelik: spektral, zamansal, armonik, ritim, tını",
+        "vocals": "Vokal analizi: perde, vibrato, formant, nefes",
+        "wav2vec2": "wav2vec2 akustik model",
+        "clap": "CLAP ses gömmesi",
+        "fst": "FST karşılaştırma modeli (harici Space)",
+        "xai": "LightGBM kararı, 11 model oyu ve SHAP",
+        "meta": "Meta-sınıflandırıcı (ikinci görüş)"
+      },
+      "stepState": {
+        "pending": "sırada",
+        "running": "çalışıyor",
+        "done": "bitti",
+        "failed": "hata",
+        "skipped": "atlandı"
+      },
+      "liveNote": "Adımlar sunucudan canlı geliyor: her satır, sunucu o adımı bitirdiğinde işaretlenir.",
+      "resumed": "Sayfa yenilendi; sunucudaki iş kaldığı yerden izleniyor, ses yeniden yüklenmedi."
     },
     "interrupted": {
       "title": "Yarıda kalan analiz",
@@ -472,7 +482,8 @@
           "vocals": "Kural tabanlı vokal ölçümleri",
           "clap": "Ses gömmesi; kütüphane yoksa spektral sezgisele düşer",
           "fst": "Açık kaynak harici tespit modeli"
-        }
+        },
+        "clapHeuristic": "Bu çalıştırmada CLAP modeli yüklenemedi; skor spektral sezgisel yedekten geldi."
       },
       "meta": {
         "title": "İkinci görüş",
@@ -523,7 +534,8 @@
         "totalTime": "Toplam süre",
         "model": "Model",
         "bpm": "Tempo",
-        "peak": "Tepe"
+        "peak": "Tepe",
+        "analysed": "Dinlenen"
       },
       "lossyNote": "Kayıplı formatta (MP3, AAC…) kodlayıcı yüksek frekansları kendisi keser; tarayıcı ölçümünde bant sınırı hesaba katılmadı.",
       "export": "JSON indir",
@@ -604,7 +616,11 @@
       "rateLimited": "Kısa sürede çok fazla istek gönderildi; bir dakika bekleyip tekrar dene.",
       "cancelled": "Analiz iptal edildi.",
       "serverPreview": "Sunucu bu sesi modellerden geçiremedi ve yalnızca bir önizleme döndürdü; önizleme gösterilmiyor.",
-      "internalError": "Sunucuda bir hata oluştu."
+      "internalError": "Sunucuda bir hata oluştu.",
+      "serverBusy": "Sunucu şu an başka analizlerle meşgul; biraz sonra tekrar dene.",
+      "serverDecodeFailed": "Sunucu bu ses dosyasını çözemedi. WAV ya da MP3'e dönüştürüp tekrar dene.",
+      "audioSilent": "Ses sessiz görünüyor; analiz edilecek sinyal yok.",
+      "jobLost": "Sunucu yeniden başladığı için iş kayboldu; tekrar çalıştırman gerekiyor."
     }
   },
   "mlToolkit": {

@@ -42,8 +42,8 @@ const failNow = (label: string, error: 'unsupportedFileType' | 'fileTooLarge' | 
   setAurisState({
     job: {
       id: `invalid-${now}`, kind: 'file', label, bytes: 0, format: '', startedAt: now, stage: 'error',
-      uploadedBytes: 0, uploadTotal: 0, uploadEndedAt: null, finishedAt: now, signalProgress: -1, signal: null,
-      result: null, warnings: [], serverError: null, error, audioUrl: null, seen: true, restored: false,
+      uploadedBytes: 0, uploadTotal: 0, uploadEndedAt: null, finishedAt: now, serverJobId: null, steps: [], signalProgress: -1, signal: null,
+      result: null, warnings: [], serverError: null, error, audioUrl: null, seen: true, restored: false, resumed: false,
     },
   })
 }

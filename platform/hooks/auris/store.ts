@@ -9,6 +9,7 @@
 
 import { useSyncExternalStore } from 'react'
 import type { AnalysisErrorCode, AnalysisResult } from '@/hooks/analysisTypes'
+import type { JobStep } from '@/hooks/analysisGateway'
 import type { SignalReport } from '@/hooks/auris/signal'
 
 export type SourceKind = 'file' | 'mic' | 'url'
@@ -20,7 +21,7 @@ export type SourceKind = 'file' | 'mic' | 'url'
  */
 export type JobStage = 'waking' | 'uploading' | 'processing' | 'done' | 'error'
 
-export type AurisError = AnalysisErrorCode | 'micDenied' | 'decodeFailed' | 'tooShort'
+export type AurisError = AnalysisErrorCode | 'micDenied' | 'decodeFailed'
 
 export interface AurisJob {
   id: string
@@ -34,6 +35,10 @@ export interface AurisJob {
   uploadTotal: number
   uploadEndedAt: number | null
   finishedAt: number | null
+  /** Id of the job on the server, when the backend supports background jobs. */
+  serverJobId: string | null
+  /** The server's own per-step progress (empty on the one-shot endpoint). */
+  steps: JobStep[]
   /** Browser-side measurement of the same audio: 0‥1, or -1 if the browser can't decode it. */
   signalProgress: number
   signal: SignalReport | null
@@ -49,6 +54,8 @@ export interface AurisJob {
   seen: boolean
   /** Brought back from storage after a reload, or opened from the history list. */
   restored: boolean
+  /** A server job picked up again after a reload (no second upload). */
+  resumed: boolean
 }
 
 export type ServerStatus = 'unknown' | 'checking' | 'ready' | 'waking' | 'down'

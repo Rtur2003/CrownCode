@@ -12,6 +12,12 @@ export const num = (language: string, v: number, digits = 2) =>
 
 export const pct = (v: number) => Math.round(v * 100)
 
+/** A 0–1 value as a percentage in the reader's convention: %73 in Turkish, 73% in English. */
+export const percent = (language: string, v: number, digits = 0) => {
+  const n = num(language, v * 100, digits)
+  return language === 'en' ? `${n}%` : `%${n}`
+}
+
 export const clock = (ms: number) => {
   const s = Math.max(0, Math.floor(ms / 1000))
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`

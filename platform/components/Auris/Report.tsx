@@ -1,11 +1,11 @@
 import React from 'react'
 import { AlertTriangle, Download, RefreshCw, RotateCcw } from 'lucide-react'
-import type { AnalysisResult, FeatureCategory, FeatureContribution, TowerScores } from '@/hooks/analysisTypes'
+import type { AnalysisResult, FeatureCategory, FeatureContribution, LayerStatus, TowerScores } from '@/hooks/analysisTypes'
 import type { MeasureKey } from '@/hooks/auris/signal'
 import type { AurisJob } from '@/hooks/auris/store'
 import { AURIS_MODEL, DL_VOTERS, VOTER_AUC } from '@/config/auris-model'
 import { useLanguage } from '@/context/LanguageContext'
-import { aiProbability, fill, isTrained, num, pct, voteMissing } from '@/components/Auris/format'
+import { aiProbability, clock, fill, isTrained, num, pct, percent, voteMissing } from '@/components/Auris/format'
 import styles from '@/styles/pages/auris.module.css'
 
 const MEASURE_ORDER: MeasureKey[] = [
@@ -91,7 +91,8 @@ export const Report: React.FC<ReportProps> = ({ job, onReset, onRetryServer }) =
   const info = r.audioInfo
   const F = L.facts
   const facts: Array<[string, string]> = [
-    [F.duration, `${Math.floor(info.duration / 60)}:${String(Math.round(info.duration % 60)).padStart(2, '0')}`],
+    [F.duration, clock(info.duration * 1000)],
+    ...(info.analysedSec && info.analysedSec < info.duration - 1 ? [[F.analysed, `${Math.round(info.analysedSec)} s`] as [string, string]] : []),
     [F.format, (info.format || '—').toUpperCase()],
     ...(info.sampleRate ? [[F.sampleRate, `${num(language, info.sampleRate / 1000, 1)} kHz`] as [string, string]] : []),
     ...(info.bitrate ? [[F.bitrate, `${info.bitrate} kbps`] as [string, string]] : []),
@@ -127,7 +128,7 @@ export const Report: React.FC<ReportProps> = ({ job, onReset, onRetryServer }) =
         </div>
 
         <div className={styles.heroSide}>
-          <p className={styles.bigNum}><span>{pct(p)}</span><small>%</small></p>
+          <p className={styles.bigNum}>{language !== 'en' && <small>%</small>}<span>{pct(p)}</span>{language === 'en' && <small>%</small>}</p>
           <p className={styles.bigLabel}>{trained ? L.probability : L.signalScore}</p>
           <dl className={styles.facts}>
             {facts.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
@@ -156,7 +157,7 @@ export const Report: React.FC<ReportProps> = ({ job, onReset, onRetryServer }) =
         {votes.length > 0 && <Votes votes={votes} best={xai?.bestModel ?? ''} threshold={threshold} language={language} />}
         {xai && <Why items={xai.topContributions} language={language} />}
         {xai && Object.keys(xai.allFeatures ?? {}).length > 0 && <Families all={xai.allFeatures} language={language} />}
-        {trained && <Towers scores={r.towerScores ?? {}} warnings={job.warnings} language={language} />}
+        {trained && <Towers scores={r.towerScores ?? {}} warnings={job.warnings} layers={r.layers ?? {}} language={language} />}
         {r.metaClassifier && (
           <Panel title={L.meta.title} lead={L.meta.lead}>
             <div className={styles.metaHead}>
@@ -166,7 +167,7 @@ export const Report: React.FC<ReportProps> = ({ job, onReset, onRetryServer }) =
               </span>
             </div>
             <Bar value={r.metaClassifier.isAIGenerated ? r.metaClassifier.confidence : 1 - r.metaClassifier.confidence} mid={0.5} />
-            <p className={styles.small}>{L.probability}: {pct(r.metaClassifier.isAIGenerated ? r.metaClassifier.confidence : 1 - r.metaClassifier.confidence)}% · {r.metaClassifier.modelVersion}</p>
+            <p className={styles.small}>{L.probability}: {percent(language, r.metaClassifier.isAIGenerated ? r.metaClassifier.confidence : 1 - r.metaClassifier.confidence)} · {r.metaClassifier.modelVersion}</p>
             {r.metaClassifier.topFeatures.length > 0 && (
               <>
                 <p className={styles.subhead}>{L.meta.features}</p>
@@ -201,7 +202,7 @@ export const Report: React.FC<ReportProps> = ({ job, onReset, onRetryServer }) =
                       <div className={styles.meterMid} />
                     </div>
                     <p>{copy.desc}</p>
-                    <span className={styles.weight}>{L.signal.weight} {Math.round(c.weight * 100)}%</span>
+                    <span className={styles.weight}>{L.signal.weight} {percent(language, c.weight)}</span>
                   </li>
                 )
               })}
@@ -240,7 +241,7 @@ const Bar: React.FC<{ value: number; mid?: number; tone?: 'ai' | 'human' | undef
 )
 
 const Gauge: React.FC<{ p: number; threshold: number; labels: { human: string; ai: string; threshold: string }; language: string }> = ({ p, threshold, labels, language }) => (
-  <div className={styles.gauge} role="img" aria-label={`${pct(p)}% · ${labels.threshold} ${pct(threshold)}%`}>
+  <div className={styles.gauge} role="img" aria-label={`${percent(language, p)} · ${labels.threshold} ${num(language, threshold, 2)}`}>
     <div className={styles.gaugeTrack}>
       <div className={styles.gaugeAiZone} style={{ left: `${threshold * 100}%` }} />
       <div className={styles.gaugeThreshold} style={{ left: `${threshold * 100}%` }}>
@@ -274,7 +275,7 @@ const Votes: React.FC<{ votes: NonNullable<AnalysisResult['xai']>['modelVotes'];
               ) : (
                 <Bar value={v.probability} mid={tick} tone={v.vote === 'ai' ? 'ai' : 'human'} />
               )}
-              <span className={styles.mono}>{missing ? '—' : `${pct(v.probability)}%`}</span>
+              <span className={styles.mono}>{missing ? '—' : percent(language, v.probability)}</span>
               <span className={styles.voteAuc}>{auc ? num(language, auc, 3) : ''}</span>
             </li>
           )
@@ -347,7 +348,7 @@ const Families: React.FC<{ all: Record<string, FeatureContribution>; language: s
   )
 }
 
-const Towers: React.FC<{ scores: TowerScores; warnings: string[]; language: string }> = ({ scores, warnings, language }) => {
+const Towers: React.FC<{ scores: TowerScores; warnings: string[]; layers: Record<string, LayerStatus>; language: string }> = ({ scores, warnings, layers, language }) => {
   const { t } = useLanguage()
   const T = t.aiDetection.report.towers
   return (
@@ -365,7 +366,9 @@ const Towers: React.FC<{ scores: TowerScores; warnings: string[]; language: stri
                 <span className={styles.mono}>{missing ? T.missing : num(language, v, 2)}</span>
               </div>
               {!missing && <Bar value={v} mid={0.5} />}
-              <p className={styles.small}>{T.notes[key]}</p>
+              <p className={styles.small}>
+                {key === 'clap' && layers.clap?.mode === 'heuristic_spectral' ? T.clapHeuristic : T.notes[key]}
+              </p>
             </li>
           )
         })}
@@ -391,7 +394,7 @@ const Vocals: React.FC<{ result: AnalysisResult; language: string }> = ({ result
     <Panel title={V.title}>
       <div className={styles.metaHead}>
         <strong>{V.aiScore}</strong>
-        <span className={styles.mono}>{pct(v.vocalAiScore)}%</span>
+        <span className={styles.mono}>{percent(language, v.vocalAiScore)}</span>
       </div>
       <Bar value={v.vocalAiScore} mid={0.5} />
       <dl className={styles.statGrid}>
@@ -419,9 +422,9 @@ export const ModelMetrics: React.FC = () => {
   const { t, language } = useLanguage()
   const M = t.aiDetection.method.metrics
   const rows: Array<[string, string]> = [
-    [M.accuracy, `${num(language, AURIS_MODEL.accuracy * 100, 1)}%`],
-    [M.precision, `${num(language, AURIS_MODEL.precision * 100, 1)}%`],
-    [M.recall, `${num(language, AURIS_MODEL.recall * 100, 1)}%`],
+    [M.accuracy, percent(language, AURIS_MODEL.accuracy, 1)],
+    [M.precision, percent(language, AURIS_MODEL.precision, 1)],
+    [M.recall, percent(language, AURIS_MODEL.recall, 1)],
     [M.f1, num(language, AURIS_MODEL.f1, 3)],
     [M.auc, num(language, AURIS_MODEL.rocAuc, 3)],
     [M.threshold, num(language, AURIS_MODEL.threshold, 3)],
