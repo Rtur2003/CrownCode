@@ -93,7 +93,9 @@ so a slow analysis never ties up the web server.
 | `hf-crowncode-backend/` | The production backend. It is its own git repository whose remote **is** the Space: a push to it is a deploy. | no (`.gitignore`) |
 | `DataSet/` | AURIS training audio and feature tables (5,195 labelled songs). Too large for git; lives on the author's disk. | no |
 | `docs/` | Academic reports, technical notes, guides, and the media used in this README. | yes |
-| `portfolio/`, `templates/`, `scripts/` | A Vite portfolio, page templates, repository-level tooling. | yes |
+| `templates/noir-grain/` | Source of the Noir & Grain restaurant template. | yes |
+| `scripts/` | Builders and checkers for the thesis documents and presentations. | yes |
+| `portfolio/` | A small Vite + React portfolio. | yes |
 | `Android-App-CrownCode/` | The Android client. | no |
 
 ### The platform
