@@ -59,7 +59,7 @@ export const JobProgress: React.FC<{ job: ActiveJob; onCancel: () => void }> = (
   const upload = job.uploadTotal ? job.uploadedBytes / job.uploadTotal : 0
   const queue = job.queue
   const note = queue
-    ? [fill(W.queued, { n: queue.position - 1 }), queue.estimatedWaitSec !== null ? fill(W.queuedWait, { s: Math.max(5, Math.round(queue.estimatedWaitSec / 5) * 5) }) : ''].filter(Boolean).join(' ')
+    ? [fill(W.queued, { n: queue.ahead ?? queue.position }), queue.estimatedWaitSec !== null ? fill(W.queuedWait, { s: Math.max(5, Math.round(queue.estimatedWaitSec / 5) * 5) }) : ''].filter(Boolean).join(' ')
     : job.stage === 'waking' ? W.wakingNote : job.resumed ? W.resumed : live ? W.liveNote : W.processingNote
 
   return (

@@ -186,7 +186,7 @@ export interface JobSnapshot {
   elapsedSec: number
   response: AnalyzeResponse | null
   /** Place in line while queued; the wait estimate appears once the server has timed a job. */
-  queue?: { position: number; estimatedWaitSec: number | null }
+  queue?: { position: number; ahead?: number; estimatedWaitSec: number | null }
   /** Served from the server's cache: the same audio was analysed recently. */
   cached?: boolean
 }

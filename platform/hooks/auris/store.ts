@@ -40,7 +40,7 @@ export interface AurisJob {
   /** The server's own per-step progress (empty on the one-shot endpoint). */
   steps: JobStep[]
   /** Waiting behind other analyses on the server. */
-  queue: { position: number; estimatedWaitSec: number | null } | null
+  queue: { position: number; ahead?: number; estimatedWaitSec: number | null } | null
   /** Browser-side measurement of the same audio: 0‥1, or -1 if the browser can't decode it. */
   signalProgress: number
   signal: SignalReport | null
