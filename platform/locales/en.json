@@ -393,7 +393,8 @@
       "title": "Recent analyses",
       "model": "Model",
       "signal": "Browser",
-      "all": "Full history"
+      "all": "Full history",
+      "lead": "Analyses you ran in this browser. Click one to open its report again."
     },
     "pill": {
       "waking": "AURIS server waking up",
@@ -415,7 +416,9 @@
       "pause": "Pause",
       "seek": "Position in track",
       "restored": "Saved result",
-      "noVisuals": "Opened from history. Audio and graphs are only kept for the latest analysis."
+      "noVisuals": "Opened from history. Audio and graphs are only kept for the latest analysis.",
+      "title": "Audio",
+      "lead": "The audio as your browser decoded it. Click the waveform to move through the song."
     },
     "report": {
       "eyebrow": "AURIS report",
@@ -425,9 +428,9 @@
       "threshold": "Threshold",
       "thresholdNote": "Threshold {t}. Above it, the song is marked as AI-generated. The value was picked on validation data during training (Youden J).",
       "band": "Certainty",
-      "consensus": "{ai}/{n} models say AI",
+      "consensus": "{ai} of {n} models say AI",
       "decidedBy": "Verdict",
-      "trained": "Trained model",
+      "trained": "Verdict",
       "signalOnly": "Browser measurement only",
       "fallbackTitle": "This result doesn't come from the trained model",
       "fallbackBody": "No result came back from the server: {reason} The score below is the average of 7 simple measurements taken in your browser. It isn't a trained model, so don't read it as a firm answer.",
@@ -465,7 +468,7 @@
       },
       "towers": {
         "title": "Other models",
-        "lead": "Separate models that don't take part in the verdict. 0 means human-made, 1 means AI.",
+        "lead": "Separate models that don't take part in the verdict. 0 is closer to human-made, 1 closer to AI.",
         "missing": "didn't run",
         "names": {
           "xai_ensemble": "LightGBM probability",
@@ -506,7 +509,7 @@
           "breathPatternScore": "Breath pattern",
           "vocalTextureScore": "Vocal texture"
         },
-        "scoresLead": "0 means human-made, 1 means AI.",
+        "scoresLead": "Scores run from 0 to 1. 0 is closer to human-made, 1 closer to AI.",
         "none": "No clear vocals were found in the song."
       },
       "signal": {
@@ -540,7 +543,9 @@
       "lossyNote": "Compressed files like MP3 already have their high frequencies cut, so the bandwidth measurement wasn't used.",
       "export": "Download JSON",
       "again": "New analysis",
-      "fusionOnly": "Main model didn't run"
+      "fusionOnly": "Main model didn't run",
+      "title": "Report",
+      "openReport": "See the report"
     },
     "measures": {
       "spectralPeriodicity": {
