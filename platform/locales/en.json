@@ -295,13 +295,14 @@
   },
   "aiDetection": {
     "meta": {
-      "title": "AURIS · AI music detection",
-      "description": "AI music detection with LightGBM: 47 audio features, model comparisons and SHAP explanations.",
-      "keywords": "AURIS, AI music detection, LightGBM, SHAP, spectrogram, audio analysis, CrownCode"
+      "title": "Is This Song AI-Generated? Check It with AURIS",
+      "description": "Made with Suno or Udio? Upload a song or paste a YouTube link and AURIS estimates whether it's AI-generated, and shows why. Free, no sign-up.",
+      "keywords": "AI song checker, is this song AI generated, AI music detector, Suno detector, Udio detector, detect AI music, AURIS"
     },
     "intro": {
       "eyebrow": "Audio analysis · Thesis research",
-      "lead": "Analyses 47 audio features with LightGBM. Reports AI probability and each feature’s contribution to the prediction."
+      "lead": "Upload a song or paste its link. AURIS runs it through trained models and shows which measurements the result is based on.",
+      "question": "Was this song made with AI?"
     },
     "server": {
       "label": "Model server",
@@ -326,7 +327,7 @@
       "drop": "Drop a track here",
       "browse": "or choose one from your computer",
       "formats": "MP3 · WAV · FLAC · M4A · OGG · up to 30 MB",
-      "privacy": "The file is sent to the AURIS server for analysis and isn't stored afterwards."
+      "privacy": "The file is sent to the AURIS server for analysis and isn't kept there. For the FST layer, a copy also goes to the mippia team's Hugging Face Space."
     },
     "url": {
       "label": "YouTube link",
@@ -581,6 +582,36 @@
         "label": "Stereo correlation",
         "desc": "Measures similarity between the left and right channels."
       }
+    },
+    "faq": {
+      "title": "Questions people ask",
+      "lead": "Most visitors arrive with one of these.",
+      "items": [
+        {
+          "q": "How can you tell if a song was made with AI?",
+          "a": "There are a few things to listen for: vocals that never take a breath, lyrics that drift off meaning, a texture that stays the same from start to finish, endings that stop for no reason. People's songs can have all of these too. AURIS takes 47 measurements from the audio, feeds them to a model trained on 5,195 labelled songs, and shows which measurement pushed the result which way."
+        },
+        {
+          "q": "Does it recognise songs made with Suno or Udio?",
+          "a": "The training set includes tracks made with Suno, Udio, MusicGen, AudioLDM, ACE-Step and DiffRhythm. New versions of these tools can fool it, so read the result as a likelihood, not a ruling."
+        },
+        {
+          "q": "How reliable is the result?",
+          "a": "In cross-validation it is 88.4% accurate with a ROC-AUC of 0.955, so roughly one song in nine is misclassified. The closer the probability is to the threshold (0.432), the less certain the result; the report shows this on the Certainty line."
+        },
+        {
+          "q": "Is my file stored?",
+          "a": "Not on the server: the file is dropped from memory once the analysis ends, and only the result is kept for a few hours in case the same file comes back. The last audio stays in your own browser so a reload can pick up where it left off. For the FST layer, a copy goes to the mippia team's Hugging Face Space."
+        },
+        {
+          "q": "Is it free? Do I need an account?",
+          "a": "It's free and there's no account. Files can be up to 30 MB. The server runs one analysis at a time, so at busy moments you wait in line, and the page shows your place."
+        },
+        {
+          "q": "How does a YouTube link work?",
+          "a": "The server downloads the audio of the first two minutes and analyses it the same way as a file. YouTube blocks downloads for some videos; if that happens, upload the song as a file."
+        }
+      ]
     },
     "method": {
       "eyebrow": "Method",

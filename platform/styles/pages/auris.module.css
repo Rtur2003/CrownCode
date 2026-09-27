@@ -105,8 +105,19 @@
   text-shadow: none;
 }
 
+.question {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--font-family-base);
+  font-size: clamp(22px, 2vw, 30px);
+  line-height: 1.15;
+  letter-spacing: 0;
+  color: var(--copper);
+  text-wrap: balance;
+}
+
 .lead {
-  margin: 22px 0 0;
+  margin: 18px 0 0;
   max-width: 38ch;
   font-size: clamp(17px, 1.35vw, 20px);
   line-height: 1.5;
@@ -604,6 +615,37 @@
   border: 0;
   cursor: pointer;
 }
+
+/* questions */
+.faq { display: grid; gap: 0; max-width: 780px; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary {
+  position: relative;
+  padding: 18px 40px 18px 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: '';
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-top: -7px;
+  border-right: 1px solid var(--amber);
+  border-bottom: 1px solid var(--amber);
+  transform: rotate(45deg);
+  transition: transform 0.3s var(--ease-out);
+}
+.faq details[open] summary::after { transform: translateY(4px) rotate(-135deg); }
+.faq summary:hover { color: #f2cc87; }
+.faq summary:focus-visible { outline: 2px solid #f2cc87; outline-offset: 4px; }
+.faq p { margin: 0 0 20px; max-width: 70ch; font-size: 1rem; line-height: 1.6; color: var(--body); }
 
 /* recent */
 .recent { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-bottom: 18px; }

@@ -295,13 +295,14 @@
   },
   "aiDetection": {
     "meta": {
-      "title": "AURIS · Yapay zekâ müzik tespiti",
-      "description": "LightGBM ile yapay zekâ müzik tespiti. 47 ses özniteliği, model karşılaştırmaları ve SHAP ile karar açıklaması.",
-      "keywords": "AURIS, yapay zekâ müzik tespiti, LightGBM, SHAP, spektrogram, ses analizi, CrownCode"
+      "title": "Bu Şarkı Yapay Zekâ mı? AURIS ile Kontrol Et",
+      "description": "Suno ya da Udio ile mi yapıldı? Şarkını yükle veya YouTube bağlantısını yapıştır; AURIS yapay zekâ ihtimalini ölçsün, nedenini göstersin. Ücretsiz.",
+      "keywords": "yapay zeka şarkı tespiti, bu şarkı yapay zeka mı, yapay zeka müzik dedektörü, suno şarkı tespit, yapay zeka ile yapılmış şarkı nasıl anlaşılır, AI müzik tespiti, AURIS"
     },
     "intro": {
       "eyebrow": "Ses analizi · Tez araştırması",
-      "lead": "Sesin 47 özniteliğini LightGBM ile analiz eder. Yapay zekâ olasılığını ve özniteliklerin karara etkisini raporlar."
+      "lead": "Şarkını yükle ya da bağlantısını yapıştır. AURIS eğitilmiş modellerle inceler ve sonucun hangi ölçümlere dayandığını gösterir.",
+      "question": "Bu şarkıyı yapay zekâ mı yaptı?"
     },
     "server": {
       "label": "Model sunucusu",
@@ -326,7 +327,7 @@
       "drop": "Şarkıyı buraya bırak",
       "browse": "ya da bilgisayarından seç",
       "formats": "MP3 · WAV · FLAC · M4A · OGG · en fazla 30 MB",
-      "privacy": "Dosya analiz için AURIS sunucusuna gönderilir, sonra saklanmaz."
+      "privacy": "Dosya analiz için AURIS sunucusuna gönderilir ve orada saklanmaz. FST katmanı için bir kopyası mippia ekibinin Hugging Face Space'ine de gider."
     },
     "url": {
       "label": "YouTube bağlantısı",
@@ -581,6 +582,36 @@
         "label": "Stereo korelasyon",
         "desc": "Sol ve sağ kanal arasındaki benzerliği ölçer."
       }
+    },
+    "faq": {
+      "title": "Sık sorulanlar",
+      "lead": "Bu sayfaya en çok bu sorularla geliniyor.",
+      "items": [
+        {
+          "q": "Bir şarkının yapay zekâ ile yapıldığı nasıl anlaşılır?",
+          "a": "Kulakla bakılabilecek birkaç işaret var: nefes almayan vokaller, anlamı kayan sözler, baştan sona hiç değişmeyen bir ses dokusu, yersiz bitişler. Ama bunlar insan yapımı şarkılarda da çıkabiliyor. AURIS sesten 47 ölçüm alıp 5.195 etiketli şarkıyla eğitilmiş bir modele veriyor ve hangi ölçümün sonucu ne yöne ittiğini tek tek gösteriyor."
+        },
+        {
+          "q": "Suno veya Udio ile yapılmış şarkıları tanıyor mu?",
+          "a": "Eğitim setinde Suno, Udio, MusicGen, AudioLDM, ACE-Step ve DiffRhythm ile üretilmiş parçalar var. Bu araçların yeni sürümleri çıktıkça model yanılabilir, o yüzden sonucu kesin bir hüküm değil bir ihtimal olarak oku."
+        },
+        {
+          "q": "Sonuç ne kadar güvenilir?",
+          "a": "Çapraz doğrulamada doğruluk %88,4, ROC-AUC 0,955. Kabaca dokuz şarkıdan biri yanlış sınıflanıyor. Olasılık eşiğe (0,432) ne kadar yakınsa sonuç o kadar belirsiz; raporda bunu \"Kesinlik\" satırında görürsün."
+        },
+        {
+          "q": "Yüklediğim dosya saklanıyor mu?",
+          "a": "Sunucuda saklanmıyor: analiz bitince dosya bellekten silinir, aynı dosya tekrar gelirse diye yalnızca sonuç birkaç saat tutulur. Sayfayı yenilersen kaldığın yerden devam edebilmen için son ses kendi tarayıcında durur. FST katmanı için dosyanın bir kopyası mippia ekibinin Hugging Face Space'ine gider."
+        },
+        {
+          "q": "Ücretli mi, üye olmak gerekiyor mu?",
+          "a": "İkisi de hayır. Dosya başına sınır 30 MB. Sunucu aynı anda tek analiz yaptığı için yoğun anlarda sıraya girersin; kaçıncı sırada olduğun ekranda yazar."
+        },
+        {
+          "q": "YouTube bağlantısıyla nasıl çalışıyor?",
+          "a": "Sunucu videonun ilk iki dakikasının sesini indirir ve dosyayla aynı şekilde inceler. YouTube bazı videolarda indirmeye izin vermiyor; öyle olursa şarkıyı dosya olarak yükle."
+        }
+      ]
     },
     "method": {
       "eyebrow": "Yöntem",

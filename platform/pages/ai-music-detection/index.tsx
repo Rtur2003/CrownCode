@@ -124,7 +124,13 @@ const AurisPage: NextPage = () => {
   const sector = language === 'en' ? LOOK.sector.en : LOOK.sector.tr
 
   return (
-    <MainLayout title={A.meta.title} description={A.meta.description} keywords={A.meta.keywords}>
+    <MainLayout
+      title={A.meta.title}
+      description={A.meta.description}
+      keywords={A.meta.keywords}
+      image={language === 'en' ? '/og/ai-music-detection-en.jpg' : '/og/ai-music-detection.jpg'}
+      schema={[faqSchema(A.faq.items)]}
+    >
       <div className={styles.page}>
         <section
           ref={stageRef}
@@ -156,7 +162,10 @@ const AurisPage: NextPage = () => {
               <span>{pad(WORLD_INDEX + 1)} / {pad(PRODUCT_CATALOG.length)}</span>
               <span>{sector}</span>
             </p>
-            <h1 id="auris-title" className={styles.title}>AURIS</h1>
+            <h1 id="auris-title" className={styles.title}>
+              AURIS
+              <span className={styles.question}>{A.intro.question}</span>
+            </h1>
 
             {active ? (
               <JobProgress job={job} onCancel={auris.reset} />
@@ -186,6 +195,7 @@ const AurisPage: NextPage = () => {
           {signal && job && <Scope auris={auris} signal={signal} />}
           {report && <ReportLog job={report} />}
           <Recent current={job} />
+          <Faq />
           <Method />
         </div>
       </div>
@@ -443,6 +453,33 @@ const Recent: React.FC<{ current: AurisJob | null }> = ({ current }) => {
     </Stop>
   )
 }
+
+/** The questions people search for, answered on the page (and as FAQPage data). */
+const Faq: React.FC = () => {
+  const { t } = useLanguage()
+  const F = t.aiDetection.faq
+  return (
+    <Stop title={F.title} lead={F.lead}>
+      <div className={styles.faq}>
+        {F.items.map(item => (
+          <details key={item.q}>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </Stop>
+  )
+}
+
+const faqSchema = (items: ReadonlyArray<{ q: string; a: string }>) => ({
+  '@type': 'FAQPage',
+  mainEntity: items.map(item => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+})
 
 const Method: React.FC = () => {
   const { t, language } = useLanguage()

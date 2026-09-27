@@ -153,6 +153,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         author: { '@id': PERSON_ID },
         mainEntityOfPage: { '@id': `${canonicalUrl}#page` },
+        ...(app.sameAs ? { sameAs: app.sameAs } : {}),
       })
     }
   }

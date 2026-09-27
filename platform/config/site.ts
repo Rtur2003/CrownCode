@@ -62,8 +62,18 @@ export const INDEXABLE_ROUTES = [
  * matching entry into WebApplication/SoftwareApplication JSON-LD, using the
  * page's own localized title and description.
  */
-export const APP_SCHEMA: Record<string, { category: string; os: string; type?: 'WebApplication' | 'SoftwareApplication' }> = {
-  '/ai-music-detection': { category: 'MultimediaApplication', os: 'Web' },
+export const APP_SCHEMA: Record<string, {
+  category: string
+  os: string
+  type?: 'WebApplication' | 'SoftwareApplication'
+  /** Where the same thing lives elsewhere (model weights, source). */
+  sameAs?: string[]
+}> = {
+  '/ai-music-detection': {
+    category: 'MultimediaApplication',
+    os: 'Web',
+    sameAs: ['https://huggingface.co/Rthur2003/auris-models', 'https://huggingface.co/spaces/Rthur2003/crowncode-backend'],
+  },
   '/data-manipulation': { category: 'DeveloperApplication', os: 'Web' },
   '/creator-studio': { category: 'MultimediaApplication', os: 'Web' },
   '/crown-commend': { category: 'SocialNetworkingApplication', os: 'Web' },
