@@ -10,6 +10,9 @@ requestAnimationFrame, and the Web Animations API for CSS), so the WebGL
 world, the step list and every transition move at real speed in the
 video however slowly the frames are captured.
 
+Output (video, events) goes to --out, which git ignores; frames go to the
+OS temp dir and are deleted once the video is encoded.
+
 Usage (from platform/, with `npm run dev` on :3000):
   python scripts/capture-auris-reel.py [--lang tr|en] [--out assets-src/video/auris]
 Then: python scripts/generate-auris-reel-sound.py --events <out>/events.json
@@ -21,6 +24,7 @@ import json
 import math
 import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -34,7 +38,8 @@ args = parser.parse_args()
 FPS = 30
 W, H = 540, 960  # CSS px; captured at 2x
 OUT = Path(args.out)
-FRAMES = OUT / 'frames'
+# Frames are scratch (~350 MB); they live in the OS temp dir and go once encoded.
+FRAMES = Path(tempfile.gettempdir()) / f'auris-reel-frames-{args.lang}'
 URL = f"{args.base}{'/en' if args.lang == 'en' else ''}/ai-music-detection"
 
 CAPTIONS = {
@@ -242,6 +247,7 @@ def main() -> None:
     if FRAMES.exists():
         shutil.rmtree(FRAMES)
     FRAMES.mkdir(parents=True)
+    OUT.mkdir(parents=True, exist_ok=True)
     with sync_playwright() as p:
         browser = p.chromium.launch(args=['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'])
         ctx = browser.new_context(viewport={'width': W, 'height': H}, device_scale_factor=2, is_mobile=True, has_touch=True)
@@ -331,6 +337,7 @@ def main() -> None:
     video = OUT / f'auris-reel-9x16-{args.lang}-silent.mp4'
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-framerate', str(FPS), '-i', str(FRAMES / '%05d.png'),
                     '-c:v', 'libx264', '-preset', 'slow', '-crf', '17', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', str(video)], check=True)
+    shutil.rmtree(FRAMES, ignore_errors=True)
     print(video, frame, 'frames', f'{frame / FPS:.1f}s')
 
 
