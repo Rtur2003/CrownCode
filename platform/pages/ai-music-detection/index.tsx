@@ -1,19 +1,24 @@
-// AURIS — sends a track to the trained models on the CrownCode backend
-// (Hugging Face Space) and explains the verdict. The browser measures the
-// same audio for the waveform/spectrogram and as a labelled fallback.
-// Jobs run in hooks/auris/runner.ts, so they survive leaving this page.
+// AURIS — the first world of the homepage atlas, opened up. A track goes to
+// the trained models on the CrownCode backend (Hugging Face Space); the
+// browser measures the same audio for the waveform and spectrogram, and as
+// a labelled fallback. Jobs run in hooks/auris/runner.ts, so they survive
+// leaving this page.
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import type { NextPage } from 'next'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { AlertTriangle, ExternalLink, FileAudio, Link as LinkIcon, Mic, RefreshCw, Square, Upload, X } from 'lucide-react'
+import { AlertTriangle, ExternalLink, FileAudio, Link as LinkIcon, Mic, RefreshCw, Square, Upload } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { PlayButton, ResidualPlot, Spectrogram, Waveform, usePlayback } from '@/components/Auris/SignalViews'
-import { ModelMetrics, Report } from '@/components/Auris/Report'
-import { JobProgress } from '@/components/Auris/JobProgress'
+import { ModelMetrics, ReportLog, Stop, Verdict, summarize, type DoneJob } from '@/components/Auris/Report'
+import { JobProgress, jobSegments } from '@/components/Auris/JobProgress'
+import type { WorldMode } from '@/components/Auris/AurisWorld'
 import { aiProbability, clock, fill, isTrained, num, percent } from '@/components/Auris/format'
 import { AURIS_MODELS_URL, AURIS_SPACE_URL } from '@/config/api'
 import { AURIS_MODEL } from '@/config/auris-model'
+import { PRODUCT_CATALOG } from '@/config/product-catalog'
+import { worldLook } from '@/config/showroom-worlds'
 import { useLanguage } from '@/context/LanguageContext'
 import type { AnalysisResult } from '@/hooks/analysisTypes'
 import { dismissInterrupted, markSeen, openFromHistory, rerunLast, retryInterrupted } from '@/hooks/auris/runner'
@@ -23,7 +28,43 @@ import { useAuris, type AurisController } from '@/hooks/auris/useAuris'
 import { HISTORY_KEYS, readHistory, type HistoryEntry } from '@/hooks/useLocalHistory'
 import styles from '@/styles/pages/auris.module.css'
 
+// The world is WebGL; the server HTML shows a still of the same scene.
+const AurisWorld = dynamic(() => import('@/components/Auris/AurisWorld'), { ssr: false })
+
 type Tab = 'file' | 'url' | 'mic'
+
+const WORLD_ID = 'ai-music-detection'
+const WORLD_INDEX = PRODUCT_CATALOG.findIndex(p => p.id === WORLD_ID)
+const LOOK = worldLook({ id: WORLD_ID })
+const pad = (n: number) => String(n).padStart(2, '0')
+
+/** What the planet shows for the current job. */
+const worldState = (job: AurisJob | null): { mode: WorldMode; progress: number; threshold: number | null; ticks: number } => {
+  if (isActive(job)) {
+    if (job.stage === 'waking' || (job.stage === 'processing' && job.steps.length === 0)) {
+      return { mode: 'waking', progress: 0, threshold: null, ticks: 0 }
+    }
+    const { segments, progress } = jobSegments(job)
+    return { mode: 'running', progress, threshold: null, ticks: segments }
+  }
+  if (job?.stage === 'done' && job.result) {
+    const s = summarize(job.result)
+    return { mode: s.isAi ? 'ai' : 'human', progress: s.p, threshold: s.modelVerdict ? s.threshold : null, ticks: 0 }
+  }
+  return { mode: 'idle', progress: 0, threshold: null, ticks: 0 }
+}
+
+const useReducedMotion = () => {
+  const [reduced, setReduced] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const sync = () => setReduced(mq.matches)
+    sync()
+    mq.addEventListener('change', sync)
+    return () => mq.removeEventListener('change', sync)
+  }, [])
+  return reduced
+}
 
 const AurisPage: NextPage = () => {
   const { t, language } = useLanguage()
@@ -31,6 +72,12 @@ const AurisPage: NextPage = () => {
   const auris = useAuris(A.mic.take)
   const { job, server, interrupted } = auris
   const [tab, setTab] = useState<Tab>('file')
+  const [hot, setHot] = useState(false)
+  const [inView, setInView] = useState(true)
+  const [worldReady, setWorldReady] = useState(false)
+  const dragDepth = useRef(0)
+  const stageRef = useRef<HTMLElement>(null)
+  const reducedMotion = useReducedMotion()
   const active = isActive(job)
   const finished = job?.stage === 'done' || job?.stage === 'error'
 
@@ -39,153 +86,171 @@ const AurisPage: NextPage = () => {
     if (finished) {markSeen()}
   }, [finished, job?.id])
 
-  // Bring the report into view when a run finishes while the visitor watches.
-  const lastStage = useRef(job?.stage)
+  // Rendering pauses while the stage is scrolled away.
   useEffect(() => {
-    const was = lastStage.current
-    lastStage.current = job?.stage
-    if (job?.stage === 'done' && was && was !== 'done' && !job.restored) {
-      document.getElementById('auris-report')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }, [job?.stage, job?.restored])
+    const el = stageRef.current
+    if (!el) {return}
+    const io = new IntersectionObserver(([entry]) => setInView(!!entry?.isIntersecting), { rootMargin: '80px' })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
 
-  const report = job?.stage === 'done' && job.result ? (job as AurisJob & { result: AnalysisResult }) : null
+  // Drop a file anywhere on the stage, straight onto the world.
+  const onDragEnter = (e: React.DragEvent) => {
+    if (active || !e.dataTransfer.types.includes('Files')) {return}
+    dragDepth.current++
+    setHot(true)
+  }
+  const onDragLeave = () => {
+    dragDepth.current = Math.max(0, dragDepth.current - 1)
+    if (dragDepth.current === 0) {setHot(false)}
+  }
+  const onDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    dragDepth.current = 0
+    setHot(false)
+    const file = e.dataTransfer.files?.[0]
+    if (file && !active) {
+      setTab('file')
+      auris.analyseFile(file)
+    }
+  }
+
+  const report = job?.stage === 'done' && job.result ? (job as DoneJob) : null
   const canRerun = report && !report.result.xai && !report.restored
+  const openReport = () => document.getElementById('auris-report')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' })
+  const world = worldState(job)
+  const signal = job?.signal?.visuals ? job.signal : null
+  const sector = language === 'en' ? LOOK.sector.en : LOOK.sector.tr
 
   return (
     <MainLayout title={A.meta.title} description={A.meta.description} keywords={A.meta.keywords}>
       <div className={styles.page}>
-        <header className={styles.intro}>
-          <p className={styles.eyebrow}>{A.intro.eyebrow}</p>
-          <h1 className={styles.title}>AURIS</h1>
-          <p className={styles.lead}>{A.intro.lead}</p>
+        <section
+          ref={stageRef}
+          className={styles.stage}
+          data-mode={world.mode}
+          data-hot={hot ? 'true' : undefined}
+          aria-labelledby="auris-title"
+          onDragEnter={onDragEnter}
+          onDragOver={e => { if (!active) {e.preventDefault()} }}
+          onDragLeave={onDragLeave}
+          onDrop={onDrop}
+        >
+          <div className={styles.world} data-ready={worldReady ? 'true' : undefined}>
+            <div className={styles.worldPoster} aria-hidden="true" />
+            <div className={styles.worldCanvas}>
+              <AurisWorld
+                {...world}
+                hot={hot}
+                active={inView}
+                reducedMotion={reducedMotion}
+                onReady={() => setWorldReady(true)}
+              />
+            </div>
+          </div>
+          <div className={styles.scrim} aria-hidden="true" />
+
+          <div className={styles.panel}>
+            <p className={styles.kicker}>
+              <span>{pad(WORLD_INDEX + 1)} / {pad(PRODUCT_CATALOG.length)}</span>
+              <span>{sector}</span>
+            </p>
+            <h1 id="auris-title" className={styles.title}>AURIS</h1>
+
+            {active ? (
+              <JobProgress job={job} onCancel={auris.reset} />
+            ) : report ? (
+              <Verdict job={report} onReset={auris.reset} onRetryServer={canRerun ? () => void rerunLast() : undefined} onOpenReport={openReport} />
+            ) : (
+              <>
+                <p className={styles.lead}>{A.intro.lead}</p>
+                {interrupted && !job && (
+                  <div className={styles.banner} role="status">
+                    <p><strong>{A.interrupted.title}.</strong> {fill(A.interrupted.body, { label: interrupted.label })}</p>
+                    <div className={styles.actions}>
+                      <button type="button" className={styles.btnPrimary} onClick={() => void retryInterrupted()}><RefreshCw size={16} /> {A.interrupted.retry}</button>
+                      <button type="button" className={styles.btnGhost} onClick={dismissInterrupted}>{A.interrupted.dismiss}</button>
+                    </div>
+                  </div>
+                )}
+                <Console auris={auris} tab={tab} onTab={setTab} />
+              </>
+            )}
+          </div>
+
           <ServerStatus server={server} />
-        </header>
-
-        {interrupted && !job && (
-          <div className={styles.banner} role="status">
-            <div>
-              <strong>{A.interrupted.title}</strong>
-              <p>{fill(A.interrupted.body, { label: interrupted.label })}</p>
-            </div>
-            <div className={styles.actions}>
-              <button type="button" className={styles.btnPrimary} onClick={() => void retryInterrupted()}><RefreshCw size={16} /> {A.interrupted.retry}</button>
-              <button type="button" className={styles.btnGhost} onClick={dismissInterrupted}>{A.interrupted.dismiss}</button>
-            </div>
-          </div>
-        )}
-
-        <div className={styles.console}>
-          <aside className={styles.sources}>
-            <div className={styles.tabs} role="tablist" aria-label={A.tabs.ariaLabel}>
-              {([
-                ['file', FileAudio, A.tabs.file],
-                ['url', LinkIcon, A.tabs.url],
-                ['mic', Mic, A.tabs.mic],
-              ] as const).map(([id, Icon, label]) => (
-                <button
-                  key={id}
-                  type="button"
-                  role="tab"
-                  id={`auris-tab-${id}`}
-                  aria-controls="auris-source"
-                  aria-selected={tab === id}
-                  className={styles.tab}
-                  onClick={() => setTab(id)}
-                >
-                  <Icon size={16} /> {label}
-                </button>
-              ))}
-            </div>
-            <div id="auris-source" role="tabpanel" aria-labelledby={`auris-tab-${tab}`} className={styles.sourcePanel}>
-              {active ? (
-                <div className={styles.locked}>
-                  <p>{A.busy.locked}</p>
-                  <button type="button" className={styles.btnGhost} onClick={auris.reset}><X size={16} /> {A.busy.cancel}</button>
-                </div>
-              ) : (
-                <>
-                  {tab === 'file' && <FileSource auris={auris} />}
-                  {tab === 'url' && <UrlSource auris={auris} />}
-                  {tab === 'mic' && <MicSource auris={auris} />}
-                </>
-              )}
-            </div>
-          </aside>
-
-          <Scope auris={auris} />
-        </div>
-
-        {active && <JobProgress job={job} onCancel={auris.reset} />}
-
-        {report && (
-          <div id="auris-report" className={styles.reportAnchor}>
-            <Report job={report} onReset={auris.reset} onRetryServer={canRerun ? () => void rerunLast() : undefined} />
-          </div>
-        )}
-
-        <Recent current={job} />
-
-        <section className={styles.method} aria-labelledby="auris-method">
-          <div>
-            <p className={styles.eyebrow}>{A.method.eyebrow}</p>
-            <h2 id="auris-method">{A.method.title}</h2>
-            <p>
-              {fill(A.method.lead, {
-                samples: AURIS_MODEL.samples.toLocaleString(language === 'en' ? 'en-US' : 'tr-TR'),
-                ai: AURIS_MODEL.aiSamples.toLocaleString(language === 'en' ? 'en-US' : 'tr-TR'),
-                human: AURIS_MODEL.humanSamples.toLocaleString(language === 'en' ? 'en-US' : 'tr-TR'),
-                features: AURIS_MODEL.features,
-                folds: AURIS_MODEL.folds,
-              })}
-            </p>
-            <ModelMetrics />
-            <p className={styles.links}>
-              <a href={AURIS_MODELS_URL} target="_blank" rel="noopener noreferrer">{A.server.models} <ExternalLink size={13} /></a>
-              <a href={AURIS_SPACE_URL} target="_blank" rel="noopener noreferrer">{A.server.space} <ExternalLink size={13} /></a>
-            </p>
-          </div>
-          <div className={styles.methodCols}>
-            <div>
-              <h3>{A.method.stepsTitle}</h3>
-              <ol>
-                <li>{A.method.step1}</li>
-                <li>{fill(A.method.step2, { t: num(language, AURIS_MODEL.threshold, 3) })}</li>
-                <li>{A.method.step3}</li>
-                <li>{A.method.step4}</li>
-              </ol>
-            </div>
-            <div>
-              <h3>{A.method.limitsTitle}</h3>
-              <ul>
-                <li>{A.method.limit1}</li>
-                <li>{A.method.limit2}</li>
-                <li>{fill(A.method.limit3, { acc: num(language, AURIS_MODEL.accuracy * 100, 1) })}</li>
-              </ul>
-            </div>
-          </div>
         </section>
+
+        <div className={styles.route}>
+          {signal && job && <Scope auris={auris} signal={signal} />}
+          {report && <ReportLog job={report} />}
+          <Recent current={job} />
+          <Method />
+        </div>
       </div>
     </MainLayout>
   )
 }
 
+// ── stage pieces ────────────────────────────────────────────────────
+
 const ServerStatus: React.FC<{ server: ServerState }> = ({ server }) => {
   const { t } = useLanguage()
   const S = t.aiDetection.server
-  const label = S[server.status]
   const note = server.status === 'waking' ? S.wakingNote : server.status === 'down' ? S.downNote : null
   return (
-    <div className={styles.serverStatus} data-status={server.status}>
-      <p className={styles.status}>
-        <span className={styles.dot} data-status={server.status} />
-        {S.label}: {label}
+    <div className={styles.server} data-status={server.status}>
+      <p>
+        <span className={styles.dot} aria-hidden="true" />
+        {S.label}: {S[server.status]}
         {server.status === 'ready' && server.latencyMs !== null && <span className={styles.mono}>{server.latencyMs} ms</span>}
         {server.status === 'down' && (
           <button type="button" className={styles.linkBtn} onClick={() => void ensureServer()}>{S.retry}</button>
         )}
       </p>
-      {note && <p className={styles.hint}>{note}</p>}
+      {note && <p className={styles.serverNote}>{note}</p>}
+    </div>
+  )
+}
+
+const Console: React.FC<{ auris: AurisController; tab: Tab; onTab: (t: Tab) => void }> = ({ auris, tab, onTab }) => {
+  const { t } = useLanguage()
+  const A = t.aiDetection
+  const job = auris.job
+  const errorText = job?.stage === 'error' && job.error
+    ? (A.errors as Record<string, string>)[job.error] ?? A.errors.internalError
+    : null
+  return (
+    <div className={styles.console}>
+      <div className={styles.tabs} role="tablist" aria-label={A.tabs.ariaLabel}>
+        {([
+          ['file', FileAudio, A.tabs.file],
+          ['url', LinkIcon, A.tabs.url],
+          ['mic', Mic, A.tabs.mic],
+        ] as const).map(([id, Icon, label]) => (
+          <button
+            key={id}
+            type="button"
+            role="tab"
+            id={`auris-tab-${id}`}
+            aria-controls="auris-source"
+            aria-selected={tab === id}
+            className={styles.tab}
+            onClick={() => onTab(id)}
+          >
+            <Icon size={15} /> {label}
+          </button>
+        ))}
+      </div>
+      <div id="auris-source" role="tabpanel" aria-labelledby={`auris-tab-${tab}`} className={styles.sourcePanel}>
+        {tab === 'file' && <FileSource auris={auris} />}
+        {tab === 'url' && <UrlSource auris={auris} />}
+        {tab === 'mic' && <MicSource auris={auris} />}
+      </div>
+      {errorText && (
+        <p className={styles.error} role="alert"><AlertTriangle size={16} /> {errorText}</p>
+      )}
     </div>
   )
 }
@@ -203,18 +268,19 @@ const FileSource: React.FC<{ auris: AurisController }> = ({ auris }) => {
       data-over={over}
       role="button"
       tabIndex={0}
-      aria-label={F.browse}
+      aria-label={`${F.drop}. ${F.browse}`}
       onClick={() => input.current?.click()}
       onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.current?.click() } }}
       onDragOver={e => { e.preventDefault(); setOver(true) }}
       onDragLeave={() => setOver(false)}
-      onDrop={e => { e.preventDefault(); setOver(false); pick(e.dataTransfer.files?.[0]) }}
+      onDrop={e => { e.preventDefault(); e.stopPropagation(); setOver(false); pick(e.dataTransfer.files?.[0]) }}
     >
-      <Upload size={28} />
-      <strong>{F.drop}</strong>
-      <span>{F.browse}</span>
+      <Upload size={22} />
+      <span className={styles.dropText}>
+        <strong>{F.drop}</strong>
+        <span>{F.browse}</span>
+      </span>
       <small>{F.formats}</small>
-      <small className={styles.privacy}>{F.privacy}</small>
       <input
         ref={input}
         type="file"
@@ -222,6 +288,7 @@ const FileSource: React.FC<{ auris: AurisController }> = ({ auris }) => {
         hidden
         onChange={e => { pick(e.target.files?.[0]); e.target.value = '' }}
       />
+      <small className={styles.privacy}>{F.privacy}</small>
     </div>
   )
 }
@@ -233,16 +300,18 @@ const UrlSource: React.FC<{ auris: AurisController }> = ({ auris }) => {
   return (
     <form className={styles.urlForm} onSubmit={e => { e.preventDefault(); auris.analyseUrl(value) }}>
       <label htmlFor="auris-url">{U.label}</label>
-      <input
-        id="auris-url"
-        type="url"
-        inputMode="url"
-        autoComplete="off"
-        placeholder={U.placeholder}
-        value={value}
-        onChange={e => setValue(e.target.value)}
-      />
-      <button type="submit" className={styles.btnPrimary} disabled={!value.trim()}>{U.submit}</button>
+      <div className={styles.urlRow}>
+        <input
+          id="auris-url"
+          type="url"
+          inputMode="url"
+          autoComplete="off"
+          placeholder={U.placeholder}
+          value={value}
+          onChange={e => setValue(e.target.value)}
+        />
+        <button type="submit" className={styles.btnPrimary} disabled={!value.trim()}>{U.submit}</button>
+      </div>
       <p className={styles.hint}>{U.hint}</p>
     </form>
   )
@@ -261,84 +330,71 @@ const MicSource: React.FC<{ auris: AurisController }> = ({ auris }) => {
         onClick={auris.recording ? auris.stopRecording : () => void auris.startRecording()}
         style={{ ['--level' as string]: auris.micLevel }}
       >
-        {auris.recording ? <Square size={22} /> : <Mic size={24} />}
+        {auris.recording ? <Square size={20} /> : <Mic size={22} />}
         <span>{auris.recording ? M.stop : M.start}</span>
       </button>
-      <p className={styles.hint}>
-        {auris.recording ? `${M.recording} ${secs} / ${auris.maxRecordMs / 1000} s` : M.hint}
-      </p>
+      <div className={styles.micSide}>
+        {auris.recording ? <LiveMeter level={auris.micLevel} /> : null}
+        <p className={styles.hint}>
+          {auris.recording ? `${M.recording} ${secs} / ${auris.maxRecordMs / 1000} s` : M.hint}
+        </p>
+      </div>
     </div>
   )
 }
 
-const Scope: React.FC<{ auris: AurisController }> = ({ auris }) => {
+/** Rolling input level while the microphone records. */
+const LiveMeter: React.FC<{ level: number }> = ({ level }) => {
+  const [history, setHistory] = useState<number[]>(() => Array(64).fill(0))
+  const [prevLevel, setPrevLevel] = useState(level)
+  if (level !== prevLevel) {
+    setPrevLevel(level)
+    setHistory(h => [...h.slice(1), level])
+  }
+  return (
+    <svg className={styles.liveMeter} viewBox="0 0 256 40" aria-hidden="true" preserveAspectRatio="none">
+      {history.map((v, i) => {
+        const hgt = Math.max(1.5, v * 38)
+        return <rect key={i} x={i * 4} y={20 - hgt / 2} width={2.6} height={hgt} rx={1} />
+      })}
+    </svg>
+  )
+}
+
+// ── below the stage, on the route line ─────────────────────────────
+
+const Scope: React.FC<{ auris: AurisController; signal: NonNullable<AurisJob['signal']> }> = ({ auris, signal }) => {
   const { t } = useLanguage()
   const A = t.aiDetection
-  const { job } = auris
-  const playback = usePlayback(job?.audioUrl ?? null)
-  const signal = job?.signal?.visuals ? job.signal : null
-  const active = isActive(job)
-  const errorText = job?.stage === 'error' && job.error
-    ? (A.errors as Record<string, string>)[job.error] ?? A.errors.internalError
-    : null
-
+  const playback = usePlayback(auris.job?.audioUrl ?? null)
   return (
-    <section className={styles.scope} aria-live="polite" aria-busy={active}>
-      <div className={styles.scopeBar}>
-        <span className={styles.scopeName}>
-          {job?.restored && <span className={styles.chip}>{A.scope.restored}</span>} {job?.label || A.scope.empty}
-        </span>
-        {signal && playback.available && (
-          <PlayButton playing={playback.playing} onClick={playback.toggle} labels={{ play: A.scope.play, pause: A.scope.pause }} />
-        )}
-      </div>
-
-      {signal ? (
-        <div className={styles.views}>
-          <div>
-            <p className={styles.viewLabel}>{A.scope.waveform}</p>
+    <Stop title={A.scope.title} lead={A.scope.lead}>
+      <div className={styles.scope}>
+        <div className={styles.scopeRow}>
+          {playback.available && (
+            <PlayButton playing={playback.playing} onClick={playback.toggle} labels={{ play: A.scope.play, pause: A.scope.pause }} />
+          )}
+          <div className={styles.scopeWave}>
             <Waveform peaks={signal.visuals.waveform} progress={playback.progress} onSeek={playback.seek} label={A.scope.seek} />
           </div>
-          <div>
-            <p className={styles.viewLabel}>{A.scope.spectrogram}</p>
-            <Spectrogram
-              data={signal.visuals.spectrogram}
-              minHz={signal.visuals.spectrogramMinHz}
-              maxHz={signal.visuals.spectrogramMaxHz}
-              cutoffHz={signal.contributions.bandwidthCutoff.value}
-              cutoffLabel={A.scope.cutoff}
-              progress={playback.progress}
-            />
-          </div>
-          <div>
-            <p className={styles.viewLabel}>{A.scope.residual}</p>
-            <ResidualPlot values={signal.visuals.periodicityResidual} label={A.scope.residual} />
-          </div>
         </div>
-      ) : (
-        <div className={styles.scopeIdle}>
-          {active ? (
-            <>
-              <ScanTrace />
-              <p>{A.wait.stages[job.stage as 'waking' | 'uploading' | 'processing']}</p>
-            </>
-          ) : errorText ? (
-            <div className={styles.error} role="alert">
-              <AlertTriangle size={20} />
-              <p>{errorText}</p>
-              <button type="button" className={styles.btnGhost} onClick={auris.reset}>{A.errors.tryAgain}</button>
-            </div>
-          ) : job?.stage === 'done' ? (
-            <p>{A.scope.noVisuals}</p>
-          ) : (
-            <>
-              {auris.recording ? <LiveMeter level={auris.micLevel} /> : <IdleTrace />}
-              <p>{auris.recording ? A.mic.recording : A.scope.idle}</p>
-            </>
-          )}
+        <div>
+          <p className={styles.viewLabel}>{A.scope.spectrogram}</p>
+          <Spectrogram
+            data={signal.visuals.spectrogram}
+            minHz={signal.visuals.spectrogramMinHz}
+            maxHz={signal.visuals.spectrogramMaxHz}
+            cutoffHz={signal.contributions.bandwidthCutoff.value}
+            cutoffLabel={A.scope.cutoff}
+            progress={playback.progress}
+          />
         </div>
-      )}
-    </section>
+        <div>
+          <p className={styles.viewLabel}>{A.scope.residual}</p>
+          <ResidualPlot values={signal.visuals.periodicityResidual} label={A.scope.residual} />
+        </div>
+      </div>
+    </Stop>
   )
 }
 
@@ -356,14 +412,10 @@ const Recent: React.FC<{ current: AurisJob | null }> = ({ current }) => {
   const fmt = new Intl.DateTimeFormat(language === 'en' ? 'en-GB' : 'tr-TR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
 
   return (
-    <section className={styles.recent} aria-labelledby="auris-recent">
-      <div className={styles.recentHead}>
-        <h2 id="auris-recent">{R.title}</h2>
-        <Link href="/analysis-history">{R.all}</Link>
-      </div>
-      <ol>
+    <Stop title={R.title} lead={R.lead}>
+      <ol className={styles.recent}>
         {entries.map(e => {
-          const trained = isTrained(e.result)
+          const trained = isTrained(e.result) && !!e.result.xai
           const p = aiProbability(e.result)
           const ai = trained ? e.result.isAIGenerated : p >= 0.5
           return (
@@ -373,10 +425,10 @@ const Recent: React.FC<{ current: AurisJob | null }> = ({ current }) => {
                 disabled={busy}
                 onClick={() => {
                   openFromHistory(e.input, e.result, e.timestamp)
-                  requestAnimationFrame(() => document.getElementById('auris-report')?.scrollIntoView({ behavior: 'smooth' }))
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
                 }}
               >
-                <span className={styles.recentVerdict} data-tone={ai ? 'ai' : 'human'}>{percent(language, p)}</span>
+                <span className={styles.recentValue} data-tone={ai ? 'ai' : 'human'}>{percent(language, p)}</span>
                 <span className={styles.recentLabel}>{e.input}</span>
                 <span className={styles.recentMeta}>
                   {trained ? R.model : R.signal} · {fmt.format(e.timestamp)}
@@ -387,47 +439,50 @@ const Recent: React.FC<{ current: AurisJob | null }> = ({ current }) => {
           )
         })}
       </ol>
-    </section>
+      <Link href="/analysis-history" className={styles.linkBtn}>{R.all}</Link>
+    </Stop>
   )
 }
 
-/** Rolling input level while the microphone records. */
-const LiveMeter: React.FC<{ level: number }> = ({ level }) => {
-  const [history, setHistory] = useState<number[]>(() => Array(96).fill(0))
-  const [prevLevel, setPrevLevel] = useState(level)
-  if (level !== prevLevel) {
-    setPrevLevel(level)
-    setHistory(h => [...h.slice(1), level])
-  }
+const Method: React.FC = () => {
+  const { t, language } = useLanguage()
+  const M = t.aiDetection.method
+  const count = (n: number) => n.toLocaleString(language === 'en' ? 'en-US' : 'tr-TR')
   return (
-    <svg className={styles.idleTrace} viewBox="0 0 384 60" aria-hidden="true" preserveAspectRatio="none">
-      {history.map((v, i) => {
-        const hgt = Math.max(1.5, v * 56)
-        return <rect key={i} x={i * 4} y={30 - hgt / 2} width={2.6} height={hgt} rx={1} className={styles.liveBar} />
-      })}
-    </svg>
+    <>
+      <Stop
+        title={M.title}
+        lead={fill(M.lead, {
+          samples: count(AURIS_MODEL.samples),
+          ai: count(AURIS_MODEL.aiSamples),
+          human: count(AURIS_MODEL.humanSamples),
+          features: AURIS_MODEL.features,
+          folds: AURIS_MODEL.folds,
+        })}
+      >
+        <ModelMetrics />
+        <p className={styles.links}>
+          <a href={AURIS_MODELS_URL} target="_blank" rel="noopener noreferrer">{t.aiDetection.server.models} <ExternalLink size={13} /></a>
+          <a href={AURIS_SPACE_URL} target="_blank" rel="noopener noreferrer">{t.aiDetection.server.space} <ExternalLink size={13} /></a>
+        </p>
+      </Stop>
+      <Stop title={M.stepsTitle}>
+        <ol className={styles.methodList}>
+          <li>{M.step1}</li>
+          <li>{fill(M.step2, { t: num(language, AURIS_MODEL.threshold, 3) })}</li>
+          <li>{M.step3}</li>
+          <li>{M.step4}</li>
+        </ol>
+      </Stop>
+      <Stop title={M.limitsTitle}>
+        <ul className={styles.methodList}>
+          <li>{M.limit1}</li>
+          <li>{M.limit2}</li>
+          <li>{fill(M.limit3, { acc: num(language, AURIS_MODEL.accuracy * 100, 1) })}</li>
+        </ul>
+      </Stop>
+    </>
   )
 }
-
-const tracePath = Array.from({ length: 101 }, (_, i) => {
-  const x = i * 4
-  const y = 30 + Math.sin(i * 0.45) * 9 * Math.exp(-(((i - 50) / 26) ** 2)) + Math.sin(i * 1.7) * 2
-  return `${i ? 'L' : 'M'}${x},${y.toFixed(1)}`
-}).join(' ')
-
-/** Static trace so the empty scope reads as an instrument, not a blank box. */
-const IdleTrace = () => (
-  <svg className={styles.idleTrace} viewBox="0 0 400 60" aria-hidden="true" preserveAspectRatio="none">
-    <path d={tracePath} />
-  </svg>
-)
-
-/** The same trace with a sweep, while a job is in flight. */
-const ScanTrace = () => (
-  <svg className={`${styles.idleTrace} ${styles.scanTrace}`} viewBox="0 0 400 60" aria-hidden="true" preserveAspectRatio="none">
-    <path d={tracePath} />
-    <rect className={styles.scanBeam} x="0" y="0" width="60" height="60" />
-  </svg>
-)
 
 export default AurisPage
