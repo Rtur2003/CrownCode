@@ -167,7 +167,7 @@ export function ProjectExplorer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // "Open project": the camera dives into the planet and the stage floods
+  // "Enter world": the camera dives into the planet and the stage floods
   // with the world's colour before the project page loads.
   const enterWorld = (href: string, color: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (reducedMotion || external(href) || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) {return}
