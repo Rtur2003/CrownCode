@@ -192,6 +192,7 @@ PAGE_SETUP = r"""
   const style = document.createElement('style')
   style.textContent = `
     header, [class*="RouteBadge"], [class*="badge"], .skip-link, footer { visibility: hidden !important; }
+    nextjs-portal { display: none !important; }
     /* Once a song is dropped, the title steps aside so the world and the panel share the frame. */
     body.reel-compact [class*="kicker"], body.reel-compact h1, body.reel-compact [class*="lead"] { display: none !important; }
     body.reel-compact [class*="world"] { height: 440px !important; }
