@@ -1,5 +1,5 @@
-import React from 'react'
-import { AlertTriangle, ArrowDown, Download, RefreshCw, RotateCcw } from 'lucide-react'
+import React, { useState } from 'react'
+import { AlertTriangle, ArrowDown, Download, RefreshCw, RotateCcw, Share2 } from 'lucide-react'
 import type { AnalysisResult, FeatureCategory, FeatureContribution, LayerStatus, TowerScores } from '@/hooks/analysisTypes'
 import type { MeasureKey } from '@/hooks/auris/signal'
 import type { AurisJob } from '@/hooks/auris/store'
@@ -86,12 +86,38 @@ export const Verdict: React.FC<VerdictProps> = ({ job, onReset, onRetryServer, o
     ? (language === 'en' ? r.xai.confidenceBand.labelEn : r.xai.confidenceBand.labelTr)
     : null
   const reason = job.serverError ? ((A.errors as Record<string, string>)[job.serverError] ?? A.errors.internalError) : ''
+  const [sharing, setSharing] = useState<'idle' | 'busy' | 'saved'>('idle')
+  const verdictText = s.modelVerdict ? (s.isAi ? L.verdictAi : L.verdictHuman) : (s.isAi ? L.leanAi : L.leanHuman)
+
+  const share = async () => {
+    setSharing('busy')
+    try {
+      const { drawCard, shareCard } = await import('@/components/Auris/shareCard')
+      const url = `hasan-arthur-altuntas.xyz${language === 'en' ? '/en' : ''}/ai-music-detection`
+      const blob = await drawCard({
+        language,
+        label: job.label,
+        verdict: verdictText,
+        probability: s.p,
+        probabilityLabel: s.modelVerdict ? L.probability : L.signalScore,
+        modelLine: s.modelVerdict ? `LightGBM · ${fill(L.consensus, { ai: s.aiVotes, n: s.liveVotes.length })}` : L.signalOnly,
+        threshold: s.modelVerdict ? s.threshold : null,
+        isAi: s.isAi,
+        note: L.shareNote,
+        url,
+      })
+      const outcome = await shareCard(blob, 'auris-sonuc.png', fill(L.shareText, { p: percent(language, s.p) }), `https://${url}`)
+      setSharing(outcome === 'saved' ? 'saved' : 'idle')
+    } catch {
+      setSharing('idle')
+    }
+  }
 
   return (
     <div className={styles.verdict} data-verdict={s.isAi ? 'ai' : 'human'} data-source={s.modelVerdict ? 'model' : 'other'}>
       <p className={styles.verdictFile}>{job.label}</p>
       <h2 id="auris-verdict" className={styles.verdictTitle}>
-        {s.modelVerdict ? (s.isAi ? L.verdictAi : L.verdictHuman) : (s.isAi ? L.leanAi : L.leanHuman)}
+        {verdictText}
       </h2>
 
       <div className={styles.reading}>
@@ -123,6 +149,9 @@ export const Verdict: React.FC<VerdictProps> = ({ job, onReset, onRetryServer, o
 
       <div className={styles.actions}>
         <button type="button" className={styles.btnPrimary} onClick={onOpenReport}><ArrowDown size={16} /> {L.openReport}</button>
+        <button type="button" className={styles.btnGhost} onClick={() => void share()} disabled={sharing === 'busy'} aria-live="polite">
+          <Share2 size={16} /> {sharing === 'saved' ? L.shareSaved : L.share}
+        </button>
         {onRetryServer && (
           <button type="button" className={styles.btnGhost} onClick={onRetryServer}><RefreshCw size={16} /> {L.retryServer}</button>
         )}

@@ -551,7 +551,11 @@
       "again": "Yeni analiz",
       "fusionOnly": "Ana model çalışmadı",
       "title": "Rapor",
-      "openReport": "Raporu gör"
+      "openReport": "Raporu gör",
+      "share": "Sonucu paylaş",
+      "shareSaved": "Kart indirildi",
+      "shareNote": "Bir ihtimal, kesin hüküm değil.",
+      "shareText": "AURIS bu şarkıya {p} yapay zekâ olasılığı verdi. Seninkini de dene:"
     },
     "measures": {
       "spectralPeriodicity": {

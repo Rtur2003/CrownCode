@@ -551,7 +551,11 @@
       "again": "New analysis",
       "fusionOnly": "Main model didn't run",
       "title": "Report",
-      "openReport": "See the report"
+      "openReport": "See the report",
+      "share": "Share the result",
+      "shareSaved": "Card downloaded",
+      "shareNote": "A likelihood, not a ruling.",
+      "shareText": "AURIS gave this song a {p} chance of being AI-made. Try yours:"
     },
     "measures": {
       "spectralPeriodicity": {

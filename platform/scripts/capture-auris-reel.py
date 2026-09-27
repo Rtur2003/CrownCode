@@ -16,6 +16,7 @@ Then: python scripts/generate-auris-reel-sound.py --events <out>/events.json
 Requires playwright (python) and ffmpeg.
 """
 import argparse
+import datetime
 import json
 import math
 import shutil
@@ -186,6 +187,9 @@ PAGE_SETUP = r"""
   const style = document.createElement('style')
   style.textContent = `
     header, [class*="RouteBadge"], [class*="badge"], .skip-link, footer { visibility: hidden !important; }
+    /* Once a song is dropped, the title steps aside so the world and the panel share the frame. */
+    body.reel-compact [class*="kicker"], body.reel-compact h1, body.reel-compact [class*="lead"] { display: none !important; }
+    body.reel-compact [class*="world"] { height: 440px !important; }
     #reel-cap { position: fixed; z-index: 99999; left: 22px; right: 22px; top: 26px; pointer-events: none; }
     #reel-cap p { margin: 0; padding: 10px 14px; display: inline-block; font-family: var(--font-family-base); font-size: 21px; line-height: 1.25;
       color: #f3e9d8; background: rgb(12 11 10 / .78); border: 1px solid #d6ab6b4d; border-radius: 12px; backdrop-filter: blur(8px);
@@ -247,7 +251,7 @@ def main() -> None:
         page.wait_for_selector('[data-ready="true"]', timeout=60000)
         page.wait_for_timeout(1500)
         page.evaluate(PAGE_SETUP)
-        page.clock.pause_at(page.evaluate('Date.now()') + 10)
+        page.clock.pause_at(datetime.datetime.now() + datetime.timedelta(seconds=1))
 
         frame = 0
         scroll = {'from': 0, 'to': 0, 'start': 0, 'dur': 1}
@@ -258,7 +262,8 @@ def main() -> None:
         def step(seconds: float) -> None:
             nonlocal frame
             for _ in range(int(round(seconds * FPS))):
-                page.clock.run_for(1000 / FPS)
+                # Whole milliseconds per frame (33/34), so 30 frames make exactly one second.
+                page.clock.run_for(round((frame + 1) * 1000 / FPS) - round(frame * 1000 / FPS))
                 k = (frame - scroll['start']) / scroll['dur']
                 if 0 <= k <= 1.0001:
                     y = scroll['from'] + (scroll['to'] - scroll['from']) * ease(k)
@@ -278,22 +283,19 @@ def main() -> None:
         page.evaluate("window.__f1 = window.__makeFile('parca.wav', 7); window.__drag('dragenter', window.__f1)")
         at('hot')
         step(1.1)
-        page.evaluate("window.__drag('drop', window.__f1)")
+        page.evaluate("window.__drag('drop', window.__f1); document.body.classList.add('reel-compact')")
         at('drop')
         step(1.0)
         # 2. The server works.
         page.evaluate(f'window.__caption("2", {json.dumps(c["run"])})')
-        set_scroll(300, 1.2)
         step(6.3)
         # 3. The verdict.
         page.evaluate(f'window.__caption("3", {json.dumps(c["verdict"])})')
-        set_scroll(330, 0.8)
-        step(3.2)
+        step(3.4)
         # A second song, made by people.
         page.evaluate('window.__caption("", "")')
         page.evaluate("window.__setRun('second')")
         page.evaluate("document.querySelectorAll('button').forEach(b => { if (/Yeni analiz|New analysis/.test(b.textContent)) b.click() })")
-        set_scroll(0, 0.7)
         step(0.8)
         page.evaluate("window.__f2 = window.__makeFile('parca-2.wav', 23); window.__drag('dragenter', window.__f2)")
         step(0.5)
@@ -301,10 +303,10 @@ def main() -> None:
         at('drop')
         step(0.6)
         page.evaluate(f'window.__caption("", {json.dumps(c["human"])})')
-        set_scroll(330, 1.0)
-        step(5.4)
+        step(5.6)
         # The report.
         page.evaluate(f'window.__caption("", {json.dumps(c["report"])})')
+        page.evaluate("document.body.classList.remove('reel-compact')")
         votes_y = page.evaluate("(() => { const h = [...document.querySelectorAll('h3')].find(x => /Model oyları|What the models say/.test(x.textContent)); return h ? h.getBoundingClientRect().top + scrollY - 70 : 1400 })()")
         set_scroll(votes_y, 1.6)
         step(2.6)

@@ -73,3 +73,10 @@ storybook-static/
 # PWA
 public/sw.js
 public/workbox-*.js
+
+# Reel output (frames, video, sound, events): made by scripts/capture-*-reel.* and
+# scripts/generate-*-reel-sound.py, rebuilt on demand, never tracked.
+assets-src/video/**/frames/
+assets-src/video/**/*.mp4
+assets-src/video/**/*.wav
+assets-src/video/auris/
