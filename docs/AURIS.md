@@ -274,9 +274,9 @@ Server settings (Space variables, all optional):
 | `FST_PREDICT_TIMEOUT` | `60` | Seconds to wait for FST. |
 | `CROWNCODE_CORS_ORIGINS` | | Allowed site origins, comma separated. |
 
-YouTube sometimes blocks downloads from cloud addresses. The downloader accepts
-cookies from a Space secret when that happens (see
-`app/services/youtube_downloader.py`).
+YouTube sometimes blocks downloads from cloud addresses. When that happens, add
+exported YouTube cookies as the Space secret `YOUTUBE_COOKIES_BASE64` (base64 of
+a cookies.txt file); `YOUTUBE_COOKIES_FILE` works for a path inside the image.
 
 The tests don't run any model:
 
