@@ -71,11 +71,11 @@ export default defineConfig([
     rules: { 'react-hooks/purity': 'off' },
   },
 
-  // Atlas WebGL sahnesi: R3F'de shader uniform'lari ve Three nesneleri
+  // Atlas ve AURIS WebGL sahneleri: R3F'de shader uniform'lari ve Three nesneleri
   // useFrame icinde kasitli olarak mutasyona ugrar (her karede React render'i
   // tetiklememenin standart yolu).
   {
-    files: ['components/Home/Atlas/AtlasScene.tsx'],
+    files: ['components/Home/Atlas/AtlasScene.tsx', 'components/Auris/AurisWorld.tsx'],
     rules: { 'react-hooks/immutability': 'off' },
   },
 
