@@ -180,8 +180,9 @@ export interface JobStep {
 
 export interface JobSnapshot {
   jobId: string | null
-  /** queued: waiting for the CPU behind other analyses; running: downloading or analysing. */
-  status: 'queued' | 'running' | 'done' | 'error'
+  status: 'running' | 'done' | 'error'
+  /** While running: queued = waiting for the CPU behind other analyses. */
+  phase?: 'queued' | 'running' | 'done' | 'error'
   steps: JobStep[]
   elapsedSec: number
   response: AnalyzeResponse | null

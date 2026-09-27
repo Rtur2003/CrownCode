@@ -159,12 +159,13 @@ const followServerJob = async (id: string, serverJobId: string, signal: AbortSig
     } else {
       misses = 0
       const { snapshot } = poll
-      patchJob(id, { steps: snapshot.steps ?? [], queue: snapshot.status === 'queued' ? snapshot.queue ?? null : null })
+      const queued = snapshot.phase === 'queued'
+      patchJob(id, { steps: snapshot.steps ?? [], queue: queued ? snapshot.queue ?? null : null })
       if (isSettled(snapshot)) {
         const outcome = readAnalyzeResponse(200, snapshot.response)
         return snapshot.cached ? { ...outcome, warnings: [...outcome.warnings, 'cached_result'] } : outcome
       }
-      await sleep(snapshot.status === 'queued' ? QUEUED_POLL_MS : POLL_MS, signal)
+      await sleep(queued ? QUEUED_POLL_MS : POLL_MS, signal)
       continue
     }
     await sleep(POLL_MS, signal)
