@@ -393,7 +393,8 @@
       "title": "Son analizler",
       "model": "Model",
       "signal": "Tarayıcı",
-      "all": "Tüm geçmiş"
+      "all": "Tüm geçmiş",
+      "lead": "Bu tarayıcıda yaptığın analizler. Birine tıklayınca raporu yeniden açılır."
     },
     "pill": {
       "waking": "AURIS sunucusu uyanıyor",
@@ -415,19 +416,21 @@
       "pause": "Duraklat",
       "seek": "Parçada konum",
       "restored": "Kayıtlı sonuç",
-      "noVisuals": "Geçmişten açıldı. Ses ve grafikler sadece son analiz için saklanıyor."
+      "noVisuals": "Geçmişten açıldı. Ses ve grafikler sadece son analiz için saklanıyor.",
+      "title": "Ses",
+      "lead": "Tarayıcının çözdüğü ses. Dalga formuna tıklayıp parçada gezinebilirsin."
     },
     "report": {
       "eyebrow": "AURIS raporu",
       "verdictAi": "Yapay zekâ ile üretilmiş olabilir",
       "verdictHuman": "İnsan yapımı görünüyor",
-      "probability": "AI olasılığı",
+      "probability": "Yapay zekâ olasılığı",
       "threshold": "Eşik",
       "thresholdNote": "Eşik {t}. Olasılık bunun üstündeyse sonuç yapay zekâ olarak işaretlenir. Bu değer eğitimde doğrulama verisi üzerinde seçildi (Youden J).",
       "band": "Kesinlik",
-      "consensus": "{ai}/{n} model AI diyor",
+      "consensus": "{ai}/{n} model yapay zekâ diyor",
       "decidedBy": "Karar",
-      "trained": "Eğitilmiş model",
+      "trained": "Karar",
       "signalOnly": "Sadece tarayıcı ölçümü",
       "fallbackTitle": "Bu sonuç eğitilmiş modelden gelmiyor",
       "fallbackBody": "Sunucudan sonuç alınamadı: {reason} Aşağıdaki skor tarayıcıda yapılan 7 basit ölçümün ortalaması. Eğitilmiş bir model değil, kesin bir sonuç gibi okunmamalı.",
@@ -465,7 +468,7 @@
       },
       "towers": {
         "title": "Diğer modeller",
-        "lead": "Karara katılmayan, ayrı çalışan modeller. 0 insan yapımı, 1 yapay zekâ demek.",
+        "lead": "Karara katılmayan, ayrı çalışan modeller. 0 insan yapımına, 1 yapay zekâya yakın demek.",
         "missing": "çalışmadı",
         "names": {
           "xai_ensemble": "LightGBM olasılığı",
@@ -506,7 +509,7 @@
           "breathPatternScore": "Nefes deseni",
           "vocalTextureScore": "Vokal doku"
         },
-        "scoresLead": "0 insan yapımı, 1 yapay zekâ demek.",
+        "scoresLead": "Skorlar 0 ile 1 arasında. 0 insan yapımına, 1 yapay zekâya yakın demek.",
         "none": "Şarkıda belirgin bir vokal bulunamadı."
       },
       "signal": {
@@ -540,7 +543,9 @@
       "lossyNote": "MP3 gibi sıkıştırılmış dosyalarda yüksek frekanslar zaten kesildiği için bant sınırı ölçümü kullanılmadı.",
       "export": "JSON indir",
       "again": "Yeni analiz",
-      "fusionOnly": "Ana model çalışmadı"
+      "fusionOnly": "Ana model çalışmadı",
+      "title": "Rapor",
+      "openReport": "Raporu gör"
     },
     "measures": {
       "spectralPeriodicity": {
