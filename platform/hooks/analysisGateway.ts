@@ -39,6 +39,8 @@ const ERROR_MAP: Array<[string, AnalysisErrorCode]> = [
   ['audio_too_short', 'tooShort'],
   ['audio_silent', 'audioSilent'],
   ['audio_decode_failed', 'serverDecodeFailed'],
+  ['cancelled', 'cancelled'],
+  ['job_abandoned', 'jobLost'],
   ['internal_error', 'internalError'],
 ]
 
@@ -178,11 +180,18 @@ export interface JobStep {
 
 export interface JobSnapshot {
   jobId: string | null
-  status: 'running' | 'done' | 'error'
+  /** queued: waiting for the CPU behind other analyses; running: downloading or analysing. */
+  status: 'queued' | 'running' | 'done' | 'error'
   steps: JobStep[]
   elapsedSec: number
   response: AnalyzeResponse | null
+  /** Place in line while queued; the wait estimate appears once the server has timed a job. */
+  queue?: { position: number; estimatedWaitSec: number | null }
+  /** Served from the server's cache: the same audio was analysed recently. */
+  cached?: boolean
 }
+
+export const isSettled = (s: JobSnapshot) => s.status === 'done' || s.status === 'error'
 
 export type JobStart =
   | { kind: 'job'; jobId: string; steps: JobStep[] }
@@ -232,5 +241,14 @@ export const pollServerJob = async (apiBaseUrl: string, jobId: string, signal?: 
     return { kind: 'snapshot', snapshot: await res.json() as JobSnapshot }
   } catch {
     return { kind: 'unreachable' }
+  }
+}
+
+/** Tells the server to drop or stop a job. Fire and forget: works while the page unloads too. */
+export const cancelServerJob = (apiBaseUrl: string, jobId: string) => {
+  try {
+    void fetch(`${apiBaseUrl}/api/analyze/jobs/${encodeURIComponent(jobId)}`, { method: 'DELETE', keepalive: true }).catch(() => {})
+  } catch {
+    // nothing to do: the server drops unpolled jobs on its own
   }
 }

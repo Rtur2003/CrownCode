@@ -83,13 +83,13 @@
       "noirGrain": {
         "title": "Noir & Grain - Restoran Şablonu",
         "description": "Fine-dining restoranları için hazırlanmış bir site şablonu. Masaüstünde yatay kaydırılan sahneler ve WebGL mürekkep geçişleri, mobilde hikâye biçiminde ayrı bir arayüz, rezervasyon için WhatsApp akışı.",
-        "showroomDescription": "Mobil hikâye deneyimi ve WhatsApp rezervasyon akışı sunan sinematik restoran şablonu.",
+        "showroomDescription": "Menü, mobil hikâye görünümü ve WhatsApp rezervasyonu içeren restoran sitesi şablonu.",
         "status": "Aktif",
         "stats": "4 Sayfa · React 19",
         "features": [
           "React 19 + GSAP",
           "WebGL Shader",
-          "Mobil Story-Modu"
+          "Mobil hikâye görünümü"
         ],
         "page": {
           "subtitle": "Restoranlar için koyu tonlu, film grenli bir site şablonu",
@@ -109,14 +109,14 @@
         }
       },
       "aiMusic": {
-        "title": "AURIS - AI Müzik Tespit Motoru",
-        "description": "Bir şarkının yapay zekâyla mı yoksa insan eliyle mi üretildiğini ayırt etmeye çalışan bir tez araştırması. Model wav2vec2 üzerine kuruluyor ve hâlâ geliştirme aşamasında.",
-        "showroomDescription": "Yapay zekâyla üretilmiş müziği ayırt etmeye çalışan, geliştirme aşamasındaki bir tez araştırması.",
+        "title": "AURIS - Yapay Zekâ Müzik Tespiti",
+        "description": "Müziğin yapay zekâyla üretilme olasılığını LightGBM ile hesaplayan tez projesi. Raporda model karşılaştırmaları ve SHAP açıklamaları yer alır.",
+        "showroomDescription": "Müziğin yapay zekâyla üretilme olasılığını hesaplar, sonucu etkileyen ses özelliklerini gösterir.",
         "status": "Geliştiriliyor",
         "stats": "Tez araştırması · Web",
         "features": [
-          "wav2vec2",
-          "Transfer öğrenme",
+          "LightGBM",
+          "SHAP açıklamaları",
           "Dosya · Bağlantı · Mikrofon"
         ]
       },
@@ -147,7 +147,7 @@
       "dreams": {
         "title": "Crown Dreams",
         "description": "Rüyanı yaz, Gemini içindeki duyguları, temaları ve sembolleri çıkarsın. Günlük ve lüsid rüya takibi şimdilik örnek verilerle gösteriliyor.",
-        "showroomDescription": "Rüyaları kaydetmek, yapay zekâyla analiz etmek ve lüsid rüyaları takip etmek için günlük.",
+        "showroomDescription": "Rüyalardaki duygu ve sembolleri Gemini ile yorumlar. Günlük ve takip ekranları örnek veri içerir.",
         "status": "Aktif",
         "stats": "Web · Gemini ile analiz",
         "features": [
@@ -159,7 +159,7 @@
       "commend": {
         "title": "Crown Commend",
         "description": "Bir YouTube videosunun konusuna ve varsa altyazılarına bakıp Gemini ile yorum taslağı hazırlar. Beğendiğin yorumu buradan doğrudan YouTube'a gönderebilirsin.",
-        "showroomDescription": "YouTube videolarına Gemini ile bağlama uygun yorumlar hazırlayan araç.",
+        "showroomDescription": "YouTube videosunun konusu ve altyazılarından yorum taslakları hazırlar.",
         "status": "Aktif",
         "stats": "Web · 5 dil",
         "features": [
@@ -171,7 +171,7 @@
       "vote": {
         "title": "Crown Vote - VOTRYX",
         "description": "DistroKid Spotlight oylamalarını Chrome üzerinden otomatik yapan bir Windows uygulaması. Aynı anda birkaç tarayıcı penceresiyle çalışabiliyor ve arka planda sistem tepsisinde bekliyor.",
-        "showroomDescription": "DistroKid Spotlight oylamasını otomatikleştiren, Selenium tabanlı masaüstü uygulaması.",
+        "showroomDescription": "DistroKid Spotlight oylamalarını Chrome üzerinden yürüten Windows uygulaması.",
         "status": "Aktif",
         "stats": "Masaüstü · Windows",
         "features": [
@@ -183,7 +183,7 @@
       "kognita": {
         "title": "Kognita",
         "description": "Bilgisayardaki etkinliğini arka planda sessizce kaydeden bir masaüstü takipçisi. Kayıtlar yalnızca senin cihazında kalır.",
-        "showroomDescription": "Verileri cihazınızda tutarak masaüstü etkinliğinizi izleyen takip aracı.",
+        "showroomDescription": "Bilgisayar etkinliğini kaydeder; verileri cihazda tutar.",
         "status": "GitHub'da",
         "stats": "Masaüstü · Yerel veri"
       }
@@ -296,23 +296,23 @@
   "aiDetection": {
     "meta": {
       "title": "AURIS · Yapay zekâ müzik tespiti",
-      "description": "Şarkını yükle, AURIS yapay zekâyla üretilmiş olma ihtimalini hesaplasın. Karar LightGBM modelinden gelir, hangi özelliklerin etkili olduğu raporda görünür.",
+      "description": "LightGBM ile yapay zekâ müzik tespiti. 47 ses özniteliği, model karşılaştırmaları ve SHAP ile karar açıklaması.",
       "keywords": "AURIS, yapay zekâ müzik tespiti, LightGBM, SHAP, spektrogram, ses analizi, CrownCode"
     },
     "intro": {
-      "eyebrow": "Ses laboratuvarı · Tez araştırması",
-      "lead": "Bir şarkı yükle. AURIS onu eğitilmiş modellerle inceler ve sonucun hangi ölçümlere dayandığını gösterir."
+      "eyebrow": "Ses analizi · Tez araştırması",
+      "lead": "Sesin 47 özniteliğini LightGBM ile analiz eder. Yapay zekâ olasılığını ve özniteliklerin karara etkisini raporlar."
     },
     "server": {
       "label": "Model sunucusu",
-      "unknown": "Yoklanmadı",
-      "checking": "Yoklanıyor…",
+      "unknown": "Kontrol edilmedi",
+      "checking": "Kontrol ediliyor…",
       "ready": "Hazır",
-      "waking": "Uyanıyor",
+      "waking": "Başlatılıyor",
       "down": "Ulaşılamıyor",
-      "wakingNote": "Sunucu bir süre kullanılmayınca uykuya geçiyor, açılması 1-2 dakika sürebilir. Şarkıyı şimdiden gönderebilirsin, sunucu açılınca yüklenir.",
-      "downNote": "Sunucu şu an cevap vermiyor. Yine de şarkı gönderirsen sadece tarayıcıdaki ölçüm yapılır, raporda da bu yazar.",
-      "retry": "Tekrar yokla",
+      "wakingNote": "Sunucunun başlatılması 1–2 dakika sürebilir. Seçilen dosya sunucu hazır olduğunda yüklenir.",
+      "downNote": "Sunucuya ulaşılamıyor. Dosya ve mikrofon kayıtlarında yalnızca tarayıcı ölçümleri kullanılabilir.",
+      "retry": "Yeniden kontrol et",
       "models": "Model deposu",
       "space": "Sunucu"
     },
@@ -332,12 +332,12 @@
       "label": "YouTube bağlantısı",
       "placeholder": "https://youtu.be/…",
       "submit": "Bağlantıyı analiz et",
-      "hint": "Ses YouTube'dan indirilip aynı şekilde incelenir. Bazı videolar indirilemiyor, o durumda şarkıyı dosya olarak yükle."
+      "hint": "YouTube sesi sunucuda indirilip analiz edilir. İndirme başarısız olursa ses dosyasını yükle."
     },
     "mic": {
       "start": "Kaydet",
       "stop": "Durdur",
-      "hint": "Şarkıyı hoparlörden çal, cihazı yakın tut. Kayıt 30 saniyede kendisi durur. Odanın sesi ve mikrofon sonucu etkiler.",
+      "hint": "Kayıt 30 saniyede durur. Mikrofon ve ortam gürültüsü analiz sonucunu etkileyebilir.",
       "recording": "Kaydediliyor",
       "take": "Mikrofon kaydı"
     },
@@ -351,13 +351,14 @@
       "elapsed": "Geçen süre",
       "typical": "Bu tarayıcıdaki son {n} analiz ortalama {s} sn sürdü.",
       "stages": {
-        "waking": "Sunucu uyanıyor",
+        "waking": "Sunucu başlatılıyor",
         "uploading": "Yükleniyor",
         "processing": "Sunucuda modeller çalışıyor",
-        "done": "Rapor hazırlanıyor"
+        "done": "Rapor hazırlanıyor",
+        "queued": "Sırada bekliyor"
       },
-      "wakingNote": "Sunucu uykudaysa önce açılmasını bekliyoruz.",
-      "processingNote": "Bu sunucu sürümü ara adımları bildirmiyor. Adımlar sırayla çalışıyor, sonuç bitince gelecek.",
+      "wakingNote": "Sunucunun başlatılması bekleniyor.",
+      "processingNote": "Bu sunucu sürümü adım durumlarını iletmiyor. İşlem tamamlandığında rapor gösterilir.",
       "urlNote": "Önce ses YouTube'dan indiriliyor.",
       "pipelineTitle": "Sunucudaki adımlar",
       "browser": "Tarayıcı ölçümü",
@@ -380,8 +381,10 @@
         "failed": "hata",
         "skipped": "atlandı"
       },
-      "liveNote": "Adımlar sunucudan anlık geliyor. Biten adımın yanına işaret düşer.",
-      "resumed": "Sayfa yenilendi ama analiz sunucuda devam ediyordu, oradan takip ediliyor."
+      "liveNote": "Adım durumları sunucudan güncellenir.",
+      "resumed": "Sunucuda devam eden analize yeniden bağlanıldı.",
+      "queued": "Sunucu aynı anda tek analiz yapıyor. Önünde {n} analiz var.",
+      "queuedWait": "Tahmini bekleme yaklaşık {s} sn."
     },
     "interrupted": {
       "title": "Yarıda kalan analiz",
@@ -397,13 +400,14 @@
       "lead": "Bu tarayıcıda yaptığın analizler. Birine tıklayınca raporu yeniden açılır."
     },
     "pill": {
-      "waking": "AURIS sunucusu uyanıyor",
+      "waking": "AURIS sunucusu başlatılıyor",
       "uploading": "AURIS yükleniyor",
       "processing": "AURIS modelleri çalışıyor",
       "done": "AURIS sonucu hazır",
       "error": "AURIS analizi tamamlanamadı",
       "open": "Aç",
-      "dismiss": "Kapat"
+      "dismiss": "Kapat",
+      "queued": "AURIS sırada ({n}.)"
     },
     "scope": {
       "empty": "Kaynak bekleniyor",
@@ -417,43 +421,43 @@
       "seek": "Parçada konum",
       "restored": "Kayıtlı sonuç",
       "noVisuals": "Geçmişten açıldı. Ses ve grafikler sadece son analiz için saklanıyor.",
-      "title": "Ses",
-      "lead": "Tarayıcının çözdüğü ses. Dalga formuna tıklayıp parçada gezinebilirsin."
+      "title": "Sinyal görünümü",
+      "lead": "Çözümlenen sesin dalga formu ve spektrogramı. Dalga formuna tıklayarak kayıtta ilerleyebilirsin."
     },
     "report": {
       "eyebrow": "AURIS raporu",
-      "verdictAi": "Yapay zekâ ile üretilmiş olabilir",
-      "verdictHuman": "İnsan yapımı görünüyor",
+      "verdictAi": "Model tahmini: yapay zekâ üretimi",
+      "verdictHuman": "Model tahmini: insan yapımı",
       "probability": "Yapay zekâ olasılığı",
       "threshold": "Eşik",
-      "thresholdNote": "Eşik {t}. Olasılık bunun üstündeyse sonuç yapay zekâ olarak işaretlenir. Bu değer eğitimde doğrulama verisi üzerinde seçildi (Youden J).",
-      "band": "Kesinlik",
-      "consensus": "{ai}/{n} model yapay zekâ diyor",
+      "thresholdNote": "Karar eşiği: {t}. Eşiğin üzerindeki olasılıklar yapay zekâ olarak sınıflandırılır. Eşik, doğrulama verisinde Youden J ile seçildi.",
+      "band": "Güven düzeyi",
+      "consensus": "{ai}/{n} model: yapay zekâ",
       "decidedBy": "Karar",
       "trained": "Karar",
       "signalOnly": "Sadece tarayıcı ölçümü",
-      "fallbackTitle": "Bu sonuç eğitilmiş modelden gelmiyor",
-      "fallbackBody": "Sunucudan sonuç alınamadı: {reason} Aşağıdaki skor tarayıcıda yapılan 7 basit ölçümün ortalaması. Eğitilmiş bir model değil, kesin bir sonuç gibi okunmamalı.",
+      "fallbackTitle": "Model sonucu alınamadı",
+      "fallbackBody": "Sunucu hatası: {reason} Skor, tarayıcıdaki kullanılabilir sinyal ölçümlerinin ağırlıklı ortalamasıdır; model tahmini değildir.",
       "retryServer": "Sunucuda tekrar dene",
       "signalScore": "Ölçüm skoru",
       "leanHuman": "İnsan yapımına yakın",
       "leanAi": "Yapay zekâya yakın",
       "votes": {
         "title": "Model oyları",
-        "lead": "Aynı verilerle eğitilmiş 11 model. Çubuk modelin verdiği olasılık, dikey çizgi o modelin eşiği. Sağdaki sayı modelin test başarısı (ROC-AUC).",
+        "lead": "11 modelin tahminleri. Çubuklar olasılığı, çizgiler karar eşiğini gösterir. Sağda çapraz doğrulama ROC-AUC değeri yer alır.",
         "best": "ana model",
         "unavailable": "sunucuda yüklenemedi"
       },
       "why": {
-        "title": "Sonucu en çok etkileyenler",
-        "lead": "SHAP ile hesaplandı. Sağa uzanan çubuk sonucu yapay zekâ tarafına, sola uzanan insan tarafına çekti. z değeri, ölçümün eğitim verisindeki ortalamadan ne kadar uzak olduğunu gösterir.",
+        "title": "SHAP öznitelik katkıları",
+        "lead": "Sağdaki katkılar yapay zekâ, soldakiler insan sınıfını destekler. z skoru, eğitim ortalamasından uzaklığı standart sapma cinsinden gösterir.",
         "towardsAi": "Yapay zekâ tarafı",
         "towardsHuman": "İnsan tarafı",
         "none": "Bu sonuçta SHAP hesabı yok."
       },
       "families": {
-        "title": "Özellik grupları",
-        "lead": "Aynı etkiler gruplara göre toplandı.",
+        "title": "Öznitelik grupları",
+        "lead": "SHAP katkılarının öznitelik gruplarına göre toplamı.",
         "categories": {
           "spectral": "Spektral",
           "temporal": "Zamansal",
@@ -467,8 +471,8 @@
         }
       },
       "towers": {
-        "title": "Diğer modeller",
-        "lead": "Karara katılmayan, ayrı çalışan modeller. 0 insan yapımına, 1 yapay zekâya yakın demek.",
+        "title": "Ek analizler",
+        "lead": "Model ve ölçüm skorları: 0 insan, 1 yapay zekâ sınıfına yakınlığı belirtir.",
         "missing": "çalışmadı",
         "names": {
           "xai_ensemble": "LightGBM olasılığı",
@@ -490,7 +494,7 @@
       },
       "meta": {
         "title": "Meta-sınıflandırıcı",
-        "lead": "Diğer modellerin skorlarını birleştiren ayrı bir model. Ana kararı değiştirmez, karşılaştırma için burada.",
+        "lead": "Diğer model skorlarını birleştirir. Ana kararı değiştirmez; karşılaştırma için gösterilir.",
         "agrees": "Ana kararla aynı",
         "disagrees": "Ana karardan farklı",
         "features": "Modelin en çok ağırlık verdiği girdiler"
@@ -514,7 +518,7 @@
       },
       "signal": {
         "title": "Tarayıcı ölçümleri",
-        "lead": "Tarayıcının aynı ses üzerinde yaptığı 7 ölçüm. Sonuca etki etmez, bilgi için gösteriliyor.",
+        "lead": "Tarayıcıda hesaplanan 7 sinyal ölçümü. Sunucudaki model kararını etkilemez.",
         "weight": "Ağırlık"
       },
       "warnings": {
@@ -525,11 +529,12 @@
         "fst_analysis_unavailable": "Harici FST modeline ulaşılamadı.",
         "xai_unavailable": "Ana karar modeli yüklenemedi, sonuç diğer skorların birleşiminden hesaplandı.",
         "meta_classifier_unavailable": "Meta-sınıflandırıcı çalışmadı.",
-        "unknown": "Sunucu notu: {code}"
+        "unknown": "Sunucu notu: {code}",
+        "cached_result": "Bu ses kısa süre önce analiz edilmişti, o sonuç gösteriliyor."
       },
       "facts": {
         "duration": "Süre",
-        "sampleRate": "Örnekleme",
+        "sampleRate": "Örnekleme hızı",
         "bitrate": "Bit hızı",
         "format": "Format",
         "channels": "Kanal",
@@ -550,37 +555,37 @@
     "measures": {
       "spectralPeriodicity": {
         "label": "Spektral periyodiklik",
-        "desc": "4 kHz üstünde sabit aralıklı tepeler arar. Bazı yapay zekâ modelleri sesi üretirken bu izi bırakır."
+        "desc": "4 kHz üzerindeki spektrumda düzenli aralıklarla tekrarlanan tepeleri ölçer."
       },
       "bandwidthCutoff": {
         "label": "Bant sınırı",
-        "desc": "Sesin hangi frekansta kesildiği. Birçok üretici 16 kHz civarında keser, stüdyo kayıtları genelde 20 kHz'e kadar çıkar."
+        "desc": "Yüksek frekanslardaki kesim noktasını tahmin eder. Kayıt ve sıkıştırma biçiminden etkilenir."
       },
       "flatnessVariation": {
         "label": "Spektral düzlük değişimi",
-        "desc": "Sesin tonlu ve gürültülü anlar arasında ne kadar değiştiği. Az değişim, dokunun baştan sona aynı kaldığını gösterir."
+        "desc": "Spektral düzlüğün zaman içindeki değişimini ölçer."
       },
       "centroidVariation": {
         "label": "Parlaklık değişimi",
-        "desc": "Sesin parlaklığının şarkı boyunca ne kadar değiştiği. Canlı çalımda enstrümanlar girip çıktıkça belirgin şekilde değişir."
+        "desc": "Spektral ağırlık merkezinin zaman içindeki değişimini ölçer."
       },
       "loudnessRange": {
         "label": "Dinamik aralık",
-        "desc": "Ses seviyesinin ne kadar oynadığı. Çok dar aralık yoğun sıkıştırmaya işaret eder, modern masterlarda da görülür."
+        "desc": "Kayıt boyunca ses seviyesinin değişim aralığını ölçer. Dinamik sıkıştırma bu aralığı daraltabilir."
       },
       "tempoDrift": {
         "label": "Tempo kayması",
-        "desc": "Şarkının bölümleri arasındaki tempo farkı. İnsan çalımında tempo biraz kayar, bilgisayarda yapılan şarkılarda hiç kaymayabilir."
+        "desc": "Kaydın bölümleri arasındaki tahmini tempo değişimini ölçer."
       },
       "stereoCorrelation": {
         "label": "Stereo korelasyon",
-        "desc": "Sol ve sağ kanalın ne kadar benzediği. Bazı üreticilerde neredeyse mono bir ses çıkar."
+        "desc": "Sol ve sağ kanal arasındaki benzerliği ölçer."
       }
     },
     "method": {
       "eyebrow": "Yöntem",
-      "title": "Model hakkında",
-      "lead": "Karar modeli bir LightGBM sınıflandırıcısı. {samples} şarkıyla eğitildi ({ai} yapay zekâ, {human} insan yapımı) ve her şarkıdan {features} öznitelik çıkarıldı. Aşağıdaki sonuçlar {folds} katlı çapraz doğrulamadan. Model dosyaları Hugging Face'te herkese açık.",
+      "title": "Model ve doğrulama",
+      "lead": "LightGBM: {samples} kayıt ({ai} yapay zekâ, {human} insan), {features} öznitelik. Metrikler {folds} katlı çapraz doğrulamadan alınmıştır. Model dosyaları Hugging Face’te açıktır.",
       "metrics": {
         "accuracy": "Doğruluk",
         "precision": "Kesinlik",
@@ -590,14 +595,14 @@
         "threshold": "Eşik (Youden J)"
       },
       "stepsTitle": "Analiz adımları",
-      "step1": "Ses sunucuda açılır ve ilk 60 saniyesinden 47 öznitelik çıkarılır.",
-      "step2": "LightGBM bu özniteliklerden bir olasılık hesaplar. Olasılık {t} üstündeyse sonuç yapay zekâ olur.",
-      "step3": "Aynı öznitelikler 10 modele daha verilir, oyları karşılaştırma için gösterilir. SHAP hangi özniteliğin sonucu ne kadar etkilediğini hesaplar.",
-      "step4": "wav2vec2, FST ve vokal analizi ayrıca çalışır, sonuçları raporda ayrı gösterilir.",
-      "limitsTitle": "Sınırlar",
-      "limit1": "Model eğitimde gördüğü yapay zekâ araçlarını ve müzik türlerini tanır. Yeni bir araçla üretilmiş ya da farklı türde bir şarkıda yanılabilir.",
-      "limit2": "Yoğun işlenmiş ya da tamamen elektronik şarkılar insan yapımı olsa bile yapay zekâ gibi görünebilir. Mikrofonla kayıt ve düşük kaliteli dosyalar da sonucu etkiler.",
-      "limit3": "Doğruluk %{acc}, yani yaklaşık dokuz şarkıdan biri yanlış sınıflanıyor. Sonucu tek başına kanıt olarak kullanma."
+      "step1": "İlk 60 saniyelik sesten 47 öznitelik çıkarılır.",
+      "step2": "LightGBM olasılık üretir; {t} üzerindeki değerler yapay zekâ sınıfına atanır.",
+      "step3": "10 ek modelin tahminleri karşılaştırılır. SHAP, özniteliklerin ana karara katkısını hesaplar.",
+      "step4": "wav2vec2, FST ve vokal analizi sonuçları ayrı raporlanır.",
+      "limitsTitle": "Sınırlamalar",
+      "limit1": "Eğitimde bulunmayan müzik türleri ve üretim modellerinde başarı düşebilir.",
+      "limit2": "Yoğun ses işleme, elektronik müzik, mikrofon kaydı ve düşük ses kalitesi yanlış sınıflandırmaya yol açabilir.",
+      "limit3": "Çapraz doğrulama doğruluğu %{acc}. Bu oran yeni kayıtlar için garanti değildir; sonuç tek başına kaynak kanıtı sayılmaz."
     },
     "errors": {
       "tryAgain": "Tekrar dene",

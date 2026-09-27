@@ -41,7 +41,7 @@ const pad = (n: number) => String(n).padStart(2, '0')
 /** What the planet shows for the current job. */
 const worldState = (job: AurisJob | null): { mode: WorldMode; progress: number; threshold: number | null; ticks: number } => {
   if (isActive(job)) {
-    if (job.stage === 'waking' || (job.stage === 'processing' && job.steps.length === 0)) {
+    if (job.stage === 'waking' || job.queue || (job.stage === 'processing' && job.steps.length === 0)) {
       return { mode: 'waking', progress: 0, threshold: null, ticks: 0 }
     }
     const { segments, progress } = jobSegments(job)

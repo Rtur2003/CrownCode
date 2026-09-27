@@ -15,7 +15,7 @@
 
 import { API_BASE_URL } from '@/config/api'
 import {
-  pollServerJob, readAnalyzeResponse, sendAnalysis, startServerJob,
+  cancelServerJob, isSettled, pollServerJob, readAnalyzeResponse, sendAnalysis, startServerJob,
   type AnalyzeOutcome, type AnalyzePayload,
 } from '@/hooks/analysisGateway'
 import type { AnalysisResult, FileSourceInfo } from '@/hooks/analysisTypes'
@@ -30,6 +30,8 @@ import {
 
 const MIN_SECONDS = 3
 const POLL_MS = 1_500
+// While waiting in line nothing changes quickly; poll less.
+const QUEUED_POLL_MS = 3_000
 // A Space restart drops in-memory jobs; give it about a minute before giving up.
 const MAX_POLL_MISSES = 40
 // The server keeps finished jobs for 15 minutes.
@@ -157,10 +159,13 @@ const followServerJob = async (id: string, serverJobId: string, signal: AbortSig
     } else {
       misses = 0
       const { snapshot } = poll
-      patchJob(id, { steps: snapshot.steps ?? [] })
-      if (snapshot.status !== 'running') {
-        return readAnalyzeResponse(200, snapshot.response)
+      patchJob(id, { steps: snapshot.steps ?? [], queue: snapshot.status === 'queued' ? snapshot.queue ?? null : null })
+      if (isSettled(snapshot)) {
+        const outcome = readAnalyzeResponse(200, snapshot.response)
+        return snapshot.cached ? { ...outcome, warnings: [...outcome.warnings, 'cached_result'] } : outcome
       }
+      await sleep(snapshot.status === 'queued' ? QUEUED_POLL_MS : POLL_MS, signal)
+      continue
     }
     await sleep(POLL_MS, signal)
   }
@@ -221,7 +226,7 @@ const measure = async (id: string, decoded: Decoded, format: string) => {
 const freshJob = (id: string, input: JobInput, bytes: number, startedAt: number, patch: Partial<AurisJob> = {}): AurisJob => ({
   id, kind: input.kind, label: input.label, bytes, format: input.format, startedAt,
   stage: 'waking', uploadedBytes: 0, uploadTotal: bytes, uploadEndedAt: null, finishedAt: null,
-  serverJobId: null, steps: [],
+  serverJobId: null, steps: [], queue: null,
   signalProgress: input.blob ? 0 : -1, signal: null, result: null, warnings: [],
   serverError: null, error: null,
   audioUrl: input.blob ? URL.createObjectURL(input.blob) : null,
@@ -341,6 +346,9 @@ const resumeJob = async (stored: StoredJob & { serverJobId: string }) => {
 
 /** Stops the running job and clears the console. */
 export const resetJob = () => {
+  const job = getAurisState().job
+  // Free the server too: a queued job leaves the line, a running one stops.
+  if (isActive(job) && job.serverJobId) {cancelServerJob(API_BASE_URL, job.serverJobId)}
   controller?.abort()
   controller = null
   guardUnload(false)
@@ -358,7 +366,7 @@ const jobFromStored = (stored: StoredJob, result: AnalysisResult): AurisJob => (
   id: stored.id, kind: stored.kind, label: stored.label, bytes: stored.bytes, format: stored.format,
   startedAt: stored.startedAt, stage: 'done', uploadedBytes: stored.bytes, uploadTotal: stored.bytes,
   uploadEndedAt: null, finishedAt: stored.finishedAt ?? stored.startedAt,
-  serverJobId: stored.serverJobId ?? null, steps: [],
+  serverJobId: stored.serverJobId ?? null, steps: [], queue: null,
   signalProgress: result.signal?.visuals ? 1 : -1,
   signal: result.signal?.visuals ? result.signal : null,
   result, warnings: stored.warnings ?? [], serverError: (stored.serverError as AurisError | null) ?? null, error: null,
@@ -425,7 +433,7 @@ export const openFromHistory = (label: string, result: AnalysisResult, timestamp
       id: newId(), kind, label, bytes: result.source?.kind === 'file' ? result.source.fileSizeBytes : 0,
       format: result.audioInfo?.format ?? '', startedAt: timestamp, stage: 'done',
       uploadedBytes: 0, uploadTotal: 0, uploadEndedAt: null, finishedAt: timestamp,
-      serverJobId: null, steps: [],
+      serverJobId: null, steps: [], queue: null,
       signalProgress: -1, signal: null, result, warnings: [], serverError: null, error: null,
       audioUrl: null, seen: true, restored: true, resumed: false,
     },

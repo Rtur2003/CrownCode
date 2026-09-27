@@ -41,49 +41,49 @@ const LOOKS: Record<string, WorldLook> = {
   'ai-music-detection': {
     base: '#0d0b0a', mid: '#3a2618', accent: '#e0a15a', atmosphere: '#d99a55',
     bands: 0.85, detail: 2.2, lines: 0.55, gloss: 0.9, size: 1.45, spin: 0.09, ring: 'grooves',
-    sector: { tr: 'Ses · Araştırma', en: 'Sound · Research' },
+    sector: { tr: 'Müzik analizi', en: 'Music analysis' },
   },
   // Tape and machined brass → striated bronze.
   'ml-toolkit': {
     base: '#1b140d', mid: '#6a4a26', accent: '#f0c47c', atmosphere: '#c9974f',
     bands: 0.6, detail: 3.4, lines: 0.75, gloss: 0.25, size: 1.1, spin: 0.14,
-    sector: { tr: 'Veri · Araçlar', en: 'Data · Tooling' },
+    sector: { tr: 'Ses veri setleri', en: 'Audio datasets' },
   },
   // Engraved brass wheel → golden world wearing a segmented wheel ring.
   'crown-fortune': {
     base: '#2a1b0a', mid: '#9a6a2c', accent: '#ffd98a', atmosphere: '#f0b95e',
     bands: 0.2, detail: 2.6, lines: 0.6, gloss: 0.45, size: 1.25, spin: 0.12, ring: 'wheel',
-    sector: { tr: 'Ritüel · Günlük', en: 'Ritual · Daily' },
+    sector: { tr: 'Şans çarkı', en: 'Fortune wheel' },
   },
   // Smoky quartz with amethyst traces.
   'crown-dreams': {
     base: '#120d18', mid: '#4a3560', accent: '#d7b8ff', atmosphere: '#a88bd6',
     bands: 0.15, detail: 1.8, lines: 0.5, gloss: 0.7, size: 1.15, spin: 0.07,
-    sector: { tr: 'Yapay Zekâ · Günlük', en: 'AI · Journal' },
+    sector: { tr: 'Rüya analizi', en: 'Dream analysis' },
   },
   // Oxblood shellac.
   'crown-commend': {
     base: '#1a0908', mid: '#6b1f18', accent: '#f08c62', atmosphere: '#c9573d',
     bands: 0.7, detail: 2.8, lines: 0.45, gloss: 0.55, size: 1.05, spin: 0.16,
-    sector: { tr: 'Yapay Zekâ · Metin', en: 'AI · Writing' },
+    sector: { tr: 'YouTube yorumları', en: 'YouTube comments' },
   },
   // Olive enamel voting dial.
   'crown-vote': {
     base: '#10140b', mid: '#465a2a', accent: '#d9e29a', atmosphere: '#9fb465',
     bands: 0.35, detail: 3.0, lines: 0.65, gloss: 0.35, size: 1.0, spin: 0.2, ring: 'dust',
-    sector: { tr: 'Masaüstü · Otomasyon', en: 'Desktop · Automation' },
+    sector: { tr: 'Oylama otomasyonu', en: 'Voting automation' },
   },
   // Coffee-glazed ceramic.
   'noir-grain': {
     base: '#140d08', mid: '#5b3a22', accent: '#f3dcb8', atmosphere: '#b9865a',
     bands: 0.05, detail: 5.0, lines: 0.35, gloss: 0.3, size: 1.05, spin: 0.1,
-    sector: { tr: 'Web · Şablon', en: 'Web · Template' },
+    sector: { tr: 'Restoran sitesi', en: 'Restaurant website' },
   },
   // Smoked glass lens with circuit etchings.
   kognita: {
     base: '#0a0f12', mid: '#27414a', accent: '#9ee7f0', atmosphere: '#6fb7c4',
     bands: 0.1, detail: 2.4, lines: 0.9, gloss: 1.0, size: 0.95, spin: 0.11,
-    sector: { tr: 'Masaüstü · Gizlilik', en: 'Desktop · Privacy' },
+    sector: { tr: 'Etkinlik takibi', en: 'Activity tracking' },
   },
 }
 
@@ -124,7 +124,7 @@ export function derivedLook(id: string): WorldLook {
     size: 0.95 + r(20) * 0.35,
     spin: 0.08 + r(2) * 0.1,
     ...(r(28) > 0.7 ? { ring: 'dust' as const } : {}),
-    sector: { tr: 'Yeni dünya', en: 'New world' },
+    sector: { tr: 'Yeni proje', en: 'New project' },
   }
 }
 

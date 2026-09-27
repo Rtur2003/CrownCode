@@ -57,12 +57,15 @@ export const JobProgress: React.FC<{ job: ActiveJob; onCancel: () => void }> = (
   const ids = job.kind === 'url' ? ['download', ...FILE_STEPS] : FILE_STEPS
   const steps = live ? job.steps : ids.map(id => ({ id, state: undefined as StepState | undefined, seconds: undefined as number | undefined }))
   const upload = job.uploadTotal ? job.uploadedBytes / job.uploadTotal : 0
-  const note = job.stage === 'waking' ? W.wakingNote : job.resumed ? W.resumed : live ? W.liveNote : W.processingNote
+  const queue = job.queue
+  const note = queue
+    ? [fill(W.queued, { n: queue.position - 1 }), queue.estimatedWaitSec !== null ? fill(W.queuedWait, { s: Math.max(5, Math.round(queue.estimatedWaitSec / 5) * 5) }) : ''].filter(Boolean).join(' ')
+    : job.stage === 'waking' ? W.wakingNote : job.resumed ? W.resumed : live ? W.liveNote : W.processingNote
 
   return (
     <div className={styles.run} aria-live="polite">
       <div className={styles.runHead}>
-        <h2>{W.stages[job.stage]}</h2>
+        <h2>{queue ? W.stages.queued : W.stages[job.stage]}</h2>
         <p className={styles.clock} aria-label={W.elapsed}>{clock(now - job.startedAt)}</p>
       </div>
       <p className={styles.runFile}>{job.label}</p>

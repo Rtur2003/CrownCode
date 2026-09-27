@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import { AudioWaveform, Check, TriangleAlert, X } from 'lucide-react'
 import { isActive, patchJob, useAurisStore } from '@/hooks/auris/store'
 import { useLanguage } from '@/context/LanguageContext'
-import { clock, percent, useNow } from '@/components/Auris/format'
+import { clock, fill, percent, useNow } from '@/components/Auris/format'
 import styles from './JobPill.module.css'
 
 const AURIS_PATH = '/ai-music-detection'
@@ -27,7 +27,9 @@ export const JobPill: React.FC = () => {
   if (finished && job.seen) {return null}
   if (!active && !finished) {return null}
 
-  const label = active ? P[job.stage as 'waking' | 'uploading' | 'processing'] : job.stage === 'done' ? P.done : P.error
+  const label = active
+    ? job.queue ? fill(P.queued, { n: job.queue.position }) : P[job.stage as 'waking' | 'uploading' | 'processing']
+    : job.stage === 'done' ? P.done : P.error
   const upload = job.stage === 'uploading' && job.uploadTotal ? ` ${percent(language, job.uploadedBytes / job.uploadTotal)}` : ''
 
   return (

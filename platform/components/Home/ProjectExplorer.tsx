@@ -167,7 +167,7 @@ export function ProjectExplorer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // "Enter world": the camera dives into the planet and the stage floods
+  // "Open project": the camera dives into the planet and the stage floods
   // with the world's colour before the project page loads.
   const enterWorld = (href: string, color: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (reducedMotion || external(href) || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) {return}
@@ -241,12 +241,12 @@ export function ProjectExplorer() {
             <div ref={panelRef} className={styles.panel}>
               {station === 0 || reducedMotion ? (
                 <div key="intro" className={styles.copy}>
-                  <p className={styles.eyebrow}>{en ? `Atlas · ${count} worlds` : `Atlas · ${count} dünya`}</p>
+                  <p className={styles.eyebrow}>{en ? `${count} projects` : `${count} proje`}</p>
                   <h1 id="showroom-title">CrownCode</h1>
-                  <p className={styles.lead}>{en ? 'Independent work across sound, data and the web, laid out as worlds you can travel between.' : 'Ses, veri ve web üzerine bağımsız işler; aralarında gezebileceğin dünyalar olarak.'}</p>
+                  <p className={styles.lead}>{en ? 'Audio analysis, data tools and web applications by Hasan Arthur Altuntaş.' : 'Hasan Arthur Altuntaş’ın ses analizi, veri işleme ve web projeleri.'}</p>
                   <div className={styles.actions}>
                     <button type="button" className={styles.primary} onClick={() => goTo(1)}>
-                      {en ? 'Enter the atlas' : 'Atlas’a gir'} <ArrowDown size={18} />
+                      {en ? 'Browse projects' : 'Projeleri incele'} <ArrowDown size={18} />
                     </button>
                     <a href="#project-index" className={styles.secondary}>{en ? 'All projects' : 'Tüm projeler'}</a>
                   </div>
@@ -265,26 +265,26 @@ export function ProjectExplorer() {
                   <div className={styles.actions}>
                     <Link href={world.href} className={styles.primary} onClick={enterWorld(world.href, world.look.accent)}
                       target={external(world.href) ? '_blank' : undefined} rel={external(world.href) ? 'noreferrer' : undefined}>
-                      {en ? 'Enter world' : 'Dünyaya gir'} <ArrowUpRight size={18} />
+                      {en ? 'Open project' : 'Projeyi aç'} <ArrowUpRight size={18} />
                     </Link>
                     <span className={styles.status}>{world.status}</span>
                   </div>
                 </article>
               ) : (
                 <div key="outro" className={styles.copy}>
-                  <p className={styles.eyebrow}>{en ? 'Atlas · end of route' : 'Atlas · rotanın sonu'}</p>
-                  <h2>{en ? `${count} worlds, one route.` : `${count} dünya, tek rota.`}</h2>
-                  <p className={styles.lead}>{en ? 'Keep scrolling: the log of every world is right below.' : 'Kaydırmaya devam et: her dünyanın seyir kaydı hemen aşağıda.'}</p>
+                  <p className={styles.eyebrow}>{en ? 'Project overview' : 'Proje listesi'}</p>
+                  <h2>{en ? `All ${count} projects` : `${count} projenin tamamı`}</h2>
+                  <p className={styles.lead}>{en ? 'Find project details and links below.' : 'Proje açıklamaları ve bağlantıları aşağıda.'}</p>
                   <div className={styles.actions}>
-                    <a href="#project-index" className={styles.primary}>{en ? 'Open the log' : 'Seyir defterini aç'} <ArrowDown size={18} /></a>
+                    <a href="#project-index" className={styles.primary}>{en ? 'View all projects' : 'Tüm projeleri gör'} <ArrowDown size={18} /></a>
                   </div>
                 </div>
               )}
             </div>
 
-            <nav className={styles.strip} aria-label={en ? 'Choose a world' : 'Dünya seç'}>
+            <nav className={styles.strip} aria-label={en ? 'Choose a project' : 'Proje seç'}>
               <button type="button" className={styles.step} onClick={() => goTo(station - 1)} disabled={station === 0}
-                aria-label={en ? 'Previous world' : 'Önceki dünya'}>
+                aria-label={en ? 'Previous project' : 'Önceki proje'}>
                 <ArrowLeft size={18} />
               </button>
               <ol className={styles.track} style={{ '--count': count } as CSSProperties}>
@@ -300,7 +300,7 @@ export function ProjectExplorer() {
                 ))}
               </ol>
               <button type="button" className={styles.step} onClick={() => goTo(station + 1)} disabled={station === stations - 1}
-                aria-label={en ? 'Next world' : 'Sonraki dünya'}>
+                aria-label={en ? 'Next project' : 'Sonraki proje'}>
                 <ArrowRight size={18} />
               </button>
               <p className={styles.hint} aria-hidden="true">{en ? 'Scroll or use ← →' : 'Kaydır ya da ← → kullan'}</p>
@@ -320,9 +320,9 @@ export function ProjectExplorer() {
 
         <section id="project-index" ref={indexRef} className={styles.index} aria-labelledby="project-index-title">
           <div className={styles.indexLead}>
-            <p className={styles.eyebrow}>{en ? 'Atlas · log' : 'Atlas · seyir defteri'}</p>
-            <h2 id="project-index-title">{en ? 'Every world, in order.' : 'Bütün dünyalar, sırayla.'}</h2>
-            <p>{en ? 'The same route as a list. Hover a world to find it on the map.' : 'Aynı rota, liste olarak. Bir dünyanın üzerine gel, haritada yerini gör.'}</p>
+            <p className={styles.eyebrow}>{en ? 'Projects' : 'Projeler'}</p>
+            <h2 id="project-index-title">{en ? 'All projects' : 'Tüm projeler'}</h2>
+            <p>{en ? 'Select a project for details.' : 'Ayrıntıları görmek için bir proje seç.'}</p>
           </div>
           <ol className={styles.indexList}>
             {worlds.map((w, index) => (
@@ -345,7 +345,7 @@ export function ProjectExplorer() {
             ))}
           </ol>
           <div id="studio-end" className={styles.musicBridge}>
-            <p>{en ? 'The music lives next door.' : 'Müzik de yan tarafta.'}</p>
+            <p>{en ? 'Music by Hasan Arthur Altuntaş' : 'Hasan Arthur Altuntaş’ın müzikleri'}</p>
             <a href="https://hasan-arthur-altuntas.com.tr" target="_blank" rel="noreferrer">
               {en ? 'Listen to Hasan Arthur Altuntaş' : 'Hasan Arthur Altuntaş’ı dinle'} <ArrowUpRight size={26} />
             </a>
