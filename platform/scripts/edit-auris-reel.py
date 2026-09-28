@@ -155,12 +155,12 @@ WORDS = {
     'en': {
         'lines': {
             'l1': (0.12, 'Did a person make this song, or an AI?', {'person': GREEN, 'AI?': AMBER}),
-            'l2': (3.78, "You can't tell by ear anymore.", {}),
+            'l2': (3.40, "You can't tell by ear anymore.", {}),
             'l3': (5.66, 'Drop the song on the world.', {'world.': AMBER}),
             'l4': (7.62, 'Separate layers listen to the audio,', {}),
-            'l5': (9.40, 'eleven models cast a vote.', {'eleven': AMBER, 'models': AMBER}),
+            'l5': (9.72, 'eleven models cast a vote.', {'eleven': AMBER, 'models': AMBER}),
             'l6': (13.15, 'And the verdict...', {}),
-            'l7': (20.62, 'Try it with your own song. Link in bio.', {'Link': AMBER, 'in': AMBER, 'bio.': AMBER}),
+            'l7': (20.2, 'Try it with your own song. Link in bio.', {'Link': AMBER, 'in': AMBER, 'bio.': AMBER}),
         },
         'big': [
             (32, 33, 'AI', 'display', 230, AMBER, 1240, None),

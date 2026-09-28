@@ -335,11 +335,11 @@ def main() -> None:
         # The report.
         caption('', c['report'])
         page.evaluate("document.body.classList.remove('reel-compact')")
-        votes_y = page.evaluate("(() => { const h = [...document.querySelectorAll('h3')].find(x => /Model oyları|What the models say/.test(x.textContent)); return h ? h.getBoundingClientRect().top + scrollY - 70 : 1400 })()")
+        votes_y = page.evaluate("(() => { const h = [...document.querySelectorAll('h3')].find(x => /Model oyları|Model votes/.test(x.textContent)); return h ? h.getBoundingClientRect().top + scrollY - 70 : 1400 })()")
         if args.angle != 'world':
             set_scroll(votes_y, 1.6)
         step(2.6)
-        why_y = page.evaluate("(() => { const h = [...document.querySelectorAll('h3')].find(x => /etkileyenler|drove|affected/.test(x.textContent)); return h ? h.getBoundingClientRect().top + scrollY - 70 : 2400 })()")
+        why_y = page.evaluate("(() => { const h = [...document.querySelectorAll('h3')].find(x => /^SHAP/.test(x.textContent)); return h ? h.getBoundingClientRect().top + scrollY - 70 : 2400 })()")
         if args.angle != 'world':
             set_scroll(why_y, 1.4)
         step(2.8)
