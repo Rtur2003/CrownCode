@@ -289,7 +289,7 @@ class Promo:
         a = clamp((t - self.b0 - 0.9) / 0.4)
         tp.blit(img, tp.sprite(self.spec['tagline'], 'italic', 50, CREAM), 70 - tp.pad_of(50), y + 30, alpha=a * 0.9, anchor='left')
         e = self.bands[min(fi, len(self.bands) - 1)]
-        props.bars(img, e[::2], 70, 1010, 1640, 70, self.accent, alpha=0.8 * a)
+        props.bars(img, e[::2], 70, 1010, min(1760, max(1640, y + 170)), 70, self.accent, alpha=0.8 * a)
 
     def type_group(self, img, t, fi):
         spec = self.spec
@@ -454,7 +454,7 @@ def main():
         wav = OUT / f'{promo.key}.wav'
         sound.write_wav(wav, sound.master(promo.soundtrack(), -11.0))
         dst = OUT / f'{promo.key}-promo.mp4'
-        render.mux(silent, wav, dst)
+        render.mux(silent, wav, dst, lufs=-12)
         wav.unlink()
         silent.unlink()
         render.lighter(dst, OUT / f'{promo.key}-promo-phone.mp4', height=1280, crf=24, maxrate='4M')

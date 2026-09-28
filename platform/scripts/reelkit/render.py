@@ -40,8 +40,10 @@ def stills(render, times, path: Path, cols=6):
     return path
 
 
-def mux(video: Path, wav: Path, out: Path):
-    subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', str(video), '-i', str(wav), '-c:v', 'copy', '-c:a', 'aac',
+def mux(video: Path, wav: Path, out: Path, lufs: float | None = None):
+    """Video plus sound; with `lufs`, the sound is brought to that integrated loudness."""
+    level = ['-af', f'loudnorm=I={lufs}:TP=-1.5:LRA=11', '-ar', '48000'] if lufs is not None else []
+    subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', str(video), '-i', str(wav), '-c:v', 'copy', *level, '-c:a', 'aac',
                     '-b:a', '256k', '-shortest', '-movflags', '+faststart', str(out)], check=True)
 
 

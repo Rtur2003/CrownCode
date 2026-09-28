@@ -6,14 +6,11 @@ from PIL import Image, ImageDraw, ImageFont
 from . import type as tp
 from .core import H, W
 
-_vinyl: dict = {}
-
-
 def vinyl_disc(size: int, label: np.ndarray | None = None):
-    """A record face (RGBA): black grooves, a soft sheen band, a label in the middle."""
-    key = (size, id(label))
-    if key in _vinyl:
-        return _vinyl[key]
+    """A record face (RGBA): black grooves, a soft sheen band, a label in the middle.
+
+    Not cached here: the caller keeps the discs it needs (one label per record).
+    """
     s = size
     yy, xx = np.mgrid[0:s, 0:s].astype(np.float32)
     r = np.hypot(xx - s / 2, yy - s / 2) / (s / 2)
@@ -35,7 +32,6 @@ def vinyl_disc(size: int, label: np.ndarray | None = None):
         img[lab] = (40, 34, 26, 255)
     hole = r < 0.025
     img[hole, 3] = 0
-    _vinyl[key] = img
     return img
 
 
