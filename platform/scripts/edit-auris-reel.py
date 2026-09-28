@@ -7,7 +7,7 @@ drop, the voice carries the build-up, the verdict lands on the drop, the
 human result a bar later, then the report and the end card.
 
 The analyses on screen are the capture's DEMO data (81 % and 22 %); the
-edit labels them "örnek analiz".
+edit labels them "örnek analiz" / "sample analysis".
 
 Usage (from platform/):
   python scripts/edit-auris-reel.py --shots DIR --music song.mp3 --bpm 129.2 --drop 21.885 \
@@ -19,6 +19,7 @@ Requires numpy, scipy, opencv-python, pillow, librosa and ffmpeg.
 """
 import argparse
 import json
+import re
 import subprocess
 import wave
 from pathlib import Path
@@ -175,7 +176,10 @@ LINES, BIG, TAGS = WORDS['lines'], WORDS['big'], WORDS['tags']
 
 
 def syllables(word: str) -> int:
-    return max(1, sum(ch in 'aeıioöuüâîûAEIİOÖUÜÂÎÛ' for ch in word))
+    """Rough count, for spacing a caption's words across its line."""
+    if args.lang == 'tr':  # one vowel, one syllable
+        return max(1, sum(ch in 'aeıioöuüâîûAEIİOÖUÜÂÎÛ' for ch in word))
+    return max(1, len(re.findall(r'[aeiouy]+', word.lower().removesuffix('e'))))
 
 
 def load_voice(key: str):
@@ -396,9 +400,10 @@ def draw_type(frame: np.ndarray, t: float):
         u = t - b(44)
         e = lambda d: 1 - (1 - np.clip((u - d) / 0.4, 0, 1)) ** 3  # noqa: E731
         blit(frame, sprite('AURIS', 'display', 210, CREAM, tracking=0.02), W / 2, 820 - 20 * (1 - e(0)), alpha=e(0))
-        blit(frame, sprite('Bu şarkıyı yapay zekâ mı yaptı?', 'serif', 60, AMBER), W / 2, 985, alpha=e(0.12))
+        question, small = WORDS['end']
+        blit(frame, sprite(question, 'serif', 60, AMBER), W / 2, 985, alpha=e(0.12))
         blit(frame, sprite('hasan-arthur-altuntas.xyz', 'mono', 34, CREAM, tracking=0.06), W / 2, 1105, alpha=e(0.24))
-        blit(frame, sprite('ücretsiz · üyelik yok', 'serif', 42, MUTED), W / 2, 1172, alpha=e(0.3))
+        blit(frame, sprite(small, 'serif', 42, MUTED), W / 2, 1172, alpha=e(0.3))
 
 
 # ── frames ──────────────────────────────────────────────────────────────
