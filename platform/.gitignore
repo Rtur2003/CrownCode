@@ -74,9 +74,14 @@ storybook-static/
 public/sw.js
 public/workbox-*.js
 
-# Reel output (frames, video, sound, events): made by scripts/capture-*-reel.* and
-# scripts/generate-*-reel-sound.py, rebuilt on demand, never tracked.
+# Reel output (frames, video, sound, events, stills): made by scripts/capture-*.py|mjs,
+# scripts/edit-*.py and scripts/generate-*-reel-sound.py, rebuilt on demand, never tracked.
 assets-src/video/**/frames/
 assets-src/video/**/*.mp4
 assets-src/video/**/*.wav
+assets-src/video/**/*.jpg
+assets-src/video/**/*.png
 assets-src/video/auris/
+assets-src/video/atlas/
+# Raw footage from capture-atlas-shots.py and capture-page-tour.py (all-intra, large)
+assets-src/video/shots/
