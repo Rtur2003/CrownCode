@@ -18,6 +18,29 @@ def rgb_bgr(rgb):
     return tuple(rgb[::-1])
 
 
+def accent_from(img_bgr, fallback=(107, 171, 214)):
+    """The picture's most vivid colour that is not near-black or near-white (BGR)."""
+    small = cv2.resize(img_bgr, (64, 64), interpolation=cv2.INTER_AREA).reshape(-1, 3).astype(np.float32)
+    _, labels, centres = cv2.kmeans(small, 6, None, (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 20, 1.0), 3,
+                                    cv2.KMEANS_PP_CENTERS)
+    best, score = None, -1.0
+    for i, c in enumerate(centres):
+        hsv = cv2.cvtColor(np.uint8([[c]]), cv2.COLOR_BGR2HSV)[0, 0] / np.array([180, 255, 255])
+        if hsv[2] < 0.25 or (hsv[1] < 0.12 and hsv[2] > 0.9):
+            continue
+        share = float(np.mean(labels == i))
+        sc = hsv[1] * 0.7 + hsv[2] * 0.3 + min(share, 0.3)
+        if sc > score:
+            best, score = c, sc
+    if best is None:
+        return fallback
+    # lift it so it reads as light on a dark frame
+    hsv = cv2.cvtColor(np.uint8([[best]]), cv2.COLOR_BGR2HSV)[0, 0].astype(np.float32)
+    hsv[2] = max(hsv[2], 200)
+    hsv[1] = min(max(hsv[1], 90), 200)
+    return tuple(int(v) for v in cv2.cvtColor(np.uint8([[hsv]]), cv2.COLOR_HSV2BGR)[0, 0])
+
+
 def lut(r, g, b, contrast=1.08):
     x = np.arange(256) / 255
     y = 0.5 + (x - 0.5) * contrast

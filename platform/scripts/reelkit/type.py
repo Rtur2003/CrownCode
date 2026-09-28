@@ -15,6 +15,11 @@ CREAM, AMBER, MUTED, INK = (243, 233, 216), (242, 180, 95), (187, 168, 143), (12
 _cache: dict = {}
 
 
+def register(name: str, path) -> None:
+    """Add a face under `name` (any path PIL can open: ttf, otf, woff, woff2)."""
+    FONT[name] = str(Path(path).resolve())
+
+
 def pad_of(size: int) -> int:
     return int(size * 0.4)
 
