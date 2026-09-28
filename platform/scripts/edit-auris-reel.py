@@ -61,7 +61,7 @@ music_len = librosa.get_duration(path=args.music) - M0
 END = int((music_len - 0.02) * FPS) / FPS
 N = int(round(END * FPS))
 
-events = json.loads((shots_dir / 'events-ui.json').read_text(encoding='utf-8'))['events']
+events = json.loads((shots_dir / f'events-ui-{args.lang}.json').read_text(encoding='utf-8'))['events']
 
 
 def event(name: str, after: float = 0.0) -> float:
@@ -129,22 +129,49 @@ HITS = [(4, .04, 0, 2, None, 0), (8, .04, 0, 2, None, 0), (12, .04, 0, 2, None, 
         (40, .08, 8, 4, None, 0), (42, .05, 4, 3, None, 0), (44, .03, 0, 0, None, 0)]
 
 # ── words ───────────────────────────────────────────────────────────────
-LINES = {
-    'l1': (0.12, 'Bu şarkıyı bir insan mı yaptı, yoksa yapay zekâ mı?', {'insan': GREEN, 'yapay': AMBER, 'zekâ': AMBER}),
-    'l2': (3.78, 'Kulakla artık ayırt edemiyoruz.', {}),
-    'l3': (5.66, 'Şarkıyı dünyaya bırak.', {'dünyaya': AMBER}),
-    'l4': (7.62, 'Birkaç katman sesi ayrı ayrı dinliyor,', {}),
-    'l5': (9.40, 'on bir model oy veriyor.', {'on': AMBER, 'bir': AMBER, 'model': AMBER}),
-    'l6': (13.15, 'Ve sonuç...', {}),
-    'l7': (20.62, 'Kendi şarkınla dene. Link profilde.', {'Link': AMBER, 'profilde.': AMBER}),
-}
-BIG = [  # beat from, beat to, text, font, size, colour, y, small line under it
-    (32, 33, 'YAPAY ZEKÂ', 'display', 104, AMBER, 1240, None),
-    (34, 35, '%81', 'display', 300, CREAM, 1250, 'YAPAY ZEKÂ OLASILIĞI'),
-    (36, 37, 'İNSAN', 'display', 150, GREEN, 1240, None),
-    (38, 39, '%22', 'display', 300, CREAM, 1250, 'YAPAY ZEKÂ OLASILIĞI'),
-]
-TAGS = [(32, 40, 'ÖRNEK ANALİZ'), (40, 44, '11 MODELİN OYU · SHAP AÇIKLAMASI')]
+# Narration lines: key -> (start in seconds, text, colour per word). BIG: beat from,
+# beat to, text, font, size, colour, y, small line under it.
+WORDS = {
+    'tr': {
+        'lines': {
+            'l1': (0.12, 'Bu şarkıyı bir insan mı yaptı, yoksa yapay zekâ mı?', {'insan': GREEN, 'yapay': AMBER, 'zekâ': AMBER}),
+            'l2': (3.78, 'Kulakla artık ayırt edemiyoruz.', {}),
+            'l3': (5.66, 'Şarkıyı dünyaya bırak.', {'dünyaya': AMBER}),
+            'l4': (7.62, 'Birkaç katman sesi ayrı ayrı dinliyor,', {}),
+            'l5': (9.40, 'on bir model oy veriyor.', {'on': AMBER, 'bir': AMBER, 'model': AMBER}),
+            'l6': (13.15, 'Ve sonuç...', {}),
+            'l7': (20.62, 'Kendi şarkınla dene. Link profilde.', {'Link': AMBER, 'profilde.': AMBER}),
+        },
+        'big': [
+            (32, 33, 'YAPAY ZEKÂ', 'display', 104, AMBER, 1240, None),
+            (34, 35, '%81', 'display', 300, CREAM, 1250, 'YAPAY ZEKÂ OLASILIĞI'),
+            (36, 37, 'İNSAN', 'display', 150, GREEN, 1240, None),
+            (38, 39, '%22', 'display', 300, CREAM, 1250, 'YAPAY ZEKÂ OLASILIĞI'),
+        ],
+        'tags': [(32, 40, 'ÖRNEK ANALİZ'), (40, 44, '11 MODELİN OYU · SHAP AÇIKLAMASI')],
+        'end': ('Bu şarkıyı yapay zekâ mı yaptı?', 'ücretsiz · üyelik yok'),
+    },
+    'en': {
+        'lines': {
+            'l1': (0.12, 'Did a person make this song, or an AI?', {'person': GREEN, 'AI?': AMBER}),
+            'l2': (3.78, "You can't tell by ear anymore.", {}),
+            'l3': (5.66, 'Drop the song on the world.', {'world.': AMBER}),
+            'l4': (7.62, 'Separate layers listen to the audio,', {}),
+            'l5': (9.40, 'eleven models cast a vote.', {'eleven': AMBER, 'models': AMBER}),
+            'l6': (13.15, 'And the verdict...', {}),
+            'l7': (20.62, 'Try it with your own song. Link in bio.', {'Link': AMBER, 'in': AMBER, 'bio.': AMBER}),
+        },
+        'big': [
+            (32, 33, 'AI', 'display', 230, AMBER, 1240, None),
+            (34, 35, '81%', 'display', 300, CREAM, 1250, 'AI PROBABILITY'),
+            (36, 37, 'HUMAN', 'display', 170, GREEN, 1240, None),
+            (38, 39, '22%', 'display', 300, CREAM, 1250, 'AI PROBABILITY'),
+        ],
+        'tags': [(32, 40, 'SAMPLE ANALYSIS'), (40, 44, '11 MODEL VOTES · SHAP BREAKDOWN')],
+        'end': ('Was this song made with AI?', 'free · no sign-up'),
+    },
+}[args.lang]
+LINES, BIG, TAGS = WORDS['lines'], WORDS['big'], WORDS['tags']
 
 
 def syllables(word: str) -> int:

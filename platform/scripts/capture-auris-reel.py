@@ -353,7 +353,7 @@ def main() -> None:
         events = page.evaluate('window.__events')
         t0 = events[0][0] if events else 0
         start = page.evaluate('performance.now()') - frame * 1000 / FPS
-        (OUT / ('events.json' if REEL else f'events-{args.angle}.json')).write_text(json.dumps({
+        (OUT / ('events.json' if REEL else f'events-{args.angle}-{args.lang}.json')).write_text(json.dumps({
             'fps': FPS, 'frames': frame,
             'events': [[round((t - start) / 1000, 3), name] for t, name in events],
         }, indent=1), encoding='utf-8')
