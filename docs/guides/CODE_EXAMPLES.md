@@ -2,7 +2,6 @@
 
 **Professional Software Development Showcase**
 
-> **Düzce University Computer Engineering Department**
 > **Developer:** Hasan Arthur Altuntaş
 > **Academic Year:** 2025-2026
 
@@ -1394,7 +1393,6 @@ interface PerformanceMetrics {
 // - Open science compatibility
 //
 // @author Hasan Arthur Altuntaş
-// @institution Düzce University - Computer Engineering
 // @project CrownCode Platform - AI Music Detection
 // @academic_year 2025-2026
 // @version 1.0.0
@@ -1667,10 +1665,6 @@ export class AcademicResearchExample {
 
       // Metadata for academic submission
       academicMetadata: {
-        institution: 'Düzce University',
-        department: 'Computer Engineering',
-        degree: 'Bachelor of Science',
-        advisorName: '[Advisor Name]',
         submissionDate: new Date().toISOString(),
         keywords: this.generateKeywords(),
         abstract: this.generateAbstract(experimentResults)

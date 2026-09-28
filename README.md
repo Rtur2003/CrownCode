@@ -1,8 +1,7 @@
 # CrownCode
 
-Hasan Arthur Altuntaş's workshop for independent software projects, built as a
-Computer Engineering thesis at Düzce University. The site is live at
-[hasan-arthur-altuntas.xyz](https://hasan-arthur-altuntas.xyz).
+Hasan Arthur Altuntaş's workshop for independent software projects. The site is
+live at [hasan-arthur-altuntas.xyz](https://hasan-arthur-altuntas.xyz).
 
 <table>
   <tr>
@@ -280,14 +279,11 @@ system can't do.
 MIT, see [LICENSE](LICENSE).
 
 ```bibtex
-@thesis{altuntas2026crowncode,
-  title       = {Web-Based AI Music Detection and Data Manipulation Platform},
-  author      = {Hasan Arthur Altuntaş},
-  institution = {Düzce University},
-  department  = {Computer Engineering},
-  year        = {2026},
-  type        = {Bachelor's Thesis},
-  url         = {https://hasan-arthur-altuntas.xyz}
+@software{altuntas2026crowncode,
+  title  = {CrownCode},
+  author = {Hasan Arthur Altuntaş},
+  year   = {2026},
+  url    = {https://github.com/Rtur2003/CrownCode}
 }
 ```
 

@@ -1,5 +1,10 @@
 """Record the 9:16 AURIS reel (1080x1920, 30 fps) from the running site.
 
+With --angle ui or --angle world it records raw footage for an edit
+instead: no captions and no end card, same timeline as the reel. `ui` is
+the page at 1620x2880; `world` hides the panel and lets the world fill a
+1620x2880 frame. Both are encoded all-intra so an editor can seek any frame.
+
 The analyses in the reel use DEMO data: the backend is replaced in the
 page by a stand-in that answers like /api/analyze/jobs, so nothing is
 uploaded and no model runs. The first file comes back AI (81 %), the
@@ -10,11 +15,11 @@ requestAnimationFrame, and the Web Animations API for CSS), so the WebGL
 world, the step list and every transition move at real speed in the
 video however slowly the frames are captured.
 
-Output (video, events) goes to --out, which git ignores; frames go to the
-OS temp dir and are deleted once the video is encoded.
+Output (video, events) goes to --out, which git ignores. Frames are piped
+straight into ffmpeg.
 
 Usage (from platform/, with `npm run dev` on :3000):
-  python scripts/capture-auris-reel.py [--lang tr|en] [--out assets-src/video/auris]
+  python scripts/capture-auris-reel.py [--lang tr|en] [--angle reel|ui|world] [--out assets-src/video/auris]
 Then: python scripts/generate-auris-reel-sound.py --events <out>/events.json
 Requires playwright (python) and ffmpeg.
 """
@@ -22,9 +27,7 @@ import argparse
 import datetime
 import json
 import math
-import shutil
 import subprocess
-import tempfile
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -33,13 +36,15 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--lang', default='tr')
 parser.add_argument('--out', default='assets-src/video/auris')
 parser.add_argument('--base', default='http://localhost:3000')
+parser.add_argument('--angle', choices=['reel', 'ui', 'world'], default='reel')
 args = parser.parse_args()
 
 FPS = 30
-W, H = 540, 960  # CSS px; captured at 2x
+REEL = args.angle == 'reel'
+# CSS viewport and device scale. The world angle uses a wider viewport so the
+# canvas renders at a higher pixel ratio (the page caps it below 800 px).
+W, H, SCALE = {'reel': (540, 960, 2), 'ui': (540, 960, 3), 'world': (810, 1440, 2)}[args.angle]
 OUT = Path(args.out)
-# Frames are scratch (~350 MB); they live in the OS temp dir and go once encoded.
-FRAMES = Path(tempfile.gettempdir()) / f'auris-reel-frames-{args.lang}'
 URL = f"{args.base}{'/en' if args.lang == 'en' else ''}/ai-music-detection"
 
 CAPTIONS = {
@@ -196,6 +201,9 @@ PAGE_SETUP = r"""
     /* Once a song is dropped, the title steps aside so the world and the panel share the frame. */
     body.reel-compact [class*="kicker"], body.reel-compact h1, body.reel-compact [class*="lead"] { display: none !important; }
     body.reel-compact [class*="world"] { height: 440px !important; }
+    body.reel-world [class*="panel"], body.reel-world [class*="route"], body.reel-world [class*="server"],
+    body.reel-world main > :not(:first-child) { visibility: hidden !important; }
+    body.reel-world [class*="world"] { height: 100svh !important; -webkit-mask-image: none !important; mask-image: none !important; }
     #reel-cap { position: fixed; z-index: 99999; left: 22px; right: 22px; top: 26px; pointer-events: none; }
     #reel-cap p { margin: 0; padding: 10px 14px; display: inline-block; font-family: var(--font-family-base); font-size: 21px; line-height: 1.25;
       color: #f3e9d8; background: rgb(12 11 10 / .78); border: 1px solid #d6ab6b4d; border-radius: 12px; backdrop-filter: blur(8px);
@@ -245,19 +253,25 @@ def ease(t: float) -> float:
 
 
 def main() -> None:
-    if FRAMES.exists():
-        shutil.rmtree(FRAMES)
-    FRAMES.mkdir(parents=True)
     OUT.mkdir(parents=True, exist_ok=True)
+    name = f'auris-reel-9x16-{args.lang}-silent.mp4' if REEL else f'auris-shot-{args.angle}-{args.lang}.mp4'
+    video = OUT / name
+    # Shots are all-intra and near-lossless: they are cut and zoomed later.
+    quality = ['-crf', '17'] if REEL else ['-crf', '12', '-g', '1']
+    encoder = subprocess.Popen(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', str(FPS), '-i', '-',
+                                '-c:v', 'libx264', '-preset', 'slow', *quality, '-pix_fmt', 'yuv420p', '-movflags', '+faststart', str(video)],
+                               stdin=subprocess.PIPE)
     with sync_playwright() as p:
         browser = p.chromium.launch(args=['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'])
-        ctx = browser.new_context(viewport={'width': W, 'height': H}, device_scale_factor=2, is_mobile=True, has_touch=True)
+        ctx = browser.new_context(viewport={'width': W, 'height': H}, device_scale_factor=SCALE, is_mobile=True, has_touch=True)
         page = ctx.new_page()
         page.clock.install()
         page.goto(URL, wait_until='networkidle')
         page.wait_for_selector('[data-ready="true"]', timeout=60000)
         page.wait_for_timeout(1500)
         page.evaluate(PAGE_SETUP)
+        if args.angle == 'world':
+            page.evaluate("document.body.classList.add('reel-world')")
         page.clock.pause_at(datetime.datetime.now() + datetime.timedelta(seconds=1))
 
         frame = 0
@@ -276,31 +290,38 @@ def main() -> None:
                     y = scroll['from'] + (scroll['to'] - scroll['from']) * ease(k)
                     page.evaluate(f'window.scrollTo(0, {y:.1f})')
                 page.evaluate('window.__syncAnimations()')
-                page.screenshot(path=str(FRAMES / f'{frame:05d}.png'))
+                # The first shot waits for shaders to compile, which can take over 30 s.
+                encoder.stdin.write(page.screenshot(timeout=180_000))
                 frame += 1
 
         def at(name: str) -> None:
             page.evaluate(f'window.__mark({json.dumps(name)})')
 
+        def caption(n: str, text: str) -> None:
+            if REEL:
+                page.evaluate(f'window.__caption({json.dumps(n)}, {json.dumps(text)})')
+
+        compact = "document.body.classList.add('reel-compact')" if args.angle != 'world' else ''
+
         c = CAPTIONS
         # Idle: the world and the question.
         step(2.2)
         # 1. Drop.
-        page.evaluate(f'window.__caption("1", {json.dumps(c["drop"])})')
+        caption('1', c['drop'])
         page.evaluate("window.__f1 = window.__makeFile('parca.wav', 7); window.__drag('dragenter', window.__f1)")
         at('hot')
         step(1.1)
-        page.evaluate("window.__drag('drop', window.__f1); document.body.classList.add('reel-compact')")
+        page.evaluate(f"window.__drag('drop', window.__f1); {compact}")
         at('drop')
         step(1.0)
         # 2. The server works.
-        page.evaluate(f'window.__caption("2", {json.dumps(c["run"])})')
+        caption('2', c['run'])
         step(6.3)
         # 3. The verdict.
-        page.evaluate(f'window.__caption("3", {json.dumps(c["verdict"])})')
+        caption('3', c['verdict'])
         step(3.4)
         # A second song, made by people.
-        page.evaluate('window.__caption("", "")')
+        caption('', '')
         page.evaluate("window.__setRun('second')")
         page.evaluate("document.querySelectorAll('button').forEach(b => { if (/Yeni analiz|New analysis/.test(b.textContent)) b.click() })")
         step(0.8)
@@ -309,36 +330,38 @@ def main() -> None:
         page.evaluate("window.__drag('drop', window.__f2)")
         at('drop')
         step(0.6)
-        page.evaluate(f'window.__caption("", {json.dumps(c["human"])})')
+        caption('', c['human'])
         step(5.6)
         # The report.
-        page.evaluate(f'window.__caption("", {json.dumps(c["report"])})')
+        caption('', c['report'])
         page.evaluate("document.body.classList.remove('reel-compact')")
         votes_y = page.evaluate("(() => { const h = [...document.querySelectorAll('h3')].find(x => /Model oyları|What the models say/.test(x.textContent)); return h ? h.getBoundingClientRect().top + scrollY - 70 : 1400 })()")
-        set_scroll(votes_y, 1.6)
+        if args.angle != 'world':
+            set_scroll(votes_y, 1.6)
         step(2.6)
         why_y = page.evaluate("(() => { const h = [...document.querySelectorAll('h3')].find(x => /etkileyenler|drove|affected/.test(x.textContent)); return h ? h.getBoundingClientRect().top + scrollY - 70 : 2400 })()")
-        set_scroll(why_y, 1.4)
+        if args.angle != 'world':
+            set_scroll(why_y, 1.4)
         step(2.8)
         # End card.
-        page.evaluate('window.__caption("", "")')
-        page.evaluate(f'window.__end({json.dumps(c["end_q"])}, {json.dumps(c["end_s"])}, "hasan-arthur-altuntas.xyz/ai-music-detection")')
+        caption('', '')
+        if REEL:
+            page.evaluate(f'window.__end({json.dumps(c["end_q"])}, {json.dumps(c["end_s"])}, "hasan-arthur-altuntas.xyz/ai-music-detection")')
         at('end')
         step(3.2)
 
         events = page.evaluate('window.__events')
         t0 = events[0][0] if events else 0
         start = page.evaluate('performance.now()') - frame * 1000 / FPS
-        (OUT / 'events.json').write_text(json.dumps({
+        (OUT / ('events.json' if REEL else f'events-{args.angle}.json')).write_text(json.dumps({
             'fps': FPS, 'frames': frame,
             'events': [[round((t - start) / 1000, 3), name] for t, name in events],
         }, indent=1), encoding='utf-8')
         browser.close()
 
-    video = OUT / f'auris-reel-9x16-{args.lang}-silent.mp4'
-    subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-framerate', str(FPS), '-i', str(FRAMES / '%05d.png'),
-                    '-c:v', 'libx264', '-preset', 'slow', '-crf', '17', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', str(video)], check=True)
-    shutil.rmtree(FRAMES, ignore_errors=True)
+    encoder.stdin.close()
+    if encoder.wait():
+        raise SystemExit('ffmpeg failed')
     print(video, frame, 'frames', f'{frame / FPS:.1f}s')
 
 

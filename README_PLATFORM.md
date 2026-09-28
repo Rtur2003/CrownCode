@@ -11,7 +11,6 @@
 
 CrownCode, yapay zeka destekli ses analizi ve yaratici araclar icin gelistirilmis acik kaynakli bir platformdur. Moduler yapida tasarlanmis olup, mobil ve masaustu cihazlarda tam uyumluluk saglar.
 
-> **Duzce Universitesi Bilgisayar Muhendisligi Bolumu**
 > **Gelistirici:** Hasan Arthur Altuntas
 
 ---

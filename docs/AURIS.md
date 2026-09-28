@@ -14,9 +14,8 @@ which way.
 **Model weights:** [Rthur2003/auris-models](https://huggingface.co/Rthur2003/auris-models) ·
 **Server:** [Rthur2003/crowncode-backend](https://huggingface.co/spaces/Rthur2003/crowncode-backend)
 
-This is the AURIS half of the [CrownCode](../README.md) repository. It started
-as a thesis project at Düzce University and is still being developed: read
-every result as a likelihood, not a ruling.
+This is the AURIS half of the [CrownCode](../README.md) repository. It is still
+being developed: read every result as a likelihood, not a ruling.
 
 ---
 

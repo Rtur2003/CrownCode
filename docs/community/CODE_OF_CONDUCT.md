@@ -54,12 +54,6 @@ Examples of unacceptable behavior by participants include:
 
 Project maintainers are responsible for clarifying and enforcing our standards of acceptable behavior and will take appropriate and fair corrective action in response to any behavior that they deem inappropriate, threatening, offensive, or harmful.
 
-### Academic Context
-As this is an academic thesis project, violations may also be reported to:
-* Düzce University Computer Engineering Department
-* Academic advisor and faculty
-* University ethics committee (for serious violations)
-
 ## Scope
 
 This Code of Conduct applies within all project spaces, and also applies when an individual is officially representing the project or its community in public spaces. Examples of representing our project or community include:
@@ -127,12 +121,6 @@ If you experience or witness unacceptable behavior, please report it by contacti
 * **Email**: contact@hasan-arthur-altuntas.xyz
 * **Subject Line**: [Code of Conduct] Brief description of issue
 
-### Academic Reporting
-For academic misconduct or serious violations:
-* **University**: Düzce University Ethics Committee
-* **Department**: Computer Engineering Department
-* **Faculty Advisor**: [Advisor Name and Contact]
-
 ### What to Include in Your Report
 * Your contact information
 * Names (real, usernames, or pseudonyms) of any individuals involved
@@ -149,12 +137,11 @@ Community Impact Guidelines were inspired by [Mozilla's code of conduct enforcem
 ## Academic Integrity Statement
 
 This project is conducted in accordance with:
-* Düzce University Academic Integrity Policy
 * IEEE Code of Ethics for Engineers and Computer Scientists
 * ACM Code of Ethics and Professional Conduct
 * International standards for research ethics and conduct
 
-For questions about this Code of Conduct or academic integrity, please contact the project maintainer or the Düzce University Computer Engineering Department.
+For questions about this Code of Conduct or academic integrity, please contact the project maintainer.
 
 ---
 
