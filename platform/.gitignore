@@ -85,3 +85,5 @@ assets-src/video/auris/
 assets-src/video/atlas/
 # Raw footage from capture-atlas-shots.py and capture-page-tour.py (all-intra, large)
 assets-src/video/shots/
+# Music promos: covers, previews, fonts and renders for the music site (edit-release-promo.py)
+assets-src/video/music/
