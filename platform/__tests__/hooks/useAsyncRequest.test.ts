@@ -7,6 +7,8 @@ const ok = (body: unknown = {}) => ({ ok: true, status: 200, json: async () => b
 const hangingFetch = () =>
   jest.fn((_input: unknown, init?: RequestInit) =>
     new Promise<Response>((_resolve, reject) => {
+      // Like the real fetch: a signal that is already aborted rejects at once.
+      if (init?.signal?.aborted) {return reject(init.signal.reason)}
       init?.signal?.addEventListener('abort', () => reject(init.signal?.reason), { once: true })
     }),
   )
