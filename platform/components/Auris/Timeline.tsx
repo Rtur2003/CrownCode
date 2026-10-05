@@ -65,7 +65,7 @@ export const TimelineView: React.FC<Props> = ({ timeline, playback }) => {
 
   const stats: Array<[string, string]> = [
     [T.stats.windows, `${insight.flagged} / ${insight.scored}`],
-    [T.stats.share, percent(language, timeline.summary.aiShare)],
+    [T.stats.share, percent(language, insight.share)],
     [T.stats.mean, percent(language, timeline.summary.meanProbability)],
     [T.stats.peak, insight.peak ? `${rangeOf(insight.peak)} · ${percent(language, insight.peak.probability)}` : '–'],
   ]
@@ -208,7 +208,7 @@ const WaveCanvas: React.FC<{ timeline: Timeline; progress: number; label: string
       const rgb = tone === 'ai' ? AI : tone === 'human' ? HUMAN : QUIET
       const strength = seg ? strengthOf(seg) : 0
       const alpha = i < played ? 1 : tone === 'ai' ? 0.72 + 0.28 * strength : tone === 'human' ? 0.5 : 0.28
-      ctx.fillStyle = `rgb(${rgb} / ${alpha})`
+      ctx.fillStyle = `rgba(${rgb}, ${alpha})`
       const half = Math.max(1, Math.pow(peaks[i]!, 0.8) * mid * 0.9)
       ctx.fillRect(i * bar, mid - half, Math.max(1, bar - 0.8), half * 2)
     }
