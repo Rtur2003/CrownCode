@@ -5,6 +5,13 @@ const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 30
 const MAX_TRACKED_IPS = 10_000
 
+// Only the metrics the site reports are accepted, with bounded fields, so the
+// endpoint can't be used to write arbitrary text into the logs.
+const METRIC_NAMES = new Set(['CLS', 'FCP', 'FID', 'INP', 'LCP', 'TTFB', 'Next.js-hydration', 'Next.js-route-change-to-render', 'Next.js-render'])
+const RATINGS = new Set(['good', 'needs-improvement', 'poor'])
+const MAX_ID_LENGTH = 64
+const MAX_PAGE_LENGTH = 200
+
 function clampSampleRate(raw: string | undefined): number {
   const parsed = parseFloat(raw || '1')
   if (isNaN(parsed) || parsed > 1) { return 1 }
@@ -60,7 +67,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   // Prefer platform-specific trusted headers over spoofable x-forwarded-for
   const clientIp =
-    (req.headers?.['x-nf-client-connection-ip'] as string)?.trim() ||
+    (req.headers?.['cf-connecting-ip'] as string)?.trim() ||
     (req.headers?.['x-forwarded-for'] as string)?.split(',')[0]?.trim() ||
     req.socket?.remoteAddress || 'unknown'
   if (isRateLimited(clientIp)) {
@@ -72,16 +79,25 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(413).json({ error: 'Payload Too Large' })
   }
 
-  let metric: { name?: string; value?: unknown; rating?: string; id?: string; page?: string }
+  let metric: { name?: unknown; value?: unknown; rating?: unknown; id?: unknown; page?: unknown }
   try {
     metric = typeof req.body === 'string' ? JSON.parse(req.body) : req.body
   } catch {
     return res.status(400).json({ error: 'Invalid JSON' })
   }
 
-  if (!metric.name || metric.value === undefined) {
-    return res.status(400).json({ error: 'Missing required fields: name, value' })
+  if (!metric || typeof metric !== 'object') {
+    return res.status(400).json({ error: 'Invalid payload' })
   }
+  if (typeof metric.name !== 'string' || !METRIC_NAMES.has(metric.name)) {
+    return res.status(400).json({ error: 'Unknown metric name' })
+  }
+  if (typeof metric.value !== 'number' || !Number.isFinite(metric.value) || metric.value < 0 || metric.value > 1e7) {
+    return res.status(400).json({ error: 'Invalid metric value' })
+  }
+
+  // The page is kept as a path only: no query string, no fragment.
+  const page = typeof metric.page === 'string' ? metric.page.split(/[?#]/)[0]?.slice(0, MAX_PAGE_LENGTH) : undefined
 
   // eslint-disable-next-line no-console
   console.log(
@@ -89,9 +105,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       type: 'web-vital',
       name: metric.name,
       value: metric.value,
-      rating: metric.rating,
-      id: metric.id,
-      page: metric.page,
+      rating: typeof metric.rating === 'string' && RATINGS.has(metric.rating) ? metric.rating : undefined,
+      id: typeof metric.id === 'string' ? metric.id.slice(0, MAX_ID_LENGTH) : undefined,
+      page,
       ts: Date.now(),
     })
   )
