@@ -76,6 +76,7 @@ poll GET /api/analyze/jobs/{id}  ◄──── queue position ───  wait 
                                                            ├─ decode once: first 60 s, mono, 22.05 kHz
                                                            ├─ in parallel: 47 features · vocal analysis
                                                            │               wav2vec2 · CLAP layer
+                                                           ├─ whole-track scan: first 6 min in ~30 s windows
                                                            ├─ at the same time, over the network: FST
                                                            ├─ LightGBM verdict + 10 more votes + SHAP
                                                            └─ meta-classifier (second opinion)
@@ -88,8 +89,25 @@ clip back returns exactly the samples the feature extractor would have got
 from the original file, so this saves three decodes without changing a single
 feature value.
 
-A YouTube link takes the same road after the server downloads the first two
+A YouTube link takes the same road after the server downloads the first six
 minutes of its audio (from `?t=` if the link has one).
+
+### The whole-track scan
+
+The verdict comes from the opening clip, as validated. Alongside it the server
+reads the rest of the track (`app/services/timeline.py`): the first six minutes
+are cut into equal windows of about 30 s (20 to 45 s each), and every window
+goes through the same feature extraction, vocal analysis and LightGBM model.
+Beat counts are scaled to the 60 s the model was trained on, and SHAP gives each
+window its top three reasons. Two windows run at once, and windows not started
+within 180 s are reported as skipped instead of holding the CPU slot longer.
+The result carries `timeline` with a peak envelope for the waveform, one
+segment per window, and a summary. The page draws it under the waveform.
+
+A window score is the classifier applied to an excerpt shorter than its 60 s
+training clips, and every training clip was wholly AI or wholly human. The
+timeline shows where the music reads AI-like, not where an AI was used, and it
+does not change the verdict.
 
 ## The models
 
@@ -159,7 +177,7 @@ was trained on (`DataSet/features_with_meta.csv`):
 | Vocal deepfake sets | 250 | 242 |
 | archive.org | | 18 |
 
-Audio features are extracted from the first 60 seconds at 22.05 kHz. Two
+Audio features are extracted from 60-second clips at 22.05 kHz. Two
 columns (duration and sample rate) were dropped before training because they
 leaked the source, and the scaler is fitted inside each fold.
 
