@@ -43,6 +43,13 @@ const CreatorStudioPage: NextPage = () => {
 
         <MultitrackMixer />
 
+        <section className={styles['about']}>
+          <h2 className={styles['about-title']}>{cs.about.title}</h2>
+          {cs.about.body.map((paragraph: string, index: number) => (
+            <p key={index}>{paragraph}</p>
+          ))}
+        </section>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

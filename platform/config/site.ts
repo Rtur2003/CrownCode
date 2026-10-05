@@ -41,20 +41,22 @@ export function localizedUrl(path: string, locale: Locale): string {
 
 /**
  * Routes that are indexable and belong in the sitemap. Everything else under
- * `pages/` must either be listed here or in NOINDEX_ROUTES — a test enforces it.
+ * `pages/` must either be listed here or in NOINDEX_ROUTES, a test enforces it.
+ * `lastmod` is the date the page's content last changed; bump it with the edit.
+ * Google ignores changefreq and priority, so they are not emitted.
  */
 export const INDEXABLE_ROUTES = [
-  { path: '/', changefreq: 'weekly', priority: 1.0 },
-  { path: '/ai-music-detection', changefreq: 'weekly', priority: 0.9 },
-  { path: '/data-manipulation', changefreq: 'monthly', priority: 0.7 },
-  { path: '/creator-studio', changefreq: 'monthly', priority: 0.7 },
-  { path: '/crown-commend', changefreq: 'monthly', priority: 0.7 },
-  { path: '/crown-fortune', changefreq: 'daily', priority: 0.7 },
-  { path: '/crown-dreams', changefreq: 'monthly', priority: 0.7 },
-  { path: '/crown-vote', changefreq: 'monthly', priority: 0.6 },
-  { path: '/noir-grain', changefreq: 'monthly', priority: 0.6 },
-  { path: '/privacy', changefreq: 'yearly', priority: 0.2 },
-  { path: '/terms', changefreq: 'yearly', priority: 0.2 },
+  { path: '/', lastmod: '2026-10-05' },
+  { path: '/ai-music-detection', lastmod: '2026-09-27' },
+  { path: '/data-manipulation', lastmod: '2026-10-05' },
+  { path: '/creator-studio', lastmod: '2026-10-05' },
+  { path: '/crown-commend', lastmod: '2026-10-05' },
+  { path: '/crown-fortune', lastmod: '2026-10-05' },
+  { path: '/crown-dreams', lastmod: '2026-10-05' },
+  { path: '/crown-vote', lastmod: '2026-10-05' },
+  { path: '/noir-grain', lastmod: '2026-10-05' },
+  { path: '/privacy', lastmod: '2026-10-05' },
+  { path: '/terms', lastmod: '2026-10-05' },
 ] as const
 
 /**

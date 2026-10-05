@@ -390,6 +390,13 @@ const AudioDatasetPage: NextPage = () => {
                   )
                 })}
               </div>
+
+              <section className={styles['about']}>
+                <h2 className={styles['about-title']}>{t.audioDataset.about.title}</h2>
+                {t.audioDataset.about.body.map((paragraph: string, index: number) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
+              </section>
             </>
           ) : (
             <AnimatePresence mode="wait">

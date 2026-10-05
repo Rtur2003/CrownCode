@@ -758,11 +758,23 @@
   padding: 1.25rem;
 }
 
+.info-card h2,
 .info-card h3 {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--color-text-primary, #f4ede3);
   margin: 0 0 0.875rem 0;
+}
+
+.info-card p {
+  margin: 0 0 0.75rem 0;
+  color: var(--color-text-secondary, #c8b9a7);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.info-card p:last-child {
+  margin-bottom: 0;
 }
 
 .info-card ul {
