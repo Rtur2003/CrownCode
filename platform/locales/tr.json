@@ -1136,27 +1136,25 @@
       "keywords": "rüya günlüğü, lüsid rüya, rüya analizi, AI rüya yorumu, duygu analizi, rüya sembolleri"
     },
     "header": {
-      "badge": "Rüya Günlüğü",
-      "welcomeBack": "Hoş Geldin,",
-      "streakLabel": "günlük seri",
-      "lucidRateLabel": "lüsid oranı",
-      "newDream": "Yeni Rüya",
-      "analytics": "Analitik",
-      "demoNotice": "Demo Verisi"
+      "title": "Crown Dreams",
+      "lead": "Bir rüya yaz; Gemini duygularını, temalarını ve simgelerini okusun."
     },
     "analyzer": {
-      "title": "Rüyanı Analiz Et",
-      "subtitle": "Rüyanı yaz, Gemini içindeki duyguları, temaları ve sembolleri çıkarsın.",
-      "placeholder": "Rüyanı buraya yaz... (en az 10 karakter)",
-      "analyzeButton": "Analiz Et",
-      "analyzing": "Analiz ediliyor...",
-      "analyzeAnother": "Başka Bir Rüya Analiz Et",
-      "close": "Kapat",
-      "emotionsLabel": "Tespit Edilen Duygular",
+      "title": "Rüyayı yaz",
+      "subtitle": "Hatırladığın ne varsa, hangi sırayla olursa yaz. Gemini bulduğu duyguları, temaları ve simgeleri gösterir. Düşünmek için bir yorum olarak al; teşhis ya da tavsiye değildir.",
+      "label": "Rüyan",
+      "placeholder": "Dün gece hem benim olan hem olmayan bir evdeydim…",
+      "hint": "En az 10 karakter.",
+      "analyzeButton": "Rüyamı oku",
+      "analyzing": "Okunuyor…",
+      "analyzeAnother": "Bir tane daha yaz",
+      "emotionsLabel": "Duygular",
       "themesLabel": "Temalar",
-      "symbolsLabel": "Semboller",
-      "interpretationLabel": "Yorum",
-      "lucidDetected": "Lüsid Rüya Tespit Edildi",
+      "symbolsLabel": "Simgeler",
+      "interpretationLabel": "Okuma",
+      "lucidDetected": "Metin, rüya gördüğünü fark ettiğini düşündürüyor.",
+      "disclaimer": "Yazdığın metinden Gemini üretti. Kendi düşünmen için bir başlangıç say.",
+      "privacy": "Metnin CrownCode arka ucuna, oradan da okunmak üzere Gemini’ye gider. Bu sayfa metni kaydetmez.",
       "emotions": {
         "joy": "Sevinç",
         "fear": "Korku",
@@ -1180,52 +1178,25 @@
         "unknownError": "Bir şeyler ters gitti."
       }
     },
-    "stats": {
-      "totalDreams": "Toplam Rüya",
-      "lucidDreams": "Lüsid Rüya",
-      "currentStreak": "Günlük Seri",
-      "avgClarity": "Ort. Netlik",
-      "days": "gün"
-    },
-    "sections": {
-      "lucidMastery": "Lüsid Ustalık",
-      "dreamClarity": "Rüya Netliği",
-      "sleepQuality": "Uyku Kalitesi",
-      "nextMilestone": "Sonraki seviye",
-      "remaining": "kaldı",
-      "milestoneRank": "Bilinç Kaşifi",
-      "recentDreams": "Son Rüyalar",
-      "viewAll": "Tümünü Gör",
-      "starredDreams": "Yıldızlı Rüyalar",
-      "noStarred": "Henüz yıldızlı rüya yok",
-      "dreamInsights": "İç Görüler",
-      "weeklyActivity": "Haftalık Aktivite"
-    },
     "journal": {
-      "searchPlaceholder": "Rüya ara...",
+      "title": "Örnek günlük",
+      "note": "Bu kayıtlar sayfa için yazılmış örnek veridir. Yukarıya yazdıkların bunlara eklenmez.",
+      "count": "{n} örnek rüya, {lucid} tanesi lüsid.",
+      "searchLabel": "Örnek rüyalarda ara",
+      "searchPlaceholder": "Kelime ya da simgeyle ara",
+      "filterLabel": "Türe göre süz",
       "filterAll": "Tümü",
-      "noDreams": "Rüya bulunamadı",
-      "lucid": "Lüsid"
+      "noDreams": "Eşleşen örnek rüya yok.",
+      "entry": "No. {n}"
     },
     "detail": {
       "clarity": "Netlik",
-      "lucidity": "Lüsidlik",
-      "sleep": "Uyku",
+      "lucidity": "Farkındalık",
       "duration": "Süre",
       "durationUnit": "dk",
       "emotions": "Duygular",
-      "symbols": "Semboller",
-      "characters": "Karakterler",
-      "locations": "Mekanlar",
-      "aiAnalysis": "AI Analizi"
-    },
-    "patterns": {
-      "theme": "En Yaygın Tema",
-      "emotion": "Baskın Duygu",
-      "symbol": "Lüsid Tetikleyici",
-      "location": "Sık Görülen Mekan",
-      "character": "Tekrarlayan Karakter",
-      "appearsIn": "rüyada görüldü"
+      "symbols": "Simgeler",
+      "reading": "Bir okuma"
     }
   },
   "crownCommend": {
