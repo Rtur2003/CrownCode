@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React from 'react'
 import type { NextPage } from 'next'
@@ -50,7 +50,7 @@ const CrownCommendPage: NextPage = () => {
     reset
   } = useCommend(commendT.errors)
 
-  const isLoading = state === 'generating' || state === 'fetching' || state === 'posting'
+  const isLoading = state === 'generating' || state === 'posting'
 
   const featureItems = [
     {
