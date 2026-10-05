@@ -220,3 +220,22 @@ trace.zip
 /*.jpeg
 /*.webp
 /*.gif
+
+# ==========================================
+# Heavy masters, thesis material, tool caches
+# ==========================================
+
+# The 22 tarot masters are ~190 MB of PNG. What ships is the optimized WebP
+# in platform/public/tarot, built from these by platform/scripts/compress-tarot.js.
+platform/assets-src/tarot-original/
+
+# Thesis and paper material names the university, so it stays on this machine.
+docs/academic/
+scripts/build_tez.py
+scripts/build_sunumlar.py
+scripts/build_tanitim.py
+scripts/build_dokumanlar.py
+scripts/sunum_lib.py
+
+# Coding-agent and design-tool caches
+.impeccable/
