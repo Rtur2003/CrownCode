@@ -1,5 +1,5 @@
 import type { Timeline, TimelineSegment } from '@/hooks/analysisTypes'
-import { bandTint, place, rangeOf, readTimeline, segmentAt, stamp, toneOf } from '@/components/Auris/timeline'
+import { bandTint, place, rangeOf, readTimeline, segmentAt, stamp, toneOf } from '@/components/Auris/timelineModel'
 
 const seg = (index: number, p: number | null, isAi = false, margin = 0.5, state: TimelineSegment['state'] = 'ok'): TimelineSegment => ({
   index,
