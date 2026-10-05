@@ -12,6 +12,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
+import { WebGLGuard } from '@/components/UI/WebGLGuard'
 import { worldLook } from '@/config/showroom-worlds'
 import {
   atmosphereFragment, atmosphereVertex, planetFragment, planetVertex,
@@ -357,17 +358,20 @@ function Scene({ mode, progress, threshold, ticks, hot, reducedMotion, onReady }
 
 export default function AurisWorld({ active, ...props }: AurisWorldProps) {
   const [maxDpr] = useState(() => (typeof window === 'undefined' ? 1 : Math.min(window.devicePixelRatio || 1, window.innerWidth < 800 ? 1.5 : 1.75)))
+  // Without WebGL the page keeps the still of this scene it already shows behind it.
   return (
-    <Canvas
-      frameloop={active ? 'always' : 'never'}
-      dpr={[1, maxDpr]}
-      flat
-      camera={{ fov: 34, near: 0.1, far: 800, position: [0, 3, 14] }}
-      gl={{ antialias: true, alpha: false, stencil: false, powerPreference: 'high-performance' }}
-      onCreated={({ gl }) => gl.setClearColor('#07070a')}
-      aria-hidden="true"
-    >
-      <Scene {...props} />
-    </Canvas>
+    <WebGLGuard>
+      <Canvas
+        frameloop={active ? 'always' : 'never'}
+        dpr={[1, maxDpr]}
+        flat
+        camera={{ fov: 34, near: 0.1, far: 800, position: [0, 3, 14] }}
+        gl={{ antialias: true, alpha: false, stencil: false, powerPreference: 'high-performance' }}
+        onCreated={({ gl }) => gl.setClearColor('#07070a')}
+        aria-hidden="true"
+      >
+        <Scene {...props} />
+      </Canvas>
+    </WebGLGuard>
   )
 }
