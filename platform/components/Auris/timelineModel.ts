@@ -53,7 +53,9 @@ export const readTimeline = (t: Timeline): Insight => {
   const scored = t.segments.filter(isScored)
   const flagged = scored.filter(s => s.isAi)
   const peak = scored.length ? scored.reduce((a, b) => (b.probability > a.probability ? b : a)) : null
-  const base = { scored: scored.length, flagged: flagged.length, share: t.summary.aiShare, peak }
+  const seconds = scored.reduce((sum, s) => sum + (s.end - s.start), 0)
+  const flaggedSeconds = flagged.reduce((sum, s) => sum + (s.end - s.start), 0)
+  const base = { scored: scored.length, flagged: flagged.length, share: seconds > 0 ? flaggedSeconds / seconds : 0, peak }
 
   const first = scored[0]
   if (!first) {return { ...base, key: 'none' }}
