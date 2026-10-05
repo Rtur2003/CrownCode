@@ -74,9 +74,11 @@ interface VerdictProps {
   onReset: () => void
   onRetryServer: (() => void) | undefined
   onOpenReport: () => void
+  /** Present when the result carries a timeline worth showing. */
+  onOpenTimeline?: (() => void) | undefined
 }
 
-export const Verdict: React.FC<VerdictProps> = ({ job, onReset, onRetryServer, onOpenReport }) => {
+export const Verdict: React.FC<VerdictProps> = ({ job, onReset, onRetryServer, onOpenReport, onOpenTimeline }) => {
   const { t, language } = useLanguage()
   const A = t.aiDetection
   const L = A.report
@@ -137,6 +139,13 @@ export const Verdict: React.FC<VerdictProps> = ({ job, onReset, onRetryServer, o
         <p className={styles.note}>{fill(L.thresholdNote, { t: num(language, s.threshold, 3) })}</p>
       )}
 
+      {onOpenTimeline && r.timeline && r.timeline.summary.scoredCount > 0 && (
+        <p className={styles.note}>
+          {fill(L.wholeTrack, { flagged: r.timeline.summary.flaggedCount, scored: r.timeline.summary.scoredCount })}.{' '}
+          <button type="button" className={styles.linkBtn} onClick={onOpenTimeline}>{L.wholeTrackLink}</button>
+        </p>
+      )}
+
       {!s.trained && (
         <div className={styles.fallback} role="note">
           <AlertTriangle size={18} />
@@ -187,6 +196,7 @@ export const ReportLog: React.FC<{ job: DoneJob }> = ({ job }) => {
   const facts: Array<[string, string]> = [
     [F.duration, clock(info.duration * 1000)],
     ...(info.analysedSec && info.analysedSec < info.duration - 1 ? [[F.analysed, `${Math.round(info.analysedSec)} s`] as [string, string]] : []),
+    ...(r.timeline ? [[F.scanned, clock(r.timeline.durationSec * 1000)] as [string, string]] : []),
     [F.format, (info.format || '—').toUpperCase()],
     ...(info.sampleRate ? [[F.sampleRate, `${num(language, info.sampleRate / 1000, 1)} kHz`] as [string, string]] : []),
     ...(info.bitrate ? [[F.bitrate, `${info.bitrate} kbps`] as [string, string]] : []),
