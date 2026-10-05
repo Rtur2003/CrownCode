@@ -1,11 +1,12 @@
-﻿/**
+/**
  * Crown Commend Hook
  * AI-powered YouTube comment generation
  */
 
-import { useState, useCallback, useMemo, useRef } from 'react'
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
 import { useLocalHistory, HISTORY_KEYS } from '@/hooks/useLocalHistory'
+import { MAX_COMMENT_LENGTH, parseGenerateResponse, parsePostResponse, parseYouTubeVideoId } from '@/hooks/validators'
 
 export type CommentLanguage = 'Turkish' | 'English' | 'Russian' | 'Chinese' | 'Japanese'
 
@@ -42,7 +43,7 @@ export interface PostResponse {
   alreadyCommented?: boolean
 }
 
-export type CommendState = 'idle' | 'fetching' | 'generating' | 'posting' | 'success' | 'error'
+export type CommendState = 'idle' | 'generating' | 'posting' | 'success' | 'error'
 
 export interface CommendError {
   code: string
@@ -97,8 +98,6 @@ const mapCommendErrorCode = (code: string | undefined, msgs: CommendMessages): s
   return key ? msgs[key] : undefined
 }
 
-const YOUTUBE_URL_REGEX = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|shorts\/)|youtu\.be\/)[a-zA-Z0-9_-]{11}/
-
 export const useCommend = (messages: Partial<CommendMessages> = {}) => {
   const [state, setState] = useState<CommendState>('idle')
   const [videoUrl, setVideoUrl] = useState('')
@@ -113,20 +112,23 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
 
   const apiBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_API_URL?.trim(), [])
   const requestIdRef = useRef(0)
+  const controllerRef = useRef<AbortController | null>(null)
   const { lastEntry: lastCommend, save: saveCommend } = useLocalHistory<{ comment: string; videoTitle: string }>(HISTORY_KEYS.COMMEND)
   const i18nMessages = useMemo(
     () => ({ ...DEFAULT_MESSAGES, ...messages }),
     [messages]
   )
 
-  const isValidUrl = useMemo(() => {
-    return YOUTUBE_URL_REGEX.test(videoUrl)
-  }, [videoUrl])
+  const isValidUrl = useMemo(() => parseYouTubeVideoId(videoUrl) !== null, [videoUrl])
+
+  // Leaving the page stops a request nobody is waiting for any more.
+  useEffect(() => () => controllerRef.current?.abort(), [])
 
   const reset = useCallback(() => {
     // Invalidate any in-flight generate/post request so its response can't
     // land after reset and silently repopulate the just-cleared state.
     requestIdRef.current++
+    controllerRef.current?.abort()
     setState('idle')
     setGeneratedComment(null)
     setVideoDetails(null)
@@ -151,6 +153,9 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
 
     const currentRequestId = ++requestIdRef.current
     const isStale = () => requestIdRef.current !== currentRequestId
+    controllerRef.current?.abort()
+    const controller = new AbortController()
+    controllerRef.current = controller
 
     setState('generating')
     setError(null)
@@ -163,7 +168,8 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
           videoUrl,
           language,
           commentStyle: style
-        })
+        }),
+        signal: controller.signal,
       })
 
       if (isStale()) {return}
@@ -176,9 +182,10 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
         throw new Error(errorMessage)
       }
 
-      const data: GenerateResponse = await response.json()
+      const data = parseGenerateResponse(await response.json().catch(() => null))
 
       if (isStale()) {return}
+      if (!data) {throw new Error(i18nMessages.generationFailed)}
 
       setGeneratedComment(data.generatedText)
       setVideoDetails(data.videoDetails)
@@ -212,6 +219,9 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
     if (state === 'posting') {return}
     const currentRequestId = ++requestIdRef.current
     const isStale = () => requestIdRef.current !== currentRequestId
+    controllerRef.current?.abort()
+    const controller = new AbortController()
+    controllerRef.current = controller
 
     setState('posting')
     setError(null)
@@ -222,8 +232,9 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           videoUrl,
-          commentText: generatedComment
-        })
+          commentText: generatedComment.slice(0, MAX_COMMENT_LENGTH)
+        }),
+        signal: controller.signal,
       })
 
       if (isStale()) {return}
@@ -251,7 +262,8 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
         throw new Error(errorMessage)
       }
 
-      const data: PostResponse = await response.json()
+      const data = parsePostResponse(await response.json().catch(() => null))
+      if (!data) {throw new Error(i18nMessages.postingFailed)}
       setPostResult(data)
       setState('success')
 
