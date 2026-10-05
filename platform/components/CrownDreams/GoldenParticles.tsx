@@ -4,6 +4,7 @@ import React, { useRef, useMemo, useState, useEffect, Suspense } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Points, PointMaterial } from '@react-three/drei'
 import * as THREE from 'three'
+import { WebGLGuard } from '@/components/UI/WebGLGuard'
 import styles from './GoldenParticles.module.css'
 
 // Neural Network Lines connecting particles
@@ -289,37 +290,42 @@ function Scene({ tier }: { tier: 'full' | 'reduced' }) {
 export default function GoldenParticles() {
   const tier = usePerformanceTier()
 
-  // Skip 3D entirely for reduced-motion preference
-  if (tier === 'none') {
-    return (
-      <div className={styles.container}>
-        <div className={styles.gradientTop} />
-        <div className={styles.gradientBottom} />
-        <div className={styles.radialGlow} />
-      </div>
-    )
-  }
-
-  return (
+  const still = (
     <div className={styles.container}>
-      <Canvas
-        camera={{ position: [0, 0, 15], fov: 60 }}
-        dpr={tier === 'reduced' ? [1, 1] : [1, 1.5]}
-        gl={{
-          antialias: false,
-          alpha: true,
-          powerPreference: 'high-performance',
-        }}
-      >
-        <Suspense fallback={null}>
-          <Scene tier={tier} />
-        </Suspense>
-      </Canvas>
-
-      {/* Gradient overlays for depth */}
       <div className={styles.gradientTop} />
       <div className={styles.gradientBottom} />
       <div className={styles.radialGlow} />
     </div>
+  )
+
+  // Skip 3D entirely for reduced-motion preference
+  if (tier === 'none') {
+    return still
+  }
+
+  // No WebGL (or a refused context): the same still the reduced-motion path uses.
+  return (
+    <WebGLGuard fallback={still}>
+      <div className={styles.container}>
+        <Canvas
+          camera={{ position: [0, 0, 15], fov: 60 }}
+          dpr={tier === 'reduced' ? [1, 1] : [1, 1.5]}
+          gl={{
+            antialias: false,
+            alpha: true,
+            powerPreference: 'high-performance',
+          }}
+        >
+          <Suspense fallback={null}>
+            <Scene tier={tier} />
+          </Suspense>
+        </Canvas>
+
+        {/* Gradient overlays for depth */}
+        <div className={styles.gradientTop} />
+        <div className={styles.gradientBottom} />
+        <div className={styles.radialGlow} />
+      </div>
+    </WebGLGuard>
   )
 }
