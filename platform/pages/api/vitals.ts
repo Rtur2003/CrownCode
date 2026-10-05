@@ -21,6 +21,9 @@ function clampSampleRate(raw: string | undefined): number {
 
 const SAMPLE_RATE = clampSampleRate(process.env.VITALS_SAMPLE_RATE)
 
+// Best-effort limiter: each Worker isolate keeps its own map, so the real cap is
+// per isolate. Vitals are low-value and sampled, so this is enough; anything that
+// costs money per call needs a shared limiter instead.
 const ipHits = new Map<string, number[]>()
 
 function evictStaleEntries(): void {

@@ -1,5 +1,8 @@
 # Static asset headers (Cloudflare Workers static assets).
-# Page responses get their headers from next.config.js `headers()`.
+# Page responses get their headers from next.config.js `headers()`, including
+# the Content-Security-Policy: it only matters on documents, so it lives there
+# and not here. The three nosniff/frame/referrer lines below repeat what the
+# page headers send, for the files Cloudflare serves without the Worker.
 
 # Hashed build output never changes under the same URL
 /_next/static/*
