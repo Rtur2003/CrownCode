@@ -8,7 +8,7 @@ import { useLanguage } from '@/context/LanguageContext'
 import { clock, fill, isTrained, megabytes, num, percent, useNow } from '@/components/Auris/format'
 import styles from '@/styles/pages/auris.module.css'
 
-const FILE_STEPS = ['features', 'vocals', 'wav2vec2', 'clap', 'fst', 'xai', 'meta']
+const FILE_STEPS = ['features', 'vocals', 'wav2vec2', 'clap', 'timeline', 'fst', 'xai', 'meta']
 const SETTLED: StepState[] = ['done', 'skipped', 'failed']
 
 /** Steps the band around the world is divided into: the upload, then each server step. */
@@ -55,7 +55,7 @@ export const JobProgress: React.FC<{ job: ActiveJob; onCancel: () => void }> = (
   const typical = useTypicalSeconds()
   const live = job.steps.length > 0
   const ids = job.kind === 'url' ? ['download', ...FILE_STEPS] : FILE_STEPS
-  const steps = live ? job.steps : ids.map(id => ({ id, state: undefined as StepState | undefined, seconds: undefined as number | undefined }))
+  const steps = live ? job.steps : ids.map(id => ({ id, state: undefined as StepState | undefined, seconds: undefined as number | undefined, progress: undefined as number | undefined }))
   const upload = job.uploadTotal ? job.uploadedBytes / job.uploadTotal : 0
   const queue = job.queue
   const note = queue
@@ -89,7 +89,9 @@ export const JobProgress: React.FC<{ job: ActiveJob; onCancel: () => void }> = (
             <small>
               {typeof step.seconds === 'number'
                 ? `${num(language, step.seconds, 1)} s`
-                : step.state && step.state !== 'pending' ? (W.stepState as Record<string, string>)[step.state] : ''}
+                : step.state === 'running' && typeof step.progress === 'number'
+                  ? percent(language, step.progress)
+                  : step.state && step.state !== 'pending' ? (W.stepState as Record<string, string>)[step.state] : ''}
             </small>
           </li>
         ))}
