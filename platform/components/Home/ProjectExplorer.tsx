@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import Image, { getImageProps } from 'next/image'
 import { useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react'
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
+import { hasWebGL } from '@/components/UI/WebGLGuard'
 import { useLanguage } from '@/context/LanguageContext'
 import { PRODUCT_CATALOG, resolveProduct, type ProductEntry } from '@/config/product-catalog'
 import { worldLook, worldName, worldPlacement, type WorldLook, type WorldPlacement } from '@/config/showroom-worlds'
@@ -33,15 +34,6 @@ const external = (href: string) => href.startsWith('https:')
 const smoothstep = (a: number, b: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)))
   return t * t * (3 - 2 * t)
-}
-
-function hasWebGL(): boolean {
-  try {
-    const canvas = document.createElement('canvas')
-    return Boolean(canvas.getContext('webgl2') ?? canvas.getContext('webgl'))
-  } catch {
-    return false
-  }
 }
 
 export function ProjectExplorer() {
