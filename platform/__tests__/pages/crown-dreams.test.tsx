@@ -16,11 +16,11 @@ jest.mock('next/router', () => ({
   }),
 }))
 
-jest.mock('next/head', () => ({ children }: { children: React.ReactNode }) => <>{children}</>)
+jest.mock('next/head', () => function Head({ children }: { children: React.ReactNode }) { return <>{children}</> })
 
-jest.mock('next/link', () => ({ children, href }: { children: React.ReactNode; href: string }) => (
-  <a href={href}>{children}</a>
-))
+jest.mock('next/link', () => function Link({ children, href }: { children: React.ReactNode; href: string }) {
+  return <a href={href}>{children}</a>
+})
 
 // The header animates with motion and watches scroll position; neither matters here.
 const MOTION_ONLY = new Set(['initial', 'animate', 'exit', 'transition', 'whileHover', 'whileTap', 'whileInView', 'viewport', 'variants', 'layout', 'layoutId'])
