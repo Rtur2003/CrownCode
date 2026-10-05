@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion -- tests index into arrays they just built */
 import { act, renderHook } from '@testing-library/react'
 import { fetchWithTimeout, isCallerAbort, useAsyncRequest } from '@/hooks/useAsyncRequest'
 
