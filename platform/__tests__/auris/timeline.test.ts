@@ -112,6 +112,13 @@ describe('readTimeline', () => {
     expect(r.key).toBe('openingAi')
   })
 
+  it('works the AI share out of the scored windows, weighted by length', () => {
+    const t = timeline([seg(0, 0.2), seg(1, 0.9, true), seg(2, 0.8, true), seg(3, null, false, 0, 'skipped')])
+    const r = readTimeline(t)
+    expect(r.flagged).toBe(2)
+    expect(r.share).toBeCloseTo(2 / 3, 5)
+  })
+
   it('skips unscored windows when looking at the opening', () => {
     const r = readTimeline(timeline([seg(0, null, false, 0, 'silent'), seg(1, 0.9, true), seg(2, 0.2)]))
     expect(r.key).toBe('openingAi')
