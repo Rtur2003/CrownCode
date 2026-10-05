@@ -64,6 +64,13 @@ safe without per-track checking. No YouTube downloads.
 | `awsaf49/sonics-spectttra-alpha-120s` | `pytorch_model.bin` + config | 75 MB | published SONICS detector, long window |
 | `awsaf49/sonics-spectttra-alpha-5s` | same | 68 MB | published SONICS detector, 5 s window |
 | `awsaf49/sonics-spectttra-{beta,gamma}-{5s,120s}` (optional) | same | ~70–80 MB each (not individually verified) | SpecTTTra variants |
+| `facebook/encodec_24khz` | `model.safetensors` + json | 93.1 MB | Codec round-trip control (E5): real clips reconstructed through the decoder |
+| `descript/dac_44khz` | `model.safetensors` + json | 306.5 MB | Second codec for E5 |
+| `facebook/wav2vec2-xls-r-2b` (optional, not planned) | `pytorch_model.bin` | 8.65 GB fp32 (about 4.3 GB in fp16) | Does not fit the 4 GB GPU; only for a rented-GPU frozen-embedding run (decision D3) |
+
+Already on disk and reused: the first paper's pool under `D:\CrownCode\DataSet` (5,195 clips: GTZAN, FMA, SleepyJesse, archive.org,
+Suno audio, Echoes, AIME, deepfake sets, all 22,050 Hz). It supplies the legacy real corpora and the frozen-model overlap audit;
+it is never uploaded or redistributed.
 
 Third-party detectors named in the literature (CLAM, ArtifactNet ONNX, Deezer fakeprint LR) are **not** in this tier:
 checkpoint availability, licence and size are unverified, and ArtifactNet/ArtifactBench are single-author vendor-linked
