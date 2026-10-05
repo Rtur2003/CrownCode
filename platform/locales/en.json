@@ -379,6 +379,7 @@
         "vocals": "Vocal analysis",
         "wav2vec2": "wav2vec2 model",
         "clap": "CLAP model",
+        "timeline": "Reading the whole track",
         "fst": "FST model (external)",
         "xai": "LightGBM verdict and 11 model votes",
         "meta": "Meta-classifier"
@@ -432,6 +433,48 @@
       "noVisuals": "Opened from history. Audio and graphs are only kept for the latest analysis.",
       "title": "Signal view",
       "lead": "Waveform and spectrogram of the decoded audio. Click the waveform to seek."
+    },
+    "timeline": {
+      "title": "Across the track",
+      "lead": "The model reads the whole track, one window at a time, and every window gets its own probability.",
+      "insight": {
+        "none": "No window could be scored.",
+        "allAi": "Every scored window leans AI ({flagged} of {scored}). The strongest reading is {p}, at {when}.",
+        "allHuman": "No window leans AI. The highest reading is {p}, at {when}.",
+        "openingHuman": "The opening reads human-made, but {flagged} of {scored} windows lean AI ({share} of the track). The strongest is {p}, at {when}.",
+        "openingAi": "The opening leans AI, but part of the track reads human-made. {flagged} of {scored} windows lean AI ({share} of the track). The strongest is {p}, at {when}."
+      },
+      "waveLabel": "Waveform tinted by window: amber leans AI, green leans human-made",
+      "laneLabel": "AI probability per window",
+      "threshold": "Threshold {t}",
+      "legend": {
+        "ai": "Leans AI",
+        "human": "Leans human-made",
+        "none": "Not scored"
+      },
+      "stats": {
+        "windows": "Windows leaning AI",
+        "share": "Share of the track",
+        "mean": "Average probability",
+        "peak": "Strongest window"
+      },
+      "detail": {
+        "over": "{n} points over the threshold",
+        "under": "{n} points under the threshold",
+        "reasons": "What moved this window",
+        "towardsAi": "toward AI",
+        "towardsHuman": "toward human-made",
+        "noVocals": "No vocals in this window.",
+        "play": "Play from here",
+        "pause": "Pause",
+        "states": {
+          "silent": "This window is silent, so it was not scored.",
+          "skipped": "This window was skipped to keep the analysis within its time limit.",
+          "failed": "This window could not be read."
+        }
+      },
+      "truncated": "The scan covers the first {scanned} of a {total} track. Longer tracks are read up to six minutes.",
+      "note": "Each window is scored by the same model as the opening, on about 30 seconds of audio. That model was trained on 60-second clips that were either all AI or all human-made, so this shows where the music reads AI-like, not where an AI was used."
     },
     "report": {
       "eyebrow": "AURIS report",
@@ -539,7 +582,8 @@
         "xai_unavailable": "The main model couldn't be loaded, so the result was combined from the other scores.",
         "meta_classifier_unavailable": "The meta-classifier didn't run.",
         "unknown": "Server note: {code}",
-        "cached_result": "This audio was analysed a short while ago, so that result is shown."
+        "cached_result": "This audio was analysed a short while ago, so that result is shown.",
+        "timeline_unavailable": "The track couldn't be scanned window by window, so there is no timeline."
       },
       "facts": {
         "duration": "Length",
@@ -552,7 +596,8 @@
         "model": "Model",
         "bpm": "Tempo",
         "peak": "Peak",
-        "analysed": "Analysed"
+        "analysed": "Analysed",
+        "scanned": "Scanned"
       },
       "lossyNote": "Compressed files like MP3 already have their high frequencies cut, so the bandwidth measurement wasn't used.",
       "export": "Download JSON",
@@ -563,7 +608,9 @@
       "share": "Share the result",
       "shareSaved": "Card downloaded",
       "shareNote": "A likelihood, not a ruling.",
-      "shareText": "AURIS gave this song a {p} chance of being AI-made. Try yours:"
+      "shareText": "AURIS gave this song a {p} chance of being AI-made. Try yours:",
+      "wholeTrack": "Across the track: {flagged} of {scored} windows lean AI",
+      "wholeTrackLink": "Show timeline"
     },
     "measures": {
       "spectralPeriodicity": {
@@ -612,6 +659,10 @@
           "a": "In cross-validation it is 88.4% accurate with a ROC-AUC of 0.955, so roughly one song in nine is misclassified. The closer the probability is to the threshold (0.432), the less certain the result; the report shows this on the Certainty line."
         },
         {
+          "q": "Can it show which part of a song is AI?",
+          "a": "It shows where the song reads AI-like. The track (up to the first six minutes) is read in windows of about 30 seconds, and each window gets its own probability, drawn under the waveform. The model was trained on whole tracks that were either all AI or all human-made, so a high window means that stretch sounds like AI music, not that an AI was used only there. A mixed track, such as a human song with an AI-made intro, can show up as a change along the timeline, but treat it as a hint."
+        },
+        {
           "q": "Is my file stored?",
           "a": "Not on the server: the file is dropped from memory once the analysis ends, and only the result is kept for a few hours in case the same file comes back. The last audio stays in your own browser so a reload can pick up where it left off. For the FST layer, a copy goes to the mippia team's Hugging Face Space."
         },
@@ -621,7 +672,7 @@
         },
         {
           "q": "How does a YouTube link work?",
-          "a": "The server downloads the audio of the first two minutes and analyses it the same way as a file. YouTube blocks downloads for some videos; if that happens, upload the song as a file."
+          "a": "The server downloads the audio of the first six minutes and analyses it the same way as a file. YouTube blocks downloads for some videos; if that happens, upload the song as a file."
         }
       ]
     },
@@ -638,14 +689,15 @@
         "threshold": "Threshold (Youden J)"
       },
       "stepsTitle": "Analysis steps",
-      "step1": "47 features are extracted from the first 60 seconds of audio.",
-      "step2": "LightGBM estimates probability; values above {t} are assigned to the AI class.",
+      "step1": "47 features are extracted from the opening 60 seconds. The rest of the track, up to six minutes, is then read in windows of about 30 seconds.",
+      "step2": "LightGBM estimates the probability for the opening; values above {t} are assigned to the AI class. The same model scores each window of the timeline.",
       "step3": "Predictions from 10 additional models are compared. SHAP computes feature contributions to the primary prediction.",
       "step4": "wav2vec2, FST and vocal analysis results are reported separately.",
       "limitsTitle": "Limitations",
       "limit1": "Performance may drop on genres and generators absent from the training data.",
       "limit2": "Heavy processing, electronic music, microphone recordings and low audio quality can cause misclassification.",
-      "limit3": "Cross-validation accuracy: {acc}%. This does not guarantee performance on new tracks or prove their origin."
+      "limit3": "Cross-validation accuracy: {acc}%. This does not guarantee performance on new tracks or prove their origin.",
+      "limit4": "Timeline windows are about 30 seconds long, shorter than the 60-second clips the model was trained on, and each training clip was either all AI or all human-made. A window shows where the music reads AI-like, not where an AI was used."
     },
     "errors": {
       "tryAgain": "Try again",
