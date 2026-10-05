@@ -176,6 +176,8 @@ export interface JobStep {
   id: string
   state: StepState
   seconds?: number
+  /** While a many-part step runs (the timeline scan): 0 to 1. */
+  progress?: number
 }
 
 export interface JobSnapshot {

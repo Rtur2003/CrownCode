@@ -166,6 +166,57 @@ export interface LayerStatus {
   ensembleLoaded?: number
 }
 
+/** One feature that pushed a window's score (SHAP). */
+export interface SegmentReason {
+  name: string
+  label: string
+  labelEn: string
+  direction: 'towards_ai' | 'towards_human'
+  shapValue: number
+}
+
+/** One window of the whole-track scan; only `ok` windows carry a score. */
+export interface TimelineSegment {
+  index: number
+  start: number
+  end: number
+  state: 'ok' | 'silent' | 'skipped' | 'failed'
+  probability?: number | null
+  isAi?: boolean | null
+  /** 0 at the decision threshold, 1 at the far end of the window's side. */
+  margin?: number | null
+  hasVocals?: boolean | null
+  reasons?: SegmentReason[]
+}
+
+export interface TimelineSummary {
+  scoredCount: number
+  flaggedCount: number
+  scoredSec: number
+  /** Share of the scored time whose windows lean AI. */
+  aiShare: number
+  meanProbability: number
+  maxProbability: number
+  peakIndex: number | null
+}
+
+/**
+ * The track read window by window by the primary classifier. Window scores come
+ * from a model trained on 60 s clips that were wholly AI or wholly human, so they
+ * show where the music reads AI-like, not where an AI was used.
+ */
+export interface Timeline {
+  /** Seconds covered by the scan (at most the first six minutes) and the full length. */
+  durationSec: number
+  totalSec: number
+  truncated: boolean
+  threshold: number
+  /** Peak level per slice of the covered part, 0 to 1. */
+  peaks: number[]
+  segments: TimelineSegment[]
+  summary: TimelineSummary
+}
+
 export interface AnalysisResult {
   isAIGenerated: boolean
   confidence: number
@@ -181,6 +232,8 @@ export interface AnalysisResult {
   topFeatures?: FeatureImportance[]
   xai?: XAIExplanation
   metaClassifier?: MetaClassifierExplanation
+  /** Whole-track scan; absent for results from before it existed or when it couldn't run. */
+  timeline?: Timeline
   layers?: Record<string, LayerStatus>
   /** Raw measurements and visuals from the AURIS signal analysis. */
   signal?: SignalReport
