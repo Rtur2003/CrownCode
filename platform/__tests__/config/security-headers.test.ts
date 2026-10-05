@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion -- tests index into arrays they just built */
 import fs from 'fs'
 import path from 'path'
 import { DEFAULT_API_URL } from '@/config/api'
