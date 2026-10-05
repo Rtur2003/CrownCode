@@ -13,6 +13,7 @@ import { MainLayout } from '@/components/Layout/MainLayout'
 import { PlayButton, ResidualPlot, Spectrogram, Waveform, usePlayback } from '@/components/Auris/SignalViews'
 import { ModelMetrics, ReportLog, Stop, Verdict, summarize, type DoneJob } from '@/components/Auris/Report'
 import { JobProgress, jobSegments } from '@/components/Auris/JobProgress'
+import { TimelineView } from '@/components/Auris/Timeline'
 import type { WorldMode } from '@/components/Auris/AurisWorld'
 import { aiProbability, clock, fill, isTrained, num, percent } from '@/components/Auris/format'
 import { AURIS_MODELS_URL, AURIS_SPACE_URL } from '@/config/api'
@@ -80,6 +81,8 @@ const AurisPage: NextPage = () => {
   const reducedMotion = useReducedMotion()
   const active = isActive(job)
   const finished = job?.stage === 'done' || job?.stage === 'error'
+  // One audio element for the signal view and the timeline, so they never play over each other.
+  const playback = usePlayback(job?.audioUrl ?? null)
 
   // A result shown here counts as seen, so the site-wide pill stops announcing it.
   useEffect(() => {
@@ -119,6 +122,8 @@ const AurisPage: NextPage = () => {
   const report = job?.stage === 'done' && job.result ? (job as DoneJob) : null
   const canRerun = report && !report.result.xai && !report.restored
   const openReport = () => document.getElementById('auris-report')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' })
+  const timeline = report?.result.timeline && report.result.timeline.segments.length >= 2 ? report.result.timeline : null
+  const openTimeline = () => document.getElementById('auris-timeline')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' })
   const world = worldState(job)
   const signal = job?.signal?.visuals ? job.signal : null
   const sector = language === 'en' ? LOOK.sector.en : LOOK.sector.tr
@@ -170,7 +175,7 @@ const AurisPage: NextPage = () => {
             {active ? (
               <JobProgress job={job} onCancel={auris.reset} />
             ) : report ? (
-              <Verdict job={report} onReset={auris.reset} onRetryServer={canRerun ? () => void rerunLast() : undefined} onOpenReport={openReport} />
+              <Verdict job={report} onReset={auris.reset} onRetryServer={canRerun ? () => void rerunLast() : undefined} onOpenReport={openReport} onOpenTimeline={timeline ? openTimeline : undefined} />
             ) : (
               <>
                 <p className={styles.lead}>{A.intro.lead}</p>
@@ -192,7 +197,12 @@ const AurisPage: NextPage = () => {
         </section>
 
         <div className={styles.route}>
-          {signal && job && <Scope auris={auris} signal={signal} />}
+          {timeline && (
+            <Stop title={A.timeline.title} lead={A.timeline.lead} id="auris-timeline">
+              <TimelineView timeline={timeline} playback={playback} />
+            </Stop>
+          )}
+          {signal && job && <Scope playback={playback} signal={signal} />}
           {report && <ReportLog job={report} />}
           <Recent current={job} />
           <Faq />
@@ -373,10 +383,9 @@ const LiveMeter: React.FC<{ level: number }> = ({ level }) => {
 
 // ── below the stage, on the route line ─────────────────────────────
 
-const Scope: React.FC<{ auris: AurisController; signal: NonNullable<AurisJob['signal']> }> = ({ auris, signal }) => {
+const Scope: React.FC<{ playback: ReturnType<typeof usePlayback>; signal: NonNullable<AurisJob['signal']> }> = ({ playback, signal }) => {
   const { t } = useLanguage()
   const A = t.aiDetection
-  const playback = usePlayback(auris.job?.audioUrl ?? null)
   return (
     <Stop title={A.scope.title} lead={A.scope.lead}>
       <div className={styles.scope}>
@@ -516,6 +525,7 @@ const Method: React.FC = () => {
           <li>{M.limit1}</li>
           <li>{M.limit2}</li>
           <li>{fill(M.limit3, { acc: num(language, AURIS_MODEL.accuracy * 100, 1) })}</li>
+          <li>{M.limit4}</li>
         </ul>
       </Stop>
     </>
