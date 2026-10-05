@@ -379,6 +379,7 @@
         "vocals": "Vokal analizi",
         "wav2vec2": "wav2vec2 modeli",
         "clap": "CLAP modeli",
+        "timeline": "Tüm parça okunuyor",
         "fst": "FST modeli (harici)",
         "xai": "LightGBM kararı ve 11 modelin oyu",
         "meta": "Meta-sınıflandırıcı"
@@ -432,6 +433,48 @@
       "noVisuals": "Geçmişten açıldı. Ses ve grafikler sadece son analiz için saklanıyor.",
       "title": "Sinyal görünümü",
       "lead": "Çözümlenen sesin dalga formu ve spektrogramı. Dalga formuna tıklayarak kayıtta ilerleyebilirsin."
+    },
+    "timeline": {
+      "title": "Parça boyunca",
+      "lead": "Model tüm parçayı pencere pencere okur ve her pencere kendi olasılığını alır.",
+      "insight": {
+        "none": "Hiçbir pencere puanlanamadı.",
+        "allAi": "Puanlanan her pencere yapay zekâya yakın ({scored} pencerenin {flagged} tanesi). En güçlü okuma {when} aralığında, {p}.",
+        "allHuman": "Hiçbir pencere yapay zekâya yakın değil. En yüksek okuma {when} aralığında, {p}.",
+        "openingHuman": "Giriş insan işi gibi okunuyor, ama {scored} pencerenin {flagged} tanesi yapay zekâya yakın (parçanın {share}). En güçlüsü {when} aralığında, {p}.",
+        "openingAi": "Giriş yapay zekâya yakın, ama parçanın bir kısmı insan işi gibi okunuyor. {scored} pencerenin {flagged} tanesi yapay zekâya yakın (parçanın {share}). En güçlüsü {when} aralığında, {p}."
+      },
+      "waveLabel": "Pencereye göre renklenen dalga formu: kehribar yapay zekâya yakın, yeşil insan işine yakın",
+      "laneLabel": "Pencere başına yapay zekâ olasılığı",
+      "threshold": "Eşik {t}",
+      "legend": {
+        "ai": "Yapay zekâya yakın",
+        "human": "İnsan işine yakın",
+        "none": "Puanlanmadı"
+      },
+      "stats": {
+        "windows": "Yapay zekâya yakın pencere",
+        "share": "Parçanın payı",
+        "mean": "Ortalama olasılık",
+        "peak": "En güçlü pencere"
+      },
+      "detail": {
+        "over": "Eşiğin {n} puan üstünde",
+        "under": "Eşiğin {n} puan altında",
+        "reasons": "Bu pencereyi ne etkiledi",
+        "towardsAi": "yapay zekâ yönünde",
+        "towardsHuman": "insan işi yönünde",
+        "noVocals": "Bu pencerede vokal yok.",
+        "play": "Buradan çal",
+        "pause": "Duraklat",
+        "states": {
+          "silent": "Bu pencere sessiz, bu yüzden puanlanmadı.",
+          "skipped": "Bu pencere, analizi süre sınırı içinde tutmak için atlandı.",
+          "failed": "Bu pencere okunamadı."
+        }
+      },
+      "truncated": "Tarama, {total} uzunluğundaki parçanın ilk {scanned} kısmını kapsıyor. Daha uzun parçalar altı dakikaya kadar okunur.",
+      "note": "Her pencere, girişi puanlayan modelle ve yaklaşık 30 saniyelik sesle puanlanır. Bu model baştan sona ya yapay zekâ ya da insan işi 60 saniyelik kliplerle eğitildi; bu yüzden çizelge müziğin nerede yapay zekâya benzediğini gösterir, yapay zekânın nerede kullanıldığını değil."
     },
     "report": {
       "eyebrow": "AURIS raporu",
@@ -539,7 +582,8 @@
         "xai_unavailable": "Ana karar modeli yüklenemedi, sonuç diğer skorların birleşiminden hesaplandı.",
         "meta_classifier_unavailable": "Meta-sınıflandırıcı çalışmadı.",
         "unknown": "Sunucu notu: {code}",
-        "cached_result": "Bu ses kısa süre önce analiz edilmişti, o sonuç gösteriliyor."
+        "cached_result": "Bu ses kısa süre önce analiz edilmişti, o sonuç gösteriliyor.",
+        "timeline_unavailable": "Parça pencere pencere taranamadı, bu yüzden zaman çizelgesi yok."
       },
       "facts": {
         "duration": "Süre",
@@ -552,7 +596,8 @@
         "model": "Model",
         "bpm": "Tempo",
         "peak": "Tepe",
-        "analysed": "İncelenen süre"
+        "analysed": "İncelenen süre",
+        "scanned": "Taranan"
       },
       "lossyNote": "MP3 gibi sıkıştırılmış dosyalarda yüksek frekanslar zaten kesildiği için bant sınırı ölçümü kullanılmadı.",
       "export": "JSON indir",
@@ -563,7 +608,9 @@
       "share": "Sonucu paylaş",
       "shareSaved": "Kart indirildi",
       "shareNote": "Bir ihtimal, kesin hüküm değil.",
-      "shareText": "AURIS bu şarkıya {p} yapay zekâ olasılığı verdi. Seninkini de dene:"
+      "shareText": "AURIS bu şarkıya {p} yapay zekâ olasılığı verdi. Seninkini de dene:",
+      "wholeTrack": "Parça boyunca: {scored} pencerenin {flagged} tanesi yapay zekâya yakın",
+      "wholeTrackLink": "Çizelgeyi göster"
     },
     "measures": {
       "spectralPeriodicity": {
@@ -612,6 +659,10 @@
           "a": "Çapraz doğrulamada doğruluk %88,4, ROC-AUC 0,955. Kabaca dokuz şarkıdan biri yanlış sınıflanıyor. Olasılık eşiğe (0,432) ne kadar yakınsa sonuç o kadar belirsiz; raporda bunu \"Kesinlik\" satırında görürsün."
         },
         {
+          "q": "Şarkının hangi bölümünün yapay zekâ olduğunu gösterebiliyor mu?",
+          "a": "Şarkının nerelerinin yapay zekâya benzediğini gösterir. Parça (ilk altı dakikaya kadar) yaklaşık 30 saniyelik pencerelerle okunur ve her pencere dalga formunun altında kendi olasılığını alır. Model baştan sona ya yapay zekâ ya da insan işi parçalarla eğitildi. Yüksek bir pencere, o kısmın yapay zekâ müziğine benzediği anlamına gelir; yapay zekânın yalnızca orada kullanıldığı anlamına gelmez. Karma bir parça, örneğin yapay zekâyla yapılmış girişi olan bir insan şarkısı, çizelgede bir değişim olarak görünebilir ama bunu bir ipucu say."
+        },
+        {
           "q": "Yüklediğim dosya saklanıyor mu?",
           "a": "Sunucuda saklanmıyor: analiz bitince dosya bellekten silinir, aynı dosya tekrar gelirse diye yalnızca sonuç birkaç saat tutulur. Sayfayı yenilersen kaldığın yerden devam edebilmen için son ses kendi tarayıcında durur. FST katmanı için dosyanın bir kopyası mippia ekibinin Hugging Face Space'ine gider."
         },
@@ -621,7 +672,7 @@
         },
         {
           "q": "YouTube bağlantısıyla nasıl çalışıyor?",
-          "a": "Sunucu videonun ilk iki dakikasının sesini indirir ve dosyayla aynı şekilde inceler. YouTube bazı videolarda indirmeye izin vermiyor; öyle olursa şarkıyı dosya olarak yükle."
+          "a": "Sunucu videonun ilk altı dakikasının sesini indirir ve dosyayla aynı şekilde inceler. YouTube bazı videolarda indirmeye izin vermiyor; öyle olursa şarkıyı dosya olarak yükle."
         }
       ]
     },
@@ -638,14 +689,15 @@
         "threshold": "Eşik (Youden J)"
       },
       "stepsTitle": "Analiz adımları",
-      "step1": "İlk 60 saniyelik sesten 47 öznitelik çıkarılır.",
-      "step2": "LightGBM olasılık üretir; {t} üzerindeki değerler yapay zekâ sınıfına atanır.",
+      "step1": "İlk 60 saniyeden 47 öznitelik çıkarılır. Parçanın geri kalanı, altı dakikaya kadar, yaklaşık 30 saniyelik pencerelerle okunur.",
+      "step2": "LightGBM giriş için olasılık üretir; {t} üzerindeki değerler yapay zekâ sınıfına atanır. Aynı model zaman çizelgesindeki her pencereyi de puanlar.",
       "step3": "10 ek modelin tahminleri karşılaştırılır. SHAP, özniteliklerin ana karara katkısını hesaplar.",
       "step4": "wav2vec2, FST ve vokal analizi sonuçları ayrı raporlanır.",
       "limitsTitle": "Sınırlamalar",
       "limit1": "Eğitimde bulunmayan müzik türleri ve üretim modellerinde başarı düşebilir.",
       "limit2": "Yoğun ses işleme, elektronik müzik, mikrofon kaydı ve düşük ses kalitesi yanlış sınıflandırmaya yol açabilir.",
-      "limit3": "Çapraz doğrulama doğruluğu %{acc}. Bu oran yeni kayıtlar için garanti değildir; sonuç tek başına kaynak kanıtı sayılmaz."
+      "limit3": "Çapraz doğrulama doğruluğu %{acc}. Bu oran yeni kayıtlar için garanti değildir; sonuç tek başına kaynak kanıtı sayılmaz.",
+      "limit4": "Çizelgedeki pencereler yaklaşık 30 saniyedir; modelin eğitildiği 60 saniyelik kliplerden kısadır ve her eğitim klibi baştan sona ya yapay zekâ ya da insan işiydi. Bir pencere müziğin nerede yapay zekâya benzediğini gösterir, yapay zekânın nerede kullanıldığını değil."
     },
     "errors": {
       "tryAgain": "Tekrar dene",
