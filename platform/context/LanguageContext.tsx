@@ -19,13 +19,15 @@ const RESTORED_KEY = 'language-restored'
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
 export function rememberLanguage(lang: Language) {
+  if (!isLocale(lang)) {return}
   try {
     localStorage.setItem(STORAGE_KEY, lang)
   } catch {
     // Storage can be blocked; the URL still carries the language.
   }
   // Next.js reads NEXT_LOCALE when it has to pick a locale for a bare URL.
-  document.cookie = `NEXT_LOCALE=${lang}; path=/; max-age=31536000; SameSite=Lax`
+  const secure = location.protocol === 'https:' ? '; Secure' : ''
+  document.cookie = `NEXT_LOCALE=${lang}; path=/; max-age=31536000; SameSite=Lax${secure}`
 }
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
