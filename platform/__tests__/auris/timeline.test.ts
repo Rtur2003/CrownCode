@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion -- tests index into arrays they just built */
 import type { Timeline, TimelineSegment } from '@/hooks/analysisTypes'
 import { bandTint, place, rangeOf, readTimeline, segmentAt, stamp, toneOf } from '@/components/Auris/timelineModel'
 
