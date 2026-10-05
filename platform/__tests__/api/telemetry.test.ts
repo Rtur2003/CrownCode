@@ -43,6 +43,40 @@ describe('/api/vitals', () => {
     handler(req, res)
     expect(res.status).toHaveBeenCalledWith(204)
   })
+
+  it.each([
+    ['an unknown metric name', { name: 'whatever', value: 1 }],
+    ['a name that is not text', { name: { a: 1 }, value: 1 }],
+    ['a value that is not a number', { name: 'LCP', value: '1200' }],
+    ['a negative value', { name: 'LCP', value: -5 }],
+    ['an absurdly large value', { name: 'LCP', value: 1e12 }],
+  ])('rejects %s', (_label, body) => {
+    const { req, res } = createMocks('POST', body, { 'x-forwarded-for': '198.51.100.9' })
+    handler(req, res)
+    expect(res.status).toHaveBeenCalledWith(400)
+  })
+
+  it('logs only the path of the page and trims the id', () => {
+    const log = jest.spyOn(console, 'log').mockImplementation(() => undefined)
+    const { req, res } = createMocks('POST', { name: 'CLS', value: 0.1, rating: 'nonsense', id: 'x'.repeat(200), page: '/privacy?token=abc#frag' })
+    handler(req, res)
+    const line = JSON.parse(log.mock.calls[0]![0] as string)
+    log.mockRestore()
+    expect(line.page).toBe('/privacy')
+    expect(line.id).toHaveLength(64)
+    expect(line.rating).toBeUndefined()
+  })
+
+  it('counts visitors by the Cloudflare client address', () => {
+    const { req } = createMocks('POST', { name: 'LCP', value: 1 }, { 'cf-connecting-ip': '203.0.113.50' })
+    for (let i = 0; i < 30; i++) {handler(req, createMocks('POST').res)}
+    const limited = createMocks('POST', { name: 'LCP', value: 1 }, { 'cf-connecting-ip': '203.0.113.50' })
+    handler(limited.req, limited.res)
+    expect(limited.res.status).toHaveBeenCalledWith(429)
+    const other = createMocks('POST', { name: 'LCP', value: 1 }, { 'cf-connecting-ip': '203.0.113.51' })
+    handler(other.req, other.res)
+    expect(other.res.status).toHaveBeenCalledWith(204)
+  })
 })
 
 describe('/api/errors', () => {
