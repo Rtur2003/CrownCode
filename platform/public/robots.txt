@@ -1,4 +1,4 @@
-# CrownCode — https://hasan-arthur-altuntas.xyz
+# CrownCode | https://hasan-arthur-altuntas.xyz
 #
 # Crawlers must be able to fetch /_next/static (JS/CSS) to render pages,
 # so it is deliberately NOT disallowed. Personal and diagnostic pages are

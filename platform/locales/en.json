@@ -81,11 +81,11 @@
     },
     "items": {
       "noirGrain": {
-        "title": "Noir & Grain - Restaurant Template",
+        "title": "Noir & Grain: Restaurant Template",
         "description": "A website template for fine-dining restaurants. Scenes scroll sideways with WebGL ink transitions on desktop, mobile gets its own story-style layout, and reservations go through WhatsApp.",
         "showroomDescription": "A restaurant website template with a menu, mobile stories and WhatsApp reservations.",
         "status": "Active",
-        "stats": "4 Pages · React 19",
+        "stats": "Template · React",
         "features": [
           "React 19 + GSAP",
           "WebGL Shaders",
@@ -109,7 +109,7 @@
         }
       },
       "aiMusic": {
-        "title": "AURIS - AI Music Detection",
+        "title": "AURIS: AI Music Detection",
         "description": "A thesis project that uses LightGBM to estimate whether music is AI-generated, with model comparisons and SHAP explanations.",
         "showroomDescription": "Estimates whether music is AI-generated and shows which audio features affected the result.",
         "status": "In Development",
@@ -137,7 +137,7 @@
         "description": "A fortune wheel that resets every midnight. Spin it, draw a card from a 22-card deck, and read the day's message. Just for fun.",
         "showroomDescription": "A daily fortune wheel that draws from a 22-card deck.",
         "status": "Active",
-        "stats": "5 Categories · 22 Cards",
+        "stats": "Daily · Cards",
         "features": [
           "Fortune Wheel",
           "Card of the Day",
@@ -161,7 +161,7 @@
         "description": "Drafts a comment for a YouTube video with Gemini, based on what the video covers and its subtitles when there are any. If you like the draft, you can post it to YouTube from the page.",
         "showroomDescription": "Drafts comments from a YouTube video’s topic and subtitles.",
         "status": "Active",
-        "stats": "Web · 5 languages",
+        "stats": "Web · Multilingual",
         "features": [
           "Gemini",
           "YouTube API",
@@ -169,7 +169,7 @@
         ]
       },
       "vote": {
-        "title": "Crown Vote - VOTRYX",
+        "title": "Crown Vote: VOTRYX",
         "description": "A Windows app that votes on DistroKid Spotlight for you through Chrome. It can run several browser windows at once and waits in the system tray.",
         "showroomDescription": "A Windows app that automates DistroKid Spotlight voting in Chrome.",
         "status": "Active",
@@ -192,6 +192,14 @@
   "audioDataset": {
     "title": "Audio Dataset Tools",
     "subtitle": "Tools for preparing and processing audio datasets for AI music detection",
+    "about": {
+      "title": "What it does",
+      "body": [
+        "ML Toolkit is a small workbench for preparing audio datasets. Pick a tool, upload a file and download the result. It is made for the datasets behind AI music detection.",
+        "Conversion moves a file between WAV, MP3, FLAC and OGG, with a bitrate choice for the lossy formats. Augmentation makes new samples from an existing one: pitch shift, speed change, bass boost, silence trimming, mixing and added noise. Dataset organization reads a file and reports its duration, tempo, key and loudness, so a folder can be labelled without opening each track.",
+        "Processing runs on the CrownCode backend. If it has been idle it needs a minute or two to wake up, and the first request waits for it."
+      ]
+    },
     "demo": {
       "badge": "Interface Demo",
       "notice": "Frontend application - Backend processing will be added in future phases"
@@ -232,7 +240,7 @@
       }
     },
     "meta": {
-      "title": "ML Toolkit — Audio Dataset Tools",
+      "title": "ML Toolkit: Audio Dataset Tools",
       "description": "Prepare audio datasets for AI music detection: format conversion, data augmentation and dataset metadata extraction tools.",
       "keywords": "audio dataset, data augmentation, format conversion, machine learning, AI music detection"
     }
@@ -311,7 +319,7 @@
       "ready": "Ready",
       "waking": "Starting",
       "down": "Unreachable",
-      "wakingNote": "Server startup may take 1–2 minutes. The selected file uploads when the server is ready.",
+      "wakingNote": "Server startup can take a minute or two. The selected file uploads when the server is ready.",
       "downNote": "Server unavailable. Files and microphone recordings can still use browser measurements.",
       "retry": "Check again",
       "models": "Model repository",
@@ -874,12 +882,12 @@
   },
   "crownFortune": {
     "meta": {
-      "title": "Crown Destiny - Daily Fortune",
+      "title": "Crown Fortune: Daily Fortune Wheel and Card",
       "description": "A daily fortune wheel: spin it, reveal your card from a 22-card deck, and read the day’s message, lucky elements and moon phase.",
-      "keywords": "daily destiny, fortune wheel, tarot, motivation, CrownCode, crown destiny"
+      "keywords": "daily fortune wheel, card of the day, tarot, moon phase, Crown Fortune"
     },
     "header": {
-      "badge": "Crown Destiny",
+      "badge": "Crown Fortune",
       "title": "Today's Destiny",
       "subtitle": "Spin the wheel and discover what the universe is telling you today."
     },
@@ -932,10 +940,17 @@
       "close": "Close"
     },
     "disclaimer": "This application is for entertainment purposes only.",
+    "about": {
+      "title": "What this is",
+      "body": [
+        "Crown Fortune is a small daily ritual. Once a day you spin the wheel and it settles on one of five areas: love, career, wealth, vitality or spirit. A card from a 22-card deck is drawn for it, along with a short message, lucky numbers, a lucky colour and the current moon phase.",
+        "The draw is worked out in your browser from the date and an anonymous ID kept in local storage, so it stays the same until midnight (Turkey time) and no account is needed. The cards and messages are written for fun. They are not advice and not a prediction."
+      ]
+    },
     "share": {
       "button": "Share",
       "download": "Download",
-      "title": "Crown Destiny - My Daily Fortune",
+      "title": "Crown Fortune: My Daily Fortune",
       "fileFallback": "card"
     },
     "streak": {
@@ -962,7 +977,7 @@
   },
   "crownVote": {
     "meta": {
-      "title": "Crown Vote - VOTRYX Automation Tool",
+      "title": "Crown Vote: VOTRYX Automation Tool",
       "description": "VOTRYX is a Selenium-based Windows desktop app that automates DistroKid Spotlight voting. Download, setup guide and config generator on this page.",
       "keywords": "votryx, distrokid, spotlight, automation, voting, selenium"
     },
@@ -1064,7 +1079,7 @@
   },
   "crownDreams": {
     "meta": {
-      "title": "Crown Dreams - Dream Journal & Analysis",
+      "title": "Crown Dreams: Dream Journal & Analysis",
       "description": "Write down a dream and Gemini picks out its emotions, themes and symbols. The journal and lucid-dream tracking currently run on sample data.",
       "keywords": "dream journal, lucid dream, dream analysis, AI dream interpretation, emotion analysis, dream symbols"
     },
@@ -1163,7 +1178,7 @@
   },
   "crownCommend": {
     "meta": {
-      "title": "Crown Commend - AI YouTube Comment Generator",
+      "title": "Crown Commend: AI YouTube Comment Generator",
       "description": "Paste a YouTube link and Crown Commend drafts natural, original comments that fit what the video is actually about.",
       "keywords": "youtube comment, ai comment, artificial intelligence, commend ai"
     },
@@ -1267,7 +1282,7 @@
   },
   "privacy": {
     "meta": {
-      "title": "Privacy Policy - CrownCode",
+      "title": "Privacy Policy | CrownCode",
       "description": "What data CrownCode collects, how it is used and how it is protected."
     },
     "backToHome": "Back to Home",
@@ -1296,7 +1311,7 @@
   },
   "notFound": {
     "meta": {
-      "title": "404 - Page Not Found",
+      "title": "404: Page Not Found",
       "description": "The page you are looking for could not be found."
     },
     "title": "Page Not Found",
@@ -1335,7 +1350,7 @@
   },
   "terms": {
     "meta": {
-      "title": "Terms of Service - CrownCode",
+      "title": "Terms of Service | CrownCode",
       "description": "The terms for using CrownCode projects and demo tools."
     },
     "backToHome": "Back to Home",
@@ -1393,12 +1408,20 @@
   },
   "creatorStudio": {
     "meta": {
-      "title": "Creator Studio - Remix and Mixer | CrownCode",
+      "title": "Creator Studio: Remix and Mixer | CrownCode",
       "description": "A free remix tool that matches the tempo and key of two tracks and joins them with a smooth crossfade. There's also a simple 2-6 track mixer.",
-      "keywords": "AI remix, tempo matching, crossfade, audio blending, music production tool, creator studio, multi-track"
+      "keywords": "remix tool, tempo matching, key matching, crossfade, audio blending, multitrack mixer, creator studio"
     },
     "title": "Creator Studio",
     "subtitle": "Tools for remixing and mixing tracks",
+    "about": {
+      "title": "How the tools work",
+      "body": [
+        "Remix Studio takes two tracks, detects the tempo and key of each, stretches and pitch-shifts the second one to fit the first, and joins them with a crossfade you set. The result downloads as a WAV file.",
+        "The Multi-Track Mixer takes two to six tracks. You set each track's level and its place between left and right, and the mix is bounced to one file with its peak level normalised so it does not clip.",
+        "Each file can be up to 30 MB. Processing runs on the CrownCode backend, so the first request after a quiet spell can take a minute or two."
+      ]
+    },
     "comingSoon": "Coming Soon",
     "comingSoonDesc": "AI audio generation isn't here yet; it's being worked on.",
     "upcomingTitle": "Coming Up Next",
@@ -1483,7 +1506,7 @@
   },
   "analysisHistory": {
     "meta": {
-      "title": "Analysis History - CrownCode",
+      "title": "Analysis History | CrownCode",
       "description": "View your recent AI music analysis results.",
       "keywords": "analysis history, AI music detection, results, history"
     },
@@ -1506,7 +1529,7 @@
   },
   "systemStatus": {
     "meta": {
-      "title": "System Status - CrownCode",
+      "title": "System Status | CrownCode",
       "description": "Live status of CrownCode services.",
       "keywords": "system status, health, uptime, services"
     },
@@ -1516,7 +1539,7 @@
     "degraded": "Partial degradation detected",
     "refresh": "Refresh",
     "lastChecked": "Last checked",
-    "noExternalBackend": "External backend not configured — only local API endpoints are monitored",
+    "noExternalBackend": "External backend not configured, only local API endpoints are monitored",
     "checking": "Checking services…"
   }
 }

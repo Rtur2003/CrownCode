@@ -159,6 +159,29 @@ const celebrateConfetti = async (isReversed = false) => {
   }, 250)
 }
 
+/** Plain, server-rendered copy: what the page is and how a draw works. */
+function FortuneAbout({ t }: { t: { crownFortune: { about: { title: string; body: string[] }; info: { title: string; steps: string[] } } } }) {
+  const { about, info } = t.crownFortune
+  return (
+    <>
+      <div className={styles['info-card']}>
+        <h2>{about.title}</h2>
+        {about.body.map((paragraph, index) => (
+          <p key={index}>{paragraph}</p>
+        ))}
+      </div>
+      <div className={styles['info-card']}>
+        <h2>{info.title}</h2>
+        <ul>
+          {info.steps.map((step, index) => (
+            <li key={index}>{step}</li>
+          ))}
+        </ul>
+      </div>
+    </>
+  )
+}
+
 const CrownFortunePage: NextPage = () => {
   const { language, t } = useLanguage()
   const [destiny, setDestiny] = useState<DailyDestiny | null>(null)
@@ -752,6 +775,9 @@ const CrownFortunePage: NextPage = () => {
               <Sparkles className={styles['loading-icon']} size={32} />
               <span>{t.crownFortune.loading}</span>
             </div>
+            <section className={styles['info-section']}>
+              <FortuneAbout t={t} />
+            </section>
           </div>
         </div>
       </MainLayout>
@@ -949,11 +975,11 @@ const CrownFortunePage: NextPage = () => {
                       transformStyle: 'preserve-3d'
                     }}
                   >
-                    {/* CARD BACK - Initial Crown Destiny */}
+                    {/* CARD BACK */}
                     <div className={`${styles['card-face']} ${styles['card-back']}`}>
                       <div className={styles['card-back-pattern']} />
                       <Crown className={styles['card-back-logo']} size={80} />
-                      <span className={styles['card-back-text']}>Crown Destiny</span>
+                      <span className={styles['card-back-text']}>Crown Fortune</span>
                     </div>
 
                     {/* CARD FRONT - Tarot Image (tek kart, ters/düz durumuna göre içerik değişir) */}
@@ -1322,14 +1348,7 @@ const CrownFortunePage: NextPage = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <div className={styles['info-card']}>
-              <h3>{t.crownFortune.info.title}</h3>
-              <ul>
-                {t.crownFortune.info.steps.map((step: string, index: number) => (
-                  <li key={index}>{step}</li>
-                ))}
-              </ul>
-            </div>
+            <FortuneAbout t={t} />
 
             <div className={styles['categories-grid']}>
               {FORTUNE_CATEGORIES.map(cat => (
