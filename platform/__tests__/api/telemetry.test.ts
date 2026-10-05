@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion -- tests index into arrays they just built */
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 // Helper to create mock req/res
