@@ -24,7 +24,7 @@ const LUT = (() => {
   return lut
 })()
 
-const useCanvasSize = () => {
+export const useCanvasSize = () => {
   const ref = useRef<HTMLCanvasElement>(null)
   const [size, setSize] = useState({ w: 0, h: 0, dpr: 1 })
   useEffect(() => {
@@ -226,7 +226,16 @@ export const usePlayback = (src: string | null) => {
     setProgress(ratio)
   }, [])
 
-  return { playing, progress, toggle, seek, available: Boolean(src) }
+  /** Jump to a point and start playing from there. */
+  const playFrom = useCallback((ratio: number) => {
+    const a = audioRef.current
+    if (!a || !a.duration) {return}
+    a.currentTime = ratio * a.duration
+    setProgress(ratio)
+    void a.play()
+  }, [])
+
+  return { playing, progress, toggle, seek, playFrom, available: Boolean(src) }
 }
 
 export const PlayButton: React.FC<{ playing: boolean; onClick: () => void; labels: { play: string; pause: string } }> = ({ playing, onClick, labels }) => (
