@@ -153,8 +153,9 @@ None of these require a detector score. All of them require that authors take fu
 | Conferences (ISMIR, ICASSP, Interspeech, DCASE) | — | Deadlines not verified | — | Faster visibility, short page limits | Our design is journal-sized; a workshop paper on one block is possible |
 | arXiv preprint | — | Immediate | None | Establishes date | Decide the timing against paper 1's status and the target venue's preprint policy |
 
-Recommendation: preprint when paper 1 is accepted; submit to the Journal on Audio, Speech, and Music Processing first; TISMIR as the
-patient alternative; IEEE Access only if a funded APC exists.
+Status: the venue is chosen by the advisor after the research and writing are finished (decision D2). The table is the starting
+list for that conversation: the Journal on Audio, Speech, and Music Processing fits "fast and in English" best on the evidence
+found; TISMIR is the patient, fee-free alternative; IEEE Access only if an APC can be paid.
 
 ## 8b. Ethics and integrity paragraph (needed by most venues)
 
