@@ -1,14 +1,17 @@
 // CrownCode Platform - Service Worker
-// Version 4.0.0
+// Version 5.0.0
+//
+// Offline fallback and cached build output only. There is no push or
+// background-sync feature on the site, so this worker has no handlers for them.
 
-const STATIC_CACHE = 'crowncode-static-v4'
-const DYNAMIC_CACHE = 'crowncode-dynamic-v4'
+const STATIC_CACHE = 'crowncode-static-v5'
+const DYNAMIC_CACHE = 'crowncode-dynamic-v5'
 const MAX_DYNAMIC_ENTRIES = 50
 
-// Assets to cache on install. offline.html must be here: it is the
-// navigation fallback and can't be fetched once the network is gone.
+// offline.html is the navigation fallback and can't be fetched once the
+// network is gone, so installing without it must fail.
+const OFFLINE_PAGE = '/offline.html'
 const STATIC_ASSETS = [
-  '/offline.html',
   '/manifest.json',
   '/favicon.svg',
   '/fonts/im-fell-double-pica-regular.woff2',
@@ -19,7 +22,11 @@ const STATIC_ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(STATIC_CACHE)
-      .then((cache) => cache.addAll(STATIC_ASSETS))
+      .then(async (cache) => {
+        await cache.add(OFFLINE_PAGE)
+        // A missing icon or font shouldn't stop the worker from installing.
+        await Promise.allSettled(STATIC_ASSETS.map((url) => cache.add(url)))
+      })
       .then(() => self.skipWaiting())
   )
 })
@@ -40,7 +47,7 @@ self.addEventListener('activate', (event) => {
   )
 })
 
-// Trim cache to a maximum number of entries
+// Trim cache to a maximum number of entries (oldest first)
 async function trimCache(cacheName, maxEntries) {
   const cache = await caches.open(cacheName)
   const keys = await cache.keys()
@@ -48,6 +55,13 @@ async function trimCache(cacheName, maxEntries) {
     const toDelete = keys.slice(0, keys.length - maxEntries)
     await Promise.all(toDelete.map((key) => cache.delete(key)))
   }
+}
+
+// Store a copy of a response, then keep the cache within its bound.
+async function remember(request, response) {
+  const cache = await caches.open(DYNAMIC_CACHE)
+  await cache.put(request, response)
+  await trimCache(DYNAMIC_CACHE, MAX_DYNAMIC_ENTRIES)
 }
 
 // Fetch event
@@ -61,7 +75,7 @@ self.addEventListener('fetch', (event) => {
 
   // Hashed build output never changes under the same URL: cache-first.
   if (url.pathname.startsWith('/_next/static/')) {
-    event.respondWith(cacheFirst(request))
+    event.respondWith(cacheFirst(event))
     return
   }
 
@@ -69,105 +83,43 @@ self.addEventListener('fetch', (event) => {
   // would reference chunk hashes that no longer exist and fail to hydrate.
   // The cached copy is only an offline fallback.
   if (request.mode === 'navigate' || url.pathname.startsWith('/_next/data/')) {
-    event.respondWith(networkFirst(request))
+    event.respondWith(networkFirst(event))
   }
 })
 
-async function cacheFirst(request) {
+async function cacheFirst(event) {
+  const { request } = event
   const cached = await caches.match(request)
   if (cached) {return cached}
 
   try {
     const response = await fetch(request)
     if (response && response.status === 200 && response.type === 'basic') {
-      const cache = await caches.open(DYNAMIC_CACHE)
-      cache.put(request, response.clone())
+      event.waitUntil(remember(request, response.clone()))
     }
     return response
   } catch {
     if (request.mode === 'navigate') {
-      return caches.match('/offline.html')
+      return caches.match(OFFLINE_PAGE)
     }
     return new Response('', { status: 503 })
   }
 }
 
-async function networkFirst(request) {
+async function networkFirst(event) {
+  const { request } = event
   try {
     const response = await fetch(request)
     if (response && response.status === 200 && response.type === 'basic') {
-      const cache = await caches.open(DYNAMIC_CACHE)
-      cache.put(request, response.clone())
+      event.waitUntil(remember(request, response.clone()))
     }
     return response
   } catch {
     const cached = await caches.match(request)
     if (cached) {return cached}
     if (request.mode === 'navigate') {
-      return caches.match('/offline.html')
+      return caches.match(OFFLINE_PAGE)
     }
     return new Response('', { status: 503 })
-  }
-}
-
-// Background sync
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'background-sync') {
-    event.waitUntil(doBackgroundSync())
-  }
-})
-
-// Push notifications
-self.addEventListener('push', (event) => {
-  if (event.data) {
-    const data = event.data.json()
-    const options = {
-      body: data.body,
-      icon: '/favicon-32x32.png',
-      badge: '/favicon-16x16.png',
-      image: data.image,
-      tag: data.tag,
-      data: data.data,
-      actions: data.actions,
-      vibrate: [100, 50, 100],
-      dir: 'ltr',
-      lang: 'tr'
-    }
-
-    event.waitUntil(
-      self.registration.showNotification(data.title, options)
-    )
-  }
-})
-
-// Notification click
-self.addEventListener('notificationclick', (event) => {
-  event.notification.close()
-
-  if (event.action === 'open') {
-    event.waitUntil(
-      clients.openWindow(event.notification.data.url || '/')
-    )
-  }
-})
-
-// Background sync function
-async function doBackgroundSync() {
-  try {
-    const cache = await caches.open(DYNAMIC_CACHE)
-    const requests = await cache.keys()
-
-    for (const request of requests) {
-      try {
-        const response = await fetch(request)
-        if (response.ok) {
-          await cache.put(request, response.clone())
-        }
-      } catch {
-        // Skip failed requests during sync
-      }
-    }
-  } catch {
-    // Sync failed, will retry on next sync event
   }
 }
