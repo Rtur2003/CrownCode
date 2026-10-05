@@ -81,11 +81,11 @@
     },
     "items": {
       "noirGrain": {
-        "title": "Noir & Grain - Restoran Şablonu",
+        "title": "Noir & Grain: Restoran Şablonu",
         "description": "Fine-dining restoranları için hazırlanmış bir site şablonu. Masaüstünde yatay kaydırılan sahneler ve WebGL mürekkep geçişleri, mobilde hikâye biçiminde ayrı bir arayüz, rezervasyon için WhatsApp akışı.",
         "showroomDescription": "Menü, mobil hikâye görünümü ve WhatsApp rezervasyonu içeren restoran sitesi şablonu.",
         "status": "Aktif",
-        "stats": "4 Sayfa · React 19",
+        "stats": "Şablon · React",
         "features": [
           "React 19 + GSAP",
           "WebGL Shader",
@@ -109,7 +109,7 @@
         }
       },
       "aiMusic": {
-        "title": "AURIS - Yapay Zekâ Müzik Tespiti",
+        "title": "AURIS: Yapay Zekâ Müzik Tespiti",
         "description": "Müziğin yapay zekâyla üretilme olasılığını LightGBM ile hesaplayan tez projesi. Raporda model karşılaştırmaları ve SHAP açıklamaları yer alır.",
         "showroomDescription": "Müziğin yapay zekâyla üretilme olasılığını hesaplar, sonucu etkileyen ses özelliklerini gösterir.",
         "status": "Geliştiriliyor",
@@ -137,7 +137,7 @@
         "description": "Her gece yarısı yenilenen bir şans çarkı. Çarkı çevir, 22 kartlık desteden kartını aç, günün mesajını oku. Tamamen eğlence amaçlı.",
         "showroomDescription": "Her gün yenilenen, 22 kartlık desteyle çalışan bir şans çarkı.",
         "status": "Aktif",
-        "stats": "5 Kategori · 22 Kart",
+        "stats": "Günlük · Kartlar",
         "features": [
           "Şans Çarkı",
           "Günün Kartı",
@@ -161,7 +161,7 @@
         "description": "Bir YouTube videosunun konusuna ve varsa altyazılarına bakıp Gemini ile yorum taslağı hazırlar. Beğendiğin yorumu buradan doğrudan YouTube'a gönderebilirsin.",
         "showroomDescription": "YouTube videosunun konusu ve altyazılarından yorum taslakları hazırlar.",
         "status": "Aktif",
-        "stats": "Web · 5 dil",
+        "stats": "Web · Çok dilli",
         "features": [
           "Gemini",
           "YouTube API",
@@ -169,7 +169,7 @@
         ]
       },
       "vote": {
-        "title": "Crown Vote - VOTRYX",
+        "title": "Crown Vote: VOTRYX",
         "description": "DistroKid Spotlight oylamalarını Chrome üzerinden otomatik yapan bir Windows uygulaması. Aynı anda birkaç tarayıcı penceresiyle çalışabiliyor ve arka planda sistem tepsisinde bekliyor.",
         "showroomDescription": "DistroKid Spotlight oylamalarını Chrome üzerinden yürüten Windows uygulaması.",
         "status": "Aktif",
@@ -192,6 +192,14 @@
   "audioDataset": {
     "title": "Ses Veri Seti Araçları",
     "subtitle": "AI müzik tespiti için ses veri setlerini hazırlama ve işleme araçları",
+    "about": {
+      "title": "Ne yapar",
+      "body": [
+        "ML Toolkit, ses veri setlerini hazırlamak için küçük bir çalışma tezgâhı. Bir araç seç, dosyanı yükle, sonucu indir. Yapay zekâ müzik tespitinin arkasındaki veri setleri için yapıldı.",
+        "Dönüştürme, bir dosyayı WAV, MP3, FLAC ve OGG arasında taşır; kayıplı formatlarda bit hızı seçilebilir. Veri artırma, var olan bir örnekten yenilerini üretir: perde kaydırma, hız değiştirme, bas güçlendirme, sessizlik kırpma, karıştırma ve gürültü ekleme. Veri seti düzenleme dosyayı okuyup süresini, temposunu, tonunu ve ses seviyesini verir; böylece bir klasör parça parça açılmadan etiketlenebilir.",
+        "İşleme CrownCode arka ucunda çalışır. Bir süre kullanılmadıysa uyanması bir iki dakika sürer ve ilk istek bunu bekler."
+      ]
+    },
     "demo": {
       "badge": "Arayüz Demosu",
       "notice": "Ön yüz uygulaması - Arka plan işleme gelecek aşamalarda eklenecek"
@@ -232,7 +240,7 @@
       }
     },
     "meta": {
-      "title": "ML Toolkit — Ses Veri Seti Araçları",
+      "title": "ML Toolkit: Ses Veri Seti Araçları",
       "description": "AI müzik tespiti için ses veri setlerini hazırla: format dönüştürme, veri artırma ve veri seti meta verisi çıkarma araçları.",
       "keywords": "ses veri seti, veri artırma, format dönüştürme, makine öğrenmesi, AI müzik tespiti"
     }
@@ -311,7 +319,7 @@
       "ready": "Hazır",
       "waking": "Başlatılıyor",
       "down": "Ulaşılamıyor",
-      "wakingNote": "Sunucunun başlatılması 1–2 dakika sürebilir. Seçilen dosya sunucu hazır olduğunda yüklenir.",
+      "wakingNote": "Sunucunun açılması bir iki dakika sürebilir. Seçilen dosya sunucu hazır olduğunda yüklenir.",
       "downNote": "Sunucuya ulaşılamıyor. Dosya ve mikrofon kayıtlarında yalnızca tarayıcı ölçümleri kullanılabilir.",
       "retry": "Yeniden kontrol et",
       "models": "Model deposu",
@@ -874,12 +882,12 @@
   },
   "crownFortune": {
     "meta": {
-      "title": "Crown Destiny - Günlük Kader",
+      "title": "Crown Fortune: Günlük Şans Çarkı ve Kart",
       "description": "Her gün yenilenen kader çarkı: çarkı çevir, 22 kartlık desteden kartını aç; günün mesajını, şanslı öğelerini ve ay evresini gör.",
-      "keywords": "günlük kader, şans çarkı, tarot, motivasyon, CrownCode, crown destiny"
+      "keywords": "günlük şans çarkı, günün kartı, tarot, ay evresi, Crown Fortune"
     },
     "header": {
-      "badge": "Crown Destiny",
+      "badge": "Crown Fortune",
       "title": "Bugünün Kaderi",
       "subtitle": "Çarkı çevir ve evrenin bugün sana ne söylediğini keşfet."
     },
@@ -932,10 +940,17 @@
       "close": "Kapat"
     },
     "disclaimer": "Bu uygulama eğlence amaçlıdır.",
+    "about": {
+      "title": "Bu nedir",
+      "body": [
+        "Crown Fortune küçük bir günlük ritüel. Günde bir kez çarkı çevirirsin; çark aşk, kariyer, bereket, sağlık ve ruh alanlarından birinde durur. Bu alana 22 kartlık desteden bir kart düşer, yanında kısa bir mesaj, şanslı sayılar, şanslı renk ve o günün ay evresi gelir.",
+        "Çekiliş tarayıcında, tarihe ve yerel depolamada tutulan anonim bir kimliğe göre hesaplanır. Bu yüzden gece yarısına kadar (Türkiye saati) aynı kalır ve hesap gerekmez. Kartlar ve mesajlar eğlence için yazıldı. Tavsiye ya da tahmin değildir."
+      ]
+    },
     "share": {
       "button": "Paylaş",
       "download": "İndir",
-      "title": "Crown Destiny - Günlük Kaderim",
+      "title": "Crown Fortune: Günlük Kaderim",
       "fileFallback": "kart"
     },
     "streak": {
@@ -962,7 +977,7 @@
   },
   "crownVote": {
     "meta": {
-      "title": "Crown Vote - VOTRYX Otomasyon Aracı",
+      "title": "Crown Vote: VOTRYX Otomasyon Aracı",
       "description": "VOTRYX, DistroKid Spotlight oylamalarını otomatikleştiren Selenium tabanlı bir Windows masaüstü uygulaması. İndirme, kurulum ve yapılandırma bu sayfada.",
       "keywords": "votryx, distrokid, spotlight, otomasyon, oylama, selenium"
     },
@@ -1064,7 +1079,7 @@
   },
   "crownDreams": {
     "meta": {
-      "title": "Crown Dreams - Rüya Günlüğü ve Analizi",
+      "title": "Crown Dreams: Rüya Günlüğü ve Analizi",
       "description": "Rüyanı yaz, Gemini içindeki duyguları, temaları ve sembolleri çıkarsın. Günlük ve lüsid rüya takibi şimdilik örnek verilerle çalışıyor.",
       "keywords": "rüya günlüğü, lüsid rüya, rüya analizi, AI rüya yorumu, duygu analizi, rüya sembolleri"
     },
@@ -1163,7 +1178,7 @@
   },
   "crownCommend": {
     "meta": {
-      "title": "Crown Commend - AI YouTube Yorum Üretici",
+      "title": "Crown Commend: AI YouTube Yorum Üretici",
       "description": "Bir YouTube bağlantısı yapıştır; Crown Commend videonun içeriğine uygun, doğal ve özgün yorum taslakları hazırlasın.",
       "keywords": "youtube yorum, ai yorum, yapay zeka, commend ai"
     },
@@ -1267,7 +1282,7 @@
   },
   "privacy": {
     "meta": {
-      "title": "Gizlilik Politikası - CrownCode",
+      "title": "Gizlilik Politikası | CrownCode",
       "description": "CrownCode’un hangi verileri topladığı, bu verileri nasıl kullandığı ve nasıl koruduğu."
     },
     "backToHome": "Ana Sayfaya Dön",
@@ -1296,7 +1311,7 @@
   },
   "notFound": {
     "meta": {
-      "title": "404 - Sayfa Bulunamadı",
+      "title": "404: Sayfa Bulunamadı",
       "description": "Aradığınız sayfa bulunamadı."
     },
     "title": "Sayfa Bulunamadı",
@@ -1335,7 +1350,7 @@
   },
   "terms": {
     "meta": {
-      "title": "Kullanım Koşulları - CrownCode",
+      "title": "Kullanım Koşulları | CrownCode",
       "description": "CrownCode projelerini ve demo araçlarını kullanma koşulları."
     },
     "backToHome": "Ana Sayfaya Dön",
@@ -1393,12 +1408,20 @@
   },
   "creatorStudio": {
     "meta": {
-      "title": "Creator Studio - Remiks ve Mikser | CrownCode",
+      "title": "Creator Studio: Remiks ve Mikser | CrownCode",
       "description": "İki parçanın temposunu ve tonunu eşleştirip yumuşak bir geçişle birleştiren ücretsiz remiks aracı. Yanında 2-6 parçalık basit bir mikser de var.",
       "keywords": "AI remiks, tempo eşleştirme, crossfade, ses birleştirme, müzik prodüksiyon aracı, creator studio, çoklu parça"
     },
     "title": "Creator Studio",
     "subtitle": "Parçaları remikslemek ve miks etmek için araçlar",
+    "about": {
+      "title": "Araçlar nasıl çalışır",
+      "body": [
+        "Remix Studio iki parça alır, her birinin temposunu ve tonunu bulur, ikinci parçayı birincinin temposuna ve tonuna uyacak şekilde esnetip perdesini kaydırır, ardından senin belirlediğin süreli bir geçişle birleştirir. Sonuç WAV dosyası olarak iner.",
+        "Çoklu Parça Mikseri iki ile altı arası parça alır. Her parçanın seviyesini ve sol ile sağ arasındaki yerini ayarlarsın; miks tek dosyaya dönüştürülür ve tepe seviyesi normalleştirilir, böylece bozulma olmaz.",
+        "Her dosya en fazla 30 MB olabilir. İşleme CrownCode arka ucunda çalışır, bu yüzden bir süre sessiz kaldıktan sonraki ilk istek bir iki dakika sürebilir."
+      ]
+    },
     "comingSoon": "Yakında",
     "comingSoonDesc": "Yapay zekâyla ses üretimi henüz yok; üzerinde çalışılıyor.",
     "upcomingTitle": "Yakında Geliyor",
@@ -1483,7 +1506,7 @@
   },
   "analysisHistory": {
     "meta": {
-      "title": "Analiz Geçmişi - CrownCode",
+      "title": "Analiz Geçmişi | CrownCode",
       "description": "Son AI müzik analiz sonuçlarınızı görüntüleyin.",
       "keywords": "analiz geçmişi, AI müzik tespiti, sonuçlar, geçmiş"
     },
@@ -1506,7 +1529,7 @@
   },
   "systemStatus": {
     "meta": {
-      "title": "Sistem Durumu - CrownCode",
+      "title": "Sistem Durumu | CrownCode",
       "description": "CrownCode servislerinin canlı durumu.",
       "keywords": "sistem durumu, sağlık, çalışma süresi, servisler"
     },
@@ -1516,7 +1539,7 @@
     "degraded": "Kısmi bozulma tespit edildi",
     "refresh": "Yenile",
     "lastChecked": "Son kontrol",
-    "noExternalBackend": "Harici backend yapılandırılmadı — yalnızca yerel API uç noktaları izleniyor",
+    "noExternalBackend": "Harici backend yapılandırılmadı, yalnızca yerel API uç noktaları izleniyor",
     "checking": "Servisler kontrol ediliyor…"
   }
 }

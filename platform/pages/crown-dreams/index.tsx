@@ -97,10 +97,10 @@ const CrownDreamsPage: NextPage = () => {
   const recentDreams = MOCK_DREAMS.slice(0, 4)
 
   const statCards = [
-    { label: cd.stats.totalDreams, value: MOCK_STATS.totalDreams, icon: Moon, trend: 12 },
-    { label: cd.stats.lucidDreams, value: MOCK_STATS.lucidDreams, icon: Sparkles, trend: 24 },
-    { label: cd.stats.currentStreak, value: `${MOCK_STATS.streakDays} ${cd.stats.days}`, icon: Flame, trend: 8 },
-    { label: cd.stats.avgClarity, value: `${MOCK_STATS.avgClarity}/5`, icon: Eye, trend: 5 }
+    { label: cd.stats.totalDreams, value: MOCK_STATS.totalDreams, icon: Moon },
+    { label: cd.stats.lucidDreams, value: MOCK_STATS.lucidDreams, icon: Sparkles },
+    { label: cd.stats.currentStreak, value: `${MOCK_STATS.streakDays} ${cd.stats.days}`, icon: Flame },
+    { label: cd.stats.avgClarity, value: `${MOCK_STATS.avgClarity}/5`, icon: Eye }
   ]
 
   const getDreamTitle = (dream: DreamEntry) => language === 'tr' ? dream.title : dream.titleEn
@@ -133,7 +133,7 @@ const CrownDreamsPage: NextPage = () => {
                 <h1 className={styles['dreams-title']}>
                   {/* The visible heading greets the demo user; the page's
                       real subject leads the accessible name for search/AT. */}
-                  <span className="sr-only">Crown Dreams — </span>
+                  <span className="sr-only">Crown Dreams: </span>
                   {cd.header.welcomeBack} {language === 'en' ? MOCK_USER.nameEn : MOCK_USER.name}
                 </h1>
                 <p className={styles['dreams-subtitle']}>
@@ -179,7 +179,6 @@ const CrownDreamsPage: NextPage = () => {
                   label={stat.label}
                   value={stat.value}
                   icon={<stat.icon size={18} />}
-                  trend={stat.trend}
                 />
               </motion.div>
             ))}

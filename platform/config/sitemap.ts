@@ -16,9 +16,8 @@ export function buildSitemap(): string {
       return [
         '  <url>',
         `    <loc>${localizedUrl(route.path, locale)}</loc>`,
+        `    <lastmod>${route.lastmod}</lastmod>`,
         alternates,
-        `    <changefreq>${route.changefreq}</changefreq>`,
-        `    <priority>${route.priority.toFixed(1)}</priority>`,
         '  </url>',
       ].join('\n')
     }),

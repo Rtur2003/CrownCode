@@ -462,3 +462,21 @@
   background: rgba(201, 147, 71, 0.06);
 }
 
+
+.about {
+  margin-bottom: 3rem;
+  max-width: 68ch;
+}
+
+.about-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.about p {
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 0.875rem;
+}
