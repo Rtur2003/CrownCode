@@ -6,8 +6,12 @@
  * clobber state after the user has already reset or resubmitted.
  */
 
-import { useState, useCallback, useMemo, useRef } from 'react'
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
+import { parseDreamAnalysis } from '@/hooks/validators'
+
+/** Same limit the backend enforces on the dream text. */
+export const MAX_DREAM_LENGTH = 4000
 
 export type DreamEmotion =
   | 'joy' | 'fear' | 'anxiety' | 'sadness' | 'anger' | 'confusion'
@@ -57,17 +61,22 @@ export const useDreamAnalysis = (messages: Partial<DreamAnalysisMessages> = {}) 
 
   const apiBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_API_URL?.trim(), [])
   const requestIdRef = useRef(0)
+  const controllerRef = useRef<AbortController | null>(null)
   const i18nMessages = useMemo(() => ({ ...DEFAULT_MESSAGES, ...messages }), [messages])
+
+  // Leaving the page stops a Gemini request nobody is waiting for any more.
+  useEffect(() => () => controllerRef.current?.abort(), [])
 
   const reset = useCallback(() => {
     requestIdRef.current++
+    controllerRef.current?.abort()
     setState('idle')
     setResult(null)
     setError(null)
   }, [])
 
   const analyzeDream = useCallback(async (language: string) => {
-    const trimmed = dreamText.trim()
+    const trimmed = dreamText.trim().slice(0, MAX_DREAM_LENGTH)
     if (trimmed.length < 10) {
       setError(i18nMessages.tooShort)
       setState('error')
@@ -82,6 +91,9 @@ export const useDreamAnalysis = (messages: Partial<DreamAnalysisMessages> = {}) 
 
     const currentRequestId = ++requestIdRef.current
     const isStale = () => requestIdRef.current !== currentRequestId
+    controllerRef.current?.abort()
+    const controller = new AbortController()
+    controllerRef.current = controller
 
     setState('analyzing')
     setError(null)
@@ -92,6 +104,7 @@ export const useDreamAnalysis = (messages: Partial<DreamAnalysisMessages> = {}) 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ dreamText: trimmed, language }),
         timeout: 30_000,
+        signal: controller.signal,
       })
 
       if (isStale()) {return}
@@ -107,8 +120,9 @@ export const useDreamAnalysis = (messages: Partial<DreamAnalysisMessages> = {}) 
         throw new Error(errorMessage)
       }
 
-      const data: DreamAnalysisResult = await response.json()
+      const data = parseDreamAnalysis(await response.json().catch(() => null))
       if (isStale()) {return}
+      if (!data) {throw new Error(i18nMessages.analysisFailed)}
 
       setResult(data)
       setState('success')
