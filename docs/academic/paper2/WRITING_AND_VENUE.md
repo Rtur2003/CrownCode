@@ -169,3 +169,18 @@ Liang et al., Patterns 2023 (doi 10.1016/j.patter.2023.100779); Kobak et al., Sc
 Gopen & Swan, American Scientist 78(6):550–558 (1990); Springer Nature AI guidance and journal guideline pages; Elsevier policy
 text quoted in publisher compilations; IEEE guideline text quoted in the same compilations; IEEE 2026 APC list; Journal on
 Audio, Speech, and Music Processing home page; TISMIR "About" statistics; a third-party summary of IEEE Access timing.
+
+## 8c. Venue facts added 2026-10-09 (re-check on the day)
+
+| Item | Fact found | Source status |
+|---|---|---|
+| Journal on Audio, Speech, and Music Processing | APC £1,490 / US$1,990 / €1,690 plus taxes; waivers and discounts for authors from the lowest-income countries, other requests case by case for financial need, to be made at submission | Springer "How to publish with us" page, opened |
+| TISMIR | Research article limit 8,000 words including references; blind review (title page with title and abstract only); fee-free routes and the APC figure conflict between sources (£530 in one report, other lower figures in an earlier search) | Guidelines page opened; fee unresolved |
+| TÜBİTAK Turkish J. Electrical Eng. & Computer Sciences | No APC | policy page per report; confirm |
+| TMLR | No fees | policy page per report; confirm |
+| Signal Processing (Elsevier) | Subscription route has no author fee; optional OA about US$2,920 | report; confirm |
+| Digital Signal Processing (Elsevier) | Moving to full open access; APC about US$2,900 for new submissions after the transition date | report; confirm |
+| ICASSP 2027 (Toronto) | Full-paper deadline 23 Sep 2026 has passed; notification 13 Jan 2027; final papers 27 Jan 2027 | CFP page opened |
+| EUSIPCO 2027 | Paper deadline 6 Feb 2027 | report and earlier search agree; confirm |
+| Interspeech 2027 | Full submission 9 Feb 2027 per the key-dates page; Interspeech dates conflicted in an earlier search | report; confirm |
+| ISMIR 2027, SMC 2027, DCASE 2027 workshop, AES | No paper CFP found yet | report and earlier search |

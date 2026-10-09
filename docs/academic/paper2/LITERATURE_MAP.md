@@ -36,6 +36,15 @@ final PDF/DOI before it enters the manuscript.
 | 16 | Speech anti-spoofing methodology: Müller et al. 2021 (silence), Müller et al. 2022 Interspeech, Pascu et al. (arXiv 2309.05384), Kheir et al. (arXiv 2502.03559), arXiv 2606.30791 | Silence-duration shortcut (85 % accuracy from leading silence alone); frozen SSL + linear head generalises; lower layers carry most evidence; probing-guided layer selection | Not repeated for music under crossed shift | abstracts / excerpts |
 | 17 | Deezer newsroom 2026-04-20 and 2026-07-21 | ~75,000 AI tracks/day (~44 % of uploads) in April; ~90,000/day and >50 % at the June 2026 peak; proprietary detector claims 99.8 % accuracy, <1 in 10,000 human tracks flagged; AI tracks 1–3 % of streams | Numbers are unverifiable vendor statements | page text |
 
+Added 2026-10-09 after a delegated search (full list, with confidence per row, in `EXTRA_SOURCES_AGENT.md`; that file is model output
+and is trusted only for rows re-checked below):
+
+| # | Work | What it did | Relevance | Depth |
+|---|---|---|---|---|
+| 18 | Norman & Barrington, arXiv 2609.09489 (8 Sep 2026) | CLAP-embedding temporal-coherence statistics + lightweight ensembles for speech and music deepfakes; reports that 21 of 29 statistical features reverse their discriminative direction between training and in-the-wild data, and that entropy flips direction between speech and music | Direct precedent for feature-sign flips under shift: our "sign-consistency" analysis of AURIS features must cite it and cannot be claimed as new in general | abstract (re-checked on arXiv) |
+| 19 | Slendebroek & Metaxa, arXiv 2608.06106 (AIES 2026) | Audit of Suno and Lyria 3 homogenisation with 72 MIR features; a standard classifier separates AI from human near-perfectly on MIR features alone | Supports in-domain strength of handcrafted features and motivates testing them under shift | abstract (re-checked on arXiv) |
+| 20 | Chen et al., arXiv 2509.14675 | Singing-voice deepfake detection: instrumental accompaniment acts mainly as data augmentation; fine-tuning raises reliance on shallow speaker features | Singing-voice setting; context for layer/shortcut discussion only | abstract (re-checked on arXiv) |
+
 ## 3. Facts that shape the design
 
 1. Every cross-dataset matrix so far pairs a dataset's fakes with *that dataset's* reals (Echoes, MusicDET, Li et al.). A cell off
@@ -71,7 +80,7 @@ final PDF/DOI before it enters the manuscript.
 | Candidate | What we searched | Result so far |
 |---|---|---|
 | C1 Crossed real-corpus × fake-source design with variance decomposition of cross-dataset AUROC | cross-dataset music deepfake papers above | No paper found that fully crosses ≥3 real corpora with ≥4 fake sources; CoMoE restricts one side at a time |
-| C2 Interpretable handcrafted features vs SSL embeddings (wav2vec2, XLS-R, MERT, CLAP) under identical splits and shifts | "handcrafted vs SSL AI music" | Only an unreviewed preprint (row 15) and the Fourier-peak work (row 4) touch handcrafted cues; no controlled comparison found |
+| C2 Interpretable handcrafted features vs SSL embeddings (wav2vec2, XLS-R, MERT, CLAP) under identical splits and shifts | "handcrafted vs SSL AI music" | An unreviewed preprint (row 15), the Fourier-peak work (row 4), a 72-feature MIR audit (row 19) and CLAP-statistics features with sign flips (row 18) touch handcrafted cues; no controlled handcrafted-vs-SSL comparison under crossed shift found |
 | C3 Threshold-policy comparison (source-fixed, real-anchored quantile, few-shot recalibration) across detector families | "calibration threshold transfer AI music" | Real-quantile thresholds exist inside one method (row 12); no cross-system comparison found |
 | C4 Shortcut ladder (nuisance-only → handcrafted → SSL) plus a real-vs-real null task | "shortcut learning music deepfake" | Shortcuts discussed (rows 3, 5, 16) but not used as a measured baseline ladder in music |
 | C5 Forward-chained generator-version ladder (Suno v2→v3→v3.5→v5, Udio 32→130) | "generator version drift detector" | Version cohorts appear in ArtifactBench; no ordered train-old/test-new protocol found |
@@ -87,3 +96,42 @@ Must read in full: Echoes v2, CoMoE, ArtifactBench v2, MusicDET, Li et al. Sci. 
 section on interpretability), Fourier explanation, MoM/CLAM, Pascu et al. 2309.05384, Kheir et al. 2502.03559, "Finding the noise"
 2607.25530, Müller 2021/2022. Should read: ArtifactNet 2604.16254, Sofia 2606.16612, AIME (Grötschla et al., ICASSP 2025),
 GTZAN critique (Sturm; **verify** reference), clustered bootstrap and calibration references for the statistics section.
+
+## 7. Additions from an external research report (2026-10-09)
+
+A long report (ChatGPT-style deep research, supplied by the user) listed about 45 further papers, a dataset audit, method
+references, venue facts and compute options. It is treated as a lead list, not as evidence. `tools/verify_refs.py` resolved every
+arXiv id and DOI in it against the arXiv API and Crossref: **54 of 54 arXiv ids and 24 of 25 DOIs return the claimed title**
+(`refcheck_chatgpt_report.csv`). The one failure is the Holm (1979) DOI `10.2307/4615733`, which returns 404 at doi.org; cite
+Holm by the JSTOR stable URL (`jstor.org/stable/4615733`) without a DOI. A resolving id proves the title exists, not that the paper
+says what the report claims; the "Depth" below is what was actually checked.
+
+| Work | Why it matters here | Depth |
+|---|---|---|
+| Sroka et al., ISMIR 2025 LBD, arXiv 2507.10447 | Stress-tests released SpecTTTra under unseen generators and augmentations: direct precedent for our SpecTTTra-as-released baseline | id verified; content per report |
+| Segment Transformer, Kim & Go, arXiv 2509.08283 (APSIPA ASC 2025) | SSL + self-similarity structure, evaluated on FakeMusicCaps and SONICS: a direct SSL comparator that must be cited | id verified; content per report |
+| Morosanu et al., arXiv 2608.14916 (RobustifAI @ IJCAI-ECAI 2026) | Hard negatives (edited human audio) with anchor-song lineage splits | id verified; content per report |
+| Garcia de la Cruz et al., arXiv 2608.07285; Rigaud et al., arXiv 2607.26874 (ISMIR 2026) | Hybrid human/AI stems; codec reconstructions as proxy generated stems | id verified; content per report |
+| Frohmann et al., arXiv 2506.18488 (ISMIR 2025), 2506.15981 (Findings ACL 2025) | Lyrics-origin detection from audio; genre/language error differences; partly-fake Suno audio with human lyrics | id verified; content per report |
+| Gohari et al., ICASSP 2025, doi 10.1109/ICASSP49660.2025.10888452 | Singing-voice deepfakes: handcrafted vs learned vs pretrained features. Closest feature-family comparison; paper itself not opened | DOI verified; abstract only per report |
+| SingGraph (2406.03111), FIONA (2409.14131), Whisper encodings (2501.18919), GenuVoice (doi 10.18653/v1/2026.findings-acl.1245) | MERT/wav2vec/Whisper/handcrafted fusion in the singing-voice setting | ids verified; content per report |
+| Xie et al., arXiv 2504.06753 (AAAI 2026); AT-ADD, arXiv 2608.23437 | All-type audio deepfake detection that includes FakeMusicCaps/music | ids verified; content per report |
+| Longardner, J. Creative Music Systems 2026 (doi 10.5920/jcms.1704); Figueiredo et al., arXiv 2509.25601 | Human listening studies; genre-dependent misattribution of human music | ids verified; content per report |
+| Shim et al., arXiv 2306.00044, 2406.17246; Rubio et al., arXiv 2607.03150; Müller & Debus, arXiv 2606.23335 | Speech anti-spoofing: shortcut diagnosis by intervention, silence and watermark shortcuts: donors for our nuisance interventions | ids verified; content per report |
+| Watermark/provenance: 2412.08549, 2607.11117, 2503.19176 | Cooperative marking is a different problem from detecting unmarked audio | ids verified; content per report |
+
+Method references confirmed to resolve (titles match): Field & Welsh 2007 (clustered bootstrap), DeLong et al. 1988, Obuchowski 1997
+(clustered ROC), Hanley & McNeil 1982/1983, Guo et al. 2017 (ECE), Ovadia et al. 2019 (uncertainty under shift), Saerens et al.
+2002 and Lipton et al. 2018 (prior/label shift), Bates et al. 2023 (conformal outlier p-values), Tibshirani et al. 2019 and Barber
+et al. 2023 (conformal under shift/beyond exchangeability), Tong et al. 2018 (Neyman–Pearson thresholds), Bates et al. 2015 (lme4),
+Nakagawa & Schielzeth 2013 (R² for mixed models), Bouthillier et al. 2021 (benchmark variance), Geirhos et al. 2020, Sturm 2013.
+Statistical caveats from the report that shape our methods: a paired DeLong test is not valid over dependent windows of one
+lineage; mixed-label lineage families must be resampled together; a random-effect variance share is not a causal decomposition;
+prior-shift correction assumes stable class-conditionals; weighted conformal needs a specified shift model; a Hanley–McNeil
+standard error does not give power for a clustered paired difference.
+
+Dataset leads that matter for the plan: MUSIC8K public audio (Hugging Face `homura23/MUSIC8K`, 3,614 MP3, about 13.9 GB, newest
+generators: ACE-Step, HeartMuLa, MiniMax, Mureka, Suno v5/v5.5); AIME 62.28 GB (matches our check); Echoes current card 4,468 tracks
+(differs from the paper's first release); FakeMusicCaps 12.89 GB; MTG-Jamendo original 508 GB / low-quality 156 GB with a
+per-track licence file (`audio_licenses.txt`). Several large Suno/Udio scrapes carry MIT/Apache/CC0 tags that do not license the
+underlying outputs; they are not used. BAMM's "AI" labels come from a detector ensemble, so it cannot validate those detectors.
