@@ -207,15 +207,9 @@
 .nav-project:focus-visible { outline: 2px solid var(--color-gold-400); outline-offset: -2px; }
 .nav-project.is-active { color: var(--color-gold-400); background: rgba(201, 147, 71, 0.06); }
 
-.nav-project-index {
-  font-family: var(--font-family-mono);
-  font-size: 0.6875rem;
-  color: var(--color-gold-500);
-  min-width: 1.25rem;
-}
 .nav-project-text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
 .nav-project-name { font-size: 0.95rem; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.nav-project-sector { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-family-mono); font-size: 0.625rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-muted); margin-top: 0.2rem; }
+.nav-project-sector { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 0.2rem; }
 .nav-project-ext { color: var(--color-text-muted); flex-shrink: 0; }
 
 .nav-dropdown-footer {
@@ -241,11 +235,8 @@
 .mobile-nav-section-title {
   margin: 0;
   padding: 0.25rem 0.75rem 0.5rem;
-  font-family: var(--font-family-mono);
-  font-size: 0.6875rem;
+  font-size: 0.875rem;
   color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
 }
 
 .mobile-projects { display: grid; grid-template-columns: 1fr 1fr; gap: 0.125rem; }

@@ -74,7 +74,7 @@ export const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
         <div className="toast-progress-bar">
           <motion.div
             className="toast-progress-fill"
-            style={{ width: `${progress}%` }}
+            style={{ transform: `scaleX(${Math.max(0, Math.min(100, progress)) / 100})` }}
             transition={{ duration: 0.05, ease: 'linear' }}
           />
         </div>

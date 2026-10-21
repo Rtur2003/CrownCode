@@ -1,138 +1,71 @@
 'use client'
 
-import React, { useCallback, useState } from 'react'
-import { m as motion } from 'motion/react'
-import { Upload, FileImage, FileAudio, X, CheckCircle } from 'lucide-react'
+import React, { useCallback, useId, useState } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
+import world from '@/styles/components/world-page.module.css'
+import styles from '@/styles/pages/data-manipulation.module.css'
 
 interface FileUploaderProps {
-  dataType: 'image' | 'audio'
   files: File[]
   onFilesChange: (files: File[]) => void
 }
 
-export const FileUploader: React.FC<FileUploaderProps> = ({ dataType, files, onFilesChange }) => {
+// The backend accepts anything that decodes; this is what the picker offers.
+const ACCEPT = 'audio/*,.mp3,.wav,.flac,.m4a,.ogg,.opus,.aac'
+
+/** Audio files in, by drop or by the picker. The real input stays for keyboard and screen readers. */
+export const FileUploader: React.FC<FileUploaderProps> = ({ files, onFilesChange }) => {
   const { t } = useLanguage()
-  const [isDragging, setIsDragging] = useState(false)
+  const U = t.mlToolkit.fileUploader
+  const inputId = useId()
+  const [dragging, setDragging] = useState(false)
 
-  const acceptedTypes = dataType === 'image'
-    ? 'image/jpeg,image/png,image/jpg,image/webp'
-    : 'audio/mpeg,audio/wav,audio/mp3,audio/ogg'
-
-  const handleDrag = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    if (e.type === 'dragenter' || e.type === 'dragover') {
-      setIsDragging(true)
-    } else if (e.type === 'dragleave') {
-      setIsDragging(false)
-    }
-  }, [])
-
-  const handleFiles = useCallback((newFiles: File[]) => {
-    const validFiles = newFiles.filter(file => {
-      if (dataType === 'image') {
-        return file.type.startsWith('image/')
-      } else {
-        return file.type.startsWith('audio/')
-      }
-    })
-
-    onFilesChange([...files, ...validFiles])
-  }, [dataType, files, onFilesChange])
-
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setIsDragging(false)
-
-    const dropped = Array.from(e.dataTransfer.files)
-    handleFiles(dropped)
-  }, [handleFiles])
-
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const selected = Array.from(e.target.files)
-      handleFiles(selected)
-    }
-  }
-
-  const removeFile = (index: number) => {
-    onFilesChange(files.filter((_, i) => i !== index))
-  }
-
-  const Icon = dataType === 'image' ? FileImage : FileAudio
+  const add = useCallback((incoming: File[]) => {
+    const audio = incoming.filter(file => file.type.startsWith('audio/') || /\.(mp3|wav|flac|m4a|ogg|opus|aac)$/i.test(file.name))
+    if (audio.length) {onFilesChange([...files, ...audio])}
+  }, [files, onFilesChange])
 
   return (
-    <div className="file-uploader">
+    <div>
       <div
-        className={`upload-zone ${isDragging ? 'dragging' : ''}`}
-        onDragEnter={handleDrag}
-        onDragLeave={handleDrag}
-        onDragOver={handleDrag}
-        onDrop={handleDrop}
+        className={styles.drop}
+        data-dragging={dragging ? 'true' : undefined}
+        onDragEnter={(e) => { e.preventDefault(); setDragging(true) }}
+        onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
+        onDragLeave={(e) => { e.preventDefault(); setDragging(false) }}
+        onDrop={(e) => { e.preventDefault(); setDragging(false); add(Array.from(e.dataTransfer.files)) }}
       >
         <input
+          id={inputId}
           type="file"
-          id="file-upload"
           multiple
-          accept={acceptedTypes}
-          onChange={handleFileInput}
-          className="file-input"
+          accept={ACCEPT}
+          className="sr-only"
+          onChange={(e) => { add(Array.from(e.target.files ?? [])); e.target.value = '' }}
         />
-
-        <label htmlFor="file-upload" className="upload-label">
-          <Upload className="upload-icon" size={48} />
-          <h3 className="upload-title">
-            {dataType === 'image' ? t.mlToolkit.fileUploader.image.title : t.mlToolkit.fileUploader.audio.title}
-          </h3>
-          <p className="upload-subtitle">
-            {t.mlToolkit.fileUploader.subtitle}
-          </p>
-          <span className="upload-hint">
-            {dataType === 'image'
-              ? t.mlToolkit.fileUploader.image.hint
-              : t.mlToolkit.fileUploader.audio.hint
-            }
-          </span>
+        <label htmlFor={inputId} className={styles.dropLabel}>
+          <strong>{U.audio.title}</strong>
+          <span>{U.subtitle}</span>
+          <small>{U.audio.hint}</small>
         </label>
       </div>
 
       {files.length > 0 && (
-        <div className="selected-files">
-          <div className="files-header">
-            <h4 className="files-title">
-              {t.mlToolkit.fileUploader.filesUploaded} ({files.length})
-            </h4>
-            <CheckCircle className="text-green-500" size={20} />
-          </div>
-
-          <div className="files-list">
-            {files.map((file, index) => (
-              <motion.div
-                key={`${file.name}-${index}`}
-                className="file-item"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, x: -20 }}
+        <ul className={styles.files} aria-label={U.filesUploaded}>
+          {files.map((file, index) => (
+            <li key={`${file.name}-${index}`}>
+              <span className={styles.fileName}>{file.name}</span>
+              <span className={styles.fileSize}>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
+              <button
+                type="button"
+                className={world.link}
+                onClick={() => onFilesChange(files.filter((_, i) => i !== index))}
               >
-                <Icon size={20} className="file-icon" />
-                <span className="file-name">{file.name}</span>
-                <span className="file-size">
-                  {(file.size / 1024 / 1024).toFixed(2)} MB
-                </span>
-                <button
-                  type="button"
-                  onClick={() => removeFile(index)}
-                  className="file-remove"
-                  aria-label={t.aria.removeFile.replace('{{name}}', file.name)}
-                >
-                  <X size={16} />
-                </button>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+                ×<span className="sr-only"> {t.aria.removeFile.replace('{{name}}', file.name)}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   )

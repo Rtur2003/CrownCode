@@ -235,7 +235,17 @@ export const usePlayback = (src: string | null) => {
     void a.play()
   }, [])
 
-  return { playing, progress, toggle, seek, playFrom, available: Boolean(src) }
+  /** Jump to a second and start playing from there. */
+  const playAtSeconds = useCallback((sec: number) => {
+    const a = audioRef.current
+    if (!a) {return}
+    const end = a.duration || sec
+    a.currentTime = Math.max(0, Math.min(sec, end))
+    if (a.duration) {setProgress(a.currentTime / a.duration)}
+    void a.play()
+  }, [])
+
+  return { playing, progress, toggle, seek, playFrom, playAtSeconds, available: Boolean(src) }
 }
 
 export const PlayButton: React.FC<{ playing: boolean; onClick: () => void; labels: { play: string; pause: string } }> = ({ playing, onClick, labels }) => (

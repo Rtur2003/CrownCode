@@ -1,132 +1,90 @@
-import React from 'react'
+// Analysis History: what AURIS has analysed for this browser. The entries live in
+// localStorage on this device; nothing here is fetched from a server.
+
+import React, { useState } from 'react'
 import type { NextPage } from 'next'
-import { m as motion } from 'motion/react'
+import Link from 'next/link'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { History, Music, FileAudio, Trash2, Sparkles, User } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
+import { WorldPage } from '@/components/UI/WorldPage'
 import { useLanguage } from '@/context/LanguageContext'
 import { useLocalHistory, HISTORY_KEYS } from '@/hooks/useLocalHistory'
 import type { AnalysisResult } from '@/hooks/analysisTypes'
-
+import world from '@/styles/components/world-page.module.css'
 import styles from '@/styles/pages/analysis-history.module.css'
 
 const AnalysisHistoryPage: NextPage = () => {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const ah = t.analysisHistory
   const { entries, removeById, clear } = useLocalHistory<AnalysisResult>(HISTORY_KEYS.ANALYSIS)
-  const [listRef] = useAutoAnimate<HTMLDivElement>({ duration: 200, easing: 'ease-in-out' })
+  const [listRef] = useAutoAnimate<HTMLUListElement>({ duration: 200, easing: 'ease-out' })
+  const [confirming, setConfirming] = useState(false)
+  const dateFormat = new Intl.DateTimeFormat(language === 'en' ? 'en-GB' : 'tr-TR', { dateStyle: 'medium', timeStyle: 'short' })
 
   return (
-    <MainLayout
-      title={ah.meta.title}
-      description={ah.meta.description}
-      keywords={ah.meta.keywords}
-      noIndex
-    >
-      <div className={styles['page-container']}>
-        <div className="enter-rise">
-          <div className={styles['header-row']}>
-            <History size={28} className={styles['header-icon']} />
-            <h1 className={styles['title']}>
-              {ah.title}
-            </h1>
-          </div>
-          <p className={styles['subtitle']}>
-            {ah.subtitle}
-          </p>
-        </div>
-
+    <MainLayout title={ah.meta.title} description={ah.meta.description} keywords={ah.meta.keywords} noIndex>
+      <WorldPage world="ai-music-detection" planet={false} title={ah.title} lead={ah.subtitle}>
         {entries.length > 0 ? (
-          <>
-            <div className={styles['list-header']}>
-              <span className={styles['entry-count']}>
-                {ah.entryCount.replace('{{count}}', String(entries.length))}
-              </span>
-              <button
-                type="button"
-                onClick={() => {
-                  if (window.confirm(ah.clearAllConfirm)) {
-                    clear()
-                  }
-                }}
-                className={styles['clear-all-btn']}
-              >
-                <Trash2 size={14} />
-                {ah.clearAll}
-              </button>
+          <section className={world.section} aria-label={ah.title}>
+            <div className={world.sectionHead}>
+              <h2>{ah.entryCount.replace('{{count}}', String(entries.length))}</h2>
+              <div className={styles.clear}>
+                {confirming ? (
+                  <>
+                    <span>{ah.clearAllConfirm}</span>
+                    <button type="button" className={world.link} onClick={() => { clear(); setConfirming(false) }}>{ah.clearAll}</button>
+                    <button type="button" className={world.link} onClick={() => setConfirming(false)}>{ah.cancel}</button>
+                  </>
+                ) : (
+                  <button type="button" className={world.link} onClick={() => setConfirming(true)}>{ah.clearAll}</button>
+                )}
+              </div>
             </div>
 
-            <div ref={listRef} className={styles['entries-list']}>
-              {entries.map((entry, index) => (
-                <motion.div
-                  key={entry.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className={styles['entry-card']}
-                >
-                  <div className={styles['entry-header']}>
-                    <div className={styles['entry-input']}>
-                      {entry.input.includes('http') ? <Music size={18} className={styles['entry-icon']} /> : <FileAudio size={18} className={styles['entry-icon']} />}
-                      <span className={styles['entry-input-text']}>{entry.input}</span>
-                    </div>
-                    <button
-                      onClick={() => removeById(entry.id)}
-                      className={styles['delete-btn']}
-                      title={ah.delete}
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                  <div className={styles['entry-date']}>
-                    {new Date(entry.timestamp).toLocaleString()}
-                  </div>
-                  {entry.result && (
-                    <div className={styles['entry-result']}>
-                      {typeof entry.result.isAIGenerated === 'boolean' && (
-                        <div className={styles['verdict-badge']}>
-                          {entry.result.isAIGenerated ? <Sparkles size={14} /> : <User size={14} />}
-                          <span>{entry.result.isAIGenerated ? ah.verdictAi : ah.verdictHuman}</span>
-                        </div>
+            <div className={world.sectionBody}>
+              <ul ref={listRef} className={styles.entries}>
+                {entries.map(entry => {
+                  const result = entry.result
+                  const facts: Array<[string, string]> = [
+                    ...(typeof result?.confidence === 'number' ? [[ah.confidenceLabel, `${Math.round(result.confidence * 100)}%`] as [string, string]] : []),
+                    ...(typeof result?.processingTime === 'number' ? [[ah.durationLabel, `${result.processingTime.toFixed(1)} s`] as [string, string]] : []),
+                    ...(result?.modelVersion ? [[ah.modelLabel, result.modelVersion] as [string, string]] : []),
+                  ]
+                  return (
+                    <li key={entry.id} className={styles.entry}>
+                      <p className={styles.input}>{entry.input}</p>
+                      <p className={styles.when}>{dateFormat.format(new Date(entry.timestamp))}</p>
+                      {typeof result?.isAIGenerated === 'boolean' && (
+                        <p className={world.interpretation}>{result.isAIGenerated ? ah.verdictAi : ah.verdictHuman}</p>
                       )}
-                      <div className={styles['result-stats']}>
-                        {typeof entry.result.confidence === 'number' && (
-                          <div className={styles['result-stat']}>
-                            <span className={styles['result-stat-label']}>{ah.confidenceLabel}</span>
-                            <span className={styles['result-stat-value']}>{Math.round(entry.result.confidence * 100)}%</span>
-                          </div>
-                        )}
-                        {typeof entry.result.processingTime === 'number' && (
-                          <div className={styles['result-stat']}>
-                            <span className={styles['result-stat-label']}>{ah.durationLabel}</span>
-                            <span className={styles['result-stat-value']}>{entry.result.processingTime.toFixed(1)}s</span>
-                          </div>
-                        )}
-                        {entry.result.modelVersion && (
-                          <div className={styles['result-stat']}>
-                            <span className={styles['result-stat-label']}>{ah.modelLabel}</span>
-                            <span className={styles['result-stat-value']}>{entry.result.modelVersion}</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
-              ))}
+                      {facts.length > 0 && (
+                        <dl className={world.margins}>
+                          {facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
+                        </dl>
+                      )}
+                      <button type="button" className={`${world.link} ${styles.remove}`} onClick={() => removeById(entry.id)}>
+                        {ah.delete}
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
             </div>
-          </>
+          </section>
         ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className={styles['empty-state']}
-          >
-            <History size={48} className={styles['empty-icon']} />
-            <p>{ah.noHistory}</p>
-            <p className={styles['empty-sub']}>{ah.noHistoryDesc}</p>
-          </motion.div>
+          <section className={world.section} aria-label={ah.title}>
+            <div className={world.sectionHead}>
+              <h2>{ah.noHistory}</h2>
+            </div>
+            <div className={world.sectionBody}>
+              <p className={world.interpretation}>{ah.noHistoryDesc}</p>
+              <div className={world.actions}>
+                <Link href="/ai-music-detection" className={world.primary}>{ah.goToAnalysis}</Link>
+              </div>
+            </div>
+          </section>
         )}
-      </div>
+      </WorldPage>
     </MainLayout>
   )
 }

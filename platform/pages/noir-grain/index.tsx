@@ -1,18 +1,14 @@
+// Noir & Grain: a restaurant website template, shown as screenshots with the notes
+// that matter (what it is, what it is built with, how to run it).
+
 import React from 'react'
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import { m as motion } from 'motion/react'
-import { UtensilsCrossed, ArrowUpRight, Terminal } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
+import { WorldPage } from '@/components/UI/WorldPage'
 import { useLanguage } from '@/context/LanguageContext'
-
-// =========================================================================
-// NOIR & GRAIN SHOWCASE PAGE
-// =========================================================================
-// Presents the Noir & Grain fine-dining restaurant template as a
-// sellable showcase product. Copy lives in locales under
-// products.items.noirGrain(.page); screenshots in /images/noir-grain/.
-// =========================================================================
+import world from '@/styles/components/world-page.module.css'
+import styles from '@/styles/pages/noir-grain.module.css'
 
 const GALLERY = [
   { key: 'hero', src: '/images/noir-grain/hero.webp' },
@@ -23,102 +19,69 @@ const GALLERY = [
 
 const TECH = ['React 19', 'Vite 8', 'Tailwind CSS', 'GSAP + ScrollTrigger', 'Lenis', 'OGL (WebGL)', 'Vitest'] as const
 
+const RUN_COMMANDS = 'cd templates/noir-grain\nnpm install\nnpm run dev'
+
 const NoirGrainPage: NextPage = () => {
   const { t } = useLanguage()
-  const item = t.products?.items?.noirGrain
-  const page = item?.page
+  const item = t.products.items.noirGrain
+  const page = item.page
 
   return (
-    <MainLayout
-      title={item?.title ?? 'Noir & Grain'}
-      description={page?.metaDescription ?? item?.description ?? ''}
-      keywords="restaurant template, webgl, gsap, react, fine dining"
-    >
-      <section className="mx-auto max-w-6xl px-6 pb-24 pt-32">
-        {/* ===== HERO ===== */}
-        <header className="mb-16 enter-rise">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-400">
-            <UtensilsCrossed size={15} aria-hidden="true" />
-            <span>{item?.stats}</span>
+    <MainLayout title={item.title} description={page.metaDescription} keywords="restaurant template, webgl, gsap, react, fine dining">
+      <WorldPage world="noir-grain" title="Noir & Grain" lead={page.subtitle}>
+        <section className={world.section} aria-labelledby="noir-gallery-title">
+          <div className={world.sectionHead}>
+            <h2 id="noir-gallery-title">{page.galleryTitle}</h2>
           </div>
-          <h1 className="mb-4 text-4xl font-bold md:text-6xl">{item?.title}</h1>
-          <p className="max-w-2xl text-lg text-neutral-400">{page?.subtitle}</p>
-        </header>
-
-        {/* ===== GALLERY ===== */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-20"
-        >
-          <h2 className="mb-6 text-sm uppercase tracking-widest text-amber-400">{page?.galleryTitle}</h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {GALLERY.map(({ key, src }, index) => (
-              <figure key={key} className="overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900">
-                <Image
-                  src={src}
-                  alt={page?.galleryItems?.[key] ?? key}
-                  width={1440}
-                  height={900}
-                  sizes="(max-width: 768px) 100vw, 560px"
-                  loading={index < 2 ? 'eager' : 'lazy'}
-                  className="aspect-video h-auto w-full object-cover object-top transition-transform duration-500 hover:scale-[1.03]"
-                />
-                <figcaption className="px-4 py-3 text-sm text-neutral-400">
-                  {page?.galleryItems?.[key]}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* ===== ABOUT + TECH ===== */}
-        <motion.div
-          initial={{ opacity: 0, x: -28 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-20 grid gap-12 md:grid-cols-[1.4fr,1fr]"
-        >
-          <div>
-            <h2 className="mb-4 text-sm uppercase tracking-widest text-amber-400">{page?.aboutTitle}</h2>
-            <p className="leading-relaxed text-neutral-300">{page?.about}</p>
-          </div>
-          <div>
-            <h2 className="mb-4 text-sm uppercase tracking-widest text-amber-400">{page?.techTitle}</h2>
-            <div className="flex flex-wrap gap-2">
-              {TECH.map(tech => (
-                <span key={tech} className="rounded-full border border-neutral-700 px-3 py-1 text-sm text-neutral-300">
-                  {tech}
-                </span>
+          <div className={world.sectionBody}>
+            <div className={styles.gallery}>
+              {GALLERY.map(({ key, src }, index) => (
+                <figure key={key} className={styles.shot}>
+                  <Image
+                    src={src}
+                    alt={page.galleryItems[key]}
+                    width={1440}
+                    height={900}
+                    sizes="(max-width: 860px) 100vw, 400px"
+                    loading={index < 2 ? 'eager' : 'lazy'}
+                  />
+                  <figcaption>{page.galleryItems[key]}</figcaption>
+                </figure>
               ))}
             </div>
           </div>
-        </motion.div>
+        </section>
 
-        {/* ===== RUN LOCALLY ===== */}
-        <motion.div
-          initial={{ opacity: 0, x: 28 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="rounded-xl border border-neutral-800 bg-neutral-900 p-6"
-        >
-          <h2 className="mb-3 flex items-center gap-2 text-sm uppercase tracking-widest text-amber-400">
-            <Terminal size={15} aria-hidden="true" />
-            {page?.runTitle}
-          </h2>
-          <pre className="overflow-x-auto rounded-lg bg-black/60 p-4 text-sm text-neutral-300">
-            <code>{`cd templates/noir-grain\nnpm install\nnpm run dev`}</code>
-          </pre>
-          <p className="mt-3 flex items-center gap-1 text-sm text-neutral-500">
-            {page?.sourceNote}
-            <ArrowUpRight size={14} aria-hidden="true" />
-          </p>
-        </motion.div>
-      </section>
+        <section className={world.section} aria-labelledby="noir-about-title">
+          <div className={world.sectionHead}>
+            <h2 id="noir-about-title">{page.aboutTitle}</h2>
+          </div>
+          <div className={world.sectionBody}>
+            <p className={world.interpretation}>{page.about}</p>
+          </div>
+        </section>
+
+        <section className={world.section} aria-labelledby="noir-tech-title">
+          <div className={world.sectionHead}>
+            <h2 id="noir-tech-title">{page.techTitle}</h2>
+          </div>
+          <div className={world.sectionBody}>
+            <ul className={styles.tech}>
+              {TECH.map(tech => <li key={tech}>{tech}</li>)}
+            </ul>
+          </div>
+        </section>
+
+        <section className={world.section} aria-labelledby="noir-run-title">
+          <div className={world.sectionHead}>
+            <h2 id="noir-run-title">{page.runTitle}</h2>
+            <p>{page.sourceNote}</p>
+          </div>
+          <div className={world.sectionBody}>
+            <pre className={styles.code}><code>{RUN_COMMANDS}</code></pre>
+          </div>
+        </section>
+      </WorldPage>
     </MainLayout>
   )
 }

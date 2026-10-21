@@ -98,8 +98,6 @@
   font-weight: 600;
   color: var(--color-text-primary);
   margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .stats-grid {
@@ -154,8 +152,6 @@
   font-weight: 600;
   color: var(--color-text-primary);
   margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .projects-list {
@@ -279,8 +275,6 @@
   font-weight: 600;
   color: var(--color-text-primary);
   margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .section-links {

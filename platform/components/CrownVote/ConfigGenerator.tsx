@@ -1,59 +1,80 @@
-import React, { useState, useMemo } from 'react'
-import { m as motion, AnimatePresence } from 'motion/react'
-import { Settings, Download, Eye, Copy } from 'lucide-react'
+import React, { useId, useMemo, useState } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useToast } from '@/context/ToastContext'
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
+import world from '@/styles/components/world-page.module.css'
 import styles from '@/styles/pages/crown-vote.module.css'
 
-interface VotryxConfig {
-  paths: {
-    chrome: string
-    driver: string
-    logs: string
-    config: string
-  }
+type NumberKey = 'pause_between_votes' | 'parallel_workers' | 'timeout_seconds' | 'max_errors'
+
+const NUMBER_FIELDS: { key: NumberKey; label: 'pauseBetween' | 'parallelWorkers' | 'timeout' | 'maxErrors'; min: number; max: number; fallback: number }[] = [
+  { key: 'pause_between_votes', label: 'pauseBetween', min: 1, max: 30, fallback: 3 },
+  { key: 'parallel_workers', label: 'parallelWorkers', min: 1, max: 10, fallback: 2 },
+  { key: 'timeout_seconds', label: 'timeout', min: 5, max: 60, fallback: 15 },
+  { key: 'max_errors', label: 'maxErrors', min: 1, max: 20, fallback: 3 },
+]
+
+interface FormState {
   target_url: string
-  pause_between_votes: number
-  batch_size: number
-  max_errors: number
-  parallel_workers: number
+  numbers: Record<NumberKey, string>
   headless: boolean
-  timeout_seconds: number
-  use_selenium_manager: boolean
   use_random_user_agent: boolean
   block_images: boolean
 }
 
-export const ConfigGenerator: React.FC = () => {
-  const { t, language } = useLanguage()
-  const { success } = useToast()
-  const { copyToClipboard } = useCopyToClipboard()
+const INITIAL: FormState = {
+  target_url: 'https://distrokid.com/spotlight/yourartist/vote/',
+  numbers: { pause_between_votes: '3', parallel_workers: '2', timeout_seconds: '15', max_errors: '3' },
+  headless: true,
+  use_random_user_agent: true,
+  block_images: true,
+}
 
-  const [config, setConfig] = useState<VotryxConfig>({
+/** A number field is kept as text while typing, so it can be cleared; the file always gets a value inside the allowed range. */
+const clamp = (raw: string, min: number, max: number, fallback: number) => {
+  const value = Number.parseInt(raw, 10)
+  return Number.isNaN(value) ? fallback : Math.min(max, Math.max(min, value))
+}
+
+const isHttpUrl = (value: string) => {
+  try {
+    const { protocol } = new URL(value)
+    return protocol === 'https:' || protocol === 'http:'
+  } catch {
+    return false
+  }
+}
+
+export const ConfigGenerator: React.FC = () => {
+  const { t } = useLanguage()
+  const { success } = useToast()
+  const { copied, copyToClipboard } = useCopyToClipboard()
+  const G = t.crownVote.configGenerator
+  const idBase = useId()
+
+  const [form, setForm] = useState<FormState>(INITIAL)
+  const [showPreview, setShowPreview] = useState(false)
+
+  const urlInvalid = form.target_url.trim().length > 0 && !isHttpUrl(form.target_url.trim())
+
+  const configJson = useMemo(() => JSON.stringify({
     paths: {
       chrome: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
       driver: 'chromedriver.exe',
       logs: 'logs',
       config: 'config.json',
     },
-    target_url: 'https://distrokid.com/spotlight/yourartist/vote/',
-    pause_between_votes: 3,
+    target_url: form.target_url.trim(),
+    pause_between_votes: clamp(form.numbers.pause_between_votes, 1, 30, 3),
     batch_size: 1,
-    max_errors: 3,
-    parallel_workers: 2,
-    headless: true,
-    timeout_seconds: 15,
+    max_errors: clamp(form.numbers.max_errors, 1, 20, 3),
+    parallel_workers: clamp(form.numbers.parallel_workers, 1, 10, 2),
+    headless: form.headless,
+    timeout_seconds: clamp(form.numbers.timeout_seconds, 5, 60, 15),
     use_selenium_manager: false,
-    use_random_user_agent: true,
-    block_images: true,
-  })
-
-  const [showPreview, setShowPreview] = useState(false)
-
-  const configJson = useMemo(() => {
-    return JSON.stringify(config, null, 2)
-  }, [config])
+    use_random_user_agent: form.use_random_user_agent,
+    block_images: form.block_images,
+  }, null, 2), [form])
 
   const handleDownload = () => {
     const blob = new Blob([configJson], { type: 'application/json' })
@@ -62,161 +83,72 @@ export const ConfigGenerator: React.FC = () => {
     a.href = url
     a.download = 'config.json'
     a.click()
-    URL.revokeObjectURL(url)
-
-    success(
-      language === 'tr' ? 'config.json indirildi!' : 'config.json downloaded!'
-    )
+    setTimeout(() => URL.revokeObjectURL(url), 0)
+    success(G.downloaded)
   }
 
-  const handleCopy = () => {
-    copyToClipboard(configJson)
-  }
-
-  const fields = t.crownVote?.configGenerator?.fields
+  const toggles: { key: 'headless' | 'use_random_user_agent' | 'block_images'; label: string }[] = [
+    { key: 'headless', label: G.fields.headless },
+    { key: 'use_random_user_agent', label: G.fields.useRandomAgent },
+    { key: 'block_images', label: G.fields.blockImages },
+  ]
 
   return (
-    <motion.div
-      className={styles['config-generator']}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.3 }}
-    >
-      <div className={styles['config-header']}>
-        <Settings size={20} />
-        <h2>{t.crownVote?.configGenerator?.title || 'Configuration Generator'}</h2>
+    <div>
+      <div className={world.field}>
+        <label className={world.fieldLabel} htmlFor={`${idBase}-url`}>{G.fields.targetUrl}</label>
+        <input
+          id={`${idBase}-url`}
+          type="url"
+          inputMode="url"
+          autoComplete="off"
+          className={world.input}
+          value={form.target_url}
+          aria-invalid={urlInvalid}
+          aria-describedby={urlInvalid ? `${idBase}-url-error` : undefined}
+          onChange={(e) => setForm({ ...form, target_url: e.target.value })}
+        />
+        {urlInvalid && <p id={`${idBase}-url-error`} className={world.error}>{G.urlInvalid}</p>}
       </div>
 
-      <p className={styles['config-description']}>
-        {t.crownVote?.configGenerator?.description ||
-          'Create and download your config.json file from the web'}
-      </p>
-
-      <div className={styles['config-form']}>
-        <div className={styles['form-group']}>
-          <label>{fields?.targetUrl || 'Target URL'}</label>
-          <input
-            type="url"
-            value={config.target_url}
-            onChange={(e) => setConfig({ ...config, target_url: e.target.value })}
-            placeholder="https://distrokid.com/spotlight/.../vote/"
-          />
-        </div>
-
-        <div className={styles['form-row']}>
-          <div className={styles['form-group']}>
-            <label>{fields?.pauseBetween || 'Pause Between Votes (seconds)'}</label>
+      <div className={world.fields}>
+        {NUMBER_FIELDS.map(({ key, label, min, max }) => (
+          <div key={key} className={world.field}>
+            <label className={world.fieldLabel} htmlFor={`${idBase}-${key}`}>{G.fields[label]}</label>
             <input
+              id={`${idBase}-${key}`}
               type="number"
-              min={1}
-              max={30}
-              value={config.pause_between_votes}
-              onChange={(e) =>
-                setConfig({ ...config, pause_between_votes: parseInt(e.target.value) || 3 })
-              }
+              inputMode="numeric"
+              min={min}
+              max={max}
+              className={world.input}
+              value={form.numbers[key]}
+              onChange={(e) => setForm({ ...form, numbers: { ...form.numbers, [key]: e.target.value } })}
             />
           </div>
-
-          <div className={styles['form-group']}>
-            <label>{fields?.parallelWorkers || 'Parallel Workers'}</label>
-            <input
-              type="number"
-              min={1}
-              max={10}
-              value={config.parallel_workers}
-              onChange={(e) =>
-                setConfig({ ...config, parallel_workers: parseInt(e.target.value) || 2 })
-              }
-            />
-          </div>
-        </div>
-
-        <div className={styles['form-row']}>
-          <div className={styles['form-group']}>
-            <label>{fields?.timeout || 'Timeout (seconds)'}</label>
-            <input
-              type="number"
-              min={5}
-              max={60}
-              value={config.timeout_seconds}
-              onChange={(e) =>
-                setConfig({ ...config, timeout_seconds: parseInt(e.target.value) || 15 })
-              }
-            />
-          </div>
-
-          <div className={styles['form-group']}>
-            <label>{fields?.maxErrors || 'Max Errors'}</label>
-            <input
-              type="number"
-              min={1}
-              max={20}
-              value={config.max_errors}
-              onChange={(e) => setConfig({ ...config, max_errors: parseInt(e.target.value) || 3 })}
-            />
-          </div>
-        </div>
-
-        <div className={styles['toggle-group']}>
-          <label className={styles['toggle']}>
-            <input
-              type="checkbox"
-              checked={config.headless}
-              onChange={(e) => setConfig({ ...config, headless: e.target.checked })}
-            />
-            <span>{fields?.headless || 'Headless Mode'}</span>
-          </label>
-
-          <label className={styles['toggle']}>
-            <input
-              type="checkbox"
-              checked={config.use_random_user_agent}
-              onChange={(e) => setConfig({ ...config, use_random_user_agent: e.target.checked })}
-            />
-            <span>{fields?.useRandomAgent || 'Random User-Agent'}</span>
-          </label>
-
-          <label className={styles['toggle']}>
-            <input
-              type="checkbox"
-              checked={config.block_images}
-              onChange={(e) => setConfig({ ...config, block_images: e.target.checked })}
-            />
-            <span>{fields?.blockImages || 'Block Images'}</span>
-          </label>
-        </div>
+        ))}
       </div>
 
-      <div className={styles['config-actions']}>
-        <button className={styles['preview-btn']} onClick={() => setShowPreview(!showPreview)}>
-          <Eye size={16} />
-          {t.crownVote?.configGenerator?.preview || 'Preview'}
-        </button>
+      <div className={styles.toggles}>
+        {toggles.map(({ key, label }) => (
+          <label key={key} className={styles.toggle}>
+            <input type="checkbox" checked={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.checked })} />
+            <span>{label}</span>
+          </label>
+        ))}
+      </div>
 
-        <button className={styles['copy-btn']} onClick={handleCopy}>
-          <Copy size={16} />
-          {t.crownVote?.configGenerator?.copy || 'Copy'}
+      <div className={world.actions}>
+        <button type="button" className={world.primary} onClick={handleDownload} disabled={urlInvalid}>{G.download}</button>
+        <button type="button" className={world.link} onClick={() => void copyToClipboard(configJson)} aria-live="polite">
+          {copied ? G.copied : G.copy}
         </button>
-
-        <button className={styles['download-btn']} onClick={handleDownload}>
-          <Download size={16} />
-          {t.crownVote?.configGenerator?.download || 'Download File'}
+        <button type="button" className={world.link} onClick={() => setShowPreview(v => !v)} aria-expanded={showPreview}>
+          {G.preview}
         </button>
       </div>
 
-      <AnimatePresence>
-        {showPreview && (
-          <motion.pre
-            className={styles['config-preview']}
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <code>{configJson}</code>
-          </motion.pre>
-        )}
-      </AnimatePresence>
-    </motion.div>
+      {showPreview && <pre className={styles.code}><code>{configJson}</code></pre>}
+    </div>
   )
 }

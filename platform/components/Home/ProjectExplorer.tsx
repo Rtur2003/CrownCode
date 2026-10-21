@@ -8,16 +8,13 @@ import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
 import { hasWebGL } from '@/components/UI/WebGLGuard'
 import { useLanguage } from '@/context/LanguageContext'
 import { PRODUCT_CATALOG, resolveProduct, type ProductEntry } from '@/config/product-catalog'
-import { worldLook, worldName, worldPlacement, type WorldLook, type WorldPlacement } from '@/config/showroom-worlds'
+import { worldImage, worldLook, worldName, worldPlacement, worldSector, type WorldLook, type WorldPlacement } from '@/config/showroom-worlds'
 import type { AtlasState } from './Atlas/AtlasScene'
 import styles from './ProjectExplorer.module.css'
 
 // WebGL only exists in the browser and is not needed for the first paint:
 // the server HTML shows a rendered poster of the same scene.
 const AtlasScene = dynamic(() => import('./Atlas/AtlasScene'), { ssr: false })
-
-/** Worlds with a rendered thumbnail (scripts/capture-atlas-assets.py). */
-const RENDERED = new Set(['ai-music-detection', 'ml-toolkit', 'crown-fortune', 'crown-dreams', 'crown-commend', 'crown-vote', 'noir-grain', 'kognita'])
 
 /** Scroll distance between two stops, in viewport heights. */
 const HOP = 1.1
@@ -29,7 +26,6 @@ type World = ProductEntry & ReturnType<typeof resolveProduct> & {
   placement: WorldPlacement
 }
 
-const pad = (n: number) => String(n).padStart(2, '0')
 const external = (href: string) => href.startsWith('https:')
 const smoothstep = (a: number, b: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)))
@@ -49,7 +45,7 @@ export function ProjectExplorer() {
       ...entry,
       ...localized,
       name,
-      image: RENDERED.has(entry.id) ? `/images/atlas/world-${entry.id}.webp` : '/images/showroom/planet-generic.webp',
+      image: worldImage(entry.id),
       look: worldLook(entry),
       placement: worldPlacement(index),
     }
@@ -206,8 +202,7 @@ export function ProjectExplorer() {
         <section ref={stageRef} className={styles.stage} aria-labelledby="showroom-title">
           <picture className={`${styles.poster} ${sceneReady ? styles.posterHidden : ''}`}>
             <source media="(max-aspect-ratio: 4/5)" srcSet={portraitSrcSet} />
-            {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text -- props come from getImageProps (art direction) */}
-            <img {...posterProps} />
+            <img {...posterProps} src={posterProps.src} alt="" />
           </picture>
           {canRender && (
             <div className={`${styles.canvas} ${sceneReady ? styles.canvasReady : ''}`}>
@@ -223,7 +218,7 @@ export function ProjectExplorer() {
                 <button key={w.id} type="button" tabIndex={-1} className={styles.worldLabel}
                   ref={(el) => { labelRefs.current[i] = el }} onClick={() => goTo(i + 1)}
                   style={{ '--world': w.look.accent } as CSSProperties}>
-                  <span>{pad(i + 1)}</span>{w.name}
+                  {w.name}
                 </button>
               ))}
             </div>
@@ -233,7 +228,6 @@ export function ProjectExplorer() {
             <div ref={panelRef} className={styles.panel}>
               {station === 0 || reducedMotion ? (
                 <div key="intro" className={styles.copy}>
-                  <p className={styles.eyebrow}>{en ? `${count} projects` : `${count} proje`}</p>
                   <h1 id="showroom-title">CrownCode</h1>
                   <p className={styles.lead}>{en ? 'Audio analysis, data tools and web applications by Hasan Arthur Altuntaş.' : 'Hasan Arthur Altuntaş’ın ses analizi, veri işleme ve web projeleri.'}</p>
                   <div className={styles.actions}>
@@ -245,10 +239,6 @@ export function ProjectExplorer() {
                 </div>
               ) : world ? (
                 <article key={world.id} className={styles.copy} style={{ '--world': world.look.accent } as CSSProperties}>
-                  <p className={styles.eyebrow}>
-                    <span className={styles.worldIndex}>{pad(station)} / {pad(count)}</span>
-                    <span>{en ? world.look.sector.en : world.look.sector.tr}</span>
-                  </p>
                   <h2>{world.name}</h2>
                   <p className={styles.lead}>{world.showroomDescription}</p>
                   {world.features.length > 0 && (
@@ -259,12 +249,11 @@ export function ProjectExplorer() {
                       target={external(world.href) ? '_blank' : undefined} rel={external(world.href) ? 'noreferrer' : undefined}>
                       {en ? 'Open project' : 'Projeyi aç'} <ArrowUpRight size={18} />
                     </Link>
-                    <span className={styles.status}>{world.status}</span>
+                    {world.status && <span className={styles.status}>{world.status}</span>}
                   </div>
                 </article>
               ) : (
                 <div key="outro" className={styles.copy}>
-                  <p className={styles.eyebrow}>{en ? 'Project overview' : 'Proje listesi'}</p>
                   <h2>{en ? `All ${count} projects` : `${count} projenin tamamı`}</h2>
                   <p className={styles.lead}>{en ? 'Find project details and links below.' : 'Proje açıklamaları ve bağlantıları aşağıda.'}</p>
                   <div className={styles.actions}>
@@ -286,7 +275,7 @@ export function ProjectExplorer() {
                     <button type="button" onClick={() => goTo(i + 1)} aria-current={station === i + 1 ? 'step' : undefined}
                       style={{ '--world': w.look.accent } as CSSProperties}>
                       <span className={styles.node} aria-hidden="true" />
-                      <span className={styles.nodeLabel}><span aria-hidden="true">{pad(i + 1)}</span> {w.name}</span>
+                      <span className={styles.nodeLabel}>{w.name}</span>
                     </button>
                   </li>
                 ))}
@@ -312,7 +301,6 @@ export function ProjectExplorer() {
 
         <section id="project-index" ref={indexRef} className={styles.index} aria-labelledby="project-index-title">
           <div className={styles.indexLead}>
-            <p className={styles.eyebrow}>{en ? 'Projects' : 'Projeler'}</p>
             <h2 id="project-index-title">{en ? 'All projects' : 'Tüm projeler'}</h2>
             <p>{en ? 'Select a project for details.' : 'Ayrıntıları görmek için bir proje seç.'}</p>
           </div>
@@ -324,10 +312,9 @@ export function ProjectExplorer() {
                   style={{ '--world': w.look.accent } as CSSProperties}
                   onPointerEnter={highlight(index)} onPointerLeave={clearHighlight}
                   onFocus={highlight(index)} onBlur={clearHighlight}>
-                  <span className={styles.indexNumber} aria-hidden="true">{pad(index + 1)}</span>
                   <span className={styles.indexImage}><Image src={w.image} alt="" fill sizes="(max-width: 700px) 54px, 160px" /></span>
                   <span className={styles.indexCopy}>
-                    <span className={styles.indexSector}>{en ? w.look.sector.en : w.look.sector.tr} · {w.status}</span>
+                    <span className={styles.indexSector}>{worldSector(w, en ? 'en' : 'tr', w.stats)}</span>
                     <strong>{w.name}</strong>
                     <span>{w.showroomDescription}</span>
                   </span>

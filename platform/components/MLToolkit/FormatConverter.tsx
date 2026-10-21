@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react'
-import { m as motion } from 'motion/react'
-import { FileAudio } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
+import world from '@/styles/components/world-page.module.css'
+import styles from '@/styles/pages/data-manipulation.module.css'
 
 export type AudioTargetFormat = 'wav' | 'mp3' | 'flac' | 'ogg'
 
@@ -28,52 +28,41 @@ const BITRATE_OPTIONS = [128, 192, 256, 320]
 
 export const FormatConverter: React.FC<FormatConverterProps> = ({ options, onChange }) => {
   const { t } = useLanguage()
-  const selectedFormat = TARGET_FORMATS.find((f) => f.id === options.targetFormat)
+  const F = t.mlToolkit.formatConverter
+  const selected = TARGET_FORMATS.find(f => f.id === options.targetFormat)
 
   return (
-    <div className="format-converter">
-      <div className="options-header">
-        <h3 className="options-title">{t.mlToolkit.formatConverter.title}</h3>
-      </div>
-
-      <div className="format-grid">
-        {TARGET_FORMATS.map((format) => {
-          const isSelected = options.targetFormat === format.id
-          return (
-            <motion.button
-              key={format.id}
-              type="button"
-              onClick={() => onChange({ ...options, targetFormat: format.id })}
-              className={`format-card ${isSelected ? 'format-selected' : ''}`}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <FileAudio size={20} className="format-icon" />
-              <span className="format-label">{format.label}</span>
-              <span className="format-badge">
-                {format.lossy ? t.mlToolkit.formatConverter.lossy : t.mlToolkit.formatConverter.lossless}
+    <div>
+      <fieldset className={styles.checklist}>
+        <legend className={world.fieldLabel}>{F.title}</legend>
+        <div className={styles.formats}>
+          {TARGET_FORMATS.map(format => (
+            <label key={format.id} className={styles.format}>
+              <input
+                type="radio"
+                name="target-format"
+                checked={options.targetFormat === format.id}
+                onChange={() => onChange({ ...options, targetFormat: format.id })}
+              />
+              <span>
+                <strong>{format.label}</strong>
+                <small>{format.lossy ? F.lossy : F.lossless}</small>
               </span>
-            </motion.button>
-          )
-        })}
-      </div>
+            </label>
+          ))}
+        </div>
+      </fieldset>
 
-      {selectedFormat?.lossy && (
-        <div className="bitrate-row">
-          <label className="bitrate-label" htmlFor="bitrate-select">
-            {t.mlToolkit.formatConverter.bitrateLabel}
-          </label>
+      {selected?.lossy && (
+        <div className={world.field}>
+          <label className={world.fieldLabel} htmlFor="bitrate-select">{F.bitrateLabel}</label>
           <select
             id="bitrate-select"
-            className="bitrate-select"
+            className={world.select}
             value={options.bitrateKbps}
             onChange={(e) => onChange({ ...options, bitrateKbps: Number(e.target.value) })}
           >
-            {BITRATE_OPTIONS.map((kbps) => (
-              <option key={kbps} value={kbps}>
-                {kbps} kbps
-              </option>
-            ))}
+            {BITRATE_OPTIONS.map(kbps => <option key={kbps} value={kbps}>{kbps} kbps</option>)}
           </select>
         </div>
       )}

@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react'
-import { m as motion } from 'motion/react'
-import { Music4, Gauge, Music2, Tag } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
+import world from '@/styles/components/world-page.module.css'
+import styles from '@/styles/pages/data-manipulation.module.css'
 
 export interface DatasetEntryMetadata {
   durationSec: number
@@ -27,45 +27,21 @@ export const DatasetMetadataResult: React.FC<DatasetMetadataResultProps> = ({ me
   const { t } = useLanguage()
   const om = t.mlToolkit.organizer
 
-  const stats = [
-    { icon: Gauge, label: om.duration, value: formatDuration(metadata.durationSec) },
-    { icon: Music2, label: om.tempo, value: metadata.tempoBpm > 0 ? `${metadata.tempoBpm} BPM` : om.noBeat },
-    { icon: Music4, label: om.key, value: metadata.key },
-    { icon: Tag, label: om.loudness, value: `${metadata.loudnessDb} dB` },
+  const facts: Array<[string, string]> = [
+    [om.duration, formatDuration(metadata.durationSec)],
+    [om.tempo, metadata.tempoBpm > 0 ? `${metadata.tempoBpm} BPM` : om.noBeat],
+    [om.key, metadata.key],
+    [om.loudness, `${metadata.loudnessDb} dB`],
   ]
 
   return (
-    <motion.div
-      className="dataset-metadata-result"
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-    >
-      <div className="metadata-stats-grid">
-        {stats.map((stat) => {
-          const Icon = stat.icon
-          return (
-            <div key={stat.label} className="metadata-stat-box">
-              <Icon size={18} className="metadata-stat-icon" />
-              <div className="metadata-stat-content">
-                <span className="metadata-stat-label">{stat.label}</span>
-                <span className="metadata-stat-value">{stat.value}</span>
-              </div>
-            </div>
-          )
-        })}
-      </div>
-
-      <div className="metadata-tags-row">
-        <span className="metadata-tags-label">{om.autoTags}</span>
-        <div className="metadata-tags-list">
-          {metadata.tags.map((tag) => (
-            <span key={tag} className="metadata-tag-pill">
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
-    </motion.div>
+    <div className={world.reading}>
+      <dl className={world.margins}>
+        {facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
+      </dl>
+      <h3 className={`${world.readingLabel} ${styles.tagsLabel}`}>{om.autoTags}</h3>
+      <p className={world.interpretation}>{metadata.tags.join(', ')}</p>
+    </div>
   )
 }
 

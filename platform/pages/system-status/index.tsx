@@ -1,153 +1,125 @@
-import React, { useEffect, useState } from 'react'
-import type { NextPage } from 'next'
-import { m as motion } from 'motion/react'
-import { Activity, CheckCircle, XCircle, RefreshCw } from 'lucide-react'
-import { MainLayout } from '@/components/Layout/MainLayout'
-import { useLanguage } from '@/context/LanguageContext'
-import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
+// System Status: three live checks (this site's API, its version endpoint and the
+// CrownCode backend), run when the page opens and again on request.
 
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import type { NextPage } from 'next'
+import { MainLayout } from '@/components/Layout/MainLayout'
+import { BackendNote } from '@/components/UI/BackendNote'
+import { WorldPage } from '@/components/UI/WorldPage'
+import { useLanguage } from '@/context/LanguageContext'
+import { API_BASE_URL } from '@/config/api'
+import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
+import world from '@/styles/components/world-page.module.css'
 import styles from '@/styles/pages/system-status.module.css'
 
+type ServiceId = 'frontend' | 'version' | 'backend'
+
 interface ServiceStatus {
-  name: string
+  id: ServiceId
   url: string
   status: 'ok' | 'error' | 'loading'
   latency?: number
 }
 
-async function probeServices(): Promise<ServiceStatus[]> {
-  const hfUrl = process.env.NEXT_PUBLIC_API_URL
-  const targets: { name: string; url: string }[] = [
-    { name: 'Frontend API', url: '/api/health' },
-    { name: 'Version', url: '/api/version' },
-  ]
-  if (hfUrl) {
-    targets.push({ name: 'HF Backend', url: `${hfUrl}/api/health` })
-  }
+const TARGETS: { id: ServiceId; url: string }[] = [
+  { id: 'frontend', url: '/api/health' },
+  { id: 'version', url: '/api/version' },
+  { id: 'backend', url: `${API_BASE_URL}/api/health` },
+]
 
+// A sleeping backend needs a minute or two to boot; give the probe room to see it answer.
+const TIMEOUT_MS: Record<ServiceId, number> = { frontend: 10_000, version: 10_000, backend: 20_000 }
+
+const loadingState = (): ServiceStatus[] => TARGETS.map(target => ({ ...target, status: 'loading' }))
+
+async function probeServices(signal: AbortSignal): Promise<ServiceStatus[]> {
   return Promise.all(
-    targets.map(async (svc) => {
+    TARGETS.map(async (target): Promise<ServiceStatus> => {
       const start = Date.now()
       try {
-        const res = await fetchWithTimeout(svc.url, { timeout: 10_000 })
-        return { ...svc, status: res.ok ? ('ok' as const) : ('error' as const), latency: Date.now() - start }
+        const res = await fetchWithTimeout(target.url, { timeout: TIMEOUT_MS[target.id], signal })
+        return { ...target, status: res.ok ? 'ok' : 'error', latency: Date.now() - start }
       } catch {
-        return { ...svc, status: 'error' as const, latency: Date.now() - start }
+        return { ...target, status: 'error', latency: Date.now() - start }
       }
     }),
   )
 }
 
 const SystemStatusPage: NextPage = () => {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const ss = t.systemStatus
-  const [services, setServices] = useState<ServiceStatus[]>([
-    { name: 'Frontend API', url: '/api/health', status: 'loading' },
-    { name: 'Version', url: '/api/version', status: 'loading' },
-  ])
-  // The first check starts on mount, so the page begins in the checking state.
+  const [services, setServices] = useState<ServiceStatus[]>(loadingState)
   const [checking, setChecking] = useState(true)
   const [lastChecked, setLastChecked] = useState<Date | null>(null)
+  const controllerRef = useRef<AbortController | null>(null)
 
-  const noExternalBackend = !process.env.NEXT_PUBLIC_API_URL
-
-  const applyResults = (results: ServiceStatus[]) => {
+  const apply = useCallback((results: ServiceStatus[]) => {
     setServices(results)
     setLastChecked(new Date())
     setChecking(false)
-  }
-
-  useEffect(() => {
-    let mounted = true
-    probeServices().then((results) => {
-      if (mounted) {applyResults(results)}
-    })
-    return () => {
-      mounted = false
-    }
   }, [])
 
+  const begin = useCallback(() => {
+    controllerRef.current?.abort()
+    const controller = new AbortController()
+    controllerRef.current = controller
+    return controller
+  }, [])
+
+  // The first round starts on mount and the page begins in the checking state, so
+  // nothing is set here until the answers arrive.
+  useEffect(() => {
+    const controller = begin()
+    void probeServices(controller.signal).then(results => {
+      if (!controller.signal.aborted) {apply(results)}
+    })
+    return () => controller.abort()
+  }, [begin, apply])
+
   const refresh = () => {
+    const controller = begin()
     setChecking(true)
-    probeServices().then(applyResults)
+    void probeServices(controller.signal).then(results => {
+      if (!controller.signal.aborted) {apply(results)}
+    })
   }
 
-  const isLoading = services.some((s) => s.status === 'loading')
-  const allOk = services.every((s) => s.status === 'ok')
-  const someOk = services.some((s) => s.status === 'ok')
-  const isDegraded = !allOk && someOk && services.every((s) => s.status !== 'loading')
+  const settled = services.every(s => s.status !== 'loading')
+  const allOk = services.every(s => s.status === 'ok')
+  const someOk = services.some(s => s.status === 'ok')
+  const summary = !settled ? ss.checking : allOk ? ss.allOperational : someOk ? ss.degraded : ss.someIssues
+  const tone = !settled ? 'pending' : allOk ? 'ok' : someOk ? 'pending' : 'down'
+  const timeFormat = new Intl.DateTimeFormat(language === 'en' ? 'en-GB' : 'tr-TR', { timeStyle: 'medium' })
 
   return (
-    <MainLayout
-      title={ss.meta.title}
-      description={ss.meta.description}
-      keywords={ss.meta.keywords}
-      noIndex
-    >
-      <div className={styles['page-container']}>
-        <div className="enter-rise">
-          <div className={styles['header-row']}>
-            <Activity size={28} className={styles['header-icon']} />
-            <h1 className={styles['title']}>
-              {ss.title}
-            </h1>
+    <MainLayout title={ss.meta.title} description={ss.meta.description} keywords={ss.meta.keywords} noIndex>
+      <WorldPage world="kognita" planet={false} title={ss.title}>
+        <section className={world.section} aria-labelledby="status-summary">
+          <div className={world.sectionHead}>
+            <h2 id="status-summary" role="status" aria-live="polite">{summary}</h2>
+            {lastChecked && <p className={world.hint}>{ss.lastChecked}: {timeFormat.format(lastChecked)}</p>}
           </div>
 
-          <div className={styles['status-bar']}>
-            <span className={`${styles['status-dot']} ${isLoading ? styles['status-dot-degraded'] : allOk ? styles['status-dot-ok'] : isDegraded ? styles['status-dot-degraded'] : styles['status-dot-error']}`} />
-            <span className={styles['status-text']} role="status" aria-live="polite">
-              {isLoading ? ss.checking : allOk ? ss.allOperational : isDegraded ? ss.degraded : ss.someIssues}
-            </span>
-            <button
-              type="button"
-              onClick={refresh}
-              disabled={checking}
-              className={styles['refresh-btn']}
-            >
-              <RefreshCw size={14} className={checking ? 'animate-spin' : ''} />
-              {ss.refresh}
-            </button>
+          <div className={world.sectionBody}>
+            <BackendNote />
+            <ul className={styles.rows} data-tone={tone}>
+              {services.map(service => (
+                <li key={service.id} className={styles.row} data-status={service.status}>
+                  <span className={styles.name}>{ss.services[service.id]}</span>
+                  <span className={styles.state}>{ss.state[service.status]}</span>
+                  <span className={styles.latency}>{service.latency !== undefined ? `${service.latency} ms` : ''}</span>
+                </li>
+              ))}
+            </ul>
+            <div className={world.actions}>
+              <button type="button" className={world.primary} onClick={refresh} disabled={checking} aria-busy={checking}>
+                {checking ? ss.checking : ss.refresh}
+              </button>
+            </div>
           </div>
-
-          {lastChecked && (
-            <p className={styles['last-checked']}>
-              {ss.lastChecked}: {lastChecked.toLocaleTimeString()}
-            </p>
-          )}
-
-          {noExternalBackend && (
-            <p className={styles['demo-label']}>
-              {ss.noExternalBackend}
-            </p>
-          )}
-        </div>
-
-        <div className={styles['services-list']}>
-          {services.map((svc, i) => (
-            <motion.div
-              key={svc.name}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.05 * i }}
-              className={styles['service-card']}
-            >
-              <div className={styles['service-info']}>
-                {svc.status === 'ok' ? (
-                  <CheckCircle size={18} className={styles['icon-ok']} />
-                ) : svc.status === 'error' ? (
-                  <XCircle size={18} className={styles['icon-error']} />
-                ) : (
-                  <RefreshCw size={18} className={`${styles['icon-loading']} animate-spin`} />
-                )}
-                <span className={styles['service-name']}>{svc.name}</span>
-              </div>
-              <span className={styles['service-latency']}>
-                {svc.latency !== undefined ? `${svc.latency}ms` : '...'}
-              </span>
-            </motion.div>
-          ))}
-        </div>
-      </div>
+        </section>
+      </WorldPage>
     </MainLayout>
   )
 }

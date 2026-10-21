@@ -1,166 +1,83 @@
 ﻿/**
- * Comment Editor Component
- * Read-only generated comment with copy and post functionality
- * Note: Editing disabled to maintain AI-generated content integrity
+ * The draft: editable text, what it was based on, and what can be done with it.
+ * Copying and opening the video are always there; posting only in a build that enables it.
  */
 
 import React from 'react'
-import { m as motion, AnimatePresence } from 'motion/react'
-import { Copy, Check, Sparkles, RefreshCw, Send, AlertCircle } from 'lucide-react'
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
-import styles from './CommentEditor.module.css'
+import { fill } from '@/components/Auris/format'
+import world from '@/styles/components/world-page.module.css'
+import styles from '@/styles/pages/crown-commend.module.css'
 
-interface CommentEditorTexts {
-  aiGenerated: string
+export interface DraftTexts {
+  title: string
+  editLabel: string
+  aiNote: string
   withTranscript: string
+  noTranscript: string
   copy: string
   copied: string
+  openVideo: string
   regenerate: string
+  time: string
   post: string
   posting: string
-  alreadyPosted: string
-  processingTimeTemplate: string
-  disclaimer: string
+  posted: string
   alreadyPostedNote: string
 }
 
 interface CommentEditorProps {
   comment: string
-  onRegenerate: () => void
-  onPost: () => void
-  isPosting: boolean
-  isAlreadyPosted: boolean
+  videoUrl: string
   hasTranscript: boolean
   processingTime: number | null
-  texts: CommentEditorTexts
+  canPost: boolean
+  isPosting: boolean
+  isPosted: boolean
+  texts: DraftTexts
+  onChange: (text: string) => void
+  onRegenerate: () => void
+  onPost: () => void
 }
 
 export const CommentEditor: React.FC<CommentEditorProps> = ({
-  comment,
-  onRegenerate,
-  onPost,
-  isPosting,
-  isAlreadyPosted,
-  hasTranscript,
-  processingTime,
-  texts
+  comment, videoUrl, hasTranscript, processingTime, canPost, isPosting, isPosted, texts, onChange, onRegenerate, onPost,
 }) => {
   const { copied, copyToClipboard } = useCopyToClipboard()
-  const handleCopy = () => copyToClipboard(comment)
-
-  const processingTimeText =
-    processingTime !== null
-      ? texts.processingTimeTemplate.replace('{{seconds}}', String(processingTime))
-      : null
 
   return (
-    <motion.div
-      className={styles.container}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
-    >
-      {/* Header */}
-      <div className={styles.header}>
-        <div className={styles.headerLeft}>
-          <Sparkles size={16} className={styles.sparkle} />
-          <span>{texts.aiGenerated}</span>
-          {hasTranscript && (
-            <span className={styles.transcriptBadge}>
-              {texts.withTranscript}
-            </span>
-          )}
-        </div>
-        {processingTimeText && (
-          <span className={styles.processingTime}>
-            {processingTimeText}
-          </span>
+    <div className={world.reading}>
+      <h3 className={world.readingLabel}>{texts.title}</h3>
+
+      <label htmlFor="commend-draft" className="sr-only">{texts.editLabel}</label>
+      <textarea
+        id="commend-draft"
+        className={`${world.textarea} ${styles.draft}`}
+        value={comment}
+        onChange={(e) => onChange(e.target.value)}
+        rows={6}
+        maxLength={10_000}
+        disabled={isPosted}
+      />
+
+      <p className={world.hint}>
+        {hasTranscript ? texts.withTranscript : texts.noTranscript}
+        {processingTime !== null && ` ${fill(texts.time, { seconds: processingTime })}.`}
+      </p>
+      <p className={world.hint}>{isPosted ? texts.alreadyPostedNote : texts.aiNote}</p>
+
+      <div className={world.actions}>
+        <button type="button" className={world.primary} onClick={() => copyToClipboard(comment)} aria-live="polite">
+          {copied ? texts.copied : texts.copy}
+        </button>
+        <a className={world.link} href={videoUrl} target="_blank" rel="noopener noreferrer">{texts.openVideo}</a>
+        <button type="button" className={world.link} onClick={onRegenerate} disabled={isPosted}>{texts.regenerate}</button>
+        {canPost && (
+          <button type="button" className={world.link} onClick={onPost} disabled={isPosting || isPosted}>
+            {isPosting ? texts.posting : isPosted ? texts.posted : texts.post}
+          </button>
         )}
       </div>
-
-      {/* Comment Text (Read-only) */}
-      <div className={styles.commentWrapper}>
-        <div className={styles.commentText}>
-          {comment}
-        </div>
-      </div>
-
-      {/* Actions */}
-      <div className={styles.actions}>
-        <div className={styles.actionsLeft}>
-          <button
-            className={styles.actionButton}
-            onClick={handleCopy}
-            title={texts.copy}
-          >
-            <AnimatePresence mode="wait">
-              {copied ? (
-                <motion.span
-                  key="check"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
-                  className={styles.copied}
-                >
-                  <Check size={16} />
-                  {texts.copied}
-                </motion.span>
-              ) : (
-                <motion.span
-                  key="copy"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
-                >
-                  <Copy size={16} />
-                  {texts.copy}
-                </motion.span>
-              )}
-            </AnimatePresence>
-          </button>
-
-          <button
-            className={styles.actionButton}
-            onClick={onRegenerate}
-            title={texts.regenerate}
-            disabled={isAlreadyPosted}
-          >
-            <RefreshCw size={16} />
-            {texts.regenerate}
-          </button>
-        </div>
-
-        <motion.button
-          className={`${styles.postButton} ${isAlreadyPosted ? styles.postButtonDisabled : ''}`}
-          onClick={onPost}
-          disabled={isPosting || isAlreadyPosted}
-          whileHover={!isAlreadyPosted ? { scale: 1.02 } : {}}
-          whileTap={!isAlreadyPosted ? { scale: 0.98 } : {}}
-        >
-          {isPosting ? (
-            <>
-              <RefreshCw size={18} className={styles.spinning} />
-              {texts.posting}
-            </>
-          ) : isAlreadyPosted ? (
-            <>
-              <Check size={18} />
-              {texts.alreadyPosted}
-            </>
-          ) : (
-            <>
-              <Send size={18} />
-              {texts.post}
-            </>
-          )}
-        </motion.button>
-      </div>
-
-      {/* Disclaimer */}
-      <div className={styles.disclaimer}>
-        <AlertCircle size={14} />
-        <span>{isAlreadyPosted ? texts.alreadyPostedNote : texts.disclaimer}</span>
-      </div>
-    </motion.div>
+    </div>
   )
 }

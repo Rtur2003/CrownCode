@@ -12,6 +12,7 @@ import { ToastProvider } from '@/context/ToastContext'
 import { ToastContainer } from '@/components/UI/Toast/ToastContainer'
 import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary'
 import { JobPill } from '@/components/Auris/JobPill'
+import { AppShell } from '@/components/Layout/AppShell'
 import { imFell, imFellItalic, jetbrainsMono, portmanteau } from '@/styles/fonts'
 import '@/styles/globals.css'
 
@@ -64,7 +65,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <LanguageProvider>
         <LazyMotion features={loadMotionFeatures} strict>
           <ToastProvider>
-            <Component {...pageProps} />
+            <AppShell>
+              <Component {...pageProps} />
+            </AppShell>
             <ToastContainer />
             {/* AURIS jobs outlive their page; this links back while one runs */}
             <JobPill />

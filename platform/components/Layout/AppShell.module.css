@@ -1,0 +1,44 @@
+/* Content fades in after a client-side navigation. Opacity only: a transform on
+   this wrapper would make fixed-position page content move with it for the
+   duration. The pages' own server-rendered entrances supply the movement. */
+.pageIn { animation: pageIn 0.28s cubic-bezier(0.16, 1, 0.3, 1); }
+
+@keyframes pageIn {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
+/* Route progress: appears only when a navigation is slow. */
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: calc(var(--z-fixed) + 2);
+  height: 2px;
+  background: var(--color-primary);
+  transform-origin: left center;
+  transform: scaleX(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.progress[data-phase='loading'] {
+  opacity: 1;
+  animation: crawl 9s cubic-bezier(0.1, 0.6, 0.2, 1) forwards;
+}
+
+.progress[data-phase='done'] {
+  opacity: 0;
+  transform: scaleX(1);
+  transition: transform 0.2s ease-out, opacity 0.25s ease 0.12s;
+}
+
+@keyframes crawl {
+  from { transform: scaleX(0.04); }
+  to { transform: scaleX(0.9); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pageIn { animation: none; }
+  .progress[data-phase='loading'] { animation: none; transform: scaleX(0.6); }
+  .progress[data-phase='done'] { transition: none; }
+}

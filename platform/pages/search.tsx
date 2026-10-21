@@ -1,23 +1,13 @@
-'use client'
-
 import React, { useState, useMemo } from 'react'
 import type { NextPage } from 'next'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { MainLayout } from '@/components/Layout/MainLayout'
-import { Search as SearchIcon, ExternalLink } from 'lucide-react'
+import { WorldPage } from '@/components/UI/WorldPage'
 import { useLanguage } from '@/context/LanguageContext'
 import { buildSearchItems } from '@/hooks/useSearch'
-import Link from 'next/link'
-import { m as motion } from 'motion/react'
+import world from '@/styles/components/world-page.module.css'
 import styles from '@/styles/pages/search.module.css'
-
-interface SearchResult {
-  title: string
-  description: string
-  url: string
-  type: 'product' | 'feature' | 'page'
-  icon: React.ReactNode
-}
 
 const SearchPage: NextPage = () => {
   const router = useRouter()
@@ -33,24 +23,16 @@ const SearchPage: NextPage = () => {
     setQuery(urlQuery)
   }
 
-  const searchableContent: SearchResult[] = useMemo(() => {
-    return buildSearchItems(t).map((item) => ({
-      title: item.title,
-      description: item.description ?? '',
-      url: item.href,
-      type: item.category,
-      icon: <ExternalLink size={20} />,
-    }))
-  }, [t])
+  const items = useMemo(() => buildSearchItems(t), [t])
 
   const results = useMemo(() => {
     const needle = urlQuery.trim().toLocaleLowerCase()
     if (!needle) {return []}
-    return searchableContent.filter(item =>
+    return items.filter(item =>
       item.title.toLocaleLowerCase().includes(needle) ||
-      item.description.toLocaleLowerCase().includes(needle)
+      (item.description ?? '').toLocaleLowerCase().includes(needle),
     )
-  }, [urlQuery, searchableContent])
+  }, [urlQuery, items])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -66,77 +48,43 @@ const SearchPage: NextPage = () => {
       keywords={t.searchMeta?.keywords}
       noIndex
     >
-      <div className={styles['search-page']}>
-        <div className={`${styles['search-header']} enter-rise`}>
-          <h1 className={styles['search-title']}>{sp.title}</h1>
-          <p className={styles['search-subtitle']}>{sp.subtitle}</p>
-        </div>
-
-        <form
-          role="search"
-          onSubmit={handleSearch}
-          className={`${styles['search-form']} enter-rise`}
-          style={{ '--enter-delay': '0.08s' } as React.CSSProperties}
-        >
-          <div className={styles['search-bar']}>
-            <SearchIcon size={20} className={styles['search-icon']} />
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={sp.placeholder}
-              aria-label={sp.inputLabel}
-              className={styles['search-input']}
-              autoFocus
-            />
-            <button type="submit" className={styles['search-button']}>
-              {sp.button}
-            </button>
-          </div>
+      <WorldPage world="kognita" planet={false} title={sp.title} lead={sp.subtitle}>
+        <form role="search" onSubmit={handleSearch} className={styles.form}>
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={sp.placeholder}
+            aria-label={sp.inputLabel}
+            className={world.input}
+            autoFocus
+          />
+          <button type="submit" className={world.primary}>{sp.button}</button>
         </form>
 
-        {urlQuery ? (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}>
-            <h2 className={styles['results-heading']}>
-              {results.length > 0 ? `${results.length} ${sp.resultsFound}` : sp.noResults}
-            </h2>
-
-            <div className={styles['results-list']}>
-              {results.map((result, index) => (
-                <motion.div
-                  key={result.url}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.35, delay: Math.min(index * 0.05, 0.3) }}
-                >
-                  <Link href={result.url} className={styles['result-link']}>
-                    <div className={`${styles['result-card']} ${styles[`result-card--${result.type}`]}`}>
-                      <span className={styles['result-icon']}>{result.icon}</span>
-                      <div className={styles['result-body']}>
-                        <div className={styles['result-header']}>
-                          <h3 className={styles['result-title']}>{result.title}</h3>
-                          <span className={styles['result-badge']}>{sp.badges[result.type]}</span>
-                        </div>
-                        <p className={styles['result-description']}>{result.description}</p>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className={styles['empty-state']}
-          >
-            <SearchIcon size={40} className={styles['empty-icon']} />
-            <p className={styles['empty-text']}>{sp.emptyState}</p>
-          </motion.div>
-        )}
-      </div>
+        <div aria-live="polite">
+          {urlQuery ? (
+            <>
+              <h2 className={styles.heading}>
+                {results.length > 0 ? `${results.length} ${sp.resultsFound}` : sp.noResults}
+              </h2>
+              <ul className={styles.results}>
+                {results.map(result => (
+                  <li key={result.href}>
+                    <Link href={result.href} className={styles.result}>
+                      <span className={styles.title}>{result.title}</span>
+                      <span className={styles.badge}>{sp.badges[result.category]}</span>
+                      {result.description && <span className={styles.description}>{result.description}</span>}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <p className={world.hint}>{sp.emptyState}</p>
+          )}
+        </div>
+      </WorldPage>
     </MainLayout>
   )
 }

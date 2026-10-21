@@ -146,7 +146,7 @@ describe('Page Smoke Tests', () => {
     it('renders the search input', async () => {
       const SearchPage = (await import('@/pages/search')).default
       renderWithProviders(<SearchPage />)
-      const searchInput = screen.getByRole('textbox')
+      const searchInput = screen.getByRole('searchbox')
       expect(searchInput).toBeInTheDocument()
     })
   })
@@ -186,11 +186,10 @@ describe('Page Smoke Tests', () => {
       localStorage.setItem('crowncode:last-analysis', JSON.stringify([entry]))
 
       const AnalysisHistoryPage = (await import('@/pages/analysis-history/index')).default
-      const { container } = renderWithProviders(<AnalysisHistoryPage />)
+      renderWithProviders(<AnalysisHistoryPage />)
 
-      const inputText = container.querySelector('[class*="entry-input-text"]')
+      const inputText = await screen.findByText(longInput)
       expect(inputText).toBeInTheDocument()
-      expect(inputText?.textContent).toBe(longInput)
     })
   })
 
@@ -237,15 +236,16 @@ describe('Page Smoke Tests', () => {
       })
     })
 
-    it('shows no-external-backend label when NEXT_PUBLIC_API_URL is not set', async () => {
-      delete process.env.NEXT_PUBLIC_API_URL
+    it('probes the backend health endpoint as one of its services', async () => {
+      const fetchMock = jest.fn(() => Promise.resolve({ ok: true, json: () => Promise.resolve({}) } as Response))
+      global.fetch = fetchMock
       const SystemStatusPage = (await import('@/pages/system-status/index')).default
       await act(async () => {
         renderWithProviders(<SystemStatusPage />)
       })
-      // TR: "Harici backend yapılandırılmadı"
       await waitFor(() => {
-        expect(screen.getByText(/Harici backend/)).toBeInTheDocument()
+        const urls = fetchMock.mock.calls.map(call => String((call as unknown[])[0]))
+        expect(urls.some(url => url.endsWith('/api/health') && url.startsWith('https://'))).toBe(true)
       })
     })
 

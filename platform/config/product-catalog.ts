@@ -1,12 +1,13 @@
 /**
- * Product Catalog — Single source of truth for all platform products.
+ * Product catalog: the one place a project is declared.
  *
- * Every component that needs to list, search, or link products must import
- * from this file instead of maintaining its own hardcoded array.
- *
- * Localised strings (title, description, etc.) still come from the
- * translation files; this catalog provides the *structural* data:
- * id, route, icon name, gradient, category and locale-key path.
+ * A project's structure lives here (id, route, icon, schema.org facts, last
+ * change); its words live in the locale files under `products.items.<localeKey>`.
+ * The homepage atlas, header, footer, route badge, search, sitemap, structured
+ * data and social images are all derived from this list, so a new project is one
+ * entry plus its page and its text. `scripts/new-project.mjs` writes those, and
+ * `__tests__/config/project-integrity.test.ts` fails until nothing is missing.
+ * See docs/ADDING_A_PROJECT.md.
  */
 
 import type { LucideIcon } from 'lucide-react'
@@ -27,6 +28,20 @@ export interface ProductEntry {
   gradient: string
   /** Product category for search/filter */
   category: 'project' | 'page'
+  /** The project's own name, where it differs from the part of its title before the colon. */
+  name?: string
+  /** What schema.org should say about the project's page. Internal routes only. */
+  schema?: AppSchema
+  /** Date the page's content last changed (YYYY-MM-DD); feeds the sitemap. */
+  updated?: string
+}
+
+export interface AppSchema {
+  category: string
+  os?: string
+  type?: 'WebApplication' | 'SoftwareApplication'
+  /** Where the same thing lives elsewhere (model weights, source). */
+  sameAs?: string[]
 }
 
 // ── Catalog ─────────────────────────────────────────────────────────
@@ -39,6 +54,12 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     icon: Music,
     gradient: 'from-amber-400 via-yellow-500 to-orange-600',
     category: 'project',
+    schema: {
+      category: 'MultimediaApplication',
+      os: 'Web',
+      sameAs: ['https://huggingface.co/Rthur2003/auris-models', 'https://huggingface.co/spaces/Rthur2003/crowncode-backend'],
+    },
+    updated: '2026-10-21',
   },
   {
     id: 'ml-toolkit',
@@ -47,6 +68,9 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     icon: Brain,
     gradient: 'from-blue-400 via-cyan-500 to-teal-600',
     category: 'project',
+    name: 'ML Toolkit',
+    schema: { category: 'DeveloperApplication', os: 'Web' },
+    updated: '2026-10-21',
   },
   {
     id: 'crown-fortune',
@@ -55,6 +79,8 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     icon: Crown,
     gradient: 'from-amber-400 via-orange-500 to-red-500',
     category: 'project',
+    schema: { category: 'EntertainmentApplication', os: 'Web' },
+    updated: '2026-10-21',
   },
   {
     id: 'crown-dreams',
@@ -63,6 +89,8 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     icon: Moon,
     gradient: 'from-purple-400 via-violet-500 to-indigo-600',
     category: 'project',
+    schema: { category: 'LifestyleApplication', os: 'Web' },
+    updated: '2026-10-21',
   },
   {
     id: 'crown-commend',
@@ -71,6 +99,8 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     icon: Youtube,
     gradient: 'from-red-500 via-red-600 to-amber-500',
     category: 'project',
+    schema: { category: 'SocialNetworkingApplication', os: 'Web' },
+    updated: '2026-10-21',
   },
   {
     id: 'crown-vote',
@@ -79,6 +109,9 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     icon: Bot,
     gradient: 'from-emerald-400 via-green-500 to-teal-600',
     category: 'project',
+    name: 'VOTRYX',
+    schema: { category: 'UtilitiesApplication', os: 'Windows 10, Windows 11', type: 'SoftwareApplication' },
+    updated: '2026-10-21',
   },
   {
     id: 'noir-grain',
@@ -87,6 +120,8 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     icon: UtensilsCrossed,
     gradient: 'from-stone-700 via-amber-600 to-yellow-500',
     category: 'project',
+    schema: { category: 'DesignApplication', os: 'Web' },
+    updated: '2026-10-21',
   },
   {
     id: 'kognita',
@@ -97,6 +132,12 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     category: 'project',
   },
 ] as const
+
+/** The project's route without its slash: the name of its social image and of its page folder. */
+export const slugOf = (href: string): string => href.replace(/^\//, '')
+
+/** Projects that have a page on this site (the others link out). */
+export const internalProjects = (): ProductEntry[] => PRODUCT_CATALOG.filter(entry => entry.href.startsWith('/'))
 
 // ── Search Registry (pages + features) ──────────────────────────────
 

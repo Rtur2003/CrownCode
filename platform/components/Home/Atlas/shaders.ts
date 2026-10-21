@@ -2,7 +2,7 @@
 // textures to download, and every world stays crisp however close the
 // camera flies.
 
-const NOISE = /* glsl */ `
+export const NOISE = /* glsl */ `
   float hash3(vec3 p) {
     p = fract(p * 0.3183099 + 0.1);
     p *= 17.0;

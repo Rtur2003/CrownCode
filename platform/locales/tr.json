@@ -54,7 +54,7 @@
     },
     "subtitle": "Ses, veri ve web üzerine araçlar, küçük uygulamalar ve araştırma projeleri. Çoğunun kaynak kodu GitHub'da açık.",
     "cta": {
-      "explore": "Projeleri Keşfet",
+      "explore": "Projelere göz at",
       "github": "GitHub'da Görüntüle"
     },
     "features": {
@@ -84,7 +84,7 @@
         "title": "Noir & Grain: Restoran Şablonu",
         "description": "Fine-dining restoranları için hazırlanmış bir site şablonu. Masaüstünde yatay kaydırılan sahneler ve WebGL mürekkep geçişleri, mobilde hikâye biçiminde ayrı bir arayüz, rezervasyon için WhatsApp akışı.",
         "showroomDescription": "Menü, mobil hikâye görünümü ve WhatsApp rezervasyonu içeren restoran sitesi şablonu.",
-        "status": "Aktif",
+        "status": "",
         "stats": "Şablon · React",
         "features": [
           "React 19 + GSAP",
@@ -101,11 +101,11 @@
             "story": "Dergi düzeninde hikâye"
           },
           "aboutTitle": "Nedir?",
-          "about": "Bir restorana 'metinlerinizi ve fotoğraflarınızı gönderin, sitenizi böyle kuralım' diyebilmek için hazırlanmış örnek bir iş. Masaüstünde sahneler yatay kayıyor, aralarda WebGL mürekkep geçişleri var. Mobilde ise uygulama gibi çalışan, hikâye biçiminde ayrı bir arayüz açılıyor. Rezervasyon talepleri sunucu gerekmeden WhatsApp'a düşüyor; istenirse CrownCode API'si ve bir masa yönetim paneliyle de yönetilebiliyor.",
+          "about": "Bir restoran sitesinin nasıl olabileceğine örnek. Masaüstünde sahneler yatay kayar, aralarında WebGL mürekkep geçişleri olur; mobilde uygulamaya yakın, hikâye biçiminde ayrı bir düzen açılır. Rezervasyon talepleri sunucu olmadan doğrudan WhatsApp'a gidebilir ya da CrownCode API'si ve bir masa yönetim paneliyle yönetilebilir.",
           "techTitle": "Teknoloji",
           "runTitle": "Yerelde Çalıştır",
           "sourceNote": "Kaynak: templates/noir-grain",
-          "metaDescription": "Fine-dining restoranları için sinematik site şablonu: WebGL mürekkep geçişleri, mobilde hikâye düzeni ve WhatsApp ile rezervasyon."
+          "metaDescription": "Fine-dining restoranları için WebGL mürekkep geçişleri, mobilde hikâye düzeni ve WhatsApp rezervasyonu olan bir site şablonu."
         }
       },
       "aiMusic": {
@@ -136,7 +136,7 @@
         "title": "Crown Fortune",
         "description": "Her gece yarısı yenilenen bir şans çarkı. Çarkı çevir, 22 kartlık desteden kartını aç, günün mesajını oku. Tamamen eğlence amaçlı.",
         "showroomDescription": "Her gün yenilenen, 22 kartlık desteyle çalışan bir şans çarkı.",
-        "status": "Aktif",
+        "status": "",
         "stats": "Günlük · Kartlar",
         "features": [
           "Şans Çarkı",
@@ -148,7 +148,7 @@
         "title": "Crown Dreams",
         "description": "Rüyanı yaz, Gemini içindeki duyguları, temaları ve sembolleri çıkarsın. Günlük ve lüsid rüya takibi şimdilik örnek verilerle gösteriliyor.",
         "showroomDescription": "Rüyalardaki duygu ve sembolleri Gemini ile yorumlar. Günlük ve takip ekranları örnek veri içerir.",
-        "status": "Aktif",
+        "status": "",
         "stats": "Web · Gemini ile analiz",
         "features": [
           "Rüya Günlüğü",
@@ -160,7 +160,7 @@
         "title": "Crown Commend",
         "description": "Bir YouTube videosunun konusuna ve varsa altyazılarına bakıp Gemini ile yorum taslağı hazırlar. Beğendiğin yorumu buradan doğrudan YouTube'a gönderebilirsin.",
         "showroomDescription": "YouTube videosunun konusu ve altyazılarından yorum taslakları hazırlar.",
-        "status": "Aktif",
+        "status": "",
         "stats": "Web · Çok dilli",
         "features": [
           "Gemini",
@@ -172,7 +172,7 @@
         "title": "Crown Vote: VOTRYX",
         "description": "DistroKid Spotlight oylamalarını Chrome üzerinden otomatik yapan bir Windows uygulaması. Aynı anda birkaç tarayıcı penceresiyle çalışabiliyor ve arka planda sistem tepsisinde bekliyor.",
         "showroomDescription": "DistroKid Spotlight oylamalarını Chrome üzerinden yürüten Windows uygulaması.",
-        "status": "Aktif",
+        "status": "",
         "stats": "Masaüstü · Windows",
         "features": [
           "Selenium Otomasyon",
@@ -190,8 +190,8 @@
     }
   },
   "audioDataset": {
-    "title": "Ses Veri Seti Araçları",
-    "subtitle": "AI müzik tespiti için ses veri setlerini hazırlama ve işleme araçları",
+    "title": "ML Toolkit",
+    "subtitle": "Bir veri seti için sesi dönüştür, çoğalt, etiketle.",
     "about": {
       "title": "Ne yapar",
       "body": [
@@ -200,43 +200,39 @@
         "İşleme CrownCode arka ucunda çalışır. Bir süre kullanılmadıysa uyanması bir iki dakika sürer ve ilk istek bunu bekler."
       ]
     },
-    "demo": {
-      "badge": "Arayüz Demosu",
-      "notice": "Ön yüz uygulaması - Arka plan işleme gelecek aşamalarda eklenecek"
-    },
     "tools": {
-      "upload": {
-        "title": "Ses Dosyası Yükleme",
-        "description": "Toplu ses dosyası yükleme ve format doğrulama"
+      "augment": {
+        "title": "Veri artırma",
+        "description": "Tek dosyadan yeni örnekler üret: perdeyi ya da hızı kaydır, bası güçlendir, sessizliği kırp, ikinci bir dosyayı karıştır ya da hafif gürültü ekle."
       },
       "convert": {
-        "title": "Format Dönüştürme",
-        "description": "MP3, WAV, FLAC formatları arasında dönüştürme"
-      },
-      "augment": {
-        "title": "Veri Artırma",
-        "description": "Pitch, tempo ve gürültü ile ses artırma"
+        "title": "Dönüştürme",
+        "description": "Bir dosyayı WAV, MP3, FLAC ve OGG arasında taşı."
       },
       "organize": {
-        "title": "Veri Seti Organizasyonu",
-        "description": "Etiketleme ve kategorilendirme araçları"
+        "title": "Etiketleme",
+        "description": "Dosyanın süresini, temposunu, tonunu ve ses seviyesini oku; başlangıç için bir etiket seti al."
       }
     },
     "interface": {
-      "backToTools": "Araçlara Dön",
-      "step1": "1. Ses Dosyası Yükle",
-      "step2": "2. Augmentation Ayarları",
+      "toolsLabel": "Araç",
+      "filesTitle": "Ses",
+      "filesNote": "Bir seferde tek dosya, en fazla 30 MB. Karıştırma ikinci bir dosya ister.",
+      "optionsTitle": "Seçenekler",
       "selected": "seçildi",
-      "demoNote": "(Bu demoda sadece ilk dosya işlenecektir)",
-      "startProcessing": "İşlemi Başlat",
-      "processing": "İşleniyor...",
-      "downloadResult": "Sonucu İndir",
-      "openTool": "Aracı Aç →",
-      "comingSoon": "Çok Yakında",
+      "startProcessing": "İşle",
+      "processing": "Çalışıyor...",
+      "downloadResult": "Sonucu indir",
+      "logTitle": "Durum",
       "errors": {
-        "selectFile": "Lütfen önce bir dosya seçin.",
-        "processingFailed": "İşlem başarısız oldu",
-        "unexpected": "Beklenmeyen bir hata oluştu."
+        "selectFile": "Önce bir dosya seç.",
+        "processingFailed": "Dosya işlenemedi.",
+        "unexpected": "Bir şey ters gitti. Tekrar dene.",
+        "tooLarge": "{name} 30 MB'ı aşıyor.",
+        "invalidFile": "Bu dosya sunucunun okuyabildiği bir ses biçimi değil.",
+        "rateLimit": "Çok fazla istek. Bir dakika bekleyip tekrar dene.",
+        "busy": "Sunucu meşgul. Biraz sonra tekrar dene.",
+        "unreachable": "Sunucuya ulaşılamadı. Henüz uyanıyor olabilir; birazdan tekrar dene."
       }
     },
     "meta": {
@@ -423,7 +419,7 @@
       "empty": "Kaynak bekleniyor",
       "idle": "Bir şarkı seçtiğinde dalga formu ve spektrogram burada çizilir.",
       "waveform": "Dalga formu",
-      "spectrogram": "Spektrogram · 40 Hz - 20 kHz",
+      "spectrogram": "Spektrogram · 40 Hz ile 20 kHz arası",
       "residual": "Yüksek bant dalgalanması · 4 kHz üstü",
       "cutoff": "Bant sınırı",
       "play": "Çal",
@@ -727,145 +723,94 @@
       "serverDecodeFailed": "Sunucu bu dosyayı açamadı. WAV ya da MP3'e çevirip tekrar dene.",
       "audioSilent": "Ses tamamen sessiz görünüyor, analiz edilecek bir şey yok.",
       "jobLost": "Sunucu yeniden başladığı için analiz yarıda kaldı. Tekrar başlatman gerekiyor."
+    },
+    "world": {
+      "title": "Parçan, bir dünya olarak",
+      "lead": "Zaman ekvatorun çevresinde bir tur atar. Alçak sesler güney kutbunda, tiz sesler kuzey kutbunda durur. Gezegeni sürükleyerek çevir ya da kaydırıcıyı kullan.",
+      "position": "Parçadaki konum",
+      "hear": "Bu anı dinle",
+      "stop": "Durdur",
+      "how": "Nasıl okunur",
+      "legend": {
+        "raised": "Yükselen yer daha gürültülü demek.",
+        "ai": "Kehribar: modeller yapay zekâya yaklaştı.",
+        "human": "Yeşil: insana yaklaştı.",
+        "rings": "İnce halkalar: spektrumda tekrar eden tepeler, bazı üreticilerin bıraktığı bir iz.",
+        "marks": "Ekvator boyunca her {s} saniyede bir işaret var."
+      },
+      "readout": {
+        "ai": "Yapay zekâya yakın, {p}",
+        "human": "İnsana yakın, {p}",
+        "silent": "Sessizlik",
+        "none": "Okunmadı"
+      },
+      "covers": "Dünya parçanın ilk {sec} saniyesini gösterir."
     }
   },
   "mlToolkit": {
-    "badge": "ML Toolkit",
-    "title": "Veri Seti Çoğaltma",
-    "subtitle": "Veri setindeki dosyalardan yeni örnekler üretin, formatları dönüştürün, etiketleri çıkarın",
-    "dataType": {
-      "title": "Veri Tipi Seçin",
-      "subtitle": "Hangi tür veri seti ile çalışacaksınız?",
-      "image": {
-        "title": "Görsel Veri Seti",
-        "description": "Fotoğraf ve görsel dosyalarınızı çoğaltın"
-      },
-      "audio": {
-        "title": "Ses Veri Seti",
-        "description": "Ses dosyalarınızdan yeni varyasyonlar üretin"
-      }
-    },
     "fileUploader": {
-      "image": {
-        "title": "Görsel Dosyalarınızı Yükleyin",
-        "hint": "JPG, PNG, WEBP destekleniyor"
-      },
       "audio": {
-        "title": "Ses Dosyalarınızı Yükleyin",
-        "hint": "MP3, WAV, OGG destekleniyor"
+        "title": "Ses dosyalarını seç",
+        "hint": "MP3, WAV, FLAC, M4A ya da OGG"
       },
-      "subtitle": "Sürükle bırak veya tıklayarak dosya seç",
-      "filesUploaded": "Yüklenen Dosyalar"
-    },
-    "imageOptions": {
-      "title": "Görsel İşleme Seçenekleri",
-      "selectedCount": "seçenek aktif",
-      "colorChange": {
-        "title": "Renk Değişimi",
-        "description": "Parlaklık, kontrast ve renk tonlarını değiştir"
-      },
-      "rotation": {
-        "title": "Döndürme",
-        "description": "Görselleri rastgele açılarda döndür"
-      },
-      "zoomIn": {
-        "title": "Yakınlaştırma",
-        "description": "Görselleri yakınlaştırıp kırp"
-      },
-      "zoomOut": {
-        "title": "Uzaklaştırma",
-        "description": "Görselleri uzaklaştırıp padding ekle"
-      },
-      "blend": {
-        "title": "Karıştırma",
-        "description": "İki görseli karıştırıp yeni görsel oluştur"
-      },
-      "overlay": {
-        "title": "Görsel Ekleme",
-        "description": "Bir görselin içine başka görsel ekle"
-      }
+      "subtitle": "Dosyaları buraya bırak ya da tıklayıp seç",
+      "filesUploaded": "Seçilen dosyalar"
     },
     "audioOptions": {
-      "title": "Ses İşleme Seçenekleri",
-      "selectedCount": "seçenek aktif",
-      "mixAudioNeedsTwoFiles": "Ses Karıştırma için ikinci bir ses dosyası daha yükleyin.",
-      "mixAudioHint": "Karıştırmak için ikinci dosyayı da yükleyin (2. dosya karıştırılacak).",
+      "title": "Değişiklikler",
+      "selectedCount": "seçili",
+      "mixAudioNeedsTwoFiles": "Karıştırma için ikinci bir dosya gerekir. Yukarıdan ekle.",
+      "mixAudioHint": "İkinci dosya, birincinin uzunluğuna göre döngüye alınır ya da kesilir ve karıştırılır.",
       "pitchShift": {
-        "title": "Pitch Değişimi",
-        "description": "Sesin perdesini yukarı veya aşağı kaydır"
+        "title": "Perde kaydırma",
+        "description": "Rastgele, en fazla iki yarım ton yukarı ya da aşağı."
       },
       "speedChange": {
-        "title": "Hız Değişimi",
-        "description": "Ses hızını artır veya azalt"
+        "title": "Hız",
+        "description": "Rastgele 0,9x ile 1,1x arası. Perde aynı kalır."
       },
       "bassBoost": {
-        "title": "Bass/Treble",
-        "description": "Bas ve tiz seviyelerini ayarla"
+        "title": "Bas güçlendirme",
+        "description": "200 Hz altına ağırlık ekler."
       },
       "trimSilence": {
-        "title": "Sessizlik Kesme",
-        "description": "Başta ve sondaki sessizlikleri kaldır"
+        "title": "Sessizliği kırp",
+        "description": "Başta ve sondaki sessiz kısımları keser."
       },
       "mixAudio": {
-        "title": "Ses Karıştırma",
-        "description": "İki ses dosyasını karıştır"
+        "title": "Karıştırma",
+        "description": "İkinci bir dosyayı içine karıştırır."
       },
       "addNoise": {
-        "title": "Gürültü Ekleme",
-        "description": "Hafif arka plan gürültüsü ekle"
+        "title": "Gürültü",
+        "description": "Hafif bir cızırtı ekler."
       }
     },
     "formatConverter": {
-      "title": "Hedef Format Seçin",
+      "title": "Hedef format",
       "lossy": "Kayıplı",
       "lossless": "Kayıpsız",
-      "bitrateLabel": "Bit Hızı",
-      "convert": "Dönüştür",
-      "converting": "Dönüştürülüyor...",
-      "downloadResult": "Dönüştürülen Dosyayı İndir"
+      "bitrateLabel": "Bit hızı"
     },
     "organizer": {
-      "step2": "Otomatik Etiketleme",
-      "description": "Ses dosyanız analiz edilip süre, tempo, ton ve yükseklik gibi gerçek akustik özellikler çıkarılacak; bu özelliklere göre veri setinize otomatik etiketler önerilecek.",
-      "analyze": "Analiz Et",
+      "description": "Dosya, gerçek süresi, temposu, tonu ve ses seviyesi için çözümlenir; etiketler bunlardan önerilir.",
+      "analyze": "Çözümle",
       "duration": "Süre",
       "tempo": "Tempo",
       "key": "Ton",
-      "loudness": "Ses Yüksekliği",
-      "noBeat": "Ritim yok",
-      "autoTags": "Önerilen Etiketler"
+      "loudness": "Ses seviyesi",
+      "noBeat": "Belirgin ritim yok",
+      "autoTags": "Önerilen etiketler"
     },
     "processLog": {
-      "title": "İşlem Durumu",
-      "notStarted": "İşlem başlamadı..."
+      "title": "Durum",
+      "notStarted": "Henüz bir şey çalışmadı."
     },
     "logs": {
-      "filesUploaded": "{count} dosya yüklendi",
-      "processStarted": "İşlem başlatıldı...",
-      "allReady": "Toplam {count} dosya hazır!",
-      "imageProcessed": "görsel",
-      "audioProcessed": "ses",
-      "processed": "İşlendi",
-      "uploadFirst": "Lütfen önce dosya yükleyin!",
-      "selectOperation": "Lütfen en az bir işlem seçin!",
-      "creatingZip": "ZIP dosyası oluşturuluyor...",
-      "downloadStarted": "İndirme başlatıldı!"
-    },
-    "meta": {
-      "title": "ML Toolkit",
-      "description": "Ses veri setleri için format dönüştürme, veri artırma ve otomatik etiketleme araçları.",
-      "keywords": "data augmentation, ML toolkit, image processing, audio processing, dataset generator, CrownCode"
-    },
-    "buttons": {
-      "changeType": "Veri Tipini Değiştir",
-      "startProcess": "İşlemi Başlat"
-    },
-    "download": {
-      "button": "Veri Setini İndir ({count} dosya)",
-      "downloading": "İndiriliyor...",
-      "downloaded": "İndirildi!"
-    },
-    "optionsActive": "seçenek aktif"
+      "filesUploaded": "{count} dosya seçildi",
+      "processStarted": "Yükleniyor ve işleniyor",
+      "done": "Bitti"
+    }
   },
   "toast": {
     "success": {
@@ -908,7 +853,7 @@
       "mlToolkit": "ML Araç Seti",
       "projects": "Projeler",
       "crownFortune": "Crown Fortune",
-      "crownVote": "Crown Vote - VOTRYX"
+      "crownVote": "VOTRYX"
     },
     "features": {
       "urlAnalysis": "YouTube Analizi",
@@ -939,9 +884,8 @@
       "keywords": "günlük şans çarkı, günün kartı, tarot, ay evresi, Crown Fortune"
     },
     "header": {
-      "badge": "Crown Fortune",
       "title": "Bugünün Kaderi",
-      "subtitle": "Çarkı çevir ve evrenin bugün sana ne söylediğini keşfet."
+      "subtitle": "Çarkı çevir, günün neler getirdiğine bak."
     },
     "loading": "Yükleniyor...",
     "countdown": {
@@ -971,15 +915,6 @@
       "descending": "Alçalan Enerji",
       "stable": "Dengeli Enerji"
     },
-    "info": {
-      "title": "Nasıl Çalışır?",
-      "steps": [
-        "Her gün gece yarısı (00:00) yeni kader belirlenir",
-        "Çarkı çevir, kategorini öğren",
-        "Kartın açılsın, mesajını oku",
-        "Ertesi güne kadar aynı kader geçerli"
-      ]
-    },
     "card": {
       "reversed": "(Ters)",
       "clickToEnlarge": "Büyütmek için tıkla",
@@ -1006,7 +941,10 @@
       "fileFallback": "kart"
     },
     "streak": {
-      "daysTo": "gün kaldı"
+      "daysTo": "gün kaldı",
+      "label": "Seri",
+      "days": "gün",
+      "day": "gün"
     },
     "moonPhase": {
       "energySuffix": "enerjisi"
@@ -1018,14 +956,14 @@
     },
     "collection": {
       "title": "Kart Koleksiyonu",
-      "complete": "Koleksiyon Tamamlandı!",
+      "complete": "Koleksiyon tamamlandı",
       "notSeen": "Henüz görülmedi",
       "close": "Kapat"
     },
     "quote": {
-      "title": "Günün Sözü",
-      "unknownAuthor": "Bilinmiyor"
-    }
+      "title": "Günün Sözü"
+    },
+    "legendLabel": "Çarkın beş alanı"
   },
   "crownVote": {
     "meta": {
@@ -1034,13 +972,8 @@
       "keywords": "votryx, distrokid, spotlight, otomasyon, oylama, selenium"
     },
     "header": {
-      "badge": "Masaüstü Uygulaması",
       "title": "VOTRYX",
       "subtitle": "DistroKid Spotlight oylamalarını otomatikleştiren Windows uygulaması"
-    },
-    "tabs": {
-      "download": "İndir",
-      "config": "Yapılandırma"
     },
     "features": {
       "automation": {
@@ -1069,44 +1002,46 @@
       }
     },
     "download": {
-      "title": "Uygulamayı İndir",
-      "description": "Windows için VOTRYX installer'ı indirin",
-      "button": "Windows Installer İndir",
+      "title": "İndir",
+      "description": "Windows için VOTRYX yükleyicisi.",
+      "button": "Windows için indir",
       "version": "Sürüm",
       "size": "Boyut",
       "requirements": {
-        "title": "Sistem Gereksinimleri",
+        "title": "Gerekenler",
         "items": [
-          "Windows 10/11",
-          "Google Chrome (güncel sürüm)",
+          "Windows 10 ya da 11",
+          "Güncel Google Chrome",
           "İnternet bağlantısı"
         ]
-      }
+      },
+      "date": "Yayın tarihi",
+      "loadFailed": "Sürüm bilgisi GitHub'dan alınamadı. Düğme sürümler sayfasını açar."
     },
     "installation": {
-      "title": "Kurulum Adımları",
+      "title": "Kurulum",
       "steps": [
         {
-          "title": "Installer'ı İndirin",
-          "description": "Yukarıdaki butona tıklayarak installer'ı indirin"
+          "title": "Yükleyiciyi indir",
+          "description": "Yukarıdaki düğmeyi kullan."
         },
         {
-          "title": "Kurulumu Başlatın",
-          "description": "İndirilen .exe dosyasını çalıştırın ve yönergeleri izleyin"
+          "title": "Çalıştır",
+          "description": "İndirilen .exe dosyasını aç ve adımları izle."
         },
         {
-          "title": "Chrome Doğrulayın",
-          "description": "Google Chrome'un kurulu olduğunu doğrulayın"
+          "title": "Chrome'u kontrol et",
+          "description": "VOTRYX Chrome'u sürer, bu yüzden kurulu olması gerekir."
         },
         {
-          "title": "Uygulamayı Başlatın",
-          "description": "VOTRYX'i başlatın ve hedef URL'nizi yapılandırın"
+          "title": "VOTRYX'i başlat",
+          "description": "Hedef adresi gir ya da bu sayfada hazırlanan bir config.json yükle."
         }
       ]
     },
     "configGenerator": {
       "title": "Yapılandırma Oluşturucu",
-      "description": "config.json dosyanızı web üzerinden oluşturun ve indirin",
+      "description": "Seçenekleri ayarla, uygulamanın yanında duracak bir config.json indir.",
       "fields": {
         "targetUrl": "Hedef URL",
         "pauseBetween": "Oylar Arası Bekleme (saniye)",
@@ -1121,13 +1056,17 @@
       "generate": "config.json Oluştur",
       "download": "Dosyayı İndir",
       "preview": "Önizleme",
-      "copy": "Kopyala"
+      "copy": "Kopyala",
+      "downloaded": "config.json indirildi",
+      "copied": "Kopyalandı",
+      "urlInvalid": "https:// ile başlayan tam bir adres gir"
     },
     "github": {
       "title": "Kaynak Kodu",
       "description": "VOTRYX açık kaynak bir projedir",
       "button": "GitHub'da Gör"
-    }
+    },
+    "featuresTitle": "Ne yapar"
   },
   "crownDreams": {
     "meta": {
@@ -1186,8 +1125,7 @@
       "searchPlaceholder": "Kelime ya da simgeyle ara",
       "filterLabel": "Türe göre süz",
       "filterAll": "Tümü",
-      "noDreams": "Eşleşen örnek rüya yok.",
-      "entry": "No. {n}"
+      "noDreams": "Eşleşen örnek rüya yok."
     },
     "detail": {
       "clarity": "Netlik",
@@ -1206,21 +1144,19 @@
       "keywords": "youtube yorum, ai yorum, yapay zeka, commend ai"
     },
     "header": {
-      "badge": "YouTube Yorum Aracı",
       "title": "Crown Commend",
-      "subtitle": "Bir YouTube bağlantısı yapıştır, Gemini videoya uygun bir yorum taslağı hazırlasın."
+      "lead": "Bir YouTube bağlantısı yapıştır; Gemini videoya uyan bir yorum taslağı yazsın."
     },
     "form": {
-      "urlLabel": "YouTube Video URL",
-      "urlPlaceholder": "https://youtube.com/watch?v=... veya https://youtu.be/...",
-      "languageLabel": "Yorum Dili",
-      "styleLabel": "Yorum Stili",
-      "generateButton": "Yorum Üret",
-      "generating": "Üretiliyor..."
-    },
-    "feedback": {
-      "errorTitle": "Hata",
-      "successMessage": "Yorum başarıyla YouTube'a gönderildi!"
+      "title": "Videoyu seç",
+      "subtitle": "Bağlantıyı yapıştır, dili ve tonu seç. Gemini videonun başlığına, açıklamasına, en üstteki yorumlara ve varsa altyazıya bakıp senin değiştirebileceğin ya da kendin paylaşabileceğin tek bir yorum yazar.",
+      "urlLabel": "Video bağlantısı",
+      "urlPlaceholder": "youtube.com/watch?v=… ya da youtu.be/…",
+      "urlInvalid": "Bu bir YouTube video bağlantısına benzemiyor.",
+      "languageLabel": "Dil",
+      "styleLabel": "Ton",
+      "generateButton": "Yorum taslağı yaz",
+      "generating": "Yazılıyor…"
     },
     "styles": {
       "supportive": {
@@ -1244,26 +1180,29 @@
         "description": "Resmi ve saygılı"
       }
     },
-    "features": {
-      "title": "Özellikler",
-      "items": {
-        "advancedAI": {
-          "title": "Gemini",
-          "description": "Yorumları Google Gemini yazar; videonun konusuna göre şekillenir."
-        },
-        "multiLanguage": {
-          "title": "Çoklu Dil",
-          "description": "Türkçe, İngilizce, Rusça, Çince ve Japonca dillerinde yorum üretir."
-        },
-        "transcript": {
-          "title": "Altyazı Okuma",
-          "description": "Altyazı varsa okur, böylece yorum videoda gerçekten konuşulanlara değinir."
-        },
-        "transparency": {
-          "title": "AI Notu",
-          "description": "Gönderilen her yorumda, yapay zekâyla yazıldığını belirten bir not bulunur."
-        }
-      }
+    "draft": {
+      "title": "Taslak",
+      "editLabel": "Taslak, düzenlenebilir",
+      "aiNote": "Gemini yazdı. Sonunda bunu belirten bir satır var; paylaşırsan bırak.",
+      "withTranscript": "Videonun altyazısı kullanıldı.",
+      "noTranscript": "Altyazı bulunamadı; taslak başlığa, açıklamaya ve üstteki yorumlara dayanıyor.",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı",
+      "openVideo": "Videoyu aç",
+      "regenerate": "Yeniden yaz",
+      "time": "{seconds} sn içinde yazıldı",
+      "post": "YouTube'a gönder",
+      "posting": "Gönderiliyor…",
+      "posted": "Gönderildi",
+      "alreadyPostedNote": "Bu videoya zaten bir yorum gönderilmiş. Her videoya yalnızca bir yorum gönderilebilir."
+    },
+    "how": {
+      "title": "Nasıl çalışır",
+      "steps": [
+        "Gemini’ye videonun başlığı, açıklaması, en üstteki yorumlar ve varsa altyazısı verilir.",
+        "Seçtiğin dilde ve tonda tek bir yorum yazar.",
+        "Sen okursun, istediğin yeri değiştirirsin ve YouTube'da kendin paylaşırsın."
+      ]
     },
     "preview": {
       "stats": {
@@ -1273,20 +1212,11 @@
         "subscribers": "abone"
       }
     },
-    "editor": {
-      "aiGenerated": "AI Tarafından Üretildi",
-      "withTranscript": "Altyazılar okundu",
-      "copy": "Kopyala",
-      "copied": "Kopyalandı!",
-      "regenerate": "Yeniden Üret",
-      "post": "YouTube'a Gönder",
-      "posting": "Gönderiliyor...",
-      "alreadyPosted": "Zaten Gönderildi",
-      "processingTimeTemplate": "{{seconds}} saniyede üretildi",
-      "disclaimer": "Yorum YouTube'a gönderildiğinde AI tarafından üretildiğini belirten bir not içerecektir.",
-      "alreadyPostedNote": "Bu videoya zaten bir yorum gönderilmiş. Her videoya yalnızca bir yorum gönderilebilir."
+    "feedback": {
+      "errorTitle": "Hata",
+      "successMessage": "Yorum YouTube'a gönderildi."
     },
-    "disclaimer": "Crown Commend, YouTube'un hizmet şartlarına uygun şekilde çalışır. Üretilen tüm yorumlar AI tarafından oluşturulduğunu belirten bir not içerir. Spam veya kötüye kullanım amaçlı kullanım yasaktır.",
+    "disclaimer": "Arkasında durabileceğin yorumlar için kullan. Spam, toplu paylaşım ve YouTube kurallarına aykırı her şey bu aracın işi değil.",
     "errors": {
       "invalidUrl": "Lütfen geçerli bir YouTube URL'si girin.",
       "apiNotConfigured": "API yapılandırılmadı.",
@@ -1308,26 +1238,25 @@
       "title": "Gizlilik Politikası | CrownCode",
       "description": "CrownCode’un hangi verileri topladığı, bu verileri nasıl kullandığı ve nasıl koruduğu."
     },
-    "backToHome": "Ana Sayfaya Dön",
     "title": "Gizlilik Politikası",
-    "lastUpdated": "Son güncelleme: 24 Şubat 2026",
-    "intro": "CrownCode, kullanıcı gizliliğine saygı gösterir. Bu politika, platformumuzun veri toplama ve kullanım uygulamalarını açıklar.",
+    "lastUpdated": "Son güncelleme: 21 Ekim 2026",
+    "intro": "Bu sayfa, CrownCode sitesinin ve araçlarının verilerinle ne yaptığını anlatır.",
     "sections": {
       "dataCollection": {
-        "title": "Toplanan Veriler",
-        "content": "CrownCode platformu, kullanıcı deneyimini iyileştirmek için minimal veri toplar. Bunlar arasında tarayıcı bilgileri, tercih edilen dil ve tema ayarları bulunur. Kişisel olarak tanımlanabilir bilgi toplamamaktayız."
+        "title": "Toplananlar",
+        "content": "Hesap yok. Site, ziyaretlerin bir bölümünde anonim sayfa hızı ölçümlerini ve ölçümün geldiği sayfayı kaydeder. Siteyi ve araçları barındıran sunucular (Cloudflare ve Hugging Face) olağan erişim kayıtları tutar; bunlar IP adresini ve tarayıcını içerebilir."
       },
       "dataUsage": {
-        "title": "Veri Kullanımı",
-        "content": "Toplanan veriler yalnızca platform işlevselliğini sağlamak için kullanılır. Verileriniz üçüncü taraflarla paylaşılmaz veya satılmaz. Yapay zekâ kullanan araçlar (Crown Commend, Crown Dreams) kullanıcı verilerini saklamaz."
+        "title": "Gönderdiklerine ne olur",
+        "content": "Bir araca gönderdiğin ses, rüya metni ya da video bağlantısı yalnızca sonucunu üretmek için o aracın sunucusuna gider. Analizler, sonucu alabilmen için kısa bir süre bellekte tutulur, sonra silinir. Crown Dreams rüya metnini, Crown Commend ise videonun transkriptini yanıtı yazması için Google'ın Gemini API'sine gönderir; Google bu metni kendi koşullarına göre işler. Hiçbir şey satılmaz ya da reklam için kullanılmaz."
       },
       "dataSecurity": {
-        "title": "Veri Güvenliği",
-        "content": "Tüm veri aktarımları HTTPS ile şifrelenir. Yerel depolama (localStorage) yalnızca kullanıcı tercihlerini saklar. Oturum verileri tarayıcı kapatıldığında silinir."
+        "title": "Cihazında",
+        "content": "Dil seçimin, analiz geçmişin ve Crown Fortune çekimlerin tarayıcının yerel depolamasında durur, cihazından çıkmaz. Silmek için tarayıcıdan sitenin verilerini temizle. Seninle site arasındaki trafik HTTPS ile şifrelenir."
       },
       "cookies": {
         "title": "Çerezler",
-        "content": "Platform, temel işlevsellik için gerekli çerezleri kullanır. Bu çerezler dil tercihi ve tema ayarlarını içerir. Üçüncü taraf izleme çerezleri kullanılmamaktadır."
+        "content": "Dil tercihini hatırlamak için tek bir çerez kullanılır. İzleme ya da reklam çerezi yoktur."
       }
     },
     "contactLabel": "Gizlilik ile ilgili sorularınız için:"
@@ -1376,31 +1305,30 @@
       "title": "Kullanım Koşulları | CrownCode",
       "description": "CrownCode projelerini ve demo araçlarını kullanma koşulları."
     },
-    "backToHome": "Ana Sayfaya Dön",
     "title": "Kullanım Koşulları",
-    "lastUpdated": "Son güncelleme: 24 Şubat 2026",
-    "intro": "CrownCode platformunu kullanmadan önce lütfen bu kullanım koşullarını dikkatlice okuyunuz. Platform üzerindeki tüm hizmetler bu koşullara tabidir.",
+    "lastUpdated": "Son güncelleme: 21 Ekim 2026",
+    "intro": "Bu koşullar CrownCode sitesini ve demo araçlarını kapsar. Kullanarak burada yazanları kabul etmiş olursun.",
     "sections": {
       "acceptableUse": {
-        "title": "Kabul Edilen Kullanım",
-        "content": "CrownCode platformunu kullanarak bu koşulları kabul etmiş olursunuz. Platform, yazılım geliştirme araçları, AI destekli uygulamalar ve açık kaynak projeler sunar. Platformu yasal amaçlar için kullanmayı kabul edersiniz."
+        "title": "Kabul edilen kullanım",
+        "content": "Siteyi ve araçları yasal amaçlarla kullan. Araçlar fikir denemek için yapılmış projelerdir; haber verilmeden değişebilir ya da kapanabilir."
       },
       "userResponsibilities": {
-        "title": "Kullanıcı Sorumlulukları",
-        "content": "Crown Commend gibi AI araçlarını sorumlu bir şekilde kullanmayı kabul edersiniz. Spam, kötüye kullanım veya platformların hizmet şartlarını ihlal eden içerik oluşturmak yasaktır. Tüm AI içerikleri bunu belirten bir açıklama içerir."
+        "title": "Sorumluluğun",
+        "content": "Araçları spam, kötüye kullanım ya da YouTube gibi başka bir hizmetin kurallarını bozan işler için kullanma. Bir aracın senin için yazdığı metin taslaktır; onunla yaptığın her şeyden sen sorumlusun. Yalnızca kullanma hakkın olan sesleri yükle."
       },
       "intellectualProperty": {
-        "title": "Fikri Mülkiyet",
-        "content": "CrownCode platformu ve içeriği Hasan Arthur Altuntaş'a aittir. Açık kaynak projeler kendi lisansları altında sunulur (genellikle MIT). Platform kaynak kodunu kendi lisans koşulları altında kullanabilirsiniz."
+        "title": "Mülkiyet",
+        "content": "Site ve içeriği Hasan Arthur Altuntaş'a aittir. Kaynak kod, her deponun belirttiği lisansla yayımlanır; çoğu MIT. Yüklediğin ses ve metin sana ait kalır."
       },
       "disclaimer": {
-        "title": "Sorumluluk Reddi",
-        "content": "Platform \"olduğu gibi\" sunulmaktadır. AI araçları deneysel niteliktedir ve sonuçların doğruluğu garanti edilmez. Platform kesintileri veya veri kaybından sorumlu değiliz. Üçüncü taraf hizmetlerin kullanılabilirliğini garanti etmiyoruz."
+        "title": "Garanti yok",
+        "content": "Her şey olduğu gibi, garanti verilmeden sunulur. AURIS ve diğer araçlar deneyseldir, sonuçları yanlış olabilir; önemli kararları onlara dayandırma. Kesintiler, kaybolan sonuçlar ve üçüncü taraf hizmetlerin erişilebilirliği CrownCode'un denetiminde değildir."
       }
     },
     "openSource": {
-      "title": "Açık Kaynak Lisansları",
-      "content": "CrownCode açık kaynak bir projedir. Kaynak kodu MIT lisansı altında GitHub'da mevcuttur. Üçüncü taraf kütüphaneler kendi lisanslarına tabidir.",
+      "title": "Açık kaynak",
+      "content": "CrownCode açık kaynaktır. Kod MIT lisansıyla GitHub'dadır; üçüncü taraf kütüphaneler kendi lisanslarını korur.",
       "viewOnGithub": "GitHub'da Görüntüle"
     },
     "contactLabel": "Koşullar hakkında sorularınız için:"
@@ -1412,6 +1340,11 @@
     "previous": "Önceki dünya",
     "next": "Sonraki dünya",
     "newTab": "yeni sekmede açılır"
+  },
+  "backendNote": {
+    "waking": "Sunucu uyanıyor. Uzun bir aradan sonraki ilk istek bir iki dakika sürebilir.",
+    "down": "Sunucu şu an yanıt vermiyor. Birkaç dakika sonra yeniden dene.",
+    "retry": "Yeniden kontrol et"
   },
   "aria": {
     "homePage": "CrownCode Ana Sayfa",
@@ -1530,11 +1463,11 @@
   "analysisHistory": {
     "meta": {
       "title": "Analiz Geçmişi | CrownCode",
-      "description": "Son AI müzik analiz sonuçlarınızı görüntüleyin.",
+      "description": "Bu tarayıcıda yaptığın AURIS analizleri. Yalnızca bu cihazda tutulur ve istediğin zaman silinebilir.",
       "keywords": "analiz geçmişi, AI müzik tespiti, sonuçlar, geçmiş"
     },
     "title": "Analiz Geçmişi",
-    "subtitle": "Son analiz sonuçlarınız",
+    "subtitle": "Bu tarayıcıda yapılan analizler. Yalnızca bu cihazda saklanır.",
     "lastAnalysis": "Son Analiz",
     "noHistory": "Henüz analiz geçmişi yok.",
     "noHistoryDesc": "Sonuçlarınızı burada görmek için AI Müzik Tespiti sayfasında bir analiz çalıştırın.",
@@ -1548,12 +1481,13 @@
     "verdictHuman": "İnsan Bestesi",
     "confidenceLabel": "Güven Skoru",
     "durationLabel": "İşlem Süresi",
-    "modelLabel": "Model"
+    "modelLabel": "Model",
+    "cancel": "Vazgeç"
   },
   "systemStatus": {
     "meta": {
       "title": "Sistem Durumu | CrownCode",
-      "description": "CrownCode servislerinin canlı durumu.",
+      "description": "CrownCode sitesinin, API'sinin ve ses araçlarını çalıştıran arka ucun canlı kontrolü; her birinin yanıt süresiyle.",
       "keywords": "sistem durumu, sağlık, çalışma süresi, servisler"
     },
     "title": "Sistem Durumu",
@@ -1562,7 +1496,16 @@
     "degraded": "Kısmi bozulma tespit edildi",
     "refresh": "Yenile",
     "lastChecked": "Son kontrol",
-    "noExternalBackend": "Harici backend yapılandırılmadı, yalnızca yerel API uç noktaları izleniyor",
-    "checking": "Servisler kontrol ediliyor…"
+    "checking": "Servisler kontrol ediliyor…",
+    "services": {
+      "frontend": "Site API",
+      "version": "Sürüm",
+      "backend": "Arka uç"
+    },
+    "state": {
+      "ok": "Çalışıyor",
+      "error": "Yanıt yok",
+      "loading": "Kontrol ediliyor"
+    }
   }
 }

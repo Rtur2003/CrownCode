@@ -45,7 +45,7 @@
 .text strong { font-weight: 400; font-size: 0.9rem; }
 .text small {
   font-family: var(--font-family-mono);
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   color: var(--color-text-muted);
   white-space: nowrap;
   overflow: hidden;
@@ -55,10 +55,7 @@
 .open {
   margin-left: auto;
   padding-left: 0.5rem;
-  font-family: var(--font-family-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 0.875rem;
   color: var(--color-gold-400);
 }
 

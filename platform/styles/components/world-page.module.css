@@ -1,0 +1,251 @@
+/* The shell every project page shares: the atlas's own layout (a
+   display title, then sections with the heading on the left and the work on the
+   right) in the colours of that project's planet. WorldPage sets --world-base,
+   --world-accent and --world-atmosphere from config/showroom-worlds.ts; everything
+   else is derived from them, so a new project only needs a look in that file. */
+
+.page {
+  --void: color-mix(in srgb, #050407, var(--world-base, #120d18) 24%);
+  --accent: var(--world-accent, #d7b8ff);
+  --accent-deep: var(--world-atmosphere, #a88bd6);
+  --ink: color-mix(in srgb, #ffffff 88%, var(--accent));
+  --body: color-mix(in srgb, #ffffff 74%, var(--accent));
+  --muted: color-mix(in srgb, var(--accent) 42%, #8a8a8a);
+  --soft: color-mix(in srgb, var(--accent) 28%, #7e7e7e);
+  --warn: #f0a98a;
+  --line: color-mix(in srgb, var(--accent) 15%, transparent);
+  --line-strong: color-mix(in srgb, var(--accent) 34%, transparent);
+  --on-accent: #0d0a10;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 100svh;
+  padding: clamp(96px, 13vh, 150px) clamp(20px, 5vw, 72px) 96px;
+  color: var(--ink);
+  background: var(--void);
+  font-family: var(--font-family-base);
+}
+
+.page ::selection { background: var(--accent); color: var(--on-accent); }
+
+/* The global heading style is the caps display face; only the page title uses it. */
+.page h2, .page h3, .page h4 {
+  font-family: var(--font-family-base);
+  font-weight: 400;
+  text-transform: none;
+  text-shadow: none;
+  letter-spacing: normal;
+}
+
+.page :is(a, button, input, textarea, select, summary):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.frame { max-width: 1180px; margin: 0 auto; }
+
+/* ── top of the page ──────────────────────────────────────────────── */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px clamp(24px, 6vw, 96px);
+  align-items: start;
+  padding-bottom: clamp(40px, 7vw, 72px);
+}
+
+.hero[data-bare='true'] { grid-template-columns: minmax(0, 1fr); padding-bottom: clamp(28px, 5vw, 48px); }
+
+.meta { margin: 18px 0 0; font-size: 0.95rem; color: var(--soft); }
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-heading);
+  font-size: clamp(54px, 7.2vw, 104px);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-shadow: none;
+  overflow-wrap: anywhere;
+}
+
+.lead {
+  margin: 22px 0 0;
+  max-width: 34ch;
+  font-size: clamp(19px, 1.6vw, 24px);
+  line-height: 1.45;
+  color: var(--body);
+  text-wrap: pretty;
+}
+
+/* The planet this project has in the homepage atlas. */
+.planet {
+  width: clamp(120px, 16vw, 230px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: color-mix(in srgb, #050407, var(--world-base, #120d18) 60%) center / cover no-repeat;
+  box-shadow: 0 0 0 1px var(--line);
+  opacity: 0.92;
+}
+
+/* ── sections: heading left, work right ───────────────────────────── */
+
+.section {
+  display: grid;
+  grid-template-columns: minmax(200px, 290px) minmax(0, 1fr);
+  gap: 20px clamp(32px, 5vw, 80px);
+  padding: clamp(40px, 5vw, 60px) 0;
+  border-top: 1px solid var(--line);
+}
+
+.sectionHead h2 {
+  margin: 0;
+  font-size: clamp(26px, 2.3vw, 34px);
+  line-height: 1.12;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.sectionHead p {
+  margin: 12px 0 0;
+  max-width: 38ch;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.sectionHead p.hint { font-size: 0.9rem; color: var(--soft); }
+
+.sectionBody { min-width: 0; max-width: 820px; }
+
+.hint { margin: 0; font-size: 0.9rem; line-height: 1.5; color: var(--soft); }
+.count { font-family: var(--font-family-mono); font-size: 0.78rem; letter-spacing: 0.02em; }
+.privacy { margin: 18px 0 0; max-width: 56ch; font-size: 0.9rem; line-height: 1.5; color: var(--soft); }
+.error { margin: 16px 0 0; font-size: 1rem; line-height: 1.5; color: var(--warn); }
+.note { margin: 24px 0 0; font-size: 1.02rem; color: var(--accent); }
+
+/* ── fields: a line under the text, no boxes ──────────────────────── */
+
+.field { display: grid; gap: 6px; margin-bottom: 22px; }
+.fieldLabel { font-size: 0.95rem; color: var(--muted); }
+
+.input, .select, .textarea {
+  width: 100%;
+  padding: 8px 0 12px;
+  font: inherit;
+  font-size: 1.1rem;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  transition: border-color 0.25s ease;
+}
+.input::placeholder, .textarea::placeholder { color: var(--soft); }
+.input:focus, .select:focus, .textarea:focus { outline: none; border-bottom-color: var(--accent); }
+.input:focus-visible, .select:focus-visible, .textarea:focus-visible { outline: none; box-shadow: 0 1px 0 var(--accent); }
+.input:disabled, .select:disabled, .textarea:disabled { opacity: 0.6; }
+.input[aria-invalid='true'] { border-bottom-color: var(--warn); }
+.select { cursor: pointer; }
+.select option { color: #111; background: #fff; }
+
+.textarea {
+  display: block;
+  min-height: 200px;
+  padding: 2px 0 18px;
+  resize: vertical;
+  font-size: clamp(20px, 1.9vw, 26px);
+  line-height: 1.55;
+}
+
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 32px; }
+
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: 18px; }
+
+.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 24px;
+  font: inherit;
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: color-mix(in srgb, #050407 82%, transparent);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+.primary:hover:not(:disabled):not([aria-disabled='true']) { color: var(--on-accent); background: var(--accent); transform: translateY(-1px); }
+.primary:disabled, .primary[aria-disabled='true'] { opacity: 0.45; cursor: not-allowed; }
+
+.link {
+  padding: 4px 0;
+  font: inherit;
+  font-size: 0.98rem;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.link:hover { color: var(--ink); border-color: var(--accent); }
+
+/* ── a reading: prose with its notes in the margin ────────────────── */
+
+.reading {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  animation: rise 0.7s var(--ease-out) both;
+}
+
+.readingLabel {
+  margin: 0 0 12px;
+  font-size: 1.02rem;
+  color: var(--accent);
+}
+
+.interpretation {
+  margin: 0;
+  max-width: 58ch;
+  font-size: clamp(19px, 1.6vw, 23px);
+  line-height: 1.6;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.margins {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 22px 32px;
+  margin: 28px 0 0;
+}
+.margins dt {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+  color: var(--soft);
+}
+.margins dd { margin: 0; font-size: 1.05rem; line-height: 1.5; color: var(--body); }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ── small screens ────────────────────────────────────────────────── */
+
+@media (max-width: 860px) {
+  .title { font-size: clamp(38px, 11vw, 72px); }
+  .hero { grid-template-columns: 1fr; }
+  .planet { grid-row: 1; width: 112px; }
+  .section { grid-template-columns: 1fr; }
+  .sectionHead p { max-width: 52ch; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reading { animation: none; }
+  .primary, .link, .input, .select, .textarea { transition: none; }
+  .primary:hover:not(:disabled):not([aria-disabled='true']) { transform: none; }
+}

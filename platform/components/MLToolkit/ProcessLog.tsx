@@ -1,9 +1,8 @@
 'use client'
 
 import React from 'react'
-import { m as motion, AnimatePresence } from 'motion/react'
-import { CheckCircle, Loader, AlertCircle } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
+import styles from '@/styles/pages/data-manipulation.module.css'
 
 export interface LogEntry {
   id: string
@@ -16,46 +15,25 @@ interface ProcessLogProps {
   logs: LogEntry[]
 }
 
+/** What the tool has done so far, newest last. */
 export const ProcessLog: React.FC<ProcessLogProps> = ({ logs }) => {
-  const { t } = useLanguage()
-  const getIcon = (status: LogEntry['status']) => {
-    switch (status) {
-      case 'success':
-        return <CheckCircle className="log-icon success" size={20} />
-      case 'processing':
-        return <Loader className="log-icon processing animate-spin" size={20} />
-      case 'error':
-        return <AlertCircle className="log-icon error" size={20} />
-    }
-  }
+  const { t, language } = useLanguage()
+  const time = new Intl.DateTimeFormat(language === 'en' ? 'en-GB' : 'tr-TR', { timeStyle: 'medium' })
 
   return (
-    <div className="process-log">
-      <h3 className="log-title">{t.mlToolkit.processLog.title}</h3>
-
-      <div className="log-container">
-        <AnimatePresence mode="popLayout">
-          {logs.map((log, index) => (
-            <motion.div
-              key={log.id}
-              className={`log-entry log-${log.status}`}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ delay: index * 0.05 }}
-            >
-              {getIcon(log.status)}
-              <span className="log-message">{log.message}</span>
-            </motion.div>
+    <div className={styles.log} role="log" aria-label={t.mlToolkit.processLog.title}>
+      {logs.length === 0 ? (
+        <p>{t.mlToolkit.processLog.notStarted}</p>
+      ) : (
+        <ol>
+          {logs.map(log => (
+            <li key={log.id} data-status={log.status}>
+              <time dateTime={log.timestamp.toISOString()}>{time.format(log.timestamp)}</time>
+              <span>{log.message}</span>
+            </li>
           ))}
-        </AnimatePresence>
-
-        {logs.length === 0 && (
-          <div className="log-empty">
-            <p>{t.mlToolkit.processLog.notStarted}</p>
-          </div>
-        )}
-      </div>
+        </ol>
+      )}
     </div>
   )
 }

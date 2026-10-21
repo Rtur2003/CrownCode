@@ -179,10 +179,6 @@
   background-size: 200% 200%;
 }
 
-.animate-bounce {
-  animation: bounce 1s ease-in-out infinite;
-}
-
 /* Hover Animations */
 .hover-lift {
   transition: transform var(--animation-normal) var(--ease-out-cubic);
@@ -285,8 +281,7 @@
   .animate-pulse,
   .animate-spin,
   .animate-shimmer,
-  .animate-gradient-shift,
-  .animate-bounce {
+  .animate-gradient-shift {
     animation: none !important;
   }
 }

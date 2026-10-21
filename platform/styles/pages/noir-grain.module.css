@@ -1,0 +1,32 @@
+/* Noir & Grain: the screenshots, the stack and the run command. The frame and
+   sections are shared (styles/components/world-page.module.css). */
+
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; }
+
+.shot { margin: 0; }
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+  border: 1px solid var(--line);
+}
+.shot figcaption { margin-top: 10px; font-size: 0.95rem; color: var(--muted); }
+
+.tech { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 0; padding: 0; list-style: none; }
+.tech li { font-family: var(--font-family-mono); font-size: 0.86rem; letter-spacing: 0.02em; color: var(--body); }
+
+.code {
+  margin: 0;
+  padding: 18px 20px;
+  overflow-x: auto;
+  font-family: var(--font-family-mono);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--ink);
+  background: color-mix(in srgb, #050407 70%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}

@@ -23,6 +23,7 @@ being developed: read every result as a likelihood, not a ruling.
 
 - [What a visitor sees](#what-a-visitor-sees)
 - [From upload to verdict](#from-upload-to-verdict)
+- [The track world](#the-track-world)
 - [The models](#the-models)
 - [Training data](#training-data)
 - [When many people use it at once](#when-many-people-use-it-at-once)
@@ -108,6 +109,43 @@ A window score is the classifier applied to an excerpt shorter than its 60 s
 training clips, and every training clip was wholly AI or wholly human. The
 timeline shows where the music reads AI-like, not where an AI was used, and it
 does not change the verdict.
+
+## The track world
+
+When a result comes in, the AURIS planet stops being procedural and wears the
+track. Nothing on it is invented: every texel is a measurement.
+
+| On the planet | What it is |
+| --- | --- |
+| East to west | Time, once around the equator. A tick every 5 s on a short clip, every 10 s on a long one, and a brighter first meridian for 0:00. |
+| South to north | Pitch, 40 Hz at the south pole to 20 kHz at the north, on the same 96 log bands as the spectrogram. |
+| Raised ground, engraved lines | The spectrogram's energy. The lines are its contour levels, the site's brass-engraving motif. |
+| Amber and green | The stretches of the whole-track scan the models leaned towards AI or towards human, stronger the further from the threshold. Silent and failed windows stay neutral. |
+| Fine rings | Where the spectrum's residual peaks repeatedly (the spectral periodicity measure, 30% of the signal score). They fade with how periodic the whole spectrum measured, so a clean track keeps a quiet surface. |
+| The needle | The moment under the pointer, or the one facing the viewer. While the track plays a second needle marks the playhead and the planet turns under it. |
+
+The planet covers the opening the browser measured (at most 90 s). When the
+track is longer, the key says so.
+
+It can be turned by dragging, read by hovering, and a click or tap plays that
+moment from the audio kept in the browser. All of it is also available without
+the canvas: a slider for the position, a button to hear the moment, and the
+reading as text (`components/Auris/TrackWorld.tsx`). A result with no
+spectrogram (a link the server could not fetch) leaves the planet as it was.
+
+The pieces:
+
+- `components/Auris/trackSurface.ts` builds the 240 x 96 RGBA texture from the
+  signal report and the timeline (R energy, G lean, B ring). Pure and tested
+  (`__tests__/auris/trackSurface.test.ts`).
+- `components/Auris/trackShaders.ts` is the planet's vertex and fragment
+  shader. With no track it draws exactly what the atlas worlds draw.
+- `components/Auris/AurisWorld.tsx` owns the texture, the reveal (the surface
+  is written from the first meridian eastward over about two and a half
+  seconds), the dragging, the raycast under the pointer and the longitude
+  facing the viewer.
+- Any other world can be given a data surface the same way: build a texture
+  with the same three channels and hand it to the shader.
 
 ## The models
 

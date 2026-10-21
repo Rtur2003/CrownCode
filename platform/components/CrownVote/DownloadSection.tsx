@@ -1,135 +1,98 @@
-import React, { useState, useEffect } from 'react'
-import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
-import { m as motion } from 'motion/react'
-import { Download, Monitor, CheckCircle, ExternalLink } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
+import { fetchWithTimeout, isCallerAbort } from '@/hooks/useAsyncRequest'
+import world from '@/styles/components/world-page.module.css'
 import styles from '@/styles/pages/crown-vote.module.css'
+
+const REPO_URL = 'https://github.com/Rtur2003/VOTRYX'
+const RELEASES_URL = `${REPO_URL}/releases`
+const RELEASES_API = 'https://api.github.com/repos/Rtur2003/VOTRYX/releases?per_page=5'
 
 interface ReleaseInfo {
   version: string
   downloadUrl: string
   size: string | null
-  date: string
+  date: string | null
 }
 
 interface GitHubRelease {
   tag_name?: string
   html_url: string
   draft: boolean
-  published_at: string
+  published_at?: string
   assets?: { name: string; size: number; browser_download_url: string }[]
 }
 
+/** The installer link comes from the newest published release; if GitHub can't be reached it falls back to the releases page. */
 export const DownloadSection: React.FC = () => {
-  const { t } = useLanguage()
-  const [releaseInfo, setReleaseInfo] = useState<ReleaseInfo | null>(null)
-  const [loading, setLoading] = useState(true)
+  const { t, language } = useLanguage()
+  const D = t.crownVote.download
+  const I = t.crownVote.installation
+  const [release, setRelease] = useState<ReleaseInfo | null>(null)
+  const [failed, setFailed] = useState(false)
 
   useEffect(() => {
-    let isMounted = true
+    const controller = new AbortController()
 
-    const fetchRelease = async () => {
+    const load = async () => {
       try {
-        // /releases/latest skips pre-releases (VOTRYX only has one), so take
-        // the newest published release from the list instead of a 404.
-        const res = await fetchWithTimeout('https://api.github.com/repos/Rtur2003/VOTRYX/releases?per_page=5', { timeout: 10_000 })
-        if (res.ok) {
-          const releases = (await res.json()) as GitHubRelease[]
-          const data = releases.find((r) => !r.draft)
-          const exeAsset = data?.assets?.find((a) => a.name.endsWith('.exe'))
-
-          if (data && isMounted) {
-            setReleaseInfo({
-              version: data.tag_name || 'v1.0.0',
-              downloadUrl: exeAsset?.browser_download_url || data.html_url,
-              size: exeAsset ? `${(exeAsset.size / 1024 / 1024).toFixed(1)} MB` : null,
-              date: new Date(data.published_at).toLocaleDateString(),
-            })
-          }
-        }
-      } catch (error) {
-        console.error('Failed to fetch release info:', error)
-      } finally {
-        if (isMounted) {
-          setLoading(false)
-        }
+        // /releases/latest skips pre-releases and VOTRYX only has one, so read the list.
+        const res = await fetchWithTimeout(RELEASES_API, { timeout: 10_000, signal: controller.signal })
+        if (!res.ok) {throw new Error(`GitHub answered ${res.status}`)}
+        const releases = (await res.json()) as GitHubRelease[]
+        const newest = releases.find(r => !r.draft)
+        if (!newest) {throw new Error('No published release')}
+        const exe = newest.assets?.find(a => a.name.endsWith('.exe'))
+        const published = newest.published_at ? new Date(newest.published_at) : null
+        setRelease({
+          version: newest.tag_name || '',
+          downloadUrl: exe?.browser_download_url || newest.html_url,
+          size: exe ? `${(exe.size / 1024 / 1024).toFixed(1)} MB` : null,
+          date: published && !Number.isNaN(published.getTime())
+            ? published.toLocaleDateString(language === 'en' ? 'en-GB' : 'tr-TR', { dateStyle: 'medium' })
+            : null,
+        })
+      } catch (err) {
+        if (!isCallerAbort(err, controller.signal)) {setFailed(true)}
       }
     }
 
-    fetchRelease()
+    void load()
+    return () => controller.abort()
+  }, [language])
 
-    return () => {
-      isMounted = false
-    }
-  }, [])
-
-  const downloadText = t.crownVote?.download
-  const requirementItems = downloadText?.requirements?.items || [
-    'Windows 10/11',
-    'Google Chrome (latest version)',
-    'Internet connection',
-  ]
+  const facts = release ? [
+    release.version && `${D.version} ${release.version}`,
+    release.size && `${D.size} ${release.size}`,
+    release.date && `${D.date} ${release.date}`,
+  ].filter(Boolean) : []
 
   return (
-    <motion.div
-      className={styles['download-section']}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.3 }}
-    >
-      <div className={styles['download-card']}>
-        <div className={styles['download-icon']}>
-          <Monitor size={48} />
-        </div>
+    <div>
+      {facts.length > 0 && <p className={styles.release}>{facts.join(' · ')}</p>}
 
-        <h2>{downloadText?.title || 'Download Application'}</h2>
-        <p>{downloadText?.description || 'Download VOTRYX installer for Windows'}</p>
-
-        {releaseInfo && !loading && (
-          <div className={styles['release-info']}>
-            <span>
-              {downloadText?.version || 'Version'}: {releaseInfo.version}
-            </span>
-            {releaseInfo.size && (
-              <span>
-                {downloadText?.size || 'Size'}: {releaseInfo.size}
-              </span>
-            )}
-          </div>
-        )}
-
-        <a
-          href={releaseInfo?.downloadUrl || 'https://github.com/Rtur2003/VOTRYX/releases'}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles['download-button']}
-        >
-          <Download size={20} />
-          {downloadText?.button || 'Download Windows Installer'}
+      <div className={world.actions}>
+        <a className={world.primary} href={release?.downloadUrl ?? RELEASES_URL} target="_blank" rel="noopener noreferrer">
+          {D.button}
         </a>
-
-        <div className={styles['requirements']}>
-          <h4>{downloadText?.requirements?.title || 'System Requirements'}</h4>
-          <ul>
-            {requirementItems.map((item: string, i: number) => (
-              <li key={i}>
-                <CheckCircle size={14} />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <a
-          href="https://github.com/Rtur2003/VOTRYX"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles['github-link']}
-        >
-          <ExternalLink size={14} />
-          {t.crownVote?.github?.button || 'View on GitHub'}
-        </a>
+        <a className={world.link} href={REPO_URL} target="_blank" rel="noopener noreferrer">{t.crownVote.github.button}</a>
       </div>
-    </motion.div>
+      {failed && <p className={world.hint}>{D.loadFailed}</p>}
+
+      <h3 className={`${world.readingLabel} ${styles.subhead}`}>{D.requirements.title}</h3>
+      <ul className={styles.plain}>
+        {D.requirements.items.map((item: string) => <li key={item}>{item}</li>)}
+      </ul>
+
+      <h3 className={`${world.readingLabel} ${styles.subhead}`}>{I.title}</h3>
+      <ol className={styles.steps}>
+        {I.steps.map((step: { title: string; description: string }) => (
+          <li key={step.title}>
+            <strong>{step.title}</strong>
+            <span>{step.description}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
   )
 }

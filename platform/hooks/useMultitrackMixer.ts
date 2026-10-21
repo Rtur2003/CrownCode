@@ -5,6 +5,7 @@
  */
 
 import { useState, useCallback, useMemo, useRef } from 'react'
+import { API_BASE_URL } from '@/config/api'
 import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
 
 export const MULTITRACK_MIN_TRACKS = 2
@@ -85,7 +86,7 @@ export const useMultitrackMixer = (messages: Partial<MultitrackMessages> = {}) =
   const [resultUrl, setResultUrl] = useState<string | null>(null)
   const [analysis, setAnalysis] = useState<MultitrackAnalysis | null>(null)
 
-  const apiBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_API_URL?.trim(), [])
+  const apiBaseUrl = API_BASE_URL
   const requestIdRef = useRef(0)
   const resultUrlRef = useRef<string | null>(null)
   const i18nMessages = useMemo(() => ({ ...DEFAULT_MESSAGES, ...messages }), [messages])
@@ -129,11 +130,6 @@ export const useMultitrackMixer = (messages: Partial<MultitrackMessages> = {}) =
       return
     }
 
-    if (!apiBaseUrl) {
-      setError({ code: 'no_api', message: i18nMessages.apiNotConfigured })
-      setState('error')
-      return
-    }
 
     const currentRequestId = ++requestIdRef.current
     const isStale = () => requestIdRef.current !== currentRequestId

@@ -6,6 +6,8 @@
  * its own crawlable URL that hreflang alternates can point to.
  */
 
+import { internalProjects, slugOf, type AppSchema } from '@/config/product-catalog'
+
 export const SITE_URL = 'https://hasan-arthur-altuntas.xyz'
 export const SITE_NAME = 'CrownCode'
 export const AUTHOR_NAME = 'Hasan Arthur Altuntaş'
@@ -39,50 +41,40 @@ export function localizedUrl(path: string, locale: Locale): string {
   return `${SITE_URL}${prefix}${clean}`
 }
 
-/**
- * Routes that are indexable and belong in the sitemap. Everything else under
- * `pages/` must either be listed here or in NOINDEX_ROUTES, a test enforces it.
- * `lastmod` is the date the page's content last changed; bump it with the edit.
- * Google ignores changefreq and priority, so they are not emitted.
- */
-export const INDEXABLE_ROUTES = [
-  { path: '/', lastmod: '2026-10-05' },
-  { path: '/ai-music-detection', lastmod: '2026-09-27' },
-  { path: '/data-manipulation', lastmod: '2026-10-05' },
-  { path: '/creator-studio', lastmod: '2026-10-05' },
-  { path: '/crown-commend', lastmod: '2026-10-05' },
-  { path: '/crown-fortune', lastmod: '2026-10-05' },
-  { path: '/crown-dreams', lastmod: '2026-10-05' },
-  { path: '/crown-vote', lastmod: '2026-10-05' },
-  { path: '/noir-grain', lastmod: '2026-10-05' },
-  { path: '/privacy', lastmod: '2026-10-05' },
-  { path: '/terms', lastmod: '2026-10-05' },
+/** Pages that are not projects of their own but belong in the index. */
+const STANDALONE_ROUTES = [
+  { path: '/creator-studio', lastmod: '2026-10-21', schema: { category: 'MultimediaApplication', os: 'Web' } as AppSchema },
+  { path: '/privacy', lastmod: '2026-10-21' },
+  { path: '/terms', lastmod: '2026-10-21' },
 ] as const
 
 /**
- * schema.org application facts per product route. MainLayout turns the
- * matching entry into WebApplication/SoftwareApplication JSON-LD, using the
- * page's own localized title and description.
+ * Routes that are indexable and belong in the sitemap: the home page, every
+ * project in the catalog that has a page here, and the standalone pages above.
+ * Everything else under `pages/` must be here or in NOINDEX_ROUTES; a test
+ * enforces it. `lastmod` is the date the page's content last changed (the
+ * catalog's `updated`); bump it with the edit. Google ignores changefreq and
+ * priority, so they are not emitted.
  */
-export const APP_SCHEMA: Record<string, {
-  category: string
-  os: string
-  type?: 'WebApplication' | 'SoftwareApplication'
-  /** Where the same thing lives elsewhere (model weights, source). */
-  sameAs?: string[]
-}> = {
-  '/ai-music-detection': {
-    category: 'MultimediaApplication',
-    os: 'Web',
-    sameAs: ['https://huggingface.co/Rthur2003/auris-models', 'https://huggingface.co/spaces/Rthur2003/crowncode-backend'],
-  },
-  '/data-manipulation': { category: 'DeveloperApplication', os: 'Web' },
-  '/creator-studio': { category: 'MultimediaApplication', os: 'Web' },
-  '/crown-commend': { category: 'SocialNetworkingApplication', os: 'Web' },
-  '/crown-fortune': { category: 'EntertainmentApplication', os: 'Web' },
-  '/crown-dreams': { category: 'LifestyleApplication', os: 'Web' },
-  '/crown-vote': { category: 'UtilitiesApplication', os: 'Windows 10, Windows 11', type: 'SoftwareApplication' },
-  '/noir-grain': { category: 'DesignApplication', os: 'Web' },
+export const INDEXABLE_ROUTES: readonly { path: string; lastmod: string }[] = [
+  { path: '/', lastmod: '2026-10-21' },
+  ...internalProjects().map(entry => ({ path: entry.href, lastmod: entry.updated ?? '2026-10-21' })),
+  ...STANDALONE_ROUTES.map(({ path, lastmod }) => ({ path, lastmod })),
+]
+
+/**
+ * schema.org application facts per route. MainLayout turns the matching entry
+ * into WebApplication/SoftwareApplication JSON-LD, using the page's own
+ * localized title and description.
+ */
+export const APP_SCHEMA: Record<string, AppSchema> = {
+  ...Object.fromEntries(internalProjects().flatMap(entry => (entry.schema ? [[entry.href, entry.schema]] : []))),
+  ...Object.fromEntries(STANDALONE_ROUTES.flatMap(route => ('schema' in route ? [[route.path, route.schema]] : []))),
+}
+
+/** Social preview image of a route: `public/og/<route>.jpg`, or the default for pages without one. */
+export function ogImagePath(pathname: string): string {
+  return pathname in APP_SCHEMA ? `/og/${slugOf(pathname)}.jpg` : '/og/default.jpg'
 }
 
 /** Personal (localStorage), live-diagnostic or thin pages that stay out of the index. */

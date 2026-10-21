@@ -51,7 +51,6 @@
   letter-spacing: .02em; white-space: nowrap; text-shadow: 0 1px 10px #000; cursor: pointer; will-change: transform, opacity;
 }
 .worldLabel::before { content: ''; position: absolute; left: 0; top: 50%; width: 12px; height: 1px; background: var(--world, var(--amber)); opacity: .8; }
-.worldLabel span { color: var(--world, var(--amber)); font-family: var(--font-family-mono); font-size: 10px; letter-spacing: .12em; }
 .worldLabel:hover { color: #fff4dc; }
 
 /* ── Station copy ────────────────────────────────────────────────────── */
@@ -63,15 +62,11 @@
 .panel[data-passing] { pointer-events: none; }
 .copy { animation: copyIn .7s cubic-bezier(.16, 1, .3, 1) both; }
 @keyframes copyIn { from { opacity: 0; transform: translateY(14px); } }
-.eyebrow {
-  display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 0 0 18px; color: var(--amber);
-  font-family: var(--font-family-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-}
-.worldIndex { color: var(--world, var(--amber)); }
 .panel h1, .panel h2 { margin: 0; font-family: var(--font-family-heading); font-size: clamp(48px, 5.4vw, 84px); line-height: .94; letter-spacing: -.02em; }
 .lead { margin: 22px 0 0; max-width: 36ch; color: #e6d8c5; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.5; }
-.features { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; padding: 0; list-style: none; }
-.features li { padding: 5px 12px; border: 1px solid #d6ab6b40; border-radius: 999px; color: #d9c3a2; font-size: 13px; }
+.features { display: flex; flex-wrap: wrap; gap: 4px 0; margin: 22px 0 0; padding: 0; list-style: none; }
+.features li { color: #d9c3a2; font-size: 15px; }
+.features li + li::before { content: '·'; margin: 0 .6em; opacity: .55; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 30px; }
 .primary {
   display: inline-flex; align-items: center; gap: 12px; padding: 12px 22px; border: 1px solid var(--world, var(--amber));
@@ -81,7 +76,7 @@
 .primary:hover { background: var(--world, var(--amber)); color: #0c0906; transform: translateY(-1px); }
 .secondary { display: inline-flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #d6ab6b80; color: var(--muted); font-size: 15px; }
 .secondary:hover { color: var(--ink); }
-.status { color: #ab9276; font-family: var(--font-family-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+.status { color: #ab9276; font-size: 15px; }
 
 /* ── Level-select strip ──────────────────────────────────────────────── */
 .strip {
@@ -106,13 +101,11 @@
   transition: transform .35s cubic-bezier(.16, 1, .3, 1), background-color .35s ease, box-shadow .35s ease;
 }
 .nodeLabel { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-.nodeLabel span { color: #8f7a5c; font-family: var(--font-family-mono); font-size: 10px; letter-spacing: .1em; }
 .track button:hover { color: var(--ink); }
 .track button:hover .node { transform: scale(1.25); border-color: var(--world); }
 .track button[aria-current='step'] { color: var(--ink); }
 .track button[aria-current='step'] .node { transform: scale(1.45); background: var(--world); border-color: var(--world); box-shadow: 0 0 0 5px #d6ab6b1f, 0 0 18px var(--world); }
-.track button[aria-current='step'] .nodeLabel span { color: var(--world); }
-.hint { grid-column: 1 / -1; justify-self: end; margin: 0; color: #8f7f69; font-family: var(--font-family-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+.track button[aria-current='step'] .hint { grid-column: 1 / -1; justify-self: end; margin: 0; color: #8f7f69; font-size: 14px; }
 .srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* ── Project log ─────────────────────────────────────────────────────── */
@@ -123,19 +116,13 @@
   position: relative; z-index: 2; padding: 38svh 5.4vw 110px;
   background: linear-gradient(180deg, transparent 0, #07070a73 22svh, #07070ad9 70svh, #0b0908f5 100%);
 }
-.index::before {
-  content: ''; position: absolute; left: calc(5.4vw + 27px); top: 0; bottom: 180px; width: 1px;
-  background: linear-gradient(180deg, transparent 0, #f2cc87 30svh, #d6ab6b66 70%, transparent 100%);
-}
-.indexLead { position: relative; max-width: 760px; padding-left: 80px; }
+.indexLead { position: relative; max-width: 760px; }
 .indexLead h2 { margin: 0; font-family: var(--font-family-heading); font-size: clamp(40px, 4.8vw, 70px); letter-spacing: -.025em; line-height: 1.02; }
 .indexLead > p:last-child { margin-top: 16px; max-width: 44ch; color: var(--muted); font-size: 16px; line-height: 1.5; }
 .indexList { margin: 56px 0 0; padding: 0; list-style: none; }
-.indexList a { position: relative; display: grid; min-width: 0; grid-template-columns: 55px clamp(100px, 11vw, 160px) minmax(0, 1fr) 28px; align-items: center; gap: clamp(20px, 4vw, 68px); padding: 26px 0; border-bottom: 1px solid #a98b6330; scroll-margin-top: 90px; transition: color .3s ease; }
+.indexList a { position: relative; display: grid; min-width: 0; grid-template-columns: clamp(100px, 11vw, 160px) minmax(0, 1fr) 28px; align-items: center; gap: clamp(20px, 4vw, 68px); padding: 26px 0; border-bottom: 1px solid #a98b6330; scroll-margin-top: 90px; transition: color .3s ease; }
 .indexList a:hover, .indexList a:focus-visible { color: #f2cc87; }
-.indexNumber { position: relative; align-self: center; justify-self: center; display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--world, var(--amber)); border-radius: 50%; background: #0b0908; color: var(--world, var(--amber)); font-family: var(--font-family-mono); font-size: 11px; letter-spacing: .08em; transition: box-shadow .35s ease, background-color .35s ease; }
-.indexList a:hover .indexNumber, .indexList a:focus-visible .indexNumber { background: var(--world); color: #0b0908; box-shadow: 0 0 22px var(--world); }
-.indexSector { color: var(--world, var(--amber)); font-family: var(--font-family-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+.indexSector { color: var(--world, var(--amber)); font-size: 15px; }
 .indexImage { position: relative; width: clamp(100px, 11vw, 160px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 1px #b795634d, 0 18px 40px #0008; transition: transform .7s cubic-bezier(.2, .7, .15, 1), box-shadow .7s ease; }
 .indexList a:hover .indexImage { transform: rotate(8deg) scale(1.05); box-shadow: 0 0 0 1px var(--world), 0 0 34px color-mix(in srgb, var(--world) 35%, transparent); }
 .indexImage img { object-fit: cover; }
@@ -150,20 +137,16 @@
 
 /* ── Tall / narrow screens: world above, copy in a bottom sheet ─────── */
 @media (max-aspect-ratio: 4/5), (max-width: 700px) {
-  .index::before { left: calc(6vw + 12px); }
-  .indexLead { padding-left: 34px; }
-  .indexNumber { width: 22px; height: 22px; font-size: 9px; }
-  .scrim {
+      .scrim {
     background:
       linear-gradient(0deg, #07070af7 0%, #07070ae6 24%, #07070a80 42%, transparent 58%),
       linear-gradient(180deg, #07070acc 0%, transparent 14%);
   }
   .panel { left: 6vw; right: 6vw; top: auto; bottom: 104px; width: auto; transform: translateY(calc((1 - var(--dwell, 1)) * 16px)); }
-  .panel h1, .panel h2 { font-size: clamp(40px, 11vw, 60px); }
-  .eyebrow { margin-bottom: 12px; font-size: 10px; }
-  .lead { margin-top: 14px; font-size: 16px; line-height: 1.45; }
-  .features { margin-top: 14px; gap: 6px; }
-  .features li { font-size: 12px; padding: 4px 10px; }
+  .panel h1, .panel h2 { font-size: clamp(30px, 9.4vw, 60px); }
+    .lead { margin-top: 14px; font-size: 16px; line-height: 1.45; }
+  .features { margin-top: 12px; }
+  .features li { font-size: 14px; }
   .actions { margin-top: 18px; gap: 12px 18px; }
   .primary { padding: 10px 18px; font-size: 15px; }
   .strip { left: 4vw; right: 4vw; bottom: 16px; gap: 4px 10px; }
@@ -173,9 +156,8 @@
   .hint { display: none; }
   .worldLabel { font-size: 11px; }
   .index { padding: 34svh 6vw 80px; }
-  .indexList a { grid-template-columns: 24px 54px minmax(0, 1fr) 20px; gap: 12px; padding: 20px 0; }
-  .indexNumber { font-size: 10px; }
-  .indexImage { width: 54px; }
+  .indexList a { grid-template-columns: 54px minmax(0, 1fr) 20px; gap: 12px; padding: 20px 0; }
+    .indexImage { width: 54px; }
   .indexCopy strong { font-size: 19px; }
   .indexCopy > span { font-size: 13px; }
   .musicBridge { padding-top: 88px; }

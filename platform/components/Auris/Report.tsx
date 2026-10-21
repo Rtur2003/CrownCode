@@ -292,7 +292,7 @@ export const ReportLog: React.FC<{ job: DoneJob }> = ({ job }) => {
 export const Stop: React.FC<React.PropsWithChildren<{ title: string; lead?: string | undefined; id?: string }>> = ({ title, lead, id, children }) => (
   <section className={styles.stop} id={id} aria-label={title}>
     <div className={styles.stopHead}>
-      <h3>{title}</h3>
+      <h2>{title}</h2>
       {lead && <p>{lead}</p>}
     </div>
     <div className={styles.stopBody}>{children}</div>

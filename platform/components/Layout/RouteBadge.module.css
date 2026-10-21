@@ -1,5 +1,5 @@
 /* Route badge: a small brass-edged plate pinned to the bottom of project
-   pages. Same warm palette and mono indices as the homepage atlas. */
+   pages. Same warm palette as the homepage atlas. */
 .badge {
   --ink: #f3e9d8;
   --muted: #b9a58c;
@@ -54,30 +54,11 @@
 
 .rule { flex: none; width: 1px; height: 20px; margin: 0 4px; background: #d6ab6b33; }
 
-.here,
-.number {
-  font-family: var(--font-family-mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-}
-.here { margin: 0 6px; color: var(--world, var(--amber)); white-space: nowrap; }
-.of { color: #8f7d68; }
-
 .badge .step { color: var(--muted); }
 .badge .step:hover { color: var(--ink); }
 .step svg { flex: none; opacity: 0.8; }
-.number { color: var(--world, var(--amber)); }
 .name { max-width: 16ch; overflow: hidden; text-overflow: ellipsis; }
 .external { opacity: 0.6; }
-
-.srOnly {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
 
 /* Keep the footer's last line clear of the plate. */
 :global(.app-container):has(> .badge) :global(.footer-bottom) {
@@ -100,7 +81,7 @@
   .badge .step { gap: 4px; }
 }
 @media (max-width: 340px) {
-  .here, .rule { display: none; }
+  .rule { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

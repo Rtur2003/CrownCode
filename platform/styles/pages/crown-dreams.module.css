@@ -1,151 +1,5 @@
-/* Crown Dreams. The page wears the colours of its planet in the homepage atlas
-   (smoky quartz, amethyst) and the atlas's layout: a mono kicker, a display
-   title, then sections with their heading on the left and the work on the right. */
-
-.page {
-  --void: #09070c;
-  --ink: #f2ebf7;
-  --body: #ddd2e8;
-  --muted: #b4a6c4;
-  --soft: #8e7fa1;
-  --accent: #d7b8ff;
-  --accent-deep: #a88bd6;
-  --warn: #f0a98a;
-  --line: #d7b8ff24;
-  --line-strong: #d7b8ff52;
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  min-height: 100svh;
-  padding: clamp(96px, 13vh, 150px) clamp(20px, 5vw, 72px) 96px;
-  color: var(--ink);
-  background: var(--void);
-  font-family: var(--font-family-base);
-}
-
-.page ::selection { background: var(--accent); color: #120d18; }
-
-/* The global heading style is the caps display face; here only the title uses it. */
-.page h2, .page h3, .page h4 {
-  font-family: var(--font-family-base);
-  font-weight: 400;
-  text-transform: none;
-  text-shadow: none;
-  letter-spacing: normal;
-}
-
-.page :is(a, button, input, textarea, select):focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 4px;
-}
-
-.frame { max-width: 1180px; margin: 0 auto; }
-
-/* ── top of the page ──────────────────────────────────────────────── */
-
-.hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 24px clamp(24px, 6vw, 96px);
-  align-items: start;
-  padding-bottom: clamp(40px, 7vw, 72px);
-}
-
-.kicker {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 16px;
-  margin: 0 0 18px;
-  color: var(--accent);
-  font-family: var(--font-family-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-.kicker span:first-child { color: var(--accent-deep); }
-
-.title {
-  margin: 0;
-  font-family: var(--font-family-heading);
-  font-size: clamp(54px, 7.2vw, 104px);
-  font-weight: 400;
-  line-height: 0.92;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  text-shadow: none;
-  overflow-wrap: anywhere;
-}
-
-.lead {
-  margin: 22px 0 0;
-  max-width: 34ch;
-  font-size: clamp(19px, 1.6vw, 24px);
-  line-height: 1.45;
-  color: var(--body);
-  text-wrap: pretty;
-}
-
-/* The same planet the atlas shows for this project. */
-.planet {
-  width: clamp(120px, 16vw, 230px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #120d18 url('/images/atlas/world-crown-dreams.webp') center / cover no-repeat;
-  box-shadow: 0 0 0 1px var(--line);
-  opacity: 0.92;
-}
-
-/* ── sections: heading left, work right ───────────────────────────── */
-
-.section {
-  display: grid;
-  grid-template-columns: minmax(200px, 290px) minmax(0, 1fr);
-  gap: 20px clamp(32px, 5vw, 80px);
-  padding: clamp(40px, 5vw, 60px) 0;
-  border-top: 1px solid var(--line);
-}
-
-.sectionHead h2 {
-  margin: 0;
-  font-size: clamp(26px, 2.3vw, 34px);
-  line-height: 1.12;
-  color: var(--ink);
-  text-wrap: balance;
-}
-.sectionHead p {
-  margin: 12px 0 0;
-  max-width: 38ch;
-  font-size: 1rem;
-  line-height: 1.55;
-  color: var(--muted);
-}
-.sectionHead p.hint { font-size: 0.9rem; color: var(--soft); }
-
-.sectionBody { min-width: 0; max-width: 820px; }
-
-.hint { margin: 0; font-size: 0.9rem; line-height: 1.5; color: var(--soft); }
-.small { margin: 0; font-size: 0.86rem; line-height: 1.45; color: var(--soft); }
-
-/* ── the writing surface ──────────────────────────────────────────── */
-
-.textarea {
-  display: block;
-  width: 100%;
-  min-height: 200px;
-  padding: 2px 0 18px;
-  resize: vertical;
-  font-family: var(--font-family-base);
-  font-size: clamp(20px, 1.9vw, 26px);
-  line-height: 1.55;
-  color: var(--ink);
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid var(--line-strong);
-  border-radius: 0;
-  transition: border-color 0.25s ease;
-}
-.textarea::placeholder { color: var(--soft); }
-.textarea:focus { outline: none; border-bottom-color: var(--accent); }
-.textarea:focus-visible { outline: none; box-shadow: 0 1px 0 var(--accent); }
-.textarea:disabled { opacity: 0.6; }
+/* Crown Dreams: what is particular to this page. The frame, fields and
+   reading styles are shared (styles/components/world-page.module.css). */
 
 .writeFoot {
   display: flex;
@@ -155,89 +9,6 @@
   gap: 14px 24px;
   margin-top: 16px;
 }
-.count { font-family: var(--font-family-mono); font-size: 0.78rem; letter-spacing: 0.02em; }
-
-.primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 46px;
-  padding: 0 24px;
-  font: inherit;
-  font-size: 1.05rem;
-  color: var(--ink);
-  background: #0c0911b3;
-  border: 1px solid var(--accent);
-  border-radius: 999px;
-  cursor: pointer;
-  transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
-}
-.primary:hover:not(:disabled) { color: #120d18; background: var(--accent); transform: translateY(-1px); }
-.primary:disabled { opacity: 0.45; cursor: not-allowed; }
-
-.link {
-  padding: 4px 0;
-  font: inherit;
-  font-size: 0.98rem;
-  color: var(--muted);
-  background: none;
-  border: 0;
-  border-bottom: 1px solid var(--line-strong);
-  cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-.link:hover { color: var(--ink); border-color: var(--accent); }
-
-.privacy { margin: 18px 0 0; max-width: 56ch; font-size: 0.9rem; line-height: 1.5; color: var(--soft); }
-
-.error { margin: 16px 0 0; font-size: 1rem; color: var(--warn); }
-
-/* ── a reading, in prose with its notes in the margin ─────────────── */
-
-.reading {
-  margin-top: 40px;
-  padding-top: 28px;
-  border-top: 1px solid var(--line);
-  animation: rise 0.7s var(--ease-out) both;
-}
-
-.readingLabel {
-  margin: 0 0 12px;
-  font-family: var(--font-family-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.interpretation {
-  margin: 0;
-  max-width: 58ch;
-  font-size: clamp(19px, 1.6vw, 23px);
-  line-height: 1.6;
-  color: var(--ink);
-  text-wrap: pretty;
-}
-
-.margins {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 22px 32px;
-  margin: 28px 0 0;
-}
-.margins dt {
-  margin: 0 0 6px;
-  font-family: var(--font-family-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--soft);
-}
-.margins dd { margin: 0; font-size: 1.05rem; line-height: 1.5; color: var(--body); }
-
-.note { margin: 24px 0 0; font-size: 1.02rem; color: var(--accent); }
-.reading .hint { margin-top: 24px; }
-.reading .link { margin-top: 14px; }
 
 /* ── the sample journal ───────────────────────────────────────────── */
 
@@ -282,7 +53,7 @@
 
 .entryHead {
   display: grid;
-  grid-template-columns: 68px minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: baseline;
   gap: 4px 14px;
   width: 100%;
@@ -295,21 +66,20 @@
   cursor: pointer;
 }
 
-.number { font-family: var(--font-family-mono); font-size: 0.78rem; letter-spacing: 0.04em; color: var(--soft); }
 .entryTitle { font-size: clamp(22px, 2vw, 28px); line-height: 1.2; color: var(--ink); transition: color 0.2s ease; }
 .entryHead:hover .entryTitle, .entry[data-open='true'] .entryTitle { color: var(--accent); }
-.kind { font-family: var(--font-family-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft); }
+.kind { font-size: 14px; color: var(--soft); }
 
 .excerpt {
   margin: 0;
-  padding: 0 0 22px 82px;
+  padding: 0 0 22px;
   max-width: 64ch;
   font-size: 1.02rem;
   line-height: 1.55;
   color: var(--muted);
 }
 
-.detail { padding: 8px 0 30px 82px; animation: rise 0.5s var(--ease-out) both; }
+.detail { padding: 8px 0 30px; animation: rise 0.5s var(--ease-out) both; }
 .detail[hidden] { display: none; }
 
 .full {
@@ -321,44 +91,27 @@
   text-wrap: pretty;
 }
 
-.facts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 36px;
-  margin: 24px 0 0;
-}
+.facts { display: flex; flex-wrap: wrap; gap: 8px 36px; margin: 24px 0 0; }
 .facts div { display: flex; gap: 10px; align-items: baseline; }
 .facts dt { font-size: 0.92rem; color: var(--soft); }
 .facts dd { margin: 0; font-family: var(--font-family-mono); font-size: 0.82rem; color: var(--ink); }
 
-.detail .margins { margin-top: 22px; }
-.detail .readingLabel { margin-top: 28px; }
-.detail .interpretation { font-size: 1.1rem; color: var(--body); }
+.detail h3 { margin-top: 28px; }
 
 @keyframes rise {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: none; }
 }
 
-/* ── small screens ────────────────────────────────────────────────── */
-
 @media (max-width: 860px) {
-  .hero { grid-template-columns: 1fr; }
-  .planet { grid-row: 1; width: 112px; }
-  .section { grid-template-columns: 1fr; }
-  .sectionHead p { max-width: 52ch; }
-  .entryHead { grid-template-columns: 52px minmax(0, 1fr); }
-  .kind { grid-column: 2; }
-  .excerpt, .detail { padding-left: 66px; }
+  .entryHead { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 480px) {
-  .excerpt, .detail { padding-left: 0; }
   .entryHead { padding-top: 18px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reading, .detail { animation: none; }
-  .primary, .link, .filter, .entryTitle, .textarea { transition: none; }
-  .primary:hover:not(:disabled) { transform: none; }
+  .detail { animation: none; }
+  .filter, .entryTitle { transition: none; }
 }

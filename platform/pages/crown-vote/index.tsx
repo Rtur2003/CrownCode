@@ -1,79 +1,50 @@
-'use client'
+// VOTRYX: a Windows desktop app. This page is where it is downloaded, with the
+// install steps and a form that writes its config.json.
 
-import React, { useState } from 'react'
+import React from 'react'
 import type { NextPage } from 'next'
-import { m as motion } from 'motion/react'
-import { Download, Settings } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
+import { WorldPage } from '@/components/UI/WorldPage'
+import { ConfigGenerator, DownloadSection, FeaturesGrid } from '@/components/CrownVote'
 import { useLanguage } from '@/context/LanguageContext'
-import {
-  HeroSection,
-  FeaturesGrid,
-  DownloadSection,
-  ConfigGenerator,
-  InstallationGuide,
-} from '@/components/CrownVote'
-import styles from '@/styles/pages/crown-vote.module.css'
+import world from '@/styles/components/world-page.module.css'
 
 const CrownVotePage: NextPage = () => {
   const { t } = useLanguage()
-  const [activeTab, setActiveTab] = useState<'download' | 'config'>('download')
-
-  const meta = t.crownVote.meta
+  const V = t.crownVote
 
   return (
-    <MainLayout
-      title={meta.title}
-      description={meta.description}
-      keywords={meta.keywords}
-    >
-      <div className={styles['vote-page']}>
-        {/* Background */}
-        <div className={styles['vote-background']}>
-          <div className={styles['vote-gradient']} />
-        </div>
+    <MainLayout title={V.meta.title} description={V.meta.description} keywords={V.meta.keywords}>
+      <WorldPage world="crown-vote" title={V.header.title} lead={V.header.subtitle}>
+        <section className={world.section} aria-labelledby="vote-download-title">
+          <div className={world.sectionHead}>
+            <h2 id="vote-download-title">{V.download.title}</h2>
+            <p>{V.download.description}</p>
+          </div>
+          <div className={world.sectionBody}>
+            <DownloadSection />
+          </div>
+        </section>
 
-        <div className={styles['vote-container']}>
-          {/* Hero Section */}
-          <HeroSection />
+        <section className={world.section} aria-labelledby="vote-features-title">
+          <div className={world.sectionHead}>
+            <h2 id="vote-features-title">{V.featuresTitle}</h2>
+          </div>
+          <div className={world.sectionBody}>
+            <FeaturesGrid />
+          </div>
+        </section>
 
-          {/* Features Grid */}
-          <FeaturesGrid />
-
-          {/* Tab Navigation */}
-          <motion.div
-            className={styles['tab-navigation']}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <button
-              className={activeTab === 'download' ? styles['active'] : ''}
-              onClick={() => setActiveTab('download')}
-            >
-              <Download size={16} />
-              {t.crownVote?.tabs?.download || 'Download'}
-            </button>
-            <button
-              className={activeTab === 'config' ? styles['active'] : ''}
-              onClick={() => setActiveTab('config')}
-            >
-              <Settings size={16} />
-              {t.crownVote?.tabs?.config || 'Configuration'}
-            </button>
-          </motion.div>
-
-          {/* Tab Content */}
-          {activeTab === 'download' && (
-            <>
-              <DownloadSection />
-              <InstallationGuide />
-            </>
-          )}
-
-          {activeTab === 'config' && <ConfigGenerator />}
-        </div>
-      </div>
+        <section className={world.section} aria-labelledby="vote-config-title">
+          <div className={world.sectionHead}>
+            <h2 id="vote-config-title">{V.configGenerator.title}</h2>
+            <p>{V.configGenerator.description}</p>
+          </div>
+          <div className={world.sectionBody}>
+            <ConfigGenerator />
+          </div>
+        </section>
+      </WorldPage>
     </MainLayout>
   )
 }

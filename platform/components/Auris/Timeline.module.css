@@ -68,7 +68,7 @@
   bottom: 3px;
   font-style: normal;
   font-family: var(--font-family-mono);
-  font-size: 0.66rem;
+  font-size: 0.78rem;
   letter-spacing: 0.02em;
   color: var(--soft, #9c8a72);
 }
@@ -108,7 +108,7 @@
   position: absolute;
   transform: translateX(-50%);
   font-family: var(--font-family-mono);
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   letter-spacing: 0.02em;
   color: var(--soft, #9c8a72);
 }

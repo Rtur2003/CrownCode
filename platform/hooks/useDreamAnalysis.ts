@@ -7,6 +7,7 @@
  */
 
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react'
+import { API_BASE_URL } from '@/config/api'
 import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
 import { parseDreamAnalysis } from '@/hooks/validators'
 
@@ -59,7 +60,7 @@ export const useDreamAnalysis = (messages: Partial<DreamAnalysisMessages> = {}) 
   const [result, setResult] = useState<DreamAnalysisResult | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  const apiBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_API_URL?.trim(), [])
+  const apiBaseUrl = API_BASE_URL
   const requestIdRef = useRef(0)
   const controllerRef = useRef<AbortController | null>(null)
   const i18nMessages = useMemo(() => ({ ...DEFAULT_MESSAGES, ...messages }), [messages])
@@ -83,11 +84,6 @@ export const useDreamAnalysis = (messages: Partial<DreamAnalysisMessages> = {}) 
       return
     }
 
-    if (!apiBaseUrl) {
-      setError(i18nMessages.serviceNotConfigured)
-      setState('error')
-      return
-    }
 
     const currentRequestId = ++requestIdRef.current
     const isStale = () => requestIdRef.current !== currentRequestId

@@ -11,23 +11,12 @@ import {
   Briefcase,
   Coins,
   Activity,
-  Clock,
   RotateCcw,
   Star,
   X,
-  Maximize2,
   AlertTriangle,
   Skull,
-  Users,
-  Volume2,
-  VolumeX,
-  Download,
-  Share2,
-  Flame,
-  TrendingUp,
   BookOpen,
-  Clover,
-  Quote,
   Lock
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
@@ -160,25 +149,15 @@ const celebrateConfetti = async (isReversed = false) => {
 }
 
 /** Plain, server-rendered copy: what the page is and how a draw works. */
-function FortuneAbout({ t }: { t: { crownFortune: { about: { title: string; body: string[] }; info: { title: string; steps: string[] } } } }) {
-  const { about, info } = t.crownFortune
+function FortuneAbout({ t }: { t: { crownFortune: { about: { title: string; body: string[] } } } }) {
+  const { about } = t.crownFortune
   return (
-    <>
-      <div className={styles['info-card']}>
-        <h2>{about.title}</h2>
-        {about.body.map((paragraph, index) => (
-          <p key={index}>{paragraph}</p>
-        ))}
-      </div>
-      <div className={styles['info-card']}>
-        <h2>{info.title}</h2>
-        <ul>
-          {info.steps.map((step, index) => (
-            <li key={index}>{step}</li>
-          ))}
-        </ul>
-      </div>
-    </>
+    <div className={styles['info-card']}>
+      <h2>{about.title}</h2>
+      {about.body.map((paragraph, index) => (
+        <p key={index}>{paragraph}</p>
+      ))}
+    </div>
   )
 }
 
@@ -764,10 +743,6 @@ const CrownFortunePage: NextPage = () => {
                 renders after mount — but the heading is static and belongs
                 in the server HTML for search and a fast LCP. */}
             <header className={`${styles['fortune-header']} enter-rise`}>
-              <div className={styles['header-badge']}>
-                <Crown size={16} />
-                <span>{t.crownFortune.header.badge}</span>
-              </div>
               <h1 className={styles['fortune-title']}>{t.crownFortune.header.title}</h1>
               <p className={styles['fortune-subtitle']}>{t.crownFortune.header.subtitle}</p>
             </header>
@@ -803,87 +778,33 @@ const CrownFortunePage: NextPage = () => {
 
           {/* HEADER */}
           <header className={styles['fortune-header']}>
-            <div className={styles['header-badge']}>
-              <Crown size={16} />
-              <span>{t.crownFortune.header.badge}</span>
-            </div>
             <h1 className={styles['fortune-title']}>{t.crownFortune.header.title}</h1>
             <p className={styles['fortune-subtitle']}>
               {t.crownFortune.header.subtitle}
             </p>
-            <div className={styles['header-stats']}>
-              <div className={styles['countdown']}>
-                <Clock size={16} />
-                <span>{t.crownFortune.countdown.label}</span>
-                <span className={styles['countdown-time']}>{countdown}</span>
-              </div>
-              {counterAvailable && (
-                <div className={styles['daily-counter']}>
-                  <Users size={16} />
-                  <span>{t.crownFortune.counter.label}</span>
-                  <motion.span
-                    className={styles['counter-value']}
-                    key={dailyCount}
-                    initial={{ scale: 1.2, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {dailyCount.toLocaleString()}
-                  </motion.span>
-                  <span className={styles['counter-suffix']}>{t.crownFortune.counter.suffix}</span>
-                </div>
+            <p className={styles['status-line']}>
+              <span>{t.crownFortune.countdown.label} <span className={styles['countdown-time']}>{countdown}</span></span>
+              {moonPhase && (
+                <span title={`${language === 'tr' ? moonPhase.energy : moonPhase.energyEn} ${t.crownFortune.moonPhase.energySuffix}`}>
+                  {language === 'tr' ? moonPhase.name : moonPhase.nameEn}
+                </span>
               )}
               {streak.count > 0 && (
-                <motion.div
-                  className={styles['streak-counter']}
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                  title={streak.nextMilestone
-                    ? `${streak.daysToNext} ${t.crownFortune.streak.daysTo} ${streak.nextMilestone.badge}`
-                    : ''
-                  }
-                >
-                  <Flame size={16} className={styles['streak-icon']} />
-                  <span className={styles['streak-value']}>{streak.count}</span>
-                  {streak.currentMilestone && (
-                    <span className={styles['streak-badge']}>{streak.currentMilestone.badge}</span>
-                  )}
-                  {streak.nextMilestone && (
-                    <div className={styles['streak-progress']}>
-                      <TrendingUp size={12} />
-                      <span>{streak.daysToNext}</span>
-                    </div>
-                  )}
-                </motion.div>
+                <span title={streak.nextMilestone ? `${streak.daysToNext} ${t.crownFortune.streak.daysTo} ${streak.nextMilestone.label[language === 'tr' ? 'tr' : 'en']}` : undefined}>
+                  {t.crownFortune.streak.label} {streak.count} {streak.count === 1 ? t.crownFortune.streak.day : t.crownFortune.streak.days}
+                  {streak.currentMilestone ? `, ${streak.currentMilestone.label[language === 'tr' ? 'tr' : 'en']}` : ''}
+                </span>
               )}
-              {moonPhase && (
-                <div
-                  className={styles['moon-phase']}
-                  title={`${language === 'tr' ? moonPhase.name : moonPhase.nameEn} - ${language === 'tr' ? moonPhase.energy : moonPhase.energyEn} ${t.crownFortune.moonPhase.energySuffix}`}
-                >
-                  <span className={styles['moon-emoji']}>{moonPhase.emoji}</span>
-                  <span className={styles['moon-name']}>
-                    {language === 'tr' ? moonPhase.name : moonPhase.nameEn}
-                  </span>
-                </div>
+              {counterAvailable && (
+                <span>{t.crownFortune.counter.label} {dailyCount.toLocaleString()} {t.crownFortune.counter.suffix}</span>
               )}
-              <button
-                type="button"
-                className={styles['collection-badge']}
-                onClick={() => setIsCollectionModalOpen(true)}
-                title={t.crownFortune.collection.title}
-              >
-                <BookOpen size={16} />
-                <span>{collection.seenCardIds.length}/22</span>
+            </p>
+            <div className={styles['header-actions']}>
+              <button type="button" className={styles['text-action']} onClick={() => setIsCollectionModalOpen(true)}>
+                {t.crownFortune.collection.title} {collection.seenCardIds.length}/22
               </button>
-              <button
-                type="button"
-                className={styles['sound-toggle']}
-                onClick={() => setSoundEnabled(!soundEnabled)}
-                aria-label={soundEnabled ? t.crownFortune.sound.mute : t.crownFortune.sound.enable}
-              >
-                {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
+              <button type="button" className={styles['text-action']} aria-pressed={soundEnabled} onClick={() => setSoundEnabled(!soundEnabled)}>
+                {soundEnabled ? t.crownFortune.sound.mute : t.crownFortune.sound.enable}
               </button>
             </div>
           </header>
@@ -1008,7 +929,6 @@ const CrownFortunePage: NextPage = () => {
 
                       <div className={styles['card-content']}>
                         <div className={styles['card-header']}>
-                          <span className={styles['card-symbol']}>{details?.card?.symbol || '✨'}</span>
                           <h2 className={styles['card-name']}>
                             {cardName} {isReversed && t.crownFortune.card.reversed}
                           </h2>
@@ -1048,135 +968,64 @@ const CrownFortunePage: NextPage = () => {
 
                 {isCardFlipped && (
                   <div className={styles['card-actions']}>
-                      <motion.div
-                        className={styles['card-click-hint']}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1 }}
-                      >
-                        <Maximize2 size={12} />
-                        <span>{t.crownFortune.card.clickToEnlarge}</span>
-                      </motion.div>
+                    <p className={styles['card-hint']}>{t.crownFortune.card.clickToEnlarge}</p>
 
-                      {/* Tempt Fate Button */}
-                      {!isReversed && (
-                        <motion.button
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 1.5 }}
+                    {luckyElements && (
+                      <p className={styles['lucky-line']}>
+                        <span>{t.crownFortune.lucky.numbers} <strong>{luckyElements?.numbers?.join(', ') || '7, 14, 21'}</strong></span>
+                        <span>
+                          <span className={styles['color-dot']} style={{ backgroundColor: luckyElements?.color?.hex || '#FFD700' }} aria-hidden="true" />
+                          {language === 'tr' ? luckyElements?.color?.name : luckyElements?.color?.nameEn}
+                        </span>
+                        <span>{luckyElements?.direction?.symbol || '→'} {language === 'tr' ? luckyElements?.direction?.name : luckyElements?.direction?.nameEn}</span>
+                      </p>
+                    )}
+
+                    {dailyQuote && (
+                      <blockquote className={styles['daily-quote']}>
+                        <p>{language === 'tr' ? dailyQuote?.tr : dailyQuote?.en}</p>
+                        {dailyQuote?.author && <cite>{dailyQuote.author === 'Anonim' && language === 'en' ? 'Anonymous' : dailyQuote.author}</cite>}
+                      </blockquote>
+                    )}
+
+                    <div className={styles['header-actions']}>
+                      <button
+                        type="button"
+                        className={styles['text-action']}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleShare('native')
+                        }}
+                      >
+                        {t.crownFortune.share.button}
+                      </button>
+                      <button
+                        type="button"
+                        className={styles['text-action']}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleDownload()
+                        }}
+                      >
+                        {t.crownFortune.share.download}
+                      </button>
+                      {isReversed ? (
+                        <span className={styles['dark-note']}>{t.crownFortune.card.darkFateRevealed}</span>
+                      ) : (
+                        <button
+                          type="button"
+                          className={styles['text-action']}
+                          data-tone="dark"
+                          disabled={isFlipping}
                           onClick={(e: React.MouseEvent) => {
                             e.stopPropagation()
                             handleReverseDestiny()
                           }}
-                          disabled={isFlipping}
-                          className={styles['tempt-fate-button']}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
                         >
-                          <motion.div
-                            className={styles['tempt-fate-glow']}
-                            animate={{
-                              opacity: [0.3, 0.7, 0.3],
-                              scale: [1, 1.1, 1]
-                            }}
-                            transition={{
-                              duration: 2,
-                              repeat: Infinity,
-                              ease: 'easeInOut'
-                            }}
-                          />
-                          <Skull size={18} />
-                          <span>{t.crownFortune.card.revealDarkFate}</span>
-                        </motion.button>
-                      )}
-
-                      {/* Reversed indicator */}
-                      {isReversed && (
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          className={styles['reversed-indicator']}
-                        >
-                          <Skull size={14} />
-                          <span>{t.crownFortune.card.darkFateRevealed}</span>
-                        </motion.div>
-                      )}
-
-                      {/* Share & Download Actions */}
-                      <motion.div
-                        className={styles['share-actions']}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 2 }}
-                      >
-                        <button
-                          type="button"
-                          className={styles['action-button']}
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleShare('native')
-                          }}
-                          aria-label={t.crownFortune.share.button}
-                        >
-                          <Share2 size={16} />
-                          <span>{t.crownFortune.share.button}</span>
+                          {t.crownFortune.card.revealDarkFate}
                         </button>
-                        <button
-                          type="button"
-                          className={styles['action-button']}
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleDownload()
-                          }}
-                          aria-label={t.crownFortune.share.download}
-                        >
-                          <Download size={16} />
-                          <span>{t.crownFortune.share.download}</span>
-                        </button>
-                      </motion.div>
-
-                      {/* Lucky Elements */}
-                      {luckyElements && (
-                        <motion.div
-                          className={styles['lucky-elements']}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 2.5 }}
-                        >
-                          <div className={styles['lucky-numbers']}>
-                            <Clover size={14} />
-                            <span>{t.crownFortune.lucky.numbers}</span>
-                            <strong>{luckyElements?.numbers?.join(', ') || '7, 14, 21'}</strong>
-                          </div>
-                          <div className={styles['lucky-color']}>
-                            <span
-                              className={styles['color-dot']}
-                              style={{ backgroundColor: luckyElements?.color?.hex || '#FFD700' }}
-                            />
-                            <span>{language === 'tr' ? luckyElements?.color?.name : luckyElements?.color?.nameEn}</span>
-                          </div>
-                          <div className={styles['lucky-direction']}>
-                            <span>{luckyElements?.direction?.symbol || '→'}</span>
-                            <span>{language === 'tr' ? luckyElements?.direction?.name : luckyElements?.direction?.nameEn}</span>
-                          </div>
-                        </motion.div>
                       )}
-
-                      {/* Daily Quote */}
-                      {dailyQuote && (
-                        <motion.div
-                          className={styles['daily-quote']}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 3 }}
-                        >
-                          <Quote size={14} className={styles['quote-icon']} />
-                          <blockquote>
-                            <p>{language === 'tr' ? dailyQuote?.tr : dailyQuote?.en}</p>
-                            <cite>— {dailyQuote?.author || t.crownFortune.quote.unknownAuthor}</cite>
-                          </blockquote>
-                        </motion.div>
-                      )}
+                    </div>
                   </div>
                 )}
               </motion.section>
@@ -1350,20 +1199,14 @@ const CrownFortunePage: NextPage = () => {
           >
             <FortuneAbout t={t} />
 
-            <div className={styles['categories-grid']}>
+            <ul className={styles['legend']} aria-label={t.crownFortune.legendLabel}>
               {FORTUNE_CATEGORIES.map(cat => (
-                <div
-                  key={cat.key}
-                  className={styles['category-item']}
-                  style={{ borderColor: CATEGORY_COLORS[cat.key] }}
-                >
-                  <div style={{ color: CATEGORY_COLORS[cat.key] }}>
-                    {CATEGORY_ICONS[cat.key]}
-                  </div>
-                  <span>{t.crownFortune.categories[cat.key as keyof typeof t.crownFortune.categories]}</span>
-                </div>
+                <li key={cat.key}>
+                  <span style={{ color: CATEGORY_COLORS[cat.key] }} aria-hidden="true">{CATEGORY_ICONS[cat.key]}</span>
+                  {t.crownFortune.categories[cat.key as keyof typeof t.crownFortune.categories]}
+                </li>
               ))}
-            </div>
+            </ul>
 
             <div className={styles['disclaimer']}>
               <p>{t.crownFortune.disclaimer}</p>

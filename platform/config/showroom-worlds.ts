@@ -8,7 +8,7 @@
  * from its id, so the atlas never needs a new image to grow.
  */
 
-import type { ProductEntry } from '@/config/product-catalog'
+import { PRODUCT_CATALOG, type ProductEntry } from '@/config/product-catalog'
 
 export type RingStyle = 'grooves' | 'wheel' | 'dust'
 
@@ -124,15 +124,31 @@ export function derivedLook(id: string): WorldLook {
     size: 0.95 + r(20) * 0.35,
     spin: 0.08 + r(2) * 0.1,
     ...(r(28) > 0.7 ? { ring: 'dust' as const } : {}),
-    sector: { tr: 'Yeni proje', en: 'New project' },
+    // No hand-written label: worldSector() falls back to the project's own `stats` text.
+    sector: { tr: '', en: '' },
   }
 }
 
 /** Short display name of a world (the catalog title without its subtitle). */
 export function worldName(entry: Pick<ProductEntry, 'id'>, title: string): string {
-  if (entry.id === 'crown-vote') {return 'VOTRYX'}
-  if (entry.id === 'ml-toolkit') {return 'ML Toolkit'}
-  return title.split(' - ')[0]
+  const own = PRODUCT_CATALOG.find(candidate => candidate.id === entry.id)?.name
+  // Catalog titles read "Name: what it does"; the world is just the name.
+  return own ?? title.split(/:\s| - /)[0]
+}
+
+/** The short kind-of-thing label of a world: its hand-written sector, else the `stats` line from its locale text. */
+export function worldSector(entry: Pick<ProductEntry, 'id' | 'localeKey'>, language: 'en' | 'tr', stats: string): string {
+  return worldLook(entry).sector[language] || stats
+}
+
+/** Worlds that have a rendered thumbnail (`scripts/capture-atlas-assets.py`); a test checks this against the files. */
+export const RENDERED_WORLDS: ReadonlySet<string> = new Set([
+  'ai-music-detection', 'ml-toolkit', 'crown-fortune', 'crown-dreams', 'crown-commend', 'crown-vote', 'noir-grain', 'kognita',
+])
+
+/** The planet picture of a world; a project that has none yet gets the generic one, so a new project never shows a broken image. */
+export function worldImage(id: string): string {
+  return RENDERED_WORLDS.has(id) ? `/images/atlas/world-${id}.webp` : '/images/showroom/planet-generic.webp'
 }
 
 export function worldLook(entry: Pick<ProductEntry, 'id'>): WorldLook {

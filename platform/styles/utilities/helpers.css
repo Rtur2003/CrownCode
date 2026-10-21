@@ -2,20 +2,6 @@
 /* Bu dosya tekrar kullanılabilir yardımcı CSS sınıflarını içerir */
 
 /* Text Utilities */
-.text-gradient {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-secondary {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 .text-shadow-glow {
   text-shadow: 0 0 20px rgba(201, 147, 71, 0.5);
 }

@@ -6,6 +6,12 @@
  * analysis: a sweep while the server wakes, real step progress while the
  * models run, then the AI probability with the decision threshold marked.
  * The planet takes the verdict's colour when the result lands.
+ *
+ * When the result carries a track surface (trackSurface.ts) the planet then wears
+ * the track itself: its own spectrogram as raised ground and engraved contours,
+ * amber and green where the models leaned AI or human, rings where the spectrum
+ * repeats. It can be turned by hand, read under the pointer, and it turns under
+ * the needle while the track plays.
  * Client-only (loaded with next/dynamic, ssr: false).
  */
 
@@ -15,9 +21,11 @@ import * as THREE from 'three'
 import { WebGLGuard } from '@/components/UI/WebGLGuard'
 import { worldLook } from '@/config/showroom-worlds'
 import {
-  atmosphereFragment, atmosphereVertex, planetFragment, planetVertex,
+  atmosphereFragment, atmosphereVertex,
   pointsFragment, pointsVertex, ringFragment, ringVertex,
 } from '@/components/Home/Atlas/shaders'
+import { trackPlanetFragment, trackPlanetVertex } from '@/components/Auris/trackShaders'
+import { tickEvery, type TrackSurface } from '@/components/Auris/trackSurface'
 
 export type WorldMode = 'idle' | 'waking' | 'running' | 'ai' | 'human'
 
@@ -35,6 +43,18 @@ export interface AurisWorldProps {
   active: boolean
   reducedMotion: boolean
   onReady?: () => void
+  /** The track the planet wears once a result is in; null leaves the planet procedural. */
+  track?: TrackSurface | null
+  /** Turn the planet to face this longitude (0 to 1 once around); a new object starts a new turn. */
+  focus?: { u: number } | null
+  /** Longitude of the moment being played, or null. */
+  playhead?: number | null
+  /** The longitude facing the viewer, reported as the planet turns. */
+  onFace?: (u: number) => void
+  /** The longitude under the pointer, or null once it leaves. */
+  onProbe?: (u: number | null) => void
+  /** A click or tap on the planet, at that longitude. */
+  onPick?: (u: number) => void
 }
 
 const LOOK = worldLook({ id: 'ai-music-detection' })
@@ -46,6 +66,25 @@ const RING_TILT = -Math.PI / 2 + 0.38
 // Radii in planet units: the grooves, then the analysis band just outside.
 const GROOVES = [1.4, 2.15] as const
 const BAND = [2.2, 2.5] as const
+const TAU = Math.PI * 2
+const RELIEF = 0.05
+const wrapPi = (a: number) => a - TAU * Math.round(a / TAU)
+/** The rotation about Y that brings longitude `u` (0 to 1 once around) to the viewer. */
+const turnFor = (u: number) => TAU * (0.25 - u)
+/** Where a new track opens: just east of the seam, so the first reading is 0:01 and not the last. */
+const START_U = 0.012
+
+function makeTexture(track: TrackSurface): THREE.DataTexture {
+  const texture = new THREE.DataTexture(track.data, track.width, track.height, THREE.RGBAFormat)
+  texture.colorSpace = THREE.NoColorSpace
+  texture.wrapS = THREE.RepeatWrapping
+  texture.wrapT = THREE.ClampToEdgeWrapping
+  texture.minFilter = THREE.LinearFilter
+  texture.magFilter = THREE.LinearFilter
+  texture.generateMipmaps = false
+  texture.needsUpdate = true
+  return texture
+}
 
 const bandVertex = /* glsl */ `
   varying vec2 vLocal;
@@ -177,7 +216,7 @@ function Stars({ time }: { time: React.MutableRefObject<number> }) {
   return <points geometry={geometry} material={material} frustumCulled={false} />
 }
 
-function Scene({ mode, progress, threshold, ticks, hot, reducedMotion, onReady }: Omit<AurisWorldProps, 'active'>) {
+function Scene({ mode, progress, threshold, ticks, hot, reducedMotion, onReady, track, focus, playhead, onFace, onProbe, onPick }: Omit<AurisWorldProps, 'active'>) {
   const { camera, size, gl, setDpr } = useThree()
   const time = useRef(0)
   const spin = useRef<THREE.Mesh>(null)
@@ -192,24 +231,58 @@ function Scene({ mode, progress, threshold, ticks, hot, reducedMotion, onReady }
   const grooves = useDisposable(() => new THREE.RingGeometry(GROOVES[0], GROOVES[1], 200, 1), [])
   const bandGeometry = useDisposable(() => new THREE.RingGeometry(BAND[0], BAND[1], 360, 1), [])
 
+  // The world's own motion once it wears a track.
+  const spinY = useRef(0)
+  const targetY = useRef(turnFor(START_U))
+  const velocity = useRef(0)
+  const lastTouch = useRef(-1e9)
+  const dragging = useRef(false)
+  const hover = useRef<number | null>(null)
+  const face = useRef(0)
+  const faceSent = useRef(-1)
+  const faceAt = useRef(0)
+  const reveal = useRef({ mix: 0, scan: 0 })
+  const raycaster = useMemo(() => new THREE.Raycaster(), [])
+  const centre = useMemo(() => new THREE.Vector3(), [])
+  const handlers = useRef({ onFace, onProbe, onPick })
+  useEffect(() => { handlers.current = { onFace, onProbe, onPick } })
+  const placeholder = useDisposable(() => {
+    // One neutral texel: no energy, neutral lean, no rings. The track shader then draws the plain planet.
+    const t = new THREE.DataTexture(new Uint8Array([0, 128, 0, 255]), 1, 1, THREE.RGBAFormat)
+    t.needsUpdate = true
+    return t
+  }, [])
+  const trackTexture = useMemo(() => (track ? makeTexture(track) : null), [track])
+  useEffect(() => () => trackTexture?.dispose(), [trackTexture])
+
   const planet = useDisposable(() => new THREE.ShaderMaterial({
-    vertexShader: planetVertex,
-    fragmentShader: planetFragment,
+    vertexShader: trackPlanetVertex,
+    fragmentShader: trackPlanetFragment,
     uniforms: {
       uBase: { value: new THREE.Color(LOOK.base) },
       uMid: { value: new THREE.Color(LOOK.mid) },
       uAccent: { value: new THREE.Color(LOOK.accent) },
       uAtmo: { value: new THREE.Color(LOOK.atmosphere) },
       uLight: { value: KEY_LIGHT.clone() },
+      uAi: { value: AI_COLOR.clone() },
+      uHuman: { value: HUMAN_COLOR.clone() },
       uBands: { value: LOOK.bands },
       uDetail: { value: LOOK.detail },
       uLines: { value: LOOK.lines },
-      // No gloss: this close, the lacquer's highlight reads as a smudge.
-      uGloss: { value: 0 },
       uSeed: { value: 3.1 },
       uFocus: { value: 0 },
+      uTex: { value: placeholder },
+      uMix: { value: 0 },
+      uScan: { value: 0 },
+      uSpan: { value: 90 },
+      uTick: { value: 10 },
+      uRows: { value: 96 },
+      uRelief: { value: RELIEF },
+      uBump: { value: 3 },
+      uProbe: { value: -1 },
+      uPlay: { value: -1 },
     },
-  }), [])
+  }), [placeholder])
   const atmosphere = useDisposable(() => new THREE.ShaderMaterial({
     vertexShader: atmosphereVertex,
     fragmentShader: atmosphereFragment,
@@ -263,6 +336,108 @@ function Scene({ mode, progress, threshold, ticks, hot, reducedMotion, onReady }
     return () => window.removeEventListener('pointermove', move)
   }, [])
 
+  // A new track is written onto the planet from the first meridian eastward, turning as it goes.
+  useEffect(() => {
+    planet.uniforms.uTex.value = trackTexture ?? placeholder
+    if (track) {
+      planet.uniforms.uSpan.value = track.spanSec
+      planet.uniforms.uTick.value = tickEvery(track.spanSec)
+      planet.uniforms.uRows.value = track.height
+    }
+    reveal.current.scan = 0
+    targetY.current = turnFor(START_U)
+    spinY.current = turnFor(START_U) - (reducedMotion ? 0 : 1.6)
+    velocity.current = 0
+    hover.current = null
+  }, [track, trackTexture, planet, placeholder, reducedMotion])
+
+  // Asked to face a longitude (the position slider).
+  useEffect(() => {
+    if (!focus || !track) {return}
+    targetY.current = spinY.current + wrapPi(turnFor(focus.u) - spinY.current)
+    velocity.current = 0
+    lastTouch.current = performance.now()
+  }, [focus, track])
+
+  // Turning the planet by hand, and reading it under the pointer.
+  useEffect(() => {
+    if (!track) {return}
+    const el = gl.domElement
+    const previous = { touch: el.style.touchAction, cursor: el.style.cursor }
+    el.style.touchAction = 'pan-y'
+    el.style.cursor = 'grab'
+    let start: { x: number; y: number } | null = null
+    let lastX = 0
+    let moved = 0
+    const point = new THREE.Vector2()
+    const hit = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect()
+      point.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1)
+      raycaster.setFromCamera(point, camera)
+      const mesh = spin.current
+      if (!mesh) {return null}
+      mesh.updateWorldMatrix(true, false)
+      const found = raycaster.intersectObject(mesh, false)[0]
+      return found?.uv ? found.uv.x : null
+    }
+    const down = (e: PointerEvent) => {
+      if (e.pointerType === 'mouse' && e.button !== 0) {return}
+      start = { x: e.clientX, y: e.clientY }
+      lastX = e.clientX
+      moved = 0
+      dragging.current = true
+      velocity.current = 0
+      el.setPointerCapture(e.pointerId)
+      el.style.cursor = 'grabbing'
+    }
+    const move = (e: PointerEvent) => {
+      if (start) {
+        const dx = e.clientX - lastX
+        lastX = e.clientX
+        moved += Math.abs(dx)
+        targetY.current += dx * 0.0085
+        velocity.current = dx * 0.0085
+        lastTouch.current = performance.now()
+        return
+      }
+      const u = hit(e)
+      hover.current = u
+      handlers.current.onProbe?.(u)
+    }
+    const up = (e: PointerEvent) => {
+      if (!start) {return}
+      start = null
+      dragging.current = false
+      el.style.cursor = 'grab'
+      if (el.hasPointerCapture(e.pointerId)) {el.releasePointerCapture(e.pointerId)}
+      if (moved < 5) {
+        const u = hit(e)
+        if (u !== null) {handlers.current.onPick?.(u)}
+      }
+    }
+    const leave = () => {
+      if (start) {return}
+      hover.current = null
+      handlers.current.onProbe?.(null)
+    }
+    el.addEventListener('pointerdown', down)
+    el.addEventListener('pointermove', move)
+    el.addEventListener('pointerup', up)
+    el.addEventListener('pointercancel', up)
+    el.addEventListener('pointerleave', leave)
+    return () => {
+      el.removeEventListener('pointerdown', down)
+      el.removeEventListener('pointermove', move)
+      el.removeEventListener('pointerup', up)
+      el.removeEventListener('pointercancel', up)
+      el.removeEventListener('pointerleave', leave)
+      el.style.touchAction = previous.touch
+      el.style.cursor = previous.cursor
+      hover.current = null
+      dragging.current = false
+    }
+  }, [track, gl, camera, raycaster])
+
   // Frame the disc. On wide screens the world sits right of centre (an
   // off-axis projection, so it isn't viewed at a slant) and its ring runs
   // behind the panel; the band always stays whole on the open side.
@@ -293,7 +468,22 @@ function Scene({ mode, progress, threshold, ticks, hot, reducedMotion, onReady }
     time.current += dt * speed
     const k = 1 - Math.exp(-dt * 3)
 
-    if (spin.current) {spin.current.rotation.y = time.current * LOOK.spin}
+    if (spin.current) {
+      if (track) {
+        // By hand, or following the needle while the track plays; never on its own.
+        if (!dragging.current) {
+          targetY.current += velocity.current
+          velocity.current *= 0.92
+          if (typeof playhead === 'number' && performance.now() - lastTouch.current > 1800) {
+            targetY.current = spinY.current + wrapPi(turnFor(playhead) - spinY.current)
+          }
+        }
+        spinY.current += (targetY.current - spinY.current) * (reducedMotion ? 1 : 1 - Math.exp(-dt * 5))
+        spin.current.rotation.y = spinY.current
+      } else {
+        spin.current.rotation.y = time.current * LOOK.spin
+      }
+    }
     if (system.current && !reducedMotion) {
       system.current.rotation.y += (pointer.current.x * 0.12 - system.current.rotation.y) * k
       system.current.rotation.x += (pointer.current.y * 0.06 - system.current.rotation.x) * k
@@ -323,6 +513,34 @@ function Scene({ mode, progress, threshold, ticks, hot, reducedMotion, onReady }
     band.uniforms.uTime.value = time.current
     const bandTarget = mode === 'idle' ? (hot ? 0.6 : 0) : 1
     band.uniforms.uOpacity.value += (bandTarget - band.uniforms.uOpacity.value) * k
+
+    // The track fades in over the procedural planet, written from the first meridian eastward.
+    const wearing = Boolean(track)
+    reveal.current.mix += ((wearing ? 1 : 0) - reveal.current.mix) * (reducedMotion ? 1 : 1 - Math.exp(-dt * 2.5))
+    if (wearing) {reveal.current.scan = Math.min(1.2, reveal.current.scan + dt * (reducedMotion ? 6 : 0.42))}
+    planet.uniforms.uMix.value = reveal.current.mix
+    planet.uniforms.uScan.value = reveal.current.scan
+
+    if (wearing && spin.current) {
+      const now = performance.now()
+      if (now - faceAt.current > 90) {
+        faceAt.current = now
+        spin.current.updateWorldMatrix(true, false)
+        spin.current.getWorldPosition(centre)
+        centre.project(camera)
+        raycaster.setFromCamera(new THREE.Vector2(centre.x, centre.y), camera)
+        const found = raycaster.intersectObject(spin.current, false)[0]
+        if (found?.uv) {
+          face.current = found.uv.x
+          if (Math.abs(face.current - faceSent.current) > 0.002) {
+            faceSent.current = face.current
+            handlers.current.onFace?.(face.current)
+          }
+        }
+      }
+    }
+    planet.uniforms.uProbe.value = wearing ? (hover.current ?? face.current) : -1
+    planet.uniforms.uPlay.value = wearing && typeof playhead === 'number' ? playhead : -1
 
     // Adaptive resolution: step the pixel ratio down if frames run long.
     const times = frameTimes.current

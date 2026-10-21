@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useContext } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useLanguage } from '@/context/LanguageContext'
@@ -15,11 +15,13 @@ import {
   SITE_URL,
   localizedUrl,
   normalizePath,
+  ogImagePath,
 } from '@/config/site'
 import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { RouteBadge } from './RouteBadge'
+import { ShellContext } from './ShellContext'
 
 interface MainLayoutProps {
   children: ReactNode
@@ -36,24 +38,12 @@ interface MainLayoutProps {
 
 const DEFAULT_TITLE = 'CrownCode | Hasan Arthur Altuntaş'
 const DEFAULT_DESCRIPTION = 'Hasan Arthur Altuntaş’s independent projects across sound, data and the web.'
-const DEFAULT_OG_IMAGE = '/og/default.jpg'
-
-const OG_IMAGES: Record<string, string> = {
-  '/ai-music-detection': '/og/ai-music-detection.jpg',
-  '/data-manipulation': '/og/data-manipulation.jpg',
-  '/creator-studio': '/og/creator-studio.jpg',
-  '/crown-commend': '/og/crown-commend.jpg',
-  '/crown-fortune': '/og/crown-fortune.jpg',
-  '/crown-dreams': '/og/crown-dreams.jpg',
-  '/crown-vote': '/og/crown-vote.jpg',
-  '/noir-grain': '/og/noir-grain.jpg',
-}
 
 const PERSON_ID = `${SITE_URL}/#person`
 const WEBSITE_ID = `${SITE_URL}/#website`
 
 /** Page name for breadcrumbs: the part of the title before the brand suffix. */
-const shortName = (title: string) => title.split(/\s[|–—-]\s/)[0]?.trim() || title
+const shortName = (title: string) => title.split(/\s[|–—-]\s|:\s/)[0]?.trim() || title
 
 export const MainLayout: React.FC<MainLayoutProps> = ({
   children,
@@ -65,6 +55,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   schema = [],
 }) => {
   const { language, t } = useLanguage()
+  const inShell = useContext(ShellContext)
   const router = useRouter()
   const path = normalizePath(router.asPath)
   const pathname = router.pathname
@@ -72,7 +63,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
 
   const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`
   const canonicalUrl = localizedUrl(path, language)
-  const imagePath = image ?? OG_IMAGES[pathname] ?? DEFAULT_OG_IMAGE
+  const imagePath = image ?? ogImagePath(pathname)
   const imageUrl = imagePath.startsWith('http') ? imagePath : `${SITE_URL}${imagePath}`
   const inLanguage = HREFLANG[language]
 
@@ -218,18 +209,22 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         )}
       </Head>
 
-      <a href="#main-content" className="skip-link">
-        {t.aria?.skipToContent ?? (language === 'tr' ? 'İçeriğe geç' : 'Skip to content')}
-      </a>
-      <div className="app-container">
-        <Header />
-        {/* Project pages: back to their world in the atlas, or on to the next one. */}
-        <RouteBadge />
-        <main id="main-content" className="main-content" tabIndex={-1}>
-          {children}
-        </main>
-        <Footer />
-      </div>
+      {inShell ? children : (
+        <>
+          <a href="#main-content" className="skip-link">
+            {t.aria?.skipToContent ?? (language === 'tr' ? 'İçeriğe geç' : 'Skip to content')}
+          </a>
+          <div className="app-container">
+            <Header />
+            {/* Project pages: back to their world in the atlas, or on to the next one. */}
+            <RouteBadge />
+            <main id="main-content" className="main-content" tabIndex={-1}>
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </>
+      )}
     </>
   )
 }

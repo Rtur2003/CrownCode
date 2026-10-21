@@ -1,5 +1,5 @@
 /**
- * Route badge — the "you are here" plate on every project page.
+ * Route badge: the way back to the atlas, and on to the neighbouring projects.
  *
  * Project pages are the worlds of the homepage atlas. The badge finds the
  * current page in PRODUCT_CATALOG and offers the way back to that world in
@@ -17,7 +17,6 @@ import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
 import { worldLook, worldName } from '@/config/showroom-worlds'
 import styles from './RouteBadge.module.css'
 
-const pad = (n: number) => String(n).padStart(2, '0')
 const isExternal = (href: string) => /^https?:/.test(href)
 
 /** Catalog index of the world whose page is `pathname`, or -1. */
@@ -65,7 +64,6 @@ export function RouteBadge() {
     const entry = PRODUCT_CATALOG[at]
     return {
       entry,
-      number: pad(at + 1),
       name: worldName(entry, resolveProduct(entry, t).title),
       accent: worldLook(entry).accent,
       external: isExternal(entry.href),
@@ -81,11 +79,10 @@ export function RouteBadge() {
       data-dir={dir}
       rel={w.external ? 'noreferrer' : dir}
       target={w.external ? '_blank' : undefined}
-      aria-label={`${dir === 'prev' ? copy.previous : copy.next}: ${w.number} ${w.name}${w.external ? ` (${copy.newTab})` : ''}`}
+      aria-label={`${dir === 'prev' ? copy.previous : copy.next}: ${w.name}${w.external ? ` (${copy.newTab})` : ''}`}
       style={{ '--world': w.accent } as CSSProperties}
     >
       {dir === 'prev' && <ChevronLeft size={16} aria-hidden="true" />}
-      <span className={styles.number}>{w.number}</span>
       <span className={styles.name}>{w.name}</span>
       {w.external && <ArrowUpRight size={13} className={styles.external} aria-hidden="true" />}
       {dir === 'next' && <ChevronRight size={16} aria-hidden="true" />}
@@ -99,10 +96,6 @@ export function RouteBadge() {
         <span>{copy.backToAtlas}</span>
       </Link>
       <span className={styles.rule} aria-hidden="true" />
-      <p className={styles.here}>
-        <span className={styles.srOnly}>{`${copy.current}: ${here.number} ${here.name}`}</span>
-        <span aria-hidden="true">{here.number}<span className={styles.of}>/{pad(count)}</span></span>
-      </p>
       {neighbour(world(index - 1), 'prev')}
       {neighbour(world(index + 1), 'next')}
     </nav>

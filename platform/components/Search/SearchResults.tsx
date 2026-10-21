@@ -7,6 +7,7 @@
 import React from 'react'
 import { Home, Music, Wrench, FolderOpen, ArrowRight } from 'lucide-react'
 import { SearchItem } from '@/hooks/useSearch'
+import { PRODUCT_CATALOG } from '@/config/product-catalog'
 import { useLanguage } from '@/context/LanguageContext'
 
 interface SearchResultsProps {
@@ -18,11 +19,16 @@ interface SearchResultsProps {
 const iconMap: Record<string, React.ReactNode> = {
   home: <Home size={18} />,
   'ai-music': <Music size={18} />,
-  'ml-toolkit': <Wrench size={18} />,
   projects: <FolderOpen size={18} />,
   upload: <Music size={18} />,
   'url-analysis': <Music size={18} />,
   'data-augmentation': <Wrench size={18} />
+}
+
+/** A project shows its catalog icon; the other pages and features use the small set above. */
+const iconFor = (id: string): React.ReactNode => {
+  const Icon = PRODUCT_CATALOG.find(entry => entry.id === id)?.icon
+  return Icon ? <Icon size={18} /> : iconMap[id] || <ArrowRight size={18} />
 }
 
 // SearchItem.category is singular ('page' | 'feature' | 'product'), but the
@@ -91,7 +97,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                 className="search-item"
               >
                 <div className="search-item-icon">
-                  {iconMap[item.id] || <ArrowRight size={18} />}
+                  {iconFor(item.id)}
                 </div>
                 <div className="search-item-content">
                   <div className="search-item-title">{item.title}</div>

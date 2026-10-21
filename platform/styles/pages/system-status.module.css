@@ -1,164 +1,33 @@
-.page-container {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 8rem 1.5rem 4rem;
+/* System Status: one row per service. The frame, sections and buttons are shared
+   (styles/components/world-page.module.css). */
+
+.rows { margin: 0 0 8px; padding: 0; list-style: none; }
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 90px;
+  gap: 4px 20px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+.row:last-child { border-bottom: 1px solid var(--line); }
+
+.name { font-size: clamp(19px, 1.8vw, 24px); color: var(--ink); }
+.state { font-size: 1rem; color: var(--muted); }
+.latency { text-align: right; font-family: var(--font-family-mono); font-size: 0.82rem; color: var(--soft); }
+
+.row[data-status='ok'] .state { color: var(--accent); }
+.row[data-status='error'] .state { color: var(--warn); }
+.row[data-status='loading'] .state { animation: pulse 1.4s ease-in-out infinite; }
+
+@keyframes pulse { 50% { opacity: 0.45; } }
+
+@media (max-width: 520px) {
+  .row { grid-template-columns: minmax(0, 1fr) auto; }
+  .latency { grid-column: 1 / -1; text-align: left; }
 }
 
-.header-row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-
-.header-icon {
-  color: var(--color-gold-400);
-}
-
-.title {
-  font-family: var(--font-family-heading);
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
-  font-weight: 700;
-  color: var(--color-text-primary);
-  margin: 0;
-}
-
-.status-bar {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
-}
-
-.status-dot {
-  display: inline-block;
-  width: 0.625rem;
-  height: 0.625rem;
-  border-radius: 50%;
-  box-shadow: 0 0 6px currentColor;
-}
-
-.status-dot-ok {
-  background: var(--color-success);
-  color: var(--color-success);
-}
-
-.status-dot-error {
-  background: var(--color-error);
-  color: var(--color-error);
-}
-
-.status-dot-degraded {
-  background: var(--color-warning);
-  color: var(--color-warning);
-}
-
-.status-text {
-  color: var(--color-text-secondary);
-}
-
-.refresh-btn {
-  margin-left: auto;
-  background: none;
-  border: 1px solid var(--color-border-light);
-  border-radius: var(--radius-full);
-  padding: 0.375rem 0.875rem;
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.refresh-btn:hover {
-  border-color: var(--color-gold-500);
-  color: var(--color-gold-400);
-}
-
-.services-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.service-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: 1rem 1.25rem;
-  transition: border-color 0.35s var(--ease-out-cubic);
-}
-
-.service-card:hover {
-  border-color: var(--color-border-hover);
-}
-
-.service-info {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-}
-
-.service-name {
-  font-weight: 600;
-  font-size: 0.9375rem;
-  color: var(--color-text-primary);
-}
-
-.service-latency {
-  color: var(--color-text-muted);
-  font-size: 0.8125rem;
-  font-family: var(--font-family-mono);
-}
-
-.icon-ok {
-  color: var(--color-success);
-}
-
-.icon-error {
-  color: var(--color-error);
-}
-
-.icon-loading {
-  color: var(--color-text-muted);
-}
-
-.last-checked {
-  color: var(--color-text-muted);
-  font-size: 0.75rem;
-  font-family: var(--font-family-mono);
-  margin-top: -1.25rem;
-  margin-bottom: 1.5rem;
-}
-
-.demo-label {
-  display: block;
-  color: var(--color-gold-400);
-  font-size: 0.8125rem;
-  background: rgba(201, 147, 71, 0.08);
-  border: 1px solid rgba(201, 147, 71, 0.2);
-  border-radius: var(--radius-lg);
-  padding: 0.5rem 0.875rem;
-  margin-bottom: 1.5rem;
-}
-
-@media (max-width: 640px) {
-  .page-container {
-    padding: 6rem 1rem 3rem;
-  }
-
-  .status-bar {
-    flex-wrap: wrap;
-    row-gap: 0.75rem;
-  }
-
-  .refresh-btn {
-    margin-left: 0;
-  }
+@media (prefers-reduced-motion: reduce) {
+  .row[data-status='loading'] .state { animation: none; }
 }

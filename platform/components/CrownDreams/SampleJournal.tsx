@@ -4,13 +4,14 @@ import React, { useId, useMemo, useState } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
 import { fill } from '@/components/Auris/format'
 import { DREAM_TYPES, DREAM_TYPE_LABELS, SAMPLE_DREAMS, type DreamType } from '@/data/dreams'
+import world from '@/styles/components/world-page.module.css'
 import styles from '@/styles/pages/crown-dreams.module.css'
 
 const EXCERPT_LENGTH = 110
 
 const excerpt = (text: string) => (text.length <= EXCERPT_LENGTH ? text : `${text.slice(0, EXCERPT_LENGTH).trimEnd()}…`)
 
-/** The sample entries as a numbered journal: each opens in place, nothing else on the page depends on it. */
+/** The sample entries as a journal: each opens in place, nothing else on the page depends on it. */
 export const SampleJournal: React.FC = () => {
   const { t, language } = useLanguage()
   const J = t.crownDreams.journal
@@ -24,7 +25,7 @@ export const SampleJournal: React.FC = () => {
   const entries = useMemo(() => {
     const q = query.trim().toLowerCase()
     return SAMPLE_DREAMS
-      .map((dream, index) => ({ dream, number: index + 1 }))
+      .map(dream => ({ dream }))
       .filter(({ dream }) => kind === 'all' || dream.type === kind)
       .filter(({ dream }) => {
         if (!q) {return true}
@@ -38,14 +39,14 @@ export const SampleJournal: React.FC = () => {
   const lucidCount = SAMPLE_DREAMS.filter(d => d.type === 'lucid').length
 
   return (
-    <section className={styles.section} aria-labelledby="journal-title">
-      <div className={styles.sectionHead}>
+    <section className={world.section} aria-labelledby="journal-title">
+      <div className={world.sectionHead}>
         <h2 id="journal-title">{J.title}</h2>
         <p>{J.note}</p>
-        <p className={styles.hint}>{fill(J.count, { n: SAMPLE_DREAMS.length, lucid: lucidCount })}</p>
+        <p className={world.hint}>{fill(J.count, { n: SAMPLE_DREAMS.length, lucid: lucidCount })}</p>
       </div>
 
-      <div className={styles.sectionBody}>
+      <div className={world.sectionBody}>
         <div className={styles.tools}>
           <label htmlFor={`${baseId}-search`} className="sr-only">{J.searchLabel}</label>
           <input
@@ -76,7 +77,7 @@ export const SampleJournal: React.FC = () => {
           <p className={styles.empty}>{J.noDreams}</p>
         ) : (
           <ol className={styles.entries}>
-            {entries.map(({ dream, number }) => {
+            {entries.map(({ dream }) => {
               const open = openId === dream.id
               const panelId = `${baseId}-${dream.id}`
               const title = language === 'tr' ? dream.title : dream.titleEn
@@ -91,7 +92,6 @@ export const SampleJournal: React.FC = () => {
                     aria-controls={panelId}
                     onClick={() => setOpenId(open ? null : dream.id)}
                   >
-                    <span className={styles.number}>{fill(J.entry, { n: String(number).padStart(2, '0') })}</span>
                     <span className={styles.entryTitle}>{title}</span>
                     <span className={styles.kind}>{DREAM_TYPE_LABELS[dream.type][language]}</span>
                   </button>
@@ -107,13 +107,13 @@ export const SampleJournal: React.FC = () => {
                       <div><dt>{D.duration}</dt><dd>{dream.duration} {D.durationUnit}</dd></div>
                     </dl>
 
-                    <dl className={styles.margins}>
+                    <dl className={world.margins}>
                       <div><dt>{D.emotions}</dt><dd>{dream.emotions.map(e => emotions[e] ?? e).join(', ')}</dd></div>
                       <div><dt>{D.symbols}</dt><dd>{symbols.join(', ')}</dd></div>
                     </dl>
 
-                    <h3 className={styles.readingLabel}>{D.reading}</h3>
-                    <p className={styles.interpretation}>{language === 'tr' ? dream.reading : dream.readingEn}</p>
+                    <h3 className={world.readingLabel}>{D.reading}</h3>
+                    <p className={world.interpretation}>{language === 'tr' ? dream.reading : dream.readingEn}</p>
                   </div>
                 </li>
               )

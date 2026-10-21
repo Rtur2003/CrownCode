@@ -54,7 +54,7 @@
     },
     "subtitle": "Tools, small apps and research projects around audio, data and the web. Most of the source code is open on GitHub.",
     "cta": {
-      "explore": "Explore Projects",
+      "explore": "Browse projects",
       "github": "View on GitHub"
     },
     "features": {
@@ -84,7 +84,7 @@
         "title": "Noir & Grain: Restaurant Template",
         "description": "A website template for fine-dining restaurants. Scenes scroll sideways with WebGL ink transitions on desktop, mobile gets its own story-style layout, and reservations go through WhatsApp.",
         "showroomDescription": "A restaurant website template with a menu, mobile stories and WhatsApp reservations.",
-        "status": "Active",
+        "status": "",
         "stats": "Template · React",
         "features": [
           "React 19 + GSAP",
@@ -101,11 +101,11 @@
             "story": "Magazine-style story"
           },
           "aboutTitle": "What it is",
-          "about": "A sample project for telling a restaurant: 'send us your copy and photos, and we'll build your site like this.' On desktop, scenes scroll sideways with WebGL ink transitions between them. On mobile, a separate story-style interface opens that works like an app. Reservation requests go straight to WhatsApp with no server needed, or can be handled through the CrownCode API with a table management panel.",
+          "about": "A sample of what a restaurant site can be. On desktop the scenes scroll sideways, with WebGL ink transitions between them; on mobile a separate story-style layout opens, closer to an app. Reservation requests can go straight to WhatsApp with no server, or through the CrownCode API with a table management panel.",
           "techTitle": "Technology",
           "runTitle": "Run Locally",
           "sourceNote": "Source: templates/noir-grain",
-          "metaDescription": "A cinematic website template for fine-dining restaurants: WebGL ink transitions, a story-style mobile layout and WhatsApp reservations."
+          "metaDescription": "A website template for fine-dining restaurants with WebGL ink transitions, a story-style mobile layout and WhatsApp reservations."
         }
       },
       "aiMusic": {
@@ -136,7 +136,7 @@
         "title": "Crown Fortune",
         "description": "A fortune wheel that resets every midnight. Spin it, draw a card from a 22-card deck, and read the day's message. Just for fun.",
         "showroomDescription": "A daily fortune wheel that draws from a 22-card deck.",
-        "status": "Active",
+        "status": "",
         "stats": "Daily · Cards",
         "features": [
           "Fortune Wheel",
@@ -148,7 +148,7 @@
         "title": "Crown Dreams",
         "description": "Write down a dream and Gemini picks out its emotions, themes and symbols. The journal and lucid-dream tracking currently show sample data.",
         "showroomDescription": "Interprets dream emotions and symbols with Gemini. Journal and tracking screens use sample data.",
-        "status": "Active",
+        "status": "",
         "stats": "Web · Gemini analysis",
         "features": [
           "Dream Journal",
@@ -160,7 +160,7 @@
         "title": "Crown Commend",
         "description": "Drafts a comment for a YouTube video with Gemini, based on what the video covers and its subtitles when there are any. If you like the draft, you can post it to YouTube from the page.",
         "showroomDescription": "Drafts comments from a YouTube video’s topic and subtitles.",
-        "status": "Active",
+        "status": "",
         "stats": "Web · Multilingual",
         "features": [
           "Gemini",
@@ -172,7 +172,7 @@
         "title": "Crown Vote: VOTRYX",
         "description": "A Windows app that votes on DistroKid Spotlight for you through Chrome. It can run several browser windows at once and waits in the system tray.",
         "showroomDescription": "A Windows app that automates DistroKid Spotlight voting in Chrome.",
-        "status": "Active",
+        "status": "",
         "stats": "Desktop · Windows",
         "features": [
           "Selenium Automation",
@@ -190,8 +190,8 @@
     }
   },
   "audioDataset": {
-    "title": "Audio Dataset Tools",
-    "subtitle": "Tools for preparing and processing audio datasets for AI music detection",
+    "title": "ML Toolkit",
+    "subtitle": "Convert, multiply and label audio for a dataset.",
     "about": {
       "title": "What it does",
       "body": [
@@ -200,43 +200,39 @@
         "Processing runs on the CrownCode backend. If it has been idle it needs a minute or two to wake up, and the first request waits for it."
       ]
     },
-    "demo": {
-      "badge": "Interface Demo",
-      "notice": "Frontend application - Backend processing will be added in future phases"
-    },
     "tools": {
-      "upload": {
-        "title": "Audio File Upload",
-        "description": "Batch audio file upload and format validation"
+      "augment": {
+        "title": "Augmentation",
+        "description": "Make new samples from one file: shift the pitch or speed, boost the bass, trim silence, mix in a second file or add faint noise."
       },
       "convert": {
-        "title": "Format Conversion",
-        "description": "Convert between MP3, WAV, FLAC formats"
-      },
-      "augment": {
-        "title": "Data Augmentation",
-        "description": "Audio augmentation with pitch, tempo and noise"
+        "title": "Conversion",
+        "description": "Move a file between WAV, MP3, FLAC and OGG."
       },
       "organize": {
-        "title": "Dataset Organization",
-        "description": "Labeling and categorization tools"
+        "title": "Labelling",
+        "description": "Read a file's length, tempo, key and loudness and get a set of tags to start from."
       }
     },
     "interface": {
-      "backToTools": "Back to Tools",
-      "step1": "1. Upload Audio",
-      "step2": "2. Configure Augmentation",
+      "toolsLabel": "Tool",
+      "filesTitle": "Audio",
+      "filesNote": "One file at a time, up to 30 MB. Mixing takes a second file.",
+      "optionsTitle": "Options",
       "selected": "selected",
-      "demoNote": "(Only the first file will be processed in this demo)",
-      "startProcessing": "Start Processing",
-      "processing": "Processing...",
-      "downloadResult": "Download Result",
-      "openTool": "Open Tool →",
-      "comingSoon": "Coming Soon",
+      "startProcessing": "Process",
+      "processing": "Working...",
+      "downloadResult": "Download result",
+      "logTitle": "Progress",
       "errors": {
-        "selectFile": "Please select a file first.",
-        "processingFailed": "Processing failed",
-        "unexpected": "An unexpected error occurred."
+        "selectFile": "Choose a file first.",
+        "processingFailed": "The file could not be processed.",
+        "unexpected": "Something went wrong. Try again.",
+        "tooLarge": "{name} is over 30 MB.",
+        "invalidFile": "That file is not an audio format the server can read.",
+        "rateLimit": "Too many requests. Wait a minute and try again.",
+        "busy": "The server is busy. Try again in a moment.",
+        "unreachable": "The server could not be reached. It may still be waking up; try again shortly."
       }
     },
     "meta": {
@@ -423,7 +419,7 @@
       "empty": "Waiting for a source",
       "idle": "Pick a track and its waveform and spectrogram are drawn here.",
       "waveform": "Waveform",
-      "spectrogram": "Spectrogram · 40 Hz - 20 kHz",
+      "spectrogram": "Spectrogram · 40 Hz to 20 kHz",
       "residual": "High-band ripple · above 4 kHz",
       "cutoff": "Bandwidth",
       "play": "Play",
@@ -727,145 +723,94 @@
       "serverDecodeFailed": "The server couldn't open this file. Convert it to WAV or MP3 and try again.",
       "audioSilent": "The audio seems to be silent, so there's nothing to analyse.",
       "jobLost": "The server restarted and the analysis stopped. You'll need to start it again."
+    },
+    "world": {
+      "title": "Your track, as a world",
+      "lead": "Time runs once around the equator. Low sounds sit at the south pole, high sounds at the north. Drag the planet to turn it, or use the slider.",
+      "position": "Position in the track",
+      "hear": "Hear this moment",
+      "stop": "Stop",
+      "how": "How to read it",
+      "legend": {
+        "raised": "Raised ground is louder.",
+        "ai": "Amber: the models leaned towards AI.",
+        "human": "Green: they leaned towards human.",
+        "rings": "Fine rings: repeated peaks in the spectrum, a fingerprint some generators leave.",
+        "marks": "A tick every {s} seconds along the equator."
+      },
+      "readout": {
+        "ai": "Leaned AI, {p}",
+        "human": "Leaned human, {p}",
+        "silent": "Silence",
+        "none": "Not read"
+      },
+      "covers": "The world shows the first {sec} seconds of the track."
     }
   },
   "mlToolkit": {
-    "badge": "ML Toolkit",
-    "title": "Dataset Augmentation",
-    "subtitle": "Create new samples from your dataset, convert formats and pull out tags",
-    "dataType": {
-      "title": "Select Data Type",
-      "subtitle": "What type of dataset will you work with?",
-      "image": {
-        "title": "Image Dataset",
-        "description": "Multiply your photos and images"
-      },
-      "audio": {
-        "title": "Audio Dataset",
-        "description": "Create new variations of your audio files"
-      }
-    },
     "fileUploader": {
-      "image": {
-        "title": "Upload Image Files",
-        "hint": "JPG, PNG, WEBP supported"
-      },
       "audio": {
-        "title": "Upload Audio Files",
-        "hint": "MP3, WAV, OGG supported"
+        "title": "Choose audio files",
+        "hint": "MP3, WAV, FLAC, M4A or OGG"
       },
-      "subtitle": "Drag and drop or click to select files",
-      "filesUploaded": "Uploaded Files"
-    },
-    "imageOptions": {
-      "title": "Image Processing Options",
-      "selectedCount": "options active",
-      "colorChange": {
-        "title": "Color Change",
-        "description": "Modify brightness, contrast and color tones"
-      },
-      "rotation": {
-        "title": "Rotation",
-        "description": "Rotate images at random angles"
-      },
-      "zoomIn": {
-        "title": "Zoom In",
-        "description": "Zoom in and crop images"
-      },
-      "zoomOut": {
-        "title": "Zoom Out",
-        "description": "Zoom out and add padding"
-      },
-      "blend": {
-        "title": "Blending",
-        "description": "Blend two images to create new one"
-      },
-      "overlay": {
-        "title": "Image Overlay",
-        "description": "Add another image inside an image"
-      }
+      "subtitle": "Drop files here or click to browse",
+      "filesUploaded": "Selected files"
     },
     "audioOptions": {
-      "title": "Audio Processing Options",
-      "selectedCount": "options active",
-      "mixAudioNeedsTwoFiles": "Upload a second audio file to mix.",
-      "mixAudioHint": "Upload a second file to mix in (the 2nd file gets blended).",
+      "title": "Changes",
+      "selectedCount": "selected",
+      "mixAudioNeedsTwoFiles": "Mixing needs a second file. Add one above.",
+      "mixAudioHint": "The second file is looped or cut to the first one's length and blended in.",
       "pitchShift": {
-        "title": "Pitch Shift",
-        "description": "Shift the pitch up or down"
+        "title": "Pitch shift",
+        "description": "Up to two semitones higher or lower, picked at random."
       },
       "speedChange": {
-        "title": "Speed Change",
-        "description": "Increase or decrease audio speed"
+        "title": "Speed",
+        "description": "Between 0.9x and 1.1x, picked at random. The pitch stays."
       },
       "bassBoost": {
-        "title": "Bass/Treble",
-        "description": "Adjust bass and treble levels"
+        "title": "Bass boost",
+        "description": "Adds weight below 200 Hz."
       },
       "trimSilence": {
-        "title": "Trim Silence",
-        "description": "Remove silence at start and end"
+        "title": "Trim silence",
+        "description": "Cuts the quiet parts at the start and the end."
       },
       "mixAudio": {
-        "title": "Audio Mixing",
-        "description": "Mix two audio files"
+        "title": "Mix",
+        "description": "Blends in a second file."
       },
       "addNoise": {
-        "title": "Add Noise",
-        "description": "Add slight background noise"
+        "title": "Noise",
+        "description": "Adds a faint hiss."
       }
     },
     "formatConverter": {
-      "title": "Choose Target Format",
+      "title": "Target format",
       "lossy": "Lossy",
       "lossless": "Lossless",
-      "bitrateLabel": "Bitrate",
-      "convert": "Convert",
-      "converting": "Converting...",
-      "downloadResult": "Download Converted File"
+      "bitrateLabel": "Bitrate"
     },
     "organizer": {
-      "step2": "Automatic Tagging",
-      "description": "Your audio file will be analyzed to extract real acoustic properties like duration, tempo, key, and loudness, then auto-suggest dataset tags based on them.",
-      "analyze": "Analyze",
-      "duration": "Duration",
+      "description": "The file is analysed for its real length, tempo, key and loudness, and tags are suggested from them.",
+      "analyze": "Analyse",
+      "duration": "Length",
       "tempo": "Tempo",
       "key": "Key",
       "loudness": "Loudness",
-      "noBeat": "No beat",
-      "autoTags": "Suggested Tags"
+      "noBeat": "No clear beat",
+      "autoTags": "Suggested tags"
     },
     "processLog": {
-      "title": "Process Status",
-      "notStarted": "Process not started..."
+      "title": "Progress",
+      "notStarted": "Nothing has run yet."
     },
     "logs": {
-      "filesUploaded": "{count} files uploaded",
-      "processStarted": "Process started...",
-      "allReady": "Total {count} files ready!",
-      "imageProcessed": "image",
-      "audioProcessed": "audio",
-      "processed": "Processed",
-      "uploadFirst": "Please upload files first!",
-      "selectOperation": "Please select at least one option!",
-      "creatingZip": "Creating ZIP file...",
-      "downloadStarted": "Download started!"
-    },
-    "meta": {
-      "title": "ML Toolkit",
-      "description": "Format conversion, augmentation and auto-tagging tools for audio datasets.",
-      "keywords": "data augmentation, ML toolkit, image processing, audio processing, dataset generator, CrownCode"
-    },
-    "buttons": {
-      "changeType": "Change Data Type",
-      "startProcess": "Start Processing"
-    },
-    "download": {
-      "button": "Download Dataset ({count} files)",
-      "downloading": "Downloading...",
-      "downloaded": "Downloaded!"
-    },
-    "optionsActive": "options active"
+      "filesUploaded": "{count} selected",
+      "processStarted": "Uploading and processing",
+      "done": "Done"
+    }
   },
   "toast": {
     "success": {
@@ -908,7 +853,7 @@
       "mlToolkit": "ML Toolkit",
       "projects": "Projects",
       "crownFortune": "Crown Fortune",
-      "crownVote": "Crown Vote - VOTRYX"
+      "crownVote": "VOTRYX"
     },
     "features": {
       "urlAnalysis": "YouTube Analysis",
@@ -939,9 +884,8 @@
       "keywords": "daily fortune wheel, card of the day, tarot, moon phase, Crown Fortune"
     },
     "header": {
-      "badge": "Crown Fortune",
       "title": "Today's Destiny",
-      "subtitle": "Spin the wheel and discover what the universe is telling you today."
+      "subtitle": "Spin the wheel and see what the day holds."
     },
     "loading": "Loading...",
     "countdown": {
@@ -971,15 +915,6 @@
       "descending": "Falling Energy",
       "stable": "Balanced Energy"
     },
-    "info": {
-      "title": "How It Works?",
-      "steps": [
-        "A new destiny is set every midnight (00:00)",
-        "Spin the wheel to discover your category",
-        "Watch your card reveal its message",
-        "Your destiny stays the same until the next day"
-      ]
-    },
     "card": {
       "reversed": "(Reversed)",
       "clickToEnlarge": "Click to enlarge",
@@ -1006,7 +941,10 @@
       "fileFallback": "card"
     },
     "streak": {
-      "daysTo": "days to"
+      "daysTo": "days to",
+      "label": "Streak",
+      "days": "days",
+      "day": "day"
     },
     "moonPhase": {
       "energySuffix": "energy"
@@ -1018,14 +956,14 @@
     },
     "collection": {
       "title": "Card Collection",
-      "complete": "Collection Complete!",
+      "complete": "Collection complete",
       "notSeen": "Not seen yet",
       "close": "Close"
     },
     "quote": {
-      "title": "Daily Quote",
-      "unknownAuthor": "Unknown"
-    }
+      "title": "Daily Quote"
+    },
+    "legendLabel": "The five areas of the wheel"
   },
   "crownVote": {
     "meta": {
@@ -1034,13 +972,8 @@
       "keywords": "votryx, distrokid, spotlight, automation, voting, selenium"
     },
     "header": {
-      "badge": "Desktop Application",
       "title": "VOTRYX",
       "subtitle": "A Windows app that automates DistroKid Spotlight voting"
-    },
-    "tabs": {
-      "download": "Download",
-      "config": "Configuration"
     },
     "features": {
       "automation": {
@@ -1069,44 +1002,46 @@
       }
     },
     "download": {
-      "title": "Download Application",
-      "description": "Download VOTRYX installer for Windows",
-      "button": "Download Windows Installer",
+      "title": "Download",
+      "description": "The VOTRYX installer for Windows.",
+      "button": "Download for Windows",
       "version": "Version",
       "size": "Size",
       "requirements": {
-        "title": "System Requirements",
+        "title": "You need",
         "items": [
-          "Windows 10/11",
-          "Google Chrome (latest version)",
-          "Internet connection"
+          "Windows 10 or 11",
+          "Google Chrome, kept up to date",
+          "An internet connection"
         ]
-      }
+      },
+      "date": "Released",
+      "loadFailed": "Release details could not be loaded from GitHub. The button opens the releases page."
     },
     "installation": {
-      "title": "Installation Steps",
+      "title": "Install",
       "steps": [
         {
-          "title": "Download Installer",
-          "description": "Click the button above to download the installer"
+          "title": "Download the installer",
+          "description": "Use the button above."
         },
         {
-          "title": "Run Setup",
-          "description": "Run the downloaded .exe file and follow the instructions"
+          "title": "Run it",
+          "description": "Open the downloaded .exe and follow the prompts."
         },
         {
-          "title": "Verify Chrome",
-          "description": "Ensure Google Chrome is installed"
+          "title": "Check Chrome",
+          "description": "VOTRYX drives Chrome, so it has to be installed."
         },
         {
-          "title": "Launch Application",
-          "description": "Start VOTRYX and configure your target URL"
+          "title": "Start VOTRYX",
+          "description": "Set your target URL, or load a config.json made on this page."
         }
       ]
     },
     "configGenerator": {
       "title": "Configuration Generator",
-      "description": "Create and download your config.json file from the web",
+      "description": "Set the options and download a config.json to keep next to the app.",
       "fields": {
         "targetUrl": "Target URL",
         "pauseBetween": "Pause Between Votes (seconds)",
@@ -1121,13 +1056,17 @@
       "generate": "Generate config.json",
       "download": "Download File",
       "preview": "Preview",
-      "copy": "Copy"
+      "copy": "Copy",
+      "downloaded": "config.json downloaded",
+      "copied": "Copied",
+      "urlInvalid": "Enter a full address starting with https://"
     },
     "github": {
       "title": "Source Code",
       "description": "VOTRYX is an open-source project",
       "button": "View on GitHub"
-    }
+    },
+    "featuresTitle": "What it does"
   },
   "crownDreams": {
     "meta": {
@@ -1186,8 +1125,7 @@
       "searchPlaceholder": "Search by word or symbol",
       "filterLabel": "Filter by kind",
       "filterAll": "All",
-      "noDreams": "No sample dream matches.",
-      "entry": "No. {n}"
+      "noDreams": "No sample dream matches."
     },
     "detail": {
       "clarity": "Clarity",
@@ -1206,21 +1144,19 @@
       "keywords": "youtube comment, ai comment, artificial intelligence, commend ai"
     },
     "header": {
-      "badge": "YouTube Comment Tool",
       "title": "Crown Commend",
-      "subtitle": "Paste a YouTube link and Gemini drafts a comment that fits the video."
+      "lead": "Paste a YouTube link and Gemini drafts a comment that fits the video."
     },
     "form": {
-      "urlLabel": "YouTube Video URL",
-      "urlPlaceholder": "https://youtube.com/watch?v=... or https://youtu.be/...",
-      "languageLabel": "Comment Language",
-      "styleLabel": "Comment Style",
-      "generateButton": "Generate Comment",
-      "generating": "Generating..."
-    },
-    "feedback": {
-      "errorTitle": "Error",
-      "successMessage": "Comment successfully posted to YouTube!"
+      "title": "Pick the video",
+      "subtitle": "Paste a link, choose the language and tone. Gemini looks at the video's title, description, top comments and, when there are any, subtitles, then writes one comment for you to change or post yourself.",
+      "urlLabel": "Video link",
+      "urlPlaceholder": "youtube.com/watch?v=… or youtu.be/…",
+      "urlInvalid": "That doesn't look like a YouTube video link.",
+      "languageLabel": "Language",
+      "styleLabel": "Tone",
+      "generateButton": "Draft a comment",
+      "generating": "Drafting…"
     },
     "styles": {
       "supportive": {
@@ -1244,26 +1180,29 @@
         "description": "Formal and respectful"
       }
     },
-    "features": {
-      "title": "Features",
-      "items": {
-        "advancedAI": {
-          "title": "Gemini",
-          "description": "Google Gemini writes the comments, based on what the video is about."
-        },
-        "multiLanguage": {
-          "title": "Multi-Language",
-          "description": "Generates comments in Turkish, English, Russian, Chinese and Japanese."
-        },
-        "transcript": {
-          "title": "Reads Subtitles",
-          "description": "Reads the subtitles when there are any, so the comment picks up on what is actually said in the video."
-        },
-        "transparency": {
-          "title": "AI Label",
-          "description": "Every posted comment carries a note saying it was written with AI."
-        }
-      }
+    "draft": {
+      "title": "The draft",
+      "editLabel": "Draft, open to editing",
+      "aiNote": "Written by Gemini. It ends with a line saying so; keep it if you post it.",
+      "withTranscript": "Used the video's subtitles.",
+      "noTranscript": "No subtitles were available, so the draft rests on the title, description and top comments.",
+      "copy": "Copy",
+      "copied": "Copied",
+      "openVideo": "Open the video",
+      "regenerate": "Draft again",
+      "time": "Drafted in {seconds} s",
+      "post": "Post to YouTube",
+      "posting": "Posting…",
+      "posted": "Posted",
+      "alreadyPostedNote": "A comment has already been posted on this video. Only one is allowed per video."
+    },
+    "how": {
+      "title": "How it works",
+      "steps": [
+        "Gemini is given the video's title, description, top comments and, if it has them, subtitles.",
+        "It writes one comment in the language and tone you picked.",
+        "You read it, change what you like and post it yourself on YouTube."
+      ]
     },
     "preview": {
       "stats": {
@@ -1273,20 +1212,11 @@
         "subscribers": "subscribers"
       }
     },
-    "editor": {
-      "aiGenerated": "AI Generated",
-      "withTranscript": "Subtitles used",
-      "copy": "Copy",
-      "copied": "Copied!",
-      "regenerate": "Regenerate",
-      "post": "Post to YouTube",
-      "posting": "Posting...",
-      "alreadyPosted": "Already Posted",
-      "processingTimeTemplate": "Generated in {{seconds}}s",
-      "disclaimer": "The comment will include a note indicating it was generated by AI when posted to YouTube.",
-      "alreadyPostedNote": "A comment has already been posted to this video. Only one comment per video is allowed."
+    "feedback": {
+      "errorTitle": "Error",
+      "successMessage": "Comment posted to YouTube."
     },
-    "disclaimer": "Crown Commend operates in compliance with YouTube's terms of service. All generated comments include a note indicating they were created by AI. Use for spam or abuse is prohibited.",
+    "disclaimer": "Use it for comments you would stand behind. Spam, mass posting and anything against YouTube's terms is not what it is for.",
     "errors": {
       "invalidUrl": "Please enter a valid YouTube URL.",
       "apiNotConfigured": "API is not configured.",
@@ -1308,26 +1238,25 @@
       "title": "Privacy Policy | CrownCode",
       "description": "What data CrownCode collects, how it is used and how it is protected."
     },
-    "backToHome": "Back to Home",
     "title": "Privacy Policy",
-    "lastUpdated": "Last updated: February 24, 2026",
-    "intro": "CrownCode respects user privacy. This policy explains our platform's data collection and usage practices.",
+    "lastUpdated": "Last updated: October 21, 2026",
+    "intro": "This page says what the CrownCode site and its tools do with your data.",
     "sections": {
       "dataCollection": {
-        "title": "Data Collection",
-        "content": "CrownCode platform collects minimal data to improve user experience. This includes browser information, preferred language and theme settings. We do not collect personally identifiable information."
+        "title": "What is collected",
+        "content": "There are no accounts. On a sample of visits the site records anonymous page-speed measurements and the page they came from. The servers that host the site and the tools (Cloudflare and Hugging Face) keep ordinary access logs, which can include your IP address and browser."
       },
       "dataUsage": {
-        "title": "Data Usage",
-        "content": "Collected data is used solely to provide platform functionality. Your data is not shared with or sold to third parties. Tools that use AI (Crown Commend, Crown Dreams) do not store user data."
+        "title": "What happens to what you send",
+        "content": "Audio, a dream text or a video link goes to the tool's server only to produce your result. Analyses are held in memory for a short while so you can fetch the result, then discarded. Crown Dreams sends the dream text, and Crown Commend the video's transcript, to Google's Gemini API to write the reply; Google handles that text under its own terms. Nothing is sold or used for advertising."
       },
       "dataSecurity": {
-        "title": "Data Security",
-        "content": "All data transfers are encrypted via HTTPS. Local storage (localStorage) only stores user preferences. Session data is cleared when the browser is closed."
+        "title": "On your device",
+        "content": "Your language choice, your analysis history and your Crown Fortune draws are kept in your browser's local storage and never leave your device. Clear the site's data in your browser to remove them. Traffic between you and the site is encrypted over HTTPS."
       },
       "cookies": {
         "title": "Cookies",
-        "content": "The platform uses essential cookies required for basic functionality. These cookies include language preference and theme settings. No third-party tracking cookies are used."
+        "content": "One cookie remembers your language. There are no tracking or advertising cookies."
       }
     },
     "contactLabel": "For privacy-related questions:"
@@ -1376,31 +1305,30 @@
       "title": "Terms of Service | CrownCode",
       "description": "The terms for using CrownCode projects and demo tools."
     },
-    "backToHome": "Back to Home",
     "title": "Terms of Service",
-    "lastUpdated": "Last updated: February 24, 2026",
-    "intro": "Please read these terms of service carefully before using the CrownCode platform. All services on the platform are subject to these terms.",
+    "lastUpdated": "Last updated: October 21, 2026",
+    "intro": "These terms cover the CrownCode site and its demo tools. By using them you accept what is written here.",
     "sections": {
       "acceptableUse": {
-        "title": "Acceptable Use",
-        "content": "By using the CrownCode platform, you agree to these terms. The platform provides software development tools, AI-powered applications, and open-source projects. You agree to use the platform for lawful purposes only."
+        "title": "Acceptable use",
+        "content": "Use the site and the tools for lawful purposes. The tools are projects built to try ideas, and they can change or go offline without notice."
       },
       "userResponsibilities": {
-        "title": "User Responsibilities",
-        "content": "You agree to use AI tools like Crown Commend responsibly. Creating spam, abuse, or content that violates platform terms of service is prohibited. All AI-generated content includes a disclaimer indicating this."
+        "title": "Your responsibility",
+        "content": "Do not use the tools for spam, abuse, or anything that breaks the rules of another service such as YouTube. Text a tool writes for you is a draft, and you are responsible for what you do with it. Upload only audio you have the right to use."
       },
       "intellectualProperty": {
-        "title": "Intellectual Property",
-        "content": "The CrownCode platform and content belong to Hasan Arthur Altuntaş. Open-source projects are provided under their respective licenses (typically MIT). You may use platform source code under its license terms."
+        "title": "Ownership",
+        "content": "The site and its content belong to Hasan Arthur Altuntaş. Source code is published under the licence stated in each repository, mostly MIT. Audio and text you upload stay yours."
       },
       "disclaimer": {
-        "title": "Disclaimer",
-        "content": "The platform is provided \"as is\". AI tools are experimental and result accuracy is not guaranteed. We are not responsible for platform interruptions or data loss. We do not guarantee third-party service availability."
+        "title": "No warranty",
+        "content": "Everything is provided as it is, without warranty. AURIS and the other tools are experimental and their results can be wrong, so do not base decisions that matter on them. Interruptions, lost results and the availability of third-party services are outside CrownCode's control."
       }
     },
     "openSource": {
-      "title": "Open Source Licenses",
-      "content": "CrownCode is an open-source project. Source code is available on GitHub under the MIT license. Third-party libraries are subject to their own licenses.",
+      "title": "Open source",
+      "content": "CrownCode is open source. The code is on GitHub under the MIT licence; third-party libraries keep their own licences.",
       "viewOnGithub": "View on GitHub"
     },
     "contactLabel": "For questions about these terms:"
@@ -1412,6 +1340,11 @@
     "previous": "Previous world",
     "next": "Next world",
     "newTab": "opens in a new tab"
+  },
+  "backendNote": {
+    "waking": "The server is waking up. The first request after a quiet spell can take a minute or two.",
+    "down": "The server is not answering right now. Try again in a few minutes.",
+    "retry": "Check again"
   },
   "aria": {
     "homePage": "CrownCode Home",
@@ -1530,11 +1463,11 @@
   "analysisHistory": {
     "meta": {
       "title": "Analysis History | CrownCode",
-      "description": "View your recent AI music analysis results.",
+      "description": "The AURIS analyses you have run in this browser. They are kept on this device only and can be cleared at any time.",
       "keywords": "analysis history, AI music detection, results, history"
     },
     "title": "Analysis History",
-    "subtitle": "Your recent analysis results",
+    "subtitle": "Analyses run in this browser. They are stored on this device only.",
     "lastAnalysis": "Last Analysis",
     "noHistory": "No analysis history yet.",
     "noHistoryDesc": "Run an analysis on the AI Music Detection page to see your results here.",
@@ -1548,12 +1481,13 @@
     "verdictHuman": "Human Composed",
     "confidenceLabel": "Confidence Score",
     "durationLabel": "Processing Time",
-    "modelLabel": "Model"
+    "modelLabel": "Model",
+    "cancel": "Cancel"
   },
   "systemStatus": {
     "meta": {
       "title": "System Status | CrownCode",
-      "description": "Live status of CrownCode services.",
+      "description": "Live checks of the CrownCode site, its API and the backend that runs the audio tools, with the time each one took to answer.",
       "keywords": "system status, health, uptime, services"
     },
     "title": "System Status",
@@ -1562,7 +1496,16 @@
     "degraded": "Partial degradation detected",
     "refresh": "Refresh",
     "lastChecked": "Last checked",
-    "noExternalBackend": "External backend not configured, only local API endpoints are monitored",
-    "checking": "Checking services…"
+    "checking": "Checking services…",
+    "services": {
+      "frontend": "Site API",
+      "version": "Version",
+      "backend": "Backend"
+    },
+    "state": {
+      "ok": "Operational",
+      "error": "No answer",
+      "loading": "Checking"
+    }
   }
 }

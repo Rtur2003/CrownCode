@@ -165,11 +165,12 @@ describe('Crown Dreams page', () => {
   })
 
   describe('sample journal', () => {
-    it('lists every sample dream, collapsed, with its number', async () => {
+    it('lists every sample dream, collapsed, under its title', async () => {
       await renderPage()
-      const entries = screen.getAllByRole('button', { expanded: false }).filter(b => /^No\. \d\d/.test(b.textContent ?? ''))
+      const entries = screen.getAllByRole('button', { expanded: false }).filter(b => b.className.includes('entryHead'))
       expect(entries).toHaveLength(SAMPLE_DREAMS.length)
-      expect(entries[0]).toHaveTextContent('No. 01')
+      expect(entries[0]).toHaveTextContent(SAMPLE_DREAMS[0]!.titleEn)
+      expect(entries[0]).not.toHaveTextContent(/No\. \d/)
     })
 
     it('opens one entry at a time and closes it again', async () => {

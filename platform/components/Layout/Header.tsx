@@ -7,13 +7,12 @@ import { ArrowRight, ArrowUpRight, ChevronDown, Github, Menu, X } from 'lucide-r
 import { LanguageSelector, LanguageToggle } from '@/components/Navigation/LanguageSelector'
 import { useLanguage } from '@/context/LanguageContext'
 import { PRODUCT_CATALOG } from '@/config/product-catalog'
-import { worldLook, worldName } from '@/config/showroom-worlds'
+import { worldName, worldSector } from '@/config/showroom-worlds'
 import { MUSIC_SITE_URL } from '@/config/site'
 
 interface ProjectLink {
   id: string
   href: string
-  index: string
   name: string
   sector: string
   external: boolean
@@ -32,12 +31,11 @@ export const Header: React.FC = () => {
   const reducedMotion = useReducedMotion()
 
   const items = t.products.items as Record<string, { title: string }>
-  const projects: ProjectLink[] = PRODUCT_CATALOG.map((entry, i) => ({
+  const projects: ProjectLink[] = PRODUCT_CATALOG.map((entry) => ({
     id: entry.id,
     href: entry.href,
-    index: String(i + 1).padStart(2, '0'),
     name: worldName(entry, items[entry.localeKey]?.title ?? entry.id),
-    sector: worldLook(entry).sector[language === 'en' ? 'en' : 'tr'],
+    sector: worldSector(entry, language === 'en' ? 'en' : 'tr', (items[entry.localeKey] as { stats?: string } | undefined)?.stats ?? ''),
     external: entry.href.startsWith('http'),
   }))
   const isProjectActive = projects.some(p => !p.external && pathname.startsWith(p.href))
@@ -128,7 +126,6 @@ export const Header: React.FC = () => {
     const active = !p.external && pathname.startsWith(p.href)
     const body = (
       <>
-        <span className="nav-project-index">{p.index}</span>
         <span className="nav-project-text">
           <span className="nav-project-name">{p.name}</span>
           <span className="nav-project-sector">{p.sector}</span>

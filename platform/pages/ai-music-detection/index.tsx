@@ -4,7 +4,7 @@
 // a labelled fallback. Jobs run in hooks/auris/runner.ts, so they survive
 // leaving this page.
 
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react'
 import type { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -15,11 +15,11 @@ import { ModelMetrics, ReportLog, Stop, Verdict, summarize, type DoneJob } from 
 import { JobProgress, jobSegments } from '@/components/Auris/JobProgress'
 import { TimelineView } from '@/components/Auris/Timeline'
 import type { WorldMode } from '@/components/Auris/AurisWorld'
+import { TrackWorld } from '@/components/Auris/TrackWorld'
+import { buildTrackSurface, longitudeOf, secondsAt } from '@/components/Auris/trackSurface'
 import { aiProbability, clock, fill, isTrained, num, percent } from '@/components/Auris/format'
 import { AURIS_MODELS_URL, AURIS_SPACE_URL } from '@/config/api'
 import { AURIS_MODEL } from '@/config/auris-model'
-import { PRODUCT_CATALOG } from '@/config/product-catalog'
-import { worldLook } from '@/config/showroom-worlds'
 import { useLanguage } from '@/context/LanguageContext'
 import type { AnalysisResult } from '@/hooks/analysisTypes'
 import { dismissInterrupted, markSeen, openFromHistory, rerunLast, retryInterrupted } from '@/hooks/auris/runner'
@@ -34,10 +34,6 @@ const AurisWorld = dynamic(() => import('@/components/Auris/AurisWorld'), { ssr:
 
 type Tab = 'file' | 'url' | 'mic'
 
-const WORLD_ID = 'ai-music-detection'
-const WORLD_INDEX = PRODUCT_CATALOG.findIndex(p => p.id === WORLD_ID)
-const LOOK = worldLook({ id: WORLD_ID })
-const pad = (n: number) => String(n).padStart(2, '0')
 
 /** What the planet shows for the current job. */
 const worldState = (job: AurisJob | null): { mode: WorldMode; progress: number; threshold: number | null; ticks: number } => {
@@ -79,6 +75,11 @@ const AurisPage: NextPage = () => {
   const dragDepth = useRef(0)
   const stageRef = useRef<HTMLElement>(null)
   const reducedMotion = useReducedMotion()
+  // The track world: the longitude facing the viewer, the one under the pointer, and a request to turn to one.
+  const [faceU, setFaceU] = useState(0.012)
+  const [probeU, setProbeU] = useState<number | null>(null)
+  const [focus, setFocus] = useState<{ u: number } | null>(null)
+  const sliderUntil = useRef(0)
   const active = isActive(job)
   const finished = job?.stage === 'done' || job?.stage === 'error'
   // One audio element for the signal view and the timeline, so they never play over each other.
@@ -126,7 +127,15 @@ const AurisPage: NextPage = () => {
   const openTimeline = () => document.getElementById('auris-timeline')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' })
   const world = worldState(job)
   const signal = job?.signal?.visuals ? job.signal : null
-  const sector = language === 'en' ? LOOK.sector.en : LOOK.sector.tr
+  const surface = useMemo(
+    () => (report ? buildTrackSurface(signal, report.result.timeline ?? null) : null),
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- the surface follows the finished result, not every render of the job
+    [report?.result, signal],
+  )
+  const totalSec = report?.result.audioInfo?.duration ?? report?.result.timeline?.totalSec ?? surface?.spanSec ?? 0
+  const playheadU = surface && playback.playing ? longitudeOf(surface, playback.progress * totalSec) : null
+  const hear = (u: number) => { if (surface) {playback.playAtSeconds(secondsAt(surface, u))} }
+  const onFace = useCallback((u: number) => { if (performance.now() > sliderUntil.current) {setFaceU(u)} }, [])
 
   return (
     <MainLayout
@@ -157,16 +166,18 @@ const AurisPage: NextPage = () => {
                 active={inView}
                 reducedMotion={reducedMotion}
                 onReady={() => setWorldReady(true)}
+                track={surface}
+                focus={focus}
+                playhead={playheadU}
+                onFace={onFace}
+                onProbe={setProbeU}
+                onPick={hear}
               />
             </div>
           </div>
           <div className={styles.scrim} aria-hidden="true" />
 
           <div className={styles.panel}>
-            <p className={styles.kicker}>
-              <span>{pad(WORLD_INDEX + 1)} / {pad(PRODUCT_CATALOG.length)}</span>
-              <span>{sector}</span>
-            </p>
             <h1 id="auris-title" className={styles.title}>
               AURIS
               <span className={styles.question}>{A.intro.question}</span>
@@ -192,6 +203,20 @@ const AurisPage: NextPage = () => {
               </>
             )}
           </div>
+
+          {report && surface && (
+            <TrackWorld
+              surface={surface}
+              timeline={report.result.timeline ?? null}
+              totalSec={totalSec}
+              at={probeU ?? faceU}
+              playing={playback.playing}
+              canHear={playback.available}
+              onScrub={u => { sliderUntil.current = performance.now() + 700; setFaceU(u); setFocus({ u }) }}
+              onHear={() => hear(probeU ?? faceU)}
+              onStop={playback.toggle}
+            />
+          )}
 
           <ServerStatus server={server} />
         </section>
@@ -305,6 +330,8 @@ const FileSource: React.FC<{ auris: AurisController }> = ({ auris }) => {
         ref={input}
         type="file"
         accept="audio/*,.mp3,.wav,.flac,.m4a,.aac,.ogg,.opus"
+        aria-label={F.browse}
+        tabIndex={-1}
         hidden
         onChange={e => { pick(e.target.files?.[0]); e.target.value = '' }}
       />

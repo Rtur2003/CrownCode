@@ -109,7 +109,7 @@ export const Footer: React.FC = () => {
           <div className="footer-sections">
             {footerSections.map((section) => (
               <div key={section.title} className="footer-section">
-                <h3 className="section-title">{section.title}</h3>
+                <h2 className="section-title">{section.title}</h2>
                 <ul className="section-links">
                   {section.links.map((link) => (
                     <li key={link.href}>

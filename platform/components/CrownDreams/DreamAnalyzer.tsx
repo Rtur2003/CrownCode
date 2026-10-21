@@ -1,8 +1,10 @@
 'use client'
 
 import React from 'react'
+import { BackendNote } from '@/components/UI/BackendNote'
 import { useLanguage } from '@/context/LanguageContext'
 import { MAX_DREAM_LENGTH, useDreamAnalysis, type DreamEmotion } from '@/hooks/useDreamAnalysis'
+import world from '@/styles/components/world-page.module.css'
 import styles from '@/styles/pages/crown-dreams.module.css'
 
 const MIN_DREAM_LENGTH = 10
@@ -19,17 +21,18 @@ export const DreamAnalyzer: React.FC = () => {
   const tooShort = dreamText.trim().length < MIN_DREAM_LENGTH
 
   return (
-    <section className={styles.section} aria-labelledby="dream-write-title">
-      <div className={styles.sectionHead}>
+    <section className={world.section} aria-labelledby="dream-write-title">
+      <div className={world.sectionHead}>
         <h2 id="dream-write-title">{da.title}</h2>
         <p>{da.subtitle}</p>
       </div>
 
-      <div className={styles.sectionBody}>
+      <div className={world.sectionBody}>
+        <BackendNote />
         <label htmlFor="dream-text" className="sr-only">{da.label}</label>
         <textarea
           id="dream-text"
-          className={styles.textarea}
+          className={world.textarea}
           placeholder={da.placeholder}
           value={dreamText}
           onChange={(e) => setDreamText(e.target.value)}
@@ -40,13 +43,13 @@ export const DreamAnalyzer: React.FC = () => {
         />
 
         <div className={styles.writeFoot}>
-          <p id="dream-text-hint" className={styles.hint}>
-            <span className={styles.count}>{dreamText.length} / {MAX_DREAM_LENGTH}</span>
+          <p id="dream-text-hint" className={world.hint}>
+            <span className={world.count}>{dreamText.length} / {MAX_DREAM_LENGTH}</span>
             {tooShort && <span> · {da.hint}</span>}
           </p>
           <button
             type="button"
-            className={styles.primary}
+            className={world.primary}
             onClick={() => analyzeDream(backendLanguage)}
             disabled={tooShort || isReading}
             aria-busy={isReading}
@@ -55,17 +58,17 @@ export const DreamAnalyzer: React.FC = () => {
           </button>
         </div>
 
-        <p className={styles.privacy}>{da.privacy}</p>
+        <p className={world.privacy}>{da.privacy}</p>
 
-        {error && <p className={styles.error} role="alert">{error}</p>}
+        {error && <p className={world.error} role="alert">{error}</p>}
 
         <div aria-live="polite">
           {result && (
-            <div className={styles.reading}>
-              <h3 className={styles.readingLabel}>{da.interpretationLabel}</h3>
-              <p className={styles.interpretation}>{result.interpretation}</p>
+            <div className={world.reading}>
+              <h3 className={world.readingLabel}>{da.interpretationLabel}</h3>
+              <p className={world.interpretation}>{result.interpretation}</p>
 
-              <dl className={styles.margins}>
+              <dl className={world.margins}>
                 {result.emotions.length > 0 && (
                   <div>
                     <dt>{da.emotionsLabel}</dt>
@@ -86,9 +89,9 @@ export const DreamAnalyzer: React.FC = () => {
                 )}
               </dl>
 
-              {result.lucidityIndicator && <p className={styles.note}>{da.lucidDetected}</p>}
-              <p className={styles.hint}>{da.disclaimer}</p>
-              <button type="button" className={styles.link} onClick={reset}>{da.analyzeAnother}</button>
+              {result.lucidityIndicator && <p className={world.note}>{da.lucidDetected}</p>}
+              <p className={world.hint}>{da.disclaimer}</p>
+              <button type="button" className={world.link} onClick={reset}>{da.analyzeAnother}</button>
             </div>
           )}
         </div>

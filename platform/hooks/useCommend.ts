@@ -4,6 +4,7 @@
  */
 
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react'
+import { API_BASE_URL } from '@/config/api'
 import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
 import { useLocalHistory, HISTORY_KEYS } from '@/hooks/useLocalHistory'
 import { MAX_COMMENT_LENGTH, parseGenerateResponse, parsePostResponse, parseYouTubeVideoId } from '@/hooks/validators'
@@ -110,7 +111,7 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
   const [error, setError] = useState<CommendError | null>(null)
   const [postResult, setPostResult] = useState<PostResponse | null>(null)
 
-  const apiBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_API_URL?.trim(), [])
+  const apiBaseUrl = API_BASE_URL
   const requestIdRef = useRef(0)
   const controllerRef = useRef<AbortController | null>(null)
   const { lastEntry: lastCommend, save: saveCommend } = useLocalHistory<{ comment: string; videoTitle: string }>(HISTORY_KEYS.COMMEND)
@@ -145,11 +146,6 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
       return
     }
 
-    if (!apiBaseUrl) {
-      setError({ code: 'no_api', message: i18nMessages.apiNotConfigured })
-      setState('error')
-      return
-    }
 
     const currentRequestId = ++requestIdRef.current
     const isStale = () => requestIdRef.current !== currentRequestId
@@ -208,10 +204,6 @@ export const useCommend = (messages: Partial<CommendMessages> = {}) => {
       return
     }
 
-    if (!apiBaseUrl) {
-      setError({ code: 'no_api', message: i18nMessages.apiNotConfigured })
-      return
-    }
 
     // Guard against a second click firing before the 'posting' state
     // re-render disables the button, and against a stale response landing
