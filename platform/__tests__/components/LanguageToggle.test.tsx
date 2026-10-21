@@ -19,7 +19,7 @@ const toggle = (
 describe('LanguageToggle links', () => {
   afterEach(() => window.history.replaceState({}, '', '/'))
 
-  it('links to the bare path when the URL has no query, not the router's stale one', () => {
+  it('links to the bare path when the URL has no query, whatever the router remembers', () => {
     render(toggle)
     screen.getAllByRole('link').forEach(link => expect(link).toHaveAttribute('href', '/search'))
   })
