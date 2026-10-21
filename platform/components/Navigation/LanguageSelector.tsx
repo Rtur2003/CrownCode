@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useRef, useState } from 'react'
+import React, { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { AnimatePresence, m as motion } from 'motion/react'
@@ -10,6 +10,10 @@ const LANGUAGES: { code: Locale; label: string; short: string }[] = [
   { code: 'tr', label: 'Türkçe', short: 'TR' },
   { code: 'en', label: 'English', short: 'EN' },
 ]
+
+const noSubscription = () => () => {}
+const queryAndHash = () => window.location.search + window.location.hash
+const noQueryOnServer = () => ''
 
 /**
  * Language options are real links to the other locale's URL (/en/…), so
@@ -27,9 +31,14 @@ function LanguageLink({ code, className, children, onSelect }: {
   // Error pages are prerendered as /404; the browser's asPath is the missing
   // URL, so link to the home page there to keep SSR and hydration equal.
   const isErrorPage = router.pathname === '/404' || router.pathname === '/_error'
+  // The prerendered HTML never has a query string, so the link starts as the
+  // bare path and picks up ?q=…/#… once the browser has it. Same HTML on both
+  // sides of hydration, and switching language keeps the search.
+  const suffix = useSyncExternalStore(noSubscription, queryAndHash, noQueryOnServer)
+  const path = router.asPath.split(/[?#]/)[0] ?? '/'
   return (
     <Link
-      href={isErrorPage ? '/' : router.asPath}
+      href={isErrorPage ? '/' : path + suffix}
       locale={code}
       scroll={false}
       hrefLang={code}
