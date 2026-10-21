@@ -15,7 +15,7 @@ import { ModelMetrics, ReportLog, Stop, Verdict, summarize, type DoneJob } from 
 import { JobProgress, jobSegments } from '@/components/Auris/JobProgress'
 import { TimelineView } from '@/components/Auris/Timeline'
 import type { WorldMode } from '@/components/Auris/AurisWorld'
-import { TrackWorld } from '@/components/Auris/TrackWorld'
+import { TrackNow, TrackWorld } from '@/components/Auris/TrackWorld'
 import { buildTrackSurface, longitudeOf, secondsAt } from '@/components/Auris/trackSurface'
 import { aiProbability, clock, fill, isTrained, num, percent } from '@/components/Auris/format'
 import { AURIS_MODELS_URL, AURIS_SPACE_URL } from '@/config/api'
@@ -174,6 +174,7 @@ const AurisPage: NextPage = () => {
                 onPick={hear}
               />
             </div>
+            {report && surface && <TrackNow surface={surface} timeline={report.result.timeline ?? null} at={probeU ?? faceU} />}
           </div>
           <div className={styles.scrim} aria-hidden="true" />
 

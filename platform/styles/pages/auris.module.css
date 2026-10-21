@@ -747,7 +747,8 @@ ul.methodList li::before { content: ''; position: absolute; left: 8px; top: 0.62
   position: absolute;
   z-index: 3;
   right: 5.4vw;
-  bottom: 84px;
+  /* The stage can be taller than the screen when the verdict is long; keep the dock on the first screen. */
+  bottom: max(84px, calc(100% - 100svh + 84px));
   display: grid;
   gap: 12px;
   width: min(440px, 36vw);
@@ -791,8 +792,28 @@ ul.methodList li::before { content: ''; position: absolute; left: 8px; top: 0.62
   .trackDock { width: min(400px, 40vw); }
 }
 
+/* Only where the controls are far from the planet: a caption over it, above the planet. */
+.trackNow { display: none; }
+
 @media (max-width: 860px), (max-aspect-ratio: 4/5) {
   .trackDock { position: relative; right: auto; bottom: auto; width: auto; margin: 0 6vw 18px; }
+  .trackNow {
+    position: absolute;
+    z-index: 2;
+    top: 92px;
+    left: 6vw;
+    right: 6vw;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 12px;
+    margin: 0;
+    font-size: 1rem;
+    color: var(--muted);
+    pointer-events: none;
+  }
+  .trackNow [data-tone='ai'] { color: var(--ai); }
+  .trackNow [data-tone='human'] { color: var(--human); }
 }
 
 @media (prefers-reduced-motion: reduce) {

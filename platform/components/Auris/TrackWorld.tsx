@@ -40,12 +40,39 @@ export const readingOf = (segment: TimelineSegment | undefined): Reading => {
     : { tone: 'human', key: 'human', p: 1 - segment.probability }
 }
 
-export const TrackWorld: React.FC<TrackWorldProps> = ({ surface, timeline, totalSec, at, playing, canHear, onScrub, onHear, onStop }) => {
+/** The moment at a longitude of the planet and the sentence that says what was read there. */
+const useMoment = (surface: TrackSurface, timeline: Timeline | null, at: number) => {
   const { t, language } = useLanguage()
   const W = t.aiDetection.world
   const sec = secondsAt(surface, at)
   const reading = readingOf(segmentAt(timeline, sec))
   const readout = fill(W.readout[reading.key], { p: reading.p === null ? '' : percent(language, reading.p) })
+  return { W, sec, reading, readout }
+}
+
+interface TrackNowProps {
+  surface: TrackSurface
+  timeline: Timeline | null
+  at: number
+}
+
+/**
+ * The same moment as a caption over the planet. On a phone the controls sit
+ * far below the planet, so without this there is nothing to read while turning
+ * it. The controls carry the accessible version; this is a mirror of it.
+ */
+export const TrackNow: React.FC<TrackNowProps> = ({ surface, timeline, at }) => {
+  const { sec, reading, readout } = useMoment(surface, timeline, at)
+  return (
+    <p className={styles.trackNow} aria-hidden="true">
+      <span className={styles.trackTime}>{stamp(sec)}</span>
+      {surface.hasLean && <span data-tone={reading.tone}>{readout}</span>}
+    </p>
+  )
+}
+
+export const TrackWorld: React.FC<TrackWorldProps> = ({ surface, timeline, totalSec, at, playing, canHear, onScrub, onHear, onStop }) => {
+  const { W, sec, reading, readout } = useMoment(surface, timeline, at)
   const covers = surface.spanSec + 1 < totalSec
 
   return (
