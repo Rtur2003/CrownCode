@@ -2,7 +2,7 @@
 import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { LanguageProvider } from '@/context/LanguageContext'
-import { TrackWorld, readingOf } from '@/components/Auris/TrackWorld'
+import { TrackNow, TrackWorld, readingOf } from '@/components/Auris/TrackWorld'
 import type { TrackSurface } from '@/components/Auris/trackSurface'
 import type { Timeline, TimelineSegment } from '@/hooks/analysisTypes'
 
@@ -108,5 +108,27 @@ describe('TrackWorld', () => {
   it('does not say it when the whole track is on the planet', () => {
     view({ totalSec: 80 })
     expect(screen.queryByText(/first 80 seconds/)).toBeNull()
+  })
+})
+
+describe('TrackNow', () => {
+  const caption = (props: Partial<React.ComponentProps<typeof TrackNow>> = {}) =>
+    render(
+      <LanguageProvider>
+        <TrackNow surface={surface()} timeline={timeline} at={0.25} {...props} />
+      </LanguageProvider>,
+    )
+
+  it('mirrors the moment over the planet, hidden from assistive technology', () => {
+    const { container } = caption()
+    const node = container.querySelector('p')!
+    expect(node).toHaveAttribute('aria-hidden', 'true')
+    expect(node).toHaveTextContent('0:20')
+    expect(node).toHaveTextContent('Leaned AI, 81%')
+  })
+
+  it('shows only the time when the models gave no reading', () => {
+    const { container } = caption({ surface: surface({ hasLean: false }), timeline: null })
+    expect(container.querySelector('p')).toHaveTextContent(/^0:20$/)
   })
 })
