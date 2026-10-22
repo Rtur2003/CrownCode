@@ -10,8 +10,14 @@ import { fetchWithTimeout } from '@/hooks/useAsyncRequest'
 import { getAurisState, patchServer } from '@/hooks/auris/store'
 
 const PING_TIMEOUT_MS = 8_000
-const POLL_MS = 5_000
 export const WAKE_BUDGET_MS = 180_000
+
+/**
+ * Wait before the next probe. A Space that is still booting answers 503 and the
+ * browser logs every one, so the first retries come quickly and later ones back
+ * off instead of hammering a container that is busy pulling model weights.
+ */
+export const pollDelay = (attempt: number) => Math.min(15_000, Math.round(4_000 * 1.5 ** attempt))
 
 interface Health {
   status?: string
@@ -49,18 +55,19 @@ export const ensureServer = (budgetMs = WAKE_BUDGET_MS): Promise<boolean> => {
   pending = (async () => {
     const deadline = Date.now() + budgetMs
     patchServer({ status: server.status === 'waking' ? 'waking' : 'checking' })
-    for (;;) {
+    for (let attempt = 0; ; attempt++) {
       const hit = await ping()
       if (hit) {
         patchServer({ status: 'ready', checkedAt: Date.now(), latencyMs: hit.latencyMs, models: hit.models })
         return true
       }
-      if (Date.now() + POLL_MS > deadline) {
+      const wait = pollDelay(attempt)
+      if (Date.now() + wait > deadline) {
         patchServer({ status: 'down', checkedAt: Date.now(), latencyMs: null })
         return false
       }
       patchServer({ status: 'waking', checkedAt: Date.now() })
-      await sleep(POLL_MS)
+      await sleep(wait)
     }
   })().finally(() => { pending = null })
 

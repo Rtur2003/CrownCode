@@ -15,7 +15,8 @@
 
 .name { font-size: clamp(19px, 1.8vw, 24px); color: var(--ink); }
 .state { font-size: 1rem; color: var(--muted); }
-.latency { text-align: right; font-family: var(--font-family-mono); font-size: 0.82rem; color: var(--soft); }
+/* Holds its line while the probe runs so the rows do not grow when the numbers arrive. */
+.latency { min-height: 1.4em; text-align: right; font-family: var(--font-family-mono); font-size: 0.82rem; color: var(--soft); }
 
 .row[data-status='ok'] .state { color: var(--accent); }
 .row[data-status='error'] .state { color: var(--warn); }

@@ -86,7 +86,8 @@ export const LanguageSelector: React.FC = () => {
         className="language-button"
         aria-expanded={isOpen}
         aria-controls={menuId}
-        aria-label={t.aria?.changeLanguage ?? (language === 'tr' ? 'Dili değiştir' : 'Change language')}
+        // The name starts with the visible label (WCAG 2.5.3), so speech control can say what it sees.
+        aria-label={`${current.label}, ${t.aria?.changeLanguage ?? (language === 'tr' ? 'Dili değiştir' : 'Change language')}`}
       >
         <Globe size={18} aria-hidden="true" />
         <span className="language-label">{current.label}</span>

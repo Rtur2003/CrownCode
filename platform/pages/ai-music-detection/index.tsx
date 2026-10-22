@@ -314,7 +314,6 @@ const FileSource: React.FC<{ auris: AurisController }> = ({ auris }) => {
       data-over={over}
       role="button"
       tabIndex={0}
-      aria-label={`${F.drop}. ${F.browse}`}
       onClick={() => input.current?.click()}
       onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.current?.click() } }}
       onDragOver={e => { e.preventDefault(); setOver(true) }}

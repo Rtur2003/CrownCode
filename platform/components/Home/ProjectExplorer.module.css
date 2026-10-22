@@ -151,8 +151,8 @@
   .primary { padding: 10px 18px; font-size: 15px; }
   .strip { left: 4vw; right: 4vw; bottom: 16px; gap: 4px 10px; }
   .step { width: 36px; height: 36px; }
-  .nodeLabel { display: none; }
-  .track button[aria-current='step'] .nodeLabel { display: none; }
+  /* display: none would also take the project name away from screen readers. */
+  .nodeLabel, .track button[aria-current='step'] .nodeLabel { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); }
   .hint { display: none; }
   .worldLabel { font-size: 11px; }
   .index { padding: 34svh 6vw 80px; }
@@ -167,7 +167,7 @@
   .lead { margin-top: 12px; font-size: 15px; }
   .features { display: none; }
   .actions { margin-top: 16px; }
-  .nodeLabel { display: none; }
+  .nodeLabel { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); }
 }
 
 /* ── Reduced motion: no flight, a still atlas and the full list ─────── */

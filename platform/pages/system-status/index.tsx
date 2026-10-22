@@ -97,8 +97,12 @@ const SystemStatusPage: NextPage = () => {
       <WorldPage world="kognita" planet={false} title={ss.title}>
         <section className={world.section} aria-labelledby="status-summary">
           <div className={world.sectionHead}>
-            <h2 id="status-summary" role="status" aria-live="polite">{summary}</h2>
-            {lastChecked && <p className={world.hint}>{ss.lastChecked}: {timeFormat.format(lastChecked)}</p>}
+            {/* The live region sits inside the heading: role="status" on the h2 itself would replace its heading role. */}
+            <h2 id="status-summary"><span role="status" aria-live="polite">{summary}</span></h2>
+            {/* Always rendered, so the rows below do not jump when the first result lands. */}
+            <p className={world.hint} aria-hidden={lastChecked ? undefined : true}>
+              {lastChecked ? `${ss.lastChecked}: ${timeFormat.format(lastChecked)}` : ' '}
+            </p>
           </div>
 
           <div className={world.sectionBody}>
