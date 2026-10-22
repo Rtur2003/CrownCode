@@ -70,9 +70,24 @@ stats.json
 # Storybook
 storybook-static/
 
-# PWA
-public/sw.js
+# PWA: public/sw.js is hand-written (registered in pages/_app.tsx, covered by
+# __tests__/config/security-headers.test.ts) and must stay tracked. Only
+# generated workbox bundles are ignored.
 public/workbox-*.js
+
+# Wrangler local secrets and state
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# Lighthouse and DevTools trace output
+.lighthouseci/
+lighthouse-*.json
+lighthouse-*.html
+*.report.html
+*.report.json
+*.trace.json
+*.trace.json.gz
 
 # Reel output (frames, video, sound, events, stills): made by scripts/capture-*.py|mjs,
 # scripts/edit-*.py and scripts/generate-*-reel-sound.py, rebuilt on demand, never tracked.

@@ -239,3 +239,53 @@ scripts/sunum_lib.py
 
 # Coding-agent and design-tool caches
 .impeccable/
+.agents/
+.superpowers/
+
+# ==========================================
+# Tooling output that can land anywhere in the tree
+# ==========================================
+
+# Cloudflare (OpenNext / Wrangler): build output, local state and local secrets
+.open-next/
+.wrangler/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# Lighthouse and DevTools traces
+.lighthouseci/
+lighthouse-*.json
+lighthouse-*.html
+*.report.html
+*.report.json
+*.trace.json
+*.trace.json.gz
+
+# Playwright: auth state holds real session cookies, so it never gets committed
+blob-report/
+playwright/.auth/
+playwright/.cache/
+
+# Bundler and framework caches
+.vite/
+.swc/
+.turbo/
+
+# Python test and packaging leftovers
+.hypothesis/
+*.egg-info/
+.eggs/
+.ipynb_checkpoints/
+
+# Model and array dumps that belong on the Hub, not in git
+*.onnx
+*.npy
+*.npz
+*.parquet
+
+# Windows and Git Bash leftovers
+*.stackdump
+ehthumbs.db
+~$*
+.~lock.*#
