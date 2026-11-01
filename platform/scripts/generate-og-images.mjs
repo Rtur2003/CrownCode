@@ -1,7 +1,9 @@
 // Builds the 1200×630 social preview cards in public/og/ from the atlas:
 // the rendered poster for the site card, and each world's render on the
 // atlas sky for project pages. Run after re-rendering the atlas assets:
-//   node scripts/generate-og-images.mjs
+//   node scripts/generate-og-images.mjs            (every card)
+//   node scripts/generate-og-images.mjs fl-mcp     (only the named cards)
+// A project without its own render yet uses the generic planet, as its page does.
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -67,7 +69,10 @@ const halo = Buffer.from(`<svg width="${W}" height="${H}" xmlns="http://www.w3.o
   <circle cx="${W - 300}" cy="${H / 2}" r="${WORLD * 0.72}" fill="url(#h)"/>
 </svg>`)
 
+const only = process.argv.slice(2)
+
 for (const card of CARDS) {
+  if (only.length && !only.includes(card.file)) {continue}
   const layers = [{ input: overlay(card), top: 0, left: 0 }, { input: logo, top: 72, left: 68 }]
   let background
   if (card.world) {
@@ -75,7 +80,8 @@ for (const card of CARDS) {
       .extract({ left: 520, top: 160, width: 1200, height: 630 })
       .modulate({ brightness: 0.9 })
       .toBuffer()
-    const world = await sharp(pub(`images/atlas/world-${card.world}.webp`))
+    const render = pub(`images/atlas/world-${card.world}.webp`)
+    const world = await sharp(fs.existsSync(render) ? render : pub('images/showroom/planet-generic.webp'))
       .resize(WORLD, WORLD)
       .composite([{ input: worldMask, blend: 'dest-in' }])
       .png()
