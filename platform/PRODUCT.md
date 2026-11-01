@@ -12,7 +12,7 @@ CrownCode is Hasan Arthur Altuntaş's showroom for independent software projects
 
 ## Capabilities and Constraints
 
-The existing Next.js Pages Router application contains eight projects in `config/product-catalog.ts`. This catalog owns routes and localized product data. Project status must remain truthful; research projects must not be presented as validated production services. Preserve the shared header, footer, project routes, and Turkish/English support.
+The existing Next.js Pages Router application contains nine projects in `config/product-catalog.ts`. This catalog owns routes and localized product data. Project status must remain truthful; research projects must not be presented as validated production services. Preserve the shared header, footer, project routes, and Turkish/English support.
 
 ## Brand Commitments
 
