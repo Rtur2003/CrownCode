@@ -11,7 +11,7 @@
  */
 
 import type { LucideIcon } from 'lucide-react'
-import { Music, Brain, Crown, Moon, Youtube, Bot, UtensilsCrossed, Eye } from 'lucide-react'
+import { Music, Brain, Crown, Moon, Youtube, Bot, UtensilsCrossed, Eye, AudioWaveform } from 'lucide-react'
 
 // ── Types ───────────────────────────────────────────────────────────
 
@@ -130,6 +130,22 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     icon: Eye,
     gradient: 'from-amber-400 via-yellow-500 to-orange-600',
     category: 'project',
+  },
+  {
+    id: 'fl-mcp',
+    localeKey: 'flMcp',
+    href: '/fl-mcp',
+    icon: AudioWaveform,
+    gradient: 'from-rose-400 via-orange-500 to-amber-500',
+    category: 'project',
+    name: 'FL MCP',
+    schema: {
+      category: 'MultimediaApplication',
+      os: 'Windows, macOS',
+      type: 'SoftwareApplication',
+      sameAs: ['https://github.com/Rtur2003/FL-MCP'],
+    },
+    updated: '2026-11-01',
   },
 ] as const
 

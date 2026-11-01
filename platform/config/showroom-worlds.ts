@@ -79,6 +79,12 @@ const LOOKS: Record<string, WorldLook> = {
     bands: 0.05, detail: 5.0, lines: 0.35, gloss: 0.3, size: 1.05, spin: 0.1,
     sector: { tr: 'Restoran sitesi', en: 'Restaurant website' },
   },
+  // Graphite console with a signal-orange glow and fine engraved waveform lines.
+  'fl-mcp': {
+    base: '#130b08', mid: '#5c2d18', accent: '#ffb27a', atmosphere: '#e0804a',
+    bands: 0.5, detail: 4.0, lines: 0.85, gloss: 0.6, size: 1.1, spin: 0.13,
+    sector: { tr: 'Müzik prodüksiyonu', en: 'Music production' },
+  },
   // Smoked glass lens with circuit etchings.
   kognita: {
     base: '#0a0f12', mid: '#27414a', accent: '#9ee7f0', atmosphere: '#6fb7c4',

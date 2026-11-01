@@ -186,6 +186,90 @@
         "showroomDescription": "Records computer activity and keeps the data on your device.",
         "status": "On GitHub",
         "stats": "Desktop · Local data"
+      },
+      "flMcp": {
+        "title": "FL MCP: An AI assistant for FL Studio",
+        "description": "An MCP server that lets Claude, Cursor, Gemini CLI, Codex CLI or a local model control the FL Studio running on your computer: transport, mixer, channels, patterns and the piano roll. It can also sketch a whole track in twelve genres, as drums in your Channel Rack, a MIDI file or a finished project.",
+        "showroomDescription": "Lets an AI assistant control FL Studio and sketch a whole track in twelve genres.",
+        "status": "Experimental",
+        "stats": "Desktop · MCP server",
+        "heading": "What it is",
+        "page": {
+          "facts": [
+            {
+              "label": "Runs on",
+              "value": "Your computer, next to FL Studio, on Windows or macOS"
+            },
+            {
+              "label": "Works with",
+              "value": "Any assistant that can run a local MCP server: Claude, Cursor, VS Code, Codex CLI, Gemini CLI"
+            },
+            {
+              "label": "Status",
+              "value": "Experimental. Tested against a simulation of FL Studio, not yet against the real program"
+            },
+            {
+              "label": "Licence",
+              "value": "MIT, free to use"
+            }
+          ],
+          "asksTitle": "What you can ask for",
+          "asksLead": "You talk to your assistant as usual. It calls FL MCP and FL Studio does the rest.",
+          "asks": [
+            {
+              "ask": "Make a 128 BPM techno track in F# minor.",
+              "result": "Drums land in your Channel Rack as named patterns, with tempo, section markers, pan and EQ set. A MIDI file carries every part."
+            },
+            {
+              "ask": "Balance the mix.",
+              "result": "The project plays, FL Studio's own peak meters are read, and the faders move until each part sits at its level, with the master kept under minus 3 dB."
+            },
+            {
+              "ask": "Put a four on the floor in pattern 1 and solo the kick.",
+              "result": "The step sequencer, solo and every other control of the program can be used one by one."
+            },
+            {
+              "ask": "Write the whole song into my template project.",
+              "result": "A new project file is built from the instruments in your template: every pattern with its notes, and the playlist."
+            }
+          ],
+          "setupTitle": "Set it up",
+          "setupLead": "Four steps, once. You need uv, the tool that installs Python programs.",
+          "setup": [
+            {
+              "title": "Install it",
+              "body": "The second command also copies the controller script into FL Studio's settings folder.",
+              "code": "uv tool install git+https://github.com/Rtur2003/FL-MCP\nfl-mcp install"
+            },
+            {
+              "title": "Create a MIDI port",
+              "body": "On Windows, create a loopMIDI port named FL MCP. On macOS, switch on the IAC Driver in Audio MIDI Setup."
+            },
+            {
+              "title": "Tell FL Studio",
+              "body": "In Options, MIDI settings, enable the FL MCP port as an input with the controller type FL MCP, and as an output with the same port number. Restart FL Studio, then check the link.",
+              "code": "fl-mcp doctor"
+            },
+            {
+              "title": "Add it to your assistant",
+              "body": "Claude Code takes that one command. Claude Desktop, Cursor and Gemini CLI take the same server in their MCP settings: a server called fl-studio whose command is fl-mcp.",
+              "code": "claude mcp add fl-studio -- fl-mcp"
+            }
+          ],
+          "limitsTitle": "What it cannot do",
+          "limits": [
+            "FL Studio's scripting interface cannot create channels or plugins, load samples, place playlist clips or render audio. FL MCP does not pretend otherwise.",
+            "Drums go straight into your Channel Rack. Melodies and chords arrive through a piano roll script you run once per part, or in the MIDI file.",
+            "A finished project is built on a template of yours, so the instruments you want must already be in it.",
+            "It has not been run in a live FL Studio yet. The scripts are tested against a simulation built from the official API stubs, and the project file code against real FL Studio 20.8.4 files."
+          ],
+          "sourceTitle": "Source",
+          "sourceBody": "The code, the documentation and the issue tracker are on GitHub.",
+          "sourceLink": "Open FL MCP on GitHub",
+          "copy": "Copy",
+          "copied": "Copied",
+          "keywords": "FL Studio, MCP, Model Context Protocol, AI music production, MIDI, Claude, Cursor"
+        }
       }
     }
   },

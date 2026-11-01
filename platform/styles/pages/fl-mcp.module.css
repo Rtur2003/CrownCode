@@ -1,0 +1,56 @@
+/* FL MCP: example requests, setup steps with copyable commands, and the list of limits. The
+   frame, sections, margins and buttons are shared (styles/components/world-page.module.css). */
+
+.asks { margin: 0; }
+.asks > div { padding: 18px 0; border-top: 1px solid var(--line); }
+.asks > div:first-child { padding-top: 0; border-top: 0; }
+.asks dt { margin: 0 0 6px; font-size: clamp(18px, 1.5vw, 21px); line-height: 1.4; color: var(--ink); }
+.asks dd { margin: 0; max-width: 62ch; font-size: 1rem; line-height: 1.55; color: var(--muted); }
+
+.steps { margin: 0; padding: 0; list-style: none; counter-reset: step; }
+.steps li {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 2px 8px;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+  counter-increment: step;
+}
+.steps li:first-child { padding-top: 0; border-top: 0; }
+.steps li::before {
+  content: counter(step) '.';
+  grid-row: 1 / span 3;
+  font-size: 1.08rem;
+  color: var(--muted);
+}
+.steps strong { grid-column: 2; font-weight: 400; font-size: 1.08rem; color: var(--ink); }
+.steps span { grid-column: 2; max-width: 62ch; font-size: 0.98rem; line-height: 1.55; color: var(--muted); }
+
+.code {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+  padding: 14px 16px;
+  background: color-mix(in srgb, #050407 70%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+.code pre {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: var(--font-family-mono);
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.code button { flex: none; }
+
+.plain { margin: 0; padding: 0; list-style: none; }
+.plain li { padding: 14px 0; max-width: 66ch; font-size: 1.05rem; line-height: 1.55; color: var(--body); border-top: 1px solid var(--line); }
+.plain li:first-child { padding-top: 0; border-top: 0; }

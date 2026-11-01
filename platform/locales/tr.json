@@ -186,6 +186,90 @@
         "showroomDescription": "Bilgisayar etkinliğini kaydeder; verileri cihazda tutar.",
         "status": "GitHub'da",
         "stats": "Masaüstü · Yerel veri"
+      },
+      "flMcp": {
+        "title": "FL MCP: FL Studio için yapay zekâ asistanı",
+        "description": "Claude, Cursor, Gemini CLI, Codex CLI ya da yerel bir modelin bilgisayarındaki FL Studio'yu yönetmesini sağlayan bir MCP sunucusu: transport, mikser, kanallar, patternler ve piano roll. On iki türde bütün bir parça taslağı da çıkarabilir: Channel Rack'inde davullar, bir MIDI dosyası ya da bitmiş bir proje olarak.",
+        "showroomDescription": "Bir yapay zekâ asistanının FL Studio'yu yönetmesini ve on iki türde bütün bir parça taslağı çıkarmasını sağlar.",
+        "status": "Deneysel",
+        "stats": "Masaüstü · MCP sunucusu",
+        "heading": "Nedir?",
+        "page": {
+          "facts": [
+            {
+              "label": "Çalıştığı yer",
+              "value": "Bilgisayarında, FL Studio'nun yanında; Windows ve macOS"
+            },
+            {
+              "label": "Uyumlu olduğu",
+              "value": "Yerel bir MCP sunucusu çalıştırabilen her asistan: Claude, Cursor, VS Code, Codex CLI, Gemini CLI"
+            },
+            {
+              "label": "Durum",
+              "value": "Deneysel. FL Studio'nun bir benzetimine karşı test edildi, gerçek programda henüz denenmedi"
+            },
+            {
+              "label": "Lisans",
+              "value": "MIT, ücretsiz"
+            }
+          ],
+          "asksTitle": "Neler isteyebilirsin",
+          "asksLead": "Asistanınla her zamanki gibi konuşursun. O FL MCP'yi çağırır, gerisini FL Studio yapar.",
+          "asks": [
+            {
+              "ask": "128 BPM, Fa diyez minör bir techno parçası yap.",
+              "result": "Davullar Channel Rack'ine isimli patternler olarak girer; tempo, bölüm işaretleri, pan ve EQ ayarlanır. Bütün partiler bir MIDI dosyasında da durur."
+            },
+            {
+              "ask": "Mix'i dengele.",
+              "result": "Proje çalınır, FL Studio'nun kendi tepe seviyesi göstergeleri okunur ve her parça seviyesine gelene kadar fader'lar oynatılır; master eksi 3 dB'nin altında kalır."
+            },
+            {
+              "ask": "1. pattern'e dörtlü kick koy ve kick'i solo yap.",
+              "result": "Step sequencer, solo ve programın diğer kontrollerinin hepsi tek tek kullanılabilir."
+            },
+            {
+              "ask": "Bütün şarkıyı şablon projeme yaz.",
+              "result": "Şablonundaki enstrümanlarla yeni bir proje dosyası kurulur: her pattern notalarıyla, bir de playlist."
+            }
+          ],
+          "setupTitle": "Kurulum",
+          "setupLead": "Bir kez yapılan dört adım. Python programlarını kuran uv aracı gerekir.",
+          "setup": [
+            {
+              "title": "Kur",
+              "body": "İkinci komut, kontrol betiğini FL Studio'nun ayar klasörüne de kopyalar.",
+              "code": "uv tool install git+https://github.com/Rtur2003/FL-MCP\nfl-mcp install"
+            },
+            {
+              "title": "MIDI portu oluştur",
+              "body": "Windows'ta FL MCP adında bir loopMIDI portu oluştur. macOS'ta Audio MIDI Setup'tan IAC Driver'ı aç."
+            },
+            {
+              "title": "FL Studio'ya söyle",
+              "body": "Options, MIDI settings bölümünde FL MCP portunu giriş olarak, denetleyici türü FL MCP seçerek aç; çıkış olarak da aynı port numarasıyla aç. FL Studio'yu yeniden başlat, sonra bağlantıyı kontrol et.",
+              "code": "fl-mcp doctor"
+            },
+            {
+              "title": "Asistanına ekle",
+              "body": "Claude Code için bu tek komut yeter. Claude Desktop, Cursor ve Gemini CLI için aynı sunucu MCP ayarlarına eklenir: adı fl-studio, komutu fl-mcp olan bir sunucu.",
+              "code": "claude mcp add fl-studio -- fl-mcp"
+            }
+          ],
+          "limitsTitle": "Yapamadıkları",
+          "limits": [
+            "FL Studio'nun betik arayüzü kanal ya da eklenti oluşturamaz, örnek yükleyemez, playlist'e klip koyamaz, ses render edemez. FL MCP bunları yapıyormuş gibi davranmaz.",
+            "Davullar doğrudan Channel Rack'ine gider. Melodi ve akorlar, parça başına bir kez çalıştırdığın piano roll betiğiyle ya da MIDI dosyasıyla gelir.",
+            "Bitmiş bir proje senin şablonunun üzerine kurulur; istediğin enstrümanlar şablonda önceden bulunmalı.",
+            "Henüz canlı bir FL Studio'da çalıştırılmadı. Betikler resmi API şablonlarından kurulan bir benzetime karşı, proje dosyası kodu ise gerçek FL Studio 20.8.4 dosyalarına karşı test edildi."
+          ],
+          "sourceTitle": "Kaynak",
+          "sourceBody": "Kod, belgeler ve sorun takibi GitHub'da.",
+          "sourceLink": "FL MCP'yi GitHub'da aç",
+          "copy": "Kopyala",
+          "copied": "Kopyalandı",
+          "keywords": "FL Studio, MCP, Model Context Protocol, yapay zekâ müzik prodüksiyonu, MIDI, Claude, Cursor"
+        }
       }
     }
   },
