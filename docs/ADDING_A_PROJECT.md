@@ -14,7 +14,7 @@ Add `--dry-run` first to see what it would write. It creates the page from the s
 
 1. Replace every `TODO` in `locales/en.json` and `locales/tr.json`, under `products.items.<key>`.
 2. Build the tool in `pages/my-tool/index.tsx`.
-3. Give the social card its line in `scripts/generate-og-images.mjs` and run `node scripts/generate-og-images.mjs`.
+3. Give the social card its line in `scripts/generate-og-images.mjs` and run `node scripts/generate-og-images.mjs my-tool` (only that card; without a name it redraws all of them). A project without its own planet render uses the generic planet.
 4. Run `npx jest __tests__/config`. When it is green the project is complete.
 
 The tests stay red until the page, the text, the schema, the sitemap date and the social image all exist, and they name what is missing.
@@ -47,11 +47,11 @@ Each project has `products.items.<localeKey>` in both locale files:
 
 ## The look
 
-A project with no hand-tuned look gets a palette derived from its id and the generic planet picture, so adding one never needs an image. To give it its own planet:
+A project with no hand-tuned look gets a palette derived from its id and the generic planet picture, so adding one never needs an image. It does need an entry in `LOOKS` in `config/showroom-worlds.ts` with its `sector` label in both languages (`__tests__/config/showroom-worlds.test.ts` checks it); copy a neighbour's colours and write the label. To give it its own planet:
 
 1. Render it with `scripts/capture-atlas-assets.py`, which writes `public/images/atlas/world-<id>.webp`.
 2. Add the id to `RENDERED_WORLDS` in `config/showroom-worlds.ts`. A test fails if the set and the files disagree.
-3. Optionally add a hand-tuned entry for it in `LOOKS` in the same file.
+3. Tune its entry in `LOOKS` in the same file.
 
 ## The page
 
