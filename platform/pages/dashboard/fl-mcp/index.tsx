@@ -206,11 +206,13 @@ const FlMcpDashboardPage: NextPage = () => {
     }
     setLoading(true)
     setErrorMsg(null)
+    const options: { redirectTo?: string } = {}
+    if (typeof window !== 'undefined') {
+      options.redirectTo = `${window.location.origin}/dashboard/fl-mcp`
+    }
     const { error } = await sb.auth.signInWithOAuth({
       provider: 'google',
-      options: {
-        redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/dashboard/fl-mcp` : undefined,
-      },
+      options,
     })
     if (error) {
       setErrorMsg(error.message)
