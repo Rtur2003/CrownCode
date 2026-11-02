@@ -85,11 +85,6 @@ const FlMcpShowcasePage: NextPage = () => {
     url: 'https://hasan-arthur-altuntas.xyz/fl-mcp',
     sameAs: ['https://github.com/Rtur2003/FL-MCP'],
     softwareVersion: '2025.1',
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '128',
-    },
     offers: [
       { '@type': 'Offer', name: 'Community Tier', price: '0', priceCurrency: 'USD' },
       { '@type': 'Offer', name: 'Pro Producer', price: '19', priceCurrency: 'USD' },
