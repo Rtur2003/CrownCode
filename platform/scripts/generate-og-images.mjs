@@ -22,6 +22,7 @@ const CARDS = [
   { file: 'crown-dreams', world: 'crown-dreams', title: 'Crown Dreams', line: 'Dream Journal' },
   { file: 'crown-vote', world: 'crown-vote', title: 'VOTRYX', line: 'Desktop Voting Automation' },
   { file: 'noir-grain', world: 'noir-grain', title: 'Noir & Grain', line: 'Cinematic Restaurant Template' },
+  { file: 'fl-mcp', world: 'fl-mcp', title: 'FL-MCP', line: 'Autonomous FL Studio AI Copilot' },
 ]
 
 const escape = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')

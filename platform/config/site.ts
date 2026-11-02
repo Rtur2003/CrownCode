@@ -78,4 +78,4 @@ export function ogImagePath(pathname: string): string {
 }
 
 /** Personal (localStorage), live-diagnostic or thin pages that stay out of the index. */
-export const NOINDEX_ROUTES = ['/analysis-history', '/system-status', '/search', '/404', '/_error'] as const
+export const NOINDEX_ROUTES = ['/analysis-history', '/system-status', '/search', '/404', '/_error', '/dashboard/fl-mcp'] as const

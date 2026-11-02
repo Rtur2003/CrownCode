@@ -11,7 +11,7 @@
  */
 
 import type { LucideIcon } from 'lucide-react'
-import { Music, Brain, Crown, Moon, Youtube, Bot, UtensilsCrossed, Eye } from 'lucide-react'
+import { Music, Brain, Crown, Moon, Youtube, Bot, UtensilsCrossed, Eye, SlidersHorizontal } from 'lucide-react'
 
 // ── Types ───────────────────────────────────────────────────────────
 
@@ -122,6 +122,22 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     category: 'project',
     schema: { category: 'DesignApplication', os: 'Web' },
     updated: '2026-10-21',
+  },
+  {
+    id: 'fl-mcp',
+    localeKey: 'flMcp',
+    href: '/fl-mcp',
+    icon: SlidersHorizontal,
+    gradient: 'from-amber-500 via-orange-600 to-red-600',
+    category: 'project',
+    name: 'FL-MCP',
+    schema: {
+      category: 'MultimediaApplication',
+      os: 'Windows, macOS',
+      type: 'SoftwareApplication',
+      sameAs: ['https://github.com/Rtur2003/FL-MCP'],
+    },
+    updated: '2026-11-02',
   },
   {
     id: 'kognita',

@@ -66,6 +66,13 @@ const nextConfig = {
     localeDetection: false,
   },
 
+  async redirects() {
+    return [
+      { source: '/products/fl-mcp', destination: '/fl-mcp', permanent: false },
+      { source: '/tools/fl-mcp', destination: '/fl-mcp', permanent: false },
+    ]
+  },
+
   async headers() {
     const week = [{ key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' }]
     return [
