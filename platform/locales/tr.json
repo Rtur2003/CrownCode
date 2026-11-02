@@ -180,6 +180,20 @@
           "Sistem Tepsisi"
         ]
       },
+      "flMcp": {
+        "title": "FL-MCP: FL Studio Yapay Zeka Yardimcisi",
+        "description": "On iki muzik turunde beste yapin, eklenti parametrelerini gercek desibel ve hertz birimleriyle cozun, fader dengesi kurun ve BS.1770 LUFS hedefleriyle ses yuksekligini Claude uzerinden yonetin.",
+        "showroomDescription": "FL Studio icin otonom muzik produksiyonu, parametre cozucu ve mikser dengeleme sistemi.",
+        "status": "Aktif",
+        "stats": "Masaustu · FL Studio 2025",
+        "features": [
+          "12 Muzik Turu Motoru",
+          "Eklenti Bilgi Tabani",
+          "BS.1770 LUFS Mastering",
+          "MIDI CC Protokolu"
+        ],
+        "heading": "FL Studio Yapay Zeka Yardimcisi"
+      },
       "kognita": {
         "title": "Kognita",
         "description": "Bilgisayardaki etkinliğini arka planda sessizce kaydeden bir masaüstü takipçisi. Kayıtlar yalnızca senin cihazında kalır.",
@@ -1506,6 +1520,206 @@
       "ok": "Çalışıyor",
       "error": "Yanıt yok",
       "loading": "Kontrol ediliyor"
+    }
+  },
+  "flMcpPage": {
+    "meta": {
+      "title": "FL Studio Yapay Zeka MCP Sunucusu | Otonom Muzik Produksiyonu ve Miks Yardimcisi",
+      "description": "FL Studio 2025 surumunu Claude ve MCP ile kontrol edin. Cok kanalli ritimler olusturun, eklenti parametrelerini dB ve Hz ile ayarlayin, mikseri dengeleyin ve LUFS ile master yapin.",
+      "keywords": "FL Studio Yapay Zeka, FL-MCP, Claude Desktop FL Studio, loopMIDI yardimci, muzik produksiyonu yapay zeka, ses mastering LUFS, DAW MCP sunucusu"
+    },
+    "hero": {
+      "badge": "Dunyanin Ilk FL Studio MCP Sunucusu",
+      "title": "FL Studio Icin Otonom Yapay Zeka Yardimcisi",
+      "subtitle": "12 muzik turunde beste yapin, eklenti parametrelerini gercek dB ve Hz birimleriyle cozun, fader dengesi kurun ve BS.1770 LUFS ses yuksekligini Claude ve yapay zeka modellerinizle dogrudan yonetin.",
+      "getStarted": "Baslayin (Aninda Erisim)",
+      "viewDocs": "Dokumantasyon ve Kurulum",
+      "liveDemoBadge": "FL Studio 2025 Uzerinde 17 Derin Testin Tumu Basarili"
+    },
+    "features": {
+      "title": "Otonom Ses Muhendisligi ve Produksiyon",
+      "subtitle": "Claude Desktop ile FL Studio 2025 arasinda loopMIDI ve MIDI CC protokolu uzerinden dogrudan ve yerel baglanti.",
+      "genreEngine": {
+        "title": "12 Muzik Turu Produksiyon Motoru",
+        "description": "Davullar, bas hatlari, akor dizilimleri, melodiler ve gecislerle eksiksiz aranjmanlar olusturun.",
+        "items": [
+          "House ve Tech House (Groove swing, four on the floor kick, offbeat hi-hat ritimleri)",
+          "Techno ve Peak-Time (Rumble bas, hipnotik synth arpejleri, dinamik ride surusu)",
+          "Trap ve Drill (808 glide pitch kaymalari, triplet dizilimleri, trampet gecisleri)",
+          "Lo-Fi Hip Hop (Plak sicakligi, swingli vuruslar, 7li ve 9lu caz akorlari)",
+          "Drum and Bass (Amen breakleri, Reese bas, 174 BPM senkoplu trampetler)",
+          "Oriental Trap ve Hicaz (Frigyen dominant makamsal dizilimler, otantik darbuka ritimleri)",
+          "Synthwave ve Darksynth (Analog testere arpejleri, gated reverb trampetler, pirinc leadler)",
+          "Ambient ve Cinematic (Dron dokulari, poliritmik pad katmanlari, gerilim dalgalari)",
+          "Cyberpunk ve Midtempo (Endustriyel bozulma, agresif bas hiltilari, sidechain pompalamasi)",
+          "UK Garage ve 2-Step (Kesik perkusion, vokal parcalari, sub-bas sekmesi)",
+          "Afrobeats (Log davul senkopu, rimshot orgusu, melodik pirinc stablari)",
+          "Neo-Soul ve R&B (Zengin uzantilar, geride calan ritim cebi, rhodes akorlari)"
+        ]
+      },
+      "pluginSolver": {
+        "title": "Gercek dB ve Hz Birimleriyle Eklenti Parametre Cozucu",
+        "description": "Soyut sifir ile bir arasi kaydiraclarla tahmin yapmaya son. Claude, yerel ve ucuncu parti eklentiler icin kesin muzik degerlerini hesaplar.",
+        "items": [
+          "FabFilter Pro-Q 3 ve Pro-C 2 (Kesin Q degerleri, high-pass kesim frekanslari, dB cinsinden esik)",
+          "Xfer Serum ve Vital (Wavetable secimi, filtre rezonansi, unison detune acisi)",
+          "Image-Line FLEX ve Sytrus (On ayar tarama, makro artikulasyon, FM modulasyonu)",
+          "iZotope Ozone 11 (Cok bantli dinamikler, stereo genislik dagilimi, maksimizer tavani)",
+          "Fruity Parametric EQ 2 ve Fruity Limiter (Cerrahi frekans kesimleri, knee sikistirma, ms cinsinden atak ve birakma)"
+        ]
+      },
+      "audioAnalysis": {
+        "title": "Kapali Cevrim Ses Analizi ve Olcumu",
+        "description": "Sohbetten ayrilmadan yayin standardinda ses yuksekligi olcumleri ve frekans spektrumu denetimi.",
+        "items": [
+          "ITU-R BS.1770-4 Entegre LUFS (-14 LUFS yayin hedefi, -9 LUFS kulup hedefi)",
+          "True Peak Tepe Noktasi Olcumu (DAC kirpilmasini onleyen ornekler arasi tepe algilama)",
+          "Spektral Denge Denetimi (Sub-bas, alt-orta sicaklik, varlik ve hava bandi degerlendirmesi)",
+          "Dinamik Aralık ve Crest Faktoru (Vurus ve sikistirma yogunlugu orani hesaplama)"
+        ]
+      },
+      "flIntegration": {
+        "title": "FL Studio 2025 Derin Entegrasyon Koprusu",
+        "description": "Donanim hizlandirmali MIDI CC ve Python API 40 entegrasyonu ile cift yonlu fader yansimasi.",
+        "items": [
+          "loopMIDI Sanal Port Iletisimi (5 milisaniyenin altinda aninda cift yonlu geribildirim)",
+          "Piyano Rulosu Komut Koprusu (Prosedurel nota uretimi, insanilastirma, gitar arpeji)",
+          "Mikser Otomasyonu (Kazanc kademelendirme, stereo ayirimi, efekt gonderim yonlendirmesi)",
+          "Tarayici Gezintisi (Eklenti katalogu gezinimi ve kanal rafi baslatmalari)"
+        ]
+      }
+    },
+    "pricing": {
+      "title": "Seffaf Produksiyon Paketleri",
+      "subtitle": "Temel oynatma, fader hareketleri ve yerel parametre ayarlamalari sifir kredi harcar ve cevrildisi olarak sonsuza kadar calisir. Proje uretimleri kredi kullanir.",
+      "monthly": "Aylik Abonelik",
+      "topup": "Suresiz Ek Kredi",
+      "free": {
+        "name": "Topluluk Paketi",
+        "price": "$0",
+        "period": "Sonsuza Kadar Ucretsiz",
+        "description": "Yerel kontrol ve ses analizi. Temel DAW otomasyonunu cihazinizda hesap olmadan calistirin.",
+        "features": [
+          "Tam manuel DAW kontrolu (Faderlar, Pan, Calma/Durdurma)",
+          "Gercek birimlerle yerel parametre ayari",
+          "Yerel BS.1770 LUFS ses yuksekligi olcumu",
+          "1 yerel cihaz baglantisi",
+          "Discord ve GitHub topluluk destegi",
+          "0 kredi dahildir (Proje uretimi paket veya abonelik gerektirir)"
+        ],
+        "cta": "Ucretsiz Surumu Indir"
+      },
+      "pro": {
+        "name": "Pro Producer",
+        "price": "$19",
+        "period": "/ ay",
+        "badge": "En Cok Tercih Edilen",
+        "description": "Her ay cok sayida eksiksiz sarki projesi ureten aktif produktorler ve ritim ureticileri icin.",
+        "features": [
+          "Aylik 300 uretim kredisi (Yaklasik 35 tam cok kanalli proje)",
+          "Ayni anda 2 cihaz koltugu (Masaustu ve Dizustu)",
+          "Eksiksiz 12 muzik turu cok kanalli ritim uretim motoru",
+          "FabFilter, Serum, FLEX, Ozone icin eklenti parametre cozucu",
+          "Otomatik mikser dengeleme ve mastering limiter kontrolu",
+          "Oncelikli e-posta ve GitHub destegi"
+        ],
+        "cta": "Pro Producer Edin"
+      },
+      "studio": {
+        "name": "Studio Edition",
+        "price": "$49",
+        "period": "/ ay",
+        "description": "Ticari studyolar, miks muhendisleri ve yuksek hacim ile ekip koltugu talep eden profesyoneller icin.",
+        "features": [
+          "Aylik 1200 uretim kredisi (Yaklasik 150 tam sarki projesi)",
+          "Ekip is istasyonlari icin ayni anda 5 cihaz koltugu",
+          "Tum Pro ozellikleri ile birlikte tam kanal ayrimi (stem) ve MIDI disa aktarma",
+          "Toplu parca isleme ve calistirma listesi sablon yerlesim cozucu",
+          "Ozel tur gam tanimlari ve makro betikleme",
+          "Ozel eklenti profilleri ile dogrudan muhendislik destegi"
+        ],
+        "cta": "Studio Edition Edin"
+      },
+      "pack100": {
+        "name": "100 Kredilik Ek Paket",
+        "price": "$10",
+        "period": "Tek Seferlik",
+        "description": "Teslim tarihi icin ek guc mu lazim? Asla suresi dolmayan ve tum planlarla birlesen 100 kredi ekleyin.",
+        "cta": "100 Kredi Ekle"
+      }
+    },
+    "faq": {
+      "title": "Sikca Sorulan Sorular",
+      "subtitle": "FL-MCP kurulumu ve kullanimi hakkinda bilmeniz gereken her sey.",
+      "items": [
+        {
+          "q": "FL-MCP bilgisayarimdaki FL Studio ile nasil iletisim kurar?",
+          "a": "FL-MCP, Tobias Erichsen tarafindan gelistirilen loopMIDI sanal MIDI surucusu ve FL Studio 2025 icine yuklenen ozel MIDI Denetleyici betigimizi (API 40) kullanir. Claude bir MCP aracini cagirdiginda, FL-MCP standart yuksek cozunurluklu MIDI CC mesajlari gonderir ve FL Studio bunlari aninda alir."
+        },
+        {
+          "q": "Ses dosyalarim veya projelerim buluta yuklenir mi?",
+          "a": "Asla. Tum ses render islemleri, ses yuksekligi olcumu (ITU-R BS.1770-4 LUFS) ve MIDI oynatma yuzde yuz yerel olarak cihazinizda gerceklesir. CrownCode arka ucuyla yalnizca lisans anahtari dogrulamasi ve uretim araclari icin kredi provizyonu sirasinda iletisim kurulur."
+        },
+        {
+          "q": "Oturum sirasinda internet baglantim koparsa ne olur?",
+          "a": "Temel DAW hareketleri, mikser ayarlari, eklenti parametre degisiklikleri ve ses analizi sifir kredi harcar ve tamamen cevrildisi calisir. Yalnizca eksiksiz sarki besteleme gibi ust duzey proje uretim eylemleri ilk baslangicta kredi rezerve etmek icin baglanti gerektirir."
+        },
+        {
+          "q": "Hangi FL Studio surumleri destekleniyor?",
+          "a": "FL-MCP, Windows 10, Windows 11 ve macOS uzerinde FL Studio 2024 ve FL Studio 2025 surumleri icin tasarlanmis ve test edilmistir. Tum 17 derin test paketi modern FL Studio Python denetleyici betiklerine karsi basariyla gecmektedir."
+        },
+        {
+          "q": "Lisansimi yeni bir bilgisayara tasiyabilir miyim?",
+          "a": "Evet. Her plan ozel cihaz koltuklariyla gelir (Pro icin 2, Studio icin 5). CrownCode web kontrol panelinizden tek bir tiklamayla eski cihaz koltugunu iptal edebilir ya da istemciden dogrudan replace parametresi gonderebilirsiniz."
+        }
+      ]
+    },
+    "dashboard": {
+      "title": "FL-MCP Kullanici Paneli",
+      "subtitle": "Lisans anahtarinizi, aktif cihaz koltuklarinizi ve kredi bakiyenizi yonetin.",
+      "authTitle": "Lisans Kasaniza Erisin",
+      "authDescription": "Cihaz aktivasyonlariniza ve kredilerinize ulasmak icin lisans anahtarinizi veya e-postanizi girin ya da ucretsiz deneme surumu alin.",
+      "keyPlaceholder": "FLMCP-XXXXX-XXXXX-XXXXX-XXXXX",
+      "emailPlaceholder": "producer@example.com",
+      "loadButton": "Kasayi Ac",
+      "trialPrompt": "FL-MCP ile yeni misiniz? 30 gunluk deneme ve 15 ucretsiz krediyle aninda baslayin.",
+      "claimTrialButton": "30 Gunluk Ucretsiz Deneme Al",
+      "vaultTitle": "Lisans Kasasi",
+      "licenseKeyLabel": "Lisans Anahtariniz",
+      "copyKey": "Anahtari Kopyala",
+      "copied": "Panoya Kopyalandi",
+      "showKey": "Goster",
+      "hideKey": "Gizle",
+      "planLabel": "Mevcut Plan",
+      "statusLabel": "Durum",
+      "periodEndLabel": "Yenilenme / Bitis",
+      "creditsTitle": "Canli Kredi Bakiyesi",
+      "creditsAvailable": "Kullanilabilir Kredi",
+      "costsOverview": "Islem Maliyetleri",
+      "costCompose": "Tam Sarki Besteleme (5 kredi)",
+      "costFlp": "FLP Proje Uretimi (3 kredi)",
+      "costBalance": "Mikser Otomatik Dengeleme (2 kredi)",
+      "costTransport": "Fader Hareketleri ve Ses Olcumu (Ucretsiz / 0 kredi)",
+      "devicesTitle": "Aktif Cihaz Koltuklari",
+      "devicesCount": "Kayitli Cihazlar",
+      "devicesLimit": "Izin Verilen Koltuk",
+      "noDevices": "Henuz aktif bir cihaz yok. Claude Desktop veya Claude Code ile ilk makinenizi baglayin.",
+      "deviceName": "Cihaz Adi",
+      "deviceLastSeen": "Son Gorulme",
+      "revokeSeat": "Koltugu Kaldir",
+      "setupTitle": "Hizli Istemci Kurulum Rehberi",
+      "setupSubtitle": "FL-MCP sunucusunu iki dakikadan kisa surede yapay zeka ortaminiza baglayin.",
+      "tabDesktop": "Claude Desktop",
+      "tabCli": "Claude Code",
+      "tabCursor": "Cursor",
+      "tabVscode": "VS Code",
+      "downloadBundle": "Claude Desktop (.mcpb) Indir",
+      "downloadScript": "FL Studio Denetleyici Betigini Indir",
+      "downloadLoopMidi": "loopMIDI Indir (Windows)",
+      "step1": "1. loopMIDI surucusunu kurun ve FL_MCP_IN ile FL_MCP_OUT portlarini olusturun.",
+      "step2": "2. Denetleyici betigini FL Studio Settings/Hardware klasorunuze kopyalayin.",
+      "step3": "3. Asagidaki MCP yapilandirmasini yapay zeka istemcinize ekleyin.",
+      "step4": "4. Ilk sohbet turunuzda lisans anahtarinizla activate aracini calistirin."
     }
   }
 }

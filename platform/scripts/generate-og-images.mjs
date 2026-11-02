@@ -22,7 +22,6 @@ const CARDS = [
   { file: 'crown-dreams', world: 'crown-dreams', title: 'Crown Dreams', line: 'Dream Journal' },
   { file: 'crown-vote', world: 'crown-vote', title: 'VOTRYX', line: 'Desktop Voting Automation' },
   { file: 'noir-grain', world: 'noir-grain', title: 'Noir & Grain', line: 'Cinematic Restaurant Template' },
-  { file: 'fl-mcp', world: 'fl-mcp', title: 'FL-MCP', line: 'Autonomous FL Studio AI Copilot' },
 ]
 
 const escape = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -76,10 +75,7 @@ for (const card of CARDS) {
       .extract({ left: 520, top: 160, width: 1200, height: 630 })
       .modulate({ brightness: 0.9 })
       .toBuffer()
-    const worldFile = fs.existsSync(pub(`images/atlas/world-${card.world}.webp`))
-      ? pub(`images/atlas/world-${card.world}.webp`)
-      : pub('images/showroom/planet-generic.webp')
-    const world = await sharp(worldFile)
+    const world = await sharp(pub(`images/atlas/world-${card.world}.webp`))
       .resize(WORLD, WORLD)
       .composite([{ input: worldMask, blend: 'dest-in' }])
       .png()

@@ -79,6 +79,12 @@ const LOOKS: Record<string, WorldLook> = {
     bands: 0.05, detail: 5.0, lines: 0.35, gloss: 0.3, size: 1.05, spin: 0.1,
     sector: { tr: 'Restoran sitesi', en: 'Restaurant website' },
   },
+  // Glowing DAW mixer console with amber neon and analog fader etchings.
+  'fl-mcp': {
+    base: '#0c0a09', mid: '#422006', accent: '#f59e0b', atmosphere: '#d97706',
+    bands: 0.75, detail: 3.2, lines: 0.8, gloss: 0.65, size: 1.35, spin: 0.12, ring: 'grooves',
+    sector: { tr: 'Müzik prodüksiyonu', en: 'Music production' },
+  },
   // Smoked glass lens with circuit etchings.
   kognita: {
     base: '#0a0f12', mid: '#27414a', accent: '#9ee7f0', atmosphere: '#6fb7c4',

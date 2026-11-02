@@ -180,6 +180,20 @@
           "System Tray"
         ]
       },
+      "flMcp": {
+        "title": "FL-MCP: Autonomous AI Copilot for FL Studio",
+        "description": "Compose across twelve genres, solve plugin parameters in real decibels and hertz, auto-balance faders, and measure loudness with BS.1770 LUFS targets directly through Claude.",
+        "showroomDescription": "Autonomous music production, parameter solving, and mixer balancing for FL Studio.",
+        "status": "Active",
+        "stats": "Desktop · FL Studio 2025",
+        "features": [
+          "12-Genre Engine",
+          "Plugin Knowledge Base",
+          "BS.1770 LUFS Mastering",
+          "MIDI CC Protocol"
+        ],
+        "heading": "FL Studio AI Copilot"
+      },
       "kognita": {
         "title": "Kognita",
         "description": "A desktop tracker that quietly records your computer activity in the background. Everything it records stays on your own machine.",
@@ -1506,6 +1520,206 @@
       "ok": "Operational",
       "error": "No answer",
       "loading": "Checking"
+    }
+  },
+  "flMcpPage": {
+    "meta": {
+      "title": "FL Studio AI MCP Server | Autonomous Music Production and Mixing Copilot",
+      "description": "Control FL Studio 2025 using Claude and MCP. Generate multi-track beats, solve plugin parameters in dB and Hz, auto-balance mixer tracks, and master to LUFS targets.",
+      "keywords": "FL Studio AI, FL-MCP, Claude Desktop FL Studio, loopMIDI AI copilot, music production AI, audio mastering LUFS, DAW MCP server"
+    },
+    "hero": {
+      "badge": "World First FL Studio MCP Server",
+      "title": "The Autonomous AI Copilot for FL Studio",
+      "subtitle": "Compose across 12 genres, solve plugin parameters in real dB and Hz units, auto-balance faders, and measure BS.1770 LUFS loudness directly through Claude and your favorite AI models.",
+      "getStarted": "Get Started (Instant Access)",
+      "viewDocs": "View Documentation and Setup",
+      "liveDemoBadge": "All 17 Deep Self-Tests Passing on FL Studio 2025"
+    },
+    "features": {
+      "title": "Autonomous Audio Engineering and Production",
+      "subtitle": "Direct loopMIDI and MIDI CC protocol bridge connecting Claude Desktop to FL Studio 2025 with zero cloud lock-in for audio.",
+      "genreEngine": {
+        "title": "12-Genre Production Engine",
+        "description": "Generate complete arrangements with drums, basslines, chord progressions, melodies, and transitions in authentic musical scales.",
+        "items": [
+          "House and Tech House (Groove swing, four on the floor kick, offbeat hi-hats)",
+          "Techno and Peak-Time (Rumble bass, hypnotic synth arpeggios, ride drive)",
+          "Trap and Drill (808 glide pitch slides, rolling triplets, snare fills)",
+          "Lo-Fi Hip Hop (Vinyl warmth, swung beats, jazzy 7th and 9th chord voicings)",
+          "Drum and Bass (Amen breaks, Reese bass, syncopated ghost snares at 174 BPM)",
+          "Oriental Trap and Hicaz (Phrygian dominant microtonal scales, authentic darbuka rhythms)",
+          "Synthwave and Darksynth (Analog saw arpeggios, gated reverb snares, brass leads)",
+          "Ambient and Cinematic (Drone textures, polyrhythmic pad layers, tension swells)",
+          "Cyberpunk and Midtempo (Industrial distortion, aggressive bass growls, sidechain pumping)",
+          "UK Garage and 2-Step (Shuffled percussion, vocal chops, sub-bass bounce)",
+          "Afrobeats (Log drum syncopation, rimshot grooves, melodic brass stabs)",
+          "Neo-Soul and R&B (Complex extensions, laid-back pocket groove, rhodes chords)"
+        ]
+      },
+      "pluginSolver": {
+        "title": "Plugin Parameter Solver in Real dB and Hz",
+        "description": "No more guesswork with abstract 0 to 1 faders. Claude computes and sets exact musical values for stock and third-party VSTs.",
+        "items": [
+          "FabFilter Pro-Q 3 and Pro-C 2 (Exact Q values, high-pass cutoff frequencies, threshold in dB)",
+          "Xfer Serum and Vital (Wavetable selection, filter resonance, unison detune spread)",
+          "Image-Line FLEX and Sytrus (Preset browsing, macro articulation, FM modulation)",
+          "iZotope Ozone 11 (Multiband dynamics, stereo width spread, maximizer ceiling)",
+          "Fruity Parametric EQ 2 and Fruity Limiter (Surgical notches, knee compression, attack/release in ms)"
+        ]
+      },
+      "audioAnalysis": {
+        "title": "Closed-Loop Audio Analysis and Metering",
+        "description": "Objective broadcast-standard loudness measurements and frequency spectrum monitoring without leaving the conversation.",
+        "items": [
+          "ITU-R BS.1770-4 Integrated LUFS (-14 LUFS streaming target, -9 LUFS club target)",
+          "True Peak Max Metering (Intersample peak detection preventing DAC clipping)",
+          "Spectral Balance Audit (Sub-bass, low-mid warmth, presence, and air band evaluation)",
+          "Dynamic Range and Crest Factor (Punch vs compression density ratio calculation)"
+        ]
+      },
+      "flIntegration": {
+        "title": "FL Studio 2025 Deep Host Bridge",
+        "description": "Hardware-accelerated MIDI CC and Python API 40 integration with bidirectional fader reflection.",
+        "items": [
+          "loopMIDI Virtual Port Communication (Instant bi-directional feedback under 5ms)",
+          "Piano Roll Script Bridge (Procedural note generation, humanization, strumming)",
+          "Mixer Automation (Gain staging, stereo separation, effect send routing)",
+          "Browser Walking (Plugin catalog navigation and channel rack instantiations)"
+        ]
+      }
+    },
+    "pricing": {
+      "title": "Transparent Production Plans",
+      "subtitle": "Basic transport, mixer fader moves, and local parameter adjustments cost zero credits and run offline forever. Deliverable generations consume credits.",
+      "monthly": "Monthly Subscription",
+      "topup": "Non-Expiring Top-Up",
+      "free": {
+        "name": "Community Tier",
+        "price": "$0",
+        "period": "Forever Free",
+        "description": "Local control and audio analysis. Run basic DAW automation on your machine without an account.",
+        "features": [
+          "Full manual DAW control (Faders, Pan, Transport)",
+          "Stock parameter adjustment in real units",
+          "Local BS.1770 LUFS loudness metering",
+          "1 local device connection",
+          "Community Discord and GitHub support",
+          "0 credits included (Deliverable generation requires pack or plan)"
+        ],
+        "cta": "Download Free Version"
+      },
+      "pro": {
+        "name": "Pro Producer",
+        "price": "$19",
+        "period": "/ month",
+        "badge": "Most Popular",
+        "description": "For active producers and beatmakers producing multiple complete song projects each month.",
+        "features": [
+          "300 monthly generation credits (About 35 full multi-track projects)",
+          "2 simultaneous device seats (Desktop and Laptop)",
+          "Full 12-Genre multi-track beat generation engine",
+          "Plugin parameter solver for FabFilter, Serum, FLEX, Ozone",
+          "Automated mixer balancing and mastering limiter control",
+          "Direct email and GitHub priority support"
+        ],
+        "cta": "Get Pro Producer"
+      },
+      "studio": {
+        "name": "Studio Edition",
+        "price": "$49",
+        "period": "/ month",
+        "description": "For commercial studios, mixing engineers, and power users demanding high volume and team seats.",
+        "features": [
+          "1200 monthly generation credits (About 150 full song projects)",
+          "5 simultaneous device seats for team workstations",
+          "All Pro features plus full stems and MIDI export automation",
+          "Batch track processing and playlist pattern layout solver",
+          "Custom genre scale definitions and macro scripting",
+          "Direct engineering support with custom plugin profiles"
+        ],
+        "cta": "Get Studio Edition"
+      },
+      "pack100": {
+        "name": "100 Credit Top-Up Pack",
+        "price": "$10",
+        "period": "One-Time",
+        "description": "Need extra juice for a deadline? Add 100 credits that never expire and stack on any plan.",
+        "cta": "Add 100 Credits"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know about setting up and running FL-MCP.",
+      "items": [
+        {
+          "q": "How does FL-MCP communicate with FL Studio on my PC?",
+          "a": "FL-MCP uses Tobias Erichsen's loopMIDI virtual loopback MIDI driver along with our custom MIDI Controller script (API 40) loaded into FL Studio 2025. When Claude calls an MCP tool, FL-MCP sends standard high-resolution MIDI CC and pitch messages that FL Studio receives instantaneously."
+        },
+        {
+          "q": "Does my audio or project get uploaded to the cloud?",
+          "a": "Never. All audio rendering, loudness measurement (ITU-R BS.1770-4 LUFS), and MIDI playback take place 100% locally on your machine. The CrownCode backend is only contacted to authenticate your license key and verify credit reservations for generation tools."
+        },
+        {
+          "q": "What happens if my internet connection drops during a session?",
+          "a": "Basic transport controls, mixer adjustments, plugin parameter tweaks, and audio analysis cost zero credits and operate completely offline. Only high-level project generative actions (such as composing a full multi-track song) require an initial credit hold."
+        },
+        {
+          "q": "Which versions of FL Studio are supported?",
+          "a": "FL-MCP is designed and tested for FL Studio 2024 and FL Studio 2025 on Windows 10, Windows 11, and macOS. All 17 self-test suites pass against modern FL Studio Python controller scripts."
+        },
+        {
+          "q": "Can I move my license to a new computer?",
+          "a": "Yes. Each plan comes with dedicated seats (2 for Pro, 5 for Studio). You can revoke any machine from your CrownCode web dashboard with a single click, or pass the replace parameter directly from the client."
+        }
+      ]
+    },
+    "dashboard": {
+      "title": "FL-MCP User Dashboard",
+      "subtitle": "Manage your license key, active device seats, and credit balances.",
+      "authTitle": "Access Your License Vault",
+      "authDescription": "Enter your license key or email to access your machine activations and credits, or claim a free trial.",
+      "keyPlaceholder": "FLMCP-XXXXX-XXXXX-XXXXX-XXXXX",
+      "emailPlaceholder": "producer@example.com",
+      "loadButton": "Access Vault",
+      "trialPrompt": "New to FL-MCP? Claim instant access with a 30-day trial and 15 free credits.",
+      "claimTrialButton": "Claim 30-Day Free Trial",
+      "vaultTitle": "License Vault",
+      "licenseKeyLabel": "Your License Key",
+      "copyKey": "Copy Key",
+      "copied": "Copied to Clipboard",
+      "showKey": "Reveal",
+      "hideKey": "Hide",
+      "planLabel": "Current Plan",
+      "statusLabel": "Status",
+      "periodEndLabel": "Renews / Expires",
+      "creditsTitle": "Live Credit Balance",
+      "creditsAvailable": "Credits Available",
+      "costsOverview": "Operation Costs",
+      "costCompose": "Full Song Composition (5 credits)",
+      "costFlp": "FLP Project Generation (3 credits)",
+      "costBalance": "Mixer Auto-Balance (2 credits)",
+      "costTransport": "Fader Moves & Audio Metering (Free / 0 credits)",
+      "devicesTitle": "Active Device Seats",
+      "devicesCount": "Registered Seats",
+      "devicesLimit": "Seats Allowed",
+      "noDevices": "No devices activated yet. Connect your first machine using Claude Desktop or Claude Code.",
+      "deviceName": "Machine Name",
+      "deviceLastSeen": "Last Seen",
+      "revokeSeat": "Revoke Seat",
+      "setupTitle": "Quick Client Setup Guide",
+      "setupSubtitle": "Connect FL-MCP to your AI development environment in under two minutes.",
+      "tabDesktop": "Claude Desktop",
+      "tabCli": "Claude Code",
+      "tabCursor": "Cursor",
+      "tabVscode": "VS Code",
+      "downloadBundle": "Download Claude Desktop (.mcpb)",
+      "downloadScript": "Download FL Studio Controller Script",
+      "downloadLoopMidi": "Download loopMIDI (Windows)",
+      "step1": "1. Install loopMIDI and create ports FL_MCP_IN and FL_MCP_OUT.",
+      "step2": "2. Copy the controller script to your FL Studio Settings/Hardware folder.",
+      "step3": "3. Add the MCP configuration below to your AI client.",
+      "step4": "4. Run activate tool with your license key in your first chat turn."
     }
   }
 }
