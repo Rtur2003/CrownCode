@@ -15,6 +15,17 @@ function apiOrigin() {
   }
 }
 
+// Supabase Auth (Google sign-in on the FL-MCP dashboard): its origin is the only extra
+// place the browser may talk to. Unset (sign-in off), nothing is added.
+function supabaseOrigins() {
+  try {
+    const raw = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
+    return raw ? [new URL(raw).origin] : []
+  } catch {
+    return []
+  }
+}
+
 // Content-Security-Policy for pages. Pages Router output has no executable
 // inline script (__NEXT_DATA__ and the JSON-LD are data blocks), so script-src
 // stays on 'self'. Style attributes (React inline styles, Motion) need
@@ -28,7 +39,7 @@ function contentSecurityPolicy() {
     'img-src': ["'self'", 'data:', 'blob:'],
     'font-src': ["'self'", 'data:'],
     'media-src': ["'self'", 'blob:', 'data:'],
-    'connect-src': ["'self'", 'blob:', 'data:', apiOrigin(), 'https://api.github.com', 'https://cloudflareinsights.com'],
+    'connect-src': ["'self'", 'blob:', 'data:', apiOrigin(), ...supabaseOrigins(), 'https://api.github.com', 'https://cloudflareinsights.com'],
     'worker-src': ["'self'", 'blob:'],
     'manifest-src': ["'self'"],
     'object-src': ["'none'"],
@@ -47,9 +58,9 @@ const securityHeaders = [
   { key: 'Strict-Transport-Security', value: 'max-age=31536000' },
   ...(process.env.NODE_ENV === 'production'
     ? [{
-        key: process.env.CSP_REPORT_ONLY === 'true' ? 'Content-Security-Policy-Report-Only' : 'Content-Security-Policy',
-        value: contentSecurityPolicy(),
-      }]
+      key: process.env.CSP_REPORT_ONLY === 'true' ? 'Content-Security-Policy-Report-Only' : 'Content-Security-Policy',
+      value: contentSecurityPolicy(),
+    }]
     : []),
 ]
 
