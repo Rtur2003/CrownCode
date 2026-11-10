@@ -196,23 +196,7 @@ const FlMcpDashboardPage: NextPage = () => {
     }
   }, [loadAccount])
 
-  // Load standalone key from localStorage if not signed in
-  useEffect(() => {
-    if (session) { return }
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY)
-      if (saved) {
-        const parsed = JSON.parse(saved)
-        if (parsed?.key) {
-          fetchStandaloneKey(parsed.key)
-        }
-      }
-    } catch {
-      // Ignore local storage errors
-    }
-  }, [session])
-
-  const fetchStandaloneKey = async (keyInput: string) => {
+  const fetchStandaloneKey = useCallback(async (keyInput: string) => {
     setLoading(true)
     setErrorMsg(null)
     try {
@@ -236,7 +220,23 @@ const FlMcpDashboardPage: NextPage = () => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [isTr])
+
+  // Load standalone key from localStorage if not signed in
+  useEffect(() => {
+    if (session) { return }
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY)
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        if (parsed?.key) {
+          fetchStandaloneKey(parsed.key)
+        }
+      }
+    } catch {
+      // Ignore local storage errors
+    }
+  }, [session, fetchStandaloneKey])
 
   const handleGoogleSignIn = async () => {
     const sb = getSupabase()
