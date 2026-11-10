@@ -15,7 +15,7 @@ const LINKS: Record<CheckoutPlan, string> = {
 /** The checkout URL for a plan, with the buyer's email filled in; null when none is configured. */
 export function checkoutUrl(plan: CheckoutPlan, email?: string): string | null {
   const base = LINKS[plan]
-  if (!base) {return null}
+  if (!base || /YOUR_|PLACEHOLDER|CHANGE_ME/i.test(base)) {return null}
   try {
     const url = new URL(base)
     if (url.protocol !== 'https:') {return null}
