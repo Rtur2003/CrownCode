@@ -372,13 +372,13 @@ const FlMcpShowcasePage: NextPage = () => {
                     </li>
                   ))}
                 </ul>
-                <Link
-                  href={checkoutUrl('pro') || '/dashboard/fl-mcp'}
-                  className={world.primary}
-                  style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}
-                >
-                  {P?.pricing.pro.cta || 'Get Pro Producer'}
-                </Link>
+                  <Link
+                    href={checkoutUrl('pro') || '/dashboard/fl-mcp'}
+                    className={world.primary}
+                    style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}
+                  >
+                    {P?.pricing.pro.cta || 'Get Pro Producer'}
+                  </Link>
               </div>
 
               {/* Studio Edition */}
@@ -397,13 +397,13 @@ const FlMcpShowcasePage: NextPage = () => {
                     </li>
                   ))}
                 </ul>
-                <Link
-                  href={checkoutUrl('studio') || '/dashboard/fl-mcp'}
-                  className={world.secondary || world.link}
-                  style={{ textAlign: 'center', display: 'block', padding: '10px 0' }}
-                >
-                  {P?.pricing.studio.cta || 'Get Studio Edition'}
-                </Link>
+                  <Link
+                    href={checkoutUrl('studio') || '/dashboard/fl-mcp'}
+                    className={world.secondary || world.link}
+                    style={{ textAlign: 'center', display: 'block', padding: '10px 0' }}
+                  >
+                    {P?.pricing.studio.cta || 'Get Studio Edition'}
+                  </Link>
               </div>
             </div>
 
@@ -413,9 +413,9 @@ const FlMcpShowcasePage: NextPage = () => {
                 <strong style={{ color: 'var(--ink)' }}>{P?.pricing.pack100.name || '100 Credit Top-Up Pack'} ($10)</strong>
                 <p style={{ margin: '4px 0 0', fontSize: '0.88rem', color: 'var(--body)' }}>{P?.pricing.pack100.description}</p>
               </div>
-              <Link href={checkoutUrl('pack100') || '/dashboard/fl-mcp'} className={world.link}>
-                {P?.pricing.pack100.cta || 'Add 100 Credits'}
-              </Link>
+                <Link href={checkoutUrl('pack100') || '/dashboard/fl-mcp'} className={world.link}>
+                  {P?.pricing.pack100.cta || 'Add 100 Credits'}
+                </Link>
             </div>
           </div>
         </section>

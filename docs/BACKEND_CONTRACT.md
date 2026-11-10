@@ -5,7 +5,7 @@
 ## Architecture
 
 | Component | Path | Role | Serves `/api/analyze`? |
-|-----------|------|------|------------------------|
+| ----------- | ------ | ------ | ------------------------ |
 | **Core backend** | `backend/` | FastAPI: health, `/api/analyze` (AURIS signal analysis), `/api/youtube/analyze` | **Yes** |
 | **HF backend** | `hf-crowncode-backend/` (separate repo) | Advanced FastAPI: commend, data processing, analyze, audio augmentation | Yes (legacy) |
 | **Frontend** | `platform/` | Next.js 14 (Pages Router) | N/A |
@@ -26,7 +26,7 @@
 ### Request (multipart/form-data)
 
 | Field | Type | Required | Description |
-|-------|------|----------|-------------|
+| ------- | ------ | ---------- | ------------- |
 | `sourceType` | `youtube` \| `file` \| `spotify` \| `apple` | Yes | Input source type |
 | `url` | string | If sourceType is youtube/spotify | Source URL |
 | `file` | File (max 30 MB) | If sourceType is file | Audio file upload |
@@ -69,16 +69,19 @@
 ### Source Variants
 
 **YouTube:**
+
 ```json
 { "kind": "youtube", "url": "...", "normalizedUrl": "...", "videoId": "...", "startTimeSec": 30 }
 ```
 
 **Spotify:**
+
 ```json
 { "kind": "spotify", "url": "...", "normalizedUrl": "...", "trackId": "..." }
 ```
 
 **File:**
+
 ```json
 { "kind": "file", "fileName": "track.mp3", "fileSizeBytes": 4200000, "mimeType": "audio/mpeg" }
 ```
@@ -88,7 +91,7 @@
 Accepts both camelCase and snake_case field names via Pydantic aliases:
 
 | snake_case | camelCase | Type | Default |
-|-----------|-----------|------|---------|
+| ----------- | ----------- | ------ | --------- |
 | `pitch_shift` | `pitchShift` | bool | false |
 | `speed_change` | `speedChange` | bool | false |
 | `bass_boost` | `bassBoost` | bool | false |
@@ -112,8 +115,12 @@ Accepts both camelCase and snake_case field names via Pydantic aliases:
 ## Frontend References
 
 | File | Purpose |
-|------|---------|
+| ------ | --------- |
 | `platform/hooks/analysisTypes.ts` | TypeScript interfaces (source of truth for frontend) |
 | `platform/hooks/analysisGateway.ts` | HTTP client for `/api/analyze` |
 | `platform/hooks/auris/useAuris.ts` | File / link / microphone flow for the AURIS page |
 | `platform/hooks/auris/signal.ts` | Browser port of the signal analysis |
+
+## FL-MCP Licensing & Credit Ledger (`/api/v1/flmcp/*`)
+
+Both `backend/` and `hf-crowncode-backend/` expose the FL-MCP commerce, seat licensing, credit reservation/settlement, and Lemon Squeezy webhook endpoints under `/api/v1/flmcp/*`. See [`docs/FL_MCP.md`](./FL_MCP.md) for the complete specification, database schema, Supabase JWT / device token authentication rules, and rate limits.

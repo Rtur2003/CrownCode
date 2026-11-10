@@ -27,6 +27,7 @@ FL-MCP is a monetized desktop MCP server (`Rtur2003/FL-MCP`) that bridges Claude
 > **CRITICAL**: Hugging Face Spaces have ephemeral local storage. In production, set `DATABASE_URL` to the Supabase PostgreSQL connection string (`postgresql://...`). When `DATABASE_URL` is unset (local dev/tests), `db.py` falls back to SQLite (`FLMCP_DB_PATH` or `/data/flmcp.db`).
 
 ### Tables
+
 - `accounts`: `id`, `email`, `auth_user_id` (Supabase `sub`), `plan` (`free`, `trial`, `pro`, `studio`), `status`, `period_end`, `created_at`
 - `licenses`: `id`, `account_id`, `key_hash` (SHA-256 only; plaintext keys are never stored), `key_Hint`, `seats_allowed`, `revoked`, `created_at`
 - `devices`: `id`, `license_id`, `fingerprint_hash`, `name`, `token_hash` (SHA-256 of `flmcp_dt_...`), `created_at`, `last_seen`, `revoked`
@@ -37,6 +38,7 @@ FL-MCP is a monetized desktop MCP server (`Rtur2003/FL-MCP`) that bridges Claude
 - `webhook_events`: `provider`, `event_id`, `received_at` (idempotency table)
 
 ### Row Level Security (RLS)
+
 On PostgreSQL initialization (`init_db()`), `ENABLE ROW LEVEL SECURITY` is automatically applied to all 8 tables with zero public policies. This blocks any direct browser queries via Supabase PostgREST using the publishable key while allowing the backend's direct Postgres connection full access.
 
 ---
@@ -44,6 +46,7 @@ On PostgreSQL initialization (`init_db()`), `ENABLE ROW LEVEL SECURITY` is autom
 ## 3. Authentication & Abuse Protection
 
 ### Two Distinct Auth Channels
+
 1. **Web Dashboard (`/api/v1/flmcp/me*`) — Supabase JWT (`auth.py`)**:
    - Browser signs in via Google OAuth (`supabase.auth.signInWithOAuth({ provider: 'google' })`).
    - Frontend sends `Authorization: Bearer <supabase_access_token>`.
@@ -53,6 +56,7 @@ On PostgreSQL initialization (`init_db()`), `ENABLE ROW LEVEL SECURITY` is autom
    - Subsequent requests use `Authorization: Bearer flmcp_dt_<token>`.
 
 ### Rate Limits & Anti-Abuse (`ratelimit.py`, `accounts.py`, `ledger.py`)
+
 - **One Trial Per Identity**: Checked against both `auth_user_id` and normalized `email`, plus historical `trial:` credit lots.
 - **Disposable Email Blocklist**: Rejects known throwaway email providers (`mailinator.com`, `yopmail.com`, `10minutemail.com`, etc.).
 - **Sliding-Window Rate Limits** (returns `429 Too Many Requests` with `Retry-After` header):

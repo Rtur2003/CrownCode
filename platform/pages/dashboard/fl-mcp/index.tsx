@@ -134,7 +134,7 @@ const FlMcpDashboardPage: NextPage = () => {
   // Subscribe to Supabase auth state
   useEffect(() => {
     const sb = getSupabase()
-    if (!sb) {return}
+    if (!sb) { return }
 
     sb.auth.getSession().then(({ data }) => {
       if (data.session) {
@@ -160,7 +160,7 @@ const FlMcpDashboardPage: NextPage = () => {
 
   // Load standalone key from localStorage if not signed in
   useEffect(() => {
-    if (session) {return}
+    if (session) { return }
     try {
       const saved = localStorage.getItem(STORAGE_KEY)
       if (saved) {
@@ -274,8 +274,8 @@ const FlMcpDashboardPage: NextPage = () => {
   }
 
   const handleRotateKey = async () => {
-    if (!session?.access_token) {return}
-    if (!window.confirm('Generate a new license key? Your old key will stop working immediately.')) {return}
+    if (!session?.access_token) { return }
+    if (!window.confirm('Generate a new license key? Your old key will stop working immediately.')) { return }
 
     setLoading(true)
     setErrorMsg(null)
@@ -301,7 +301,7 @@ const FlMcpDashboardPage: NextPage = () => {
   }
 
   const handleRevokeSeat = async (deviceId: string) => {
-    if (!license) {return}
+    if (!license) { return }
     setRevokingId(deviceId)
     setErrorMsg(null)
     try {
@@ -328,21 +328,21 @@ const FlMcpDashboardPage: NextPage = () => {
   }
 
   const copyLicenseKey = () => {
-    if (!license) {return}
+    if (!license) { return }
     navigator.clipboard.writeText(license.key)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
 
   const maskKey = (k: string) => {
-    if (showKey) {return k}
+    if (showKey) { return k }
     const parts = k.split('-')
-    if (parts.length < 5) {return 'FLMCP-•••••-•••••-•••••-•••••'}
+    if (parts.length < 5) { return 'FLMCP-•••••-•••••-•••••-•••••' }
     return `${parts[0]}-•••••-•••••-•••••-${parts[4]}`
   }
 
   const formatPeriodEnd = (ts: number | null) => {
-    if (!ts) {return 'Active subscription'}
+    if (!ts) { return 'Active subscription' }
     return new Date(ts * 1000).toLocaleDateString(undefined, {
       year: 'numeric',
       month: 'short',
@@ -612,38 +612,38 @@ const FlMcpDashboardPage: NextPage = () => {
                             style={{ width: `${Math.min(100, Math.max(5, (license.balance / 300) * 100))}%` }}
                           />
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginTop: '8px', fontSize: '0.82rem', color: 'var(--muted)', fontFamily: 'var(--font-family-mono)' }}>
-                          <span>Auto-refills on billing date</span>
-                          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-                            <a
-                              href={checkoutUrl('pro', session?.user?.email || account?.email) || '/fl-mcp#pricing'}
-                              target="_blank"
-                              rel="noreferrer"
-                              style={{ color: 'var(--accent)' }}
-                            >
-                              Pro Plan ($19/mo)
-                            </a>
-                            <a
-                              href={checkoutUrl('studio', session?.user?.email || account?.email) || '/fl-mcp#pricing'}
-                              target="_blank"
-                              rel="noreferrer"
-                              style={{ color: 'var(--accent)' }}
-                            >
-                              Studio Plan ($49/mo)
-                            </a>
-                            <a
-                              href={checkoutUrl('pack100', session?.user?.email || account?.email) || '/fl-mcp#pricing'}
-                              target="_blank"
-                              rel="noreferrer"
-                              style={{ color: 'var(--accent)' }}
-                            >
-                              Top up +100 Credits ($10)
-                            </a>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginTop: '8px', fontSize: '0.82rem', color: 'var(--muted)', fontFamily: 'var(--font-family-mono)' }}>
+                            <span>Auto-refills on billing date</span>
+                            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                              <a
+                                href={checkoutUrl('pro', session?.user?.email || account?.email) || '/fl-mcp#pricing'}
+                                target="_blank"
+                                rel="noreferrer"
+                                style={{ color: 'var(--accent)' }}
+                              >
+                                Pro Plan ($19/mo)
+                              </a>
+                              <a
+                                href={checkoutUrl('studio', session?.user?.email || account?.email) || '/fl-mcp#pricing'}
+                                target="_blank"
+                                rel="noreferrer"
+                                style={{ color: 'var(--accent)' }}
+                              >
+                                Studio Plan ($49/mo)
+                              </a>
+                              <a
+                                href={checkoutUrl('pack100', session?.user?.email || account?.email) || '/fl-mcp#pricing'}
+                                target="_blank"
+                                rel="noreferrer"
+                                style={{ color: 'var(--accent)' }}
+                              >
+                                Top up +100 Credits ($10)
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
                 </section>
 
                 {/* Device Seats Management */}
