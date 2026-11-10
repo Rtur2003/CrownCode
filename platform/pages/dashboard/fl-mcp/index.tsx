@@ -51,14 +51,20 @@ interface LicenseData {
   costs: Record<string, number>
 }
 
-interface AccountOverview {
-  account_id: string
-  email: string
+interface LicenseSummary {
+  id: string
   plan: string
+  status: string
+  period_end: number | null
+  seats_allowed: number
+}
+
+interface AccountOverview {
+  email: string
   balance: number
   trial_used: boolean
-  seats_allowed: number
-  license_key: string | null
+  license: LicenseSummary | null
+  key?: string
   devices: DeviceSeat[]
   costs: Record<string, number>
 }
@@ -110,18 +116,40 @@ const FlMcpDashboardPage: NextPage = () => {
       }
       const data: AccountOverview = await res.json()
       setAccount(data)
-      if (data.license_key) {
-        setLicense({
-          license_id: data.account_id,
-          key: data.license_key,
-          plan: data.plan,
-          status: 'active',
-          period_end: null,
-          seats_allowed: data.seats_allowed,
+      if (data.license) {
+        let cachedKey = data.key || ''
+        if (cachedKey) {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ license_id: data.license.id, key: cachedKey }))
+          } catch {
+            // Ignore storage errors
+          }
+        } else {
+          try {
+            const saved = localStorage.getItem(STORAGE_KEY)
+            if (saved) {
+              const parsed = JSON.parse(saved)
+              if (parsed?.key && (!parsed.license_id || parsed.license_id === data.license.id)) {
+                cachedKey = parsed.key
+              }
+            }
+          } catch {
+            // Ignore storage errors
+          }
+        }
+        setLicense(prev => ({
+          license_id: data.license?.id || 'lic',
+          key: cachedKey || prev?.key || 'FLMCP-•••••-•••••-•••••-•••••',
+          plan: data.license?.plan || 'trial',
+          status: data.license?.status || 'active',
+          period_end: data.license?.period_end ?? null,
+          seats_allowed: data.license?.seats_allowed ?? 2,
           balance: data.balance,
           devices: data.devices || [],
           costs: data.costs || { 'produce.compose': 5, 'produce.flp': 3, 'mix.balance': 2 },
-        })
+        }))
+      } else {
+        setLicense(null)
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Could not load account.'
@@ -251,20 +279,27 @@ const FlMcpDashboardPage: NextPage = () => {
         const errData = await res.json().catch(() => ({}))
         throw new Error(errData.detail || 'Trial provisioning failed.')
       }
-      const data = await res.json()
+      const data: AccountOverview & { key: string } = await res.json()
+      const licId = data.license?.id || session.user.id
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ license_id: licId, key: data.key }))
+      } catch {
+        // Ignore storage errors
+      }
+      setShowKey(true)
       setSuccessMsg('Your 30-day trial and 15 credits are activated.')
+      setAccount(data)
       setLicense({
-        license_id: session.user.id,
+        license_id: licId,
         key: data.key,
-        plan: data.plan || 'trial',
-        status: 'active',
-        period_end: null,
-        seats_allowed: 1,
+        plan: data.license?.plan || 'trial',
+        status: data.license?.status || 'active',
+        period_end: data.license?.period_end ?? null,
+        seats_allowed: data.license?.seats_allowed ?? 1,
         balance: data.balance ?? 15,
-        devices: [],
-        costs: { 'produce.compose': 5, 'produce.flp': 3, 'mix.balance': 2 },
+        devices: data.devices || [],
+        costs: data.costs || { 'produce.compose': 5, 'produce.flp': 3, 'mix.balance': 2 },
       })
-      await loadAccount(session.access_token)
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Could not claim trial.'
       setErrorMsg(msg)
@@ -290,6 +325,15 @@ const FlMcpDashboardPage: NextPage = () => {
         throw new Error('Failed to rotate license key.')
       }
       const data = await res.json()
+      try {
+        localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({ license_id: data.license?.id || license?.license_id, key: data.key })
+        )
+      } catch {
+        // Ignore storage errors
+      }
+      setShowKey(true)
       setLicense(prev => (prev ? { ...prev, key: data.key } : null))
       setSuccessMsg('License key regenerated successfully.')
     } catch (err: unknown) {
