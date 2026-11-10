@@ -1,12 +1,45 @@
-/* FL-MCP: DAW aesthetic, visual meters, interactive cards, pricing and setup tabs.
-   Frames, primary buttons, fields and headings are inherited from world-page.module.css. */
+/* FL-MCP: DAW telemetry, studio gallery, interactive genre selector,
+   plugin parameter table, pricing cards, and license vault.
+   Frames, primary buttons, fields, and section grids come from world-page.module.css. */
+
+/* ── Studio Visual Gallery ────────────────────────────────────────── */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.shot {
+  margin: 0;
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+}
+
+.shot figcaption {
+  margin-top: 10px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* ── Interactive DAW Console & Telemetry ──────────────────────────── */
 
 .dawConsole {
-  margin: 0 0 24px;
+  margin: 0;
   padding: 24px;
-  background: color-mix(in srgb, #0a090d 85%, var(--accent) 15%);
+  background: color-mix(in srgb, #08070b 88%, var(--accent) 12%);
   border: 1px solid var(--line-strong);
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .dawHeader {
@@ -23,9 +56,9 @@
 .dawStatus {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-family: var(--font-family-mono);
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   color: var(--accent);
 }
 
@@ -37,16 +70,22 @@
   box-shadow: 0 0 8px var(--accent);
 }
 
+.dawLatency {
+  font-family: var(--font-family-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
 .meterRow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 16px;
-  margin-bottom: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
 }
 
 .meterBox {
-  padding: 12px;
-  background: color-mix(in srgb, #000 70%, transparent);
+  padding: 14px;
+  background: color-mix(in srgb, #040306 76%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
 }
@@ -69,139 +108,229 @@
 
 .meterBarOuter {
   width: 100%;
-  height: 6px;
-  background: #1a171e;
-  border-radius: 3px;
-  margin-top: 8px;
+  height: 5px;
+  background: #19161d;
+  border-radius: 999px;
+  margin-top: 10px;
   overflow: hidden;
 }
 
 .meterBarFill {
   height: 100%;
   background: var(--accent);
-  border-radius: 3px;
-  transition: width 0.4s ease;
+  border-radius: 999px;
+  transition: width 0.35s ease;
+}
+
+.channelRack {
+  padding: 16px 18px;
+  background: color-mix(in srgb, #040306 82%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+
+.channelRackHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-family: var(--font-family-mono);
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
+.channelRow {
+  display: grid;
+  grid-template-columns: minmax(140px, 210px) minmax(80px, 1fr) 88px;
+  gap: 14px;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+
+.channelRow:first-of-type {
+  border-top: 0;
+}
+
+.channelName {
+  color: var(--ink);
+}
+
+.channelLevel {
+  text-align: right;
+  font-family: var(--font-family-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
 }
 
 /* ── Interactive Genre Grid ───────────────────────────────────────── */
 
 .genreGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 14px;
-  margin: 16px 0 0;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
+  margin: 0;
 }
 
 .genreCard {
-  padding: 16px;
-  background: color-mix(in srgb, #050407 60%, transparent);
+  padding: 16px 18px;
+  background: color-mix(in srgb, #050407 65%, transparent);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 2px;
   cursor: pointer;
-  transition: border-color 0.2s, background-color 0.2s;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
   text-align: left;
+  font: inherit;
 }
 
 .genreCard:hover {
-  background: color-mix(in srgb, #050407 80%, var(--accent) 20%);
-  border-color: var(--accent);
+  background: color-mix(in srgb, #050407 82%, var(--accent) 18%);
+  border-color: var(--line-strong);
 }
 
 .genreCard[data-active='true'] {
-  background: color-mix(in srgb, #050407 75%, var(--accent) 25%);
+  background: color-mix(in srgb, #050407 78%, var(--accent) 22%);
   border-color: var(--accent);
 }
 
+.genreCardTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
 .genreTitle {
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   color: var(--ink);
-  margin: 0 0 4px;
+  margin: 0;
+}
+
+.genreBpm {
+  font-family: var(--font-family-mono);
+  font-size: 0.76rem;
+  color: var(--accent);
 }
 
 .genreDesc {
   font-size: 0.88rem;
-  line-height: 1.45;
+  line-height: 1.48;
   color: var(--muted);
   margin: 0;
 }
 
-/* ── Plugin Comparison Table ──────────────────────────────────────── */
+.genreInspector {
+  margin-top: 20px;
+  padding: 20px 22px;
+  background: color-mix(in srgb, #050407 78%, var(--accent) 10%);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+}
+
+.genreInspectorHeader {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+.genreInspectorTitle {
+  font-size: 1.08rem;
+  color: var(--accent);
+}
+
+.genreInspectorMeta {
+  font-family: var(--font-family-mono);
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+.genreInspectorBody {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.55;
+  color: var(--body);
+}
+
+/* ── Plugin Parameter Table ───────────────────────────────────────── */
 
 .pluginComparison {
   display: grid;
-  gap: 12px;
-  margin-top: 16px;
+  gap: 10px;
+  margin: 0;
 }
 
 .pluginRow {
   display: grid;
-  grid-template-columns: minmax(180px, 1fr) minmax(160px, 1.2fr) minmax(180px, 1.2fr);
+  grid-template-columns: minmax(150px, 1fr) minmax(150px, 1.1fr) minmax(180px, 1.3fr);
   gap: 14px;
-  padding: 12px 14px;
+  padding: 13px 16px;
   align-items: center;
-  background: color-mix(in srgb, #050407 50%, transparent);
+  background: color-mix(in srgb, #050407 58%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
   font-size: 0.92rem;
 }
 
 .pluginRowHeader {
-  background: color-mix(in srgb, #050407 80%, transparent);
+  background: color-mix(in srgb, #050407 85%, transparent);
   font-family: var(--font-family-mono);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--muted);
 }
 
 .pluginValueOld {
   font-family: var(--font-family-mono);
+  font-size: 0.84rem;
   color: var(--soft);
 }
 
 .pluginValueNew {
   font-family: var(--font-family-mono);
+  font-size: 0.86rem;
   color: var(--accent);
-  font-weight: 500;
 }
 
 /* ── Pricing Matrix ───────────────────────────────────────────────── */
 
 .pricingGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
-  margin-top: 24px;
+  margin: 0;
 }
 
 .pricingCard {
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  background: color-mix(in srgb, #08060a 85%, transparent);
+  padding: 26px 24px;
+  background: color-mix(in srgb, #07060a 84%, transparent);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 2px;
   position: relative;
 }
 
 .pricingCard[data-featured='true'] {
   border-color: var(--accent);
-  background: color-mix(in srgb, #08060a 85%, var(--accent) 15%);
+  background: color-mix(in srgb, #07060a 84%, var(--accent) 16%);
 }
 
 .pricingBadge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  padding: 3px 8px;
+  align-self: flex-start;
+  margin-bottom: 10px;
+  padding: 3px 10px;
   font-family: var(--font-family-mono);
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   color: var(--accent);
-  background: color-mix(in srgb, #000 60%, transparent);
+  background: color-mix(in srgb, #050407 75%, transparent);
   border: 1px solid var(--accent);
-  border-radius: 2px;
+  border-radius: 999px;
 }
 
 .tierName {
-  font-size: 1.2rem;
+  font-size: 1.22rem;
   color: var(--ink);
   margin: 0 0 8px;
 }
@@ -209,13 +338,13 @@
 .tierPriceBox {
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  gap: 8px;
   margin-bottom: 12px;
 }
 
 .tierPrice {
-  font-size: 2.2rem;
-  font-weight: 500;
+  font-size: 2.15rem;
+  font-weight: 400;
   color: var(--ink);
   font-family: var(--font-family-mono);
 }
@@ -226,11 +355,10 @@
 }
 
 .tierDesc {
-  font-size: 0.92rem;
-  line-height: 1.5;
+  font-size: 0.94rem;
+  line-height: 1.52;
   color: var(--body);
-  margin: 0 0 16px;
-  min-height: 48px;
+  margin: 0 0 18px;
 }
 
 .tierFeatures {
@@ -241,31 +369,50 @@
 }
 
 .tierFeatures li {
-  padding: 7px 0;
-  font-size: 0.9rem;
+  padding: 8px 0;
+  font-size: 0.92rem;
+  line-height: 1.45;
   color: var(--body);
   border-top: 1px solid var(--line);
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.tierFeatures li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
 }
 
 .tierFeatures li:first-child {
-  border-top: none;
+  border-top: 0;
+}
+
+.topupBanner {
+  margin-top: 20px;
+  padding: 18px 22px;
+  background: color-mix(in srgb, #050407 72%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
 }
 
 /* ── FAQ Accordion ────────────────────────────────────────────────── */
 
 .faqList {
   display: grid;
-  gap: 12px;
-  margin-top: 20px;
+  gap: 10px;
+  margin: 0;
 }
 
 .faqItem {
-  background: color-mix(in srgb, #050407 50%, transparent);
+  background: color-mix(in srgb, #050407 55%, transparent);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 2px;
   overflow: hidden;
 }
 
@@ -274,11 +421,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   padding: 16px 20px;
   background: none;
-  border: none;
+  border: 0;
   color: var(--ink);
-  font-size: 1.05rem;
+  font: inherit;
+  font-size: 1.04rem;
   text-align: left;
   cursor: pointer;
 }
@@ -289,57 +438,76 @@
 
 .faqAnswer {
   padding: 0 20px 18px;
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 0.96rem;
+  line-height: 1.62;
   color: var(--body);
 }
 
-/* ── Setup & Dashboard Elements ───────────────────────────────────── */
+/* ── Dashboard & Setup Elements ───────────────────────────────────── */
 
-.tabList {
+.tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 18px;
+  gap: 6px 24px;
+  margin: 0 0 20px;
+  border-bottom: 1px solid var(--line);
 }
 
-.tabButton {
-  padding: 8px 16px;
+.tab {
+  padding: 10px 0 12px;
+  font: inherit;
   font-family: var(--font-family-mono);
   font-size: 0.88rem;
   color: var(--muted);
-  background: color-mix(in srgb, #050407 60%, transparent);
-  border: 1px solid var(--line);
-  border-radius: 2px;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
   cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-.tabButton[data-active='true'] {
+.tab:hover {
   color: var(--ink);
-  background: color-mix(in srgb, #050407 70%, var(--accent) 30%);
-  border-color: var(--accent);
+}
+
+.tab[data-active='true'] {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
 }
 
 .codeBlock {
   position: relative;
-  margin: 12px 0 20px;
-  padding: 16px 20px;
-  background: #060508;
+  margin: 10px 0 22px;
+  padding: 18px 20px;
+  background: color-mix(in srgb, #050407 78%, transparent);
   border: 1px solid var(--line);
-  border-radius: 3px;
+  border-radius: 2px;
   overflow-x: auto;
   font-family: var(--font-family-mono);
   font-size: 0.84rem;
-  line-height: 1.6;
-  color: #f3ede2;
+  line-height: 1.65;
+  color: var(--ink);
 }
 
 .vaultBox {
   padding: 24px;
-  background: color-mix(in srgb, #07060a 85%, var(--accent) 15%);
+  background: color-mix(in srgb, #07060a 86%, var(--accent) 14%);
   border: 1px solid var(--line-strong);
-  border-radius: 4px;
-  margin-bottom: 24px;
+  border-radius: 2px;
+}
+
+.sessionBar {
+  margin-bottom: 28px;
+  padding: 14px 20px;
+  background: color-mix(in srgb, #050407 72%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .keyDisplayRow {
@@ -351,30 +519,126 @@
 }
 
 .keyBox {
-  flex-grow: 1;
-  padding: 12px 18px;
-  background: #000;
+  flex: 1 1 260px;
+  padding: 12px 16px;
+  background: #040306;
   border: 1px solid var(--line);
-  border-radius: 3px;
+  border-radius: 2px;
   font-family: var(--font-family-mono);
-  font-size: 1.15rem;
+  font-size: 1.08rem;
   color: var(--accent);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
+  overflow-x: auto;
+}
+
+.creditCard {
+  padding: 24px;
+  background: color-mix(in srgb, #050407 72%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  display: grid;
+  grid-template-columns: minmax(140px, auto) minmax(0, 1fr);
+  gap: 24px 36px;
+  align-items: center;
+}
+
+.creditValueBox {
+  display: grid;
+  gap: 4px;
+}
+
+.creditNumber {
+  font-family: var(--font-family-mono);
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  line-height: 1;
+  color: var(--accent);
+}
+
+.creditLabel {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.creditMeter {
+  min-width: 0;
+}
+
+.meterTrack {
+  width: 100%;
+  height: 6px;
+  background: #19161d;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.meterFill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 0.35s ease;
 }
 
 .deviceList {
   display: grid;
   gap: 10px;
-  margin-top: 14px;
+  margin: 0;
 }
 
 .deviceItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  background: color-mix(in srgb, #050407 50%, transparent);
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 18px;
+  background: color-mix(in srgb, #050407 58%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
 }
 
+.steps {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 4px 8px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  counter-increment: step;
+  font-size: 0.96rem;
+  line-height: 1.5;
+  color: var(--body);
+}
+
+.steps li:first-child {
+  border-top: 0;
+}
+
+.steps li::before {
+  content: counter(step) '.';
+  font-family: var(--font-family-mono);
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+
+@media (max-width: 680px) {
+  .channelRow {
+    grid-template-columns: 1fr auto;
+  }
+  .channelRow .meterBarOuter {
+    grid-column: 1 / -1;
+    margin-top: 4px;
+  }
+  .pluginRow {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .creditCard {
+    grid-template-columns: 1fr;
+  }
+}
