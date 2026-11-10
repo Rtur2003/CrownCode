@@ -149,7 +149,7 @@ export function worldSector(entry: Pick<ProductEntry, 'id' | 'localeKey'>, langu
 
 /** Worlds that have a rendered thumbnail (`scripts/capture-atlas-assets.py`); a test checks this against the files. */
 export const RENDERED_WORLDS: ReadonlySet<string> = new Set([
-  'ai-music-detection', 'ml-toolkit', 'crown-fortune', 'crown-dreams', 'crown-commend', 'crown-vote', 'noir-grain', 'kognita',
+  'ai-music-detection', 'ml-toolkit', 'crown-fortune', 'crown-dreams', 'crown-commend', 'crown-vote', 'noir-grain', 'fl-mcp', 'kognita',
 ])
 
 /** The planet picture of a world; a project that has none yet gets the generic one, so a new project never shows a broken image. */
