@@ -77,3 +77,4 @@ def require_usable(status: str, period_end: int | None, now: int) -> None:
             f"the subscription is {state}; renew it to continue",
             subscription=state,
         )
+

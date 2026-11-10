@@ -17,6 +17,8 @@ from typing import Any
 from .errors import ApiError
 from .plans import Config
 
+MAX_OPEN_HOLDS = 20  # unsettled reservations an account may have at once
+
 
 def _new_lot(
     conn: Any,
@@ -152,6 +154,11 @@ def reserve(
             raise ApiError(409, "idempotency_conflict", "that key was used for other operations")
         return _view(conn, again, now)
     cost = sum(prices.values())
+    open_holds = conn.execute(
+        "SELECT COUNT(*) AS n FROM reservations WHERE account_id=? AND state='held'", (account_id,)
+    ).fetchone()
+    if int(open_holds["n"] if isinstance(open_holds, dict) else open_holds[0]) >= MAX_OPEN_HOLDS:
+        raise ApiError(429, "too_many_holds", "settle or wait for open reservations before reserving more")
     have = balance(conn, account_id, now)
     if have < cost:
         raise ApiError(
@@ -237,3 +244,4 @@ def history(conn: Any, account_id: str, limit: int = 20) -> list[dict]:
         (account_id, limit),
     ).fetchall()
     return [dict(r) for r in rows]
+

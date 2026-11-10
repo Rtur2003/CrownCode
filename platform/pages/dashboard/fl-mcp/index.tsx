@@ -4,7 +4,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import type { NextPage } from 'next'
-import Link from 'next/link'
 import type { Session } from '@supabase/supabase-js'
 import {
   Key,
@@ -253,7 +252,7 @@ const FlMcpDashboardPage: NextPage = () => {
         throw new Error(errData.detail || 'Trial provisioning failed.')
       }
       const data = await res.json()
-      setSuccessMsg('Your 30-day trial and 15 credits are activated!')
+      setSuccessMsg('Your 30-day trial and 15 credits are activated.')
       setLicense({
         license_id: session.user.id,
         key: data.key,
@@ -613,16 +612,34 @@ const FlMcpDashboardPage: NextPage = () => {
                             style={{ width: `${Math.min(100, Math.max(5, (license.balance / 300) * 100))}%` }}
                           />
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px', fontSize: '0.82rem', color: 'var(--muted)', fontFamily: 'var(--font-family-mono)' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginTop: '8px', fontSize: '0.82rem', color: 'var(--muted)', fontFamily: 'var(--font-family-mono)' }}>
                           <span>Auto-refills on billing date</span>
-                          <a
-                            href={checkoutUrl('pack100', session?.user?.email) || '/fl-mcp#pricing'}
-                            target="_blank"
-                            rel="noreferrer"
-                            style={{ color: 'var(--accent)' }}
-                          >
-                            Top up +100 Credits ($10)
-                          </a>
+                          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                            <a
+                              href={checkoutUrl('pro', session?.user?.email || account?.email) || '/fl-mcp#pricing'}
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{ color: 'var(--accent)' }}
+                            >
+                              Pro Plan ($19/mo)
+                            </a>
+                            <a
+                              href={checkoutUrl('studio', session?.user?.email || account?.email) || '/fl-mcp#pricing'}
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{ color: 'var(--accent)' }}
+                            >
+                              Studio Plan ($49/mo)
+                            </a>
+                            <a
+                              href={checkoutUrl('pack100', session?.user?.email || account?.email) || '/fl-mcp#pricing'}
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{ color: 'var(--accent)' }}
+                            >
+                              Top up +100 Credits ($10)
+                            </a>
+                          </div>
                         </div>
                       </div>
                     </div>

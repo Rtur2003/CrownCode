@@ -10,12 +10,19 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .routes.analyze import router as analyze_router
+from .routes.flmcp import router as flmcp_router
 from .routes.health import router as health_router
 from .routes.youtube import router as youtube_router
 
+_DEFAULT_CORS_ORIGINS = (
+    "http://localhost:3000,"
+    "https://hasan-arthur-altuntas.xyz,"
+    "https://www.hasan-arthur-altuntas.xyz"
+)
+
 
 def _load_origins() -> list[str]:
-    raw = os.getenv("CROWNCODE_CORS_ORIGINS", "http://localhost:3000")
+    raw = os.getenv("CROWNCODE_CORS_ORIGINS", _DEFAULT_CORS_ORIGINS)
     if raw.strip() == "*":
         return ["*"]
     return [origin.strip() for origin in raw.split(",") if origin.strip()]
@@ -28,10 +35,19 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=_origins,
     allow_credentials="*" not in _origins,
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type", "Accept"],
+    allow_methods=["GET", "POST", "DELETE", "OPTIONS"],
+    allow_headers=[
+        "Content-Type",
+        "Accept",
+        "Authorization",
+        "X-Signature",
+        "X-FLMCP-Signature",
+        "X-Hub-Signature-256",
+        "stripe-signature",
+    ],
 )
 
 app.include_router(analyze_router)
+app.include_router(flmcp_router)
 app.include_router(health_router)
 app.include_router(youtube_router)

@@ -219,3 +219,56 @@ def devices(conn: Any, license_id: str) -> list[dict]:
         }
         for r in rows
     ]
+
+
+
+# Throwaway-mailbox domains that must not receive a free trial.
+DISPOSABLE_DOMAINS = frozenset(
+    "mailinator.com guerrillamail.com 10minutemail.com tempmail.com temp-mail.org yopmail.com "
+    "trashmail.com sharklasers.com getnada.com dispostable.com maildrop.cc throwawaymail.com "
+    "fakeinbox.com mintemail.com mohmal.com emailondeck.com".split()
+)
+
+
+def account_for_user(conn: Any, auth_user_id: str, email: str, now: int) -> str:
+    """The account of a signed-in Google user. Linked by the verified email, so a licence a
+    payment provider created for that address is found; the Supabase id is then pinned to it."""
+    email = email.strip().lower()
+    row = conn.execute("SELECT id FROM accounts WHERE auth_user_id=?", (auth_user_id,)).fetchone()
+    if row:
+        return row["id"]
+    row = conn.execute("SELECT id, auth_user_id FROM accounts WHERE email=?", (email,)).fetchone()
+    if row:
+        if row["auth_user_id"] and row["auth_user_id"] != auth_user_id:
+            raise ApiError(409, "account_conflict", "this email belongs to another sign-in")
+        conn.execute("UPDATE accounts SET auth_user_id=? WHERE id=?", (auth_user_id, row["id"]))
+        return row["id"]
+    aid = uuid.uuid4().hex
+    conn.execute(
+        "INSERT INTO accounts(id, email, auth_user_id, created_at) VALUES (?,?,?,?)",
+        (aid, email, auth_user_id, now),
+    )
+    return aid
+
+
+def latest_license(conn: Any, account_id: str) -> Any:
+    return conn.execute(
+        "SELECT * FROM licenses WHERE account_id=? AND status IN ('active','past_due','canceled')"
+        " ORDER BY (plan='trial'), created_at DESC LIMIT 1",
+        (account_id,),
+    ).fetchone()
+
+
+def trial_used(conn: Any, account_id: str) -> bool:
+    row = conn.execute(
+        "SELECT 1 AS x FROM licenses WHERE account_id=? AND plan='trial'", (account_id,)
+    ).fetchone()
+    return row is not None
+
+
+def rotate_key(conn: Any, license_id: str) -> str:
+    """Replace the licence key (leaked or lost). The new key is returned once; only its hash is
+    stored. Devices already activated keep working; new activations need the new key."""
+    key = keys.new_key()
+    conn.execute("UPDATE licenses SET key_hash=? WHERE id=?", (keys.hash_key(key), license_id))
+    return key

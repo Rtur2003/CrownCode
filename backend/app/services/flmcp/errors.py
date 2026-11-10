@@ -12,3 +12,4 @@ class ApiError(Exception):
         self.code = code
         self.detail = detail
         self.extra = extra
+

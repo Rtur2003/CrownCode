@@ -47,3 +47,4 @@ def hash_key(text: str) -> str | None:
 def display(text: str) -> str | None:
     s = normalize(text)
     return _format(s) if s else None
+

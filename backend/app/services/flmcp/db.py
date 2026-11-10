@@ -21,6 +21,7 @@ SQLITE_SCHEMA = """
 CREATE TABLE IF NOT EXISTS accounts (
   id TEXT PRIMARY KEY,
   email TEXT NOT NULL UNIQUE,
+  auth_user_id TEXT UNIQUE,
   created_at INTEGER NOT NULL
 );
 
@@ -116,6 +117,7 @@ PG_SCHEMA = """
 CREATE TABLE IF NOT EXISTS accounts (
   id TEXT PRIMARY KEY,
   email TEXT NOT NULL UNIQUE,
+  auth_user_id TEXT UNIQUE,
   created_at BIGINT NOT NULL
 );
 
@@ -318,6 +320,13 @@ class DB:
         try:
             conn.execute("PRAGMA journal_mode=WAL")
             conn.executescript(SQLITE_SCHEMA)
+            cols = [r[1] for r in conn.execute("PRAGMA table_info(accounts)")]
+            if "auth_user_id" not in cols:  # database created before sign-in existed
+                conn.execute("ALTER TABLE accounts ADD COLUMN auth_user_id TEXT")
+                conn.execute(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS accounts_auth ON accounts(auth_user_id)"
+                )
+            conn.commit()
         finally:
             conn.close()
 
@@ -327,6 +336,18 @@ class DB:
         try:
             with conn.cursor() as cur:
                 cur.execute(PG_SCHEMA)
+                cur.execute("ALTER TABLE accounts ADD COLUMN IF NOT EXISTS auth_user_id TEXT")
+                cur.execute(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS accounts_auth ON accounts(auth_user_id)"
+                )
+                # Supabase publishes the public schema through its REST API; with RLS on and no
+                # policies the publishable key sees nothing. This service connects as the
+                # postgres role, which bypasses RLS.
+                for table in (
+                    "accounts", "licenses", "devices", "lots",
+                    "reservations", "entries", "webhook_events", "outbox",
+                ):
+                    cur.execute(f"ALTER TABLE {table} ENABLE ROW LEVEL SECURITY")
             conn.commit()
         finally:
             conn.close()
@@ -362,3 +383,4 @@ class DB:
                 conn.execute("COMMIT")
             finally:
                 conn.close()
+

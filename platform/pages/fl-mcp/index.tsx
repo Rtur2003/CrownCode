@@ -5,9 +5,6 @@ import React, { useState } from 'react'
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import {
-  SlidersHorizontal,
-  Sparkles,
-  Music,
   Sliders,
   Activity,
   Layers,
@@ -16,12 +13,10 @@ import {
   Check,
   ArrowRight,
   ShieldCheck,
-  Cpu,
-  Laptop,
-  Terminal,
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { WorldPage } from '@/components/UI/WorldPage'
+import { checkoutUrl } from '@/config/flmcp'
 import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
 import { worldName } from '@/config/showroom-worlds'
 import { useLanguage } from '@/context/LanguageContext'
@@ -377,7 +372,11 @@ const FlMcpShowcasePage: NextPage = () => {
                     </li>
                   ))}
                 </ul>
-                <Link href="/dashboard/fl-mcp" className={world.primary} style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
+                <Link
+                  href={checkoutUrl('pro') || '/dashboard/fl-mcp'}
+                  className={world.primary}
+                  style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}
+                >
                   {P?.pricing.pro.cta || 'Get Pro Producer'}
                 </Link>
               </div>
@@ -398,7 +397,11 @@ const FlMcpShowcasePage: NextPage = () => {
                     </li>
                   ))}
                 </ul>
-                <Link href="/dashboard/fl-mcp" className={world.secondary || world.link} style={{ textAlign: 'center', display: 'block', padding: '10px 0' }}>
+                <Link
+                  href={checkoutUrl('studio') || '/dashboard/fl-mcp'}
+                  className={world.secondary || world.link}
+                  style={{ textAlign: 'center', display: 'block', padding: '10px 0' }}
+                >
                   {P?.pricing.studio.cta || 'Get Studio Edition'}
                 </Link>
               </div>
@@ -410,7 +413,7 @@ const FlMcpShowcasePage: NextPage = () => {
                 <strong style={{ color: 'var(--ink)' }}>{P?.pricing.pack100.name || '100 Credit Top-Up Pack'} ($10)</strong>
                 <p style={{ margin: '4px 0 0', fontSize: '0.88rem', color: 'var(--body)' }}>{P?.pricing.pack100.description}</p>
               </div>
-              <Link href="/dashboard/fl-mcp" className={world.link}>
+              <Link href={checkoutUrl('pack100') || '/dashboard/fl-mcp'} className={world.link}>
                 {P?.pricing.pack100.cta || 'Add 100 Credits'}
               </Link>
             </div>
