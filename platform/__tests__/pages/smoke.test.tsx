@@ -270,4 +270,22 @@ describe('Page Smoke Tests', () => {
       })
     })
   })
+
+  describe('FL-MCP Showcase Page (/fl-mcp)', () => {
+    it('renders without crashing', async () => {
+      const FlMcpPage = (await import('@/pages/fl-mcp/index')).default
+      const { container } = renderWithProviders(<FlMcpPage />)
+      expect(container).toBeTruthy()
+      expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+    })
+  })
+
+  describe('FL-MCP Dashboard Page (/dashboard/fl-mcp)', () => {
+    it('renders without crashing', async () => {
+      const FlMcpDashboardPage = (await import('@/pages/dashboard/fl-mcp/index')).default
+      const { container } = renderWithProviders(<FlMcpDashboardPage />)
+      expect(container).toBeTruthy()
+      expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+    })
+  })
 })
