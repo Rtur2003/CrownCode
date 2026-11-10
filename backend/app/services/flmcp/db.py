@@ -293,27 +293,36 @@ class DB:
         clock: Callable[[], float] = time.time,
     ) -> None:
         self.clock = clock
-        self.database_url = os.environ.get("DATABASE_URL")
-        self.is_postgres = bool(self.database_url and (
-            self.database_url.startswith("postgres://") or self.database_url.startswith("postgresql://")
-        ))
+        raw_url = (os.environ.get("DATABASE_URL") or "").strip()
+        is_placeholder = any(
+            token in raw_url.upper()
+            for token in ("YOUR_", "CHANGE_ME", "PLACEHOLDER", "[PASSWORD]", "[YOUR-PASSWORD]")
+        )
+        self.database_url = "" if is_placeholder else raw_url
+        self.is_postgres = bool(
+            self.database_url
+            and (
+                self.database_url.startswith("postgres://")
+                or self.database_url.startswith("postgresql://")
+            )
+        )
+        self.path = db_target or default_db_path()
 
         if self.is_postgres:
             try:
                 import psycopg2
                 import psycopg2.extras
+
                 self._pg_module = psycopg2
-            except ImportError:
-                try:
-                    import psycopg
-                    self._pg_module = psycopg
-                except ImportError:
-                    raise RuntimeError("PostgreSQL driver (psycopg2 or psycopg) not found. Install psycopg2-binary.")
-            self._init_postgres()
-        else:
-            self.path = db_target or default_db_path()
-            Path(self.path).parent.mkdir(parents=True, exist_ok=True)
-            self._init_sqlite()
+                self._init_postgres()
+                return
+            except Exception:
+                # Graceful fallback to SQLite so placeholder or temporarily unreachable
+                # DATABASE_URL values never crash the backend service.
+                self.is_postgres = False
+
+        Path(self.path).parent.mkdir(parents=True, exist_ok=True)
+        self._init_sqlite()
 
     def _init_sqlite(self) -> None:
         conn = sqlite3.connect(self.path, timeout=15)
@@ -331,8 +340,7 @@ class DB:
             conn.close()
 
     def _init_postgres(self) -> None:
-        import psycopg2.extras
-        conn = self._pg_module.connect(self.database_url)
+        conn = self._pg_module.connect(self.database_url, connect_timeout=5)
         try:
             with conn.cursor() as cur:
                 cur.execute(PG_SCHEMA)

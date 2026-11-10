@@ -23,8 +23,14 @@ class AuthUser:
     email: str
 
 
+DEFAULT_SUPABASE_URL = "https://ijtmlchjfbxgmypewvfg.supabase.co"
+
+
 def _supabase_url() -> str:
-    return os.environ.get("SUPABASE_URL", "").rstrip("/")
+    raw = os.environ.get("SUPABASE_URL", DEFAULT_SUPABASE_URL).strip().rstrip("/")
+    if not raw or any(tok in raw.lower() for tok in ("placeholder", "your-", "change_me")):
+        return DEFAULT_SUPABASE_URL
+    return raw
 
 
 @lru_cache(maxsize=1)

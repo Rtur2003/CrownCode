@@ -45,16 +45,32 @@ def get_admin_token() -> str:
     return os.environ.get("FLMCP_ADMIN_TOKEN", "")
 
 
-def get_webhook_secrets() -> dict[str, str]:
-    raw = os.environ.get("FLMCP_WEBHOOK_SECRETS", "")
+def _parse_kv_or_json(raw: str) -> dict[str, str]:
+    raw = (raw or "").strip()
+    if not raw:
+        return {}
+    if raw.startswith("{"):
+        try:
+            parsed = json.loads(raw)
+            if isinstance(parsed, dict):
+                return {str(k).strip(): str(v).strip() for k, v in parsed.items() if str(k).strip()}
+        except Exception:
+            return {}
     pairs = (p.split("=", 1) for p in raw.split(",") if "=" in p)
-    return {k.strip(): v.strip() for k, v in pairs}
+    return {k.strip(): v.strip() for k, v in pairs if k.strip() and v.strip()}
+
+
+def get_webhook_secrets() -> dict[str, str]:
+    secrets_map = _parse_kv_or_json(os.environ.get("FLMCP_WEBHOOK_SECRETS", ""))
+    for provider in ("lemonsqueezy", "stripe", "generic"):
+        env_val = os.environ.get(f"FLMCP_WEBHOOK_SECRET_{provider.upper()}", "").strip()
+        if env_val and provider not in secrets_map:
+            secrets_map[provider] = env_val
+    return secrets_map
 
 
 def get_ls_variants() -> dict[str, str]:
-    raw = os.environ.get("FLMCP_LS_VARIANTS", "")
-    pairs = (p.split("=", 1) for p in raw.split(",") if "=" in p)
-    return {k.strip(): v.strip() for k, v in pairs}
+    return _parse_kv_or_json(os.environ.get("FLMCP_LS_VARIANTS", ""))
 
 
 class ActivateIn(BaseModel):
@@ -284,6 +300,18 @@ def _summary(conn, db: DB, cfg: plans.Config, aid: str) -> dict:
             "seats_allowed": lic["seats_allowed"],
         }
         out["devices"] = accounts.devices(conn, lic["id"])
+        unread = conn.execute(
+            "SELECT id, payload FROM outbox WHERE account_id=? AND kind='license_key' AND sent_at IS NULL ORDER BY id DESC LIMIT 1",
+            (aid,),
+        ).fetchone()
+        if unread is not None:
+            try:
+                payload = json.loads(unread["payload"])
+                if isinstance(payload, dict) and payload.get("key"):
+                    out["key"] = payload["key"]
+                    conn.execute("UPDATE outbox SET sent_at=? WHERE id=?", (now, unread["id"]))
+            except Exception:
+                pass
     return out
 
 

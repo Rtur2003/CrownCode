@@ -35,12 +35,18 @@ DEFAULT = {
         "pro": {"credits": 300, "devices": 2},
         "studio": {"credits": 1200, "devices": 5},
     },
-    "packs": {"pack_100": 100, "pack_500": 500},
+    "packs": {"pack_100": 100, "pack100": 100, "pack_500": 500, "pack500": 500},
 }
 
 
 def load(path: str | Path | None = None) -> Config:
-    raw = {**DEFAULT, **(json.loads(Path(path).read_text("utf-8")) if path else {})}
+    extra: dict = {}
+    if path and Path(path).is_file():
+        try:
+            extra = json.loads(Path(path).read_text("utf-8"))
+        except Exception:
+            extra = {}
+    raw = {**DEFAULT, **extra}
     costs, packs = dict(raw["costs"]), dict(raw["packs"])
     plans = {name: Plan(**p) for name, p in raw["plans"].items()}
     if not costs or any(not isinstance(v, int) or v < 1 for v in costs.values()):

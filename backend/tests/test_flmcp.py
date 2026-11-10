@@ -309,3 +309,20 @@ def test_generic_webhook_still_verifies_timestamped_signature(client):
     res = client.post("/api/v1/flmcp/webhooks/stripe", content=raw,
                       headers={"Content-Type": "application/json", "X-Signature": webhooks.sign("stripe-test-secret", raw, now)})
     assert res.status_code == 200
+
+
+def test_placeholder_env_vars_and_json_variants_never_crash(client, monkeypatch):
+    monkeypatch.setenv("DATABASE_URL", "postgresql://postgres:YOUR_PASSWORD@db.ijtmlchjfbxgmypewvfg.supabase.co:5432/postgres")
+    monkeypatch.setenv("FLMCP_CONFIG", "placeholder-nonexistent.json")
+    monkeypatch.delenv("FLMCP_WEBHOOK_SECRETS", raising=False)
+    monkeypatch.setenv("FLMCP_WEBHOOK_SECRET_LEMONSQUEEZY", "lemon-secret")
+    monkeypatch.setenv("FLMCP_LS_VARIANTS", '{"111":"pro","222":"studio","333":"pack100"}')
+
+    assert ls_post(client, ls_sub(email="jsonbuyer@gmail.com")).status_code == 200
+    first_me = client.get("/api/v1/flmcp/me", headers=hdr("jsonbuyer@gmail.com")).json()
+    assert first_me["license"]["plan"] == "pro"
+    assert first_me.get("key", "").startswith("FLMCP-")
+    # Second call does not re-expose the plaintext key from outbox
+    second_me = client.get("/api/v1/flmcp/me", headers=hdr("jsonbuyer@gmail.com")).json()
+    assert "key" not in second_me
+
