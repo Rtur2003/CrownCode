@@ -1,18 +1,16 @@
 // FL-MCP: Autonomous AI Copilot for FL Studio 2025.
-// Product showcase, interactive feature matrix, pricing tiers, and audio analysis visualizer.
+// Product showcase, studio architecture visuals, interactive 12-genre matrix,
+// plugin parameter solver in real dB/Hz, closed-loop loudness analysis, and pricing.
 
 import React, { useState } from 'react'
 import type { NextPage } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import {
-  Sliders,
-  Activity,
-  Layers,
   ChevronDown,
   ChevronUp,
   Check,
   ArrowRight,
-  ShieldCheck,
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { WorldPage } from '@/components/UI/WorldPage'
@@ -26,38 +24,218 @@ import styles from '@/styles/pages/fl-mcp.module.css'
 const ENTRY = PRODUCT_CATALOG.find(entry => entry.id === 'fl-mcp')
 
 interface GenreSpec {
-  name: string
+  name: { tr: string; en: string }
   bpm: number
-  scale: string
-  groove: string
-  description: string
+  scale: { tr: string; en: string }
+  groove: { tr: string; en: string }
+  description: { tr: string; en: string }
 }
 
 const GENRES: GenreSpec[] = [
-  { name: 'House & Tech House', bpm: 126, scale: 'A Minor', groove: 'Four-on-the-floor kick with swinging 16th hats', description: 'Driving sub-bass groove with syncopated open hi-hats and sidechained organ chords.' },
-  { name: 'Techno (Peak-Time)', bpm: 132, scale: 'F Minor', groove: 'Rumble sub-kick with driving ride cymbals', description: 'Monophonic rolling basslines, industrial transient percussion, and dark reverb tails.' },
-  { name: 'Trap & Drill', bpm: 142, scale: 'C# Minor', groove: 'Half-time punch with rolling 32nd triplet hi-hats', description: 'Sliding 808 glides with aggressive soft-clipper saturation and snapping rimshots.' },
-  { name: 'Lo-Fi Hip Hop', bpm: 84, scale: 'Eb Major', groove: 'Swung unquantized boom-bap rhythm with vinyl dust', description: 'Jazzy minor 9th and 11th chords, tape wow and flutter, and mellow rhodes progressions.' },
-  { name: 'Drum & Bass', bpm: 174, scale: 'E Minor', groove: 'Amen break syncopations with ghost snares', description: 'Modulated Reese basslines, surgical sub-crossover at 120 Hz, and blistering breakbeats.' },
-  { name: 'Oriental Trap (Hicaz)', bpm: 138, scale: 'D Hicaz (Phrygian Dominant)', groove: 'Darbuka and tef syncopation over modern 808s', description: 'Microtonal makam note bends, authentic quarter-tone melodic lines, and sliding sub-bass.' },
-  { name: 'Synthwave & Darksynth', bpm: 110, scale: 'D Minor', groove: 'Gated snare backbeat with pumping sidechain', description: 'Analog saw bass arpeggios, vintage Juno chorus pads, and soaring brass leads.' },
-  { name: 'Ambient & Cinematic', bpm: 72, scale: 'B Minor', groove: 'Evolving polyrhythmic textures with swell pulses', description: 'Granular drone layers, infinite shimmer reverbs, and gentle orchestral brass swells.' },
-  { name: 'Cyberpunk Midtempo', bpm: 105, scale: 'G Minor', groove: 'Heavy stomping kick with distorted downbeats', description: 'Aggressive wavefolded bass growls, metallic snares, and pitch-bent vocoder stabs.' },
-  { name: 'UK Garage & 2-Step', bpm: 134, scale: 'F# Minor', groove: 'Skippy swung shuffle with delayed offbeat snares', description: 'Deep hollow sub-bounces, vocal chops, and crisp shaker grooves.' },
-  { name: 'Afrobeats', bpm: 102, scale: 'G Major', groove: 'Polyrhythmic 3-against-2 rimshots and shakers', description: 'Syncopated log drums, warm electric guitar plucks, and catchy melodic hooks.' },
-  { name: 'Neo-Soul & R&B', bpm: 88, scale: 'Ab Major', groove: 'Behind-the-beat pocket groove with ghost notes', description: 'Extended chord voicings, velvety bass fills, and silky vocal harmonies.' },
+  {
+    name: { tr: 'House ve Tech House', en: 'House & Tech House' },
+    bpm: 126,
+    scale: { tr: 'La Minör (A Minor)', en: 'A Minor' },
+    groove: {
+      tr: 'Dört dörtlük kick vuruşları ve 16lık swingli hi-hat yürüyüşü',
+      en: 'Four-on-the-floor kick with swinging 16th hi-hats',
+    },
+    description: {
+      tr: 'Senkoplu açık hi-hatler, sidechain pompalı org akorları ve sürükleyici sub-bas yürüyüşü.',
+      en: 'Driving sub-bass groove with syncopated open hi-hats and sidechained organ chords.',
+    },
+  },
+  {
+    name: { tr: 'Techno (Peak-Time)', en: 'Techno (Peak-Time)' },
+    bpm: 132,
+    scale: { tr: 'Fa Minör (F Minor)', en: 'F Minor' },
+    groove: {
+      tr: 'Rumble sub-kick dokusu ve kesintisiz ride zil sürüşü',
+      en: 'Rumble sub-kick with driving ride cymbals',
+    },
+    description: {
+      tr: 'Monofonik yuvarlanan bas hatları, endüstriyel perküsyon vuruşları ve karanlık reverb kuyrukları.',
+      en: 'Monophonic rolling basslines, industrial transient percussion, and dark reverb tails.',
+    },
+  },
+  {
+    name: { tr: 'Trap ve Drill', en: 'Trap & Drill' },
+    bpm: 142,
+    scale: { tr: 'Do# Minör (C# Minor)', en: 'C# Minor' },
+    groove: {
+      tr: 'Yarım zamanlı vuruş ve 32lik üçleme hi-hat ruloları',
+      en: 'Half-time punch with rolling 32nd triplet hi-hats',
+    },
+    description: {
+      tr: 'Perde kaymalı 808 glide baslar, doygun soft-clipper katmanı ve keskin rimshot geçişleri.',
+      en: 'Sliding 808 glides with aggressive soft-clipper saturation and snapping rimshots.',
+    },
+  },
+  {
+    name: { tr: 'Lo-Fi Hip Hop', en: 'Lo-Fi Hip Hop' },
+    bpm: 84,
+    scale: { tr: 'Mi♭ Majör (Eb Major)', en: 'Eb Major' },
+    groove: {
+      tr: 'Kuantize edilmemiş doğal boom-bap ritmi ve plak dokusu',
+      en: 'Swung unquantized boom-bap rhythm with vinyl dust',
+    },
+    description: {
+      tr: 'Caz 9lu ve 11li akor seslendirmeleri, kaset dalgalanması ve sıcak Rhodes yürüyüşleri.',
+      en: 'Jazzy minor 9th and 11th chords, tape wow and flutter, and mellow Rhodes progressions.',
+    },
+  },
+  {
+    name: { tr: 'Drum & Bass', en: 'Drum & Bass' },
+    bpm: 174,
+    scale: { tr: 'Mi Minör (E Minor)', en: 'E Minor' },
+    groove: {
+      tr: 'Amen break senkopları ve hayalet trampet dokunuşları',
+      en: 'Amen break syncopations with ghost snares',
+    },
+    description: {
+      tr: 'Modülasyonlu Reese baslar, 120 Hz cerrahi alt frekans ayrımı ve yüksek enerjili breakbeatler.',
+      en: 'Modulated Reese basslines, surgical sub-crossover at 120 Hz, and blistering breakbeats.',
+    },
+  },
+  {
+    name: { tr: 'Oriental Trap (Hicaz)', en: 'Oriental Trap (Hicaz)' },
+    bpm: 138,
+    scale: { tr: 'Re Hicaz (Frigyen Dominant)', en: 'D Hicaz (Phrygian Dominant)' },
+    groove: {
+      tr: 'Modern 808 baslar üzerinde darbuka ve tef senkopları',
+      en: 'Darbuka and tef syncopation over modern 808s',
+    },
+    description: {
+      tr: 'Makamsal perde bükmeleri, otantik melodik yürüyüşler ve kayan alt bas katmanları.',
+      en: 'Microtonal makam note bends, authentic melodic lines, and sliding sub-bass.',
+    },
+  },
+  {
+    name: { tr: 'Synthwave ve Darksynth', en: 'Synthwave & Darksynth' },
+    bpm: 110,
+    scale: { tr: 'Re Minör (D Minor)', en: 'D Minor' },
+    groove: {
+      tr: 'Gated reverb trampet vuruşları ve ritmik sidechain',
+      en: 'Gated snare backbeat with pumping sidechain',
+    },
+    description: {
+      tr: 'Analog testere dalga bas arpejleri, vintage Juno koro padleri ve parlak bakır leadler.',
+      en: 'Analog saw bass arpeggios, vintage Juno chorus pads, and soaring brass leads.',
+    },
+  },
+  {
+    name: { tr: 'Ambient ve Sinematik', en: 'Ambient & Cinematic' },
+    bpm: 72,
+    scale: { tr: 'Si Minör (B Minor)', en: 'B Minor' },
+    groove: {
+      tr: 'Evrilen poliritmik dokular ve dinamik kreşendo dalgaları',
+      en: 'Evolving polyrhythmic textures with swell pulses',
+    },
+    description: {
+      tr: 'Granüler dron katmanları, derin shimmer yankıları ve orkestral yaylı yükselişleri.',
+      en: 'Granular drone layers, infinite shimmer reverbs, and gentle orchestral swells.',
+    },
+  },
+  {
+    name: { tr: 'Cyberpunk Midtempo', en: 'Cyberpunk Midtempo' },
+    bpm: 105,
+    scale: { tr: 'Sol Minör (G Minor)', en: 'G Minor' },
+    groove: {
+      tr: 'Ağır bas vuruşları ve doygun alt-orta frekans darbeleri',
+      en: 'Heavy stomping kick with saturated downbeats',
+    },
+    description: {
+      tr: 'Wavefolder bas hırıltıları, metalik trampetler ve perde bükümlü vokoder akorları.',
+      en: 'Aggressive wavefolded bass growls, metallic snares, and pitch-bent vocoder stabs.',
+    },
+  },
+  {
+    name: { tr: 'UK Garage ve 2-Step', en: 'UK Garage & 2-Step' },
+    bpm: 134,
+    scale: { tr: 'Fa# Minör (F# Minor)', en: 'F# Minor' },
+    groove: {
+      tr: 'Sekmeli shuffle ritmi ve gecikmeli offbeat trampetler',
+      en: 'Skippy swung shuffle with delayed offbeat snares',
+    },
+    description: {
+      tr: 'Derin oyuk sub-bas sekmeleri, kesik vokal örnekleri ve parlak shaker örgüleri.',
+      en: 'Deep hollow sub-bounces, vocal chops, and crisp shaker grooves.',
+    },
+  },
+  {
+    name: { tr: 'Afrobeats', en: 'Afrobeats' },
+    bpm: 102,
+    scale: { tr: 'Sol Majör (G Major)', en: 'G Major' },
+    groove: {
+      tr: '3e karşı 2 poliritmik rimshot ve shaker yürüyüşü',
+      en: 'Polyrhythmic 3-against-2 rimshots and shakers',
+    },
+    description: {
+      tr: 'Senkoplu log drum vuruşları, sıcak elektro gitar arpejleri ve akılda kalıcı melodiler.',
+      en: 'Syncopated log drums, warm electric guitar plucks, and catchy melodic hooks.',
+    },
+  },
+  {
+    name: { tr: 'Neo-Soul ve R&B', en: 'Neo-Soul & R&B' },
+    bpm: 88,
+    scale: { tr: 'La♭ Majör (Ab Major)', en: 'Ab Major' },
+    groove: {
+      tr: 'Ritim cebinin gerisinde akan doğal groove ve hayalet notalar',
+      en: 'Behind-the-beat pocket groove with ghost notes',
+    },
+    description: {
+      tr: 'Genişletilmiş akor seslendirmeleri, kadifemsi bas geçişleri ve sıcak armoniler.',
+      en: 'Extended chord voicings, velvety bass fills, and silky vocal harmonies.',
+    },
+  },
 ]
 
 const PLUGIN_SOLVER_EXAMPLES = [
-  { plugin: 'FabFilter Pro-Q 3', raw: 'band1_freq = 0.432', solved: 'Cutoff: 32 Hz, Q: 0.71 (18 dB/oct HPF)' },
-  { plugin: 'FabFilter Pro-C 2', raw: 'thresh = 0.650, ratio = 0.380', solved: 'Threshold: -14.2 dB, Ratio: 4.2:1' },
-  { plugin: 'Xfer Serum', raw: 'osc_a_pos = 0.812, cutoff = 0.540', solved: 'Wavetable: Resonant Saw, Cutoff: 2.4 kHz' },
-  { plugin: 'Image-Line FLEX', raw: 'macro1 = 0.700, macro2 = 0.450', solved: 'Warmth: +4.2 dB, Reverb Mix: 35%' },
-  { plugin: 'iZotope Ozone 11', raw: 'ceiling = 0.940, target = 0.720', solved: 'True Peak: -1.0 dBTP, Target: -14.0 LUFS' },
+  {
+    plugin: 'FabFilter Pro-Q 3',
+    raw: 'band1_freq = 0.432',
+    solved: {
+      tr: 'Kesim: 32 Hz, Q: 0.71 (18 dB/oktav HPF)',
+      en: 'Cutoff: 32 Hz, Q: 0.71 (18 dB/oct HPF)',
+    },
+  },
+  {
+    plugin: 'FabFilter Pro-C 2',
+    raw: 'thresh = 0.650, ratio = 0.380',
+    solved: {
+      tr: 'Eşik: -14.2 dB, Oran: 4.2:1',
+      en: 'Threshold: -14.2 dB, Ratio: 4.2:1',
+    },
+  },
+  {
+    plugin: 'Xfer Serum',
+    raw: 'osc_a_pos = 0.812, cutoff = 0.540',
+    solved: {
+      tr: 'Dalga: Resonant Saw, Kesim: 2.4 kHz',
+      en: 'Wavetable: Resonant Saw, Cutoff: 2.4 kHz',
+    },
+  },
+  {
+    plugin: 'Image-Line FLEX',
+    raw: 'macro1 = 0.700, macro2 = 0.450',
+    solved: {
+      tr: 'Sıcaklık: +4.2 dB, Yankı Karışımı: %35',
+      en: 'Warmth: +4.2 dB, Reverb Mix: 35%',
+    },
+  },
+  {
+    plugin: 'iZotope Ozone 11',
+    raw: 'ceiling = 0.940, target = 0.720',
+    solved: {
+      tr: 'Tepe Tavanı: -1.0 dBTP, Hedef: -14.0 LUFS',
+      en: 'True Peak: -1.0 dBTP, Target: -14.0 LUFS',
+    },
+  },
 ]
 
 const FlMcpShowcasePage: NextPage = () => {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
+  const isTr = language === 'tr'
   const [activeGenreIndex, setActiveGenreIndex] = useState(0)
   const [openFaq, setOpenFaq] = useState<number | null>(0)
 
@@ -69,7 +247,6 @@ const FlMcpShowcasePage: NextPage = () => {
   const P = (t as unknown as { flMcpPage?: typeof import('@/locales/en.json')['flMcpPage'] }).flMcpPage
   const activeGenre = GENRES[activeGenreIndex]
 
-  // Structured Data schemas for SoftwareApplication and Product
   const softwareSchema = {
     '@type': 'SoftwareApplication',
     '@id': 'https://hasan-arthur-altuntas.xyz/fl-mcp#software',
@@ -103,6 +280,17 @@ const FlMcpShowcasePage: NextPage = () => {
     },
   }
 
+  const splitSpecItem = (text: string) => {
+    const idx = text.indexOf('(')
+    if (idx > 0 && text.endsWith(')')) {
+      return {
+        term: text.slice(0, idx).trim(),
+        detail: text.slice(idx + 1, -1).trim(),
+      }
+    }
+    return { term: text, detail: '' }
+  }
+
   return (
     <MainLayout
       title={P?.meta.title || item.title}
@@ -116,57 +304,119 @@ const FlMcpShowcasePage: NextPage = () => {
         lead={P?.hero.subtitle || item.showroomDescription}
         {...(P?.hero.liveDemoBadge ? { meta: P.hero.liveDemoBadge } : {})}
       >
-        {/* Interactive DAW Console Visualizer */}
+        {/* Section 1: Studio Architecture & Live Telemetry */}
         <section className={world.section} aria-labelledby="flmcp-console-heading">
           <div className={world.sectionHead}>
-            <h2 id="flmcp-console-heading">{P?.hero.badge || 'DAW Host Bridge'}</h2>
-            <p className={world.reading}>
-              Real-time hardware link between Claude Desktop, loopMIDI, and FL Studio 2025.
+            <h2 id="flmcp-console-heading">{P?.features.flIntegration.title || 'FL Studio 2025 Bridge'}</h2>
+            <p>
+              {P?.features.subtitle ||
+                (isTr
+                  ? 'Claude Desktop, loopMIDI ve FL Studio 2025 arasında sıfır bulut gecikmeli donanım bağlantısı.'
+                  : 'Real-time hardware link between Claude Desktop, loopMIDI, and FL Studio 2025.')}
             </p>
-            <div style={{ marginTop: '20px' }}>
-              <Link href="/dashboard/fl-mcp" className={world.primary}>
-                {P?.hero.getStarted || 'Get Started (Instant Access)'}
+            <div className={world.actions}>
+              <Link href="/dashboard/fl-mcp" className={world.primary} style={{ gap: '8px' }}>
+                <span>{P?.hero.getStarted || (isTr ? 'Başlayın' : 'Get Started')}</span>
                 <ArrowRight size={16} />
               </Link>
+              <a href="#pricing" className={world.link}>
+                {P?.pricing.title || (isTr ? 'Paketleri İncele' : 'View Plans')}
+              </a>
             </div>
           </div>
+
           <div className={world.sectionBody}>
+            {/* Studio Visual Gallery */}
+            <div className={styles.gallery}>
+              <figure className={styles.shot}>
+                <Image
+                  src="/images/fl-mcp/studio-bridge.webp"
+                  alt={
+                    isTr
+                      ? 'FL-MCP ve FL Studio 2025 arasında çift yönlü MIDI CC ve piyano rulosu köprüsü'
+                      : 'Bi-directional MIDI CC and piano roll bridge between FL-MCP and FL Studio 2025'
+                  }
+                  width={1440}
+                  height={900}
+                  sizes="(max-width: 860px) 100vw, 400px"
+                  priority
+                />
+                <figcaption>
+                  {isTr
+                    ? 'loopMIDI ve Python API 40 üzerinden mikser, kanal rafı ve piyano rulosu kontrolü.'
+                    : 'Direct mixer, channel rack, and piano roll control over loopMIDI and Python API 40.'}
+                </figcaption>
+              </figure>
+
+              <figure className={styles.shot}>
+                <Image
+                  src="/images/fl-mcp/acoustic-metering.webp"
+                  alt={
+                    isTr
+                      ? 'ITU-R BS.1770-4 LUFS ses yüksekliği ve True Peak spektral analiz ekranı'
+                      : 'ITU-R BS.1770-4 LUFS loudness and True Peak spectral metering display'
+                  }
+                  width={1440}
+                  height={900}
+                  sizes="(max-width: 860px) 100vw, 400px"
+                  priority
+                />
+                <figcaption>
+                  {isTr
+                    ? 'Gerçek dB ve Hz birimleriyle parametrik EQ çözümü ve yayın standardında LUFS ölçümü.'
+                    : 'Parametric EQ solving in real dB and Hz units with broadcast-grade LUFS metering.'}
+                </figcaption>
+              </figure>
+            </div>
+
+            {/* Interactive DAW Console Telemetry */}
             <div className={styles.dawConsole}>
               <div className={styles.dawHeader}>
                 <div className={styles.dawStatus}>
                   <span className={styles.statusDot} />
-                  <span>FL Studio 2025 Engine Connected (loopMIDI Port 1, API 40)</span>
+                  <span>
+                    {isTr
+                      ? 'FL Studio 2025 Motoru Bağlı (loopMIDI Port 1 · API 40)'
+                      : 'FL Studio 2025 Engine Connected (loopMIDI Port 1 · API 40)'}
+                  </span>
                 </div>
-                <div style={{ fontFamily: 'var(--font-family-mono)', fontSize: '0.82rem', color: 'var(--muted)' }}>
-                  Latency: 1.8ms · Host: Localhost
+                <div className={styles.dawLatency}>
+                  {isTr ? 'Gecikme: 1.8 ms · Yerel Köprü' : 'Latency: 1.8 ms · Local Bridge'}
                 </div>
               </div>
 
-              {/* Loudness Meters & Audio Specs */}
               <div className={styles.meterRow}>
                 <div className={styles.meterBox}>
-                  <span className={styles.meterLabel}>Integrated Loudness</span>
+                  <span className={styles.meterLabel}>
+                    {isTr ? 'Entegre Ses Yüksekliği' : 'Integrated Loudness'}
+                  </span>
                   <span className={styles.meterValue}>-14.1 LUFS</span>
                   <div className={styles.meterBarOuter}>
                     <div className={styles.meterBarFill} style={{ width: '72%' }} />
                   </div>
                 </div>
                 <div className={styles.meterBox}>
-                  <span className={styles.meterLabel}>True Peak Max</span>
+                  <span className={styles.meterLabel}>
+                    {isTr ? 'True Peak Tavanı' : 'True Peak Max'}
+                  </span>
                   <span className={styles.meterValue}>-1.02 dBTP</span>
                   <div className={styles.meterBarOuter}>
                     <div className={styles.meterBarFill} style={{ width: '85%' }} />
                   </div>
                 </div>
                 <div className={styles.meterBox}>
-                  <span className={styles.meterLabel}>Dynamic Spread</span>
+                  <span className={styles.meterLabel}>
+                    {isTr ? 'Dinamik Aralık' : 'Dynamic Spread'}
+                  </span>
                   <span className={styles.meterValue}>9.4 LU</span>
                   <div className={styles.meterBarOuter}>
                     <div className={styles.meterBarFill} style={{ width: '60%' }} />
                   </div>
                 </div>
                 <div className={styles.meterBox}>
-                  <span className={styles.meterLabel}>Sub Crossover</span>
+                  <span className={styles.meterLabel}>
+                    {isTr ? 'Alt Bas Kesimi' : 'Sub Crossover'}
+                  </span>
                   <span className={styles.meterValue}>32 Hz Mono</span>
                   <div className={styles.meterBarOuter}>
                     <div className={styles.meterBarFill} style={{ width: '45%' }} />
@@ -174,28 +424,49 @@ const FlMcpShowcasePage: NextPage = () => {
                 </div>
               </div>
 
-              {/* Active Channel Stems */}
-              <div style={{ background: '#000', padding: '14px 16px', borderRadius: '3px', border: '1px solid var(--line)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontFamily: 'var(--font-family-mono)', fontSize: '0.78rem', color: 'var(--muted)' }}>
-                  <span>Track Channels</span>
-                  <span>Mixer Level & Pan</span>
+              <div className={styles.channelRack}>
+                <div className={styles.channelRackHeader}>
+                  <span>{isTr ? 'Aktif Mikser Kanalları' : 'Active Mixer Channels'}</span>
+                  <span>{isTr ? 'Çıkış Seviyesi' : 'Output Level'}</span>
                 </div>
                 {[
-                  { name: 'Kick (909 / Sub Focus)', level: '-4.2 dB', pan: 'C', bar: '82%' },
-                  { name: 'Snare & Clap Layer', level: '-6.0 dB', pan: 'C', bar: '74%' },
-                  { name: 'Hi-Hats (16th Swung)', level: '-12.4 dB', pan: '24% R', bar: '52%' },
-                  { name: '808 Sub Bass (Glide)', level: '-3.1 dB', pan: 'C', bar: '86%' },
-                  { name: 'FLEX Synth Lead', level: '-8.5 dB', pan: '15% L', bar: '65%' },
-                  { name: 'Ozone Master Limiter', level: '-1.0 dBTP', pan: 'C', bar: '95%' },
+                  {
+                    name: isTr ? 'Kick (909 / Alt Odak)' : 'Kick (909 / Sub Focus)',
+                    level: '-4.2 dB',
+                    bar: '82%',
+                  },
+                  {
+                    name: isTr ? 'Trampet ve Alkış Katmanı' : 'Snare & Clap Layer',
+                    level: '-6.0 dB',
+                    bar: '74%',
+                  },
+                  {
+                    name: isTr ? 'Hi-Hat (16lık Swing)' : 'Hi-Hats (16th Swung)',
+                    level: '-12.4 dB',
+                    bar: '52%',
+                  },
+                  {
+                    name: isTr ? '808 Alt Bas (Glide)' : '808 Sub Bass (Glide)',
+                    level: '-3.1 dB',
+                    bar: '86%',
+                  },
+                  {
+                    name: isTr ? 'FLEX Sentetik Lead' : 'FLEX Synth Lead',
+                    level: '-8.5 dB',
+                    bar: '65%',
+                  },
+                  {
+                    name: isTr ? 'Ozone Master Limiter' : 'Ozone Master Limiter',
+                    level: '-1.0 dBTP',
+                    bar: '95%',
+                  },
                 ].map((channel, i) => (
-                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '180px 1fr 90px', gap: '12px', alignItems: 'center', padding: '6px 0', borderTop: i > 0 ? '1px solid #141218' : 'none', fontSize: '0.88rem' }}>
-                    <span style={{ color: 'var(--ink)' }}>{channel.name}</span>
-                    <div className={styles.meterBarOuter} style={{ margin: 0, height: '4px' }}>
+                  <div key={i} className={styles.channelRow}>
+                    <span className={styles.channelName}>{channel.name}</span>
+                    <div className={styles.meterBarOuter} style={{ margin: 0 }}>
                       <div className={styles.meterBarFill} style={{ width: channel.bar }} />
                     </div>
-                    <span style={{ textAlign: 'right', fontFamily: 'var(--font-family-mono)', fontSize: '0.8rem', color: 'var(--accent)' }}>
-                      {channel.level}
-                    </span>
+                    <span className={styles.channelLevel}>{channel.level}</span>
                   </div>
                 ))}
               </div>
@@ -203,11 +474,13 @@ const FlMcpShowcasePage: NextPage = () => {
           </div>
         </section>
 
-        {/* Feature 1: 12-Genre Production Engine */}
+        {/* Section 2: 12-Genre Production Engine */}
         <section className={world.section} aria-labelledby="flmcp-genres-heading">
           <div className={world.sectionHead}>
-            <h2 id="flmcp-genres-heading">{P?.features.genreEngine.title || '12-Genre Production Engine'}</h2>
-            <p className={world.reading}>
+            <h2 id="flmcp-genres-heading">
+              {P?.features.genreEngine.title || '12-Genre Production Engine'}
+            </h2>
+            <p>
               {P?.features.genreEngine.description ||
                 'Generate complete multi-track arrangements with drums, basslines, chords, and melodies.'}
             </p>
@@ -216,37 +489,48 @@ const FlMcpShowcasePage: NextPage = () => {
             <div className={styles.genreGrid}>
               {GENRES.map((g, idx) => (
                 <button
-                  key={g.name}
+                  key={g.name.en}
                   type="button"
                   className={styles.genreCard}
                   data-active={activeGenreIndex === idx}
                   onClick={() => setActiveGenreIndex(idx)}
                 >
-                  <h3 className={styles.genreTitle}>{g.name}</h3>
-                  <p className={styles.genreDesc}>{g.description}</p>
+                  <div className={styles.genreCardTop}>
+                    <h3 className={styles.genreTitle}>{isTr ? g.name.tr : g.name.en}</h3>
+                    <span className={styles.genreBpm}>{g.bpm} BPM</span>
+                  </div>
+                  <p className={styles.genreDesc}>{isTr ? g.description.tr : g.description.en}</p>
                 </button>
               ))}
             </div>
 
-            {/* Selected Genre Detail Inspector */}
-            <div style={{ marginTop: '20px', padding: '18px 20px', background: 'color-mix(in srgb, #000 70%, transparent)', border: '1px solid var(--line)', borderRadius: '3px' }}>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '18px', alignItems: 'center', marginBottom: '10px' }}>
-                <span style={{ color: 'var(--accent)', fontWeight: 500, fontSize: '1.05rem' }}>{activeGenre.name} Specification</span>
-                <span style={{ fontFamily: 'var(--font-family-mono)', fontSize: '0.85rem', color: 'var(--muted)' }}>Tempo: {activeGenre.bpm} BPM</span>
-                <span style={{ fontFamily: 'var(--font-family-mono)', fontSize: '0.85rem', color: 'var(--muted)' }}>Key: {activeGenre.scale}</span>
+            <div className={styles.genreInspector}>
+              <div className={styles.genreInspectorHeader}>
+                <span className={styles.genreInspectorTitle}>
+                  {isTr ? activeGenre.name.tr : activeGenre.name.en}
+                </span>
+                <span className={styles.genreInspectorMeta}>
+                  {isTr ? 'Tempo' : 'Tempo'}: {activeGenre.bpm} BPM
+                </span>
+                <span className={styles.genreInspectorMeta}>
+                  {isTr ? 'Gam' : 'Scale'}: {isTr ? activeGenre.scale.tr : activeGenre.scale.en}
+                </span>
               </div>
-              <p style={{ margin: 0, fontSize: '0.92rem', color: 'var(--body)' }}>
-                <strong>Groove Profile:</strong> {activeGenre.groove}
+              <p className={styles.genreInspectorBody}>
+                <strong>{isTr ? 'Ritim Örgüsü:' : 'Groove Profile:'}</strong>{' '}
+                {isTr ? activeGenre.groove.tr : activeGenre.groove.en}
               </p>
             </div>
           </div>
         </section>
 
-        {/* Feature 2: Plugin Parameter Solver in Real dB & Hz */}
+        {/* Section 3: Plugin Parameter Solver in Real dB & Hz */}
         <section className={world.section} aria-labelledby="flmcp-plugins-heading">
           <div className={world.sectionHead}>
-            <h2 id="flmcp-plugins-heading">{P?.features.pluginSolver.title || 'Plugin Parameter Solver'}</h2>
-            <p className={world.reading}>
+            <h2 id="flmcp-plugins-heading">
+              {P?.features.pluginSolver.title || 'Plugin Parameter Solver'}
+            </h2>
+            <p>
               {P?.features.pluginSolver.description ||
                 'Claude computes and sets exact musical values for stock and third-party VSTs in real units.'}
             </p>
@@ -254,80 +538,79 @@ const FlMcpShowcasePage: NextPage = () => {
           <div className={world.sectionBody}>
             <div className={styles.pluginComparison}>
               <div className={`${styles.pluginRow} ${styles.pluginRowHeader}`}>
-                <span>Plugin Target</span>
-                <span>Raw DAW Float (0.0 to 1.0)</span>
-                <span>Solved Audio Value (dB / Hz / Q)</span>
+                <span>{isTr ? 'Hedef Eklenti' : 'Target Plugin'}</span>
+                <span>{isTr ? 'Ham DAW Değeri (0.0 - 1.0)' : 'Raw DAW Float (0.0 - 1.0)'}</span>
+                <span>{isTr ? 'Çözülen Müzikal Değer (dB / Hz)' : 'Solved Audio Value (dB / Hz)'}</span>
               </div>
               {PLUGIN_SOLVER_EXAMPLES.map((ex, idx) => (
                 <div key={idx} className={styles.pluginRow}>
                   <span style={{ color: 'var(--ink)' }}>{ex.plugin}</span>
                   <span className={styles.pluginValueOld}>{ex.raw}</span>
-                  <span className={styles.pluginValueNew}>{ex.solved}</span>
+                  <span className={styles.pluginValueNew}>
+                    {isTr ? ex.solved.tr : ex.solved.en}
+                  </span>
                 </div>
               ))}
             </div>
+
+            {P?.features.pluginSolver.items && (
+              <dl className={world.margins}>
+                {P.features.pluginSolver.items.map((rawItem: string, idx: number) => {
+                  const { term, detail } = splitSpecItem(rawItem)
+                  return (
+                    <div key={idx}>
+                      <dt>{term}</dt>
+                      <dd>{detail}</dd>
+                    </div>
+                  )
+                })}
+              </dl>
+            )}
           </div>
         </section>
 
-        {/* Feature 3: Closed-Loop Audio Analysis & Host Integration */}
+        {/* Section 4: Closed-Loop Audio Analysis & Host Integration */}
         <section className={world.section} aria-labelledby="flmcp-analysis-heading">
           <div className={world.sectionHead}>
-            <h2 id="flmcp-analysis-heading">{P?.features.audioAnalysis.title || 'Closed-Loop Audio Analysis'}</h2>
-            <p className={world.reading}>
+            <h2 id="flmcp-analysis-heading">
+              {P?.features.audioAnalysis.title || 'Closed-Loop Audio Analysis'}
+            </h2>
+            <p>
               {P?.features.audioAnalysis.description ||
                 'Objective broadcast-standard loudness measurements and frequency spectrum monitoring.'}
             </p>
           </div>
           <div className={world.sectionBody}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
-              <div style={{ padding: '18px', background: 'color-mix(in srgb, #000 60%, transparent)', border: '1px solid var(--line)', borderRadius: '3px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', color: 'var(--accent)' }}>
-                  <Activity size={18} />
-                  <h3 style={{ margin: 0, fontSize: '1.05rem', color: 'var(--ink)' }}>BS.1770-4 LUFS Targets</h3>
-                </div>
-                <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--body)', lineHeight: 1.5 }}>
-                  Continuous integrated, short-term, and momentary loudness measurement matching Spotify (-14 LUFS) and Apple Music (-16 LUFS) targets.
-                </p>
-              </div>
+            <p className={world.interpretation}>
+              {isTr
+                ? 'Tüm ses analizi, ITU-R BS.1770-4 LUFS ölçümü ve MIDI üretimi yüzde yüz yerel olarak kendi işlemcinizde çalışır. Hiçbir ses dosyası dış sunuculara gönderilmez.'
+                : 'All audio rendering, ITU-R BS.1770-4 LUFS metering, and MIDI playback execute locally on your CPU. No audio ever leaves your machine.'}
+            </p>
 
-              <div style={{ padding: '18px', background: 'color-mix(in srgb, #000 60%, transparent)', border: '1px solid var(--line)', borderRadius: '3px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', color: 'var(--accent)' }}>
-                  <Sliders size={18} />
-                  <h3 style={{ margin: 0, fontSize: '1.05rem', color: 'var(--ink)' }}>True Peak DAC Safeguard</h3>
-                </div>
-                <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--body)', lineHeight: 1.5 }}>
-                  4x oversampled intersample peak metering to guarantee zero clipping distortion across analog playback converters.
-                </p>
-              </div>
-
-              <div style={{ padding: '18px', background: 'color-mix(in srgb, #000 60%, transparent)', border: '1px solid var(--line)', borderRadius: '3px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', color: 'var(--accent)' }}>
-                  <Layers size={18} />
-                  <h3 style={{ margin: 0, fontSize: '1.05rem', color: 'var(--ink)' }}>Piano Roll Script Bridge</h3>
-                </div>
-                <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--body)', lineHeight: 1.5 }}>
-                  Procedural note generation, humanization velocity shifts, and strum timing directly written into FL Studio score files.
-                </p>
-              </div>
-
-              <div style={{ padding: '18px', background: 'color-mix(in srgb, #000 60%, transparent)', border: '1px solid var(--line)', borderRadius: '3px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', color: 'var(--accent)' }}>
-                  <ShieldCheck size={18} />
-                  <h3 style={{ margin: 0, fontSize: '1.05rem', color: 'var(--ink)' }}>100% Local Audio Privacy</h3>
-                </div>
-                <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--body)', lineHeight: 1.5 }}>
-                  Audio never touches an external server. The entire analysis and DSP pipeline executes on your CPU in native Python and C++.
-                </p>
-              </div>
-            </div>
+            <dl className={world.margins}>
+              {[
+                ...(P?.features.audioAnalysis.items || []),
+                ...(P?.features.flIntegration.items || []),
+              ].map((rawItem: string, idx: number) => {
+                const { term, detail } = splitSpecItem(rawItem)
+                return (
+                  <div key={idx}>
+                    <dt>{term}</dt>
+                    <dd>{detail}</dd>
+                  </div>
+                )
+              })}
+            </dl>
           </div>
         </section>
 
-        {/* Pricing & Tier Cards */}
+        {/* Section 5: Pricing & Tier Cards */}
         <section id="pricing" className={world.section} aria-labelledby="flmcp-pricing-heading">
           <div className={world.sectionHead}>
-            <h2 id="flmcp-pricing-heading">{P?.pricing.title || 'Transparent Production Plans'}</h2>
-            <p className={world.reading}>
+            <h2 id="flmcp-pricing-heading">
+              {P?.pricing.title || 'Transparent Production Plans'}
+            </h2>
+            <p>
               {P?.pricing.subtitle ||
                 'Basic transport, mixer fader moves, and local parameter adjustments cost zero credits and run offline forever.'}
             </p>
@@ -350,7 +633,11 @@ const FlMcpShowcasePage: NextPage = () => {
                     </li>
                   ))}
                 </ul>
-                <Link href="/dashboard/fl-mcp" className={world.secondary || world.link} style={{ textAlign: 'center', display: 'block', padding: '10px 0' }}>
+                <Link
+                  href="/dashboard/fl-mcp"
+                  className={world.link}
+                  style={{ alignSelf: 'flex-start' }}
+                >
                   {P?.pricing.free.cta || 'Download Free Version'}
                 </Link>
               </div>
@@ -372,13 +659,12 @@ const FlMcpShowcasePage: NextPage = () => {
                     </li>
                   ))}
                 </ul>
-                  <Link
-                    href={checkoutUrl('pro') || '/dashboard/fl-mcp'}
-                    className={world.primary}
-                    style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}
-                  >
-                    {P?.pricing.pro.cta || 'Get Pro Producer'}
-                  </Link>
+                <Link
+                  href={checkoutUrl('pro') || '/dashboard/fl-mcp'}
+                  className={world.primary}
+                >
+                  {P?.pricing.pro.cta || 'Get Pro Producer'}
+                </Link>
               </div>
 
               {/* Studio Edition */}
@@ -397,34 +683,38 @@ const FlMcpShowcasePage: NextPage = () => {
                     </li>
                   ))}
                 </ul>
-                  <Link
-                    href={checkoutUrl('studio') || '/dashboard/fl-mcp'}
-                    className={world.secondary || world.link}
-                    style={{ textAlign: 'center', display: 'block', padding: '10px 0' }}
-                  >
-                    {P?.pricing.studio.cta || 'Get Studio Edition'}
-                  </Link>
+                <Link
+                  href={checkoutUrl('studio') || '/dashboard/fl-mcp'}
+                  className={world.link}
+                  style={{ alignSelf: 'flex-start' }}
+                >
+                  {P?.pricing.studio.cta || 'Get Studio Edition'}
+                </Link>
               </div>
             </div>
 
             {/* Top-up pack note */}
-            <div style={{ marginTop: '20px', padding: '16px 20px', background: 'color-mix(in srgb, #000 60%, transparent)', border: '1px solid var(--line)', borderRadius: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+            <div className={styles.topupBanner}>
               <div>
-                <strong style={{ color: 'var(--ink)' }}>{P?.pricing.pack100.name || '100 Credit Top-Up Pack'} ($10)</strong>
-                <p style={{ margin: '4px 0 0', fontSize: '0.88rem', color: 'var(--body)' }}>{P?.pricing.pack100.description}</p>
+                <strong style={{ color: 'var(--ink)' }}>
+                  {P?.pricing.pack100.name || '100 Credit Top-Up Pack'} ({P?.pricing.pack100.price || '$10'})
+                </strong>
+                <p style={{ margin: '4px 0 0', fontSize: '0.9rem', color: 'var(--body)' }}>
+                  {P?.pricing.pack100.description}
+                </p>
               </div>
-                <Link href={checkoutUrl('pack100') || '/dashboard/fl-mcp'} className={world.link}>
-                  {P?.pricing.pack100.cta || 'Add 100 Credits'}
-                </Link>
+              <Link href={checkoutUrl('pack100') || '/dashboard/fl-mcp'} className={world.link}>
+                {P?.pricing.pack100.cta || 'Add 100 Credits'}
+              </Link>
             </div>
           </div>
         </section>
 
-        {/* Comprehensive FAQ Accordion */}
+        {/* Section 6: Comprehensive FAQ Accordion */}
         <section className={world.section} aria-labelledby="flmcp-faq-heading">
           <div className={world.sectionHead}>
             <h2 id="flmcp-faq-heading">{P?.faq.title || 'Frequently Asked Questions'}</h2>
-            <p className={world.reading}>{P?.faq.subtitle}</p>
+            <p>{P?.faq.subtitle}</p>
           </div>
           <div className={world.sectionBody}>
             <div className={styles.faqList}>
