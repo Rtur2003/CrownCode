@@ -46,6 +46,14 @@ const CreatorStudioPage: NextPage = () => {
             {cs.about.body.map((paragraph: string) => (
               <p key={paragraph} className={world.interpretation}>{paragraph}</p>
             ))}
+            <dl className={world.margins}>
+              {cs.about.specs.map((item: { label: string; value: string }) => (
+                <div key={item.label}>
+                  <dt>{item.label}</dt>
+                  <dd>{item.value}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </section>
 

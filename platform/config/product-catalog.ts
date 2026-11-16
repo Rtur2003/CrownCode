@@ -54,12 +54,8 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     icon: Music,
     gradient: 'from-amber-400 via-yellow-500 to-orange-600',
     category: 'project',
-    schema: {
-      category: 'MultimediaApplication',
-      os: 'Web',
-      sameAs: ['https://huggingface.co/Rthur2003/auris-models', 'https://huggingface.co/spaces/Rthur2003/crowncode-backend'],
-    },
-    updated: '2026-10-21',
+    schema: { category: 'MultimediaApplication', os: 'Web', sameAs: ['https://huggingface.co/Rthur2003/auris-models', 'https://huggingface.co/spaces/Rthur2003/crowncode-backend'] },
+    updated: '2026-11-16',
   },
   {
     id: 'ml-toolkit',
@@ -90,7 +86,7 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     gradient: 'from-purple-400 via-violet-500 to-indigo-600',
     category: 'project',
     schema: { category: 'LifestyleApplication', os: 'Web' },
-    updated: '2026-10-21',
+    updated: '2026-11-16',
   },
   {
     id: 'crown-commend',
@@ -100,7 +96,7 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     gradient: 'from-red-500 via-red-600 to-amber-500',
     category: 'project',
     schema: { category: 'SocialNetworkingApplication', os: 'Web' },
-    updated: '2026-10-21',
+    updated: '2026-11-16',
   },
   {
     id: 'crown-vote',
@@ -111,7 +107,7 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     category: 'project',
     name: 'VOTRYX',
     schema: { category: 'UtilitiesApplication', os: 'Windows 10, Windows 11', type: 'SoftwareApplication' },
-    updated: '2026-10-21',
+    updated: '2026-11-16',
   },
   {
     id: 'noir-grain',
@@ -121,7 +117,7 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     gradient: 'from-stone-700 via-amber-600 to-yellow-500',
     category: 'project',
     schema: { category: 'DesignApplication', os: 'Web' },
-    updated: '2026-10-21',
+    updated: '2026-11-16',
   },
   {
     id: 'fl-mcp',
@@ -216,9 +212,13 @@ export function resolveKey(t: Record<string, any>, path: string): string {
 export const FOOTER_PRODUCT_IDS = [
   'ai-music-detection',
   'ml-toolkit',
-  'crown-fortune',
   'creator-studio',
-  'system-status',
+  'fl-mcp',
+  'crown-dreams',
+  'crown-commend',
+  'crown-vote',
+  'crown-fortune',
+  'noir-grain',
 ] as const
 
 export type FooterProductId = (typeof FOOTER_PRODUCT_IDS)[number]
@@ -227,9 +227,13 @@ export type FooterProductId = (typeof FOOTER_PRODUCT_IDS)[number]
 export const FOOTER_PRODUCT_LOCALE_MAP: Record<FooterProductId, string> = {
   'ai-music-detection': 'aiMusic',
   'ml-toolkit': 'dataProcessing',
-  'crown-fortune': 'fortune',
   'creator-studio': 'creatorStudio',
-  'system-status': 'systemStatus',
+  'fl-mcp': 'flMcp',
+  'crown-dreams': 'dreams',
+  'crown-commend': 'commend',
+  'crown-vote': 'vote',
+  'crown-fortune': 'fortune',
+  'noir-grain': 'noirGrain',
 }
 
 /**

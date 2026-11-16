@@ -102,6 +102,24 @@
           },
           "aboutTitle": "Nedir?",
           "about": "Bir restoran sitesinin nasıl olabileceğine örnek. Masaüstünde sahneler yatay kayar, aralarında WebGL mürekkep geçişleri olur; mobilde uygulamaya yakın, hikâye biçiminde ayrı bir düzen açılır. Rezervasyon talepleri sunucu olmadan doğrudan WhatsApp'a gidebilir ya da CrownCode API'si ve bir masa yönetim paneliyle yönetilebilir.",
+          "specs": [
+            {
+              "label": "Masaüstü akışı",
+              "value": "Bölümler arasında özel WebGL mürekkep yayılım gölgelendiricileriyle yatay sahne geçişleri."
+            },
+            {
+              "label": "Mobil deneyim",
+              "value": "Tek elle başparmak gezinmesine göre tasarlanmış dikey hikâye kartı düzeni."
+            },
+            {
+              "label": "Rezervasyonlar",
+              "value": "Sunucu gerektirmeyen hazır WhatsApp bağlantısı veya isteğe bağlı CrownCode API masa yönetimi."
+            },
+            {
+              "label": "Özelleştirme",
+              "value": "Restoran yayınına hazır modüler renk belirteçleri, menü kategorileri ve görsel yuvaları."
+            }
+          ],
           "techTitle": "Teknoloji",
           "runTitle": "Yerelde Çalıştır",
           "sourceNote": "Kaynak: templates/noir-grain",
@@ -283,8 +301,12 @@
         "dataProcessing": "Veri İşleme Paketi",
         "mlToolkit": "ML Araç Seti",
         "allProjects": "Tüm Projeler",
+        "flMcp": "FL-MCP",
+        "dreams": "Crown Dreams",
+        "commend": "Crown Commend",
         "fortune": "Şans Çarkı",
         "vote": "Crown Vote",
+        "noirGrain": "Noir & Grain",
         "creatorStudio": "Creator Studio",
         "systemStatus": "Sistem Durumu"
       },
@@ -1081,7 +1103,25 @@
       "description": "VOTRYX açık kaynak bir projedir",
       "button": "GitHub'da Gör"
     },
-    "featuresTitle": "Ne yapar"
+    "featuresTitle": "Ne yapar",
+    "configDocs": [
+      {
+        "label": "target_url",
+        "value": "Chrome ve Selenium ile yönetilecek anket veya web sayfasının tam HTTPS adresi."
+      },
+      {
+        "label": "batch_size & parallel_workers",
+        "value": "Tek döngüde kaç işlemin gruplanacağını ve kaç Chrome işçisinin eşzamanlı çalışacağını belirler."
+      },
+      {
+        "label": "pause_between & timeout",
+        "value": "İşlemler arası bekleme süresini ve sayfa yüklenmezse yeniden denenecek zaman aşımı sınırını tanımlar."
+      },
+      {
+        "label": "use_random_agent & block_images",
+        "value": "İstekler arasında tarayıcı user-agent başlığını döndürür ve bant genişliği için görselleri devre dışı bırakır."
+      }
+    ]
   },
   "crownDreams": {
     "meta": {
@@ -1219,6 +1259,24 @@
         "Sen okursun, istediğin yeri değiştirirsin ve YouTube'da kendin paylaşırsın."
       ]
     },
+    "specs": [
+      {
+        "label": "Video bağlamı",
+        "value": "Varsa önce açık altyazıları okur; altyazı yoksa başlık, açıklama ve üst yorumlardan bağlam çıkarır."
+      },
+      {
+        "label": "Ton seçenekleri",
+        "value": "Destekleyici, analitik, esprili, meraklı ve profesyonel olmak üzere beş hazır ton sunar."
+      },
+      {
+        "label": "Tekrar koruması",
+        "value": "Spam veya yinelenen gönderimi önlemek için her video bağlantısına yalnızca tek bir yayına izin verir."
+      },
+      {
+        "label": "İnsan denetimi",
+        "value": "Gemini taslağı doğrudan düzenlenebilir alanda açılır; YouTube'da paylaşmadan önce her satırı değiştirebilirsin."
+      }
+    ],
     "preview": {
       "stats": {
         "views": "görüntüleme",
@@ -1321,24 +1379,24 @@
       "description": "CrownCode projelerini ve demo araçlarını kullanma koşulları."
     },
     "title": "Kullanım Koşulları",
-    "lastUpdated": "Son güncelleme: 21 Ekim 2026",
-    "intro": "Bu koşullar CrownCode sitesini ve demo araçlarını kapsar. Kullanarak burada yazanları kabul etmiş olursun.",
+    "lastUpdated": "Son güncelleme: 16 Kasım 2026",
+    "intro": "Bu koşullar CrownCode sitesini, sunucu üzerinde çalışan web demolarını ve açık kaynak masaüstü araçlarını kapsar. Kullanarak burada yazanları kabul etmiş olursun.",
     "sections": {
       "acceptableUse": {
         "title": "Kabul edilen kullanım",
-        "content": "Siteyi ve araçları yasal amaçlarla kullan. Araçlar fikir denemek için yapılmış projelerdir; haber verilmeden değişebilir ya da kapanabilir."
+        "content": "Siteyi ve araçları yasal amaçlarla kullan. Barındırılan web demoları (AURIS ses tespiti, Creator Studio miks, Crown Dreams ve Crown Commend gibi) deneysel projelerdir; hız sınırına girebilir, değişebilir ya da haber verilmeden kapanabilir. FL-MCP ve VOTRYX gibi bağımsız açık kaynak araçlar kendi donanımında yerel olarak çalışır."
       },
       "userResponsibilities": {
         "title": "Sorumluluğun",
-        "content": "Araçları spam, kötüye kullanım ya da YouTube gibi başka bir hizmetin kurallarını bozan işler için kullanma. Bir aracın senin için yazdığı metin taslaktır; onunla yaptığın her şeyden sen sorumlusun. Yalnızca kullanma hakkın olan sesleri yükle."
+        "content": "Araçları spam, kötüye kullanım ya da YouTube gibi başka bir hizmetin kurallarını ihlal eden işler için kullanma. Yapay zekâ veya algoritmalar tarafından üretilen metin ya da MIDI kalıpları taslaktır; internette yayımladığın veya canlı DAW projesine gönderdiğin içeriği gözden geçirmekten sen sorumlusun. Yalnızca işleme hakkın olan ses dosyalarını yükle."
       },
       "intellectualProperty": {
         "title": "Mülkiyet",
-        "content": "Site ve içeriği Hasan Arthur Altuntaş'a aittir. Kaynak kod, her deponun belirttiği lisansla yayımlanır; çoğu MIT. Yüklediğin ses ve metin sana ait kalır."
+        "content": "Site ve içeriği Hasan Arthur Altuntaş'a aittir. Kaynak kod, her deponun belirttiği lisansla yayımlanır; çoğu MIT. Sağladığın ses, MIDI, proje dosyası ve metinler sana ait kalır; yerel araçlar FL Studio projelerini CrownCode sunucularına göndermez."
       },
       "disclaimer": {
         "title": "Garanti yok",
-        "content": "Her şey olduğu gibi, garanti verilmeden sunulur. AURIS ve diğer araçlar deneyseldir, sonuçları yanlış olabilir; önemli kararları onlara dayandırma. Kesintiler, kaybolan sonuçlar ve üçüncü taraf hizmetlerin erişilebilirliği CrownCode'un denetiminde değildir."
+        "content": "Her şey olduğu gibi, garanti verilmeden sunulur. Barındırılan analiz modelleri ve yapay zekâ çıktıları hata yapabilir; önemli tıbbi, hukuki ya da ticari kararları tek başına otomatik puanlara dayandırma. Kesintiler, geçici bellek süresinin dolması ve Google Gemini veya YouTube gibi üçüncü taraf API'lerin erişilebilirliği CrownCode'un denetiminde değildir."
       }
     },
     "openSource": {
@@ -1391,6 +1449,24 @@
         "Remix Studio iki parça alır, her birinin temposunu ve tonunu bulur, ikinci parçayı birincinin temposuna ve tonuna uyacak şekilde esnetip perdesini kaydırır, ardından senin belirlediğin süreli bir geçişle birleştirir. Sonuç WAV dosyası olarak iner.",
         "Çoklu Parça Mikseri iki ile altı arası parça alır. Her parçanın seviyesini ve sol ile sağ arasındaki yerini ayarlarsın; miks tek dosyaya dönüştürülür ve tepe seviyesi normalleştirilir, böylece bozulma olmaz.",
         "Her dosya en fazla 30 MB olabilir. İşleme CrownCode arka ucunda çalışır, bu yüzden bir süre sessiz kaldıktan sonraki ilk istek bir iki dakika sürebilir."
+      ],
+      "specs": [
+        {
+          "label": "Desteklenen biçimler",
+          "value": "Her yüklenen kanal veya parça için 30 MB boyutuna kadar WAV, MP3, FLAC ve OGG dosyalarını kabul eder."
+        },
+        {
+          "label": "Tempo ve ton eşleme",
+          "value": "BPM ve Chroma perde profilini çıkarır; ardından phase-vocoder zaman esnetme ve perde kaydırma uygular."
+        },
+        {
+          "label": "Çoklu parça yönlendirme",
+          "value": "Bağımsız kanal kazancı ve sabit güçlü sağ-sol stereo panlama ile 2 ile 6 parçayı birleştirir."
+        },
+        {
+          "label": "Kırpılmasız çıktı",
+          "value": "Birleştirilen stereo miksi -1 dBFS tepe seviyesine normalize ederek sıkıştırılmamış WAV olarak dışa aktarır."
+        }
       ]
     },
     "comingSoon": "Yakında",

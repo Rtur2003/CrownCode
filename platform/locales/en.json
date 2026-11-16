@@ -102,6 +102,24 @@
           },
           "aboutTitle": "What it is",
           "about": "A sample of what a restaurant site can be. On desktop the scenes scroll sideways, with WebGL ink transitions between them; on mobile a separate story-style layout opens, closer to an app. Reservation requests can go straight to WhatsApp with no server, or through the CrownCode API with a table management panel.",
+          "specs": [
+            {
+              "label": "Desktop motion",
+              "value": "Horizontal scene track powered by custom WebGL ink-bleed shaders between sections."
+            },
+            {
+              "label": "Mobile experience",
+              "value": "Dedicated vertical story-card layout tuned for single-hand thumb navigation."
+            },
+            {
+              "label": "Reservations",
+              "value": "Zero-server WhatsApp prefill URL mode or optional CrownCode API table management backend."
+            },
+            {
+              "label": "Customization",
+              "value": "Modular theme tokens, menu categories and photography slots ready for restaurant deployments."
+            }
+          ],
           "techTitle": "Technology",
           "runTitle": "Run Locally",
           "sourceNote": "Source: templates/noir-grain",
@@ -283,8 +301,12 @@
         "dataProcessing": "Data Processing Suite",
         "mlToolkit": "ML Toolkit",
         "allProjects": "All Projects",
+        "flMcp": "FL-MCP",
+        "dreams": "Crown Dreams",
+        "commend": "Crown Commend",
         "fortune": "Crown Fortune",
         "vote": "Crown Vote",
+        "noirGrain": "Noir & Grain",
         "creatorStudio": "Creator Studio",
         "systemStatus": "System Status"
       },
@@ -1081,7 +1103,25 @@
       "description": "VOTRYX is an open-source project",
       "button": "View on GitHub"
     },
-    "featuresTitle": "What it does"
+    "featuresTitle": "What it does",
+    "configDocs": [
+      {
+        "label": "target_url",
+        "value": "Full HTTPS URL of the poll or web form driven by Chrome and Selenium."
+      },
+      {
+        "label": "batch_size & parallel_workers",
+        "value": "Sets how many runs group into a batch and how many Chrome worker instances run in parallel."
+      },
+      {
+        "label": "pause_between & timeout",
+        "value": "Wait interval between actions and maximum page-load budget before retrying or recycling a worker."
+      },
+      {
+        "label": "use_random_agent & block_images",
+        "value": "Rotates browser user-agent strings across runs and skips image downloads to cut bandwidth."
+      }
+    ]
   },
   "crownDreams": {
     "meta": {
@@ -1219,6 +1259,24 @@
         "You read it, change what you like and post it yourself on YouTube."
       ]
     },
+    "specs": [
+      {
+        "label": "Video context",
+        "value": "Reads public captions first and falls back to title, description and top viewer comments when captions are absent."
+      },
+      {
+        "label": "Tone presets",
+        "value": "Supports five selectable styles: supportive, analytical, humorous, curious and professional."
+      },
+      {
+        "label": "Duplicate safeguard",
+        "value": "Allows one published comment per video link to prevent repetitive or spammy submissions."
+      },
+      {
+        "label": "Human review",
+        "value": "Every Gemini draft opens in an editable field so you can rewrite or trim before posting on YouTube."
+      }
+    ],
     "preview": {
       "stats": {
         "views": "views",
@@ -1321,24 +1379,24 @@
       "description": "The terms for using CrownCode projects and demo tools."
     },
     "title": "Terms of Service",
-    "lastUpdated": "Last updated: October 21, 2026",
-    "intro": "These terms cover the CrownCode site and its demo tools. By using them you accept what is written here.",
+    "lastUpdated": "Last updated: November 16, 2026",
+    "intro": "These terms cover the CrownCode site, its hosted web demos, and its open-source desktop tools. By using them you accept what is written here.",
     "sections": {
       "acceptableUse": {
         "title": "Acceptable use",
-        "content": "Use the site and the tools for lawful purposes. The tools are projects built to try ideas, and they can change or go offline without notice."
+        "content": "Use the site and the tools for lawful purposes. Hosted web demos (such as AURIS audio detection, Creator Studio mixing, Crown Dreams and Crown Commend) run as research projects and can change, rate-limit or go offline without notice. Standalone open-source tools such as FL-MCP and VOTRYX execute locally on your own hardware."
       },
       "userResponsibilities": {
         "title": "Your responsibility",
-        "content": "Do not use the tools for spam, abuse, or anything that breaks the rules of another service such as YouTube. Text a tool writes for you is a draft, and you are responsible for what you do with it. Upload only audio you have the right to use."
+        "content": "Do not use the tools for spam, automated abuse, or anything that breaks the terms of another service such as YouTube. Text or MIDI patterns generated by AI or algorithmic helpers are drafts, and you are responsible for reviewing what you publish online or send to a live DAW project. Upload only audio files you have the right to process."
       },
       "intellectualProperty": {
         "title": "Ownership",
-        "content": "The site and its content belong to Hasan Arthur Altuntaş. Source code is published under the licence stated in each repository, mostly MIT. Audio and text you upload stay yours."
+        "content": "The site and its content belong to Hasan Arthur Altuntaş. Source code is published under the licence stated in each repository, mostly MIT. Audio, MIDI, project files and text you provide stay yours; local tools do not transmit FL Studio projects to CrownCode servers."
       },
       "disclaimer": {
         "title": "No warranty",
-        "content": "Everything is provided as it is, without warranty. AURIS and the other tools are experimental and their results can be wrong, so do not base decisions that matter on them. Interruptions, lost results and the availability of third-party services are outside CrownCode's control."
+        "content": "Everything is provided as it is, without warranty. Hosted analysis models and AI outputs can make mistakes, so do not base clinical, legal or commercial decisions solely on automated scores. Temporary interruptions, ephemeral job expiry and third-party API availability (such as Google Gemini or YouTube) are outside CrownCode's control."
       }
     },
     "openSource": {
@@ -1391,6 +1449,24 @@
         "Remix Studio takes two tracks, detects the tempo and key of each, stretches and pitch-shifts the second one to fit the first, and joins them with a crossfade you set. The result downloads as a WAV file.",
         "The Multi-Track Mixer takes two to six tracks. You set each track's level and its place between left and right, and the mix is bounced to one file with its peak level normalised so it does not clip.",
         "Each file can be up to 30 MB. Processing runs on the CrownCode backend, so the first request after a quiet spell can take a minute or two."
+      ],
+      "specs": [
+        {
+          "label": "Supported formats",
+          "value": "Accepts WAV, MP3, FLAC and OGG audio files up to 30 MB per uploaded stem or track."
+        },
+        {
+          "label": "Tempo & key matching",
+          "value": "Estimates BPM and Chroma pitch profile, then applies phase-vocoder time-stretching and pitch shifting."
+        },
+        {
+          "label": "Multitrack routing",
+          "value": "Combines 2 to 6 tracks with independent fader gain and constant-power stereo left-right panning."
+        },
+        {
+          "label": "Peak-safe export",
+          "value": "Normalizes the bounced stereo mix to -1 dBFS and exports uncompressed PCM WAV output."
+        }
       ]
     },
     "comingSoon": "Coming Soon",

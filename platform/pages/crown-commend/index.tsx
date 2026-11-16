@@ -141,6 +141,14 @@ const CrownCommendPage: NextPage = () => {
             <ol className={styles.steps}>
               {C.how.steps.map((step: string) => <li key={step}>{step}</li>)}
             </ol>
+            <dl className={world.margins}>
+              {C.specs.map((item: { label: string; value: string }) => (
+                <div key={item.label}>
+                  <dt>{item.label}</dt>
+                  <dd>{item.value}</dd>
+                </div>
+              ))}
+            </dl>
             <p className={world.privacy}>{C.disclaimer}</p>
           </div>
         </section>

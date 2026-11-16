@@ -149,9 +149,9 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   }
 
   graph.push(...schema)
-  // Nodes referenced by @id must exist in the same graph for validators.
+  // Nodes referenced by @id (#website, #person) must exist in the same graph for validators.
   if (!isHomePage && graph.length > 0) {
-    graph.push(person)
+    graph.push(website, person)
   }
 
   const jsonLd = graph.length > 0

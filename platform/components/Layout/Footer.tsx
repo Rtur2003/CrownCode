@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import {
   Github,
   ExternalLink,
@@ -23,8 +24,12 @@ interface FooterSection {
 }
 
 export const Footer: React.FC = () => {
-  const { t } = useLanguage()
+  const { language, t } = useLanguage()
+  const router = useRouter()
   const currentYear = new Date().getFullYear()
+  const otherLocale = language === 'tr' ? 'en' : 'tr'
+  const isErrorPage = router.pathname === '/404' || router.pathname === '/_error'
+  const currentPath = isErrorPage ? '/' : (router.asPath?.split(/[?#]/)[0] || '/')
 
   const productLinks: FooterLink[] = FOOTER_PRODUCT_IDS.map((id) => ({
     label: (t.footer.sections.products as Record<string, string>)[FOOTER_PRODUCT_LOCALE_MAP[id]],
@@ -152,6 +157,16 @@ export const Footer: React.FC = () => {
               <span className="separator">•</span>
               <Link href="/terms" className="footer-bottom-link">
                 {t.footer.bottom.terms}
+              </Link>
+              <span className="separator">•</span>
+              <Link
+                href={currentPath}
+                locale={otherLocale}
+                hrefLang={otherLocale}
+                lang={otherLocale}
+                className="footer-bottom-link"
+              >
+                {language === 'tr' ? 'English' : 'Türkçe'}
               </Link>
             </div>
 

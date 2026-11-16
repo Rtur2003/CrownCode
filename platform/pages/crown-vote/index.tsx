@@ -42,6 +42,14 @@ const CrownVotePage: NextPage = () => {
           </div>
           <div className={world.sectionBody}>
             <ConfigGenerator />
+            <dl className={world.margins}>
+              {V.configDocs.map((item: { label: string; value: string }) => (
+                <div key={item.label}>
+                  <dt>{item.label}</dt>
+                  <dd>{item.value}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </section>
       </WorldPage>
