@@ -633,6 +633,15 @@
   margin: 0;
 }
 
+.disclaimer .community-note {
+  margin: 12px auto 0;
+  max-width: 68ch;
+  font-size: 0.76rem;
+  line-height: 1.6;
+  color: var(--color-text-muted, #9a8d7d);
+  opacity: 0.85;
+}
+
 /* =============== RESPONSIVE =============== */
 @media (max-width: 768px) {
   .fortune-page {
