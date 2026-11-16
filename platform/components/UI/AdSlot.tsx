@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useSyncExternalStore } from 'react'
 import {
   ADSENSE_CLIENT_ID,
   ADS_ENABLED,
@@ -21,6 +21,13 @@ declare global {
   }
 }
 
+const subscribeLocation = () => () => {}
+
+const getPreviewQuerySnapshot = () => {
+  if (typeof window === 'undefined') {return false}
+  return new URLSearchParams(window.location.search).get('ads-preview') === '1'
+}
+
 /**
  * Policy-safe Google AdSense slot with CLS reservation and `?ads-preview=1`
  * visual placement preview. Returns null for regular visitors when unconfigured
@@ -30,16 +37,10 @@ export const AdSlot: React.FC<AdSlotProps> = ({ placement, layout = 'leaderboard
   const { language } = useLanguage()
   const isTr = language === 'tr'
   const pushedRef = useRef(false)
-  const [previewQuery, setPreviewQuery] = useState(false)
+  const previewQuery = useSyncExternalStore(subscribeLocation, getPreviewQuerySnapshot, () => false)
 
   const slotId = adSlotIdFor(placement)
   const isLive = ADS_ENABLED && Boolean(slotId)
-
-  useEffect(() => {
-    if (typeof window === 'undefined') {return}
-    const params = new URLSearchParams(window.location.search)
-    setPreviewQuery(params.get('ads-preview') === '1')
-  }, [])
 
   useEffect(() => {
     if (!isLive || pushedRef.current || typeof window === 'undefined') {return}
