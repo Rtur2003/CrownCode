@@ -1,36 +1,26 @@
-/* Route badge: a small brass-edged plate pinned to the bottom of project
-   pages. Same warm palette as the homepage atlas. */
+/* Route badge: a compact brass-edged navigation bar at the bottom of project
+   pages, in flow above the footer so it never covers interactive page controls. */
 .badge {
   --ink: #f3e9d8;
   --muted: #b9a58c;
   --amber: #d6ab6b;
-  position: fixed;
-  z-index: 900; /* over page content, under the header, modals and toasts */
-  left: 50%;
-  bottom: max(16px, env(safe-area-inset-bottom));
-  transform: translateX(-50%);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 2px;
-  max-width: calc(100vw - 40px);
-  margin: 0;
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  margin: 18px auto;
   padding: 4px;
   border: 1px solid #d6ab6b38;
   border-radius: 999px;
-  background: rgb(14 11 9 / 0.84);
-  -webkit-backdrop-filter: blur(12px) saturate(1.15);
-  backdrop-filter: blur(12px) saturate(1.15);
-  box-shadow: 0 14px 34px -14px rgb(0 0 0 / 0.8), inset 0 1px 0 rgb(255 232 196 / 0.06);
+  background: rgb(14 11 9 / 0.88);
+  box-shadow: 0 10px 28px -14px rgb(0 0 0 / 0.7), inset 0 1px 0 rgb(255 232 196 / 0.06);
   color: var(--ink);
   font-family: var(--font-family-base);
   font-size: 14px;
   line-height: 1;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
-}
-.badge[data-tucked]:not(:focus-within) {
-  transform: translate(-50%, calc(100% + 32px));
-  opacity: 0;
-  pointer-events: none;
 }
 
 .badge a {
@@ -61,27 +51,13 @@
 .name { max-width: 16ch; overflow: hidden; text-overflow: ellipsis; }
 .external { opacity: 0.6; }
 
-/* Keep the footer's last line clear of the plate. */
-:global(.app-container):has(> .badge) :global(.footer-bottom) {
-  padding-bottom: calc(2rem + 64px + env(safe-area-inset-bottom));
-}
-
-/* Phones: a centred, name-less plate (world names stay in the link labels). */
+/* Phones: centred, compact bar above the footer. */
 @media (max-width: 640px) {
   .badge {
-    left: 0;
-    right: 0;
-    bottom: max(14px, env(safe-area-inset-bottom));
-    transform: none;
-    width: max-content;
-    max-width: calc(100vw - 32px);
-    margin-inline: auto;
+    margin: 14px auto;
     font-size: 13px;
   }
-  .badge[data-tucked]:not(:focus-within) {
-    transform: translateY(calc(100% + 32px));
-  }
-  .badge a { min-height: 40px; padding: 0 11px; }
+  .badge a { min-height: 38px; padding: 0 11px; }
   .name { display: none; }
   .badge .step { gap: 4px; }
 }
