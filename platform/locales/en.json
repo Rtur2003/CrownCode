@@ -181,18 +181,18 @@
         ]
       },
       "flMcp": {
-        "title": "FL-MCP: Autonomous AI Copilot for FL Studio",
-        "description": "Compose across twelve genres, solve plugin parameters in real decibels and hertz, auto-balance faders, and measure loudness with BS.1770 LUFS targets directly through Claude.",
-        "showroomDescription": "Autonomous music production, parameter solving, and mixer balancing for FL Studio.",
-        "status": "Active",
-        "stats": "Desktop · FL Studio 2025",
+        "title": "FL-MCP: Local MCP Server & Studio for FL Studio",
+        "description": "MIT-licensed FL Studio MCP server (v0.3.0) and FL-MCP Studio desktop app. Live verified on FL Studio 2025 v25.2.5 [build 5319] with 894 offline tests, 14 flat-schema tools (~4k tokens), real dB/Hz plugin control and BS.1770-4 LUFS mastering.",
+        "showroomDescription": "Local MCP server and Studio app for FL Studio 2025 (v0.3.0) with real dB/Hz plugin control and BS.1770 metering.",
+        "status": "Live Verified · v0.3.0",
+        "stats": "Desktop · v0.3.0 · FL Studio 2025",
         "features": [
-          "12-Genre Engine",
-          "Plugin Knowledge Base",
-          "BS.1770 LUFS Mastering",
-          "MIDI CC Protocol"
+          "14 Flat-Schema Tools (~4k tokens)",
+          "FL-MCP Studio Desktop App",
+          "Live Verified: FL Studio 2025",
+          "894 Automated Offline Tests"
         ],
-        "heading": "FL Studio AI Copilot"
+        "heading": "FL Studio 2025 MCP Bridge"
       },
       "kognita": {
         "title": "Kognita",
