@@ -1524,104 +1524,220 @@
   },
   "flMcpPage": {
     "meta": {
-      "title": "FL Studio Yapay Zekâ MCP Sunucusu | Otonom Müzik Prodüksiyonu ve Miks Yardımcısı",
-      "description": "FL Studio 2025 sürümünü Claude ve MCP ile kontrol edin. Çok kanallı ritimler oluşturun, eklenti parametrelerini dB ve Hz ile ayarlayın, mikseri dengeleyin ve LUFS ile master yapın.",
-      "keywords": "FL Studio Yapay Zekâ, FL-MCP, Claude Desktop FL Studio, loopMIDI yardımcı, müzik prodüksiyonu yapay zekâ, ses mastering LUFS, DAW MCP sunucusu"
+      "title": "FL-MCP v0.3.0: FL Studio 2025 İçin Yerel MCP Sunucusu ve Studio Uygulaması",
+      "description": "MIT lisanslı FL Studio MCP sunucusu ve sıfır terminal kurulumlu FL-MCP Studio masaüstü uygulaması. FL Studio 2025 v25.2.5 [build 5319] üzerinde canlı doğrulandı; 894 çevrimdışı test, 14 düz-şemalı araç (~4k token), gerçek dB/Hz eklenti kontrolü, BS.1770-4 LUFS ölçümü ve doğrudan .flp/.fst proje yazımı sunar.",
+      "keywords": "FL Studio MCP, FL-MCP v0.3.0, FL-MCP Studio, Claude Desktop FL Studio, Claude Code eklentisi, loopMIDI, IAC Driver, BS.1770 LUFS, .flp yazımı"
     },
     "hero": {
-      "badge": "Dünyanın İlk FL Studio MCP Sunucusu",
-      "title": "FL Studio İçin Otonom Yapay Zekâ Yardımcısı",
-      "subtitle": "12 müzik türünde beste yapın, eklenti parametrelerini gerçek dB ve Hz birimleriyle çözün, fader dengesi kurun ve BS.1770 LUFS ses yüksekliğini Claude ve yapay zekâ modellerinizle doğrudan yönetin.",
-      "getStarted": "Başlayın (Anında Erişim)",
-      "viewDocs": "Dokümantasyon ve Kurulum",
-      "liveDemoBadge": "FL Studio 2025 Üzerinde 17 Derin Testin Tümünde Başarılı"
+      "badge": "FL-MCP v0.3.0 · MIT Lisansı · Yerel Öncelikli",
+      "title": "MCP Üzerinden FL Studio 2025 Mühendisliği",
+      "subtitle": "14 düz-şemalı MCP aracı (~4k token), isteğe bağlı fl_desk katmanı ve sıfır terminal gerektiren FL-MCP Studio masaüstü uygulaması. Windows, macOS ve Linux üzerinde mikser kanallarını yönetin, eklentileri gerçek dB ve Hz birimleriyle ayarlayın, Piano Roll'a akor gönderin, ITU-R BS.1770-4 LUFS ölçün ve doğrudan .flp projeleri oluşturun.",
+      "getStarted": "FL-MCP Studio İndir",
+      "viewDocs": "GitHub ve Dokümantasyon",
+      "liveDemoBadge": "Canlı Doğrulandı: FL Studio 2025 v25.2.5 [build 5319] · API 40 · 17 derin kontrol geçti · 894 çevrimdışı test"
+    },
+    "verification": {
+      "title": "Doğrulama ve Platform Desteği",
+      "subtitle": "Windows 11 üzerinde gerçek FL Studio 2025 ile canlı test edildi ve 894 çevrimdışı otomatik test ile doğrulandı.",
+      "liveLabel": "Canlı DAW Hedefi",
+      "liveValue": "FL Studio 2025 v25.2.5",
+      "liveDetail": "Producer Edition build 5319, Scripting API 40 (fl-mcp selftest --deep 17 derin kontrolü geçti)",
+      "offlineLabel": "Otomatik Test Paketi",
+      "offlineValue": "894 Başarılı Test",
+      "offlineDetail": "Resmi fl-studio-api-stubs, loopback MIDI köprüsü, .flp ikili ayrıştırıcı/yazıcı, BS.1770-4 ses, HTTP/SSE, Masaüstü",
+      "platformsLabel": "İşletim Sistemi ve Köprü",
+      "platformsValue": "Win · macOS · Linux",
+      "platformsDetail": "Windows x86_64 ve ARM64 (loopMIDI), macOS arm64 ve x86_64 (IAC Driver), Linux (Wine yol çözümü)",
+      "clientsLabel": "İstemciler ve Protokol",
+      "clientsValue": "8 İstemci · 3 Mod",
+      "clientsDetail": "Claude Desktop (.mcpb), Claude Code eklentisi, Cursor, VS Code, Windsurf, Gemini, Antigravity, Codex · stdio, HTTP :8765, SSE"
+    },
+    "install": {
+      "title": "İki Kurulum Yolu",
+      "subtitle": "Terminal açmadan FL-MCP Studio grafik uygulamasını kullanın ya da IDE ve CLI istemcinizi tek komutla bağlayın.",
+      "studioTitle": "FL-MCP Studio (Masaüstü Uygulaması · v0.3.0)",
+      "studioBadge": "Python Kurulumu Gerektirmez",
+      "studioDesc": "Bağımsız paketler (fl-mcp-studio-<ver>-<os>-<arch>.zip veya .tar.gz) ve koyu nötr grafit (#141518) donanım DAW arayüzü.",
+      "studioFeatures": [
+        "Tek tıkla FL Studio denetleyici betiği kurulumu ve tek tıkla tüm AI istemcilerini bağlama",
+        "Canlı DAW Transport, BPM ayarı, kalibreli dB mikser şeritleri, Mute, Solo ve FX bilgisi",
+        "Tıklanabilir 16 adımlı FL Step Sequencer, Piano Roll önizleme, akor kuyruklama ve 12 tür motoru",
+        "Arka plan HTTP/SSE daemon kontrolü ile canlı MIDI TX/RX ve MCP trafik izleyici"
+      ],
+      "studioDownloadCta": "GitHub Releases Paketini Al",
+      "studioPackageNote": "Paketler: fl-mcp-studio-0.3.0-win-x64.zip, macos-arm64.tar.gz, linux-x64.tar.gz",
+      "cliTitle": "Eklenti, .mcpb ve Terminal Akışı",
+      "cliBadge": "~4k Şema Token Bütçesi",
+      "cliDesc": "Kullandığınız MCP istemcisinin tek komutunu kopyalayın ya da fl-mcp selftest --deep ile loopback portlarını doğrulayın.",
+      "copyButton": "Kopyala",
+      "copiedButton": "Kopyalandı"
     },
     "features": {
-      "title": "Otonom Ses Mühendisliği ve Prodüksiyon",
-      "subtitle": "Claude Desktop ile FL Studio 2025 arasında loopMIDI ve MIDI CC protokolü üzerinden doğrudan ve yerel bağlantı.",
-      "genreEngine": {
-        "title": "12 Müzik Türü Prodüksiyon Motoru",
-        "description": "Davullar, bas hatları, akor dizilimleri, melodiler ve geçişlerle eksiksiz aranjmanlar oluşturun.",
+      "title": "Play/Stop Ötesinde Stüdyo Mühendisliği",
+      "subtitle": "$ref, anyOf ve title şişkinliği içermeyen yalın JSON şemaları sayesinde küçük ve yerel modellerde bile şema hatası vermez.",
+      "tools": {
+        "title": "14 Düz-Şemalı Araç + İsteğe Bağlı fl_desk",
+        "description": "Yaklaşık 4k token şema bütçesi içinde kararlı araç seçimi ve doğrudan DAW üretimi için tasarlandı.",
+        "schemaNote": "Protokoller: stdio · Streamable-HTTP (http://127.0.0.1:8765/mcp) · SSE (/sse)",
         "items": [
-          "House ve Tech House (Groove swing, four on the floor kick, offbeat hi-hat ritimleri)",
-          "Techno ve Peak-Time (Rumble bas, hipnotik synth arpejleri, dinamik ride sürüşü)",
-          "Trap ve Drill (808 glide perde kaymaları, triplet dizilimleri, trampet geçişleri)",
-          "Lo-Fi Hip Hop (Plak sıcaklığı, swingli vuruşlar, 7li ve 9lu caz akorları)",
-          "Drum and Bass (Amen breakleri, Reese bas, 174 BPM senkoplu trampetler)",
-          "Oriental Trap ve Hicaz (Frigyen dominant makamsal dizilimler, otantik darbuka ritimleri)",
-          "Synthwave ve Darksynth (Analog testere arpejleri, gated reverb trampetler, pirinç leadler)",
-          "Ambient ve Cinematic (Dron dokuları, poliritmik pad katmanları, gerilim dalgaları)",
-          "Cyberpunk ve Midtempo (Endüstriyel doygunluk, agresif bas hırıltıları, sidechain pompalaması)",
-          "UK Garage ve 2-Step (Kesik perküsyon, vokal parçaları, sub-bas sekmesi)",
-          "Afrobeats (Log davul senkopu, rimshot örgüsü, melodik pirinç stabları)",
-          "Neo-Soul ve R&B (Zengin uzantılar, geride çalan ritim cebi, rhodes akorları)"
+          {
+            "name": "fl_param",
+            "role": "Gerçek Birimli Parametre ve I/O",
+            "detail": "Stok ve üçüncü parti tüm eklenti parametrelerini adıyla bulur, gerçek birimlerle (real=\"-18 dB\", settings=\"Threshold=-18 dB, Ratio=4:1\") değiştirir, view=\"io\" ile FX slot/yönlendirme/yan-zincir çıkışlarını okur ve preset yükler."
+          },
+          {
+            "name": "fl_produce",
+            "role": "12 Türlü Tohumlu Aranjör",
+            "detail": "12 müzik türünde seed'li (tekrarlanabilir) aranjman üretir; Channel Rack'e, çok kanallı MIDI'ye veya .fst preset ile .sf2 SoundFont ekleyerek doğrudan .flp proje dosyasına yazar."
+          },
+          {
+            "name": "fl_audio & fl_mix",
+            "role": "BS.1770 Ölçüm ve Gizli Mastering",
+            "detail": "ITU-R BS.1770-4 ve EBU 3342 standardında LUFS-I, True Peak (dBTP), LRA, Crest, stereo korelasyon ve 7 bant spektrum ölçer. Rol hedeflerine göre mikser faderlarını dengeler ve FL64.exe /R ile odak çalmayan gizli masaüstü renderında hedef LUFS'a master eder."
+          },
+          {
+            "name": "fl_notes",
+            "role": "Piano Roll ve Önizleme Kuyruğu",
+            "detail": "İsimli akor dizilerini (Am7@0:4, Fmaj7@4:4) Piano Roll'a kuyruklar, gerçek zamanlı preview=true ön dinleme sunar ve normalize float ile MIDI velocity girişini kabul eder."
+          },
+          {
+            "name": "fl_library",
+            "role": "Akustik Örnek ve Kit Seçici",
+            "detail": "Örnek paketlerini parlaklık, decay sönümlenmesi ve sub ağırlığına göre sıralar; kanal rafına yüklemeden önce seçilen müzik türüne uygun davul kitini önerir."
+          },
+          {
+            "name": "fl_desk (isteğe bağlı)",
+            "role": "Stealth / Polite Arayüz Otomasyonu",
+            "detail": "Scripting API sınırlarını aşan işlemler için kullanıcı onayıyla açılır. stealth modunda odak çalmadan PrintWindow + PostMessageW kullanır; polite modunda boşta kalmayı bekler; (0,0) fare acil durdurması ile korunur."
+          }
+        ]
+      },
+      "genreEngine": {
+        "title": "12 Türlü Tohumlu Prodüksiyon Motoru",
+        "description": "Belirlenmiş tohum (seed) değeriyle tekrarlanabilir davul yürüyüşleri, bas hatları, akor seslendirmeleri ve .flp/.fst/.sf2 şablonları üretir.",
+        "items": [
+          "House (124-128 BPM, four-on-the-floor kick, offbeat açık hi-hat)",
+          "Techno (130-136 BPM, rumble sub alt bas, hipnotik synth sekansları)",
+          "Trance (136-140 BPM, yuvarlanan offbeat bas, supersaw akor yürüyüşleri)",
+          "DnB (172-176 BPM, Reese bas katmanı, senkoplu breakbeat hayalet vuruşları)",
+          "Dubstep (140-150 BPM yarım zamanlı, ağır sub katmanı, sert trampet darbeleri)",
+          "Trap (138-146 BPM, perde kaymalı 808 glide baslar, 32lik hi-hat ruloları)",
+          "Oriental Trap / Hicaz (135-142 BPM, Hicaz makamsal gam, darbuka/bendir ritim cebi)",
+          "Boom Bap (86-94 BPM, swingli kuantizesiz davullar, 7li caz akor kesimleri)",
+          "Lo-Fi (76-88 BPM, sıcak Rhodes yürüyüşleri, yumuşatılmış üst frekans bandı)",
+          "Pop (100-124 BPM, sıkı nakarat kurgusu, vokal odaklı orta frekans temizliği)",
+          "Synthwave (102-116 BPM, gated reverb trampet, analog oktav testere bas)",
+          "Reggaeton (88-96 BPM, klasik dembow senkopu, sıkı mono sub ağırlığı)"
         ]
       },
       "pluginSolver": {
-        "title": "Gerçek dB ve Hz Birimleriyle Eklenti Parametre Çözücü",
-        "description": "Soyut sıfır ile bir arası kaydırıcılarla tahmin yapmaya son. Claude, yerleşik ve üçüncü parti eklentiler için kesin müzikal değerleri hesaplar.",
+        "title": "Gerçek Birimlerle Eklenti Parametre Çözücü",
+        "description": "Soyut sıfır ile bir arası kaydırıcılar yerine parametre adına göre desibel, hertz, oran ve milisaniye hesaplar.",
         "items": [
-          "FabFilter Pro-Q 3 ve Pro-C 2 (Kesin Q değerleri, high-pass kesim frekansları, dB cinsinden eşik)",
-          "Xfer Serum ve Vital (Wavetable seçimi, filtre rezonansı, unison detune açısı)",
-          "Image-Line FLEX ve Sytrus (Ön ayar tarama, makro artikülasyon, FM modülasyonu)",
-          "iZotope Ozone 11 (Çok bantlı dinamikler, stereo genişlik dağılımı, maksimizer tavanı)",
-          "Fruity Parametric EQ 2 ve Fruity Limiter (Cerrahi frekans kesimleri, knee sıkıştırma, ms cinsinden atak ve bırakma)"
+          "FabFilter Pro-Q 3 ve Pro-C 2 (Hz cinsinden kesim frekansı, Q faktörü, threshold=-18 dB ve ratio=4:1)",
+          "Xfer Serum ve Vital (Wavetable konumu, filtre kesimi Hz, unison detune yayılımı)",
+          "Image-Line FLEX ve Sytrus (Preset yükleme, makro artikülasyonu, FM derinliği)",
+          "iZotope Ozone 11 (dBTP cinsinden maksimizer tavanı ve çok bantlı dinamik hedefler)",
+          "Fruity Parametric EQ 2 ve Limiter (HPF kesimleri, send/insert yönlendirmesi, atak ve bırakma ms)"
         ]
       },
       "audioAnalysis": {
-        "title": "Kapalı Çevrim Ses Analizi ve Ölçümü",
-        "description": "Sohbetten ayrılmadan yayın standardında ses yüksekliği ölçümleri ve frekans spektrumu denetimi.",
+        "title": "Kapalı Çevrim Ses Analizi ve Kazanç Kademelendirme",
+        "description": "Her miks kararı ITU-R BS.1770-4 ve EBU 3342 ölçümleriyle nicel olarak doğrulanır.",
         "items": [
-          "ITU-R BS.1770-4 Entegre LUFS (-14 LUFS yayın hedefi, -9 LUFS kulüp hedefi)",
-          "True Peak Tepe Noktası Ölçümü (DAC kırpılmasını önleyen örnekler arası tepe algılama)",
-          "Spektral Denge Denetimi (Sub-bas, alt-orta sıcaklık, varlık ve hava bandı değerlendirmesi)",
-          "Dinamik Aralık ve Crest Faktörü (Vuruş ve sıkıştırma yoğunluğu oranı hesaplama)"
+          "Entegre Ses Yüksekliği ve LRA (ITU-R BS.1770-4 LUFS-I ve EBU 3342 dinamik aralığı)",
+          "True Peak ve Crest Faktörü (4x örnekleme üstü dBTP tavanı ve transient vuruş ölçümü)",
+          "7 Bant Spektral Denge ve Stereo Korelasyon (Sub, warmth, low-mid, mid, presence, brilliance, air)",
+          "Gizli Paralel Render Döngüsü (FL64.exe /R izole masaüstünde çalışarak hedef LUFS değerine master eder)"
         ]
       },
       "flIntegration": {
-        "title": "FL Studio 2025 Derin Entegrasyon Köprüsü",
-        "description": "Donanım hızlandırmalı MIDI CC ve Python API 40 entegrasyonu ile çift yönlü fader yansıması.",
+        "title": "FL Studio 2025 Köprüsü ve İstemci Ekosistemi",
+        "description": "loopMIDI, IAC Driver veya Wine yol çözücüsü ile bağlanın ve tüm MIDI akışını canlı izleyin.",
         "items": [
-          "loopMIDI Sanal Port İletişimi (5 milisaniyenin altında anında çift yönlü geribildirim)",
-          "Piyano Rulosu Komut Köprüsü (Prosedürel nota üretimi, insanileştirme, gitar arpeji)",
-          "Mikser Otomasyonu (Kazanç kademelendirme, stereo ayrımı, efekt gönderim yönlendirmesi)",
-          "Tarayıcı Gezintisi (Eklenti kataloğu gezinimi ve kanal rafı başlatmaları)"
+          "Claude Code Yerel Eklentisi (/plugin marketplace add Rtur2003/FL-MCP ile 5 beceri ve mix-engineer alt ajanı)",
+          "Claude Desktop (.mcpb paketi) ile Cursor, VS Code, Windsurf, Gemini CLI, Antigravity ve Codex CLI için tek tıkla kurulum",
+          "Çift Yönlü MIDI Loopback ve Scripting API 40 (Transport, Mikser insert faderları, yönlendirme ve FX slot view=\"io\")",
+          "Streamable-HTTP ve SSE Daemon (Ortak IDE akışları için kalıcı yerel 127.0.0.1:8765 sunucusu)"
         ]
       }
     },
+    "transparency": {
+      "title": "Mimari Şeffaflık",
+      "subtitle": "FL Studio Scripting API nereye kadar izin verir, ötesini odağı bozmadan hangi 5 mühendislik katmanıyla çözüyoruz.",
+      "intro": "Image-Line'ın resmi Python Scripting API'si güvenlik ve mimari gereği çevrimdışı ses dışa aktarımını, doğrudan ikili .flp/.fst okumasını ve bazı üçüncü parti eklenti pencerelerini engeller. Gerçek dışı vaatler vermek yerine her işlemi en hafif ve deterministik katmana ayırdık.",
+      "ladderTitle": "5 Katmanlı Çözüm Merdiveni",
+      "layers": [
+        {
+          "layer": "1. API (FL Scripting API 40)",
+          "scope": "Transport, BPM, Mikser kanalları, FX yönlendirme view=\"io\", VST parametreleri",
+          "how": "Windows loopMIDI, macOS IAC Driver veya Linux Wine üzerinden deterministik fl_param birim dönüşümlü çift yönlü MIDI CC + SysEx köprüsü.",
+          "boundary": "Birincil hızlı yol. Resmi API çevrimdışı WAV renderı alamaz ve doğrudan ham ikili .flp dosyası yazamaz."
+        },
+        {
+          "layer": "2. Arayüz Kuyruğu ve Önizleme (fl_notes)",
+          "scope": "İsimli akorlar (Am7@0:4, Fmaj7@4:4), Piano Roll kuyruklama ve preview=true",
+          "how": "Piano Roll komut yardımcılarını ve canlı çalma önizlemesini normalize float (0-1) veya MIDI velocity toleransıyla birleştirir.",
+          "boundary": "FL-MCP Studio'daki tek tıkla kurulum veya betik klasörü üzerinden denetleyici portunun bir kez bağlanmasını gerektirir."
+        },
+        {
+          "layer": "3. Dosya Ayrıştırıcı ve Yazıcı (.flp / .fst / .sf2)",
+          "scope": "Eksiksiz proje üretimi (fl_produce) ve akustik örnek kütüphanesi sıralama (fl_library)",
+          "how": "İkili .flp yapılarını okuyup yazar, .fst preset ve .sf2 SoundFont enjeksiyonu yapar ve örnek klasörlerini parlaklık/decay/sub ağırlığına göre indeksler.",
+          "boundary": "O an açık olan oturumun çalmasını bölmeden disk üzerinde temiz veya şablon üstü .flp projeleri oluşturur."
+        },
+        {
+          "layer": "4. Gizli Masaüstü Renderı (FL64.exe /R)",
+          "scope": "Kapalı çevrim BS.1770-4 / EBU 3342 mastering ve nesnel miks doğrulama",
+          "how": "FL64.exe /R komut satırı renderlarını izole gizli bir Windows masaüstünde paralel çalıştırır; odak çalmadan iterative limiter kazancını hedef LUFS'a yakınsatır.",
+          "boundary": "Paralel gizli masaüstü renderı Windows FL64.exe gerektirir; macOS ve Linux ortamlarında canlı API, .flp üretimi ve fl_audio ölçümü tam çalışır."
+        },
+        {
+          "layer": "5. İsteğe Bağlı Masaüstü Otomasyonu (fl_desk)",
+          "scope": "API dışındaki eklenti düğmeleri, dışa aktarma menüleri ve özel diyaloglar",
+          "how": "Varsayılan olarak kapalıdır. stealth modunda odak çalmadan PrintWindow ile okur ve PostMessageW ile tıklar; polite modunda kullanıcı boşta kalana kadar bekleyip odağı geri verir.",
+          "boundary": "Yalnızca kullanıcı açıkça açtığında etkinleşir; imleci ekranın sol üst (0,0) köşesine götürmek otomasyonu anında durdurur."
+        }
+      ]
+    },
+    "commerceNotice": {
+      "title": "Lisans ve Veri Gizliliği Modeli",
+      "subtitle": "Açık kaynak depo sürümleri tamamen ücretsiz ve sınırsızdır. Ticari planlar yalnızca gerçek ödeme bağlantıları aktif edildiğinde yayınlanır.",
+      "openSourceTitle": "MIT Açık Kaynak Sürümü (v0.3.0): Kredisiz ve Sınırsız",
+      "openSourceBody": "GitHub üzerinden Rtur2003/FL-MCP deposundan doğrudan kurulan sürümler MIT lisanslıdır; kredi sayacı veya lisans sunucusu sorgusu içermez.",
+      "localBoundaryTitle": "Her Zaman Ücretsiz ve Yerel Kalan Çekirdek",
+      "localBoundaryBody": "Gelecekteki ticari dağıtımlarda bile DAW bağlantısı, transport, mikser faderları, fl_param gerçek birimli eklenti kontrolü, fl_audio BS.1770 ses ölçümü, fl_library tarama ve fl_desk otomasyonu sonsuza kadar ücretsiz ve yerel kalır. Proje (.flp), ses ve nota verileri asla sunucuya gönderilmez; kredi sadece fl_produce ve fl_mix balance gibi üretici komutlar için kalıcı diskli licence sunucusunda işlenir.",
+      "commercialNote": "Sahte fiyat veya aktif olmayan ödeme linki yayınlanmaz. Şu an açık kaynak sürümü indirebilir veya geliştirici lisans kasasını test edebilirsiniz."
+    },
     "pricing": {
       "title": "Şeffaf Prodüksiyon Paketleri",
-      "subtitle": "Temel oynatma, fader hareketleri ve yerel parametre ayarlamaları sıfır kredi harcar ve çevrimdışı olarak sonsuza kadar çalışır. Proje üretimleri kredi kullanır.",
+      "subtitle": "Bağlantı, transport, mikser faderları, eklenti parametreleri ve ses ölçümü sıfır kredi harcar ve yerel çalışır. Kredi yalnızca üretici komutlara uygulanır.",
       "monthly": "Aylık Abonelik",
       "topup": "Süresiz Ek Kredi",
       "free": {
         "name": "Topluluk Paketi",
         "price": "$0",
         "period": "Sonsuza Kadar Ücretsiz",
-        "description": "Yerel kontrol ve ses analizi. Temel DAW otomasyonunu cihazınızda hesap olmadan çalıştırın.",
+        "description": "Tam yerel DAW kontrolü, fl_param ve BS.1770 LUFS ses analizi için hesap gerekmez.",
         "features": [
-          "Tam manuel DAW kontrolü (Faderlar, Pan, Çalma/Durdurma)",
-          "Gerçek birimlerle yerel parametre ayarı",
-          "Yerel BS.1770 LUFS ses yüksekliği ölçümü",
-          "1 yerel cihaz bağlantısı",
-          "Discord ve GitHub topluluk desteği",
-          "0 kredi dahildir (Proje üretimi paket veya abonelik gerektirir)"
+          "Sonsuza kadar ücretsiz yerel çekirdek (Transport, Mikser, fl_param, fl_notes, fl_audio)",
+          "14 düz-şemalı araç ve isteğe bağlı fl_desk",
+          "Win, macOS ve Linux için FL-MCP Studio masaüstü uygulaması",
+          "GitHub topluluk desteği"
         ],
-        "cta": "Ücretsiz Sürümü İndir"
+        "cta": "Kasayı Aç"
       },
       "pro": {
         "name": "Pro Producer",
         "price": "$19",
         "period": "/ ay",
-        "badge": "En Çok Tercih Edilen",
-        "description": "Her ay çok sayıda eksiksiz şarkı projesi üreten aktif prodüktörler ve ritim üreticileri için.",
+        "badge": "Aktif Prodüktörler",
+        "description": "Düzenli proje üreten ve kapalı çevrim miks dengeleme kullanan beatmakerlar için.",
         "features": [
-          "Aylık 300 üretim kredisi (Yaklaşık 35 tam çok kanallı proje)",
-          "Aynı anda 2 cihaz koltuğu (Masaüstü ve Dizüstü)",
-          "Eksiksiz 12 müzik türü çok kanallı ritim üretim motoru",
-          "FabFilter, Serum, FLEX, Ozone için eklenti parametre çözücü",
-          "Otomatik mikser dengeleme ve mastering limiter kontrolü",
-          "Öncelikli e-posta ve GitHub desteği"
+          "Aylık 300 üretim kredisi (fl_produce plan/flp, fl_mix balance)",
+          "Aynı anda 2 cihaz koltuğu",
+          "Tüm yerel DAW kontrolü, parametre çözümü ve ölçüm araçları sınırsız",
+          "Öncelikli eklenti profili ve issue desteği"
         ],
         "cta": "Pro Producer Edin"
       },
@@ -1629,14 +1745,12 @@
         "name": "Studio Edition",
         "price": "$49",
         "period": "/ ay",
-        "description": "Ticari stüdyolar, miks mühendisleri ve yüksek hacim ile ekip koltuğu talep eden profesyoneller için.",
+        "description": "Birden fazla stüdyo iş istasyonuyla çalışan ticari stüdyolar ve miks ekipleri için.",
         "features": [
-          "Aylık 1200 üretim kredisi (Yaklaşık 150 tam şarkı projesi)",
-          "Ekip iş istasyonları için aynı anda 5 cihaz koltuğu",
-          "Tüm Pro özellikleri ile birlikte tam kanal ayrımı (stem) ve MIDI dışa aktarma",
-          "Toplu parça işleme ve çalma listesi şablon yerleşim çözücü",
-          "Özel tür gam tanımları ve makro betikleme",
-          "Özel eklenti profilleri ile doğrudan mühendislik desteği"
+          "Aylık 1200 üretim kredisi",
+          "Aynı anda 5 cihaz koltuğu",
+          "Tüm Pro özellikleri ve çoklu koltuk yönetimi",
+          "Doğrudan mühendislik desteği"
         ],
         "cta": "Studio Edition Edin"
       },
@@ -1644,48 +1758,52 @@
         "name": "100 Kredilik Ek Paket",
         "price": "$10",
         "period": "Tek Seferlik",
-        "description": "Teslim tarihi için ek güç mü lazım? Asla süresi dolmayan ve tüm planlarla birleşen 100 kredi ekleyin.",
+        "description": "Süresi dolmayan ve mevcut aboneliğin üzerine eklenen ek üretim kredisi.",
         "cta": "100 Kredi Ekle"
       }
     },
     "faq": {
       "title": "Sıkça Sorulan Sorular",
-      "subtitle": "FL-MCP kurulumu ve kullanımı hakkında bilmeniz gereken her şey.",
+      "subtitle": "Canlı doğrulama, platform desteği, veri gizliliği ve Scripting API sınırları hakkında mühendislik yanıtları.",
       "items": [
         {
-          "q": "FL-MCP bilgisayarımdaki FL Studio ile nasıl iletişim kurar?",
-          "a": "FL-MCP, Tobias Erichsen tarafından geliştirilen loopMIDI sanal MIDI sürücüsü ve FL Studio 2025 içine yüklenen özel MIDI Denetleyici betiğimizi (API 40) kullanır. Claude bir MCP aracını çağırdığında, FL-MCP standart yüksek çözünürlüklü MIDI CC mesajları gönderir ve FL Studio bunları anında alır."
+          "q": "FL-MCP gerçekten canlı FL Studio üzerinde test edildi mi yoksa sadece mock mu?",
+          "a": "Her ikisi de doğrulandı. Windows 11 üzerinde gerçek FL Studio 2025 (Producer Edition v25.2.5 [build 5319], Scripting API 40) ile fl-mcp selftest --deep paketindeki 17 derin kontrolün tamamı canlı geçti. Ayrıca resmi fl-studio-api-stubs, loopback MIDI, .flp ikili ayrıştırıcı/yazıcı, BS.1770-4 ölçümü, HTTP/SSE ve masaüstü uygulamasını kapsayan 894 çevrimdışı test geçmektedir."
         },
         {
-          "q": "Ses dosyalarım veya projelerim buluta yüklenir mi?",
-          "a": "Asla. Tüm ses işleme adımları, ses yüksekliği ölçümü (ITU-R BS.1770-4 LUFS) ve MIDI oynatma yüzde yüz yerel olarak cihazınızda gerçekleşir. CrownCode arka ucuyla yalnızca lisans anahtarı doğrulaması ve üretim araçları için kredi provizyonu sırasında iletişim kurulur."
+          "q": "Kullanmak için Python bilmem veya terminal açmam gerekir mi?",
+          "a": "Hayır. v0.3.0 ile gelen FL-MCP Studio masaüstü uygulaması Windows, macOS ve Linux için sıfır Python gerektiren tek dosya arşivleri sunar. Uygulama içinden tek tıkla FL Studio betiğini kurabilir, tüm yapay zekâ istemcilerini bağlayabilir, Step Sequencer ile ritim yazabilir ve canlı MIDI trafiğini izleyebilirsiniz."
         },
         {
-          "q": "Oturum sırasında internet bağlantım koparsa ne olur?",
-          "a": "Temel DAW hareketleri, mikser ayarları, eklenti parametre değişiklikleri ve ses analizi sıfır kredi harcar ve tamamen çevrimdışı çalışır. Yalnızca eksiksiz şarkı besteleme gibi üst düzey proje üretim eylemleri ilk başlangıçta kredi rezerve etmek için bağlantı gerektirir."
+          "q": "Neden 14 düz-şemalı araç ve yaklaşık 4k token sınırı öne çıkarılıyor?",
+          "a": "Çok sayıda MCP sunucusu $ref, anyOf ve title alanlarıyla karmaşık şemalar üretir; bu da hem context penceresini şişirir hem küçük veya yerel modellerde parametre çağırmayı bozar. 14 düz-şemalı aracı 4k token civarında tutmak her modelde kararlı parametre eşlemesi sağlar."
         },
         {
-          "q": "Hangi FL Studio sürümleri destekleniyor?",
-          "a": "FL-MCP, Windows 10, Windows 11 ve macOS üzerinde FL Studio 2024 ve FL Studio 2025 sürümleri için tasarlanmış ve test edilmiştir. Tüm 17 derin test paketi modern FL Studio Python denetleyici betiklerine karşı başarıyla geçmektedir."
+          "q": "Gizli render veya fl_desk çalışırken pencere odağımı çalar mı?",
+          "a": "Hayır. Mastering için alınan FL64.exe /R renderları ayrı bir gizli Windows masaüstünde paralel çalıştığından çalışan pencerenizin odağı bozulmaz. fl_desk ise varsayılan olarak kapalıdır; etkinleştirildiğinde stealth modu PrintWindow ve PostMessageW ile odak çalmadan çalışır ve fareyi ekranın (0,0) köşesine götürmek otomasyonu anında keser."
         },
         {
-          "q": "Lisansımı yeni bir bilgisayara taşıyabilir miyim?",
-          "a": "Evet. Her plan özel cihaz koltuklarıyla gelir (Pro için 2, Studio için 5). CrownCode web kontrol panelinizden tek bir tıklamayla eski cihaz koltuğunu iptal edebilir ya da istemciden doğrudan replace parametresi gönderebilirsiniz."
+          "q": "v0.3.0 sürümünde hangi işletim sistemleri ve AI istemcileri destekleniyor?",
+          "a": "İşletim sistemleri: Windows x86_64 ve ARM64 (loopMIDI), macOS Apple Silicon arm64 ve Intel x86_64 (IAC Driver), Linux x86_64 ve ARM64 (Wine yol çözücü). İstemciler: Claude Desktop (.mcpb), Claude Code eklentisi (/plugin marketplace add Rtur2003/FL-MCP), Cursor, VS Code, Windsurf, Gemini CLI, Antigravity ve Codex CLI; stdio, Streamable-HTTP (:8765/mcp) ve SSE (/sse) protokolleriyle."
+        },
+        {
+          "q": "Ses dosyalarım, stemlerim veya .flp projelerim buluta gönderilir mi?",
+          "a": "Asla. Tüm BS.1770-4 ses ölçümü, .flp proje yazımı, MIDI loopback iletişimi ve örnek kütüphanesi analizi yüzde yüz yerel olarak cihazınızda çalışır. GitHub açık kaynak sürümü hiçbir harici sunucuyla iletişim kurmaz."
         }
       ]
     },
     "dashboard": {
       "title": "FL-MCP Kullanıcı Paneli",
-      "subtitle": "Lisans anahtarınızı, aktif cihaz koltuklarınızı ve kredi bakiyenizi yönetin.",
+      "subtitle": "Ticari bulut sürümleri için lisans anahtarınızı, aktif cihaz koltuklarınızı ve kredi bakiyenizi yönetin.",
       "authTitle": "Lisans Kasanıza Erişin",
       "authDescription": "Cihaz aktivasyonlarınıza ve kredilerinize ulaşmak için Google hesabınızla giriş yapın veya lisans anahtarınızı girin.",
       "keyPlaceholder": "FLMCP-XXXXX-XXXXX-XXXXX-XXXXX",
       "emailPlaceholder": "producer@example.com",
       "loadButton": "Kasayı Aç",
-      "trialPrompt": "FL-MCP ile yeni misiniz? 30 günlük deneme ve 15 ücretsiz krediyle anında başlayın.",
-      "claimTrialButton": "30 Günlük Ücretsiz Deneme Al",
+      "trialPrompt": "Google oturumu açıldı. 15 test kredisiyle 30 günlük deneme lisansı oluşturabilirsiniz (GitHub açık kaynak sürümleri kredisiz çalışır).",
+      "claimTrialButton": "30 Günlük Deneme Al (15 Kredi)",
       "vaultTitle": "Lisans Kasası",
-      "licenseKeyLabel": "Lisans Anahtarınız",
+      "licenseKeyLabel": "Lisans Anahtarı",
       "copyKey": "Anahtarı Kopyala",
       "copied": "Panoya Kopyalandı",
       "showKey": "Göster",
@@ -1699,27 +1817,27 @@
       "costCompose": "Tam Şarkı Besteleme (5 kredi)",
       "costFlp": "FLP Proje Üretimi (3 kredi)",
       "costBalance": "Mikser Otomatik Dengeleme (2 kredi)",
-      "costTransport": "Fader Hareketleri ve Ses Ölçümü (Ücretsiz / 0 kredi)",
+      "costTransport": "Transport, Mikser, fl_param, fl_audio ve fl_library (Ücretsiz / 0 kredi)",
       "devicesTitle": "Aktif Cihaz Koltukları",
       "devicesCount": "Kayıtlı Cihazlar",
       "devicesLimit": "İzin Verilen Koltuk",
-      "noDevices": "Henüz aktif bir cihaz yok. Claude Desktop veya Claude Code ile ilk makinenizi bağlayın.",
+      "noDevices": "Henüz aktif cihaz yok. FL-MCP Studio veya Claude Code üzerinden ilk makinenizi bağlayın.",
       "deviceName": "Cihaz Adı",
       "deviceLastSeen": "Son Görülme",
       "revokeSeat": "Koltuğu Kaldır",
       "setupTitle": "Hızlı İstemci Kurulum Rehberi",
-      "setupSubtitle": "FL-MCP sunucusunu iki dakikadan kısa sürede yapay zekâ ortamınıza bağlayın.",
+      "setupSubtitle": "FL-MCP sunucusunu stdio veya kalıcı Streamable-HTTP (:8765/mcp) üzerinden yapay zekâ istemcinize bağlayın.",
       "tabDesktop": "Claude Desktop",
       "tabCli": "Claude Code",
       "tabCursor": "Cursor",
       "tabVscode": "VS Code",
-      "downloadBundle": "Claude Desktop (.mcpb) İndir",
+      "downloadBundle": "FL-MCP Studio ve .mcpb İndir (GitHub Releases)",
       "downloadScript": "FL Studio Denetleyici Betiğini İndir",
       "downloadLoopMidi": "loopMIDI İndir (Windows)",
-      "step1": "1. loopMIDI sürücüsünü kurun ve FL_MCP_IN ile FL_MCP_OUT portlarını oluşturun.",
-      "step2": "2. Denetleyici betiğini FL Studio Settings/Hardware klasörünüze kopyalayın.",
-      "step3": "3. Aşağıdaki MCP yapılandırmasını yapay zekâ istemcinize ekleyin.",
-      "step4": "4. İlk sohbet turunuzda lisans anahtarınızla activate aracını çalıştırın."
+      "step1": "1. Windows için loopMIDI kurun, macOS için IAC Driver etkinleştirin, Linux için Wine yollarını doğrulayın.",
+      "step2": "2. Tek tıkla FL betik ve AI istemci kurulumu için FL-MCP Studio açın veya /plugin marketplace add Rtur2003/FL-MCP ekleyin.",
+      "step3": "3. FL Studio 2025 canlı doğrulaması için isteğe bağlı olarak fl-mcp selftest --deep komutunu çalıştırın.",
+      "step4": "4. Açık kaynak sürümler yerel ve kredisiz çalışır; ticari sürümler FLMCP anahtarınızla doğrulanır."
     }
   }
 }
