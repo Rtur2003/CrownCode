@@ -80,7 +80,7 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     gradient: 'from-amber-400 via-orange-500 to-red-500',
     category: 'project',
     schema: { category: 'EntertainmentApplication', os: 'Web' },
-    updated: '2026-10-21',
+    updated: '2026-11-16',
   },
   {
     id: 'crown-dreams',
