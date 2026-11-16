@@ -442,11 +442,11 @@
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  padding: 6px 10px;
-  background: color-mix(in srgb, #050407 90%, transparent);
+  padding: 8px 14px;
+  background: color-mix(in srgb, #08060b 86%, transparent);
   border: 1px solid var(--line);
   border-bottom: 0;
-  border-radius: 2px 2px 0 0;
+  border-radius: 16px 16px 0 0;
 }
 
 .codeLabel {
@@ -460,7 +460,7 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 3px 9px;
+  padding: 4px 10px;
   font: inherit;
   font-family: var(--font-family-mono);
   font-size: 0.73rem;
@@ -470,6 +470,7 @@
   border-radius: 999px;
   cursor: pointer;
   flex-shrink: 0;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .copyBtn:hover {
@@ -480,12 +481,12 @@
 
 .codeBlockCompact {
   margin: 0;
-  padding: 10px 12px;
+  padding: 12px 14px;
   max-width: 100%;
   box-sizing: border-box;
-  background: #040306;
+  background: color-mix(in srgb, #040307 90%, transparent);
   border: 1px solid var(--line);
-  border-radius: 0 0 2px 2px;
+  border-radius: 0 0 16px 16px;
   overflow-x: auto;
   font-family: var(--font-family-mono);
   font-size: 0.78rem;
@@ -1049,17 +1050,17 @@
 .vaultBox {
   min-width: 0;
   padding: 22px 20px;
-  background: color-mix(in srgb, #07060a 86%, var(--accent) 14%);
+  background: color-mix(in srgb, #09080d 84%, var(--accent) 16%);
   border: 1px solid var(--line-strong);
-  border-radius: 2px;
+  border-radius: 20px;
 }
 
 .sessionBar {
   margin-bottom: 26px;
   padding: 14px 18px;
-  background: color-mix(in srgb, #050407 72%, transparent);
+  background: color-mix(in srgb, #07060b 78%, transparent);
   border: 1px solid var(--line);
-  border-radius: 2px;
+  border-radius: 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1078,10 +1079,10 @@
 .keyBox {
   flex: 1 1 220px;
   min-width: 0;
-  padding: 12px 14px;
-  background: #040306;
+  padding: 12px 16px;
+  background: #050408;
   border: 1px solid var(--line);
-  border-radius: 2px;
+  border-radius: 14px;
   font-family: var(--font-family-mono);
   font-size: 1.02rem;
   color: var(--accent);
@@ -1092,9 +1093,9 @@
 .creditCard {
   min-width: 0;
   padding: 22px 20px;
-  background: color-mix(in srgb, #050407 72%, transparent);
+  background: color-mix(in srgb, #07060b 78%, transparent);
   border: 1px solid var(--line);
-  border-radius: 2px;
+  border-radius: 20px;
   display: grid;
   grid-template-columns: minmax(140px, auto) minmax(0, 1fr);
   gap: 20px 32px;
@@ -1150,10 +1151,10 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  padding: 14px 16px;
-  background: color-mix(in srgb, #050407 58%, transparent);
+  padding: 14px 18px;
+  background: color-mix(in srgb, #07060b 64%, transparent);
   border: 1px solid var(--line);
-  border-radius: 2px;
+  border-radius: 16px;
 }
 
 .steps {
