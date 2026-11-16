@@ -4,7 +4,7 @@
  * Bağımlılıklar: LanguageProvider, ToastProvider, ErrorBoundary, LazyMotion, fonts, global styles
  */
 
-import React, { useState, useEffect, lazy, Suspense } from 'react'
+import React, { useEffect, useSyncExternalStore, lazy, Suspense } from 'react'
 import type { AppProps } from 'next/app'
 import Script from 'next/script'
 import { LazyMotion } from 'motion/react'
@@ -26,14 +26,12 @@ const ExternalLinkWarning = lazy(() => import('@/components/ExternalLink/Externa
 // Motion's animation features arrive in their own chunk after hydration.
 const loadMotionFeatures = () => import('@/config/motion-features').then(m => m.default)
 
+const emptySubscribe = () => () => {}
+
 function MyApp({ Component, pageProps }: AppProps) {
-  const [modalsReady, setModalsReady] = useState(false)
+  const modalsReady = useSyncExternalStore(emptySubscribe, () => true, () => false)
 
   useEffect(() => {
-    // Mount deferred modal listeners immediately after hydration so the very first
-    // external link click or Ctrl+K / Ctrl+/ press is always intercepted cleanly.
-    setModalsReady(true)
-
     // Register service worker for PWA
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
       navigator.serviceWorker
