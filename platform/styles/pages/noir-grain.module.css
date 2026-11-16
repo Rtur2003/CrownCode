@@ -1,10 +1,19 @@
 /* Noir & Grain: the screenshots, the stack and the run command. The frame and
    sections are shared (styles/components/world-page.module.css). */
 
-.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
 
 .shot { margin: 0; }
-.shot img {
+.shotButton {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.shotButton img {
   display: block;
   width: 100%;
   height: auto;
@@ -12,10 +21,29 @@
   object-fit: cover;
   object-position: top;
   border: 1px solid var(--line);
+  transition: border-color 0.2s ease, opacity 0.2s ease;
 }
-.shot figcaption { margin-top: 10px; font-size: 0.95rem; color: var(--muted); }
+.shotButton:hover img {
+  border-color: var(--accent);
+  opacity: 0.92;
+}
+.zoomBadge {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: rgba(6, 5, 8, 0.78);
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+}
+.shot figcaption { margin-top: 8px; font-size: 0.92rem; color: var(--muted); }
 
-.tech { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 0; padding: 0; list-style: none; }
+.tech { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 0 0 18px; padding: 0; list-style: none; }
 .tech li { font-family: var(--font-family-mono); font-size: 0.86rem; letter-spacing: 0.02em; color: var(--body); }
 
 .code {
