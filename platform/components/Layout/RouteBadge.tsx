@@ -8,7 +8,7 @@
  * Rendered by MainLayout; renders nothing outside a project route.
  */
 
-import { useEffect, useRef, type CSSProperties } from 'react'
+import { type CSSProperties } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ArrowLeft, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -29,32 +29,7 @@ export function worldIndexForPath(pathname: string): number {
 export function RouteBadge() {
   const { t } = useLanguage()
   const { pathname } = useRouter()
-  const ref = useRef<HTMLElement>(null)
   const index = worldIndexForPath(pathname)
-
-  // Tuck away while reading downwards, come back on the way up and at the
-  // end of the page (where the next world is the natural next step).
-  useEffect(() => {
-    const el = ref.current
-    if (!el) {return}
-    let last = window.scrollY
-    let frame = 0
-    const update = () => {
-      frame = 0
-      const y = window.scrollY
-      const atEnd = y + window.innerHeight >= document.documentElement.scrollHeight - 120
-      if (Math.abs(y - last) < 8 && !atEnd) {return}
-      el.toggleAttribute('data-tucked', y > last && y > 160 && !atEnd)
-      last = y
-    }
-    const onScroll = () => { frame ||= requestAnimationFrame(update) }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(frame)
-      el.removeAttribute('data-tucked')
-    }
-  }, [index])
 
   if (index < 0) {return null}
 
@@ -90,7 +65,7 @@ export function RouteBadge() {
   )
 
   return (
-    <nav ref={ref} className={styles.badge} aria-label={copy.label} style={{ '--world': here.accent } as CSSProperties}>
+    <nav className={styles.badge} aria-label={copy.label} style={{ '--world': here.accent } as CSSProperties}>
       <Link href={`/#world-${here.entry.id}`} className={styles.home}>
         <ArrowLeft size={15} aria-hidden="true" />
         <span>{copy.backToAtlas}</span>
