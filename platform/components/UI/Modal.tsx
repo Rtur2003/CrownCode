@@ -6,11 +6,11 @@ interface ModalProps {
   open: boolean
   onClose: () => void
   title: string
-  subtitle?: string
+  subtitle?: string | undefined
   size?: 'sm' | 'md' | 'lg'
-  closeLabel?: string
+  closeLabel?: string | undefined
   children: ReactNode
-  footer?: ReactNode
+  footer?: ReactNode | undefined
 }
 
 /**
