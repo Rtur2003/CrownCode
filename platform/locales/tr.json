@@ -181,18 +181,18 @@
         ]
       },
       "flMcp": {
-        "title": "FL-MCP: FL Studio Yapay Zekâ Yardımcısı",
-        "description": "On iki müzik türünde beste yapın, eklenti parametrelerini gerçek desibel ve hertz birimleriyle çözün, fader dengesi kurun ve BS.1770 LUFS hedefleriyle ses yüksekliğini Claude üzerinden yönetin.",
-        "showroomDescription": "FL Studio için otonom müzik prodüksiyonu, parametre çözücü ve mikser dengeleme sistemi.",
-        "status": "Aktif",
-        "stats": "Masaüstü · FL Studio 2025",
+        "title": "FL-MCP: FL Studio İçin Yerel MCP Sunucusu ve Studio",
+        "description": "MIT lisanslı FL Studio MCP sunucusu (v0.3.0) ve sıfır kurulumlu FL-MCP Studio masaüstü uygulaması. FL Studio 2025 v25.2.5 [build 5319] ile canlı doğrulandı, 894 çevrimdışı test, 14 düz-şemalı araç (~4k token), gerçek dB/Hz eklenti kontrolü ve BS.1770-4 LUFS mastering sunar.",
+        "showroomDescription": "FL Studio 2025 (v0.3.0) için gerçek dB/Hz eklenti kontrolü ve BS.1770 ölçümü sunan yerel MCP sunucusu.",
+        "status": "Canlı Doğrulandı · v0.3.0",
+        "stats": "Masaüstü · v0.3.0 · FL Studio 2025",
         "features": [
-          "12 Müzik Türü Motoru",
-          "Eklenti Bilgi Tabanı",
-          "BS.1770 LUFS Mastering",
-          "MIDI CC Protokolü"
+          "14 Düz-Şemalı Araç (~4k token)",
+          "FL-MCP Studio Masaüstü",
+          "Canlı Doğrulandı: FL Studio 2025",
+          "894 Çevrimdışı Otomatik Test"
         ],
-        "heading": "FL Studio Yapay Zekâ Yardımcısı"
+        "heading": "FL Studio 2025 MCP Köprüsü"
       },
       "kognita": {
         "title": "Kognita",
