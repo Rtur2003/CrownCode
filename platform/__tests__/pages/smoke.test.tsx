@@ -272,11 +272,24 @@ describe('Page Smoke Tests', () => {
   })
 
   describe('FL-MCP Showcase Page (/fl-mcp)', () => {
-    it('renders without crashing', async () => {
+    it('renders without crashing and opens Download & Docs popups', async () => {
+      const { fireEvent } = await import('@testing-library/react')
       const FlMcpPage = (await import('@/pages/fl-mcp/index')).default
       const { container } = renderWithProviders(<FlMcpPage />)
       expect(container).toBeTruthy()
       expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+
+      const downloadBtn = screen.getByRole('button', { name: /İndir ve Kur|Download & Install/ })
+      fireEvent.click(downloadBtn)
+      expect(screen.getByRole('dialog')).toBeInTheDocument()
+      expect(screen.getByText(/fl-mcp-studio-0\.3\.0-win-x64\.zip/)).toBeInTheDocument()
+
+      fireEvent.keyDown(window, { key: 'Escape' })
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+
+      const docsBtn = screen.getByRole('button', { name: /Teknik Doküman ve SSS|Technical Docs & FAQ/ })
+      fireEvent.click(docsBtn)
+      expect(screen.getByRole('dialog')).toBeInTheDocument()
     })
   })
 
