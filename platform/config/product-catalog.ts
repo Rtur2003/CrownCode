@@ -133,11 +133,11 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     name: 'FL-MCP',
     schema: {
       category: 'MultimediaApplication',
-      os: 'Windows, macOS',
+      os: 'Windows, macOS, Linux',
       type: 'SoftwareApplication',
       sameAs: ['https://github.com/Rtur2003/FL-MCP'],
     },
-    updated: '2026-11-02',
+    updated: '2026-11-16',
   },
   {
     id: 'kognita',
