@@ -1524,104 +1524,220 @@
   },
   "flMcpPage": {
     "meta": {
-      "title": "FL Studio AI MCP Server | Autonomous Music Production and Mixing Copilot",
-      "description": "Control FL Studio 2025 using Claude and MCP. Generate multi-track beats, solve plugin parameters in dB and Hz, auto-balance mixer tracks, and master to LUFS targets.",
-      "keywords": "FL Studio AI, FL-MCP, Claude Desktop FL Studio, loopMIDI AI copilot, music production AI, audio mastering LUFS, DAW MCP server"
+      "title": "FL-MCP v0.3.0: Local MCP Server & Studio App for FL Studio 2025",
+      "description": "MIT-licensed FL Studio MCP server and zero-terminal FL-MCP Studio desktop app. Live verified on FL Studio 2025 v25.2.5 [build 5319] with 894 offline tests, 14 flat-schema tools (~4k tokens), real dB/Hz plugin control, BS.1770-4 LUFS metering and direct .flp/.fst synthesis.",
+      "keywords": "FL Studio MCP, FL-MCP v0.3.0, FL-MCP Studio, Claude Desktop FL Studio, Claude Code plugin, loopMIDI, IAC Driver, BS.1770 LUFS, .flp parser"
     },
     "hero": {
-      "badge": "World First FL Studio MCP Server",
-      "title": "The Autonomous AI Copilot for FL Studio",
-      "subtitle": "Compose across 12 genres, solve plugin parameters in real dB and Hz units, auto-balance faders, and measure BS.1770 LUFS loudness directly through Claude and your favorite AI models.",
-      "getStarted": "Get Started (Instant Access)",
-      "viewDocs": "View Documentation and Setup",
-      "liveDemoBadge": "All 17 Deep Self-Tests Passing on FL Studio 2025"
+      "badge": "FL-MCP v0.3.0 · MIT License · Local First",
+      "title": "FL Studio 2025 Control Over MCP",
+      "subtitle": "14 flat-schema MCP tools (~4k tokens) plus opt-in fl_desk and the zero-terminal FL-MCP Studio desktop app. Control mixer inserts, solve VST parameters in real dB and Hz, queue named chords into Piano Roll, meter ITU-R BS.1770-4 LUFS and write .flp projects directly on Windows, macOS and Linux.",
+      "getStarted": "Download FL-MCP Studio",
+      "viewDocs": "GitHub & Docs",
+      "liveDemoBadge": "Live Verified: FL Studio 2025 v25.2.5 [build 5319] · API 40 · 17 out of 17 deep checks · 894 offline tests"
+    },
+    "verification": {
+      "title": "Verification & Runtime Support",
+      "subtitle": "Tested directly against live FL Studio 2025 on Windows 11 alongside deterministic CI simulation suites.",
+      "liveLabel": "Live DAW Target",
+      "liveValue": "FL Studio 2025 v25.2.5",
+      "liveDetail": "Producer Edition build 5319, Scripting API 40 (fl-mcp selftest --deep passed 17 of 17 checks)",
+      "offlineLabel": "Automated Suite",
+      "offlineValue": "894 Passing Tests",
+      "offlineDetail": "fl-studio-api-stubs, loopback MIDI bridge, .flp binary parser/writer, BS.1770-4 audio, HTTP/SSE, Desktop",
+      "platformsLabel": "OS & MIDI Bridges",
+      "platformsValue": "Win · macOS · Linux",
+      "platformsDetail": "Windows x86_64 & ARM64 (loopMIDI), macOS arm64 & x86_64 (IAC Driver), Linux (Wine paths)",
+      "clientsLabel": "Clients & Transports",
+      "clientsValue": "8 AI Hosts · 3 Modes",
+      "clientsDetail": "Claude Desktop (.mcpb), Claude Code plugin, Cursor, VS Code, Windsurf, Gemini, Antigravity, Codex · stdio, HTTP :8765, SSE"
+    },
+    "install": {
+      "title": "Two Paths to Connect",
+      "subtitle": "Pick the standalone graphical studio for zero terminal setup, or connect directly from your IDE and CLI over stdio or Streamable-HTTP.",
+      "studioTitle": "FL-MCP Studio (Desktop App · v0.3.0)",
+      "studioBadge": "Zero Python Required",
+      "studioDesc": "Standalone cross-platform binaries (fl-mcp-studio-<ver>-<os>-<arch>.zip or .tar.gz) inside a dark neutral graphite (#141518) hardware DAW interface.",
+      "studioFeatures": [
+        "1-click FL Studio controller script installer and 1-click AI client registration",
+        "Live DAW Transport, BPM control, calibrated dB mixer faders with Mute, Solo and FX telemetry",
+        "Clickable 16-step FL Step Sequencer, Piano Roll chord queueing and 12-genre arranger",
+        "Background HTTP/SSE daemon toggle with live MIDI TX/RX and MCP request inspector"
+      ],
+      "studioDownloadCta": "Get Release Package on GitHub",
+      "studioPackageNote": "Archive assets: fl-mcp-studio-0.3.0-win-x64.zip, macos-arm64.tar.gz, linux-x64.tar.gz",
+      "cliTitle": "Plugin, .mcpb & Terminal Setup",
+      "cliBadge": "~4k Tool Schema Budget",
+      "cliDesc": "Copy the exact command or JSON config for your MCP host, or run fl-mcp selftest --deep to verify loopback ports.",
+      "copyButton": "Copy",
+      "copiedButton": "Copied"
     },
     "features": {
-      "title": "Autonomous Audio Engineering and Production",
-      "subtitle": "Direct loopMIDI and MIDI CC protocol bridge connecting Claude Desktop to FL Studio 2025 with zero cloud lock-in for audio.",
-      "genreEngine": {
-        "title": "12-Genre Production Engine",
-        "description": "Generate complete arrangements with drums, basslines, chord progressions, melodies, and transitions in authentic musical scales.",
+      "title": "Engineering Over Playback Toy Tools",
+      "subtitle": "Flat JSON schemas without $ref, anyOf or title fields prevent schema bloat even on compact and local models.",
+      "tools": {
+        "title": "14 Flat-Schema Tools + Opt-in fl_desk",
+        "description": "Designed for predictable tool selection within a ~4k token budget across frontier and local weights.",
+        "schemaNote": "Protocols: stdio · Streamable-HTTP (http://127.0.0.1:8765/mcp) · SSE (/sse)",
         "items": [
-          "House and Tech House (Groove swing, four on the floor kick, offbeat hi-hats)",
-          "Techno and Peak-Time (Rumble bass, hypnotic synth arpeggios, ride drive)",
-          "Trap and Drill (808 glide pitch slides, rolling triplets, snare fills)",
-          "Lo-Fi Hip Hop (Vinyl warmth, swung beats, jazzy 7th and 9th chord voicings)",
-          "Drum and Bass (Amen breaks, Reese bass, syncopated ghost snares at 174 BPM)",
-          "Oriental Trap and Hicaz (Phrygian dominant microtonal scales, authentic darbuka rhythms)",
-          "Synthwave and Darksynth (Analog saw arpeggios, gated reverb snares, brass leads)",
-          "Ambient and Cinematic (Drone textures, polyrhythmic pad layers, tension swells)",
-          "Cyberpunk and Midtempo (Industrial distortion, aggressive bass growls, sidechain pumping)",
-          "UK Garage and 2-Step (Shuffled percussion, vocal chops, sub-bass bounce)",
-          "Afrobeats (Log drum syncopation, rimshot grooves, melodic brass stabs)",
-          "Neo-Soul and R&B (Complex extensions, laid-back pocket groove, rhodes chords)"
+          {
+            "name": "fl_param",
+            "role": "Parameter Solver & I/O",
+            "detail": "Finds stock and third-party VST parameters by name, writes real physical units (real=\"-18 dB\", settings=\"Threshold=-18 dB, Ratio=4:1\"), reads FX slots, routing and sidechain I/O via view=\"io\", and loads presets."
+          },
+          {
+            "name": "fl_produce",
+            "role": "12-Genre Seeded Arranger",
+            "detail": "Builds seeded multi-track arrangements across 12 genres directly into Channel Rack, multi-track MIDI, or binary .flp templates populated with .fst presets and .sf2 SoundFonts."
+          },
+          {
+            "name": "fl_audio & fl_mix",
+            "role": "BS.1770 Metering & Hidden Master",
+            "detail": "Measures LUFS-I, True Peak (dBTP), LRA, Crest Factor, stereo correlation and 7-band spectrum per ITU-R BS.1770-4 / EBU 3342. Balances role gain staging and runs parallel hidden desktop FL64.exe /R renders for iterative target-LUFS mastering."
+          },
+          {
+            "name": "fl_notes",
+            "role": "Piano Roll & Preview Queue",
+            "detail": "Queues named chord progressions (Am7@0:4, Fmaj7@4:4) to Piano Roll with real-time preview=true monitoring and tolerant float (0.0 to 1.0) or MIDI velocity inputs."
+          },
+          {
+            "name": "fl_library",
+            "role": "Acoustic Kit & Sample Ranker",
+            "detail": "Indexes local sample folders by brightness, decay tail and sub-bass weight so drum kit picks match genre spectral targets before inserting into channels."
+          },
+          {
+            "name": "fl_desk (opt-in)",
+            "role": "Stealth / Polite UI Automation",
+            "detail": "Explicitly enabled layer for workflows blocked by Scripting API. Uses PrintWindow + PostMessageW in stealth mode without stealing focus, or waits for idle input in polite mode, guarded by a (0,0) corner mouse failsafe."
+          }
+        ]
+      },
+      "genreEngine": {
+        "title": "12-Genre Seeded Production Engine",
+        "description": "Deterministic seed control writes reproducible drum grooves, basslines, voicings and .flp/.fst/.sf2 templates.",
+        "items": [
+          "House (124-128 BPM, four-on-the-floor kick, offbeat open hats)",
+          "Techno (130-136 BPM, sub rumble low-end, hypnotic synth sequences)",
+          "Trance (136-140 BPM, rolling offbeat bass, euphoric supersaw progressions)",
+          "DnB (172-176 BPM, Reese bassline crossover, syncopated breakbeat ghosts)",
+          "Dubstep (140-150 BPM half-time, weighted sub bass, aggressive snare transients)",
+          "Trap (138-146 BPM, pitch-gliding 808s, 32nd hi-hat rolls)",
+          "Oriental Trap / Hicaz (135-142 BPM, Hicaz scale voicings, darbuka/bendir pocket)",
+          "Boom Bap (86-94 BPM, swung unquantized drums, chopped jazz seventh voicings)",
+          "Lo-Fi (76-88 BPM, mellow Rhodes progressions, softened top-end air band)",
+          "Pop (100-124 BPM, tight chorus hooks, vocal-pocket midrange carving)",
+          "Synthwave (102-116 BPM, gated snare reverb, analog octave saw bass)",
+          "Reggaeton (88-96 BPM, classic dembow syncopation, tight mono sub weight)"
         ]
       },
       "pluginSolver": {
-        "title": "Plugin Parameter Solver in Real dB and Hz",
-        "description": "No more guesswork with abstract 0 to 1 faders. Claude computes and sets exact musical values for stock and third-party VSTs.",
+        "title": "Plugin Parameter Solver in Real Units",
+        "description": "Resolves abstract 0.0 to 1.0 DAW floats into decibels, hertz, ratios and time constants by parameter label.",
         "items": [
-          "FabFilter Pro-Q 3 and Pro-C 2 (Exact Q values, high-pass cutoff frequencies, threshold in dB)",
-          "Xfer Serum and Vital (Wavetable selection, filter resonance, unison detune spread)",
-          "Image-Line FLEX and Sytrus (Preset browsing, macro articulation, FM modulation)",
-          "iZotope Ozone 11 (Multiband dynamics, stereo width spread, maximizer ceiling)",
-          "Fruity Parametric EQ 2 and Fruity Limiter (Surgical notches, knee compression, attack/release in ms)"
+          "FabFilter Pro-Q 3 & Pro-C 2 (Exact frequency in Hz, Q factor, threshold=-18 dB and ratio=4:1)",
+          "Xfer Serum & Vital (Wavetable index, filter cutoff in Hz, unison detune amount)",
+          "Image-Line FLEX & Sytrus (Preset loading, macro articulation, modulation depth)",
+          "iZotope Ozone 11 (Maximizer threshold ceiling in dBTP and dynamic band targets)",
+          "Fruity Parametric EQ 2 & Limiter (High-pass cuts, send/insert levels, attack and release ms)"
         ]
       },
       "audioAnalysis": {
-        "title": "Closed-Loop Audio Analysis and Metering",
-        "description": "Objective broadcast-standard loudness measurements and frequency spectrum monitoring without leaving the conversation.",
+        "title": "Closed-Loop Audio Analysis & Gain Staging",
+        "description": "Every mix adjustment can be verified quantitatively with ITU-R BS.1770-4 / EBU 3342 DSP before export.",
         "items": [
-          "ITU-R BS.1770-4 Integrated LUFS (-14 LUFS streaming target, -9 LUFS club target)",
-          "True Peak Max Metering (Intersample peak detection preventing DAC clipping)",
-          "Spectral Balance Audit (Sub-bass, low-mid warmth, presence, and air band evaluation)",
-          "Dynamic Range and Crest Factor (Punch vs compression density ratio calculation)"
+          "Integrated Loudness & LRA (ITU-R BS.1770-4 LUFS-I and EBU 3342 loudness range)",
+          "True Peak & Crest Factor (4x oversampled dBTP ceiling check and transient punch metric)",
+          "7-Band Spectral Balance & Stereo Correlation (Sub, warmth, low-mid, midrange, presence, brilliance, air)",
+          "Hidden Parallel Render Loop (FL64.exe /R executes in an isolated desktop for iterative LUFS mastering)"
         ]
       },
       "flIntegration": {
-        "title": "FL Studio 2025 Deep Host Bridge",
-        "description": "Hardware-accelerated MIDI CC and Python API 40 integration with bidirectional fader reflection.",
+        "title": "FL Studio 2025 Bridge & Client Ecosystem",
+        "description": "Connect once via loopMIDI, IAC Driver or Wine path resolver and monitor every MIDI message live.",
         "items": [
-          "loopMIDI Virtual Port Communication (Instant bi-directional feedback under 5ms)",
-          "Piano Roll Script Bridge (Procedural note generation, humanization, strumming)",
-          "Mixer Automation (Gain staging, stereo separation, effect send routing)",
-          "Browser Walking (Plugin catalog navigation and channel rack instantiations)"
+          "Claude Code Native Plugin (/plugin marketplace add Rtur2003/FL-MCP with 5 skills and mix-engineer subagent)",
+          "Claude Desktop (.mcpb extension) plus one-click sync for Cursor, VS Code, Windsurf, Gemini CLI, Antigravity and Codex CLI",
+          "Dual MIDI Loopback & Scripting API 40 (Transport, Mixer insert faders, routing, FX slot view=\"io\" inspection)",
+          "Streamable-HTTP & SSE Daemon (Persistent local server on 127.0.0.1:8765 for shared IDE workflows)"
         ]
       }
     },
+    "transparency": {
+      "title": "Architecture Transparency",
+      "subtitle": "Where FL Studio's Scripting API stops, and the 5-layer resolution ladder FL-MCP uses without breaking stability or focus.",
+      "intro": "Image-Line's official Python Scripting API intentionally blocks offline bounce rendering, direct binary .flp/.fst inspection and certain third-party modal dialogs. Rather than claiming magic capabilities, FL-MCP separates each task onto the lightest reliable engineering layer.",
+      "ladderTitle": "5-Layer Resolution Ladder",
+      "layers": [
+        {
+          "layer": "1. API (FL Scripting API 40)",
+          "scope": "Transport, BPM, Mixer inserts, FX routing view=\"io\", VST parameters",
+          "how": "Direct bidirectional MIDI CC + SysEx bridge over loopMIDI (Windows), IAC Driver (macOS) or Wine (Linux) with deterministic fl_param unit conversion.",
+          "boundary": "Primary fast path. Cannot bounce audio files offline or insert arbitrary score blocks directly into arbitrary Piano Roll positions."
+        },
+        {
+          "layer": "2. UI Queue & Preview (fl_notes)",
+          "scope": "Named chords (Am7@0:4, Fmaj7@4:4), Piano Roll queueing, preview=true",
+          "how": "Bridges FL Piano Roll script helpers and live transport monitoring with tolerant float (0-1) or MIDI integer velocity.",
+          "boundary": "Requires controller port binding once via 1-click installer in FL-MCP Studio or script folder copy."
+        },
+        {
+          "layer": "3. File Parser & Builder (.flp / .fst / .sf2)",
+          "scope": "Full project assembly (fl_produce) and acoustic sample library ranking (fl_library)",
+          "how": "Reads and writes binary .flp structures, injects .fst presets and .sf2 SoundFonts, and analyzes local sample folders by brightness, decay and sub weight.",
+          "boundary": "Produces clean standalone or template-overlay .flp project files on disk without interrupting active playback."
+        },
+        {
+          "layer": "4. Hidden Render (FL64.exe /R)",
+          "scope": "Closed-loop BS.1770-4 / EBU 3342 mastering and objective mix verification",
+          "how": "Runs parallel FL64.exe /R CLI bounces inside an isolated hidden Windows desktop so FL Studio never steals keyboard or mouse focus during iterative limiter gain convergence.",
+          "boundary": "Parallel hidden desktop bounce requires Windows FL64.exe; macOS and Linux still run full live API, .flp file assembly and fl_audio WAV measurement."
+        },
+        {
+          "layer": "5. Opt-in Desktop Automation (fl_desk)",
+          "scope": "Unscriptable VST buttons, export dialogs and legacy browser menus",
+          "how": "Off by default. In stealth mode captures via PrintWindow and dispatches PostMessageW without moving your cursor; polite mode waits for user idle and restores focus.",
+          "boundary": "Explicit opt-in only, protected at all times by moving the mouse to (0,0) top-left screen corner as an immediate fail-safe stop."
+        }
+      ]
+    },
+    "commerceNotice": {
+      "title": "Licensing & Privacy Model",
+      "subtitle": "Open-source builds are completely unmetered. Commercial packages and pricing tables go live only alongside verified checkout links.",
+      "openSourceTitle": "MIT Open-Source Build (v0.3.0): Unmetered",
+      "openSourceBody": "Building or running directly from Rtur2003/FL-MCP on GitHub is MIT-licensed and unmetered forever: zero credit gates, zero license server checks and full local privacy.",
+      "localBoundaryTitle": "What Always Stays Free & On Your Machine",
+      "localBoundaryBody": "Even in future commercial editions, DAW connection, transport, mixer faders, fl_param VST unit solving, fl_audio BS.1770 metering, fl_library scanning and fl_desk automation stay free and offline forever. Project files (.flp), audio stems and MIDI notes never leave your machine; at most a license key and generative operation name reach the persistent licence validation service (never ephemeral sleeping containers).",
+      "commercialNote": "Commercial plan pricing will publish here only once live payment checkout links are active. Right now you can explore the open-source release or open the developer sandbox vault."
+    },
     "pricing": {
       "title": "Transparent Production Plans",
-      "subtitle": "Basic transport, mixer fader moves, and local parameter adjustments cost zero credits and run offline forever. Deliverable generations consume credits.",
+      "subtitle": "Connection, transport, mixer faders, plugin parameters and audio analysis cost zero credits and run locally forever. Only generative production commands consume credits.",
       "monthly": "Monthly Subscription",
       "topup": "Non-Expiring Top-Up",
       "free": {
         "name": "Community Tier",
         "price": "$0",
         "period": "Forever Free",
-        "description": "Local control and audio analysis. Run basic DAW automation on your machine without an account.",
+        "description": "Local control and audio analysis. Run full DAW parameter control and BS.1770 metering without an account.",
         "features": [
-          "Full manual DAW control (Faders, Pan, Transport)",
-          "Stock parameter adjustment in real units",
-          "Local BS.1770 LUFS loudness metering",
-          "1 local device connection",
-          "Community Discord and GitHub support",
-          "0 credits included (Deliverable generation requires pack or plan)"
+          "100% free local control (Transport, Mixer, fl_param, fl_notes, fl_audio, fl_library)",
+          "14 flat-schema tools plus opt-in fl_desk",
+          "FL-MCP Studio desktop app for Win, macOS and Linux",
+          "Community GitHub support"
         ],
-        "cta": "Download Free Version"
+        "cta": "Open Vault"
       },
       "pro": {
         "name": "Pro Producer",
         "price": "$19",
         "period": "/ month",
-        "badge": "Most Popular",
-        "description": "For active producers and beatmakers producing multiple complete song projects each month.",
+        "badge": "Active Producers",
+        "description": "For active beatmakers running cloud-metered arrangement and closed-loop mix balancing workflows.",
         "features": [
-          "300 monthly generation credits (About 35 full multi-track projects)",
-          "2 simultaneous device seats (Desktop and Laptop)",
-          "Full 12-Genre multi-track beat generation engine",
-          "Plugin parameter solver for FabFilter, Serum, FLEX, Ozone",
-          "Automated mixer balancing and mastering limiter control",
-          "Direct email and GitHub priority support"
+          "300 monthly production credits (fl_produce plan/flp, fl_mix balance)",
+          "2 simultaneous device seats",
+          "All local DAW control, parameter solving and metering remain unmetered",
+          "Priority issue and plugin profile requests"
         ],
         "cta": "Get Pro Producer"
       },
@@ -1629,14 +1745,12 @@
         "name": "Studio Edition",
         "price": "$49",
         "period": "/ month",
-        "description": "For commercial studios, mixing engineers, and power users demanding high volume and team seats.",
+        "description": "For commercial studios and mixing rooms operating multiple workstations.",
         "features": [
-          "1200 monthly generation credits (About 150 full song projects)",
-          "5 simultaneous device seats for team workstations",
-          "All Pro features plus full stems and MIDI export automation",
-          "Batch track processing and playlist pattern layout solver",
-          "Custom genre scale definitions and macro scripting",
-          "Direct engineering support with custom plugin profiles"
+          "1200 monthly production credits",
+          "5 simultaneous device seats",
+          "All Pro capabilities plus team seat management",
+          "Direct engineering support"
         ],
         "cta": "Get Studio Edition"
       },
@@ -1644,50 +1758,54 @@
         "name": "100 Credit Top-Up Pack",
         "price": "$10",
         "period": "One-Time",
-        "description": "Need extra juice for a deadline? Add 100 credits that never expire and stack on any plan.",
+        "description": "Non-expiring extra credits that stack with any subscription.",
         "cta": "Add 100 Credits"
       }
     },
     "faq": {
       "title": "Frequently Asked Questions",
-      "subtitle": "Everything you need to know about setting up and running FL-MCP.",
+      "subtitle": "Engineering facts about live testing, platform compatibility, privacy and Scripting API boundaries.",
       "items": [
         {
-          "q": "How does FL-MCP communicate with FL Studio on my PC?",
-          "a": "FL-MCP uses Tobias Erichsen's loopMIDI virtual loopback MIDI driver along with our custom MIDI Controller script (API 40) loaded into FL Studio 2025. When Claude calls an MCP tool, FL-MCP sends standard high-resolution MIDI CC and pitch messages that FL Studio receives instantaneously."
+          "q": "Has FL-MCP been tested against a real FL Studio installation or only mocks?",
+          "a": "Both. Live integration was verified on Windows 11 against real FL Studio 2025 (Producer Edition v25.2.5 [build 5319], Scripting API 40) where all 17 deep checks in fl-mcp selftest --deep pass. In addition, an 894-test offline CI suite covers official fl-studio-api-stubs, loopback MIDI, .flp binary parsing/writing, BS.1770-4 reference audio, HTTP/SSE transport and the desktop app."
         },
         {
-          "q": "Does my audio or project get uploaded to the cloud?",
-          "a": "Never. All audio rendering, loudness measurement (ITU-R BS.1770-4 LUFS), and MIDI playback take place 100% locally on your machine. The CrownCode backend is only contacted to authenticate your license key and verify credit reservations for generation tools."
+          "q": "Do I need Python or terminal experience to use FL-MCP?",
+          "a": "No. Starting in v0.3.0, FL-MCP Studio ships as self-contained desktop archives for Windows, macOS and Linux with 1-click FL Studio controller script installation, 1-click AI client registration, live Transport/Mixer/Step Sequencer controls and MIDI TX/RX inspection."
         },
         {
-          "q": "What happens if my internet connection drops during a session?",
-          "a": "Basic transport controls, mixer adjustments, plugin parameter tweaks, and audio analysis cost zero credits and operate completely offline. Only high-level project generative actions (such as composing a full multi-track song) require an initial credit hold."
+          "q": "Why does FL-MCP emphasize 14 flat-schema tools around ~4k tokens?",
+          "a": "Many MCP servers emit deeply nested JSON schemas with $ref, anyOf and title metadata that bloat prompt context or break tool calling on smaller and local LLMs. Keeping 14 flat-schema tools under ~4k tokens leaves room for musical context and improves parameter accuracy."
         },
         {
-          "q": "Which versions of FL Studio are supported?",
-          "a": "FL-MCP is designed and tested for FL Studio 2024 and FL Studio 2025 on Windows 10, Windows 11, and macOS. All 17 self-test suites pass against modern FL Studio Python controller scripts."
+          "q": "Does hidden rendering or fl_desk steal my mouse focus while working?",
+          "a": "Hidden mastering renders use parallel FL64.exe /R execution inside a separate hidden Windows desktop so focus stays with your foreground window. Optional fl_desk defaults to off; when enabled in stealth mode it captures windows with PrintWindow and sends inputs via PostMessageW without stealing focus, plus a (0,0) top-left screen corner failsafe stops automation instantly."
         },
         {
-          "q": "Can I move my license to a new computer?",
-          "a": "Yes. Each plan comes with dedicated seats (2 for Pro, 5 for Studio). You can revoke any machine from your CrownCode web dashboard with a single click, or pass the replace parameter directly from the client."
+          "q": "What platforms and AI clients are supported in v0.3.0?",
+          "a": "Platforms: Windows x86_64 and ARM64 via loopMIDI, macOS Apple Silicon arm64 and Intel x86_64 via IAC Driver, and Linux x86_64 and ARM64 with Wine path resolution. Clients: Claude Desktop (.mcpb), Claude Code plugin (/plugin marketplace add Rtur2003/FL-MCP), Cursor, VS Code, Windsurf, Gemini CLI, Antigravity and Codex CLI over stdio, Streamable-HTTP (:8765/mcp) or SSE (/sse)."
+        },
+        {
+          "q": "Are my audio files, stems or .flp projects uploaded anywhere?",
+          "a": "Never. Audio rendering, ITU-R BS.1770-4 metering, .flp generation, MIDI loopback and sample analysis execute 100% locally. Open-source builds from GitHub are completely unmetered and make zero backend calls."
         }
       ]
     },
     "dashboard": {
       "title": "FL-MCP User Dashboard",
-      "subtitle": "Manage your license key, active device seats, and credit balances.",
+      "subtitle": "Manage your license key, active device seats and credit balance for commercial cloud builds.",
       "authTitle": "Access Your License Vault",
-      "authDescription": "Enter your license key or email to access your machine activations and credits, or claim a free trial.",
+      "authDescription": "Sign in with Google or enter a license key to inspect machine activations and cloud credits.",
       "keyPlaceholder": "FLMCP-XXXXX-XXXXX-XXXXX-XXXXX",
       "emailPlaceholder": "producer@example.com",
       "loadButton": "Access Vault",
-      "trialPrompt": "New to FL-MCP? Claim instant access with a 30-day trial and 15 free credits.",
-      "claimTrialButton": "Claim 30-Day Free Trial",
+      "trialPrompt": "Signed in. Activate a 30-day evaluation license with 15 test credits (open-source repo builds remain completely unmetered).",
+      "claimTrialButton": "Claim 30-Day Evaluation (15 Credits)",
       "vaultTitle": "License Vault",
-      "licenseKeyLabel": "Your License Key",
+      "licenseKeyLabel": "License Key",
       "copyKey": "Copy Key",
-      "copied": "Copied to Clipboard",
+      "copied": "Copied",
       "showKey": "Reveal",
       "hideKey": "Hide",
       "planLabel": "Current Plan",
@@ -1699,27 +1817,27 @@
       "costCompose": "Full Song Composition (5 credits)",
       "costFlp": "FLP Project Generation (3 credits)",
       "costBalance": "Mixer Auto-Balance (2 credits)",
-      "costTransport": "Fader Moves & Audio Metering (Free / 0 credits)",
+      "costTransport": "Transport, Mixer Faders, fl_param, fl_audio & fl_library (Free / 0 credits)",
       "devicesTitle": "Active Device Seats",
       "devicesCount": "Registered Seats",
       "devicesLimit": "Seats Allowed",
-      "noDevices": "No devices activated yet. Connect your first machine using Claude Desktop or Claude Code.",
+      "noDevices": "No devices activated yet. Register a seat from FL-MCP Studio or Claude Code.",
       "deviceName": "Machine Name",
       "deviceLastSeen": "Last Seen",
       "revokeSeat": "Revoke Seat",
       "setupTitle": "Quick Client Setup Guide",
-      "setupSubtitle": "Connect FL-MCP to your AI development environment in under two minutes.",
+      "setupSubtitle": "Connect FL-MCP to Claude Code, Claude Desktop, Cursor or VS Code over stdio or Streamable-HTTP (:8765/mcp).",
       "tabDesktop": "Claude Desktop",
       "tabCli": "Claude Code",
       "tabCursor": "Cursor",
       "tabVscode": "VS Code",
-      "downloadBundle": "Download Claude Desktop (.mcpb)",
+      "downloadBundle": "Download FL-MCP Studio & .mcpb (GitHub Releases)",
       "downloadScript": "Download FL Studio Controller Script",
       "downloadLoopMidi": "Download loopMIDI (Windows)",
-      "step1": "1. Install loopMIDI and create ports FL_MCP_IN and FL_MCP_OUT.",
-      "step2": "2. Copy the controller script to your FL Studio Settings/Hardware folder.",
-      "step3": "3. Add the MCP configuration below to your AI client.",
-      "step4": "4. Run activate tool with your license key in your first chat turn."
+      "step1": "1. Windows: install loopMIDI and create ports. macOS: enable IAC Driver. Linux: verify Wine paths or use FL-MCP Studio.",
+      "step2": "2. Run FL-MCP Studio for 1-click controller script and AI client setup, or add Rtur2003/FL-MCP via /plugin marketplace add.",
+      "step3": "3. Optionally run fl-mcp selftest --deep to verify all 17 live Scripting API checks against FL Studio 2025.",
+      "step4": "4. Open-source builds run unmetered locally; commercial builds authenticate once with your FLMCP key."
     }
   }
 }
