@@ -432,8 +432,8 @@ const FlMcpDashboardPage: NextPage = () => {
     {
       mcpServers: {
         'fl-mcp': {
-          command: 'python',
-          args: ['-m', 'fl_mcp.server'],
+          command: 'fl-mcp',
+          args: [],
           env: {
             FL_MCP_LICENSE: license?.key || 'FLMCP-YOUR-KEY-HERE',
           },
@@ -444,17 +444,21 @@ const FlMcpDashboardPage: NextPage = () => {
     2
   )
 
-  const claudeCodeCommand = `claude mcp add fl-mcp python -m fl_mcp.server --env FL_MCP_LICENSE=${license?.key || 'FLMCP-YOUR-KEY-HERE'}`
+  const claudeCodeCommand = `/plugin marketplace add Rtur2003/FL-MCP\n# Or add via stdio with license env:\nclaude mcp add fl-mcp fl-mcp --env FL_MCP_LICENSE=${license?.key || 'FLMCP-YOUR-KEY-HERE'}`
   const cursorConfig = JSON.stringify(
-    { mcpServers: { 'fl-mcp': { command: 'python', args: ['-m', 'fl_mcp.server'] } } },
+    { mcpServers: { 'fl-mcp': { url: 'http://127.0.0.1:8765/mcp' } } },
     null,
     2
   )
   const vscodeConfig = JSON.stringify(
-    { 'github.copilot.chat.mcpServers': { 'fl-mcp': { command: 'python', args: ['-m', 'fl_mcp.server'] } } },
+    { 'github.copilot.chat.mcpServers': { 'fl-mcp': { command: 'fl-mcp', args: [] } } },
     null,
     2
   )
+
+  const proCheckout = checkoutUrl('pro', session?.user?.email || account?.email)
+  const studioCheckout = checkoutUrl('studio', session?.user?.email || account?.email)
+  const pack100Checkout = checkoutUrl('pack100', session?.user?.email || account?.email)
 
   const stripStepPrefix = (s: string) => s.replace(/^\d+\.\s*/, '')
 
