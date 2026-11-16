@@ -85,12 +85,12 @@ export const AppShell: React.FC<{ children: ReactNode }> = ({ children }) => {
       </a>
       <div className="app-container">
         <Header />
-        <RouteBadge />
         <main id="main-content" className="main-content" tabIndex={-1}>
           <div key={routeKey} className={navigated ? styles.pageIn : undefined}>
             {children}
           </div>
         </main>
+        <RouteBadge />
         {bottomPlacement && <AdSlot placement={bottomPlacement} layout="leaderboard" />}
         <Footer />
       </div>
