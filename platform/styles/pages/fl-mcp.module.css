@@ -1,17 +1,204 @@
-/* FL-MCP: DAW telemetry, studio gallery, interactive genre selector,
-   plugin parameter table, pricing cards, and license vault.
+/* FL-MCP: v0.3.0 verification metrics, dual installation cards, studio gallery,
+   14 flat-schema tools, 5-layer architecture ladder, 12-genre selector,
+   plugin parameter table, licensing notice, and dashboard vault.
    Frames, primary buttons, fields, and section grids come from world-page.module.css. */
+
+/* ── Verification & Runtime Facts ─────────────────────────────────── */
+
+.factGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 14px;
+  margin: 0;
+}
+
+.factCard {
+  min-width: 0;
+  padding: 16px 18px;
+  background: color-mix(in srgb, #050407 72%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+
+.factLabel {
+  display: block;
+  font-family: var(--font-family-mono);
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.factValue {
+  display: block;
+  font-size: 1.08rem;
+  color: var(--ink);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.factDetail {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.48;
+  color: var(--soft);
+}
+
+/* ── Dual Installation & Quickstart ───────────────────────────────── */
+
+.installGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 18px;
+  margin: 0;
+}
+
+.installCard {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 20px;
+  background: color-mix(in srgb, #07060a 84%, transparent);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+}
+
+.installHeader {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px 12px;
+  margin-bottom: 10px;
+}
+
+.installTitle {
+  margin: 0;
+  font-size: 1.12rem;
+  color: var(--ink);
+}
+
+.installBadge {
+  font-family: var(--font-family-mono);
+  font-size: 0.76rem;
+  color: var(--accent);
+}
+
+.installDesc {
+  margin: 0 0 16px;
+  font-size: 0.92rem;
+  line-height: 1.52;
+  color: var(--body);
+}
+
+.bulletList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  flex-grow: 1;
+}
+
+.bulletList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 0;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+  line-height: 1.48;
+  color: var(--body);
+}
+
+.bulletList li:first-child {
+  border-top: 0;
+}
+
+.bulletList li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.packageNote {
+  margin: 12px 0 0;
+  font-family: var(--font-family-mono);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--soft);
+  overflow-wrap: anywhere;
+}
+
+.codeWrap {
+  position: relative;
+  min-width: 0;
+  margin: 8px 0 14px;
+}
+
+.codeToolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: color-mix(in srgb, #050407 90%, transparent);
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  border-radius: 2px 2px 0 0;
+}
+
+.codeLabel {
+  font-family: var(--font-family-mono);
+  font-size: 0.76rem;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.copyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font: inherit;
+  font-family: var(--font-family-mono);
+  font-size: 0.76rem;
+  color: var(--ink);
+  background: color-mix(in srgb, #0b0a0f 85%, transparent);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.copyBtn:hover {
+  color: var(--on-accent);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.codeBlockCompact {
+  margin: 0;
+  padding: 14px 16px;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: #040306;
+  border: 1px solid var(--line);
+  border-radius: 0 0 2px 2px;
+  overflow-x: auto;
+  font-family: var(--font-family-mono);
+  font-size: 0.8rem;
+  line-height: 1.58;
+  color: var(--ink);
+}
 
 /* ── Studio Visual Gallery ────────────────────────────────────────── */
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 24px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .shot {
+  min-width: 0;
   margin: 0;
 }
 
@@ -35,8 +222,9 @@
 /* ── Interactive DAW Console & Telemetry ──────────────────────────── */
 
 .dawConsole {
+  min-width: 0;
   margin: 0;
-  padding: 24px;
+  padding: 20px;
   background: color-mix(in srgb, #08070b 88%, var(--accent) 12%);
   border: 1px solid var(--line-strong);
   border-radius: 2px;
@@ -47,9 +235,9 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding-bottom: 16px;
-  margin-bottom: 20px;
+  gap: 10px 14px;
+  padding-bottom: 14px;
+  margin-bottom: 18px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -58,7 +246,7 @@
   align-items: center;
   gap: 10px;
   font-family: var(--font-family-mono);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   color: var(--accent);
 }
 
@@ -68,22 +256,24 @@
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 8px var(--accent);
+  flex-shrink: 0;
 }
 
 .dawLatency {
   font-family: var(--font-family-mono);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--muted);
 }
 
 .meterRow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 14px;
-  margin-bottom: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
 }
 
 .meterBox {
+  min-width: 0;
   padding: 14px;
   background: color-mix(in srgb, #040306 76%, transparent);
   border: 1px solid var(--line);
@@ -93,7 +283,7 @@
 .meterLabel {
   display: block;
   font-family: var(--font-family-mono);
-  font-size: 0.76rem;
+  font-size: 0.75rem;
   color: var(--muted);
   margin-bottom: 6px;
 }
@@ -101,7 +291,7 @@
 .meterValue {
   display: block;
   font-family: var(--font-family-mono);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   color: var(--ink);
   font-weight: 500;
 }
@@ -123,7 +313,8 @@
 }
 
 .channelRack {
-  padding: 16px 18px;
+  min-width: 0;
+  padding: 14px 16px;
   background: color-mix(in srgb, #040306 82%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
@@ -132,20 +323,21 @@
 .channelRackHeader {
   display: flex;
   justify-content: space-between;
+  gap: 8px;
   margin-bottom: 10px;
   font-family: var(--font-family-mono);
-  font-size: 0.76rem;
+  font-size: 0.75rem;
   color: var(--muted);
 }
 
 .channelRow {
   display: grid;
-  grid-template-columns: minmax(140px, 210px) minmax(80px, 1fr) 88px;
-  gap: 14px;
+  grid-template-columns: minmax(120px, 210px) minmax(60px, 1fr) 84px;
+  gap: 12px;
   align-items: center;
   padding: 8px 0;
   border-top: 1px solid var(--line);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 .channelRow:first-of-type {
@@ -154,26 +346,130 @@
 
 .channelName {
   color: var(--ink);
+  min-width: 0;
 }
 
 .channelLevel {
   text-align: right;
   font-family: var(--font-family-mono);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--accent);
+}
+
+/* ── 14 Flat-Schema Tools & Architecture Ladder ───────────────────── */
+
+.toolGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 14px;
+  margin: 0;
+}
+
+.toolCard {
+  min-width: 0;
+  padding: 18px;
+  background: color-mix(in srgb, #050407 68%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+
+.toolHeader {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px 10px;
+  margin-bottom: 8px;
+}
+
+.toolName {
+  font-family: var(--font-family-mono);
+  font-size: 0.96rem;
+  color: var(--accent);
+}
+
+.toolRole {
+  font-family: var(--font-family-mono);
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
+.toolDetail {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.54;
+  color: var(--body);
+}
+
+.transparencyBox {
+  min-width: 0;
+  padding: 22px 20px;
+  background: color-mix(in srgb, #060509 86%, transparent);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+}
+
+.ladder {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0 0;
+}
+
+.ladderStep {
+  min-width: 0;
+  padding: 16px 18px;
+  background: color-mix(in srgb, #040306 76%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+
+.ladderHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px 16px;
+  margin-bottom: 8px;
+}
+
+.ladderTitle {
+  margin: 0;
+  font-family: var(--font-family-mono);
+  font-size: 0.92rem;
+  color: var(--accent);
+}
+
+.ladderScope {
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+.ladderHow {
+  margin: 0 0 6px;
+  font-size: 0.92rem;
+  line-height: 1.52;
+  color: var(--ink);
+}
+
+.ladderBoundary {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.48;
+  color: var(--soft);
 }
 
 /* ── Interactive Genre Grid ───────────────────────────────────────── */
 
 .genreGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
   gap: 12px;
   margin: 0;
 }
 
 .genreCard {
-  padding: 16px 18px;
+  min-width: 0;
+  padding: 15px 16px;
   background: color-mix(in srgb, #050407 65%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
@@ -202,27 +498,29 @@
 }
 
 .genreTitle {
-  font-size: 1.02rem;
+  font-size: 1rem;
   color: var(--ink);
   margin: 0;
 }
 
 .genreBpm {
   font-family: var(--font-family-mono);
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   color: var(--accent);
+  flex-shrink: 0;
 }
 
 .genreDesc {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   line-height: 1.48;
   color: var(--muted);
   margin: 0;
 }
 
 .genreInspector {
-  margin-top: 20px;
-  padding: 20px 22px;
+  min-width: 0;
+  margin-top: 18px;
+  padding: 18px 20px;
   background: color-mix(in srgb, #050407 78%, var(--accent) 10%);
   border: 1px solid var(--line-strong);
   border-radius: 2px;
@@ -231,26 +529,26 @@
 .genreInspectorHeader {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 24px;
+  gap: 8px 20px;
   align-items: baseline;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .genreInspectorTitle {
-  font-size: 1.08rem;
+  font-size: 1.06rem;
   color: var(--accent);
 }
 
 .genreInspectorMeta {
   font-family: var(--font-family-mono);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   color: var(--muted);
 }
 
 .genreInspectorBody {
   margin: 0;
-  font-size: 0.96rem;
-  line-height: 1.55;
+  font-size: 0.94rem;
+  line-height: 1.52;
   color: var(--body);
 }
 
@@ -263,15 +561,16 @@
 }
 
 .pluginRow {
+  min-width: 0;
   display: grid;
-  grid-template-columns: minmax(150px, 1fr) minmax(150px, 1.1fr) minmax(180px, 1.3fr);
-  gap: 14px;
+  grid-template-columns: minmax(140px, 1fr) minmax(140px, 1.1fr) minmax(160px, 1.3fr);
+  gap: 12px;
   padding: 13px 16px;
   align-items: center;
   background: color-mix(in srgb, #050407 58%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
 }
 
 .pluginRowHeader {
@@ -283,29 +582,60 @@
 
 .pluginValueOld {
   font-family: var(--font-family-mono);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   color: var(--soft);
+  overflow-wrap: anywhere;
 }
 
 .pluginValueNew {
   font-family: var(--font-family-mono);
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   color: var(--accent);
+  overflow-wrap: anywhere;
 }
 
-/* ── Pricing Matrix ───────────────────────────────────────────────── */
+/* ── Commerce Notice & Pricing Matrix ─────────────────────────────── */
+
+.commerceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 16px;
+  margin: 0;
+}
+
+.commerceCard {
+  min-width: 0;
+  padding: 20px;
+  background: color-mix(in srgb, #050407 72%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+
+.commerceCard h3 {
+  margin: 0 0 8px;
+  font-size: 1.06rem;
+  color: var(--ink);
+}
+
+.commerceCard p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.56;
+  color: var(--body);
+}
 
 .pricingGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 18px;
   margin: 0;
 }
 
 .pricingCard {
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  padding: 26px 24px;
+  padding: 24px 20px;
   background: color-mix(in srgb, #07060a 84%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
@@ -330,7 +660,7 @@
 }
 
 .tierName {
-  font-size: 1.22rem;
+  font-size: 1.18rem;
   color: var(--ink);
   margin: 0 0 8px;
 }
@@ -343,7 +673,7 @@
 }
 
 .tierPrice {
-  font-size: 2.15rem;
+  font-size: 2.05rem;
   font-weight: 400;
   color: var(--ink);
   font-family: var(--font-family-mono);
@@ -355,7 +685,7 @@
 }
 
 .tierDesc {
-  font-size: 0.94rem;
+  font-size: 0.92rem;
   line-height: 1.52;
   color: var(--body);
   margin: 0 0 18px;
@@ -370,7 +700,7 @@
 
 .tierFeatures li {
   padding: 8px 0;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   line-height: 1.45;
   color: var(--body);
   border-top: 1px solid var(--line);
@@ -389,8 +719,8 @@
 }
 
 .topupBanner {
-  margin-top: 20px;
-  padding: 18px 22px;
+  margin-top: 18px;
+  padding: 18px 20px;
   background: color-mix(in srgb, #050407 72%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
@@ -410,6 +740,7 @@
 }
 
 .faqItem {
+  min-width: 0;
   background: color-mix(in srgb, #050407 55%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
@@ -422,12 +753,12 @@
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  padding: 16px 20px;
+  padding: 16px 18px;
   background: none;
   border: 0;
   color: var(--ink);
   font: inherit;
-  font-size: 1.04rem;
+  font-size: 1.02rem;
   text-align: left;
   cursor: pointer;
 }
@@ -437,27 +768,27 @@
 }
 
 .faqAnswer {
-  padding: 0 20px 18px;
-  font-size: 0.96rem;
-  line-height: 1.62;
+  padding: 0 18px 18px;
+  font-size: 0.94rem;
+  line-height: 1.6;
   color: var(--body);
 }
 
-/* ── Dashboard & Setup Elements ───────────────────────────────────── */
+/* ── Tabs & Dashboard Elements ────────────────────────────────────── */
 
 .tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 24px;
-  margin: 0 0 20px;
+  gap: 6px 20px;
+  margin: 0 0 16px;
   border-bottom: 1px solid var(--line);
 }
 
 .tab {
-  padding: 10px 0 12px;
+  padding: 9px 0 11px;
   font: inherit;
   font-family: var(--font-family-mono);
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   color: var(--muted);
   background: none;
   border: 0;
@@ -479,27 +810,30 @@
 .codeBlock {
   position: relative;
   margin: 10px 0 22px;
-  padding: 18px 20px;
+  padding: 16px 18px;
+  max-width: 100%;
+  box-sizing: border-box;
   background: color-mix(in srgb, #050407 78%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
   overflow-x: auto;
   font-family: var(--font-family-mono);
-  font-size: 0.84rem;
-  line-height: 1.65;
+  font-size: 0.82rem;
+  line-height: 1.62;
   color: var(--ink);
 }
 
 .vaultBox {
-  padding: 24px;
+  min-width: 0;
+  padding: 22px 20px;
   background: color-mix(in srgb, #07060a 86%, var(--accent) 14%);
   border: 1px solid var(--line-strong);
   border-radius: 2px;
 }
 
 .sessionBar {
-  margin-bottom: 28px;
-  padding: 14px 20px;
+  margin-bottom: 26px;
+  padding: 14px 18px;
   background: color-mix(in srgb, #050407 72%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
@@ -519,26 +853,28 @@
 }
 
 .keyBox {
-  flex: 1 1 260px;
-  padding: 12px 16px;
+  flex: 1 1 220px;
+  min-width: 0;
+  padding: 12px 14px;
   background: #040306;
   border: 1px solid var(--line);
   border-radius: 2px;
   font-family: var(--font-family-mono);
-  font-size: 1.08rem;
+  font-size: 1.02rem;
   color: var(--accent);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   overflow-x: auto;
 }
 
 .creditCard {
-  padding: 24px;
+  min-width: 0;
+  padding: 22px 20px;
   background: color-mix(in srgb, #050407 72%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
   display: grid;
   grid-template-columns: minmax(140px, auto) minmax(0, 1fr);
-  gap: 24px 36px;
+  gap: 20px 32px;
   align-items: center;
 }
 
@@ -549,7 +885,7 @@
 
 .creditNumber {
   font-family: var(--font-family-mono);
-  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-size: clamp(2.1rem, 4vw, 2.8rem);
   line-height: 1;
   color: var(--accent);
 }
@@ -585,12 +921,13 @@
 }
 
 .deviceItem {
+  min-width: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  padding: 14px 18px;
+  padding: 14px 16px;
   background: color-mix(in srgb, #050407 58%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
@@ -605,12 +942,12 @@
 
 .steps li {
   display: grid;
-  grid-template-columns: 32px minmax(0, 1fr);
+  grid-template-columns: 30px minmax(0, 1fr);
   gap: 4px 8px;
   padding: 12px 0;
   border-top: 1px solid var(--line);
   counter-increment: step;
-  font-size: 0.96rem;
+  font-size: 0.94rem;
   line-height: 1.5;
   color: var(--body);
 }
@@ -622,11 +959,18 @@
 .steps li::before {
   content: counter(step) '.';
   font-family: var(--font-family-mono);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--accent);
 }
 
 @media (max-width: 680px) {
+  .dawConsole,
+  .installCard,
+  .transparencyBox,
+  .vaultBox,
+  .creditCard {
+    padding: 16px 14px;
+  }
   .channelRow {
     grid-template-columns: 1fr auto;
   }
