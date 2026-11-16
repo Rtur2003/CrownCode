@@ -716,30 +716,28 @@ const FlMcpDashboardPage: NextPage = () => {
                           />
                         </div>
                         <div className={world.actions} style={{ marginTop: '16px' }}>
-                          <a
-                            href={checkoutUrl('pro', session?.user?.email || account?.email) || '/fl-mcp#pricing'}
-                            target="_blank"
-                            rel="noreferrer"
-                            className={world.link}
-                          >
-                            {isTr ? 'Pro Paket ($19/ay)' : 'Pro Plan ($19/mo)'}
-                          </a>
-                          <a
-                            href={checkoutUrl('studio', session?.user?.email || account?.email) || '/fl-mcp#pricing'}
-                            target="_blank"
-                            rel="noreferrer"
-                            className={world.link}
-                          >
-                            {isTr ? 'Studio Paket ($49/ay)' : 'Studio Plan ($49/mo)'}
-                          </a>
-                          <a
-                            href={checkoutUrl('pack100', session?.user?.email || account?.email) || '/fl-mcp#pricing'}
-                            target="_blank"
-                            rel="noreferrer"
-                            className={world.link}
-                          >
-                            {isTr ? '+100 Ek Kredi ($10)' : 'Top up +100 Credits ($10)'}
-                          </a>
+                          {proCheckout && (
+                            <a href={proCheckout} target="_blank" rel="noreferrer" className={world.link}>
+                              {isTr ? 'Pro Paket ($19/ay)' : 'Pro Plan ($19/mo)'}
+                            </a>
+                          )}
+                          {studioCheckout && (
+                            <a href={studioCheckout} target="_blank" rel="noreferrer" className={world.link}>
+                              {isTr ? 'Studio Paket ($49/ay)' : 'Studio Plan ($49/mo)'}
+                            </a>
+                          )}
+                          {pack100Checkout && (
+                            <a href={pack100Checkout} target="_blank" rel="noreferrer" className={world.link}>
+                              {isTr ? '+100 Ek Kredi ($10)' : 'Top up +100 Credits ($10)'}
+                            </a>
+                          )}
+                          {!proCheckout && !studioCheckout && !pack100Checkout && (
+                            <span style={{ fontSize: '0.84rem', color: 'var(--soft)' }}>
+                              {isTr
+                                ? 'GitHub açık kaynak sürümleri kredisiz çalışır. Ödeme bağlantıları henüz canlıya alınmadı.'
+                                : 'GitHub open-source builds run unmetered locally. Paid checkout links are not live yet.'}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
