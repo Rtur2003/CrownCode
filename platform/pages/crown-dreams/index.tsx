@@ -7,6 +7,7 @@ import type { NextPage } from 'next'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { DreamAnalyzer } from '@/components/CrownDreams/DreamAnalyzer'
 import { SampleJournal } from '@/components/CrownDreams/SampleJournal'
+import { AdSlot } from '@/components/UI/AdSlot'
 import { WorldPage } from '@/components/UI/WorldPage'
 import { useLanguage } from '@/context/LanguageContext'
 
@@ -22,6 +23,7 @@ const CrownDreamsPage: NextPage = () => {
     >
       <WorldPage world="crown-dreams" title={cd.header.title} lead={cd.header.lead}>
         <DreamAnalyzer />
+        <AdSlot placement="crown-dreams-mid" layout="in-content" />
         <SampleJournal />
       </WorldPage>
     </MainLayout>

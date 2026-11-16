@@ -18,7 +18,7 @@
   --on-accent: #0d0a10;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   min-height: 100svh;
-  padding: clamp(96px, 13vh, 150px) clamp(20px, 5vw, 72px) 96px;
+  padding: clamp(78px, 8.8vw, 108px) clamp(20px, 5vw, 72px) 52px;
   color: var(--ink);
   background: var(--void);
   font-family: var(--font-family-base);
@@ -47,9 +47,9 @@
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 24px clamp(24px, 6vw, 96px);
+  gap: 20px clamp(24px, 6vw, 96px);
   align-items: start;
-  padding-bottom: clamp(40px, 7vw, 72px);
+  padding-bottom: clamp(22px, 3vw, 38px);
 }
 
 .hero[data-bare='true'] { grid-template-columns: minmax(0, 1fr); padding-bottom: clamp(28px, 5vw, 48px); }
@@ -92,8 +92,8 @@
 .section {
   display: grid;
   grid-template-columns: minmax(200px, 290px) minmax(0, 1fr);
-  gap: 20px clamp(32px, 5vw, 80px);
-  padding: clamp(40px, 5vw, 60px) 0;
+  gap: 18px clamp(28px, 4.5vw, 72px);
+  padding: clamp(24px, 3vw, 38px) 0;
   border-top: 1px solid var(--line);
 }
 

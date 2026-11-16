@@ -5,6 +5,8 @@ import { Header } from './Header'
 import { Footer } from './Footer'
 import { RouteBadge } from './RouteBadge'
 import { ShellContext } from './ShellContext'
+import { AdSlot } from '@/components/UI/AdSlot'
+import { bottomAdPlacementFor } from '@/config/ads'
 import styles from './AppShell.module.css'
 
 /** Shown only if a navigation takes longer than this, so quick ones don't flash a bar. */
@@ -67,6 +69,7 @@ export const AppShell: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [navigated, setNavigated] = useState(false)
   // Query and hash changes on one page (search, anchors) are not page changes.
   const routeKey = router.asPath.split(/[?#]/)[0]
+  const bottomPlacement = bottomAdPlacementFor(router.pathname)
 
   useEffect(() => {
     const onStart = () => setNavigated(true)
@@ -88,6 +91,7 @@ export const AppShell: React.FC<{ children: ReactNode }> = ({ children }) => {
             {children}
           </div>
         </main>
+        {bottomPlacement && <AdSlot placement={bottomPlacement} layout="leaderboard" />}
         <Footer />
       </div>
     </ShellContext.Provider>

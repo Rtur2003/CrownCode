@@ -6,6 +6,7 @@
 
 import React, { useState, useEffect, lazy, Suspense } from 'react'
 import type { AppProps } from 'next/app'
+import Script from 'next/script'
 import { LazyMotion } from 'motion/react'
 import { LanguageProvider } from '@/context/LanguageContext'
 import { ToastProvider } from '@/context/ToastContext'
@@ -13,6 +14,7 @@ import { ToastContainer } from '@/components/UI/Toast/ToastContainer'
 import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary'
 import { JobPill } from '@/components/Auris/JobPill'
 import { AppShell } from '@/components/Layout/AppShell'
+import { ADSENSE_CLIENT_ID, ADS_ENABLED } from '@/config/ads'
 import { imFell, imFellItalic, jetbrainsMono, portmanteau } from '@/styles/fonts'
 import '@/styles/globals.css'
 
@@ -28,10 +30,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [modalsReady, setModalsReady] = useState(false)
 
   useEffect(() => {
-    // Defer modal chunk loading until first user interaction
-    const activateModals = () => setModalsReady(true)
-    window.addEventListener('keydown', activateModals, { once: true })
-    window.addEventListener('click', activateModals, { once: true })
+    // Mount deferred modal listeners immediately after hydration so the very first
+    // external link click or Ctrl+K / Ctrl+/ press is always intercepted cleanly.
+    setModalsReady(true)
 
     // Register service worker for PWA
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
@@ -41,15 +42,19 @@ function MyApp({ Component, pageProps }: AppProps) {
           console.error('[SW] Service Worker registration failed:', error)
         })
     }
-
-    return () => {
-      window.removeEventListener('keydown', activateModals)
-      window.removeEventListener('click', activateModals)
-    }
   }, [])
 
   return (
     <ErrorBoundary>
+      {ADS_ENABLED && (
+        <Script
+          id="google-adsense-script"
+          async
+          strategy="afterInteractive"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`}
+          crossOrigin="anonymous"
+        />
+      )}
       {/* Font families are exposed as CSS variables on :root so the
           design tokens in styles/base/variables.css can reference them. */}
       <style jsx global>{`

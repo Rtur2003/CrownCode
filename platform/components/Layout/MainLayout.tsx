@@ -18,6 +18,8 @@ import {
   ogImagePath,
 } from '@/config/site'
 import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
+import { ADSENSE_CLIENT_ID, ADS_ENABLED, bottomAdPlacementFor } from '@/config/ads'
+import { AdSlot } from '@/components/UI/AdSlot'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { RouteBadge } from './RouteBadge'
@@ -170,6 +172,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
           name="robots"
           content={noIndex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
         />
+        {ADS_ENABLED && <meta name="google-adsense-account" content={ADSENSE_CLIENT_ID} />}
 
         {/* Each language has its own URL, so canonical is self-referencing
             and hreflang ties the pair together. Noindexed pages carry
@@ -221,6 +224,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
             <main id="main-content" className="main-content" tabIndex={-1}>
               {children}
             </main>
+            {(() => {
+              const placement = !noIndex ? bottomAdPlacementFor(router.pathname) : null
+              return placement ? <AdSlot placement={placement} layout="leaderboard" /> : null
+            })()}
             <Footer />
           </div>
         </>

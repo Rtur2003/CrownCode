@@ -10,6 +10,7 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { AlertTriangle, ExternalLink, FileAudio, Link as LinkIcon, Mic, RefreshCw, Square, Upload } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
+import { AdSlot } from '@/components/UI/AdSlot'
 import { PlayButton, ResidualPlot, Spectrogram, Waveform, usePlayback } from '@/components/Auris/SignalViews'
 import { ModelMetrics, ReportLog, Stop, Verdict, summarize, type DoneJob } from '@/components/Auris/Report'
 import { JobProgress, jobSegments } from '@/components/Auris/JobProgress'
@@ -231,6 +232,7 @@ const AurisPage: NextPage = () => {
           {signal && job && <Scope playback={playback} signal={signal} />}
           {report && <ReportLog job={report} />}
           <Recent current={job} />
+          <AdSlot placement="auris-mid" layout="in-content" />
           <Faq />
           <Method />
         </div>

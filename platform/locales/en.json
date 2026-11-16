@@ -1329,7 +1329,7 @@
       },
       "cookies": {
         "title": "Cookies",
-        "content": "One cookie remembers your language. There are no tracking or advertising cookies."
+        "content": "One essential cookie remembers your language preference. When advertising is enabled on public tool pages, Google AdSense and third-party partners may use cookies or local storage to serve and measure ads according to your browser or consent settings."
       }
     },
     "contactLabel": "For privacy-related questions:"
@@ -1608,10 +1608,26 @@
     "hero": {
       "badge": "FL-MCP v0.3.0 · MIT License · Local First",
       "title": "FL Studio 2025 Control Over MCP",
-      "subtitle": "14 flat-schema MCP tools (~4k tokens) plus opt-in fl_desk and the zero-terminal FL-MCP Studio desktop app. Control mixer inserts, solve VST parameters in real dB and Hz, queue named chords into Piano Roll, meter ITU-R BS.1770-4 LUFS and write .flp projects directly on Windows, macOS and Linux.",
-      "getStarted": "Download FL-MCP Studio",
-      "viewDocs": "GitHub & Docs",
-      "liveDemoBadge": "Live Verified: FL Studio 2025 v25.2.5 [build 5319] · API 40 · 17 out of 17 deep checks · 894 offline tests"
+      "subtitle": "14 flat-schema tools (~4k tokens) and the zero-terminal FL-MCP Studio app. Mix in real dB/Hz, meter BS.1770 LUFS and build .flp projects locally.",
+      "getStarted": "Download & Install",
+      "viewDocs": "Technical Docs & FAQ",
+      "liveDemoBadge": "Live Verified: FL Studio 2025 v25.2.5 [build 5319] · API 40 · 17 deep checks · 894 offline tests",
+      "modals": {
+        "downloadTitle": "Download FL-MCP v0.3.0 & Studio",
+        "downloadSubtitle": "Free MIT open-source local software for Windows, macOS and Linux.",
+        "platformLabel": "Choose package or bundle",
+        "downloadButton": "Continue to Release Package",
+        "supportTitle": "Optional Support & Voluntary Donation",
+        "supportBody": "FL-MCP and FL-MCP Studio are 100% free and MIT licensed with no telemetry or lock-in. If it speeds up your studio workflow, voluntary support helps fund maintenance and upcoming builds.",
+        "supportButton": "Support Development",
+        "supportNote": "Commercial supporter licenses ($10+) activate automatically once payment links are configured in the environment.",
+        "docsTitle": "Architecture, Privacy Boundary & FAQ",
+        "docsSubtitle": "Detailed engineering reference for Scripting API 40, hidden render, local data guarantees and common questions.",
+        "tabArchitecture": "5-Layer Architecture",
+        "tabLicense": "License & Privacy",
+        "tabFaq": "FAQ",
+        "close": "Close"
+      }
     },
     "verification": {
       "title": "Verification & Runtime Support",

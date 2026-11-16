@@ -26,20 +26,31 @@ function supabaseOrigins() {
   }
 }
 
+function adSenseEnabled() {
+  const id = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID?.trim() ?? ''
+  return /^ca-pub-\d{10,}$/.test(id)
+}
+
 // Content-Security-Policy for pages. Pages Router output has no executable
 // inline script (__NEXT_DATA__ and the JSON-LD are data blocks), so script-src
 // stays on 'self'. Style attributes (React inline styles, Motion) need
 // 'unsafe-inline' in style-src. Production only: next dev needs eval for HMR.
 // Roll it out report-only first with CSP_REPORT_ONLY=true.
 function contentSecurityPolicy() {
+  const ads = adSenseEnabled()
+  const scriptAds = ads ? ['https://pagead2.googlesyndication.com', 'https://www.googletagservices.com', 'https://fundingchoicesmessages.google.com', 'https://ep2.adtrafficquality.google'] : []
+  const frameAds = ads ? ['https://googleads.g.doubleclick.net', 'https://tpc.googlesyndication.com', 'https://ep2.adtrafficquality.google', 'https://www.google.com', 'https://fundingchoicesmessages.google.com'] : []
+  const connectAds = ads ? ['https://pagead2.googlesyndication.com', 'https://ep1.adtrafficquality.google', 'https://ep2.adtrafficquality.google', 'https://fundingchoicesmessages.google.com'] : []
+
   const directives = {
     'default-src': ["'self'"],
-    'script-src': ["'self'", 'https://static.cloudflareinsights.com'],
+    'script-src': ["'self'", 'https://static.cloudflareinsights.com', ...scriptAds],
     'style-src': ["'self'", "'unsafe-inline'"],
-    'img-src': ["'self'", 'data:', 'blob:'],
+    'img-src': ["'self'", 'data:', 'blob:', ...(ads ? ['https://pagead2.googlesyndication.com', 'https://googleads.g.doubleclick.net', 'https://ep1.adtrafficquality.google'] : [])],
     'font-src': ["'self'", 'data:'],
     'media-src': ["'self'", 'blob:', 'data:'],
-    'connect-src': ["'self'", 'blob:', 'data:', apiOrigin(), ...supabaseOrigins(), 'https://api.github.com', 'https://cloudflareinsights.com'],
+    'connect-src': ["'self'", 'blob:', 'data:', apiOrigin(), ...supabaseOrigins(), 'https://api.github.com', 'https://cloudflareinsights.com', ...connectAds],
+    ...(frameAds.length ? { 'frame-src': ["'self'", ...frameAds] } : {}),
     'worker-src': ["'self'", 'blob:'],
     'manifest-src': ["'self'"],
     'object-src': ["'none'"],
@@ -75,6 +86,12 @@ const nextConfig = {
     locales: ['tr', 'en'],
     defaultLocale: 'tr',
     localeDetection: false,
+  },
+
+  async rewrites() {
+    return [
+      { source: '/ads.txt', destination: '/api/ads-txt', locale: false },
+    ]
   },
 
   async redirects() {

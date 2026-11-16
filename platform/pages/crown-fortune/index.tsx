@@ -231,27 +231,31 @@ const CrownFortunePage: NextPage = () => {
     return () => { timers.forEach(clearTimeout) }
   }, [])
 
-  // Modal ESC key handler + body scroll lock
+  // Modal ESC key handler + body scroll lock for both Card and Collection modals
   useEffect(() => {
-    if (!isModalOpen) {
+    if (!isModalOpen && !isCollectionModalOpen) {
       return
     }
 
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setIsModalOpen(false)
+        if (isCollectionModalOpen) {
+          setIsCollectionModalOpen(false)
+        } else {
+          setIsModalOpen(false)
+        }
       }
     }
 
-    // Lock body scroll
+    const prevOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     window.addEventListener('keydown', handleEsc)
 
     return () => {
-      document.body.style.overflow = ''
+      document.body.style.overflow = prevOverflow
       window.removeEventListener('keydown', handleEsc)
     }
-  }, [isModalOpen])
+  }, [isModalOpen, isCollectionModalOpen])
 
   // Spring animation for card flip
   const flipProgress = useMotionValue(0)
@@ -1082,7 +1086,7 @@ const CrownFortunePage: NextPage = () => {
                       <div className={styles['card-modal-info']}>
                         <div className={styles['card-modal-title']}>
                           <span className={styles['card-modal-symbol']}>{details?.card?.symbol || '✨'}</span>
-                          <h2 className={styles['card-modal-name']}>
+                          <h2 id="modal-card-title" className={styles['card-modal-name']}>
                              {cardName} {isReversed && t.crownFortune.card.reversed}
                           </h2>
                         </div>
@@ -1114,6 +1118,9 @@ const CrownFortunePage: NextPage = () => {
             {isCollectionModalOpen && (
               <motion.div
                 className={styles['collection-modal-overlay']}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="collection-modal-title"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -1127,7 +1134,7 @@ const CrownFortunePage: NextPage = () => {
                   onClick={(e: React.MouseEvent) => e.stopPropagation()}
                 >
                   <div className={styles['collection-header']}>
-                    <h2>
+                    <h2 id="collection-modal-title">
                       <BookOpen size={20} />
                       {t.crownFortune.collection.title}
                     </h2>

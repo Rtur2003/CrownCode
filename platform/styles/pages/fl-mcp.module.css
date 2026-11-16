@@ -3,8 +3,302 @@
    Frames, headings, fields and buttons come from world-page.module.css. */
 
 .compactSection {
-  padding-top: clamp(28px, 3.6vw, 42px) !important;
-  padding-bottom: clamp(28px, 3.6vw, 42px) !important;
+  padding-top: clamp(22px, 2.8vw, 34px) !important;
+  padding-bottom: clamp(22px, 2.8vw, 34px) !important;
+}
+
+/* ── Single-Screen Studio Console Deck ────────────────────────────── */
+
+.consoleSection {
+  display: grid;
+  gap: 16px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.consoleTopBar {
+  display: grid;
+  gap: 12px;
+}
+
+.topActionRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+}
+
+.secondaryAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 0 18px;
+  font: inherit;
+  font-size: 0.94rem;
+  color: var(--ink);
+  background: color-mix(in srgb, #0b0a0e 88%, transparent);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.secondaryAction:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, #0b0a0e 74%, var(--accent) 26%);
+}
+
+.specStripCompact {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.specChip {
+  min-width: 0;
+  padding: 8px 12px;
+  background: color-mix(in srgb, #050407 74%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+
+.specChip dt {
+  margin: 0 0 2px;
+  font-family: var(--font-family-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.specChip dd {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.workbenchFrame {
+  min-width: 0;
+  padding: 16px 18px;
+  background: color-mix(in srgb, #060509 86%, transparent);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+}
+
+.workbenchHeader {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px 20px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.workbenchHeading {
+  margin: 0 0 8px;
+  font-size: 1.08rem;
+  color: var(--ink);
+}
+
+.workbenchHeader .tabs {
+  margin-bottom: -1px;
+  border-bottom: 0;
+}
+
+.deckSplit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 18px 22px;
+  align-items: start;
+}
+
+.deckLeft,
+.deckRight {
+  min-width: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.studioMiniCallout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 10px 12px;
+  background: color-mix(in srgb, #050407 78%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  font-size: 0.84rem;
+  color: var(--body);
+}
+
+.studioMiniCallout strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.galleryCompact {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.shotButton {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.shotButton img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.shotButton:hover img {
+  border-color: var(--accent);
+  opacity: 0.92;
+}
+
+.shotZoomBadge {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: rgba(6, 5, 8, 0.78);
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+}
+
+.bottomSummaryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 14px 22px;
+  margin: 4px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.bottomSummaryGrid dt {
+  margin: 0 0 4px;
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+.bottomSummaryGrid dd {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.48;
+  color: var(--muted);
+}
+
+/* ── Modals: Package Info & Voluntary Support ─────────────────────── */
+
+.modalPackageCard {
+  display: grid;
+  gap: 8px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  background: color-mix(in srgb, #050407 82%, transparent);
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+}
+
+.modalPkgRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.modalPkgRow:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.modalPkgLabel {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.modalPkgCode {
+  font-family: var(--font-family-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+
+.modalPkgVal {
+  font-size: 0.84rem;
+  color: var(--ink);
+}
+
+.supportPrompt {
+  padding: 14px 16px;
+  background: color-mix(in srgb, #08070b 84%, var(--accent) 16%);
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+}
+
+.supportHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: var(--ink);
+  font-size: 0.96rem;
+}
+
+.supportPrompt p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.48;
+  color: var(--body);
+}
+
+.supportMeta {
+  margin-top: 8px !important;
+  font-size: 0.78rem !important;
+  color: var(--soft) !important;
+}
+
+.lightboxBody {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .deckSplit {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .galleryCompact {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ── Top Verification & Spec Strip ────────────────────────────────── */

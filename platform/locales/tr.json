@@ -1329,7 +1329,7 @@
       },
       "cookies": {
         "title": "Çerezler",
-        "content": "Dil tercihini hatırlamak için tek bir çerez kullanılır. İzleme ya da reklam çerezi yoktur."
+        "content": "Temel bir çerez yalnızca dil tercihini hatırlar. Herkese açık araç sayfalarında reklam gösterimi etkinleştirildiğinde Google AdSense ve reklam ortakları, tarayıcı veya onay ayarlarına göre reklam sunumu ve ölçümü için çerez kullanabilir."
       }
     },
     "contactLabel": "Gizlilik ile ilgili sorularınız için:"
@@ -1608,10 +1608,26 @@
     "hero": {
       "badge": "FL-MCP v0.3.0 · MIT Lisansı · Yerel Öncelikli",
       "title": "MCP Üzerinden FL Studio 2025 Mühendisliği",
-      "subtitle": "14 düz-şemalı MCP aracı (~4k token), isteğe bağlı fl_desk katmanı ve sıfır terminal gerektiren FL-MCP Studio masaüstü uygulaması. Windows, macOS ve Linux üzerinde mikser kanallarını yönetin, eklentileri gerçek dB ve Hz birimleriyle ayarlayın, Piano Roll'a akor gönderin, ITU-R BS.1770-4 LUFS ölçün ve doğrudan .flp projeleri oluşturun.",
-      "getStarted": "FL-MCP Studio İndir",
-      "viewDocs": "GitHub ve Dokümantasyon",
-      "liveDemoBadge": "Canlı Doğrulandı: FL Studio 2025 v25.2.5 [build 5319] · API 40 · 17 derin kontrol geçti · 894 çevrimdışı test"
+      "subtitle": "14 düz-şemalı araç (~4k token) ve sıfır terminal kurulumlu FL-MCP Studio. Gerçek dB/Hz ayarı, BS.1770 LUFS ölçümü ve doğrudan .flp üretimi.",
+      "getStarted": "İndir ve Kur",
+      "viewDocs": "Teknik Doküman ve SSS",
+      "liveDemoBadge": "Canlı Doğrulandı: FL Studio 2025 v25.2.5 [build 5319] · API 40 · 17 derin kontrol · 894 çevrimdışı test",
+      "modals": {
+        "downloadTitle": "FL-MCP v0.3.0 ve Studio İndir",
+        "downloadSubtitle": "Windows, macOS ve Linux için ücretsiz, MIT lisanslı ve tamamen yerel paketler.",
+        "platformLabel": "Paket veya eklenti türünü seçin",
+        "downloadButton": "Ücretsiz İndirmeye Geç (Releases)",
+        "supportTitle": "İsteğe Bağlı Destek ve Gönüllü Bağış",
+        "supportBody": "FL-MCP ve FL-MCP Studio zorunlu ödeme duvarı olmadan %100 ücretsizdir. Stüdyo iş akışınıza değer kattıysa geliştirme sürecine gönüllü destek bırakabilirsiniz.",
+        "supportButton": "Destek Ol",
+        "supportNote": "Ödeme bağlantıları yapılandırıldığında $10 ve üzeri destekçi erişimleri otomatik aktifleşir.",
+        "docsTitle": "Mimari, Gizlilik Sınırı ve SSS",
+        "docsSubtitle": "Scripting API 40, gizli render döngüsü, yerel veri sınırı ve sıkça sorulan soruların teknik detayı.",
+        "tabArchitecture": "5 Katmanlı Mimari",
+        "tabLicense": "Lisans ve Gizlilik",
+        "tabFaq": "Sıkça Sorulanlar",
+        "close": "Kapat"
+      }
     },
     "verification": {
       "title": "Doğrulama ve Platform Desteği",

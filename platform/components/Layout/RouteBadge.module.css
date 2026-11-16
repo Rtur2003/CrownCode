@@ -6,8 +6,9 @@
   --amber: #d6ab6b;
   position: fixed;
   z-index: 900; /* over page content, under the header, modals and toasts */
-  left: max(20px, env(safe-area-inset-left));
-  bottom: max(20px, env(safe-area-inset-bottom));
+  left: 50%;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 2px;
@@ -27,7 +28,7 @@
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
 }
 .badge[data-tucked]:not(:focus-within) {
-  transform: translateY(calc(100% + 32px));
+  transform: translate(-50%, calc(100% + 32px));
   opacity: 0;
   pointer-events: none;
 }
@@ -71,10 +72,14 @@
     left: 0;
     right: 0;
     bottom: max(14px, env(safe-area-inset-bottom));
+    transform: none;
     width: max-content;
     max-width: calc(100vw - 32px);
     margin-inline: auto;
     font-size: 13px;
+  }
+  .badge[data-tucked]:not(:focus-within) {
+    transform: translateY(calc(100% + 32px));
   }
   .badge a { min-height: 40px; padding: 0 11px; }
   .name { display: none; }
