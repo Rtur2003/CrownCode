@@ -752,6 +752,10 @@ const CrownFortunePage: NextPage = () => {
             </div>
             <section className={styles['info-section']}>
               <FortuneAbout t={t} />
+              <div className={styles['disclaimer']}>
+                <p>{t.crownFortune.disclaimer}</p>
+                <p className={styles['community-note']}>{t.crownFortune.communityNote}</p>
+              </div>
             </section>
           </div>
         </div>
@@ -1210,6 +1214,7 @@ const CrownFortunePage: NextPage = () => {
 
             <div className={styles['disclaimer']}>
               <p>{t.crownFortune.disclaimer}</p>
+              <p className={styles['community-note']}>{t.crownFortune.communityNote}</p>
             </div>
           </motion.section>
 
