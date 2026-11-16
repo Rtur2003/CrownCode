@@ -23,6 +23,7 @@ import {
   LogOut,
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
+import { Modal } from '@/components/UI/Modal'
 import { WorldPage } from '@/components/UI/WorldPage'
 import { API_BASE_URL } from '@/config/api'
 import { checkoutUrl } from '@/config/flmcp'
@@ -104,6 +105,8 @@ const FlMcpDashboardPage: NextPage = () => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [successMsg, setSuccessMsg] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
+  const [copiedSnippet, setCopiedSnippet] = useState(false)
+  const [rotateConfirmOpen, setRotateConfirmOpen] = useState(false)
   const [showKey, setShowKey] = useState(false)
   const [revokingId, setRevokingId] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'desktop' | 'cli' | 'cursor' | 'vscode'>('desktop')
@@ -330,13 +333,9 @@ const FlMcpDashboardPage: NextPage = () => {
     }
   }
 
-  const handleRotateKey = async () => {
+  const executeRotateKey = async () => {
     if (!session?.access_token) { return }
-    const confirmText = isTr
-      ? 'Yeni bir lisans anahtarı oluşturulsun mu? Eski anahtarınız hemen geçersiz olacaktır.'
-      : 'Generate a new license key? Your old key will stop working immediately.'
-    if (!window.confirm(confirmText)) { return }
-
+    setRotateConfirmOpen(false)
     setLoading(true)
     setErrorMsg(null)
     try {
@@ -666,7 +665,7 @@ const FlMcpDashboardPage: NextPage = () => {
                           <button
                             type="button"
                             className={world.link}
-                            onClick={handleRotateKey}
+                            onClick={() => setRotateConfirmOpen(true)}
                             disabled={loading}
                             style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                           >
@@ -883,41 +882,35 @@ const FlMcpDashboardPage: NextPage = () => {
                       </button>
                     </div>
 
-                    {activeTab === 'desktop' && (
-                      <div>
-                        <p className={world.hint}>
-                          {isTr ? 'claude_desktop_config.json dosyasına ekleyin:' : 'Add to claude_desktop_config.json:'}
-                        </p>
-                        <pre className={styles.codeBlock}>{claudeDesktopConfig}</pre>
-                      </div>
-                    )}
-
-                    {activeTab === 'cli' && (
-                      <div>
-                        <p className={world.hint}>
-                          {isTr ? 'Proje terminalinizde çalıştırın:' : 'Run in your project terminal:'}
-                        </p>
-                        <pre className={styles.codeBlock}>{claudeCodeCommand}</pre>
-                      </div>
-                    )}
-
-                    {activeTab === 'cursor' && (
-                      <div>
-                        <p className={world.hint}>
-                          {isTr ? '.cursor/mcp.json dosyasına ekleyin:' : 'Add to .cursor/mcp.json:'}
-                        </p>
-                        <pre className={styles.codeBlock}>{cursorConfig}</pre>
-                      </div>
-                    )}
-
-                    {activeTab === 'vscode' && (
-                      <div>
-                        <p className={world.hint}>
-                          {isTr ? 'VS Code settings.json dosyasına ekleyin:' : 'Add to VS Code settings.json:'}
-                        </p>
-                        <pre className={styles.codeBlock}>{vscodeConfig}</pre>
-                      </div>
-                    )}
+                    {(() => {
+                      const snippetMap = {
+                        desktop: { hint: isTr ? 'claude_desktop_config.json dosyasına ekleyin:' : 'Add to claude_desktop_config.json:', code: claudeDesktopConfig },
+                        cli: { hint: isTr ? 'Proje terminalinizde çalıştırın:' : 'Run in your project terminal:', code: claudeCodeCommand },
+                        cursor: { hint: isTr ? '.cursor/mcp.json dosyasına ekleyin:' : 'Add to .cursor/mcp.json:', code: cursorConfig },
+                        vscode: { hint: isTr ? 'VS Code settings.json dosyasına ekleyin:' : 'Add to VS Code settings.json:', code: vscodeConfig },
+                      } as const
+                      const currentSnippet = snippetMap[activeTab]
+                      return (
+                        <div className={styles.codeWrap}>
+                          <div className={styles.codeToolbar}>
+                            <span className={styles.codeLabel}>{currentSnippet.hint}</span>
+                            <button
+                              type="button"
+                              className={styles.copyBtn}
+                              onClick={() => {
+                                navigator.clipboard.writeText(currentSnippet.code)
+                                setCopiedSnippet(true)
+                                setTimeout(() => setCopiedSnippet(false), 2000)
+                              }}
+                            >
+                              {copiedSnippet ? <Check size={12} /> : <Copy size={12} />}
+                              <span>{copiedSnippet ? (D?.copied || (isTr ? 'Kopyalandı' : 'Copied')) : (D?.copyKey || (isTr ? 'Kopyala' : 'Copy'))}</span>
+                            </button>
+                          </div>
+                          <pre className={styles.codeBlockCompact}><code>{currentSnippet.code}</code></pre>
+                        </div>
+                      )
+                    })()}
 
                     <ol className={styles.steps}>
                       <li>{stripStepPrefix(D?.step1 || 'Install loopMIDI and create ports FL_MCP_IN and FL_MCP_OUT.')}</li>
@@ -929,6 +922,35 @@ const FlMcpDashboardPage: NextPage = () => {
                 </section>
               </>
             )}
+
+            <Modal
+              open={rotateConfirmOpen}
+              onClose={() => setRotateConfirmOpen(false)}
+              title={isTr ? 'Lisans Anahtarını Yenile' : 'Rotate License Key'}
+              subtitle={
+                isTr
+                  ? 'Yeni anahtar üretildiğinde mevcut anahtarınız ve bağlı istemci yapılandırmaları hemen geçersiz kalır.'
+                  : 'Generating a new key immediately invalidates your current key across connected clients.'
+              }
+              closeLabel={isTr ? 'Kapat' : 'Close'}
+              size="sm"
+              footer={
+                <>
+                  <button type="button" className={world.link} onClick={() => setRotateConfirmOpen(false)}>
+                    {isTr ? 'Vazgeç' : 'Cancel'}
+                  </button>
+                  <button type="button" className={world.primary} onClick={() => void executeRotateKey()} disabled={loading}>
+                    {isTr ? 'Anahtarı Yenile' : 'Confirm Rotate'}
+                  </button>
+                </>
+              }
+            >
+              <p style={{ margin: 0, fontSize: '0.92rem', lineHeight: 1.55, color: 'var(--body)' }}>
+                {isTr
+                  ? 'Devam ederseniz yeni anahtar tarayıcı oturumunuzda görünecektir; yerel MCP ayarlarınızdaki FL_MCP_LICENSE değerini güncellemeyi unutmayın.'
+                  : 'Your new key will appear immediately in your vault. Remember to update FL_MCP_LICENSE in your local MCP client config.'}
+              </p>
+            </Modal>
           </>
         )}
       </WorldPage>
