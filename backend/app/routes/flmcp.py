@@ -38,7 +38,7 @@ def get_config() -> plans.Config:
 
 
 def get_topup_url() -> str:
-    return os.environ.get("FLMCP_TOPUP_URL", "https://hasan-arthur-altuntas.xyz/fl-mcp#pricing")
+    return os.environ.get("FLMCP_TOPUP_URL", "https://hasan-arthur-altuntas.xyz/fl-mcp")
 
 
 def get_admin_token() -> str:
