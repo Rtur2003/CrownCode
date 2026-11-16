@@ -1,6 +1,6 @@
-// FL-MCP v0.3.0: Local FL Studio 2025 MCP Server & FL-MCP Studio Desktop App.
-// Product engineering showcase, verification metrics, side-by-side install flows,
-// 14 flat-schema tools, 5-layer Scripting API resolution ladder, and 12 seeded genres.
+// FL-MCP v0.3.0: Compact product & engineering showcase for FL Studio 2025.
+// 5 sections: Verification & Quickstart, Tabbed Studio Workbench (Visuals & Telemetry,
+// 14 Tools, dB/Hz Solver, 12 Genres), 5-Layer Transparency Ladder, License Boundary, and FAQ.
 
 import React, { useState } from 'react'
 import type { NextPage } from 'next'
@@ -219,14 +219,16 @@ const PLUGIN_SOLVER_EXAMPLES = [
 ]
 
 type InstallTab = 'plugin' | 'desktop' | 'clients' | 'http'
+type WorkbenchTab = 'overview' | 'tools' | 'solver' | 'genres'
 
 const FlMcpShowcasePage: NextPage = () => {
   const { t, language } = useLanguage()
   const isTr = language === 'tr'
-  const [activeGenreIndex, setActiveGenreIndex] = useState(0)
   const [installTab, setInstallTab] = useState<InstallTab>('plugin')
+  const [workbenchTab, setWorkbenchTab] = useState<WorkbenchTab>('overview')
+  const [activeGenreIndex, setActiveGenreIndex] = useState(0)
   const [copiedId, setCopiedId] = useState<string | null>(null)
-  const [openFaq, setOpenFaq] = useState<number | null>(0)
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   if (!ENTRY) {
     return null
@@ -254,70 +256,44 @@ const FlMcpShowcasePage: NextPage = () => {
     plugin: [
       {
         id: 'cc-marketplace',
-        label: isTr ? 'Claude Code Marketplace (5 Skill + mix-engineer Alt Ajanı)' : 'Claude Code Plugin Marketplace (5 Skills + mix-engineer Agent)',
+        label: isTr ? 'Claude Code (5 Skill + mix-engineer Alt Ajanı)' : 'Claude Code (5 Skills + mix-engineer Agent)',
         code: '/plugin marketplace add Rtur2003/FL-MCP',
       },
       {
         id: 'selftest-deep',
-        label: isTr ? 'Canlı FL Studio 2025 Köprü Doğrulaması (17 derin kontrol)' : 'Live FL Studio 2025 Bridge Check (17 deep checks)',
+        label: isTr ? 'Canlı FL Studio 2025 Doğrulaması (17 kontrol)' : 'Live FL Studio 2025 Self-Test (17 checks)',
         code: 'fl-mcp selftest --deep',
       },
     ],
     desktop: [
       {
         id: 'mcpb-pipx',
-        label: isTr ? 'Claude Desktop .mcpb uzantısı veya pipx ile yerel kurulum' : 'Claude Desktop (.mcpb bundle) or pipx local install',
-        code: 'pipx install fl-mcp\nfl-mcp install --client claude-desktop',
+        label: isTr ? 'Claude Desktop (.mcpb veya pipx)' : 'Claude Desktop (.mcpb bundle or pipx)',
+        code: 'pipx install fl-mcp && fl-mcp install --client claude-desktop',
       },
       {
         id: 'desktop-json',
-        label: 'claude_desktop_config.json (stdio)',
-        code: JSON.stringify(
-          {
-            mcpServers: {
-              'fl-mcp': {
-                command: 'fl-mcp',
-                args: [],
-              },
-            },
-          },
-          null,
-          2
-        ),
+        label: 'claude_desktop_config.json',
+        code: JSON.stringify({ mcpServers: { 'fl-mcp': { command: 'fl-mcp', args: [] } } }, null, 2),
       },
     ],
     clients: [
       {
         id: 'auto-register',
-        label: isTr ? 'Cursor · VS Code · Windsurf · Gemini CLI · Antigravity · Codex CLI' : 'Cursor · VS Code · Windsurf · Gemini CLI · Antigravity · Codex CLI',
+        label: 'Cursor · VS Code · Windsurf · Gemini CLI · Antigravity · Codex',
         code: 'fl-mcp install --all',
       },
       {
         id: 'cursor-json',
         label: '.cursor/mcp.json (Streamable-HTTP)',
-        code: JSON.stringify(
-          {
-            mcpServers: {
-              'fl-mcp': {
-                url: 'http://127.0.0.1:8765/mcp',
-              },
-            },
-          },
-          null,
-          2
-        ),
+        code: JSON.stringify({ mcpServers: { 'fl-mcp': { url: 'http://127.0.0.1:8765/mcp' } } }, null, 2),
       },
     ],
     http: [
       {
         id: 'http-serve',
-        label: isTr ? 'Kalıcı Yerel HTTP/SSE Daemon (Streamable-HTTP :8765/mcp ve /sse)' : 'Persistent Local HTTP/SSE Daemon (:8765/mcp & /sse)',
+        label: isTr ? 'Kalıcı HTTP (:8765/mcp) ve SSE (/sse) Daemon' : 'Persistent HTTP (:8765/mcp) & SSE (/sse) Daemon',
         code: 'fl-mcp serve --transport http --port 8765',
-      },
-      {
-        id: 'endpoints',
-        label: isTr ? 'Yerel Uç Noktalar' : 'Local Endpoints',
-        code: 'Streamable-HTTP: http://127.0.0.1:8765/mcp\nSSE Stream:      http://127.0.0.1:8765/sse',
       },
     ],
   }
@@ -357,11 +333,11 @@ const FlMcpShowcasePage: NextPage = () => {
         lead={P?.hero.subtitle || item.showroomDescription}
         {...(P?.hero.liveDemoBadge ? { meta: P.hero.liveDemoBadge } : {})}
       >
-        {/* Section 1: Live Verification & Runtime Support */}
-        <section className={world.section} aria-labelledby="flmcp-verify-heading">
+        {/* Section 1: Runtime Verification Strip & Side-by-Side Connect */}
+        <section id="install" className={`${world.section} ${styles.compactSection}`} aria-labelledby="flmcp-install-heading">
           <div className={world.sectionHead}>
-            <h2 id="flmcp-verify-heading">{P?.verification.title || 'Verification & Runtime'}</h2>
-            <p>{P?.verification.subtitle}</p>
+            <h2 id="flmcp-install-heading">{P?.install.title || 'Two Paths to Connect'}</h2>
+            <p>{P?.install.subtitle}</p>
             <div className={world.actions}>
               <a
                 href={GITHUB_RELEASES}
@@ -370,7 +346,7 @@ const FlMcpShowcasePage: NextPage = () => {
                 className={world.primary}
                 style={{ gap: '8px' }}
               >
-                <Download size={16} />
+                <Download size={15} />
                 <span>{P?.hero.getStarted || 'Download FL-MCP Studio'}</span>
               </a>
               <a
@@ -378,50 +354,57 @@ const FlMcpShowcasePage: NextPage = () => {
                 target="_blank"
                 rel="noreferrer"
                 className={world.link}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}
               >
-                <span>{P?.hero.viewDocs || 'GitHub & Docs'}</span>
-                <ExternalLink size={14} />
+                <span>GitHub</span>
+                <ExternalLink size={13} />
               </a>
+              <Link
+                href="/dashboard/fl-mcp"
+                className={world.link}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}
+              >
+                <span>{isTr ? 'Lisans Kasası' : 'License Vault'}</span>
+                <ArrowRight size={13} />
+              </Link>
             </div>
           </div>
 
           <div className={world.sectionBody}>
-            <div className={styles.factGrid}>
-              <div className={styles.factCard}>
-                <span className={styles.factLabel}>{P?.verification.liveLabel}</span>
-                <span className={styles.factValue}>{P?.verification.liveValue}</span>
-                <p className={styles.factDetail}>{P?.verification.liveDetail}</p>
+            {/* Compact 4-column verified spec strip */}
+            <dl className={styles.specStrip}>
+              <div className={styles.specCell}>
+                <dt>{P?.verification.liveLabel}</dt>
+                <dd>
+                  {P?.verification.liveValue}
+                  <span className={styles.specSub}>{isTr ? 'build 5319 · API 40 (17 kontrol)' : 'build 5319 · API 40 (17 checks)'}</span>
+                </dd>
               </div>
-              <div className={styles.factCard}>
-                <span className={styles.factLabel}>{P?.verification.offlineLabel}</span>
-                <span className={styles.factValue}>{P?.verification.offlineValue}</span>
-                <p className={styles.factDetail}>{P?.verification.offlineDetail}</p>
+              <div className={styles.specCell}>
+                <dt>{P?.verification.offlineLabel}</dt>
+                <dd>
+                  {P?.verification.offlineValue}
+                  <span className={styles.specSub}>Stubs, MIDI, .flp, BS.1770, HTTP</span>
+                </dd>
               </div>
-              <div className={styles.factCard}>
-                <span className={styles.factLabel}>{P?.verification.platformsLabel}</span>
-                <span className={styles.factValue}>{P?.verification.platformsValue}</span>
-                <p className={styles.factDetail}>{P?.verification.platformsDetail}</p>
+              <div className={styles.specCell}>
+                <dt>{P?.verification.platformsLabel}</dt>
+                <dd>
+                  {P?.verification.platformsValue}
+                  <span className={styles.specSub}>loopMIDI · IAC Driver · Wine</span>
+                </dd>
               </div>
-              <div className={styles.factCard}>
-                <span className={styles.factLabel}>{P?.verification.clientsLabel}</span>
-                <span className={styles.factValue}>{P?.verification.clientsValue}</span>
-                <p className={styles.factDetail}>{P?.verification.clientsDetail}</p>
+              <div className={styles.specCell}>
+                <dt>{P?.verification.clientsLabel}</dt>
+                <dd>
+                  {P?.verification.clientsValue}
+                  <span className={styles.specSub}>~4k tok · stdio · :8765 · SSE</span>
+                </dd>
               </div>
-            </div>
-          </div>
-        </section>
+            </dl>
 
-        {/* Section 2: Side-by-Side Install (Zero-Terminal Studio vs Plugin / CLI) */}
-        <section id="install" className={world.section} aria-labelledby="flmcp-install-heading">
-          <div className={world.sectionHead}>
-            <h2 id="flmcp-install-heading">{P?.install.title || 'Two Paths to Connect'}</h2>
-            <p>{P?.install.subtitle}</p>
-          </div>
-
-          <div className={world.sectionBody}>
+            {/* Side-by-side compact install grid */}
             <div className={styles.installGrid}>
-              {/* Card A: Zero-Terminal FL-MCP Studio Desktop App */}
               <article className={styles.installCard}>
                 <div className={styles.installHeader}>
                   <h3 className={styles.installTitle}>{P?.install.studioTitle}</h3>
@@ -431,33 +414,19 @@ const FlMcpShowcasePage: NextPage = () => {
                 <ul className={styles.bulletList}>
                   {P?.install.studioFeatures.map((feat: string, idx: number) => (
                     <li key={idx}>
-                      <Check size={15} color="var(--accent)" />
+                      <Check size={14} color="var(--accent)" />
                       <span>{feat}</span>
                     </li>
                   ))}
                 </ul>
-                <div className={world.actions} style={{ marginTop: 0 }}>
-                  <a
-                    href={GITHUB_RELEASES}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={world.primary}
-                    style={{ gap: '8px' }}
-                  >
-                    <Download size={15} />
-                    <span>{P?.install.studioDownloadCta}</span>
-                  </a>
-                </div>
                 <p className={styles.packageNote}>{P?.install.studioPackageNote}</p>
               </article>
 
-              {/* Card B: Copyable Plugin / .mcpb / Terminal Flows */}
               <article className={styles.installCard}>
                 <div className={styles.installHeader}>
                   <h3 className={styles.installTitle}>{P?.install.cliTitle}</h3>
                   <span className={styles.installBadge}>{P?.install.cliBadge}</span>
                 </div>
-                <p className={styles.installDesc}>{P?.install.cliDesc}</p>
 
                 <div className={styles.tabs} role="tablist" aria-label={isTr ? 'Kurulum akışı seç' : 'Select setup method'}>
                   <button
@@ -478,7 +447,7 @@ const FlMcpShowcasePage: NextPage = () => {
                     data-active={installTab === 'desktop'}
                     onClick={() => setInstallTab('desktop')}
                   >
-                    Claude Desktop (.mcpb)
+                    Desktop (.mcpb)
                   </button>
                   <button
                     type="button"
@@ -488,7 +457,7 @@ const FlMcpShowcasePage: NextPage = () => {
                     data-active={installTab === 'clients'}
                     onClick={() => setInstallTab('clients')}
                   >
-                    Cursor / IDE / CLI
+                    IDE / CLI
                   </button>
                   <button
                     type="button"
@@ -511,7 +480,7 @@ const FlMcpShowcasePage: NextPage = () => {
                         className={styles.copyBtn}
                         onClick={() => handleCopy(block.id, block.code)}
                       >
-                        {copiedId === block.id ? <Check size={13} /> : <Copy size={13} />}
+                        {copiedId === block.id ? <Check size={12} /> : <Copy size={12} />}
                         <span>{copiedId === block.id ? copiedLabel : copyLabel}</span>
                       </button>
                     </div>
@@ -525,251 +494,215 @@ const FlMcpShowcasePage: NextPage = () => {
           </div>
         </section>
 
-        {/* Section 3: Studio Visuals & Real-Time Metering Console */}
-        <section className={world.section} aria-labelledby="flmcp-console-heading">
+        {/* Section 2: Tabbed Studio Workbench (Visuals + 14 Tools + dB/Hz Solver + 12 Genres) */}
+        <section className={`${world.section} ${styles.compactSection}`} aria-labelledby="flmcp-workbench-heading">
           <div className={world.sectionHead}>
-            <h2 id="flmcp-console-heading">{P?.features.flIntegration.title || 'FL Studio 2025 Bridge'}</h2>
-            <p>{P?.features.flIntegration.description}</p>
-            <div className={world.actions}>
-              <Link href="/dashboard/fl-mcp" className={world.link} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                <span>{isTr ? 'Geliştirici Lisans Kasası' : 'Developer License Vault'}</span>
-                <ArrowRight size={14} />
-              </Link>
-            </div>
+            <h2 id="flmcp-workbench-heading">{P?.features.title || 'Studio Engineering'}</h2>
+            <p>{P?.features.subtitle}</p>
           </div>
 
           <div className={world.sectionBody}>
-            <div className={styles.gallery}>
-              <figure className={styles.shot}>
-                <Image
-                  src="/images/fl-mcp/studio-bridge.webp"
-                  alt={
-                    isTr
-                      ? 'FL-MCP ve FL Studio 2025 arasında çift yönlü MIDI CC ve piyano rulosu köprüsü'
-                      : 'Bi-directional MIDI CC and piano roll bridge between FL-MCP and FL Studio 2025'
-                  }
-                  width={1440}
-                  height={900}
-                  sizes="(max-width: 860px) 100vw, 400px"
-                  priority
-                />
-                <figcaption>
-                  {isTr
-                    ? 'loopMIDI (Windows), IAC Driver (macOS) veya Wine (Linux) üzerinden FL Studio 2025 Scripting API 40 köprüsü.'
-                    : 'FL Studio 2025 Scripting API 40 bridge over loopMIDI (Win), IAC Driver (macOS) or Wine (Linux).'}
-                </figcaption>
-              </figure>
-
-              <figure className={styles.shot}>
-                <Image
-                  src="/images/fl-mcp/acoustic-metering.webp"
-                  alt={
-                    isTr
-                      ? 'ITU-R BS.1770-4 / EBU 3342 LUFS ses yüksekliği ve True Peak spektral analiz ekranı'
-                      : 'ITU-R BS.1770-4 / EBU 3342 LUFS loudness and True Peak spectral metering display'
-                  }
-                  width={1440}
-                  height={900}
-                  sizes="(max-width: 860px) 100vw, 400px"
-                  priority
-                />
-                <figcaption>
-                  {isTr
-                    ? 'ITU-R BS.1770-4 / EBU 3342 ölçümü ve gerçek dB/Hz birimleriyle kapalı çevrim miks kontrolü.'
-                    : 'ITU-R BS.1770-4 / EBU 3342 metering and real dB/Hz closed-loop mix verification.'}
-                </figcaption>
-              </figure>
+            <div className={styles.tabs} role="tablist" aria-label={isTr ? 'Stüdyo yetenekleri' : 'Studio capabilities'}>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={workbenchTab === 'overview'}
+                className={styles.tab}
+                data-active={workbenchTab === 'overview'}
+                onClick={() => setWorkbenchTab('overview')}
+              >
+                {isTr ? 'Görseller ve Ölçüm' : 'Visuals & Telemetry'}
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={workbenchTab === 'tools'}
+                className={styles.tab}
+                data-active={workbenchTab === 'tools'}
+                onClick={() => setWorkbenchTab('tools')}
+              >
+                {isTr ? '14 Düz Araç (~4k tok)' : '14 Flat Tools (~4k tok)'}
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={workbenchTab === 'solver'}
+                className={styles.tab}
+                data-active={workbenchTab === 'solver'}
+                onClick={() => setWorkbenchTab('solver')}
+              >
+                {isTr ? 'dB / Hz Çözücü' : 'dB / Hz Solver'}
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={workbenchTab === 'genres'}
+                className={styles.tab}
+                data-active={workbenchTab === 'genres'}
+                onClick={() => setWorkbenchTab('genres')}
+              >
+                {isTr ? '12 Tür Motoru' : '12-Genre Engine'}
+              </button>
             </div>
 
-            <div className={styles.dawConsole}>
-              <div className={styles.dawHeader}>
-                <div className={styles.dawStatus}>
-                  <span className={styles.statusDot} />
-                  <span>
-                    {isTr
-                      ? 'FL Studio 2025 v25.2.5 [build 5319] · API 40 · fl_audio Örneği'
-                      : 'FL Studio 2025 v25.2.5 [build 5319] · API 40 · fl_audio Sample'}
-                  </span>
+            {workbenchTab === 'overview' && (
+              <div>
+                <div className={styles.gallery}>
+                  <figure className={styles.shot}>
+                    <Image
+                      src="/images/fl-mcp/studio-bridge.webp"
+                      alt={isTr ? 'FL-MCP ve FL Studio 2025 köprüsü' : 'FL-MCP and FL Studio 2025 bridge'}
+                      width={1440}
+                      height={900}
+                      sizes="(max-width: 860px) 100vw, 400px"
+                      priority
+                    />
+                    <figcaption>
+                      {isTr
+                        ? 'loopMIDI, IAC Driver veya Wine üzerinden API 40 ve FL-MCP Studio kontrolü.'
+                        : 'API 40 and FL-MCP Studio bridge over loopMIDI, IAC Driver or Wine.'}
+                    </figcaption>
+                  </figure>
+                  <figure className={styles.shot}>
+                    <Image
+                      src="/images/fl-mcp/acoustic-metering.webp"
+                      alt={isTr ? 'BS.1770-4 LUFS ve True Peak ölçüm ekranı' : 'BS.1770-4 LUFS and True Peak metering'}
+                      width={1440}
+                      height={900}
+                      sizes="(max-width: 860px) 100vw, 400px"
+                      priority
+                    />
+                    <figcaption>
+                      {isTr
+                        ? 'ITU-R BS.1770-4 / EBU 3342 ölçümü ve gizli masaüstü mastering döngüsü.'
+                        : 'ITU-R BS.1770-4 / EBU 3342 metering and focus-free hidden render loop.'}
+                    </figcaption>
+                  </figure>
                 </div>
-                <div className={styles.dawLatency}>
-                  {isTr ? 'ITU-R BS.1770-4 · EBU 3342 · 7 Bant' : 'ITU-R BS.1770-4 · EBU 3342 · 7-Band'}
-                </div>
-              </div>
 
-              <div className={styles.meterRow}>
-                <div className={styles.meterBox}>
-                  <span className={styles.meterLabel}>LUFS-I</span>
-                  <span className={styles.meterValue}>-14.1 LUFS</span>
-                  <div className={styles.meterBarOuter}>
-                    <div className={styles.meterBarFill} style={{ width: '72%' }} />
+                <div className={styles.telemetryRibbon}>
+                  <div className={styles.telemetryHead}>
+                    <span className={styles.dawStatus}>
+                      <span className={styles.statusDot} />
+                      <span>
+                        {isTr
+                          ? 'FL Studio 2025 v25.2.5 [build 5319] · fl_audio + fl_mix Örneği'
+                          : 'FL Studio 2025 v25.2.5 [build 5319] · fl_audio + fl_mix Sample'}
+                      </span>
+                    </span>
+                    <span>ITU-R BS.1770-4 · EBU 3342</span>
                   </div>
-                </div>
-                <div className={styles.meterBox}>
-                  <span className={styles.meterLabel}>True Peak</span>
-                  <span className={styles.meterValue}>-1.02 dBTP</span>
-                  <div className={styles.meterBarOuter}>
-                    <div className={styles.meterBarFill} style={{ width: '85%' }} />
-                  </div>
-                </div>
-                <div className={styles.meterBox}>
-                  <span className={styles.meterLabel}>LRA (EBU 3342)</span>
-                  <span className={styles.meterValue}>6.8 LU</span>
-                  <div className={styles.meterBarOuter}>
-                    <div className={styles.meterBarFill} style={{ width: '58%' }} />
-                  </div>
-                </div>
-                <div className={styles.meterBox}>
-                  <span className={styles.meterLabel}>
-                    {isTr ? 'Crest / Korelasyon' : 'Crest / Correlation'}
-                  </span>
-                  <span className={styles.meterValue}>9.4 dB · +0.86</span>
-                  <div className={styles.meterBarOuter}>
-                    <div className={styles.meterBarFill} style={{ width: '64%' }} />
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.channelRack}>
-                <div className={styles.channelRackHeader}>
-                  <span>{isTr ? 'Mikser Insert Hedefleri (fl_mix)' : 'Mixer Insert Targets (fl_mix)'}</span>
-                  <span>{isTr ? 'Kalibreli Seviye' : 'Calibrated Level'}</span>
-                </div>
-                {[
-                  { name: 'Insert 1 · Kick', level: '-4.2 dB', bar: '82%' },
-                  { name: 'Insert 2 · Snare / Clap', level: '-6.0 dB', bar: '74%' },
-                  { name: 'Insert 3 · Sub / 808', level: '-3.1 dB', bar: '86%' },
-                  { name: 'Insert 4 · Chord / Pad Bus', level: '-11.4 dB', bar: '55%' },
-                  { name: 'Master · Limiter Gain', level: '-1.0 dBTP', bar: '95%' },
-                ].map((channel, i) => (
-                  <div key={i} className={styles.channelRow}>
-                    <span className={styles.channelName}>{channel.name}</span>
-                    <div className={styles.meterBarOuter} style={{ margin: 0 }}>
-                      <div className={styles.meterBarFill} style={{ width: channel.bar }} />
+                  <div className={styles.meterRow}>
+                    <div className={styles.meterBox}>
+                      <span className={styles.meterLabel}>LUFS-I</span>
+                      <span className={styles.meterValue}>-14.1 LUFS</span>
                     </div>
-                    <span className={styles.channelLevel}>{channel.level}</span>
+                    <div className={styles.meterBox}>
+                      <span className={styles.meterLabel}>True Peak</span>
+                      <span className={styles.meterValue}>-1.02 dBTP</span>
+                    </div>
+                    <div className={styles.meterBox}>
+                      <span className={styles.meterLabel}>LRA · Crest</span>
+                      <span className={styles.meterValue}>6.8 LU · 9.4 dB</span>
+                    </div>
+                    <div className={styles.meterBox}>
+                      <span className={styles.meterLabel}>{isTr ? 'Spektrum' : 'Spectrum'}</span>
+                      <span className={styles.meterValue}>{isTr ? '7 Bant · +0.86 Kor.' : '7-Band · +0.86 Corr'}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {workbenchTab === 'tools' && (
+              <div className={styles.toolGrid}>
+                {P?.features.tools.items.map((tool, idx) => (
+                  <article key={idx} className={styles.toolCard}>
+                    <div className={styles.toolHeader}>
+                      <span className={styles.toolName}>{tool.name}</span>
+                      <span className={styles.toolRole}>{tool.role}</span>
+                    </div>
+                    <p className={styles.toolDetail}>{tool.detail}</p>
+                  </article>
+                ))}
+              </div>
+            )}
+
+            {workbenchTab === 'solver' && (
+              <div className={styles.pluginComparison}>
+                <div className={`${styles.pluginRow} ${styles.pluginRowHeader}`}>
+                  <span>{isTr ? 'Eklenti' : 'Plugin'}</span>
+                  <span>{isTr ? 'Ham Değer (0.0-1.0)' : 'Raw DAW Float'}</span>
+                  <span>{isTr ? 'fl_param Gerçek Birim' : 'fl_param Real Unit'}</span>
+                </div>
+                {PLUGIN_SOLVER_EXAMPLES.map((ex, idx) => (
+                  <div key={idx} className={styles.pluginRow}>
+                    <span style={{ color: 'var(--ink)' }}>{ex.plugin}</span>
+                    <span className={styles.pluginValueOld}>{ex.raw}</span>
+                    <span className={styles.pluginValueNew}>{ex.solved}</span>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-        </section>
+            )}
 
-        {/* Section 4: 14 Flat-Schema Tools + Opt-in fl_desk */}
-        <section className={world.section} aria-labelledby="flmcp-tools-heading">
-          <div className={world.sectionHead}>
-            <h2 id="flmcp-tools-heading">{P?.features.tools.title || '14 Flat-Schema Tools'}</h2>
-            <p>{P?.features.tools.description}</p>
-            <p className={world.hint} style={{ marginTop: '12px' }}>
-              {P?.features.tools.schemaNote}
-            </p>
-          </div>
-          <div className={world.sectionBody}>
-            <div className={styles.toolGrid}>
-              {P?.features.tools.items.map((tool, idx) => (
-                <article key={idx} className={styles.toolCard}>
-                  <div className={styles.toolHeader}>
-                    <span className={styles.toolName}>{tool.name}</span>
-                    <span className={styles.toolRole}>{tool.role}</span>
-                  </div>
-                  <p className={styles.toolDetail}>{tool.detail}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Section 5: 12-Genre Seeded Production Engine */}
-        <section className={world.section} aria-labelledby="flmcp-genres-heading">
-          <div className={world.sectionHead}>
-            <h2 id="flmcp-genres-heading">{P?.features.genreEngine.title || '12-Genre Production Engine'}</h2>
-            <p>{P?.features.genreEngine.description}</p>
-          </div>
-          <div className={world.sectionBody}>
-            <div className={styles.genreGrid}>
-              {GENRES.map((g, idx) => (
-                <button
-                  key={g.name.en}
-                  type="button"
-                  className={styles.genreCard}
-                  data-active={activeGenreIndex === idx}
-                  onClick={() => setActiveGenreIndex(idx)}
-                >
-                  <div className={styles.genreCardTop}>
-                    <h3 className={styles.genreTitle}>{isTr ? g.name.tr : g.name.en}</h3>
-                    <span className={styles.genreBpm}>{g.bpm}</span>
-                  </div>
-                  <p className={styles.genreDesc}>{isTr ? g.description.tr : g.description.en}</p>
-                </button>
-              ))}
-            </div>
-
-            <div className={styles.genreInspector}>
-              <div className={styles.genreInspectorHeader}>
-                <span className={styles.genreInspectorTitle}>
-                  {isTr ? activeGenre.name.tr : activeGenre.name.en}
-                </span>
-                <span className={styles.genreInspectorMeta}>
-                  {isTr ? 'Tempo' : 'Tempo'}: {activeGenre.bpm}
-                </span>
-                <span className={styles.genreInspectorMeta}>
-                  {isTr ? 'Gam' : 'Scale'}: {isTr ? activeGenre.scale.tr : activeGenre.scale.en}
-                </span>
-              </div>
-              <p className={styles.genreInspectorBody}>
-                <strong>{isTr ? 'Ritim ve Yazım Profili:' : 'Groove & Output Profile:'}</strong>{' '}
-                {isTr ? activeGenre.groove.tr : activeGenre.groove.en}
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 6: Plugin Parameter Solver in Real Units */}
-        <section className={world.section} aria-labelledby="flmcp-plugins-heading">
-          <div className={world.sectionHead}>
-            <h2 id="flmcp-plugins-heading">{P?.features.pluginSolver.title || 'Plugin Parameter Solver'}</h2>
-            <p>{P?.features.pluginSolver.description}</p>
-          </div>
-          <div className={world.sectionBody}>
-            <div className={styles.pluginComparison}>
-              <div className={`${styles.pluginRow} ${styles.pluginRowHeader}`}>
-                <span>{isTr ? 'Eklenti / Hedef' : 'Plugin Target'}</span>
-                <span>{isTr ? 'Ham DAW Parametresi (0.0-1.0)' : 'Raw DAW Float (0.0-1.0)'}</span>
-                <span>{isTr ? 'fl_param Gerçek Birim Çıktısı' : 'fl_param Real Unit Output'}</span>
-              </div>
-              {PLUGIN_SOLVER_EXAMPLES.map((ex, idx) => (
-                <div key={idx} className={styles.pluginRow}>
-                  <span style={{ color: 'var(--ink)' }}>{ex.plugin}</span>
-                  <span className={styles.pluginValueOld}>{ex.raw}</span>
-                  <span className={styles.pluginValueNew}>{ex.solved}</span>
+            {workbenchTab === 'genres' && (
+              <div>
+                <div className={styles.genreRibbon}>
+                  {GENRES.map((g, idx) => (
+                    <button
+                      key={g.name.en}
+                      type="button"
+                      className={styles.genreChip}
+                      data-active={activeGenreIndex === idx}
+                      onClick={() => setActiveGenreIndex(idx)}
+                    >
+                      <span>{isTr ? g.name.tr : g.name.en}</span>
+                      <span className={styles.genreBpm}>{g.bpm.replace(' BPM', '')}</span>
+                    </button>
+                  ))}
                 </div>
-              ))}
-            </div>
+                <div className={styles.genreInspector}>
+                  <div className={styles.genreInspectorHeader}>
+                    <span className={styles.genreInspectorTitle}>
+                      {isTr ? activeGenre.name.tr : activeGenre.name.en}
+                    </span>
+                    <span className={styles.genreInspectorMeta}>{activeGenre.bpm}</span>
+                    <span className={styles.genreInspectorMeta}>
+                      {isTr ? activeGenre.scale.tr : activeGenre.scale.en}
+                    </span>
+                  </div>
+                  <p className={styles.genreInspectorBody} style={{ marginBottom: '4px' }}>
+                    {isTr ? activeGenre.description.tr : activeGenre.description.en}
+                  </p>
+                  <p className={styles.genreInspectorBody} style={{ color: 'var(--muted)' }}>
+                    <strong>{isTr ? 'Groove:' : 'Groove:'}</strong>{' '}
+                    {isTr ? activeGenre.groove.tr : activeGenre.groove.en}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </section>
 
-        {/* Section 7: Transparency Box — Scripting API Limits & 5-Layer Resolution Ladder */}
-        <section id="architecture-transparency" className={world.section} aria-labelledby="flmcp-transparency-heading">
+        {/* Section 3: Compact 5-Layer Transparency Ladder */}
+        <section id="architecture-transparency" className={`${world.section} ${styles.compactSection}`} aria-labelledby="flmcp-transparency-heading">
           <div className={world.sectionHead}>
             <h2 id="flmcp-transparency-heading">{P?.transparency.title || 'Architecture Transparency'}</h2>
             <p>{P?.transparency.subtitle}</p>
           </div>
           <div className={world.sectionBody}>
             <div className={styles.transparencyBox}>
-              <p className={world.interpretation} style={{ fontSize: '1.05rem', marginBottom: '18px' }}>
-                {P?.transparency.intro}
-              </p>
-              <h3 style={{ margin: '0 0 8px', fontSize: '0.96rem', fontFamily: 'var(--font-family-mono)', color: 'var(--muted)' }}>
-                {P?.transparency.ladderTitle}
-              </h3>
+              <p className={styles.transparencyIntro}>{P?.transparency.intro}</p>
               <div className={styles.ladder}>
                 {P?.transparency.layers.map((step, idx) => (
-                  <div key={idx} className={styles.ladderStep}>
-                    <div className={styles.ladderHead}>
-                      <h4 className={styles.ladderTitle}>{step.layer}</h4>
-                      <span className={styles.ladderScope}>{step.scope}</span>
+                  <div key={idx} className={styles.ladderRow}>
+                    <div className={styles.ladderLayer}>{step.layer}</div>
+                    <div className={styles.ladderBody}>
+                      <p className={styles.ladderLine}>{step.how}</p>
+                      <p className={styles.ladderBoundary}>
+                        {step.scope} · {step.boundary}
+                      </p>
                     </div>
-                    <p className={styles.ladderHow}>{step.how}</p>
-                    <p className={styles.ladderBoundary}>{step.boundary}</p>
                   </div>
                 ))}
               </div>
@@ -777,8 +710,8 @@ const FlMcpShowcasePage: NextPage = () => {
           </div>
         </section>
 
-        {/* Section 8: Licensing & Privacy Boundary (or Live Checkout Plans when configured) */}
-        <section id="pricing" className={world.section} aria-labelledby="flmcp-pricing-heading">
+        {/* Section 4: License & Privacy Boundary (or Live Checkout Plans) */}
+        <section id="pricing" className={`${world.section} ${styles.compactSection}`} aria-labelledby="flmcp-pricing-heading">
           <div className={world.sectionHead}>
             <h2 id="flmcp-pricing-heading">
               {checkoutReady ? P?.pricing.title : P?.commerceNotice.title}
@@ -800,7 +733,7 @@ const FlMcpShowcasePage: NextPage = () => {
                     <ul className={styles.tierFeatures}>
                       {P?.pricing.free.features.map((feat: string, i: number) => (
                         <li key={i}>
-                          <Check size={16} color="var(--accent)" />
+                          <Check size={14} color="var(--accent)" />
                           <span>{feat}</span>
                         </li>
                       ))}
@@ -821,7 +754,7 @@ const FlMcpShowcasePage: NextPage = () => {
                     <ul className={styles.tierFeatures}>
                       {P?.pricing.pro.features.map((feat: string, i: number) => (
                         <li key={i}>
-                          <Check size={16} color="var(--accent)" />
+                          <Check size={14} color="var(--accent)" />
                           <span>{feat}</span>
                         </li>
                       ))}
@@ -841,7 +774,7 @@ const FlMcpShowcasePage: NextPage = () => {
                     <ul className={styles.tierFeatures}>
                       {P?.pricing.studio.features.map((feat: string, i: number) => (
                         <li key={i}>
-                          <Check size={16} color="var(--accent)" />
+                          <Check size={14} color="var(--accent)" />
                           <span>{feat}</span>
                         </li>
                       ))}
@@ -857,7 +790,7 @@ const FlMcpShowcasePage: NextPage = () => {
                     <strong style={{ color: 'var(--ink)' }}>
                       {P?.pricing.pack100.name} ({P?.pricing.pack100.price})
                     </strong>
-                    <p style={{ margin: '4px 0 0', fontSize: '0.9rem', color: 'var(--body)' }}>
+                    <p style={{ margin: '2px 0 0', fontSize: '0.86rem', color: 'var(--body)' }}>
                       {P?.pricing.pack100.description}
                     </p>
                   </div>
@@ -878,23 +811,14 @@ const FlMcpShowcasePage: NextPage = () => {
                     <p>{P?.commerceNotice.localBoundaryBody}</p>
                   </div>
                 </div>
-                <p className={world.privacy}>{P?.commerceNotice.commercialNote}</p>
-                <div className={world.actions}>
-                  <a href={GITHUB_RELEASES} target="_blank" rel="noreferrer" className={world.primary} style={{ gap: '8px' }}>
-                    <Download size={16} />
-                    <span>{P?.hero.getStarted}</span>
-                  </a>
-                  <Link href="/dashboard/fl-mcp" className={world.link}>
-                    {isTr ? 'Lisans Kasasını Aç' : 'Open License Vault'}
-                  </Link>
-                </div>
+                <p className={world.privacy} style={{ marginTop: '12px' }}>{P?.commerceNotice.commercialNote}</p>
               </>
             )}
           </div>
         </section>
 
-        {/* Section 9: Technical FAQ Accordion */}
-        <section className={world.section} aria-labelledby="flmcp-faq-heading">
+        {/* Section 5: Compact Technical FAQ Accordion */}
+        <section className={`${world.section} ${styles.compactSection}`} aria-labelledby="flmcp-faq-heading">
           <div className={world.sectionHead}>
             <h2 id="flmcp-faq-heading">{P?.faq.title || 'Frequently Asked Questions'}</h2>
             <p>{P?.faq.subtitle}</p>
@@ -912,7 +836,7 @@ const FlMcpShowcasePage: NextPage = () => {
                       aria-expanded={isOpen}
                     >
                       <span>{faq.q}</span>
-                      {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                      {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                     </button>
                     {isOpen && <div className={styles.faqAnswer}>{faq.a}</div>}
                   </div>

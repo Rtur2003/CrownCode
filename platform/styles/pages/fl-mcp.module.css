@@ -1,54 +1,59 @@
-/* FL-MCP: v0.3.0 verification metrics, dual installation cards, studio gallery,
-   14 flat-schema tools, 5-layer architecture ladder, 12-genre selector,
-   plugin parameter table, licensing notice, and dashboard vault.
-   Frames, primary buttons, fields, and section grids come from world-page.module.css. */
+/* FL-MCP: Compact, editorial v0.3.0 layout matching CrownCode's world color system
+   (--void, --accent, --ink, --body, --muted, --soft, --line, --line-strong).
+   Frames, headings, fields and buttons come from world-page.module.css. */
 
-/* ── Verification & Runtime Facts ─────────────────────────────────── */
-
-.factGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-  gap: 14px;
-  margin: 0;
+.compactSection {
+  padding-top: clamp(28px, 3.6vw, 42px) !important;
+  padding-bottom: clamp(28px, 3.6vw, 42px) !important;
 }
 
-.factCard {
+/* ── Top Verification & Spec Strip ────────────────────────────────── */
+
+.specStrip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 175px), 1fr));
+  gap: 10px;
+  margin: 0 0 18px;
+  padding: 0;
+}
+
+.specCell {
   min-width: 0;
-  padding: 16px 18px;
+  padding: 11px 14px;
   background: color-mix(in srgb, #050407 72%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
 }
 
-.factLabel {
-  display: block;
+.specCell dt {
+  margin: 0 0 3px;
   font-family: var(--font-family-mono);
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   color: var(--muted);
-  margin-bottom: 6px;
 }
 
-.factValue {
-  display: block;
-  font-size: 1.08rem;
+.specCell dd {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.38;
   color: var(--ink);
   font-weight: 500;
-  margin-bottom: 6px;
 }
 
-.factDetail {
-  margin: 0;
-  font-size: 0.86rem;
-  line-height: 1.48;
+.specSub {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.78rem;
+  font-weight: 400;
   color: var(--soft);
 }
 
-/* ── Dual Installation & Quickstart ───────────────────────────────── */
+/* ── Dual Installation Cards ──────────────────────────────────────── */
 
 .installGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 14px;
   margin: 0;
 }
 
@@ -56,7 +61,7 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  padding: 22px 20px;
+  padding: 16px 18px;
   background: color-mix(in srgb, #07060a 84%, transparent);
   border: 1px solid var(--line-strong);
   border-radius: 2px;
@@ -67,44 +72,44 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
-  gap: 8px 12px;
-  margin-bottom: 10px;
+  gap: 6px 10px;
+  margin-bottom: 6px;
 }
 
 .installTitle {
   margin: 0;
-  font-size: 1.12rem;
+  font-size: 1.04rem;
   color: var(--ink);
 }
 
 .installBadge {
   font-family: var(--font-family-mono);
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   color: var(--accent);
 }
 
 .installDesc {
-  margin: 0 0 16px;
-  font-size: 0.92rem;
-  line-height: 1.52;
+  margin: 0 0 12px;
+  font-size: 0.88rem;
+  line-height: 1.46;
   color: var(--body);
 }
 
 .bulletList {
   list-style: none;
   padding: 0;
-  margin: 0 0 20px;
+  margin: 0 0 14px;
   flex-grow: 1;
 }
 
 .bulletList li {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 7px 0;
+  gap: 8px;
+  padding: 5px 0;
   border-top: 1px solid var(--line);
-  font-size: 0.9rem;
-  line-height: 1.48;
+  font-size: 0.85rem;
+  line-height: 1.42;
   color: var(--body);
 }
 
@@ -114,22 +119,28 @@
 
 .bulletList li svg {
   flex-shrink: 0;
-  margin-top: 3px;
+  margin-top: 2px;
 }
 
 .packageNote {
-  margin: 12px 0 0;
+  margin: 10px 0 0;
   font-family: var(--font-family-mono);
-  font-size: 0.78rem;
-  line-height: 1.5;
+  font-size: 0.74rem;
+  line-height: 1.45;
   color: var(--soft);
   overflow-wrap: anywhere;
 }
 
+/* ── Code Blocks & Copy Controls ──────────────────────────────────── */
+
 .codeWrap {
   position: relative;
   min-width: 0;
-  margin: 8px 0 14px;
+  margin: 4px 0 10px;
+}
+
+.codeWrap:last-child {
+  margin-bottom: 0;
 }
 
 .codeToolbar {
@@ -137,7 +148,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;
+  padding: 6px 10px;
   background: color-mix(in srgb, #050407 90%, transparent);
   border: 1px solid var(--line);
   border-bottom: 0;
@@ -146,7 +157,7 @@
 
 .codeLabel {
   font-family: var(--font-family-mono);
-  font-size: 0.76rem;
+  font-size: 0.73rem;
   color: var(--muted);
   overflow-wrap: anywhere;
 }
@@ -154,11 +165,11 @@
 .copyBtn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
+  gap: 5px;
+  padding: 3px 9px;
   font: inherit;
   font-family: var(--font-family-mono);
-  font-size: 0.76rem;
+  font-size: 0.73rem;
   color: var(--ink);
   background: color-mix(in srgb, #0b0a0f 85%, transparent);
   border: 1px solid var(--line-strong);
@@ -175,7 +186,7 @@
 
 .codeBlockCompact {
   margin: 0;
-  padding: 14px 16px;
+  padding: 10px 12px;
   max-width: 100%;
   box-sizing: border-box;
   background: #040306;
@@ -183,18 +194,51 @@
   border-radius: 0 0 2px 2px;
   overflow-x: auto;
   font-family: var(--font-family-mono);
-  font-size: 0.8rem;
-  line-height: 1.58;
+  font-size: 0.78rem;
+  line-height: 1.5;
   color: var(--ink);
 }
 
-/* ── Studio Visual Gallery ────────────────────────────────────────── */
+/* ── Compact Underline Tabs ───────────────────────────────────────── */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin: 0 0 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tab {
+  padding: 7px 0 9px;
+  font: inherit;
+  font-family: var(--font-family-mono);
+  font-size: 0.82rem;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.tab:hover {
+  color: var(--ink);
+}
+
+.tab[data-active='true'] {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+/* ── Workbench Panel: Gallery, Telemetry, Tools, Genres, Solver ───── */
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: 24px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
 }
 
 .shot {
@@ -213,69 +257,57 @@
 }
 
 .shot figcaption {
-  margin-top: 10px;
-  font-size: 0.92rem;
-  line-height: 1.45;
+  margin-top: 7px;
+  font-size: 0.84rem;
+  line-height: 1.4;
   color: var(--muted);
 }
 
-/* ── Interactive DAW Console & Telemetry ──────────────────────────── */
-
-.dawConsole {
+.telemetryRibbon {
   min-width: 0;
-  margin: 0;
-  padding: 20px;
+  padding: 12px 16px;
   background: color-mix(in srgb, #08070b 88%, var(--accent) 12%);
   border: 1px solid var(--line-strong);
   border-radius: 2px;
 }
 
-.dawHeader {
+.telemetryHead {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   justify-content: space-between;
-  gap: 10px 14px;
-  padding-bottom: 14px;
-  margin-bottom: 18px;
-  border-bottom: 1px solid var(--line);
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-family: var(--font-family-mono);
+  font-size: 0.78rem;
+  color: var(--accent);
 }
 
 .dawStatus {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-family: var(--font-family-mono);
-  font-size: 0.82rem;
-  color: var(--accent);
+  gap: 8px;
 }
 
 .statusDot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 8px var(--accent);
   flex-shrink: 0;
 }
 
-.dawLatency {
-  font-family: var(--font-family-mono);
-  font-size: 0.78rem;
-  color: var(--muted);
-}
-
 .meterRow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
-  gap: 12px;
-  margin-bottom: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+  gap: 10px;
 }
 
 .meterBox {
   min-width: 0;
-  padding: 14px;
-  background: color-mix(in srgb, #040306 76%, transparent);
+  padding: 9px 11px;
+  background: color-mix(in srgb, #040306 78%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
 }
@@ -283,91 +315,31 @@
 .meterLabel {
   display: block;
   font-family: var(--font-family-mono);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--muted);
-  margin-bottom: 6px;
+  margin-bottom: 3px;
 }
 
 .meterValue {
   display: block;
   font-family: var(--font-family-mono);
-  font-size: 1.1rem;
+  font-size: 0.96rem;
   color: var(--ink);
   font-weight: 500;
 }
 
-.meterBarOuter {
-  width: 100%;
-  height: 5px;
-  background: #19161d;
-  border-radius: 999px;
-  margin-top: 10px;
-  overflow: hidden;
-}
-
-.meterBarFill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 999px;
-  transition: width 0.35s ease;
-}
-
-.channelRack {
-  min-width: 0;
-  padding: 14px 16px;
-  background: color-mix(in srgb, #040306 82%, transparent);
-  border: 1px solid var(--line);
-  border-radius: 2px;
-}
-
-.channelRackHeader {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 10px;
-  font-family: var(--font-family-mono);
-  font-size: 0.75rem;
-  color: var(--muted);
-}
-
-.channelRow {
-  display: grid;
-  grid-template-columns: minmax(120px, 210px) minmax(60px, 1fr) 84px;
-  gap: 12px;
-  align-items: center;
-  padding: 8px 0;
-  border-top: 1px solid var(--line);
-  font-size: 0.88rem;
-}
-
-.channelRow:first-of-type {
-  border-top: 0;
-}
-
-.channelName {
-  color: var(--ink);
-  min-width: 0;
-}
-
-.channelLevel {
-  text-align: right;
-  font-family: var(--font-family-mono);
-  font-size: 0.78rem;
-  color: var(--accent);
-}
-
-/* ── 14 Flat-Schema Tools & Architecture Ladder ───────────────────── */
+/* ── Compact Tool Spec List (2 columns) ───────────────────────────── */
 
 .toolGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 10px;
   margin: 0;
 }
 
 .toolCard {
   min-width: 0;
-  padding: 18px;
+  padding: 12px 14px;
   background: color-mix(in srgb, #050407 68%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
@@ -378,150 +350,74 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
-  gap: 6px 10px;
-  margin-bottom: 8px;
+  gap: 4px 8px;
+  margin-bottom: 5px;
 }
 
 .toolName {
   font-family: var(--font-family-mono);
-  font-size: 0.96rem;
+  font-size: 0.88rem;
   color: var(--accent);
 }
 
 .toolRole {
   font-family: var(--font-family-mono);
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   color: var(--muted);
 }
 
 .toolDetail {
   margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.54;
+  font-size: 0.84rem;
+  line-height: 1.45;
   color: var(--body);
 }
 
-.transparencyBox {
-  min-width: 0;
-  padding: 22px 20px;
-  background: color-mix(in srgb, #060509 86%, transparent);
-  border: 1px solid var(--line-strong);
-  border-radius: 2px;
-}
+/* ── Compact 12-Genre Selector ────────────────────────────────────── */
 
-.ladder {
-  display: grid;
-  gap: 12px;
-  margin: 18px 0 0;
-}
-
-.ladderStep {
-  min-width: 0;
-  padding: 16px 18px;
-  background: color-mix(in srgb, #040306 76%, transparent);
-  border: 1px solid var(--line);
-  border-radius: 2px;
-}
-
-.ladderHead {
+.genreRibbon {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 6px 16px;
-  margin-bottom: 8px;
+  gap: 8px;
+  margin: 0 0 12px;
 }
 
-.ladderTitle {
-  margin: 0;
-  font-family: var(--font-family-mono);
-  font-size: 0.92rem;
-  color: var(--accent);
-}
-
-.ladderScope {
-  font-size: 0.84rem;
-  color: var(--muted);
-}
-
-.ladderHow {
-  margin: 0 0 6px;
-  font-size: 0.92rem;
-  line-height: 1.52;
-  color: var(--ink);
-}
-
-.ladderBoundary {
-  margin: 0;
-  font-size: 0.86rem;
-  line-height: 1.48;
-  color: var(--soft);
-}
-
-/* ── Interactive Genre Grid ───────────────────────────────────────── */
-
-.genreGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
-  gap: 12px;
-  margin: 0;
-}
-
-.genreCard {
-  min-width: 0;
-  padding: 15px 16px;
-  background: color-mix(in srgb, #050407 65%, transparent);
+.genreChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  background: color-mix(in srgb, #050407 72%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
   cursor: pointer;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
-  text-align: left;
   font: inherit;
+  font-size: 0.86rem;
+  color: var(--body);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.genreCard:hover {
-  background: color-mix(in srgb, #050407 82%, var(--accent) 18%);
+.genreChip:hover {
   border-color: var(--line-strong);
-}
-
-.genreCard[data-active='true'] {
-  background: color-mix(in srgb, #050407 78%, var(--accent) 22%);
-  border-color: var(--accent);
-}
-
-.genreCardTop {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 6px;
-}
-
-.genreTitle {
-  font-size: 1rem;
   color: var(--ink);
-  margin: 0;
+}
+
+.genreChip[data-active='true'] {
+  background: color-mix(in srgb, #050407 76%, var(--accent) 24%);
+  border-color: var(--accent);
+  color: var(--ink);
 }
 
 .genreBpm {
   font-family: var(--font-family-mono);
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: var(--accent);
-  flex-shrink: 0;
-}
-
-.genreDesc {
-  font-size: 0.86rem;
-  line-height: 1.48;
-  color: var(--muted);
-  margin: 0;
 }
 
 .genreInspector {
   min-width: 0;
-  margin-top: 18px;
-  padding: 18px 20px;
-  background: color-mix(in srgb, #050407 78%, var(--accent) 10%);
+  padding: 14px 16px;
+  background: color-mix(in srgb, #050407 80%, var(--accent) 10%);
   border: 1px solid var(--line-strong);
   border-radius: 2px;
 }
@@ -529,105 +425,169 @@
 .genreInspectorHeader {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 20px;
+  gap: 6px 16px;
   align-items: baseline;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .genreInspectorTitle {
-  font-size: 1.06rem;
+  font-size: 1rem;
   color: var(--accent);
 }
 
 .genreInspectorMeta {
   font-family: var(--font-family-mono);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   color: var(--muted);
 }
 
 .genreInspectorBody {
   margin: 0;
-  font-size: 0.94rem;
-  line-height: 1.52;
+  font-size: 0.88rem;
+  line-height: 1.48;
   color: var(--body);
 }
 
-/* ── Plugin Parameter Table ───────────────────────────────────────── */
+/* ── Compact Plugin Parameter Table ───────────────────────────────── */
 
 .pluginComparison {
   display: grid;
-  gap: 10px;
+  gap: 6px;
   margin: 0;
 }
 
 .pluginRow {
   min-width: 0;
   display: grid;
-  grid-template-columns: minmax(140px, 1fr) minmax(140px, 1.1fr) minmax(160px, 1.3fr);
-  gap: 12px;
-  padding: 13px 16px;
+  grid-template-columns: minmax(120px, 1fr) minmax(120px, 1fr) minmax(150px, 1.3fr);
+  gap: 10px;
+  padding: 9px 13px;
   align-items: center;
-  background: color-mix(in srgb, #050407 58%, transparent);
+  background: color-mix(in srgb, #050407 62%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .pluginRowHeader {
-  background: color-mix(in srgb, #050407 85%, transparent);
+  background: color-mix(in srgb, #050407 88%, transparent);
   font-family: var(--font-family-mono);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: var(--muted);
 }
 
 .pluginValueOld {
   font-family: var(--font-family-mono);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   color: var(--soft);
   overflow-wrap: anywhere;
 }
 
 .pluginValueNew {
   font-family: var(--font-family-mono);
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   color: var(--accent);
   overflow-wrap: anywhere;
+}
+
+/* ── Compact 5-Layer Transparency Ladder ──────────────────────────── */
+
+.transparencyBox {
+  min-width: 0;
+  padding: 16px 18px;
+  background: color-mix(in srgb, #060509 86%, transparent);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+}
+
+.transparencyIntro {
+  margin: 0 0 14px;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  color: var(--body);
+}
+
+.ladder {
+  display: grid;
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.ladderRow {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(155px, 210px) minmax(0, 1fr);
+  gap: 6px 16px;
+  padding: 10px 14px;
+  background: color-mix(in srgb, #040306 78%, transparent);
+  border-top: 1px solid var(--line);
+  align-items: baseline;
+}
+
+.ladderRow:first-child {
+  border-top: 0;
+}
+
+.ladderLayer {
+  font-family: var(--font-family-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.ladderBody {
+  min-width: 0;
+}
+
+.ladderLine {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.44;
+  color: var(--ink);
+}
+
+.ladderBoundary {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--soft);
 }
 
 /* ── Commerce Notice & Pricing Matrix ─────────────────────────────── */
 
 .commerceGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 14px;
   margin: 0;
 }
 
 .commerceCard {
   min-width: 0;
-  padding: 20px;
+  padding: 16px 18px;
   background: color-mix(in srgb, #050407 72%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
 }
 
 .commerceCard h3 {
-  margin: 0 0 8px;
-  font-size: 1.06rem;
+  margin: 0 0 6px;
+  font-size: 0.98rem;
   color: var(--ink);
 }
 
 .commerceCard p {
   margin: 0;
-  font-size: 0.92rem;
-  line-height: 1.56;
+  font-size: 0.86rem;
+  line-height: 1.5;
   color: var(--body);
 }
 
 .pricingGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 14px;
   margin: 0;
 }
 
@@ -635,7 +595,7 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  padding: 24px 20px;
+  padding: 18px 16px;
   background: color-mix(in srgb, #07060a 84%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
@@ -649,10 +609,10 @@
 
 .pricingBadge {
   align-self: flex-start;
-  margin-bottom: 10px;
-  padding: 3px 10px;
+  margin-bottom: 8px;
+  padding: 2px 9px;
   font-family: var(--font-family-mono);
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: var(--accent);
   background: color-mix(in srgb, #050407 75%, transparent);
   border: 1px solid var(--accent);
@@ -660,58 +620,58 @@
 }
 
 .tierName {
-  font-size: 1.18rem;
+  font-size: 1.08rem;
   color: var(--ink);
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 }
 
 .tierPriceBox {
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 6px;
+  margin-bottom: 8px;
 }
 
 .tierPrice {
-  font-size: 2.05rem;
+  font-size: 1.85rem;
   font-weight: 400;
   color: var(--ink);
   font-family: var(--font-family-mono);
 }
 
 .tierPeriod {
-  font-size: 0.9rem;
+  font-size: 0.84rem;
   color: var(--muted);
 }
 
 .tierDesc {
-  font-size: 0.92rem;
-  line-height: 1.52;
+  font-size: 0.86rem;
+  line-height: 1.46;
   color: var(--body);
-  margin: 0 0 18px;
+  margin: 0 0 12px;
 }
 
 .tierFeatures {
   list-style: none;
   padding: 0;
-  margin: 0 0 24px;
+  margin: 0 0 16px;
   flex-grow: 1;
 }
 
 .tierFeatures li {
-  padding: 8px 0;
-  font-size: 0.9rem;
-  line-height: 1.45;
+  padding: 6px 0;
+  font-size: 0.84rem;
+  line-height: 1.4;
   color: var(--body);
   border-top: 1px solid var(--line);
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 8px;
 }
 
 .tierFeatures li svg {
   flex-shrink: 0;
-  margin-top: 3px;
+  margin-top: 2px;
 }
 
 .tierFeatures li:first-child {
@@ -719,8 +679,8 @@
 }
 
 .topupBanner {
-  margin-top: 18px;
-  padding: 18px 20px;
+  margin-top: 14px;
+  padding: 14px 16px;
   background: color-mix(in srgb, #050407 72%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
@@ -728,20 +688,20 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 12px;
 }
 
-/* ── FAQ Accordion ────────────────────────────────────────────────── */
+/* ── Compact FAQ Accordion ────────────────────────────────────────── */
 
 .faqList {
   display: grid;
-  gap: 10px;
+  gap: 6px;
   margin: 0;
 }
 
 .faqItem {
   min-width: 0;
-  background: color-mix(in srgb, #050407 55%, transparent);
+  background: color-mix(in srgb, #050407 58%, transparent);
   border: 1px solid var(--line);
   border-radius: 2px;
   overflow: hidden;
@@ -752,13 +712,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
-  padding: 16px 18px;
+  gap: 12px;
+  padding: 12px 15px;
   background: none;
   border: 0;
   color: var(--ink);
   font: inherit;
-  font-size: 1.02rem;
+  font-size: 0.94rem;
   text-align: left;
   cursor: pointer;
 }
@@ -768,44 +728,13 @@
 }
 
 .faqAnswer {
-  padding: 0 18px 18px;
-  font-size: 0.94rem;
-  line-height: 1.6;
+  padding: 0 15px 13px;
+  font-size: 0.88rem;
+  line-height: 1.54;
   color: var(--body);
 }
 
-/* ── Tabs & Dashboard Elements ────────────────────────────────────── */
-
-.tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 20px;
-  margin: 0 0 16px;
-  border-bottom: 1px solid var(--line);
-}
-
-.tab {
-  padding: 9px 0 11px;
-  font: inherit;
-  font-family: var(--font-family-mono);
-  font-size: 0.84rem;
-  color: var(--muted);
-  background: none;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.tab:hover {
-  color: var(--ink);
-}
-
-.tab[data-active='true'] {
-  color: var(--ink);
-  border-bottom-color: var(--accent);
-}
+/* ── Dashboard Vault & Setup Elements ─────────────────────────────── */
 
 .codeBlock {
   position: relative;
@@ -964,23 +893,19 @@
 }
 
 @media (max-width: 680px) {
-  .dawConsole,
   .installCard,
   .transparencyBox,
   .vaultBox,
   .creditCard {
-    padding: 16px 14px;
+    padding: 14px;
   }
-  .channelRow {
-    grid-template-columns: 1fr auto;
-  }
-  .channelRow .meterBarOuter {
-    grid-column: 1 / -1;
-    margin-top: 4px;
+  .ladderRow {
+    grid-template-columns: 1fr;
+    gap: 4px;
   }
   .pluginRow {
     grid-template-columns: 1fr;
-    gap: 6px;
+    gap: 4px;
   }
   .creditCard {
     grid-template-columns: 1fr;
