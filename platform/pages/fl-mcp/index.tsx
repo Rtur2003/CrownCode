@@ -1,6 +1,6 @@
-// FL-MCP: Autonomous AI Copilot for FL Studio 2025.
-// Product showcase, studio architecture visuals, interactive 12-genre matrix,
-// plugin parameter solver in real dB/Hz, closed-loop loudness analysis, and pricing.
+// FL-MCP v0.3.0: Local FL Studio 2025 MCP Server & FL-MCP Studio Desktop App.
+// Product engineering showcase, verification metrics, side-by-side install flows,
+// 14 flat-schema tools, 5-layer Scripting API resolution ladder, and 12 seeded genres.
 
 import React, { useState } from 'react'
 import type { NextPage } from 'next'
@@ -10,6 +10,9 @@ import {
   ChevronDown,
   ChevronUp,
   Check,
+  Copy,
+  Download,
+  ExternalLink,
   ArrowRight,
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
@@ -22,10 +25,12 @@ import world from '@/styles/components/world-page.module.css'
 import styles from '@/styles/pages/fl-mcp.module.css'
 
 const ENTRY = PRODUCT_CATALOG.find(entry => entry.id === 'fl-mcp')
+const GITHUB_REPO = 'https://github.com/Rtur2003/FL-MCP'
+const GITHUB_RELEASES = 'https://github.com/Rtur2003/FL-MCP/releases'
 
 interface GenreSpec {
   name: { tr: string; en: string }
-  bpm: number
+  bpm: string
   scale: { tr: string; en: string }
   groove: { tr: string; en: string }
   description: { tr: string; en: string }
@@ -33,159 +38,159 @@ interface GenreSpec {
 
 const GENRES: GenreSpec[] = [
   {
-    name: { tr: 'House ve Tech House', en: 'House & Tech House' },
-    bpm: 126,
+    name: { tr: 'House', en: 'House' },
+    bpm: '126 BPM',
     scale: { tr: 'La Minör (A Minor)', en: 'A Minor' },
     groove: {
-      tr: 'Dört dörtlük kick vuruşları ve 16lık swingli hi-hat yürüyüşü',
-      en: 'Four-on-the-floor kick with swinging 16th hi-hats',
+      tr: 'Dört dörtlük kick vuruşları ve 16lık offbeat açık hi-hat yürüyüşü',
+      en: 'Four-on-the-floor kick with offbeat open hi-hat drive',
     },
     description: {
-      tr: 'Senkoplu açık hi-hatler, sidechain pompalı org akorları ve sürükleyici sub-bas yürüyüşü.',
-      en: 'Driving sub-bass groove with syncopated open hi-hats and sidechained organ chords.',
+      tr: 'Senkoplu org akorları, kazanç kademeli alt bas ve piyano rulosu ritim şablonu.',
+      en: 'Syncopated chord progressions, sub-bass gain staging and sequenced groove.',
     },
   },
   {
-    name: { tr: 'Techno (Peak-Time)', en: 'Techno (Peak-Time)' },
-    bpm: 132,
+    name: { tr: 'Techno', en: 'Techno' },
+    bpm: '132 BPM',
     scale: { tr: 'Fa Minör (F Minor)', en: 'F Minor' },
     groove: {
-      tr: 'Rumble sub-kick dokusu ve kesintisiz ride zil sürüşü',
-      en: 'Rumble sub-kick with driving ride cymbals',
+      tr: 'Rumble sub-kick gövdesi ve mekanik ride sürüşü',
+      en: 'Rumble sub-kick low-end with hypnotic ride pulse',
     },
     description: {
-      tr: 'Monofonik yuvarlanan bas hatları, endüstriyel perküsyon vuruşları ve karanlık reverb kuyrukları.',
-      en: 'Monophonic rolling basslines, industrial transient percussion, and dark reverb tails.',
+      tr: 'Yuvarlanan monofonik alt frekanslar, endüstriyel perküsyon ve karanlık yankı kuyruğu.',
+      en: 'Rolling monophonic low-end sequences, crisp transients and dark room tails.',
     },
   },
   {
-    name: { tr: 'Trap ve Drill', en: 'Trap & Drill' },
-    bpm: 142,
-    scale: { tr: 'Do# Minör (C# Minor)', en: 'C# Minor' },
-    groove: {
-      tr: 'Yarım zamanlı vuruş ve 32lik üçleme hi-hat ruloları',
-      en: 'Half-time punch with rolling 32nd triplet hi-hats',
-    },
-    description: {
-      tr: 'Perde kaymalı 808 glide baslar, doygun soft-clipper katmanı ve keskin rimshot geçişleri.',
-      en: 'Sliding 808 glides with aggressive soft-clipper saturation and snapping rimshots.',
-    },
-  },
-  {
-    name: { tr: 'Lo-Fi Hip Hop', en: 'Lo-Fi Hip Hop' },
-    bpm: 84,
-    scale: { tr: 'Mi♭ Majör (Eb Major)', en: 'Eb Major' },
-    groove: {
-      tr: 'Kuantize edilmemiş doğal boom-bap ritmi ve plak dokusu',
-      en: 'Swung unquantized boom-bap rhythm with vinyl dust',
-    },
-    description: {
-      tr: 'Caz 9lu ve 11li akor seslendirmeleri, kaset dalgalanması ve sıcak Rhodes yürüyüşleri.',
-      en: 'Jazzy minor 9th and 11th chords, tape wow and flutter, and mellow Rhodes progressions.',
-    },
-  },
-  {
-    name: { tr: 'Drum & Bass', en: 'Drum & Bass' },
-    bpm: 174,
-    scale: { tr: 'Mi Minör (E Minor)', en: 'E Minor' },
-    groove: {
-      tr: 'Amen break senkopları ve hayalet trampet dokunuşları',
-      en: 'Amen break syncopations with ghost snares',
-    },
-    description: {
-      tr: 'Modülasyonlu Reese baslar, 120 Hz cerrahi alt frekans ayrımı ve yüksek enerjili breakbeatler.',
-      en: 'Modulated Reese basslines, surgical sub-crossover at 120 Hz, and blistering breakbeats.',
-    },
-  },
-  {
-    name: { tr: 'Oriental Trap (Hicaz)', en: 'Oriental Trap (Hicaz)' },
-    bpm: 138,
-    scale: { tr: 'Re Hicaz (Frigyen Dominant)', en: 'D Hicaz (Phrygian Dominant)' },
-    groove: {
-      tr: 'Modern 808 baslar üzerinde darbuka ve tef senkopları',
-      en: 'Darbuka and tef syncopation over modern 808s',
-    },
-    description: {
-      tr: 'Makamsal perde bükmeleri, otantik melodik yürüyüşler ve kayan alt bas katmanları.',
-      en: 'Microtonal makam note bends, authentic melodic lines, and sliding sub-bass.',
-    },
-  },
-  {
-    name: { tr: 'Synthwave ve Darksynth', en: 'Synthwave & Darksynth' },
-    bpm: 110,
+    name: { tr: 'Trance', en: 'Trance' },
+    bpm: '138 BPM',
     scale: { tr: 'Re Minör (D Minor)', en: 'D Minor' },
     groove: {
-      tr: 'Gated reverb trampet vuruşları ve ritmik sidechain',
-      en: 'Gated snare backbeat with pumping sidechain',
+      tr: 'Yuvarlanan offbeat bas dizilimi ve yan-zincir pompalaması',
+      en: 'Rolling offbeat bassline with pumped supersaw transitions',
     },
     description: {
-      tr: 'Analog testere dalga bas arpejleri, vintage Juno koro padleri ve parlak bakır leadler.',
-      en: 'Analog saw bass arpeggios, vintage Juno chorus pads, and soaring brass leads.',
+      tr: 'Yüksek enerjili supersaw akor kırılımları, filtre tarama otomasyonu ve 138 BPM itişi.',
+      en: 'Euphoric supersaw progressions, automated filter sweeps and 138 BPM drive.',
     },
   },
   {
-    name: { tr: 'Ambient ve Sinematik', en: 'Ambient & Cinematic' },
-    bpm: 72,
-    scale: { tr: 'Si Minör (B Minor)', en: 'B Minor' },
+    name: { tr: 'DnB', en: 'DnB' },
+    bpm: '174 BPM',
+    scale: { tr: 'Mi Minör (E Minor)', en: 'E Minor' },
     groove: {
-      tr: 'Evrilen poliritmik dokular ve dinamik kreşendo dalgaları',
-      en: 'Evolving polyrhythmic textures with swell pulses',
+      tr: 'Senkoplu breakbeat hayalet trampetleri ve keskin kick yerleşimi',
+      en: 'Syncopated breakbeat ghost snares with locked kick pocket',
     },
     description: {
-      tr: 'Granüler dron katmanları, derin shimmer yankıları ve orkestral yaylı yükselişleri.',
-      en: 'Granular drone layers, infinite shimmer reverbs, and gentle orchestral swells.',
+      tr: 'Reese alt bas geçişleri, cerrahi alt frekans ayrımı ve 174 BPM kırık ritim örgüsü.',
+      en: 'Reese basslines, tight sub crossover and high-tempo breakbeat sequencing.',
     },
   },
   {
-    name: { tr: 'Cyberpunk Midtempo', en: 'Cyberpunk Midtempo' },
-    bpm: 105,
+    name: { tr: 'Dubstep', en: 'Dubstep' },
+    bpm: '140 BPM',
+    scale: { tr: 'Fa Minör (F Minor)', en: 'F Minor' },
+    groove: {
+      tr: 'Yarım zamanlı ağır trampet darbesi ve alt bas ağırlığı',
+      en: 'Half-time snare weight on beat three with mono sub foundation',
+    },
+    description: {
+      tr: 'Modülasyonlu orta frekans growl katmanları ve temiz alt bas headroom ayrımı.',
+      en: 'Modulated midrange growls with isolated clean mono sub-bass headroom.',
+    },
+  },
+  {
+    name: { tr: 'Trap', en: 'Trap' },
+    bpm: '142 BPM',
+    scale: { tr: 'Do# Minör (C# Minor)', en: 'C# Minor' },
+    groove: {
+      tr: 'Yarım zamanlı vuruşlar ve 32lik üçleme hi-hat ruloları',
+      en: 'Half-time bounce with 32nd triplet hi-hat rolls',
+    },
+    description: {
+      tr: 'Perde kaymalı 808 glide hatları, keskin trampet geçişleri ve karanlık melodi döngüleri.',
+      en: 'Pitch-gliding 808 patterns, snapping snares and dark melodic loops.',
+    },
+  },
+  {
+    name: { tr: 'Oriental Trap / Hicaz', en: 'Oriental Trap / Hicaz' },
+    bpm: '138 BPM',
+    scale: { tr: 'Re Hicaz (Frigyen Dominant)', en: 'D Hicaz (Phrygian Dominant)' },
+    groove: {
+      tr: 'Modern 808 baslar üzerinde darbuka ve bendir senkopları',
+      en: 'Darbuka and bendir rhythmic pocket over modern 808 glides',
+    },
+    description: {
+      tr: 'Hicaz gam dizilimi, makamsal melodi yazımı ve otantik perküsyon kit seçimi.',
+      en: 'Hicaz scale voicings, ornamented melodic writing and matched percussion.',
+    },
+  },
+  {
+    name: { tr: 'Boom Bap', en: 'Boom Bap' },
+    bpm: '90 BPM',
+    scale: { tr: 'Mi♭ Majör (Eb Major)', en: 'Eb Major' },
+    groove: {
+      tr: 'İnsanileştirilmiş swing ve akustik davul cebi',
+      en: 'Swung unquantized pocket with dusty acoustic kit timing',
+    },
+    description: {
+      tr: 'Caz yedili akor kesimleri, yumuşak plak doygunluğu ve gövdeli trampet.',
+      en: 'Chopped jazz seventh voicings, subtle warmth and punchy acoustic snares.',
+    },
+  },
+  {
+    name: { tr: 'Lo-Fi', en: 'Lo-Fi' },
+    bpm: '82 BPM',
     scale: { tr: 'Sol Minör (G Minor)', en: 'G Minor' },
     groove: {
-      tr: 'Ağır bas vuruşları ve doygun alt-orta frekans darbeleri',
-      en: 'Heavy stomping kick with saturated downbeats',
+      tr: 'Rahat kuantizesiz tempo cebi ve hafif kapalı hat dokusu',
+      en: 'Laid-back unquantized beat pocket with muted hat texture',
     },
     description: {
-      tr: 'Wavefolder bas hırıltıları, metalik trampetler ve perde bükümlü vokoder akorları.',
-      en: 'Aggressive wavefolded bass growls, metallic snares, and pitch-bent vocoder stabs.',
+      tr: 'Sıcak Rhodes akorları, 9lu uzantılar ve yumuşatılmış üst frekans spektrumu.',
+      en: 'Warm Rhodes ninths, softened treble shelf and intimate stereo balance.',
     },
   },
   {
-    name: { tr: 'UK Garage ve 2-Step', en: 'UK Garage & 2-Step' },
-    bpm: 134,
-    scale: { tr: 'Fa# Minör (F# Minor)', en: 'F# Minor' },
+    name: { tr: 'Pop', en: 'Pop' },
+    bpm: '116 BPM',
+    scale: { tr: 'Do Majör (C Major)', en: 'C Major' },
     groove: {
-      tr: 'Sekmeli shuffle ritmi ve gecikmeli offbeat trampetler',
-      en: 'Skippy swung shuffle with delayed offbeat snares',
+      tr: 'Net dörtlü itiş ve nakarat öncesi enerji yükselişi',
+      en: 'Clean four-beat pocket built around pre-chorus lift',
     },
     description: {
-      tr: 'Derin oyuk sub-bas sekmeleri, kesik vokal örnekleri ve parlak shaker örgüleri.',
-      en: 'Deep hollow sub-bounces, vocal chops, and crisp shaker grooves.',
+      tr: 'Vokal için açılmış orta frekans cebi, sıkı bas ve dengeli dinamik aralık.',
+      en: 'Vocal-pocket midrange clarity, tight bass guitar anchor and balanced LUFS.',
     },
   },
   {
-    name: { tr: 'Afrobeats', en: 'Afrobeats' },
-    bpm: 102,
-    scale: { tr: 'Sol Majör (G Major)', en: 'G Major' },
+    name: { tr: 'Synthwave', en: 'Synthwave' },
+    bpm: '110 BPM',
+    scale: { tr: 'La Minör (A Minor)', en: 'A Minor' },
     groove: {
-      tr: '3e karşı 2 poliritmik rimshot ve shaker yürüyüşü',
-      en: 'Polyrhythmic 3-against-2 rimshots and shakers',
+      tr: 'Gated reverb trampet vurgusu ve sekizlik oktav bas',
+      en: 'Gated reverb backbeat paired with driven octave saw bass',
     },
     description: {
-      tr: 'Senkoplu log drum vuruşları, sıcak elektro gitar arpejleri ve akılda kalıcı melodiler.',
-      en: 'Syncopated log drums, warm electric guitar plucks, and catchy melodic hooks.',
+      tr: 'Analog testere dalga bas arpejleri, sıcak koro padleri ve parlak synth lead.',
+      en: 'Analog octave saw bass arpeggios, wide chorus pads and crisp synth leads.',
     },
   },
   {
-    name: { tr: 'Neo-Soul ve R&B', en: 'Neo-Soul & R&B' },
-    bpm: 88,
-    scale: { tr: 'La♭ Majör (Ab Major)', en: 'Ab Major' },
+    name: { tr: 'Reggaeton', en: 'Reggaeton' },
+    bpm: '94 BPM',
+    scale: { tr: 'Si Minör (B Minor)', en: 'B Minor' },
     groove: {
-      tr: 'Ritim cebinin gerisinde akan doğal groove ve hayalet notalar',
-      en: 'Behind-the-beat pocket groove with ghost notes',
+      tr: 'Klasik dembow ritim iskeleti ve sıkı trampet darbesi',
+      en: 'Classic dembow kick-snare syncopation with locked mono sub',
     },
     description: {
-      tr: 'Genişletilmiş akor seslendirmeleri, kadifemsi bas geçişleri ve sıcak armoniler.',
-      en: 'Extended chord voicings, velvety bass fills, and silky vocal harmonies.',
+      tr: 'Dembow perküsyon dizilimi, sıkı mono sub bas ve modern perküsyon kit uyumu.',
+      en: 'Dembow percussion lattice, controlled mono sub weight and sparse lead stabs.',
     },
   },
 ]
@@ -194,49 +199,33 @@ const PLUGIN_SOLVER_EXAMPLES = [
   {
     plugin: 'FabFilter Pro-Q 3',
     raw: 'band1_freq = 0.432',
-    solved: {
-      tr: 'Kesim: 32 Hz, Q: 0.71 (18 dB/oktav HPF)',
-      en: 'Cutoff: 32 Hz, Q: 0.71 (18 dB/oct HPF)',
-    },
+    solved: 'real="32 Hz", Q=0.71 (18 dB/oct HPF)',
   },
   {
     plugin: 'FabFilter Pro-C 2',
     raw: 'thresh = 0.650, ratio = 0.380',
-    solved: {
-      tr: 'Eşik: -14.2 dB, Oran: 4.2:1',
-      en: 'Threshold: -14.2 dB, Ratio: 4.2:1',
-    },
+    solved: 'settings="Threshold=-18 dB, Ratio=4:1"',
   },
   {
-    plugin: 'Xfer Serum',
-    raw: 'osc_a_pos = 0.812, cutoff = 0.540',
-    solved: {
-      tr: 'Dalga: Resonant Saw, Kesim: 2.4 kHz',
-      en: 'Wavetable: Resonant Saw, Cutoff: 2.4 kHz',
-    },
+    plugin: 'Image-Line FLEX / Serum',
+    raw: 'cutoff = 0.540',
+    solved: 'real="2.4 kHz", view="io" + preset load',
   },
   {
-    plugin: 'Image-Line FLEX',
-    raw: 'macro1 = 0.700, macro2 = 0.450',
-    solved: {
-      tr: 'Sıcaklık: +4.2 dB, Yankı Karışımı: %35',
-      en: 'Warmth: +4.2 dB, Reverb Mix: 35%',
-    },
-  },
-  {
-    plugin: 'iZotope Ozone 11',
-    raw: 'ceiling = 0.940, target = 0.720',
-    solved: {
-      tr: 'Tepe Tavanı: -1.0 dBTP, Hedef: -14.0 LUFS',
-      en: 'True Peak: -1.0 dBTP, Target: -14.0 LUFS',
-    },
+    plugin: 'Fruity Limiter',
+    raw: 'gain = 0.720, ceil = 0.940',
+    solved: 'real="-1.0 dBTP", Target="-14.0 LUFS-I"',
   },
 ]
+
+type InstallTab = 'plugin' | 'desktop' | 'clients' | 'http'
 
 const FlMcpShowcasePage: NextPage = () => {
   const { t, language } = useLanguage()
   const isTr = language === 'tr'
   const [activeGenreIndex, setActiveGenreIndex] = useState(0)
+  const [installTab, setInstallTab] = useState<InstallTab>('plugin')
+  const [copiedId, setCopiedId] = useState<string | null>(null)
   const [openFaq, setOpenFaq] = useState<number | null>(0)
 
   if (!ENTRY) {
@@ -246,49 +235,113 @@ const FlMcpShowcasePage: NextPage = () => {
   const item = resolveProduct(ENTRY, t)
   const P = (t as unknown as { flMcpPage?: typeof import('@/locales/en.json')['flMcpPage'] }).flMcpPage
   const activeGenre = GENRES[activeGenreIndex]
+  const checkoutReady = Boolean(
+    checkoutUrl('pro') && checkoutUrl('studio') && checkoutUrl('pack100')
+  )
+
+  const handleCopy = (id: string, value: string) => {
+    navigator.clipboard.writeText(value)
+    setCopiedId(id)
+    setTimeout(() => {
+      setCopiedId(prev => (prev === id ? null : prev))
+    }, 2000)
+  }
+
+  const copyLabel = P?.install.copyButton || (isTr ? 'Kopyala' : 'Copy')
+  const copiedLabel = P?.install.copiedButton || (isTr ? 'Kopyalandı' : 'Copied')
+
+  const commandBlocks: Record<InstallTab, Array<{ id: string; label: string; code: string }>> = {
+    plugin: [
+      {
+        id: 'cc-marketplace',
+        label: isTr ? 'Claude Code Marketplace (5 Skill + mix-engineer Alt Ajanı)' : 'Claude Code Plugin Marketplace (5 Skills + mix-engineer Agent)',
+        code: '/plugin marketplace add Rtur2003/FL-MCP',
+      },
+      {
+        id: 'selftest-deep',
+        label: isTr ? 'Canlı FL Studio 2025 Köprü Doğrulaması (17 derin kontrol)' : 'Live FL Studio 2025 Bridge Check (17 deep checks)',
+        code: 'fl-mcp selftest --deep',
+      },
+    ],
+    desktop: [
+      {
+        id: 'mcpb-pipx',
+        label: isTr ? 'Claude Desktop .mcpb uzantısı veya pipx ile yerel kurulum' : 'Claude Desktop (.mcpb bundle) or pipx local install',
+        code: 'pipx install fl-mcp\nfl-mcp install --client claude-desktop',
+      },
+      {
+        id: 'desktop-json',
+        label: 'claude_desktop_config.json (stdio)',
+        code: JSON.stringify(
+          {
+            mcpServers: {
+              'fl-mcp': {
+                command: 'fl-mcp',
+                args: [],
+              },
+            },
+          },
+          null,
+          2
+        ),
+      },
+    ],
+    clients: [
+      {
+        id: 'auto-register',
+        label: isTr ? 'Cursor · VS Code · Windsurf · Gemini CLI · Antigravity · Codex CLI' : 'Cursor · VS Code · Windsurf · Gemini CLI · Antigravity · Codex CLI',
+        code: 'fl-mcp install --all',
+      },
+      {
+        id: 'cursor-json',
+        label: '.cursor/mcp.json (Streamable-HTTP)',
+        code: JSON.stringify(
+          {
+            mcpServers: {
+              'fl-mcp': {
+                url: 'http://127.0.0.1:8765/mcp',
+              },
+            },
+          },
+          null,
+          2
+        ),
+      },
+    ],
+    http: [
+      {
+        id: 'http-serve',
+        label: isTr ? 'Kalıcı Yerel HTTP/SSE Daemon (Streamable-HTTP :8765/mcp ve /sse)' : 'Persistent Local HTTP/SSE Daemon (:8765/mcp & /sse)',
+        code: 'fl-mcp serve --transport http --port 8765',
+      },
+      {
+        id: 'endpoints',
+        label: isTr ? 'Yerel Uç Noktalar' : 'Local Endpoints',
+        code: 'Streamable-HTTP: http://127.0.0.1:8765/mcp\nSSE Stream:      http://127.0.0.1:8765/sse',
+      },
+    ],
+  }
+
+  const offersSchema = checkoutReady
+    ? [
+        { '@type': 'Offer', name: 'MIT Open-Source Build', price: '0', priceCurrency: 'USD' },
+        { '@type': 'Offer', name: 'Pro Producer', price: '19', priceCurrency: 'USD' },
+        { '@type': 'Offer', name: 'Studio Edition', price: '49', priceCurrency: 'USD' },
+      ]
+    : [{ '@type': 'Offer', name: 'MIT Open-Source Build (v0.3.0)', price: '0', priceCurrency: 'USD' }]
 
   const softwareSchema = {
     '@type': 'SoftwareApplication',
     '@id': 'https://hasan-arthur-altuntas.xyz/fl-mcp#software',
-    name: 'FL-MCP: FL Studio AI Copilot',
-    description: item.description,
+    name: 'FL-MCP (v0.3.0) & FL-MCP Studio',
+    description: P?.meta.description || item.description,
     applicationCategory: 'MultimediaApplication',
-    operatingSystem: 'Windows 10, Windows 11, macOS',
+    operatingSystem: 'Windows, macOS, Linux',
     url: 'https://hasan-arthur-altuntas.xyz/fl-mcp',
-    sameAs: ['https://github.com/Rtur2003/FL-MCP'],
-    softwareVersion: '2025.1',
-    offers: [
-      { '@type': 'Offer', name: 'Community Tier', price: '0', priceCurrency: 'USD' },
-      { '@type': 'Offer', name: 'Pro Producer', price: '19', priceCurrency: 'USD' },
-      { '@type': 'Offer', name: 'Studio Edition', price: '49', priceCurrency: 'USD' },
-    ],
-  }
-
-  const productSchema = {
-    '@type': 'Product',
-    '@id': 'https://hasan-arthur-altuntas.xyz/fl-mcp#product',
-    name: 'FL-MCP FL Studio AI Copilot',
-    description: item.description,
-    brand: { '@type': 'Brand', name: 'CrownCode' },
-    category: 'Digital Audio Workstation AI Plugin',
-    offers: {
-      '@type': 'AggregateOffer',
-      priceCurrency: 'USD',
-      lowPrice: '0',
-      highPrice: '49',
-      offerCount: '3',
-    },
-  }
-
-  const splitSpecItem = (text: string) => {
-    const idx = text.indexOf('(')
-    if (idx > 0 && text.endsWith(')')) {
-      return {
-        term: text.slice(0, idx).trim(),
-        detail: text.slice(idx + 1, -1).trim(),
-      }
-    }
-    return { term: text, detail: '' }
+    sameAs: [GITHUB_REPO],
+    softwareVersion: '0.3.0',
+    license: 'https://opensource.org/licenses/MIT',
+    offers: offersSchema,
   }
 
   return (
@@ -296,7 +349,7 @@ const FlMcpShowcasePage: NextPage = () => {
       title={P?.meta.title || item.title}
       description={P?.meta.description || item.description}
       {...(P?.meta.keywords ? { keywords: P.meta.keywords } : {})}
-      schema={[softwareSchema, productSchema]}
+      schema={[softwareSchema]}
     >
       <WorldPage
         world="fl-mcp"
@@ -304,29 +357,188 @@ const FlMcpShowcasePage: NextPage = () => {
         lead={P?.hero.subtitle || item.showroomDescription}
         {...(P?.hero.liveDemoBadge ? { meta: P.hero.liveDemoBadge } : {})}
       >
-        {/* Section 1: Studio Architecture & Live Telemetry */}
-        <section className={world.section} aria-labelledby="flmcp-console-heading">
+        {/* Section 1: Live Verification & Runtime Support */}
+        <section className={world.section} aria-labelledby="flmcp-verify-heading">
           <div className={world.sectionHead}>
-            <h2 id="flmcp-console-heading">{P?.features.flIntegration.title || 'FL Studio 2025 Bridge'}</h2>
-            <p>
-              {P?.features.subtitle ||
-                (isTr
-                  ? 'Claude Desktop, loopMIDI ve FL Studio 2025 arasında sıfır bulut gecikmeli donanım bağlantısı.'
-                  : 'Real-time hardware link between Claude Desktop, loopMIDI, and FL Studio 2025.')}
-            </p>
+            <h2 id="flmcp-verify-heading">{P?.verification.title || 'Verification & Runtime'}</h2>
+            <p>{P?.verification.subtitle}</p>
             <div className={world.actions}>
-              <Link href="/dashboard/fl-mcp" className={world.primary} style={{ gap: '8px' }}>
-                <span>{P?.hero.getStarted || (isTr ? 'Başlayın' : 'Get Started')}</span>
-                <ArrowRight size={16} />
-              </Link>
-              <a href="#pricing" className={world.link}>
-                {P?.pricing.title || (isTr ? 'Paketleri İncele' : 'View Plans')}
+              <a
+                href={GITHUB_RELEASES}
+                target="_blank"
+                rel="noreferrer"
+                className={world.primary}
+                style={{ gap: '8px' }}
+              >
+                <Download size={16} />
+                <span>{P?.hero.getStarted || 'Download FL-MCP Studio'}</span>
+              </a>
+              <a
+                href={GITHUB_REPO}
+                target="_blank"
+                rel="noreferrer"
+                className={world.link}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+              >
+                <span>{P?.hero.viewDocs || 'GitHub & Docs'}</span>
+                <ExternalLink size={14} />
               </a>
             </div>
           </div>
 
           <div className={world.sectionBody}>
-            {/* Studio Visual Gallery */}
+            <div className={styles.factGrid}>
+              <div className={styles.factCard}>
+                <span className={styles.factLabel}>{P?.verification.liveLabel}</span>
+                <span className={styles.factValue}>{P?.verification.liveValue}</span>
+                <p className={styles.factDetail}>{P?.verification.liveDetail}</p>
+              </div>
+              <div className={styles.factCard}>
+                <span className={styles.factLabel}>{P?.verification.offlineLabel}</span>
+                <span className={styles.factValue}>{P?.verification.offlineValue}</span>
+                <p className={styles.factDetail}>{P?.verification.offlineDetail}</p>
+              </div>
+              <div className={styles.factCard}>
+                <span className={styles.factLabel}>{P?.verification.platformsLabel}</span>
+                <span className={styles.factValue}>{P?.verification.platformsValue}</span>
+                <p className={styles.factDetail}>{P?.verification.platformsDetail}</p>
+              </div>
+              <div className={styles.factCard}>
+                <span className={styles.factLabel}>{P?.verification.clientsLabel}</span>
+                <span className={styles.factValue}>{P?.verification.clientsValue}</span>
+                <p className={styles.factDetail}>{P?.verification.clientsDetail}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 2: Side-by-Side Install (Zero-Terminal Studio vs Plugin / CLI) */}
+        <section id="install" className={world.section} aria-labelledby="flmcp-install-heading">
+          <div className={world.sectionHead}>
+            <h2 id="flmcp-install-heading">{P?.install.title || 'Two Paths to Connect'}</h2>
+            <p>{P?.install.subtitle}</p>
+          </div>
+
+          <div className={world.sectionBody}>
+            <div className={styles.installGrid}>
+              {/* Card A: Zero-Terminal FL-MCP Studio Desktop App */}
+              <article className={styles.installCard}>
+                <div className={styles.installHeader}>
+                  <h3 className={styles.installTitle}>{P?.install.studioTitle}</h3>
+                  <span className={styles.installBadge}>{P?.install.studioBadge}</span>
+                </div>
+                <p className={styles.installDesc}>{P?.install.studioDesc}</p>
+                <ul className={styles.bulletList}>
+                  {P?.install.studioFeatures.map((feat: string, idx: number) => (
+                    <li key={idx}>
+                      <Check size={15} color="var(--accent)" />
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className={world.actions} style={{ marginTop: 0 }}>
+                  <a
+                    href={GITHUB_RELEASES}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={world.primary}
+                    style={{ gap: '8px' }}
+                  >
+                    <Download size={15} />
+                    <span>{P?.install.studioDownloadCta}</span>
+                  </a>
+                </div>
+                <p className={styles.packageNote}>{P?.install.studioPackageNote}</p>
+              </article>
+
+              {/* Card B: Copyable Plugin / .mcpb / Terminal Flows */}
+              <article className={styles.installCard}>
+                <div className={styles.installHeader}>
+                  <h3 className={styles.installTitle}>{P?.install.cliTitle}</h3>
+                  <span className={styles.installBadge}>{P?.install.cliBadge}</span>
+                </div>
+                <p className={styles.installDesc}>{P?.install.cliDesc}</p>
+
+                <div className={styles.tabs} role="tablist" aria-label={isTr ? 'Kurulum akışı seç' : 'Select setup method'}>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={installTab === 'plugin'}
+                    className={styles.tab}
+                    data-active={installTab === 'plugin'}
+                    onClick={() => setInstallTab('plugin')}
+                  >
+                    Claude Code
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={installTab === 'desktop'}
+                    className={styles.tab}
+                    data-active={installTab === 'desktop'}
+                    onClick={() => setInstallTab('desktop')}
+                  >
+                    Claude Desktop (.mcpb)
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={installTab === 'clients'}
+                    className={styles.tab}
+                    data-active={installTab === 'clients'}
+                    onClick={() => setInstallTab('clients')}
+                  >
+                    Cursor / IDE / CLI
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={installTab === 'http'}
+                    className={styles.tab}
+                    data-active={installTab === 'http'}
+                    onClick={() => setInstallTab('http')}
+                  >
+                    HTTP / SSE
+                  </button>
+                </div>
+
+                {commandBlocks[installTab].map(block => (
+                  <div key={block.id} className={styles.codeWrap}>
+                    <div className={styles.codeToolbar}>
+                      <span className={styles.codeLabel}>{block.label}</span>
+                      <button
+                        type="button"
+                        className={styles.copyBtn}
+                        onClick={() => handleCopy(block.id, block.code)}
+                      >
+                        {copiedId === block.id ? <Check size={13} /> : <Copy size={13} />}
+                        <span>{copiedId === block.id ? copiedLabel : copyLabel}</span>
+                      </button>
+                    </div>
+                    <pre className={styles.codeBlockCompact}>
+                      <code>{block.code}</code>
+                    </pre>
+                  </div>
+                ))}
+              </article>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3: Studio Visuals & Real-Time Metering Console */}
+        <section className={world.section} aria-labelledby="flmcp-console-heading">
+          <div className={world.sectionHead}>
+            <h2 id="flmcp-console-heading">{P?.features.flIntegration.title || 'FL Studio 2025 Bridge'}</h2>
+            <p>{P?.features.flIntegration.description}</p>
+            <div className={world.actions}>
+              <Link href="/dashboard/fl-mcp" className={world.link} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <span>{isTr ? 'Geliştirici Lisans Kasası' : 'Developer License Vault'}</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+
+          <div className={world.sectionBody}>
             <div className={styles.gallery}>
               <figure className={styles.shot}>
                 <Image
@@ -343,8 +555,8 @@ const FlMcpShowcasePage: NextPage = () => {
                 />
                 <figcaption>
                   {isTr
-                    ? 'loopMIDI ve Python API 40 üzerinden mikser, kanal rafı ve piyano rulosu kontrolü.'
-                    : 'Direct mixer, channel rack, and piano roll control over loopMIDI and Python API 40.'}
+                    ? 'loopMIDI (Windows), IAC Driver (macOS) veya Wine (Linux) üzerinden FL Studio 2025 Scripting API 40 köprüsü.'
+                    : 'FL Studio 2025 Scripting API 40 bridge over loopMIDI (Win), IAC Driver (macOS) or Wine (Linux).'}
                 </figcaption>
               </figure>
 
@@ -353,8 +565,8 @@ const FlMcpShowcasePage: NextPage = () => {
                   src="/images/fl-mcp/acoustic-metering.webp"
                   alt={
                     isTr
-                      ? 'ITU-R BS.1770-4 LUFS ses yüksekliği ve True Peak spektral analiz ekranı'
-                      : 'ITU-R BS.1770-4 LUFS loudness and True Peak spectral metering display'
+                      ? 'ITU-R BS.1770-4 / EBU 3342 LUFS ses yüksekliği ve True Peak spektral analiz ekranı'
+                      : 'ITU-R BS.1770-4 / EBU 3342 LUFS loudness and True Peak spectral metering display'
                   }
                   width={1440}
                   height={900}
@@ -363,103 +575,71 @@ const FlMcpShowcasePage: NextPage = () => {
                 />
                 <figcaption>
                   {isTr
-                    ? 'Gerçek dB ve Hz birimleriyle parametrik EQ çözümü ve yayın standardında LUFS ölçümü.'
-                    : 'Parametric EQ solving in real dB and Hz units with broadcast-grade LUFS metering.'}
+                    ? 'ITU-R BS.1770-4 / EBU 3342 ölçümü ve gerçek dB/Hz birimleriyle kapalı çevrim miks kontrolü.'
+                    : 'ITU-R BS.1770-4 / EBU 3342 metering and real dB/Hz closed-loop mix verification.'}
                 </figcaption>
               </figure>
             </div>
 
-            {/* Interactive DAW Console Telemetry */}
             <div className={styles.dawConsole}>
               <div className={styles.dawHeader}>
                 <div className={styles.dawStatus}>
                   <span className={styles.statusDot} />
                   <span>
                     {isTr
-                      ? 'FL Studio 2025 Motoru Bağlı (loopMIDI Port 1 · API 40)'
-                      : 'FL Studio 2025 Engine Connected (loopMIDI Port 1 · API 40)'}
+                      ? 'FL Studio 2025 v25.2.5 [build 5319] · API 40 · fl_audio Örneği'
+                      : 'FL Studio 2025 v25.2.5 [build 5319] · API 40 · fl_audio Sample'}
                   </span>
                 </div>
                 <div className={styles.dawLatency}>
-                  {isTr ? 'Gecikme: 1.8 ms · Yerel Köprü' : 'Latency: 1.8 ms · Local Bridge'}
+                  {isTr ? 'ITU-R BS.1770-4 · EBU 3342 · 7 Bant' : 'ITU-R BS.1770-4 · EBU 3342 · 7-Band'}
                 </div>
               </div>
 
               <div className={styles.meterRow}>
                 <div className={styles.meterBox}>
-                  <span className={styles.meterLabel}>
-                    {isTr ? 'Entegre Ses Yüksekliği' : 'Integrated Loudness'}
-                  </span>
+                  <span className={styles.meterLabel}>LUFS-I</span>
                   <span className={styles.meterValue}>-14.1 LUFS</span>
                   <div className={styles.meterBarOuter}>
                     <div className={styles.meterBarFill} style={{ width: '72%' }} />
                   </div>
                 </div>
                 <div className={styles.meterBox}>
-                  <span className={styles.meterLabel}>
-                    {isTr ? 'True Peak Tavanı' : 'True Peak Max'}
-                  </span>
+                  <span className={styles.meterLabel}>True Peak</span>
                   <span className={styles.meterValue}>-1.02 dBTP</span>
                   <div className={styles.meterBarOuter}>
                     <div className={styles.meterBarFill} style={{ width: '85%' }} />
                   </div>
                 </div>
                 <div className={styles.meterBox}>
-                  <span className={styles.meterLabel}>
-                    {isTr ? 'Dinamik Aralık' : 'Dynamic Spread'}
-                  </span>
-                  <span className={styles.meterValue}>9.4 LU</span>
+                  <span className={styles.meterLabel}>LRA (EBU 3342)</span>
+                  <span className={styles.meterValue}>6.8 LU</span>
                   <div className={styles.meterBarOuter}>
-                    <div className={styles.meterBarFill} style={{ width: '60%' }} />
+                    <div className={styles.meterBarFill} style={{ width: '58%' }} />
                   </div>
                 </div>
                 <div className={styles.meterBox}>
                   <span className={styles.meterLabel}>
-                    {isTr ? 'Alt Bas Kesimi' : 'Sub Crossover'}
+                    {isTr ? 'Crest / Korelasyon' : 'Crest / Correlation'}
                   </span>
-                  <span className={styles.meterValue}>32 Hz Mono</span>
+                  <span className={styles.meterValue}>9.4 dB · +0.86</span>
                   <div className={styles.meterBarOuter}>
-                    <div className={styles.meterBarFill} style={{ width: '45%' }} />
+                    <div className={styles.meterBarFill} style={{ width: '64%' }} />
                   </div>
                 </div>
               </div>
 
               <div className={styles.channelRack}>
                 <div className={styles.channelRackHeader}>
-                  <span>{isTr ? 'Aktif Mikser Kanalları' : 'Active Mixer Channels'}</span>
-                  <span>{isTr ? 'Çıkış Seviyesi' : 'Output Level'}</span>
+                  <span>{isTr ? 'Mikser Insert Hedefleri (fl_mix)' : 'Mixer Insert Targets (fl_mix)'}</span>
+                  <span>{isTr ? 'Kalibreli Seviye' : 'Calibrated Level'}</span>
                 </div>
                 {[
-                  {
-                    name: isTr ? 'Kick (909 / Alt Odak)' : 'Kick (909 / Sub Focus)',
-                    level: '-4.2 dB',
-                    bar: '82%',
-                  },
-                  {
-                    name: isTr ? 'Trampet ve Alkış Katmanı' : 'Snare & Clap Layer',
-                    level: '-6.0 dB',
-                    bar: '74%',
-                  },
-                  {
-                    name: isTr ? 'Hi-Hat (16lık Swing)' : 'Hi-Hats (16th Swung)',
-                    level: '-12.4 dB',
-                    bar: '52%',
-                  },
-                  {
-                    name: isTr ? '808 Alt Bas (Glide)' : '808 Sub Bass (Glide)',
-                    level: '-3.1 dB',
-                    bar: '86%',
-                  },
-                  {
-                    name: isTr ? 'FLEX Sentetik Lead' : 'FLEX Synth Lead',
-                    level: '-8.5 dB',
-                    bar: '65%',
-                  },
-                  {
-                    name: isTr ? 'Ozone Master Limiter' : 'Ozone Master Limiter',
-                    level: '-1.0 dBTP',
-                    bar: '95%',
-                  },
+                  { name: 'Insert 1 · Kick', level: '-4.2 dB', bar: '82%' },
+                  { name: 'Insert 2 · Snare / Clap', level: '-6.0 dB', bar: '74%' },
+                  { name: 'Insert 3 · Sub / 808', level: '-3.1 dB', bar: '86%' },
+                  { name: 'Insert 4 · Chord / Pad Bus', level: '-11.4 dB', bar: '55%' },
+                  { name: 'Master · Limiter Gain', level: '-1.0 dBTP', bar: '95%' },
                 ].map((channel, i) => (
                   <div key={i} className={styles.channelRow}>
                     <span className={styles.channelName}>{channel.name}</span>
@@ -474,16 +654,35 @@ const FlMcpShowcasePage: NextPage = () => {
           </div>
         </section>
 
-        {/* Section 2: 12-Genre Production Engine */}
+        {/* Section 4: 14 Flat-Schema Tools + Opt-in fl_desk */}
+        <section className={world.section} aria-labelledby="flmcp-tools-heading">
+          <div className={world.sectionHead}>
+            <h2 id="flmcp-tools-heading">{P?.features.tools.title || '14 Flat-Schema Tools'}</h2>
+            <p>{P?.features.tools.description}</p>
+            <p className={world.hint} style={{ marginTop: '12px' }}>
+              {P?.features.tools.schemaNote}
+            </p>
+          </div>
+          <div className={world.sectionBody}>
+            <div className={styles.toolGrid}>
+              {P?.features.tools.items.map((tool, idx) => (
+                <article key={idx} className={styles.toolCard}>
+                  <div className={styles.toolHeader}>
+                    <span className={styles.toolName}>{tool.name}</span>
+                    <span className={styles.toolRole}>{tool.role}</span>
+                  </div>
+                  <p className={styles.toolDetail}>{tool.detail}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Section 5: 12-Genre Seeded Production Engine */}
         <section className={world.section} aria-labelledby="flmcp-genres-heading">
           <div className={world.sectionHead}>
-            <h2 id="flmcp-genres-heading">
-              {P?.features.genreEngine.title || '12-Genre Production Engine'}
-            </h2>
-            <p>
-              {P?.features.genreEngine.description ||
-                'Generate complete multi-track arrangements with drums, basslines, chords, and melodies.'}
-            </p>
+            <h2 id="flmcp-genres-heading">{P?.features.genreEngine.title || '12-Genre Production Engine'}</h2>
+            <p>{P?.features.genreEngine.description}</p>
           </div>
           <div className={world.sectionBody}>
             <div className={styles.genreGrid}>
@@ -497,7 +696,7 @@ const FlMcpShowcasePage: NextPage = () => {
                 >
                   <div className={styles.genreCardTop}>
                     <h3 className={styles.genreTitle}>{isTr ? g.name.tr : g.name.en}</h3>
-                    <span className={styles.genreBpm}>{g.bpm} BPM</span>
+                    <span className={styles.genreBpm}>{g.bpm}</span>
                   </div>
                   <p className={styles.genreDesc}>{isTr ? g.description.tr : g.description.en}</p>
                 </button>
@@ -510,207 +709,191 @@ const FlMcpShowcasePage: NextPage = () => {
                   {isTr ? activeGenre.name.tr : activeGenre.name.en}
                 </span>
                 <span className={styles.genreInspectorMeta}>
-                  {isTr ? 'Tempo' : 'Tempo'}: {activeGenre.bpm} BPM
+                  {isTr ? 'Tempo' : 'Tempo'}: {activeGenre.bpm}
                 </span>
                 <span className={styles.genreInspectorMeta}>
                   {isTr ? 'Gam' : 'Scale'}: {isTr ? activeGenre.scale.tr : activeGenre.scale.en}
                 </span>
               </div>
               <p className={styles.genreInspectorBody}>
-                <strong>{isTr ? 'Ritim Örgüsü:' : 'Groove Profile:'}</strong>{' '}
+                <strong>{isTr ? 'Ritim ve Yazım Profili:' : 'Groove & Output Profile:'}</strong>{' '}
                 {isTr ? activeGenre.groove.tr : activeGenre.groove.en}
               </p>
             </div>
           </div>
         </section>
 
-        {/* Section 3: Plugin Parameter Solver in Real dB & Hz */}
+        {/* Section 6: Plugin Parameter Solver in Real Units */}
         <section className={world.section} aria-labelledby="flmcp-plugins-heading">
           <div className={world.sectionHead}>
-            <h2 id="flmcp-plugins-heading">
-              {P?.features.pluginSolver.title || 'Plugin Parameter Solver'}
-            </h2>
-            <p>
-              {P?.features.pluginSolver.description ||
-                'Claude computes and sets exact musical values for stock and third-party VSTs in real units.'}
-            </p>
+            <h2 id="flmcp-plugins-heading">{P?.features.pluginSolver.title || 'Plugin Parameter Solver'}</h2>
+            <p>{P?.features.pluginSolver.description}</p>
           </div>
           <div className={world.sectionBody}>
             <div className={styles.pluginComparison}>
               <div className={`${styles.pluginRow} ${styles.pluginRowHeader}`}>
-                <span>{isTr ? 'Hedef Eklenti' : 'Target Plugin'}</span>
-                <span>{isTr ? 'Ham DAW Değeri (0.0 - 1.0)' : 'Raw DAW Float (0.0 - 1.0)'}</span>
-                <span>{isTr ? 'Çözülen Müzikal Değer (dB / Hz)' : 'Solved Audio Value (dB / Hz)'}</span>
+                <span>{isTr ? 'Eklenti / Hedef' : 'Plugin Target'}</span>
+                <span>{isTr ? 'Ham DAW Parametresi (0.0-1.0)' : 'Raw DAW Float (0.0-1.0)'}</span>
+                <span>{isTr ? 'fl_param Gerçek Birim Çıktısı' : 'fl_param Real Unit Output'}</span>
               </div>
               {PLUGIN_SOLVER_EXAMPLES.map((ex, idx) => (
                 <div key={idx} className={styles.pluginRow}>
                   <span style={{ color: 'var(--ink)' }}>{ex.plugin}</span>
                   <span className={styles.pluginValueOld}>{ex.raw}</span>
-                  <span className={styles.pluginValueNew}>
-                    {isTr ? ex.solved.tr : ex.solved.en}
-                  </span>
+                  <span className={styles.pluginValueNew}>{ex.solved}</span>
                 </div>
               ))}
             </div>
+          </div>
+        </section>
 
-            {P?.features.pluginSolver.items && (
-              <dl className={world.margins}>
-                {P.features.pluginSolver.items.map((rawItem: string, idx: number) => {
-                  const { term, detail } = splitSpecItem(rawItem)
-                  return (
-                    <div key={idx}>
-                      <dt>{term}</dt>
-                      <dd>{detail}</dd>
+        {/* Section 7: Transparency Box — Scripting API Limits & 5-Layer Resolution Ladder */}
+        <section id="architecture-transparency" className={world.section} aria-labelledby="flmcp-transparency-heading">
+          <div className={world.sectionHead}>
+            <h2 id="flmcp-transparency-heading">{P?.transparency.title || 'Architecture Transparency'}</h2>
+            <p>{P?.transparency.subtitle}</p>
+          </div>
+          <div className={world.sectionBody}>
+            <div className={styles.transparencyBox}>
+              <p className={world.interpretation} style={{ fontSize: '1.05rem', marginBottom: '18px' }}>
+                {P?.transparency.intro}
+              </p>
+              <h3 style={{ margin: '0 0 8px', fontSize: '0.96rem', fontFamily: 'var(--font-family-mono)', color: 'var(--muted)' }}>
+                {P?.transparency.ladderTitle}
+              </h3>
+              <div className={styles.ladder}>
+                {P?.transparency.layers.map((step, idx) => (
+                  <div key={idx} className={styles.ladderStep}>
+                    <div className={styles.ladderHead}>
+                      <h4 className={styles.ladderTitle}>{step.layer}</h4>
+                      <span className={styles.ladderScope}>{step.scope}</span>
                     </div>
-                  )
-                })}
-              </dl>
+                    <p className={styles.ladderHow}>{step.how}</p>
+                    <p className={styles.ladderBoundary}>{step.boundary}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 8: Licensing & Privacy Boundary (or Live Checkout Plans when configured) */}
+        <section id="pricing" className={world.section} aria-labelledby="flmcp-pricing-heading">
+          <div className={world.sectionHead}>
+            <h2 id="flmcp-pricing-heading">
+              {checkoutReady ? P?.pricing.title : P?.commerceNotice.title}
+            </h2>
+            <p>{checkoutReady ? P?.pricing.subtitle : P?.commerceNotice.subtitle}</p>
+          </div>
+
+          <div className={world.sectionBody}>
+            {checkoutReady ? (
+              <>
+                <div className={styles.pricingGrid}>
+                  <div className={styles.pricingCard}>
+                    <h3 className={styles.tierName}>{P?.pricing.free.name}</h3>
+                    <div className={styles.tierPriceBox}>
+                      <span className={styles.tierPrice}>{P?.pricing.free.price}</span>
+                      <span className={styles.tierPeriod}>{P?.pricing.free.period}</span>
+                    </div>
+                    <p className={styles.tierDesc}>{P?.pricing.free.description}</p>
+                    <ul className={styles.tierFeatures}>
+                      {P?.pricing.free.features.map((feat: string, i: number) => (
+                        <li key={i}>
+                          <Check size={16} color="var(--accent)" />
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Link href="/dashboard/fl-mcp" className={world.link} style={{ alignSelf: 'flex-start' }}>
+                      {P?.pricing.free.cta}
+                    </Link>
+                  </div>
+
+                  <div className={styles.pricingCard} data-featured="true">
+                    <span className={styles.pricingBadge}>{P?.pricing.pro.badge}</span>
+                    <h3 className={styles.tierName}>{P?.pricing.pro.name}</h3>
+                    <div className={styles.tierPriceBox}>
+                      <span className={styles.tierPrice}>{P?.pricing.pro.price}</span>
+                      <span className={styles.tierPeriod}>{P?.pricing.pro.period}</span>
+                    </div>
+                    <p className={styles.tierDesc}>{P?.pricing.pro.description}</p>
+                    <ul className={styles.tierFeatures}>
+                      {P?.pricing.pro.features.map((feat: string, i: number) => (
+                        <li key={i}>
+                          <Check size={16} color="var(--accent)" />
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Link href={checkoutUrl('pro') || '/dashboard/fl-mcp'} className={world.primary}>
+                      {P?.pricing.pro.cta}
+                    </Link>
+                  </div>
+
+                  <div className={styles.pricingCard}>
+                    <h3 className={styles.tierName}>{P?.pricing.studio.name}</h3>
+                    <div className={styles.tierPriceBox}>
+                      <span className={styles.tierPrice}>{P?.pricing.studio.price}</span>
+                      <span className={styles.tierPeriod}>{P?.pricing.studio.period}</span>
+                    </div>
+                    <p className={styles.tierDesc}>{P?.pricing.studio.description}</p>
+                    <ul className={styles.tierFeatures}>
+                      {P?.pricing.studio.features.map((feat: string, i: number) => (
+                        <li key={i}>
+                          <Check size={16} color="var(--accent)" />
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Link href={checkoutUrl('studio') || '/dashboard/fl-mcp'} className={world.link} style={{ alignSelf: 'flex-start' }}>
+                      {P?.pricing.studio.cta}
+                    </Link>
+                  </div>
+                </div>
+
+                <div className={styles.topupBanner}>
+                  <div>
+                    <strong style={{ color: 'var(--ink)' }}>
+                      {P?.pricing.pack100.name} ({P?.pricing.pack100.price})
+                    </strong>
+                    <p style={{ margin: '4px 0 0', fontSize: '0.9rem', color: 'var(--body)' }}>
+                      {P?.pricing.pack100.description}
+                    </p>
+                  </div>
+                  <Link href={checkoutUrl('pack100') || '/dashboard/fl-mcp'} className={world.link}>
+                    {P?.pricing.pack100.cta}
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className={styles.commerceGrid}>
+                  <div className={styles.commerceCard}>
+                    <h3>{P?.commerceNotice.openSourceTitle}</h3>
+                    <p>{P?.commerceNotice.openSourceBody}</p>
+                  </div>
+                  <div className={styles.commerceCard}>
+                    <h3>{P?.commerceNotice.localBoundaryTitle}</h3>
+                    <p>{P?.commerceNotice.localBoundaryBody}</p>
+                  </div>
+                </div>
+                <p className={world.privacy}>{P?.commerceNotice.commercialNote}</p>
+                <div className={world.actions}>
+                  <a href={GITHUB_RELEASES} target="_blank" rel="noreferrer" className={world.primary} style={{ gap: '8px' }}>
+                    <Download size={16} />
+                    <span>{P?.hero.getStarted}</span>
+                  </a>
+                  <Link href="/dashboard/fl-mcp" className={world.link}>
+                    {isTr ? 'Lisans Kasasını Aç' : 'Open License Vault'}
+                  </Link>
+                </div>
+              </>
             )}
           </div>
         </section>
 
-        {/* Section 4: Closed-Loop Audio Analysis & Host Integration */}
-        <section className={world.section} aria-labelledby="flmcp-analysis-heading">
-          <div className={world.sectionHead}>
-            <h2 id="flmcp-analysis-heading">
-              {P?.features.audioAnalysis.title || 'Closed-Loop Audio Analysis'}
-            </h2>
-            <p>
-              {P?.features.audioAnalysis.description ||
-                'Objective broadcast-standard loudness measurements and frequency spectrum monitoring.'}
-            </p>
-          </div>
-          <div className={world.sectionBody}>
-            <p className={world.interpretation}>
-              {isTr
-                ? 'Tüm ses analizi, ITU-R BS.1770-4 LUFS ölçümü ve MIDI üretimi yüzde yüz yerel olarak kendi işlemcinizde çalışır. Hiçbir ses dosyası dış sunuculara gönderilmez.'
-                : 'All audio rendering, ITU-R BS.1770-4 LUFS metering, and MIDI playback execute locally on your CPU. No audio ever leaves your machine.'}
-            </p>
-
-            <dl className={world.margins}>
-              {[
-                ...(P?.features.audioAnalysis.items || []),
-                ...(P?.features.flIntegration.items || []),
-              ].map((rawItem: string, idx: number) => {
-                const { term, detail } = splitSpecItem(rawItem)
-                return (
-                  <div key={idx}>
-                    <dt>{term}</dt>
-                    <dd>{detail}</dd>
-                  </div>
-                )
-              })}
-            </dl>
-          </div>
-        </section>
-
-        {/* Section 5: Pricing & Tier Cards */}
-        <section id="pricing" className={world.section} aria-labelledby="flmcp-pricing-heading">
-          <div className={world.sectionHead}>
-            <h2 id="flmcp-pricing-heading">
-              {P?.pricing.title || 'Transparent Production Plans'}
-            </h2>
-            <p>
-              {P?.pricing.subtitle ||
-                'Basic transport, mixer fader moves, and local parameter adjustments cost zero credits and run offline forever.'}
-            </p>
-          </div>
-          <div className={world.sectionBody}>
-            <div className={styles.pricingGrid}>
-              {/* Community Tier */}
-              <div className={styles.pricingCard}>
-                <h3 className={styles.tierName}>{P?.pricing.free.name || 'Community Tier'}</h3>
-                <div className={styles.tierPriceBox}>
-                  <span className={styles.tierPrice}>{P?.pricing.free.price || '$0'}</span>
-                  <span className={styles.tierPeriod}>{P?.pricing.free.period || 'Forever Free'}</span>
-                </div>
-                <p className={styles.tierDesc}>{P?.pricing.free.description}</p>
-                <ul className={styles.tierFeatures}>
-                  {P?.pricing.free.features.map((feat: string, i: number) => (
-                    <li key={i}>
-                      <Check size={16} color="var(--accent)" />
-                      <span>{feat}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/dashboard/fl-mcp"
-                  className={world.link}
-                  style={{ alignSelf: 'flex-start' }}
-                >
-                  {P?.pricing.free.cta || 'Download Free Version'}
-                </Link>
-              </div>
-
-              {/* Pro Producer (Featured) */}
-              <div className={styles.pricingCard} data-featured="true">
-                <span className={styles.pricingBadge}>{P?.pricing.pro.badge || 'Most Popular'}</span>
-                <h3 className={styles.tierName}>{P?.pricing.pro.name || 'Pro Producer'}</h3>
-                <div className={styles.tierPriceBox}>
-                  <span className={styles.tierPrice}>{P?.pricing.pro.price || '$19'}</span>
-                  <span className={styles.tierPeriod}>{P?.pricing.pro.period || '/ month'}</span>
-                </div>
-                <p className={styles.tierDesc}>{P?.pricing.pro.description}</p>
-                <ul className={styles.tierFeatures}>
-                  {P?.pricing.pro.features.map((feat: string, i: number) => (
-                    <li key={i}>
-                      <Check size={16} color="var(--accent)" />
-                      <span>{feat}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href={checkoutUrl('pro') || '/dashboard/fl-mcp'}
-                  className={world.primary}
-                >
-                  {P?.pricing.pro.cta || 'Get Pro Producer'}
-                </Link>
-              </div>
-
-              {/* Studio Edition */}
-              <div className={styles.pricingCard}>
-                <h3 className={styles.tierName}>{P?.pricing.studio.name || 'Studio Edition'}</h3>
-                <div className={styles.tierPriceBox}>
-                  <span className={styles.tierPrice}>{P?.pricing.studio.price || '$49'}</span>
-                  <span className={styles.tierPeriod}>{P?.pricing.studio.period || '/ month'}</span>
-                </div>
-                <p className={styles.tierDesc}>{P?.pricing.studio.description}</p>
-                <ul className={styles.tierFeatures}>
-                  {P?.pricing.studio.features.map((feat: string, i: number) => (
-                    <li key={i}>
-                      <Check size={16} color="var(--accent)" />
-                      <span>{feat}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href={checkoutUrl('studio') || '/dashboard/fl-mcp'}
-                  className={world.link}
-                  style={{ alignSelf: 'flex-start' }}
-                >
-                  {P?.pricing.studio.cta || 'Get Studio Edition'}
-                </Link>
-              </div>
-            </div>
-
-            {/* Top-up pack note */}
-            <div className={styles.topupBanner}>
-              <div>
-                <strong style={{ color: 'var(--ink)' }}>
-                  {P?.pricing.pack100.name || '100 Credit Top-Up Pack'} ({P?.pricing.pack100.price || '$10'})
-                </strong>
-                <p style={{ margin: '4px 0 0', fontSize: '0.9rem', color: 'var(--body)' }}>
-                  {P?.pricing.pack100.description}
-                </p>
-              </div>
-              <Link href={checkoutUrl('pack100') || '/dashboard/fl-mcp'} className={world.link}>
-                {P?.pricing.pack100.cta || 'Add 100 Credits'}
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 6: Comprehensive FAQ Accordion */}
+        {/* Section 9: Technical FAQ Accordion */}
         <section className={world.section} aria-labelledby="flmcp-faq-heading">
           <div className={world.sectionHead}>
             <h2 id="flmcp-faq-heading">{P?.faq.title || 'Frequently Asked Questions'}</h2>
