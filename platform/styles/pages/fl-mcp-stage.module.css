@@ -21,7 +21,7 @@
   isolation: isolate;
   overflow: clip;
   min-height: 100%;
-  padding: clamp(24px, 3.6vw, 48px) clamp(16px, 3.5vw, 40px) clamp(32px, 4vw, 56px);
+  padding: calc(var(--header-height, 88px) + clamp(18px, 2.4vw, 30px)) clamp(16px, 3.5vw, 40px) clamp(28px, 3.5vw, 48px);
   background: var(--void);
   color: var(--ink);
   font-family: var(--font-family-base);
@@ -75,9 +75,9 @@
 
 .planetHalo {
   position: absolute;
-  top: -18px;
+  top: calc(var(--header-height, 88px) - 8px);
   right: max(2vw, 24px);
-  width: clamp(220px, 28vw, 390px);
+  width: clamp(220px, 26vw, 370px);
   aspect-ratio: 1;
   border-radius: 50%;
   background-size: cover;
@@ -100,8 +100,8 @@
 
 .hero {
   display: grid;
-  gap: 14px;
-  max-width: 72ch;
+  gap: 13px;
+  max-width: 100%;
 }
 
 .versionPillRow {
@@ -114,8 +114,8 @@
 .versionPill {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 5px 13px;
+  gap: 8px;
+  padding: 6px 15px;
   border-radius: 999px;
   background: rgba(214, 171, 107, 0.11);
   border: 1px solid rgba(214, 171, 107, 0.3);
