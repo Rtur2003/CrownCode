@@ -12,7 +12,7 @@ import styles from './AdSlot.module.css'
 interface AdSlotProps {
   placement: AdPlacement
   layout?: 'leaderboard' | 'in-content'
-  className?: string
+  className?: string | undefined
 }
 
 declare global {
