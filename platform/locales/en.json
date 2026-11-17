@@ -1360,7 +1360,7 @@
   "privacy": {
     "meta": {
       "title": "Privacy Policy | CrownCode",
-      "description": "What data CrownCode collects, how it is used and how it is protected."
+      "description": "How CrownCode processes uploaded audio, YouTube links and dream text across its demo tools, plus browser storage, cookies and retention rules."
     },
     "title": "Privacy Policy",
     "lastUpdated": "Last updated: October 21, 2026",
@@ -1427,7 +1427,7 @@
   "terms": {
     "meta": {
       "title": "Terms of Service | CrownCode",
-      "description": "The terms for using CrownCode projects and demo tools."
+      "description": "Terms of use and scope for CrownCode web demos, AURIS detection tools, and standalone open-source desktop software such as FL-MCP and VOTRYX."
     },
     "title": "Terms of Service",
     "lastUpdated": "Last updated: November 16, 2026",
