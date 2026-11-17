@@ -109,10 +109,10 @@ for (const key of enKeys) {
 }
 
 if (errors.length > 0) {
-  console.error(`\n❌ Locale parity check failed (${errors.length} issues):\n`)
+  console.error(`\n[FAIL] Locale parity check failed (${errors.length} issues):\n`)
   errors.forEach((e) => console.error(`  - ${e}`))
   console.error('')
   process.exit(1)
 } else {
-  console.log('✅ Locale parity check passed.')
+  console.log('[OK] Locale parity check passed.')
 }
