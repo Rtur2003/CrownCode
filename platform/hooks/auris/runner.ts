@@ -82,7 +82,7 @@ const guardUnload = (on: boolean) => {
 const flagTitle = () => {
   if (typeof document === 'undefined' || !document.hidden) {return}
   const original = document.title
-  const flagged = `✓ ${original}`
+  const flagged = `[AURIS] ${original}`
   document.title = flagged
   const restore = () => {
     if (document.hidden) {return}
