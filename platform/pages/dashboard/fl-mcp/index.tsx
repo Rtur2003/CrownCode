@@ -26,7 +26,6 @@ import { MainLayout } from '@/components/Layout/MainLayout'
 import { Modal } from '@/components/UI/Modal'
 import { WorldPage } from '@/components/UI/WorldPage'
 import { API_BASE_URL } from '@/config/api'
-import { checkoutUrl } from '@/config/flmcp'
 import { SPONSORS_URL } from '@/config/site'
 import { getSupabase, SUPABASE_CONFIGURED } from '@/config/supabase'
 import { useLanguage } from '@/context/LanguageContext'
@@ -456,10 +455,6 @@ const FlMcpDashboardPage: NextPage = () => {
     2
   )
 
-  const proCheckout = checkoutUrl('pro', session?.user?.email || account?.email)
-  const studioCheckout = checkoutUrl('studio', session?.user?.email || account?.email)
-  const pack100Checkout = checkoutUrl('pack100', session?.user?.email || account?.email)
-
   const stripStepPrefix = (s: string) => s.replace(/^\d+\.\s*/, '')
 
   return (
@@ -716,33 +711,14 @@ const FlMcpDashboardPage: NextPage = () => {
                           />
                         </div>
                         <div className={world.actions} style={{ marginTop: '16px' }}>
-                          {proCheckout && (
-                            <a href={proCheckout} target="_blank" rel="noreferrer" className={world.link}>
-                              {isTr ? 'Pro Paket ($19/ay)' : 'Pro Plan ($19/mo)'}
-                            </a>
-                          )}
-                          {studioCheckout && (
-                            <a href={studioCheckout} target="_blank" rel="noreferrer" className={world.link}>
-                              {isTr ? 'Studio Paket ($49/ay)' : 'Studio Plan ($49/mo)'}
-                            </a>
-                          )}
-                          {pack100Checkout && (
-                            <a href={pack100Checkout} target="_blank" rel="noreferrer" className={world.link}>
-                              {isTr ? '+100 Ek Kredi ($10)' : 'Top up +100 Credits ($10)'}
-                            </a>
-                          )}
-                          {!proCheckout && !studioCheckout && !pack100Checkout && (
-                            <>
-                              <span style={{ fontSize: '0.84rem', color: 'var(--soft)' }}>
-                                {isTr
-                                  ? 'GitHub açık kaynak sürümleri kredisiz çalışır. Ödeme bağlantıları henüz canlıya alınmadı.'
-                                  : 'GitHub open-source builds run unmetered locally. Paid checkout links are not live yet.'}
-                              </span>
-                              <a href={SPONSORS_URL} target="_blank" rel="noopener noreferrer" className={world.link}>
-                                {isTr ? 'GitHub Sponsors ile Destek Ol' : 'Support via GitHub Sponsors'}
-                              </a>
-                            </>
-                          )}
+                          <span style={{ fontSize: '0.84rem', color: 'var(--soft)' }}>
+                            {isTr
+                              ? 'FL-MCP ve Studio tamamen ücretsiz ve MIT açık kaynaklıdır; ticari ödeme bulunmaz.'
+                              : 'FL-MCP and Studio are 100% free and MIT-licensed with no commercial paywalls.'}
+                          </span>
+                          <a href={SPONSORS_URL} target="_blank" rel="noopener noreferrer" className={world.link}>
+                            {isTr ? 'GitHub Sponsors ile Gönüllü Destek Ol' : 'Donate / Support via GitHub Sponsors'}
+                          </a>
                         </div>
                       </div>
                     </div>
