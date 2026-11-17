@@ -66,7 +66,7 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     category: 'project',
     name: 'ML Toolkit',
     schema: { category: 'DeveloperApplication', os: 'Web' },
-    updated: '2026-10-21',
+    updated: '2026-11-17',
   },
   {
     id: 'crown-fortune',
@@ -76,7 +76,7 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     gradient: 'from-amber-400 via-orange-500 to-red-500',
     category: 'project',
     schema: { category: 'EntertainmentApplication', os: 'Web' },
-    updated: '2026-11-16',
+    updated: '2026-11-17',
   },
   {
     id: 'crown-dreams',
@@ -96,7 +96,7 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     gradient: 'from-red-500 via-red-600 to-amber-500',
     category: 'project',
     schema: { category: 'SocialNetworkingApplication', os: 'Web' },
-    updated: '2026-11-16',
+    updated: '2026-11-17',
   },
   {
     id: 'crown-vote',
@@ -107,7 +107,7 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     category: 'project',
     name: 'VOTRYX',
     schema: { category: 'UtilitiesApplication', os: 'Windows 10, Windows 11', type: 'SoftwareApplication' },
-    updated: '2026-11-16',
+    updated: '2026-11-17',
   },
   {
     id: 'noir-grain',
@@ -117,7 +117,7 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
     gradient: 'from-stone-700 via-amber-600 to-yellow-500',
     category: 'project',
     schema: { category: 'DesignApplication', os: 'Web' },
-    updated: '2026-11-16',
+    updated: '2026-11-17',
   },
   {
     id: 'fl-mcp',
@@ -133,7 +133,7 @@ export const PRODUCT_CATALOG: readonly ProductEntry[] = [
       type: 'SoftwareApplication',
       sameAs: ['https://github.com/Rtur2003/FL-MCP'],
     },
-    updated: '2026-11-16',
+    updated: '2026-11-17',
   },
   {
     id: 'kognita',
