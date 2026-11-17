@@ -1,5 +1,5 @@
 // Creator Studio: Tabbed workspace switching seamlessly between two-track Remix Studio
-// and the 2-6 track Mixer without stacking redundant vertical sections.
+// and the 2-6 track Mixer, paired with inline server-rendered technical documentation.
 
 import React, { useState } from 'react'
 import type { NextPage } from 'next'
@@ -7,7 +7,6 @@ import { BookOpen } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { RemixStudio, MultitrackMixer } from '@/components/CreatorStudio'
 import { BackendNote } from '@/components/UI/BackendNote'
-import { Modal } from '@/components/UI/Modal'
 import { WorldPage } from '@/components/UI/WorldPage'
 import { useLanguage } from '@/context/LanguageContext'
 import world from '@/styles/components/world-page.module.css'
@@ -16,11 +15,9 @@ import styles from '@/styles/pages/creator-studio.module.css'
 type StudioTab = 'remix' | 'mixer'
 
 const CreatorStudioPage: NextPage = () => {
-  const { t, language } = useLanguage()
+  const { t } = useLanguage()
   const cs = t.creatorStudio
   const [studioTab, setStudioTab] = useState<StudioTab>('remix')
-  const [docsOpen, setDocsOpen] = useState(false)
-  const isTr = language === 'tr'
 
   const activeHead = studioTab === 'remix' ? cs.remixStudio : cs.multitrackMixer
 
@@ -32,15 +29,14 @@ const CreatorStudioPage: NextPage = () => {
             <h2 id="studio-workspace-title">{activeHead.title}</h2>
             <p>{activeHead.subtitle}</p>
             <div className={world.actions}>
-              <button
-                type="button"
+              <a
+                href="#studio-about-title"
                 className={world.link}
-                onClick={() => setDocsOpen(true)}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
               >
                 <BookOpen size={14} />
                 <span>{cs.about.title}</span>
-              </button>
+              </a>
             </div>
           </div>
 
@@ -71,6 +67,25 @@ const CreatorStudioPage: NextPage = () => {
             <BackendNote />
 
             {studioTab === 'remix' ? <RemixStudio /> : <MultitrackMixer />}
+          </div>
+        </section>
+
+        <section id="studio-about" className={world.section} aria-labelledby="studio-about-title">
+          <div className={world.sectionHead}>
+            <h2 id="studio-about-title">{cs.about.title}</h2>
+            <p>{cs.subtitle}</p>
+          </div>
+
+          <div className={world.sectionBody}>
+            {cs.about.body.map((paragraph: string, index: number) => (
+              <p
+                key={paragraph}
+                className={world.interpretation}
+                style={index > 0 ? { marginTop: '14px' } : undefined}
+              >
+                {paragraph}
+              </p>
+            ))}
 
             <dl className={world.margins}>
               {cs.about.specs.map((item: { label: string; value: string }) => (
@@ -80,27 +95,14 @@ const CreatorStudioPage: NextPage = () => {
                 </div>
               ))}
             </dl>
+
+            <p className={world.privacy}>
+              <strong>{cs.upcomingTitle}: {cs.features.generate.title}</strong>
+              {' — '}
+              {cs.features.generate.description}
+            </p>
           </div>
         </section>
-
-        <Modal
-          open={docsOpen}
-          onClose={() => setDocsOpen(false)}
-          title={cs.about.title}
-          subtitle={cs.subtitle}
-          closeLabel={isTr ? 'Kapat' : 'Close'}
-          size="md"
-        >
-          <div className={styles.modalStack}>
-            {cs.about.body.map((paragraph: string) => (
-              <p key={paragraph} className={styles.modalPara}>{paragraph}</p>
-            ))}
-            <div className={styles.modalUpcoming}>
-              <strong>{cs.upcomingTitle}: {cs.features.generate.title}</strong>
-              <p>{cs.features.generate.description}</p>
-            </div>
-          </div>
-        </Modal>
       </WorldPage>
     </MainLayout>
   )
