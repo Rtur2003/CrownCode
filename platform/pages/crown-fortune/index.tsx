@@ -21,6 +21,7 @@ import {
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import BackgroundFloatingCards from '@/components/CrownFortune/BackgroundFloatingCards'
+import { DestinyGlyph } from '@/components/CrownFortune/DestinyGlyph'
 import { useLanguage } from '@/context/LanguageContext'
 import { useFortuneSounds } from '@/hooks/useFortuneSounds'
 import {
@@ -616,8 +617,8 @@ const CrownFortunePage: NextPage = () => {
     }
 
     const shareText = language === 'tr'
-      ? `🔮 Bugünkü kaderim: ${cardName}${isReversed ? ' (Ters)' : ''} - ${catLabel}\n\n"${displayMessage}"\n\n#CrownDestiny #Tarot`
-      : `🔮 My destiny today: ${cardName}${isReversed ? ' (Reversed)' : ''} - ${catLabel}\n\n"${displayMessage}"\n\n#CrownDestiny #Tarot`
+      ? `Bugünkü kaderim: ${cardName}${isReversed ? ' (Ters)' : ''} · ${catLabel}\n\n"${displayMessage}"\n\n#CrownDestiny`
+      : `My destiny today: ${cardName}${isReversed ? ' (Reversed)' : ''} · ${catLabel}\n\n"${displayMessage}"\n\n#CrownDestiny`
 
     const shareUrl = 'https://hasan-arthur-altuntas.xyz/crown-fortune'
 
@@ -1085,7 +1086,9 @@ const CrownFortunePage: NextPage = () => {
 
                       <div className={styles['card-modal-info']}>
                         <div className={styles['card-modal-title']}>
-                          <span className={styles['card-modal-symbol']}>{details?.card?.symbol || '✨'}</span>
+                          <span className={styles['card-modal-symbol']} aria-hidden="true">
+                            <DestinyGlyph cardId={details?.card?.id ?? destiny.cardId} size={28} />
+                          </span>
                           <h2 id="modal-card-title" className={styles['card-modal-name']}>
                              {cardName} {isReversed && t.crownFortune.card.reversed}
                           </h2>
@@ -1166,7 +1169,6 @@ const CrownFortunePage: NextPage = () => {
                       const cardId = typeof card.id === 'number' ? card.id : index
                       const isSeen = collection.seenCardIds.includes(cardId)
                       const seenDate = collection.firstSeenDates[cardId] || ''
-                      const cardSymbol = card.symbol || '?'
                       const cardName = language === 'tr' ? (card.nameTr || card.name || '?') : (card.name || '?')
                       return (
                         <div
@@ -1179,7 +1181,9 @@ const CrownFortunePage: NextPage = () => {
                         >
                           {isSeen ? (
                             <>
-                              <span className={styles['card-symbol']}>{cardSymbol}</span>
+                              <span className={styles['card-symbol']} style={{ display: 'inline-flex', color: '#eac06f' }} aria-hidden="true">
+                                <DestinyGlyph cardId={cardId} size={22} />
+                              </span>
                               <span className={styles['card-name-small']}>{cardName}</span>
                             </>
                           ) : (
