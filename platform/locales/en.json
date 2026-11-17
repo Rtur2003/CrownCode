@@ -1652,8 +1652,8 @@
   },
   "flMcpPage": {
     "meta": {
-      "title": "FL-MCP v0.3.0: Local MCP Server & Studio App for FL Studio 2025",
-      "description": "MIT-licensed FL Studio MCP server and zero-terminal FL-MCP Studio desktop app. Live verified on FL Studio 2025 v25.2.5 [build 5319] with 894 offline tests, 14 flat-schema tools (~4k tokens), real dB/Hz plugin control, BS.1770-4 LUFS metering and direct .flp/.fst synthesis.",
+      "title": "FL-MCP v0.3.0: FL Studio MCP Server & Studio",
+      "description": "MIT-licensed FL Studio MCP server and FL-MCP Studio app: 14 flat-schema tools, real dB/Hz plugin control, BS.1770-4 LUFS metering and .flp synthesis.",
       "keywords": "FL Studio MCP, FL-MCP v0.3.0, FL-MCP Studio, Claude Desktop FL Studio, Claude Code plugin, loopMIDI, IAC Driver, BS.1770 LUFS, .flp parser"
     },
     "hero": {
