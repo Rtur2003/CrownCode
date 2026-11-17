@@ -22,7 +22,6 @@ import {
 } from 'lucide-react'
 import { MainLayout } from '@/components/Layout/MainLayout'
 import { Modal } from '@/components/UI/Modal'
-import { checkoutUrl } from '@/config/flmcp'
 import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
 import { worldImage, worldLook, worldName } from '@/config/showroom-worlds'
 import { localizedUrl, SPONSORS_URL } from '@/config/site'
@@ -423,9 +422,6 @@ const FlMcpShowcasePage: NextPage = () => {
     '--world-atmosphere': look.atmosphere,
   } as React.CSSProperties
 
-  const checkoutReady = Boolean(checkoutUrl('pro') && checkoutUrl('studio') && checkoutUrl('pack100'))
-  const supportLink = checkoutUrl('pack100')
-
   const handleCopy = (id: string, value: string) => {
     navigator.clipboard.writeText(value)
     setCopiedId(id)
@@ -453,13 +449,7 @@ const FlMcpShowcasePage: NextPage = () => {
     ],
   }
 
-  const offersSchema = checkoutReady
-    ? [
-        { '@type': 'Offer', name: 'MIT Open-Source Build', price: '0', priceCurrency: 'USD' },
-        { '@type': 'Offer', name: 'Pro Producer', price: '19', priceCurrency: 'USD' },
-        { '@type': 'Offer', name: 'Studio Edition', price: '49', priceCurrency: 'USD' },
-      ]
-    : [{ '@type': 'Offer', name: 'MIT Open-Source Build (v0.3.0)', price: '0', priceCurrency: 'USD' }]
+  const offersSchema = [{ '@type': 'Offer', name: 'MIT Open-Source Build (v0.3.0)', price: '0', priceCurrency: 'USD' }]
 
   const flMcpUrl = localizedUrl('/fl-mcp', language)
   const softwareSchema = {
@@ -965,17 +955,11 @@ const FlMcpShowcasePage: NextPage = () => {
               <strong>{M?.supportTitle}</strong>
             </div>
             <p>{M?.supportBody}</p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+            <div>
               <a href={SPONSORS_URL} target="_blank" rel="noopener noreferrer" className={styles.glassPill} style={{ minHeight: '38px', fontSize: '0.85rem' }}>
-                <span>{M?.supportButton} (GitHub Sponsors)</span>
+                <span>{M?.supportButton}</span>
                 <ExternalLink size={13} />
               </a>
-              {supportLink && (
-                <a href={supportLink} target="_blank" rel="noopener noreferrer" className={styles.glassPill} style={{ minHeight: '38px', fontSize: '0.85rem' }}>
-                  <span>{M?.supportButton} ($10)</span>
-                  <ExternalLink size={13} />
-                </a>
-              )}
             </div>
             {M?.supportNote && <p className={styles.supportMeta}>{M.supportNote}</p>}
           </div>
