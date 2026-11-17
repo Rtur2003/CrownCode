@@ -27,6 +27,7 @@ import { Modal } from '@/components/UI/Modal'
 import { WorldPage } from '@/components/UI/WorldPage'
 import { API_BASE_URL } from '@/config/api'
 import { checkoutUrl } from '@/config/flmcp'
+import { SPONSORS_URL } from '@/config/site'
 import { getSupabase, SUPABASE_CONFIGURED } from '@/config/supabase'
 import { useLanguage } from '@/context/LanguageContext'
 import world from '@/styles/components/world-page.module.css'
@@ -731,11 +732,16 @@ const FlMcpDashboardPage: NextPage = () => {
                             </a>
                           )}
                           {!proCheckout && !studioCheckout && !pack100Checkout && (
-                            <span style={{ fontSize: '0.84rem', color: 'var(--soft)' }}>
-                              {isTr
-                                ? 'GitHub açık kaynak sürümleri kredisiz çalışır. Ödeme bağlantıları henüz canlıya alınmadı.'
-                                : 'GitHub open-source builds run unmetered locally. Paid checkout links are not live yet.'}
-                            </span>
+                            <>
+                              <span style={{ fontSize: '0.84rem', color: 'var(--soft)' }}>
+                                {isTr
+                                  ? 'GitHub açık kaynak sürümleri kredisiz çalışır. Ödeme bağlantıları henüz canlıya alınmadı.'
+                                  : 'GitHub open-source builds run unmetered locally. Paid checkout links are not live yet.'}
+                              </span>
+                              <a href={SPONSORS_URL} target="_blank" rel="noopener noreferrer" className={world.link}>
+                                {isTr ? 'GitHub Sponsors ile Destek Ol' : 'Support via GitHub Sponsors'}
+                              </a>
+                            </>
                           )}
                         </div>
                       </div>
