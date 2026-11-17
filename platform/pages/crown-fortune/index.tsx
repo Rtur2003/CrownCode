@@ -150,7 +150,7 @@ const celebrateConfetti = async (isReversed = false) => {
 }
 
 /** Plain, server-rendered copy: what the page is and how a draw works. */
-function FortuneAbout({ t }: { t: { crownFortune: { about: { title: string; body: string[] } } } }) {
+function FortuneAbout({ t }: { t: { crownFortune: { about: { title: string; body: string[]; specs: Array<{ label: string; value: string }> } } } }) {
   const { about } = t.crownFortune
   return (
     <div className={styles['info-card']}>
@@ -158,6 +158,14 @@ function FortuneAbout({ t }: { t: { crownFortune: { about: { title: string; body
       {about.body.map((paragraph, index) => (
         <p key={index}>{paragraph}</p>
       ))}
+      <dl className={styles['info-specs']}>
+        {about.specs.map((item) => (
+          <div key={item.label}>
+            <dt>{item.label}</dt>
+            <dd>{item.value}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
   )
 }
