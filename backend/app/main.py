@@ -16,6 +16,9 @@ from .routes.youtube import router as youtube_router
 
 _DEFAULT_CORS_ORIGINS = (
     "http://localhost:3000,"
+    "http://127.0.0.1:3000,"
+    "http://localhost,"
+    "capacitor://localhost,"
     "https://hasan-arthur-altuntas.xyz,"
     "https://www.hasan-arthur-altuntas.xyz"
 )
