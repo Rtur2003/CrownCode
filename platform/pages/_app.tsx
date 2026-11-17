@@ -22,6 +22,7 @@ import '@/styles/globals.css'
 const ShortcutsModal = lazy(() => import('@/components/KeyboardShortcuts/ShortcutsModal').then(m => ({ default: m.ShortcutsModal })))
 const SearchModal = lazy(() => import('@/components/Search/SearchModal').then(m => ({ default: m.SearchModal })))
 const ExternalLinkWarning = lazy(() => import('@/components/ExternalLink/ExternalLinkWarning').then(m => ({ default: m.ExternalLinkWarning })))
+const SponsorModal = lazy(() => import('@/components/Sponsor/SponsorModal').then(m => ({ default: m.SponsorModal })))
 
 // Motion's animation features arrive in their own chunk after hydration.
 const loadMotionFeatures = () => import('@/config/motion-features').then(m => m.default)
@@ -80,6 +81,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <ShortcutsModal />
                 <SearchModal />
                 <ExternalLinkWarning />
+                <SponsorModal />
               </Suspense>
             )}
           </ToastProvider>

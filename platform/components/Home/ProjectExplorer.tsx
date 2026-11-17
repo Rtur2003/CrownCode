@@ -4,10 +4,12 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image, { getImageProps } from 'next/image'
 import { useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react'
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Heart, Sparkles } from 'lucide-react'
 import { hasWebGL } from '@/components/UI/WebGLGuard'
+import { openSponsorModal } from '@/components/Sponsor/sponsorPrompt'
 import { useLanguage } from '@/context/LanguageContext'
 import { PRODUCT_CATALOG, resolveProduct, type ProductEntry } from '@/config/product-catalog'
+import { SPONSORS_URL } from '@/config/site'
 import { worldImage, worldLook, worldName, worldPlacement, worldSector, type WorldLook, type WorldPlacement } from '@/config/showroom-worlds'
 import type { AtlasState } from './Atlas/AtlasScene'
 import styles from './ProjectExplorer.module.css'
@@ -323,6 +325,41 @@ export function ProjectExplorer() {
               </li>
             ))}
           </ol>
+
+          <section className={styles.showcaseBand} aria-labelledby="showcase-band-title">
+            <div className={styles.showcaseMedia}>
+              <Image
+                src="/media/crowncode-showcase.webp"
+                width={960}
+                height={540}
+                unoptimized
+                alt={t.sponsorModal?.previewAlt ?? (en ? 'CrownCode platform capabilities tour' : 'CrownCode platform yetenekleri turu')}
+              />
+            </div>
+            <div className={styles.showcaseBody}>
+              <span className={styles.showcaseEyebrow}>
+                {t.sponsorModal?.homeEyebrow ?? (en ? 'Capabilities in 9 Seconds' : '9 Saniyede Platform Yetenekleri')}
+              </span>
+              <h2 id="showcase-band-title">
+                {t.sponsorModal?.homeTitle ?? (en ? 'One open workshop from AI audio detection to FL Studio automation' : 'Ses analizinden FL Studio otomasyonuna tek açık kaynak atölye')}
+              </h2>
+              <p>
+                {t.sponsorModal?.homeBody ?? (en ? 'AURIS music analysis, Creator Studio remixing and multitrack mixing, FL-MCP hardware DAW bridge and ML utilities run free without paywalls.' : 'AURIS yapay zekâ dedektörü, Creator Studio remiks ve miks araçları, FL-MCP stüdyo köprüsü ve ML veri araçları ödeme duvarı olmadan çalışır.')}
+              </p>
+              <div className={styles.showcaseActions}>
+                <button type="button" className={styles.primary} onClick={openSponsorModal}>
+                  <Sparkles size={16} aria-hidden="true" />
+                  <span>{t.sponsorModal?.homeOpenModal ?? (en ? 'Tour & Sponsor' : 'Sponsorluk ve Tur')}</span>
+                </button>
+                <a href={SPONSORS_URL} target="_blank" rel="noopener noreferrer" className={styles.showcaseSponsorLink}>
+                  <Heart size={15} aria-hidden="true" />
+                  <span>{t.sponsorModal?.homeSponsorLink ?? 'GitHub Sponsors'}</span>
+                  <ArrowUpRight size={15} aria-hidden="true" />
+                </a>
+              </div>
+            </div>
+          </section>
+
           <div id="studio-end" className={styles.musicBridge}>
             <p>{en ? 'Music by Hasan Arthur Altuntaş' : 'Hasan Arthur Altuntaş’ın müzikleri'}</p>
             <a href="https://hasan-arthur-altuntas.com.tr" target="_blank" rel="noreferrer">

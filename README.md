@@ -18,6 +18,12 @@ live at [hasan-arthur-altuntas.xyz](https://hasan-arthur-altuntas.xyz).
   </tr>
 </table>
 
+<p align="center">
+  <img src="docs/media/crowncode-showcase.gif" width="760" alt="CrownCode full platform capability tour covering the 3D Atlas, AURIS AI music detection, FL-MCP Studio sequencer and Creator Studio">
+  <br>
+  <sub><b>What CrownCode can do in 9 seconds:</b> Interactive 3D Atlas · AURIS AI Music Detection · FL-MCP Studio &amp; 16-Step Sequencer · Creator Studio — 100% free &amp; MIT open source · <a href="https://github.com/sponsors/Rtur2003">Sponsor development on GitHub Sponsors →</a></sub>
+</p>
+
 ---
 
 ## Contents

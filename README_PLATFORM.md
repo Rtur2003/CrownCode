@@ -11,6 +11,12 @@
 
 CrownCode, yapay zeka destekli ses analizi ve yaratici araclar icin gelistirilmis acik kaynakli bir platformdur. Moduler yapida tasarlanmis olup, mobil ve masaustu cihazlarda tam uyumluluk saglar.
 
+<p align="center">
+  <img src="docs/media/crowncode-showcase.gif" width="720" alt="CrownCode platform yetenekleri turu">
+  <br>
+  <sub>3D Proje Atlasi, AURIS AI Muzik Tespiti, FL-MCP Studio ve Creator Studio — <a href="https://github.com/sponsors/Rtur2003">GitHub Sponsors ile gelistirmeyi destekle</a></sub>
+</p>
+
 > **Gelistirici:** Hasan Arthur Altuntas
 
 ---

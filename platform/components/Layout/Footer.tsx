@@ -12,6 +12,7 @@ import {
 import { useLanguage } from '@/context/LanguageContext'
 import { FOOTER_PRODUCT_IDS, FOOTER_PRODUCT_LOCALE_MAP, getProductHref } from '@/config/product-catalog'
 import { NOINDEX_ROUTES, SPONSORS_URL, normalizePath } from '@/config/site'
+import { openSponsorModal } from '@/components/Sponsor/sponsorPrompt'
 
 interface FooterLink {
   label: string
@@ -148,6 +149,13 @@ export const Footer: React.FC = () => {
                       )}
                     </li>
                   ))}
+                  {section.title === t.footer.sections.developer.title && (
+                    <li>
+                      <button type="button" className="footer-link" onClick={openSponsorModal}>
+                        {t.sponsorModal?.footerTrigger ?? (language === 'tr' ? 'Tanıtım ve Sponsorluk' : 'Capabilities & Sponsor')}
+                      </button>
+                    </li>
+                  )}
                 </ul>
               </div>
             ))}
