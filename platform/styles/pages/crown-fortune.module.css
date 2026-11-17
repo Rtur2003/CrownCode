@@ -645,7 +645,7 @@
 /* =============== RESPONSIVE =============== */
 @media (max-width: 768px) {
   .fortune-page {
-    padding: 5.5rem 1rem 3rem;
+    padding: calc(var(--header-height, 88px) + 20px) 1rem 3rem;
   }
 
   .card-actions {
@@ -655,7 +655,7 @@
 
 @media (max-width: 480px) {
   .fortune-page {
-    padding: 5rem 0.75rem 2.5rem;
+    padding: calc(var(--header-height, 88px) + 18px) 0.75rem 2.5rem;
   }
 
   .fortune-container {
