@@ -13,6 +13,7 @@ import {
   OG_LOCALE,
   SITE_NAME,
   SITE_URL,
+  SPONSORS_URL,
   localizedUrl,
   normalizePath,
   ogImagePath,
@@ -77,7 +78,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     url: SITE_URL,
     image: `${SITE_URL}/hasan-arthur-profile.jpg`,
     jobTitle: language === 'tr' ? 'Bilgisayar Mühendisliği Öğrencisi' : 'Computer Engineering Student',
-    sameAs: [GITHUB_URL, MUSIC_SITE_URL],
+    sameAs: [GITHUB_URL, SPONSORS_URL, MUSIC_SITE_URL],
   }
 
   const website = {
