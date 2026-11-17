@@ -25,6 +25,7 @@ import { Modal } from '@/components/UI/Modal'
 import { checkoutUrl } from '@/config/flmcp'
 import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
 import { worldImage, worldLook, worldName } from '@/config/showroom-worlds'
+import { localizedUrl } from '@/config/site'
 import { useLanguage } from '@/context/LanguageContext'
 import styles from '@/styles/pages/fl-mcp-stage.module.css'
 
