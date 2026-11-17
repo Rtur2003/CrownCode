@@ -461,14 +461,15 @@ const FlMcpShowcasePage: NextPage = () => {
       ]
     : [{ '@type': 'Offer', name: 'MIT Open-Source Build (v0.3.0)', price: '0', priceCurrency: 'USD' }]
 
+  const flMcpUrl = localizedUrl('/fl-mcp', language)
   const softwareSchema = {
     '@type': 'SoftwareApplication',
-    '@id': 'https://hasan-arthur-altuntas.xyz/fl-mcp#software',
+    '@id': `${flMcpUrl}#software`,
     name: 'FL-MCP (v0.3.0) & FL-MCP Studio',
     description: P?.meta.description || item.description,
     applicationCategory: 'MultimediaApplication',
     operatingSystem: 'Windows, macOS, Linux',
-    url: 'https://hasan-arthur-altuntas.xyz/fl-mcp',
+    url: flMcpUrl,
     sameAs: [GITHUB_REPO],
     softwareVersion: '0.3.0',
     license: 'https://opensource.org/licenses/MIT',
