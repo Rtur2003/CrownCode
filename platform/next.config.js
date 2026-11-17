@@ -110,6 +110,7 @@ const nextConfig = {
       { source: '/tarot/:path*', locale: false, headers: week },
       { source: '/votryx/:path*', locale: false, headers: week },
       { source: '/og/:path*', locale: false, headers: week },
+      { source: '/media/:path*', locale: false, headers: week },
     ]
   },
 

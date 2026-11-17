@@ -1670,10 +1670,10 @@
         "downloadSubtitle": "Windows, macOS ve Linux için ücretsiz, MIT lisanslı ve tamamen yerel paketler.",
         "platformLabel": "Paket veya eklenti türünü seçin",
         "downloadButton": "Ücretsiz İndirmeye Geç (Releases)",
-        "supportTitle": "İsteğe Bağlı Destek ve Gönüllü Bağış",
+        "supportTitle": "Gönüllü Açık Kaynak Sponsorluğu",
         "supportBody": "FL-MCP ve FL-MCP Studio zorunlu ödeme duvarı olmadan %100 ücretsizdir. Stüdyo iş akışınıza değer kattıysa geliştirme sürecine gönüllü destek bırakabilirsiniz.",
-        "supportButton": "GitHub Sponsors ile Destek Ol",
-        "supportNote": "FL-MCP için ücretli plan veya ödeme duvarı yoktur; projeyi desteklemek veya bağış yapmak isterseniz GitHub Sponsors üzerinden gönüllü katkı sağlayabilirsiniz.",
+        "supportButton": "GitHub Sponsors ile Sponsor Ol",
+        "supportNote": "FL-MCP için ücretli plan veya ödeme duvarı yoktur; geliştirmeye gönüllü destek vermek isterseniz yalnızca harici GitHub Sponsors üzerinden sponsor olabilirsiniz.",
         "docsTitle": "Mimari, Gizlilik Sınırı ve SSS",
         "docsSubtitle": "Scripting API 40, gizli render döngüsü, yerel veri sınırı ve sıkça sorulan soruların teknik detayı.",
         "tabArchitecture": "5 Katmanlı Mimari",
@@ -1983,7 +1983,30 @@
       "step1": "1. Windows için loopMIDI kurun, macOS için IAC Driver etkinleştirin, Linux için Wine yollarını doğrulayın.",
       "step2": "2. Tek tıkla FL betik ve AI istemci kurulumu için FL-MCP Studio açın veya /plugin marketplace add Rtur2003/FL-MCP ekleyin.",
       "step3": "3. FL Studio 2025 canlı doğrulaması için isteğe bağlı olarak fl-mcp selftest --deep komutunu çalıştırın.",
-      "step4": "4. Açık kaynak sürümler yerel ve kredisiz çalışır; ticari sürümler FLMCP anahtarınızla doğrulanır."
+      "step4": "4. Tüm açık kaynak sürümler yerel ve kredisiz çalışır; geliştirmeyi desteklemek için GitHub Sponsors sayfamızı ziyaret edebilirsiniz."
     }
+  },
+  "sponsorModal": {
+    "badge": "Ücretsiz ve Açık Kaynak",
+    "title": "Araçlar Herkese Ücretsiz Kalır, Geliştirmeyi Sponsorlukla Destekle",
+    "subtitle": "AURIS yapay zekâ müzik tespiti, FL-MCP Studio, Creator Studio ve tüm CrownCode yazılımları sıfır ödeme duvarıyla sunulur. Çalışmalar işine yarıyorsa GitHub Sponsors üzerinden gönüllü geliştirici sponsoru olabilirsin.",
+    "previewTitle": "CrownCode Neler Yapabiliyor",
+    "previewAlt": "CrownCode 3D Atlas, AURIS yapay zekâ tespiti, FL-MCP Studio ve Creator Studio yetenek özeti animasyonu",
+    "highlights": [
+      "AURIS: Suno ve Udio parçalarını saniyeler içinde ücretsiz analiz et",
+      "FL-MCP v0.3.0: Yapay zekâ istemcilerini doğrudan FL Studio 2025 oturumuna bağla",
+      "Altyapı ve Ar-Ge: Hugging Face sunucu giderlerini ve yeni açık kaynak sürümleri ayakta tut"
+    ],
+    "primaryCta": "GitHub Sponsors ile Sponsor Ol",
+    "secondaryCta": "Keşfetmeye Devam Et",
+    "dismissCta": "Daha Sonra Hatırlat",
+    "legalNote": "Katkı tamamen gönüllü açık kaynak yazılım geliştirici sponsorluğudur ve yalnızca harici GitHub Sponsors platformu üzerinden gerçekleşir. Sitedeki tüm araçlar ödemesiz ve ücretsizdir.",
+    "close": "Kapat",
+    "footerTrigger": "Tanıtım ve Sponsorluk",
+    "homeEyebrow": "9 Saniyede Platform Yetenekleri",
+    "homeTitle": "Ses analizinden FL Studio otomasyonuna tek açık kaynak atölye",
+    "homeBody": "AURIS yapay zekâ dedektörü, Creator Studio remiks ve çoklu mikser aracı, FL-MCP stüdyo köprüsü ve ML veri araçları ödeme duvarı olmadan tarayıcında ve masaüstünde çalışır.",
+    "homeOpenModal": "Sponsorluk ve Tur",
+    "homeSponsorLink": "GitHub Sponsors"
   }
 }

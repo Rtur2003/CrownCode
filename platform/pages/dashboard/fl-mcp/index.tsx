@@ -717,7 +717,7 @@ const FlMcpDashboardPage: NextPage = () => {
                               : 'FL-MCP and Studio are 100% free and MIT-licensed with no commercial paywalls.'}
                           </span>
                           <a href={SPONSORS_URL} target="_blank" rel="noopener noreferrer" className={world.link}>
-                            {isTr ? 'GitHub Sponsors ile Gönüllü Destek Ol' : 'Donate / Support via GitHub Sponsors'}
+                            {isTr ? 'GitHub Sponsors ile Sponsor Ol' : 'Sponsor Development on GitHub'}
                           </a>
                         </div>
                       </div>

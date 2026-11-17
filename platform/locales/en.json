@@ -1670,10 +1670,10 @@
         "downloadSubtitle": "Free MIT open-source local software for Windows, macOS and Linux.",
         "platformLabel": "Choose package or bundle",
         "downloadButton": "Continue to Release Package",
-        "supportTitle": "Optional Support & Voluntary Donation",
+        "supportTitle": "Optional Open-Source Sponsorship",
         "supportBody": "FL-MCP and FL-MCP Studio are 100% free and MIT licensed with no telemetry or lock-in. If it speeds up your studio workflow, voluntary support helps fund maintenance and upcoming builds.",
-        "supportButton": "Support on GitHub Sponsors",
-        "supportNote": "FL-MCP has no paid plans or checkout walls. If you want to support development or leave a donation, voluntary contributions go strictly through GitHub Sponsors.",
+        "supportButton": "Sponsor on GitHub Sponsors",
+        "supportNote": "FL-MCP has no paid plans or checkout walls. Voluntary software sponsorships are processed strictly through GitHub Sponsors.",
         "docsTitle": "Architecture, Privacy Boundary & FAQ",
         "docsSubtitle": "Detailed engineering reference for Scripting API 40, hidden render, local data guarantees and common questions.",
         "tabArchitecture": "5-Layer Architecture",
@@ -1853,7 +1853,7 @@
       "openSourceBody": "Building or running Rtur2003/FL-MCP from GitHub is MIT-licensed and unmetered forever: zero credit gates, zero paywalls and full local privacy.",
       "localBoundaryTitle": "100% Free & Local On Your Machine",
       "localBoundaryBody": "DAW connection, transport, mixer faders, fl_param VST unit solving, fl_produce arrangement, fl_audio BS.1770 metering, fl_library scanning and fl_desk automation run completely locally for free. Project files (.flp), audio stems and MIDI notes never leave your machine.",
-      "commercialNote": "There is no commercial paywall or paid checkout; anyone who wishes to support ongoing work can donate voluntarily through GitHub Sponsors."
+      "commercialNote": "There is no commercial paywall or paid checkout; anyone who wishes to support ongoing work can sponsor development voluntarily through GitHub Sponsors."
     },
     "pricing": {
       "title": "Transparent Production Plans",
@@ -1983,7 +1983,30 @@
       "step1": "1. Windows: install loopMIDI and create ports. macOS: enable IAC Driver. Linux: verify Wine paths or use FL-MCP Studio.",
       "step2": "2. Run FL-MCP Studio for 1-click controller script and AI client setup, or add Rtur2003/FL-MCP via /plugin marketplace add.",
       "step3": "3. Optionally run fl-mcp selftest --deep to verify all 17 live Scripting API checks against FL Studio 2025.",
-      "step4": "4. Open-source builds run unmetered locally; commercial builds authenticate once with your FLMCP key."
+      "step4": "4. All MIT open-source builds run unmetered and locally; visit GitHub Sponsors to support ongoing development."
     }
+  },
+  "sponsorModal": {
+    "badge": "Free and Open Source",
+    "title": "Every Tool Stays Free. Fuel What Ships Next.",
+    "subtitle": "AURIS AI music detection, FL-MCP Studio, Creator Studio and all CrownCode software ship without paywalls or subscriptions. If these tools save you time, consider sponsoring development on GitHub.",
+    "previewTitle": "What CrownCode Can Do",
+    "previewAlt": "Animated walkthrough of the CrownCode 3D Atlas, AURIS detector, FL-MCP Studio and Creator Studio",
+    "highlights": [
+      "AURIS: Inspect AI-generated music and acoustic signatures for free",
+      "FL-MCP v0.3.0: Bridge Claude, Cursor or VS Code directly into FL Studio 2025",
+      "Sustain compute & R&D: Keeps Hugging Face AI workers online and open releases shipping"
+    ],
+    "primaryCta": "Sponsor on GitHub Sponsors",
+    "secondaryCta": "Continue Exploring",
+    "dismissCta": "Remind Me Later",
+    "legalNote": "Software stays 100% free and MIT open source without paywalls. All contributions are voluntary open-source software sponsorships processed externally via GitHub Sponsors.",
+    "close": "Close",
+    "footerTrigger": "Capabilities & Sponsor",
+    "homeEyebrow": "Capabilities in 9 Seconds",
+    "homeTitle": "One open workshop from AI audio detection to FL Studio automation",
+    "homeBody": "AURIS music analysis, Creator Studio remixing and multitrack mixing, FL-MCP hardware DAW bridge and ML dataset utilities run free without subscriptions or paywalls.",
+    "homeOpenModal": "Tour & Sponsor",
+    "homeSponsorLink": "GitHub Sponsors"
   }
 }
