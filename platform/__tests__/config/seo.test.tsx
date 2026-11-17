@@ -9,6 +9,7 @@ import {
   localizedUrl,
   normalizePath,
 } from '@/config/site'
+import { evaluateRequestPolicy } from '@/config/request-policy'
 import { buildSitemap } from '@/config/sitemap'
 
 const mockRouter = { pathname: '/', asPath: '/', locale: 'tr', query: {}, isReady: true, push: jest.fn(), replace: jest.fn() }
@@ -100,6 +101,65 @@ describe('sitemap', () => {
     for (const route of NOINDEX_ROUTES) {
       expect(xml).not.toContain(`${SITE_URL}${route}<`)
     }
+  })
+
+  it('serves clean XML without deprecated browser XSLT stylesheet references', () => {
+    expect(xml).not.toContain('xml-stylesheet')
+    expect(xml).not.toContain('sitemap.xsl')
+  })
+})
+
+describe('edge request policy', () => {
+  it('redirects plain HTTP requests on the production host to HTTPS with 301', () => {
+    expect(evaluateRequestPolicy({ url: 'http://hasan-arthur-altuntas.xyz/crown-commend' })).toEqual({
+      kind: 'redirect',
+      status: 301,
+      location: `${SITE_URL}/crown-commend`,
+    })
+  })
+
+  it('prefers cf-visitor and x-forwarded-proto when workers terminate behind Cloudflare', () => {
+    expect(evaluateRequestPolicy({
+      url: 'https://hasan-arthur-altuntas.xyz/privacy',
+      cfVisitor: '{"scheme":"http"}',
+    })).toEqual({
+      kind: 'redirect',
+      status: 301,
+      location: `${SITE_URL}/privacy`,
+    })
+
+    expect(evaluateRequestPolicy({
+      url: 'http://hasan-arthur-altuntas.xyz/',
+      cfVisitor: '{"scheme":"https"}',
+    })).toEqual({ kind: 'next' })
+  })
+
+  it('redirects www host to apex HTTPS and ignores localhost', () => {
+    expect(evaluateRequestPolicy({
+      url: 'https://www.hasan-arthur-altuntas.xyz/en/terms?ref=x',
+    })).toEqual({
+      kind: 'redirect',
+      status: 301,
+      location: `${SITE_URL}/en/terms?ref=x`,
+    })
+
+    expect(evaluateRequestPolicy({ url: 'http://localhost:3000/crown-commend' })).toEqual({
+      kind: 'next',
+    })
+  })
+
+  it('returns 410 Gone for literal SearchAction placeholder URLs while keeping real searches', () => {
+    expect(evaluateRequestPolicy({
+      url: 'https://hasan-arthur-altuntas.xyz/search?q={search_term_string}',
+    })).toEqual({ kind: 'gone', status: 410 })
+
+    expect(evaluateRequestPolicy({
+      url: 'https://hasan-arthur-altuntas.xyz/en/search?q=%7Bsearch_term_string%7D',
+    })).toEqual({ kind: 'gone', status: 410 })
+
+    expect(evaluateRequestPolicy({
+      url: 'https://hasan-arthur-altuntas.xyz/search?q=auris',
+    })).toEqual({ kind: 'next' })
   })
 })
 
