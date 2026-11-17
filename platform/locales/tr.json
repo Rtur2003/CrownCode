@@ -338,6 +338,7 @@
         "name": "Hasan Arthur Altuntaş",
         "portfolio": "Portfolyo",
         "contact": "İletişim",
+        "sponsor": "GitHub Sponsors",
         "linkedin": "LinkedIn"
       },
       "support": {
@@ -1480,6 +1481,7 @@
     "github": "GitHub",
     "website": "Web Sitesi",
     "email": "E-posta",
+    "sponsors": "GitHub Sponsors ile destek ol",
     "uploadAudioFile": "AI müzik tespiti için ses dosyası yükle",
     "removeFile": "{{name}} dosyasını kaldır",
     "skipToContent": "İçeriğe geç",
@@ -1671,7 +1673,7 @@
         "supportTitle": "İsteğe Bağlı Destek ve Gönüllü Bağış",
         "supportBody": "FL-MCP ve FL-MCP Studio zorunlu ödeme duvarı olmadan %100 ücretsizdir. Stüdyo iş akışınıza değer kattıysa geliştirme sürecine gönüllü destek bırakabilirsiniz.",
         "supportButton": "Destek Ol",
-        "supportNote": "Ödeme bağlantıları yapılandırıldığında $10 ve üzeri destekçi erişimleri otomatik aktifleşir.",
+        "supportNote": "GitHub Sponsors üzerinden aylık veya tek seferlik destek olabilirsiniz; ödeme bağlantıları tanımlandığında $10+ destekçi erişimleri de aktifleşir.",
         "docsTitle": "Mimari, Gizlilik Sınırı ve SSS",
         "docsSubtitle": "Scripting API 40, gizli render döngüsü, yerel veri sınırı ve sıkça sorulan soruların teknik detayı.",
         "tabArchitecture": "5 Katmanlı Mimari",
