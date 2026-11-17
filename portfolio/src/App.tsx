@@ -224,6 +224,13 @@ function App() {
             GitHub
           </a>
           <a
+            href="https://github.com/sponsors/Rtur2003"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Sponsor
+          </a>
+          <a
             href="https://tr.linkedin.com/in/hasan-arthur-altuntas"
             target="_blank"
             rel="noreferrer"
