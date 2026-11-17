@@ -18,15 +18,15 @@ export const STORAGE_KEYS = {
   CARD_COLLECTION: 'crown_destiny_collection',
 } as const
 
-// Streak milestone badges
+// Streak milestone tiers (semantic keys; UI renders Lucide/vector icons instead of emojis)
 export const STREAK_MILESTONES = [
-  { days: 3, badge: '🌱', label: { tr: 'Filiz', en: 'Seedling' } },
-  { days: 7, badge: '🔥', label: { tr: 'Ateş Ruhu', en: 'Fire Spirit' } },
-  { days: 14, badge: '⭐', label: { tr: 'Yıldız Avcısı', en: 'Star Hunter' } },
-  { days: 30, badge: '🌙', label: { tr: 'Ay Çocuğu', en: 'Moon Child' } },
-  { days: 60, badge: '👁️', label: { tr: 'Üçüncü Göz', en: 'Third Eye' } },
-  { days: 100, badge: '👑', label: { tr: 'Kader Kralı', en: 'Destiny King' } },
-  { days: 365, badge: '🔮', label: { tr: 'Efsane', en: 'Legend' } },
+  { days: 3, badge: 'seedling', label: { tr: 'Filiz', en: 'Seedling' } },
+  { days: 7, badge: 'flame', label: { tr: 'Ateş Ruhu', en: 'Fire Spirit' } },
+  { days: 14, badge: 'star', label: { tr: 'Yıldız Avcısı', en: 'Star Hunter' } },
+  { days: 30, badge: 'moon', label: { tr: 'Ay Çocuğu', en: 'Moon Child' } },
+  { days: 60, badge: 'eye', label: { tr: 'Üçüncü Göz', en: 'Third Eye' } },
+  { days: 100, badge: 'crown', label: { tr: 'Kader Kralı', en: 'Destiny King' } },
+  { days: 365, badge: 'orbit', label: { tr: 'Efsane', en: 'Legend' } },
 ] as const
 
 export interface StreakData {
@@ -41,14 +41,14 @@ export interface StreakData {
 // MOON PHASE SYSTEM
 // ============================================================
 export const MOON_PHASES = [
-  { id: 0, name: 'Yeni Ay', nameEn: 'New Moon', emoji: '🌑', energy: 'başlangıç', energyEn: 'beginning' },
-  { id: 1, name: 'Hilal', nameEn: 'Waxing Crescent', emoji: '🌒', energy: 'büyüme', energyEn: 'growth' },
-  { id: 2, name: 'İlk Dördün', nameEn: 'First Quarter', emoji: '🌓', energy: 'aksiyon', energyEn: 'action' },
-  { id: 3, name: 'Şişkin Ay', nameEn: 'Waxing Gibbous', emoji: '🌔', energy: 'gelişim', energyEn: 'development' },
-  { id: 4, name: 'Dolunay', nameEn: 'Full Moon', emoji: '🌕', energy: 'doruk', energyEn: 'peak' },
-  { id: 5, name: 'Azalan Şişkin', nameEn: 'Waning Gibbous', emoji: '🌖', energy: 'yansıma', energyEn: 'reflection' },
-  { id: 6, name: 'Son Dördün', nameEn: 'Last Quarter', emoji: '🌗', energy: 'bırakma', energyEn: 'release' },
-  { id: 7, name: 'Azalan Hilal', nameEn: 'Waning Crescent', emoji: '🌘', energy: 'dinlenme', energyEn: 'rest' },
+  { id: 0, name: 'Yeni Ay', nameEn: 'New Moon', energy: 'başlangıç', energyEn: 'beginning' },
+  { id: 1, name: 'Hilal', nameEn: 'Waxing Crescent', energy: 'büyüme', energyEn: 'growth' },
+  { id: 2, name: 'İlk Dördün', nameEn: 'First Quarter', energy: 'aksiyon', energyEn: 'action' },
+  { id: 3, name: 'Şişkin Ay', nameEn: 'Waxing Gibbous', energy: 'gelişim', energyEn: 'development' },
+  { id: 4, name: 'Dolunay', nameEn: 'Full Moon', energy: 'doruk', energyEn: 'peak' },
+  { id: 5, name: 'Azalan Şişkin', nameEn: 'Waning Gibbous', energy: 'yansıma', energyEn: 'reflection' },
+  { id: 6, name: 'Son Dördün', nameEn: 'Last Quarter', energy: 'bırakma', energyEn: 'release' },
+  { id: 7, name: 'Azalan Hilal', nameEn: 'Waning Crescent', energy: 'dinlenme', energyEn: 'rest' },
 ] as const
 
 export type MoonPhase = typeof MOON_PHASES[number]
@@ -285,28 +285,28 @@ export const FORTUNE_CATEGORIES: {
 
 // 22 Kader Kartı - Kendi evrenimiz
 export const DESTINY_CARDS: DestinyCard[] = [
-  { id: 0, name: 'The Wanderer', nameTr: 'Gezgin', symbol: '🌟', image: '/tarot/the-fool.webp', element: 'air', energy: 'ascending' },
-  { id: 1, name: 'The Creator', nameTr: 'Yaratıcı', symbol: '✨', image: '/tarot/the-magician.webp', element: 'fire', energy: 'ascending' },
-  { id: 2, name: 'The Oracle', nameTr: 'Kahin', symbol: '🔮', image: '/tarot/the-high-priestess.webp', element: 'water', energy: 'stable' },
-  { id: 3, name: 'The Nurturer', nameTr: 'Koruyucu', symbol: '🌸', image: '/tarot/the-empress.webp', element: 'earth', energy: 'stable' },
-  { id: 4, name: 'The Sovereign', nameTr: 'Hükümdar', symbol: '👑', image: '/tarot/the-emperor.webp', element: 'fire', energy: 'stable' },
-  { id: 5, name: 'The Guide', nameTr: 'Rehber', symbol: '🗝️', image: '/tarot/the-hierophant.webp', element: 'earth', energy: 'stable' },
-  { id: 6, name: 'The Union', nameTr: 'Birlik', symbol: '💫', image: '/tarot/the-lovers.webp', element: 'air', energy: 'ascending' },
-  { id: 7, name: 'The Chariot', nameTr: 'Zafer', symbol: '⚡', image: '/tarot/the-chariot.webp', element: 'fire', energy: 'ascending' },
-  { id: 8, name: 'The Phoenix', nameTr: 'Anka', symbol: '🔥', image: '/tarot/strength.webp', element: 'fire', energy: 'ascending' },
-  { id: 9, name: 'The Hermit', nameTr: 'Bilge', symbol: '🏔️', image: '/tarot/the-hermit.webp', element: 'earth', energy: 'stable' },
-  { id: 10, name: 'The Wheel', nameTr: 'Çark', symbol: '☯️', image: '/tarot/wheel-of-fortune.webp', element: 'ether', energy: 'stable' },
-  { id: 11, name: 'The Balance', nameTr: 'Denge', symbol: '⚖️', image: '/tarot/justice.webp', element: 'air', energy: 'stable' },
-  { id: 12, name: 'The Reflection', nameTr: 'Yansıma', symbol: '🪞', image: '/tarot/the-hanged-man.webp', element: 'water', energy: 'descending' },
-  { id: 13, name: 'The Transformation', nameTr: 'Dönüşüm', symbol: '🦋', image: '/tarot/death.webp', element: 'water', energy: 'descending' },
-  { id: 14, name: 'The Harmony', nameTr: 'Uyum', symbol: '🎵', image: '/tarot/temperance.webp', element: 'water', energy: 'stable' },
-  { id: 15, name: 'The Shadow', nameTr: 'Gölge', symbol: '🌑', image: '/tarot/the-devil.webp', element: 'earth', energy: 'descending' },
-  { id: 16, name: 'The Storm', nameTr: 'Fırtına', symbol: '⛈️', image: '/tarot/the-tower.webp', element: 'air', energy: 'descending' },
-  { id: 17, name: 'The Star', nameTr: 'Yıldız', symbol: '⭐', image: '/tarot/the-star.webp', element: 'ether', energy: 'ascending' },
-  { id: 18, name: 'The Dream', nameTr: 'Düş', symbol: '🌙', image: '/tarot/the-moon.webp', element: 'water', energy: 'stable' },
-  { id: 19, name: 'The Dawn', nameTr: 'Şafak', symbol: '☀️', image: '/tarot/the-sun.webp', element: 'fire', energy: 'ascending' },
-  { id: 20, name: 'The Awakening', nameTr: 'Uyanış', symbol: '🔔', image: '/tarot/judgement.webp', element: 'ether', energy: 'ascending' },
-  { id: 21, name: 'The Crown', nameTr: 'Taç', symbol: '👑', image: '/tarot/the-world.webp', element: 'ether', energy: 'ascending' },
+  { id: 0, name: 'The Wanderer', nameTr: 'Gezgin', symbol: 'compass', image: '/tarot/the-fool.webp', element: 'air', energy: 'ascending' },
+  { id: 1, name: 'The Creator', nameTr: 'Yaratıcı', symbol: 'nova', image: '/tarot/the-magician.webp', element: 'fire', energy: 'ascending' },
+  { id: 2, name: 'The Oracle', nameTr: 'Kahin', symbol: 'oracle', image: '/tarot/the-high-priestess.webp', element: 'water', energy: 'stable' },
+  { id: 3, name: 'The Nurturer', nameTr: 'Koruyucu', symbol: 'chalice', image: '/tarot/the-empress.webp', element: 'earth', energy: 'stable' },
+  { id: 4, name: 'The Sovereign', nameTr: 'Hükümdar', symbol: 'crown', image: '/tarot/the-emperor.webp', element: 'fire', energy: 'stable' },
+  { id: 5, name: 'The Guide', nameTr: 'Rehber', symbol: 'key', image: '/tarot/the-hierophant.webp', element: 'earth', energy: 'stable' },
+  { id: 6, name: 'The Union', nameTr: 'Birlik', symbol: 'union', image: '/tarot/the-lovers.webp', element: 'air', energy: 'ascending' },
+  { id: 7, name: 'The Chariot', nameTr: 'Zafer', symbol: 'bolt', image: '/tarot/the-chariot.webp', element: 'fire', energy: 'ascending' },
+  { id: 8, name: 'The Phoenix', nameTr: 'Anka', symbol: 'flame', image: '/tarot/strength.webp', element: 'fire', energy: 'ascending' },
+  { id: 9, name: 'The Hermit', nameTr: 'Bilge', symbol: 'peak', image: '/tarot/the-hermit.webp', element: 'earth', energy: 'stable' },
+  { id: 10, name: 'The Wheel', nameTr: 'Çark', symbol: 'wheel', image: '/tarot/wheel-of-fortune.webp', element: 'ether', energy: 'stable' },
+  { id: 11, name: 'The Balance', nameTr: 'Denge', symbol: 'balance', image: '/tarot/justice.webp', element: 'air', energy: 'stable' },
+  { id: 12, name: 'The Reflection', nameTr: 'Yansıma', symbol: 'mirror', image: '/tarot/the-hanged-man.webp', element: 'water', energy: 'descending' },
+  { id: 13, name: 'The Transformation', nameTr: 'Dönüşüm', symbol: 'eclipse', image: '/tarot/death.webp', element: 'water', energy: 'descending' },
+  { id: 14, name: 'The Harmony', nameTr: 'Uyum', symbol: 'harmony', image: '/tarot/temperance.webp', element: 'water', energy: 'stable' },
+  { id: 15, name: 'The Shadow', nameTr: 'Gölge', symbol: 'shadow', image: '/tarot/the-devil.webp', element: 'earth', energy: 'descending' },
+  { id: 16, name: 'The Storm', nameTr: 'Fırtına', symbol: 'storm', image: '/tarot/the-tower.webp', element: 'air', energy: 'descending' },
+  { id: 17, name: 'The Star', nameTr: 'Yıldız', symbol: 'astrolabe', image: '/tarot/the-star.webp', element: 'ether', energy: 'ascending' },
+  { id: 18, name: 'The Dream', nameTr: 'Düş', symbol: 'crescent', image: '/tarot/the-moon.webp', element: 'water', energy: 'stable' },
+  { id: 19, name: 'The Dawn', nameTr: 'Şafak', symbol: 'sun', image: '/tarot/the-sun.webp', element: 'fire', energy: 'ascending' },
+  { id: 20, name: 'The Awakening', nameTr: 'Uyanış', symbol: 'resonance', image: '/tarot/judgement.webp', element: 'ether', energy: 'ascending' },
+  { id: 21, name: 'The Crown', nameTr: 'Taç', symbol: 'sovereign', image: '/tarot/the-world.webp', element: 'ether', energy: 'ascending' },
 ]
 
 // Mesaj havuzu - kategori ve ton bazlı (TR + EN)
@@ -799,7 +799,7 @@ const DEFAULT_CARD: DestinyCard = {
   id: 0,
   name: 'The Wanderer',
   nameTr: 'Gezgin',
-  symbol: '🌟',
+  symbol: 'compass',
   image: '/tarot/the-fool.webp',
   element: 'air',
   energy: 'ascending'
@@ -826,17 +826,17 @@ export function getDestinyDetails(destiny: DailyDestiny) {
 }
 
 /**
- * Element emoji
+ * Element icon key (UI maps via Lucide/SVG rather than emojis)
  */
-export function getElementEmoji(element: DestinyCard['element']): string {
-  const emojis = {
-    fire: '🔥',
-    water: '💧',
-    earth: '🌍',
-    air: '💨',
-    ether: '✨'
+export function getElementIconKey(element: DestinyCard['element']): string {
+  const icons = {
+    fire: 'flame',
+    water: 'droplet',
+    earth: 'globe',
+    air: 'wind',
+    ether: 'sparkles'
   }
-  return emojis[element]
+  return icons[element]
 }
 
 /**
