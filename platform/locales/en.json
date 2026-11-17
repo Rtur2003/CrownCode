@@ -123,6 +123,11 @@
           "techTitle": "Technology",
           "runTitle": "Run Locally",
           "sourceNote": "Source: templates/noir-grain",
+          "architectureTitle": "Architecture & Layout Notes",
+          "architectureBody": [
+            "On desktop viewports Noir & Grain replaces standard vertical scrolling with a horizontal scene track where sections transition through custom OGL WebGL ink-bleed shaders synchronized with GSAP ScrollTrigger timelines and Lenis momentum smoothing.",
+            "On mobile screens the same data model renders as a thumb-friendly vertical story layout. Menu groups, editorial panels and booking details live in a single typed configuration, allowing reservations to launch a zero-server WhatsApp draft or connect to an optional CrownCode API table panel."
+          ],
           "metaDescription": "A website template for fine-dining restaurants with WebGL ink transitions, a story-style mobile layout and WhatsApp reservations."
         }
       },
@@ -230,6 +235,24 @@
         "ML Toolkit is a small workbench for preparing audio datasets. Pick a tool, upload a file and download the result. It is made for the datasets behind AI music detection.",
         "Conversion moves a file between WAV, MP3, FLAC and OGG, with a bitrate choice for the lossy formats. Augmentation makes new samples from an existing one: pitch shift, speed change, bass boost, silence trimming, mixing and added noise. Dataset organization reads a file and reports its duration, tempo, key and loudness, so a folder can be labelled without opening each track.",
         "Processing runs on the CrownCode backend. If it has been idle it needs a minute or two to wake up, and the first request waits for it."
+      ],
+      "specs": [
+        {
+          "label": "Augmentation filters",
+          "value": "Semitone pitch shifting, time-stretch speed changes, low-end bass boost, silence trimming, dual-track mixing and ambient noise."
+        },
+        {
+          "label": "Codecs & bitrates",
+          "value": "Lossless WAV/FLAC alongside MP3 and OGG conversion with configurable bitrate presets."
+        },
+        {
+          "label": "Extracted metadata",
+          "value": "Track duration, estimated BPM, Chroma musical key, loudness level (dB) and descriptive audio tags."
+        },
+        {
+          "label": "Processing scope",
+          "value": "Ephemeral in-memory audio processing up to 30 MB per upload with immediate browser download."
+        }
       ]
     },
     "tools": {
@@ -969,6 +992,24 @@
       "body": [
         "Crown Fortune is a small daily ritual. Once a day you spin the wheel and it settles on one of five areas: love, career, wealth, vitality or spirit. A card from a 22-card deck is drawn for it, along with a short message, lucky numbers, a lucky colour and the current moon phase.",
         "The draw is worked out in your browser from the date and an anonymous ID kept in local storage, so it stays the same until midnight (Turkey time) and no account is needed. The cards and messages are written for fun. They are not advice and not a prediction."
+      ],
+      "specs": [
+        {
+          "label": "22 Major Arcana",
+          "value": "Complete symbolic 22-card deck featuring upright readings, reversed dark-fate reflections and SVG glyphs."
+        },
+        {
+          "label": "Five Wheel Realms",
+          "value": "Spins map daily focus across Love, Career, Wealth, Vitality and Spirit categories."
+        },
+        {
+          "label": "Daily Cycle (GMT+3)",
+          "value": "Seeded deterministic draws stay consistent throughout the day and reset at midnight Turkey time."
+        },
+        {
+          "label": "Local Storage Only",
+          "value": "Reading streaks, lunar phase calculations and discovered card collections remain privately inside your browser."
+        }
       ]
     },
     "share": {
@@ -1121,6 +1162,12 @@
         "label": "use_random_agent & block_images",
         "value": "Rotates browser user-agent strings across runs and skips image downloads to cut bandwidth."
       }
+    ],
+    "requirementsTitle": "System Requirements & Setup Notes",
+    "requirementsLead": "Local desktop runtime and safe pacing defaults",
+    "requirementsBody": [
+      "VOTRYX runs locally as a standalone desktop application on Windows 10 or Windows 11 and automates actions through an installed Google Chrome and Selenium WebDriver session. The generator on this page clamps values within safe boundaries and exports a ready-to-drop config.json file.",
+      "For reliable batch execution, keep parallel worker counts aligned with available system memory and maintain reasonable pause intervals between rounds. All configuration choices remain inside your browser until you download the JSON file."
     ]
   },
   "crownDreams": {
@@ -1257,6 +1304,10 @@
         "Gemini is given the video's title, description, top comments and, if it has them, subtitles.",
         "It writes one comment in the language and tone you picked.",
         "You read it, change what you like and post it yourself on YouTube."
+      ],
+      "details": [
+        "Once a valid YouTube link is submitted, Crown Commend inspects public video metadata and captions where available so drafts reflect actual talking points inside the clip instead of generic filler.",
+        "To keep channel engagement authentic and prevent automated spam, drafts are always handed back for manual review in an editable box so you control tone, wording and final publishing on YouTube."
       ]
     },
     "specs": [
