@@ -150,9 +150,23 @@ const AudioDatasetPage: NextPage = () => {
             <h2 id="mlk-about-title">{A.about.title}</h2>
           </div>
           <div className={world.sectionBody}>
-            {A.about.body.map((paragraph: string) => (
-              <p key={paragraph} className={world.interpretation}>{paragraph}</p>
+            {A.about.body.map((paragraph: string, index: number) => (
+              <p
+                key={paragraph}
+                className={world.interpretation}
+                style={index > 0 ? { marginTop: '14px' } : undefined}
+              >
+                {paragraph}
+              </p>
             ))}
+            <dl className={world.margins}>
+              {A.about.specs.map((item: { label: string; value: string }) => (
+                <div key={item.label}>
+                  <dt>{item.label}</dt>
+                  <dd>{item.value}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </section>
       </WorldPage>
