@@ -52,6 +52,24 @@ const CrownVotePage: NextPage = () => {
             </dl>
           </div>
         </section>
+
+        <section className={world.section} aria-labelledby="vote-requirements-title">
+          <div className={world.sectionHead}>
+            <h2 id="vote-requirements-title">{V.requirementsTitle}</h2>
+            <p>{V.requirementsLead}</p>
+          </div>
+          <div className={world.sectionBody}>
+            {V.requirementsBody.map((paragraph: string, index: number) => (
+              <p
+                key={paragraph}
+                className={world.interpretation}
+                style={index > 0 ? { marginTop: '14px' } : undefined}
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </section>
       </WorldPage>
     </MainLayout>
   )
