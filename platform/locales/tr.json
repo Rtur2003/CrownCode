@@ -123,6 +123,11 @@
           "techTitle": "Teknoloji",
           "runTitle": "Yerelde Çalıştır",
           "sourceNote": "Kaynak: templates/noir-grain",
+          "architectureTitle": "Mimari ve Tasarım Yapısı",
+          "architectureBody": [
+            "Noir & Grain masaüstü tarayıcılarda dikey kaydırma yerine bölümler arası yatay bir sahne akışı kullanır; sahne geçişleri özel OGL WebGL mürekkep yayılım gölgelendiricileri, GSAP ScrollTrigger zaman çizelgesi ve Lenis kaydırma yumuşatması ile senkronize edilir.",
+            "Mobilde aynı içerik hiyerarşisi dikey dokunuşa uyumlu hikâye kartı düzenine dönüşür. Menü kategorileri, hikâye anlatımı blokları ve rezervasyon akışı tek bir yapılandırma nesnesinden beslenir; rezervasyonlar harici sunucu olmadan önceden doldurulmuş WhatsApp bağlantısıyla ya da CrownCode API masalı yönetim paneliyle çalışabilir."
+          ],
           "metaDescription": "Fine-dining restoranları için WebGL mürekkep geçişleri, mobilde hikâye düzeni ve WhatsApp rezervasyonu olan bir site şablonu."
         }
       },
@@ -230,6 +235,24 @@
         "ML Toolkit, ses veri setlerini hazırlamak için küçük bir çalışma tezgâhı. Bir araç seç, dosyanı yükle, sonucu indir. Yapay zekâ müzik tespitinin arkasındaki veri setleri için yapıldı.",
         "Dönüştürme, bir dosyayı WAV, MP3, FLAC ve OGG arasında taşır; kayıplı formatlarda bit hızı seçilebilir. Veri artırma, var olan bir örnekten yenilerini üretir: perde kaydırma, hız değiştirme, bas güçlendirme, sessizlik kırpma, karıştırma ve gürültü ekleme. Veri seti düzenleme dosyayı okuyup süresini, temposunu, tonunu ve ses seviyesini verir; böylece bir klasör parça parça açılmadan etiketlenebilir.",
         "İşleme CrownCode arka ucunda çalışır. Bir süre kullanılmadıysa uyanması bir iki dakika sürer ve ilk istek bunu bekler."
+      ],
+      "specs": [
+        {
+          "label": "Veri artırma işlemleri",
+          "value": "Yarıton perde kaydırma, hız çarpanı, düşük frekans bas artışı, sessizlik kırpma, iki parça karıştırma ve kontrollü gürültü ekleme."
+        },
+        {
+          "label": "Format ve bit hızı",
+          "value": "Kayıpsız WAV ve FLAC ile 128-320 kbps seçilebilir MP3 ve OGG arasında doğrudan ses dönüştürme."
+        },
+        {
+          "label": "Çıkarılan metrikler",
+          "value": "Süre (sn), tahmini BPM, Chroma ton profili, RMS/tepe ses düzeyi (dB) ve otomatik etiket önerileri."
+        },
+        {
+          "label": "Dosya sınırı",
+          "value": "İşlem başına 30 MB'a kadar geçici bellek içi işleme; çıktı dosyası tarayıcıya tek dosya olarak indirilir."
+        }
       ]
     },
     "tools": {
@@ -969,6 +992,24 @@
       "body": [
         "Crown Fortune küçük bir günlük ritüel. Günde bir kez çarkı çevirirsin; çark aşk, kariyer, bereket, sağlık ve ruh alanlarından birinde durur. Bu alana 22 kartlık desteden bir kart düşer, yanında kısa bir mesaj, şanslı sayılar, şanslı renk ve o günün ay evresi gelir.",
         "Çekiliş tarayıcında, tarihe ve yerel depolamada tutulan anonim bir kimliğe göre hesaplanır. Bu yüzden gece yarısına kadar (Türkiye saati) aynı kalır ve hesap gerekmez. Kartlar ve mesajlar eğlence için yazıldı. Tavsiye ya da tahmin değildir."
+      ],
+      "specs": [
+        {
+          "label": "22 Kartlık Büyük Arkana",
+          "value": "Her biri düz ve karanlık/ters yorum metnine sahip 22 sembolik kart ve özel çizim mühür."
+        },
+        {
+          "label": "Beş Yaşam Alanı",
+          "value": "Çark her çekilişte Aşk, Kariyer, Bereket, Sağlık veya Ruh kategorilerinden birini seçer."
+        },
+        {
+          "label": "Günlük GMT+3 Döngüsü",
+          "value": "Deterministik tohumlama her gece Türkiye saatine göre 00:00'da otomatik yenilenir."
+        },
+        {
+          "label": "Yerel Gizlilik",
+          "value": "Seri sayacı, ay evresi hesabı ve kart koleksiyonu yalnızca kendi tarayıcının yerel belleğinde saklanır."
+        }
       ]
     },
     "share": {
@@ -1121,6 +1162,12 @@
         "label": "use_random_agent & block_images",
         "value": "İstekler arasında tarayıcı user-agent başlığını döndürür ve bant genişliği için görselleri devre dışı bırakır."
       }
+    ],
+    "requirementsTitle": "Sistem Gereksinimleri ve Yapılandırma Notları",
+    "requirementsLead": "Yerel masaüstü kurulumu ve güvenli çalışma aralıkları",
+    "requirementsBody": [
+      "VOTRYX Windows 10 veya Windows 11 üzerinde çalışan bağımsız bir otomasyon aracıdır ve sistemde kurulu güncel Google Chrome ile uyumlu WebDriver ortamı üzerinden görevlerini yürütür. Bu sayfadaki oluşturucu, parametre aralıklarını doğrulayarak doğrudan executable klasörüne bırakabileceğin temiz bir config.json dosyası üretir.",
+      "Toplu işlerde istikrar için eşzamanlı Chrome işçi sayısını bilgisayarının RAM kapasitesine göre ayarlaman ve oylar arası bekleme süresini makul düzeyde tutman önerilir. Uygulama herhangi bir merkezi sunucuya kimlik veya tarayıcı verisi göndermez."
     ]
   },
   "crownDreams": {
@@ -1257,6 +1304,10 @@
         "Gemini’ye videonun başlığı, açıklaması, en üstteki yorumlar ve varsa altyazısı verilir.",
         "Seçtiğin dilde ve tonda tek bir yorum yazar.",
         "Sen okursun, istediğin yeri değiştirirsin ve YouTube'da kendin paylaşırsın."
+      ],
+      "details": [
+        "Crown Commend, bir YouTube bağlantısı çözümlendiğinde videonun herkese açık meta verilerini ve mümkünse transkriptini toplayarak yalnızca genel başlık yerine videodaki somut başlıklara referans veren taslaklar üretir.",
+        "Otomatik spam önlemi olarak üretim süreci bilinçli şekilde insan onayına bağlı bırakılmıştır. Oluşturulan her metin doğrudan düzenlenebilir kutuda açılır; dili, uzunluğu ve ifadeyi istediğin gibi revize ettikten sonra kendi hesabınla yayınlarsın."
       ]
     },
     "specs": [
@@ -1309,7 +1360,7 @@
   "privacy": {
     "meta": {
       "title": "Gizlilik Politikası | CrownCode",
-      "description": "CrownCode’un hangi verileri topladığı, bu verileri nasıl kullandığı ve nasıl koruduğu."
+      "description": "CrownCode araçlarında yüklenen seslerin, YouTube bağlantılarının ve rüya metinlerinin nasıl işlendiği, çerez kullanımı ve saklama ilkeleri."
     },
     "title": "Gizlilik Politikası",
     "lastUpdated": "Son güncelleme: 21 Ekim 2026",
