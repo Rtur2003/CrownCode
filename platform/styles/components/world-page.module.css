@@ -18,7 +18,7 @@
   --on-accent: #0d0a10;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   min-height: 100svh;
-  padding: clamp(78px, 8.8vw, 108px) clamp(20px, 5vw, 72px) 52px;
+  padding: calc(var(--header-height, 88px) + clamp(20px, 2.5vw, 34px)) clamp(20px, 5vw, 72px) 52px;
   color: var(--ink);
   background: var(--void);
   font-family: var(--font-family-base);
