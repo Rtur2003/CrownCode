@@ -328,6 +328,9 @@ export function ProjectExplorer() {
             <a href="https://hasan-arthur-altuntas.com.tr" target="_blank" rel="noreferrer">
               {en ? 'Listen to Hasan Arthur Altuntaş' : 'Hasan Arthur Altuntaş’ı dinle'} <ArrowUpRight size={26} />
             </a>
+            <Link href="/creator-studio" className={styles.studioLink}>
+              {en ? 'Creator Studio: Remix & Multitrack Mixer' : 'Creator Studio: Remiks ve Çoklu Parça Mikser'} <ArrowRight size={16} />
+            </Link>
           </div>
         </section>
       </div>
