@@ -338,6 +338,7 @@
         "name": "Hasan Arthur Altuntaş",
         "portfolio": "Portfolio",
         "contact": "Contact",
+        "sponsor": "GitHub Sponsors",
         "linkedin": "LinkedIn"
       },
       "support": {
@@ -1480,6 +1481,7 @@
     "github": "GitHub",
     "website": "Website",
     "email": "Email",
+    "sponsors": "Sponsor via GitHub Sponsors",
     "uploadAudioFile": "Upload audio file for AI music detection",
     "removeFile": "Remove {{name}}",
     "skipToContent": "Skip to content",
@@ -1671,7 +1673,7 @@
         "supportTitle": "Optional Support & Voluntary Donation",
         "supportBody": "FL-MCP and FL-MCP Studio are 100% free and MIT licensed with no telemetry or lock-in. If it speeds up your studio workflow, voluntary support helps fund maintenance and upcoming builds.",
         "supportButton": "Support Development",
-        "supportNote": "Commercial supporter licenses ($10+) activate automatically once payment links are configured in the environment.",
+        "supportNote": "You can back development via GitHub Sponsors (monthly or one-time); commercial $10+ supporter perks also activate once payment links are configured.",
         "docsTitle": "Architecture, Privacy Boundary & FAQ",
         "docsSubtitle": "Detailed engineering reference for Scripting API 40, hidden render, local data guarantees and common questions.",
         "tabArchitecture": "5-Layer Architecture",
