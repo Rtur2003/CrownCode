@@ -142,7 +142,7 @@ const GENRES: GenrePreset[] = [
     name: { tr: 'Boom Bap', en: 'Boom Bap' },
     bpmNum: 90,
     bpm: '90 BPM',
-    scale: { tr: 'Mi♭ Majör (Eb Major)', en: 'Eb Major' },
+    scale: { tr: 'Mi Bemol Majör (Eb Major)', en: 'Eb Major' },
     groove: { tr: 'İnsanileştirilmiş swing ve akustik davul cebi', en: 'Swung unquantized pocket with dusty acoustic kit timing' },
     description: { tr: 'Caz yedili akor kesimleri, yumuşak doygunluk ve gövdeli trampet.', en: 'Chopped jazz seventh voicings, subtle warmth and punchy acoustic snares.' },
     notes: [311.13, 392, 466.16, 587.33, 349.23],
