@@ -173,6 +173,7 @@ npm run lint         # ESLint kontrolu
 **Hasan Arthur Altuntas**
 
 - **GitHub:** [@Rtur2003](https://github.com/Rtur2003)
+- **Sponsors:** [github.com/sponsors/Rtur2003](https://github.com/sponsors/Rtur2003)
 - **Website:** [hasan-arthur-altuntas.xyz](https://hasan-arthur-altuntas.xyz)
 - **Email:** contact@hasan-arthur-altuntas.xyz
 
