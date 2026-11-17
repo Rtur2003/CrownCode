@@ -125,6 +125,7 @@
 }
 
 .pulseDot {
+  flex-shrink: 0;
   width: 7px;
   height: 7px;
   border-radius: 50%;
@@ -1127,6 +1128,29 @@
 }
 
 @media (max-width: 640px) {
+  .metricPills {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .metricPill {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    border-radius: 16px;
+    padding: 9px 12px;
+  }
+  .capsuleRail {
+    border-radius: 18px;
+    padding: 6px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+  .capsuleTab {
+    text-align: center;
+    padding: 8px 10px;
+  }
   .rack {
     border-radius: 20px;
     padding: 14px;
