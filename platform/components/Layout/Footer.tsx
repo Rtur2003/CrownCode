@@ -11,7 +11,7 @@ import {
 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { FOOTER_PRODUCT_IDS, FOOTER_PRODUCT_LOCALE_MAP, getProductHref } from '@/config/product-catalog'
-import { NOINDEX_ROUTES, normalizePath } from '@/config/site'
+import { NOINDEX_ROUTES, SPONSORS_URL, normalizePath } from '@/config/site'
 
 interface FooterLink {
   label: string
@@ -56,6 +56,7 @@ export const Footer: React.FC = () => {
       links: [
         { label: t.footer.sections.developer.contact, href: 'mailto:contact@hasan-arthur-altuntas.xyz', external: true },
         { label: t.footer.sections.developer.portfolio, href: 'https://hasan-arthur-altuntas.com.tr', external: true },
+        { label: t.footer.sections.developer.sponsor, href: SPONSORS_URL, external: true },
       ],
     },
   ]
@@ -109,6 +110,15 @@ export const Footer: React.FC = () => {
                 aria-label={t.aria.email}
               >
                 <Mail size={20} />
+              </a>
+              <a
+                href={SPONSORS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-link"
+                aria-label={t.aria.sponsors}
+              >
+                <Heart size={20} />
               </a>
             </div>
           </div>
