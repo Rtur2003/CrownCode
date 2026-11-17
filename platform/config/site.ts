@@ -13,6 +13,7 @@ export const SITE_NAME = 'CrownCode'
 export const AUTHOR_NAME = 'Hasan Arthur Altuntaş'
 export const MUSIC_SITE_URL = 'https://hasan-arthur-altuntas.com.tr'
 export const GITHUB_URL = 'https://github.com/Rtur2003'
+export const SPONSORS_URL = 'https://github.com/sponsors/Rtur2003'
 
 export const LOCALES = ['tr', 'en'] as const
 export type Locale = (typeof LOCALES)[number]
