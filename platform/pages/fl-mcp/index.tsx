@@ -25,7 +25,7 @@ import { Modal } from '@/components/UI/Modal'
 import { checkoutUrl } from '@/config/flmcp'
 import { PRODUCT_CATALOG, resolveProduct } from '@/config/product-catalog'
 import { worldImage, worldLook, worldName } from '@/config/showroom-worlds'
-import { localizedUrl } from '@/config/site'
+import { localizedUrl, SPONSORS_URL } from '@/config/site'
 import { useLanguage } from '@/context/LanguageContext'
 import styles from '@/styles/pages/fl-mcp-stage.module.css'
 
@@ -965,15 +965,14 @@ const FlMcpShowcasePage: NextPage = () => {
               <strong>{M?.supportTitle}</strong>
             </div>
             <p>{M?.supportBody}</p>
-            <div>
-              {supportLink ? (
-                <a href={supportLink} target="_blank" rel="noreferrer" className={styles.glassPill} style={{ minHeight: '38px', fontSize: '0.85rem' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+              <a href={SPONSORS_URL} target="_blank" rel="noopener noreferrer" className={styles.glassPill} style={{ minHeight: '38px', fontSize: '0.85rem' }}>
+                <span>{M?.supportButton} (GitHub Sponsors)</span>
+                <ExternalLink size={13} />
+              </a>
+              {supportLink && (
+                <a href={supportLink} target="_blank" rel="noopener noreferrer" className={styles.glassPill} style={{ minHeight: '38px', fontSize: '0.85rem' }}>
                   <span>{M?.supportButton} ($10)</span>
-                  <ExternalLink size={13} />
-                </a>
-              ) : (
-                <a href="https://github.com/sponsors/Rtur2003" target="_blank" rel="noreferrer" className={styles.glassPill} style={{ minHeight: '38px', fontSize: '0.85rem' }}>
-                  <span>{M?.supportButton} (GitHub Sponsors)</span>
                   <ExternalLink size={13} />
                 </a>
               )}
