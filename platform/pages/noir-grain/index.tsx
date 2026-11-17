@@ -90,6 +90,23 @@ const NoirGrainPage: NextPage = () => {
           </div>
         </section>
 
+        <section className={world.section} aria-labelledby="noir-arch-title">
+          <div className={world.sectionHead}>
+            <h2 id="noir-arch-title">{page.architectureTitle}</h2>
+          </div>
+          <div className={world.sectionBody}>
+            {page.architectureBody.map((paragraph: string, index: number) => (
+              <p
+                key={paragraph}
+                className={world.interpretation}
+                style={index > 0 ? { marginTop: '14px' } : undefined}
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </section>
+
         <Modal
           open={currentShot !== null}
           onClose={() => setLightboxIndex(null)}
