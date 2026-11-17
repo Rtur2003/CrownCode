@@ -52,6 +52,11 @@ describe('components and pages', () => {
   it('do not use all-caps utility classes', () => {
     expect(offenders(tsx, /className="[^"]*\buppercase\b/)).toEqual([])
   })
+
+  it('contain no raw emojis or slop dingbat glyphs in source code', () => {
+    const code = ['components', 'pages', 'data', 'hooks', 'config', 'scripts'].flatMap(dir => walk(dir, ['.ts', '.tsx', '.mjs']))
+    expect(offenders(code, /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u)).toEqual([])
+  })
 })
 
 type Json = string | number | boolean | null | Json[] | { [key: string]: Json }
