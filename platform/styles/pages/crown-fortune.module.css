@@ -1169,6 +1169,16 @@
 .info-card h2 { margin: 0 0 12px; font-size: clamp(1.4rem, 2.4vw, 1.8rem); font-weight: 400; color: var(--color-text-primary, #f4ede3); }
 .info-card p { margin: 0 0 1em; font-size: 1.05rem; line-height: 1.65; color: var(--color-text-secondary, #c8b9a7); }
 .info-card p:last-child { margin-bottom: 0; }
+.info-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px 24px;
+  margin: 20px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in srgb, var(--color-gold-400, #eac06f) 18%, transparent);
+}
+.info-specs dt { margin: 0 0 4px; font-size: 0.9rem; color: var(--color-gold-400, #eac06f); }
+.info-specs dd { margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--color-text-secondary, #c8b9a7); }
 
 @media (prefers-reduced-motion: reduce) {
   .text-action { transition: none; }
