@@ -141,6 +141,11 @@ const CrownCommendPage: NextPage = () => {
             <ol className={styles.steps}>
               {C.how.steps.map((step: string) => <li key={step}>{step}</li>)}
             </ol>
+            {C.how.details.map((paragraph: string) => (
+              <p key={paragraph} className={world.interpretation} style={{ marginTop: '14px' }}>
+                {paragraph}
+              </p>
+            ))}
             <dl className={world.margins}>
               {C.specs.map((item: { label: string; value: string }) => (
                 <div key={item.label}>
