@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { FOOTER_PRODUCT_IDS, FOOTER_PRODUCT_LOCALE_MAP, getProductHref } from '@/config/product-catalog'
+import { NOINDEX_ROUTES, normalizePath } from '@/config/site'
 
 interface FooterLink {
   label: string
@@ -29,6 +30,8 @@ export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear()
   const otherLocale = language === 'tr' ? 'en' : 'tr'
   const isErrorPage = router.pathname === '/404' || router.pathname === '/_error'
+  const isNoIndexPage =
+    isErrorPage || (NOINDEX_ROUTES as readonly string[]).includes(normalizePath(router.pathname))
   const currentPath = isErrorPage ? '/' : (router.asPath?.split(/[?#]/)[0] || '/')
 
   const productLinks: FooterLink[] = FOOTER_PRODUCT_IDS.map((id) => ({
@@ -162,7 +165,7 @@ export const Footer: React.FC = () => {
               <Link
                 href={currentPath}
                 locale={otherLocale}
-                hrefLang={otherLocale}
+                hrefLang={isNoIndexPage ? undefined : otherLocale}
                 lang={otherLocale}
                 className="footer-bottom-link"
               >
