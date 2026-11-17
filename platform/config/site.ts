@@ -43,9 +43,9 @@ export function localizedUrl(path: string, locale: Locale): string {
 
 /** Pages that are not projects of their own but belong in the index. */
 const STANDALONE_ROUTES = [
-  { path: '/creator-studio', lastmod: '2026-11-16', schema: { category: 'MultimediaApplication', os: 'Web' } as AppSchema },
-  { path: '/privacy', lastmod: '2026-11-16' },
-  { path: '/terms', lastmod: '2026-11-16' },
+  { path: '/creator-studio', lastmod: '2026-11-17', schema: { category: 'MultimediaApplication', os: 'Web' } as AppSchema },
+  { path: '/privacy', lastmod: '2026-11-17' },
+  { path: '/terms', lastmod: '2026-11-17' },
 ] as const
 
 /**
@@ -57,8 +57,8 @@ const STANDALONE_ROUTES = [
  * priority, so they are not emitted.
  */
 export const INDEXABLE_ROUTES: readonly { path: string; lastmod: string }[] = [
-  { path: '/', lastmod: '2026-11-16' },
-  ...internalProjects().map(entry => ({ path: entry.href, lastmod: entry.updated ?? '2026-11-16' })),
+  { path: '/', lastmod: '2026-11-17' },
+  ...internalProjects().map(entry => ({ path: entry.href, lastmod: entry.updated ?? '2026-11-17' })),
   ...STANDALONE_ROUTES.map(({ path, lastmod }) => ({ path, lastmod })),
 ]
 
