@@ -1672,8 +1672,8 @@
         "downloadButton": "Ücretsiz İndirmeye Geç (Releases)",
         "supportTitle": "İsteğe Bağlı Destek ve Gönüllü Bağış",
         "supportBody": "FL-MCP ve FL-MCP Studio zorunlu ödeme duvarı olmadan %100 ücretsizdir. Stüdyo iş akışınıza değer kattıysa geliştirme sürecine gönüllü destek bırakabilirsiniz.",
-        "supportButton": "Destek Ol",
-        "supportNote": "GitHub Sponsors üzerinden aylık veya tek seferlik destek olabilirsiniz; ödeme bağlantıları tanımlandığında $10+ destekçi erişimleri de aktifleşir.",
+        "supportButton": "GitHub Sponsors ile Destek Ol",
+        "supportNote": "FL-MCP için ücretli plan veya ödeme duvarı yoktur; projeyi desteklemek veya bağış yapmak isterseniz GitHub Sponsors üzerinden gönüllü katkı sağlayabilirsiniz.",
         "docsTitle": "Mimari, Gizlilik Sınırı ve SSS",
         "docsSubtitle": "Scripting API 40, gizli render döngüsü, yerel veri sınırı ve sıkça sorulan soruların teknik detayı.",
         "tabArchitecture": "5 Katmanlı Mimari",
@@ -1848,12 +1848,12 @@
     },
     "commerceNotice": {
       "title": "Lisans ve Veri Gizliliği Modeli",
-      "subtitle": "Açık kaynak depo sürümleri tamamen ücretsiz ve sınırsızdır. Ticari planlar yalnızca gerçek ödeme bağlantıları aktif edildiğinde yayınlanır.",
+      "subtitle": "FL-MCP ve FL-MCP Studio tamamen ücretsiz ve MIT açık kaynak lisanslıdır; ticari ödeme planı bulunmaz.",
       "openSourceTitle": "MIT Açık Kaynak Sürümü (v0.3.0): Kredisiz ve Sınırsız",
-      "openSourceBody": "GitHub üzerinden Rtur2003/FL-MCP deposundan doğrudan kurulan sürümler MIT lisanslıdır; kredi sayacı veya lisans sunucusu sorgusu içermez.",
-      "localBoundaryTitle": "Her Zaman Ücretsiz ve Yerel Kalan Çekirdek",
-      "localBoundaryBody": "Gelecekteki ticari dağıtımlarda bile DAW bağlantısı, transport, mikser faderları, fl_param gerçek birimli eklenti kontrolü, fl_audio BS.1770 ses ölçümü, fl_library tarama ve fl_desk otomasyonu sonsuza kadar ücretsiz ve yerel kalır. Proje (.flp), ses ve nota verileri asla sunucuya gönderilmez; kredi sadece fl_produce ve fl_mix balance gibi üretici komutlar için kalıcı diskli licence sunucusunda işlenir.",
-      "commercialNote": "Sahte fiyat veya aktif olmayan ödeme linki yayınlanmaz. Şu an açık kaynak sürümü indirebilir veya geliştirici lisans kasasını test edebilirsiniz."
+      "openSourceBody": "GitHub üzerinden Rtur2003/FL-MCP deposundan kurulan sürümler MIT lisanslıdır; kredi sayacı, ücretli paket veya lisans zorunluluğu içermez.",
+      "localBoundaryTitle": "Tamamen Yerel ve Ödeme Duvarısız Çekirdek",
+      "localBoundaryBody": "DAW bağlantısı, transport, mikser faderları, fl_param gerçek birimli eklenti kontrolü, fl_produce aranjör, fl_audio BS.1770 ses ölçümü, fl_library tarama ve fl_desk otomasyonu bütünüyle yerel ve ücretsiz çalışır. Proje (.flp), ses ve nota verileri sunucuya gönderilmez.",
+      "commercialNote": "Ücretli abonelik veya ticari ödeme sistemi yoktur; geliştirmeyi desteklemek isteyenler GitHub Sponsors üzerinden gönüllü katkı sağlayabilir."
     },
     "pricing": {
       "title": "Şeffaf Prodüksiyon Paketleri",
