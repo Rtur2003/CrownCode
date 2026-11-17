@@ -288,5 +288,6 @@ MIT, see [LICENSE](LICENSE).
 ```
 
 GitHub [@Rtur2003](https://github.com/Rtur2003) ·
+[Sponsors](https://github.com/sponsors/Rtur2003) ·
 [hasan-arthur-altuntas.xyz](https://hasan-arthur-altuntas.xyz) ·
 contact@hasan-arthur-altuntas.xyz
