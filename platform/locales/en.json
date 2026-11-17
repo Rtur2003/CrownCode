@@ -1672,8 +1672,8 @@
         "downloadButton": "Continue to Release Package",
         "supportTitle": "Optional Support & Voluntary Donation",
         "supportBody": "FL-MCP and FL-MCP Studio are 100% free and MIT licensed with no telemetry or lock-in. If it speeds up your studio workflow, voluntary support helps fund maintenance and upcoming builds.",
-        "supportButton": "Support Development",
-        "supportNote": "You can back development via GitHub Sponsors (monthly or one-time); commercial $10+ supporter perks also activate once payment links are configured.",
+        "supportButton": "Support on GitHub Sponsors",
+        "supportNote": "FL-MCP has no paid plans or checkout walls. If you want to support development or leave a donation, voluntary contributions go strictly through GitHub Sponsors.",
         "docsTitle": "Architecture, Privacy Boundary & FAQ",
         "docsSubtitle": "Detailed engineering reference for Scripting API 40, hidden render, local data guarantees and common questions.",
         "tabArchitecture": "5-Layer Architecture",
@@ -1848,12 +1848,12 @@
     },
     "commerceNotice": {
       "title": "Licensing & Privacy Model",
-      "subtitle": "Open-source builds are completely unmetered. Commercial packages and pricing tables go live only alongside verified checkout links.",
+      "subtitle": "FL-MCP and FL-MCP Studio are 100% free and MIT-licensed with no commercial checkout or paid subscriptions.",
       "openSourceTitle": "MIT Open-Source Build (v0.3.0): Unmetered",
-      "openSourceBody": "Building or running directly from Rtur2003/FL-MCP on GitHub is MIT-licensed and unmetered forever: zero credit gates, zero license server checks and full local privacy.",
-      "localBoundaryTitle": "What Always Stays Free & On Your Machine",
-      "localBoundaryBody": "Even in future commercial editions, DAW connection, transport, mixer faders, fl_param VST unit solving, fl_audio BS.1770 metering, fl_library scanning and fl_desk automation stay free and offline forever. Project files (.flp), audio stems and MIDI notes never leave your machine; at most a license key and generative operation name reach the persistent licence validation service (never ephemeral sleeping containers).",
-      "commercialNote": "Commercial plan pricing will publish here only once live payment checkout links are active. Right now you can explore the open-source release or open the developer sandbox vault."
+      "openSourceBody": "Building or running Rtur2003/FL-MCP from GitHub is MIT-licensed and unmetered forever: zero credit gates, zero paywalls and full local privacy.",
+      "localBoundaryTitle": "100% Free & Local On Your Machine",
+      "localBoundaryBody": "DAW connection, transport, mixer faders, fl_param VST unit solving, fl_produce arrangement, fl_audio BS.1770 metering, fl_library scanning and fl_desk automation run completely locally for free. Project files (.flp), audio stems and MIDI notes never leave your machine.",
+      "commercialNote": "There is no commercial paywall or paid checkout; anyone who wishes to support ongoing work can donate voluntarily through GitHub Sponsors."
     },
     "pricing": {
       "title": "Transparent Production Plans",
