@@ -1427,7 +1427,7 @@
   "terms": {
     "meta": {
       "title": "Kullanım Koşulları | CrownCode",
-      "description": "CrownCode projelerini ve demo araçlarını kullanma koşulları."
+      "description": "CrownCode barındırılan web demoları, AURIS analizleri ve FL-MCP ile VOTRYX açık kaynak masaüstü araçları için kullanım koşulları ve sorumluluk sınırı."
     },
     "title": "Kullanım Koşulları",
     "lastUpdated": "Son güncelleme: 16 Kasım 2026",
@@ -1652,8 +1652,8 @@
   },
   "flMcpPage": {
     "meta": {
-      "title": "FL-MCP v0.3.0: FL Studio 2025 İçin Yerel MCP Sunucusu ve Studio Uygulaması",
-      "description": "MIT lisanslı FL Studio MCP sunucusu ve sıfır terminal kurulumlu FL-MCP Studio masaüstü uygulaması. FL Studio 2025 v25.2.5 [build 5319] üzerinde canlı doğrulandı; 894 çevrimdışı test, 14 düz-şemalı araç (~4k token), gerçek dB/Hz eklenti kontrolü, BS.1770-4 LUFS ölçümü ve doğrudan .flp/.fst proje yazımı sunar.",
+      "title": "FL-MCP v0.3.0: FL Studio MCP ve Studio",
+      "description": "MIT lisanslı FL Studio MCP sunucusu ve FL-MCP Studio: 14 araç, gerçek dB/Hz kontrolü, BS.1770-4 LUFS ölçümü ve doğrudan .flp/.fst proje yazımı.",
       "keywords": "FL Studio MCP, FL-MCP v0.3.0, FL-MCP Studio, Claude Desktop FL Studio, Claude Code eklentisi, loopMIDI, IAC Driver, BS.1770 LUFS, .flp yazımı"
     },
     "hero": {
