@@ -437,15 +437,16 @@ const FlMcpShowcasePage: NextPage = () => {
       { id: 'selftest-deep', label: isTr ? 'Canlı Doğrulama (17 kontrol)' : 'Live FL Self-Test (17 checks)', code: 'fl-mcp selftest --deep' },
     ],
     desktop: [
-      { id: 'mcpb-pipx', label: isTr ? 'Claude Desktop (.mcpb veya pipx)' : 'Claude Desktop (.mcpb or pipx)', code: 'pipx install fl-mcp && fl-mcp install --client claude-desktop' },
-      { id: 'desktop-json', label: 'claude_desktop_config.json', code: JSON.stringify({ mcpServers: { 'fl-mcp': { command: 'fl-mcp', args: [] } } }, null, 2) },
+      { id: 'mcpb-pipx', label: isTr ? 'Claude Desktop (uv veya .mcpb)' : 'Claude Desktop (uv or .mcpb)', code: 'uv tool install "fl-mcp[audio] @ git+https://github.com/Rtur2003/FL-MCP" && fl-mcp setup --client claude-desktop --source git --write' },
+      { id: 'desktop-json', label: 'claude_desktop_config.json', code: JSON.stringify({ mcpServers: { 'fl-studio': { command: 'uvx', args: ['--from', 'fl-mcp[audio] @ git+https://github.com/Rtur2003/FL-MCP', 'fl-mcp'] } } }, null, 2) },
     ],
     clients: [
-      { id: 'auto-register', label: 'Cursor · VS Code · Windsurf · Gemini · Antigravity · Codex', code: 'fl-mcp install --all' },
-      { id: 'cursor-json', label: 'Streamable-HTTP (.cursor/mcp.json)', code: JSON.stringify({ mcpServers: { 'fl-mcp': { url: 'http://127.0.0.1:8765/mcp' } } }, null, 2) },
+      { id: 'auto-register', label: 'Cursor · VS Code · Windsurf · Gemini · Antigravity · Codex', code: 'fl-mcp config cursor --source git --write && fl-mcp config --source git' },
+      { id: 'cursor-json', label: 'Streamable-HTTP (.cursor/mcp.json)', code: JSON.stringify({ mcpServers: { 'fl-studio': { url: 'http://127.0.0.1:8765/mcp' } } }, null, 2) },
     ],
     http: [
-      { id: 'http-serve', label: isTr ? 'Kalıcı HTTP (:8765/mcp) & SSE' : 'Persistent HTTP (:8765/mcp) & SSE', code: 'fl-mcp serve --transport http --port 8765' },
+      { id: 'http-daemon', label: isTr ? 'Arka Plan Studio UI & Daemon (:8765)' : 'Background Studio UI & Daemon (:8765)', code: 'fl-mcp service start --open' },
+      { id: 'http-serve', label: isTr ? 'Doğrudan Streamable-HTTP MCP' : 'Direct Streamable-HTTP MCP', code: 'fl-mcp serve --transport streamable-http --port 8765' },
     ],
   }
 
